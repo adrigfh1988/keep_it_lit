@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.AI;
+
 using UnityEngine.Rendering;
 
 public static partial class AsylumHubBuilder
@@ -21,6 +21,7 @@ public static partial class AsylumHubBuilder
         HashSet<Material> seen = new HashSet<Material>();
         foreach (Renderer r in root.GetComponentsInChildren<Renderer>(true))
         {
+            if (r.GetComponent<TMPro.TMP_Text>() != null || r is ParticleSystemRenderer) continue; // text and particles have their own shaders
             foreach (Material m in r.sharedMaterials)
             {
                 if (m == null || !seen.Add(m)) continue;
@@ -63,7 +64,7 @@ public static partial class AsylumHubBuilder
                     if (GameObjectUtility.GetStaticEditorFlags(t.gameObject) != 0) { staticLeaves++; break; }
                 }
             }
-            if (door.arrivalPoint != null && !ClearanceFree(door)) blocked.Add($"floor {door.floor}");
+            if (door.arrivalPoint != null && !ClearanceFree(door)) blocked.Add($"floor {door.floor} by {LastBlocker}");
         }
         int wired = hub.wingDoors.Count(d => d != null);
         sb.AppendLine($"  wing doors: {wired} / 5 {(wired == 5 ? "OK" : "MISSING")}");
@@ -76,14 +77,17 @@ public static partial class AsylumHubBuilder
     }
 
     /// <summary>The 1.5 x 2.5 x 1.5 m box in front of a wing door has nothing solid in it.</summary>
+    public static string LastBlocker;
+
     private static bool ClearanceFree(WingDoor door)
     {
         Vector3 forward = door.arrivalPoint.forward;
-        Vector3 centre = door.arrivalPoint.position - forward * 0.75f + Vector3.up * 1.3f;
-        Collider[] hits = Physics.OverlapBox(centre, new Vector3(0.75f, 1.2f, 0.75f), door.arrivalPoint.rotation, ~0, QueryTriggerInteraction.Ignore);
+        Vector3 centre = door.arrivalPoint.position - forward * 0.625f + Vector3.up * 1.3f;
+        Collider[] hits = Physics.OverlapBox(centre, new Vector3(0.75f, 1.15f, 0.625f), door.arrivalPoint.rotation, ~0, QueryTriggerInteraction.Ignore);
         foreach (Collider c in hits)
         {
-            if (c.GetComponentInParent<WingDoor>() != null) continue; // the door's own leaf / frame
+            if (c.GetComponentInParent<WingDoor>() != null) continue; // the door own leaf / frame
+            LastBlocker = c.name + " (" + c.transform.parent?.name + ")";
             return false;
         }
         return true;
@@ -91,27 +95,9 @@ public static partial class AsylumHubBuilder
 
     // ---------------------------------------------------------------- walk graph
 
-    private static NavMeshDataInstance AddTemporaryNavMesh(AsylumHub hub)
-    {
-        Physics.SyncTransforms();
-        // A copy of the Humanoid agent type's settings: NavMesh.CreateSettings() would add a new agent type to ProjectSettings.
-        NavMeshBuildSettings settings = NavMesh.GetSettingsByID(0);
-        settings.agentRadius = 0.28f;
-        settings.agentHeight = 1.8f;
-        settings.agentClimb = 0.25f;
-        settings.agentSlope = 45f;
-        settings.minRegionArea = 0.2f;
-
-        Bounds area = new Bounds(hub.transform.position + new Vector3(0f, 5f, 0f), new Vector3(90f, 30f, 80f));
-        List<NavMeshBuildSource> sources = new List<NavMeshBuildSource>();
-        NavMeshBuilder.CollectSources(area, ~0, NavMeshCollectGeometry.PhysicsColliders, 0, new List<NavMeshBuildMarkup>(), sources);
-        NavMeshData data = NavMeshBuilder.BuildNavMeshData(settings, sources, area, area.center, Quaternion.identity);
-        return NavMesh.AddNavMeshData(data);
-    }
-
     /// <summary>
-    /// A temporary editor NavMesh over the hub colliders (agent radius 0.28, height 1.8, step 0.25, slope 45) and a
-    /// complete path from the main entrance to every wing arrival point and from each wing to the next.
+    /// Complete path (see WalkGrid) from the main entrance to every wing arrival point and from each wing to the next.
+    /// Lines start with "path" and end in OK; the summary line says whether the whole graph is complete.
     /// </summary>
     private static string AuditWalkGraph(AsylumHub hub)
     {
@@ -122,70 +108,45 @@ public static partial class AsylumHubBuilder
             return sb.ToString();
         }
 
-        NavMeshDataInstance instance = default;
-        try
-        {
-            instance = AddTemporaryNavMesh(hub);
+        WalkGrid grid = BuildWalkGrid(hub);
+        List<(string, Transform)> nodes = new List<(string, Transform)> { ("entrance", hub.mainEntrance) };
+        foreach (WingDoor d in hub.wingDoors) nodes.Add(($"wing {d.floor}", d.arrivalPoint));
 
-            List<(string, Transform)> nodes = new List<(string, Transform)> { ("entrance", hub.mainEntrance) };
-            foreach (WingDoor d in hub.wingDoors) nodes.Add(($"wing {d.floor}", d.arrivalPoint));
-
-            bool all = true;
-            for (int i = 1; i < nodes.Count; i++)
-            {
-                sb.AppendLine(PathLine(nodes[0], nodes[i], out bool ok));
-                all &= ok;
-                if (i >= 2)
-                {
-                    sb.AppendLine(PathLine(nodes[i - 1], nodes[i], out ok));
-                    all &= ok;
-                }
-            }
-            sb.AppendLine($"  walk graph: {(all ? "complete OK" : "BROKEN")}");
-        }
-        finally
+        bool all = true;
+        int[] ids = nodes.Select(n => grid.Nearest(n.Item2.position)).ToArray();
+        sb.AppendLine($"  walk nodes: {grid.Count}");
+        for (int i = 1; i < nodes.Count; i++)
         {
-            if (instance.valid) NavMesh.RemoveNavMeshData(instance);
+            all &= PathLine(grid, nodes, ids, 0, i, sb);
+            if (i >= 2) all &= PathLine(grid, nodes, ids, i - 1, i, sb);
         }
+        sb.AppendLine($"  walk graph: {(all ? "complete OK" : "BROKEN")}");
         return sb.ToString();
     }
 
-    private static string PathLine((string, Transform) a, (string, Transform) b, out bool ok)
+    private static bool PathLine(WalkGrid grid, List<(string, Transform)> nodes, int[] ids, int from, int to, StringBuilder sb)
     {
-        ok = false;
-        if (!NavMesh.SamplePosition(a.Item2.position, out NavMeshHit ha, 1.5f, NavMesh.AllAreas)) return $"  path {a.Item1} -> {b.Item1}: start is off the walkable area";
-        if (!NavMesh.SamplePosition(b.Item2.position, out NavMeshHit hb, 1.5f, NavMesh.AllAreas)) return $"  path {a.Item1} -> {b.Item1}: end is off the walkable area";
-        NavMeshPath path = new NavMeshPath();
-        if (!NavMesh.CalculatePath(ha.position, hb.position, NavMesh.AllAreas, path) || path.status != NavMeshPathStatus.PathComplete)
-        {
-            return $"  path {a.Item1} -> {b.Item1}: {path.status}";
-        }
-        float length = 0f;
-        for (int i = 1; i < path.corners.Length; i++) length += Vector3.Distance(path.corners[i - 1], path.corners[i]);
-        ok = true;
-        return $"  path {a.Item1} -> {b.Item1}: {length:F0} m OK";
+        string label = $"{nodes[from].Item1} -> {nodes[to].Item1}";
+        if (ids[from] < 0 || ids[to] < 0) { sb.AppendLine($"  path {label}: {(ids[from] < 0 ? "start" : "end")} is off the walkable area"); return false; }
+        grid.Flood(ids[from], out int[] parent);
+        if (parent[ids[to]] < 0) { sb.AppendLine($"  path {label}: no walkable route"); return false; }
+        sb.AppendLine($"  path {label}: {WalkGrid.Length(grid.PathTo(ids[to], parent)):F0} m OK");
+        return true;
     }
 
-    /// <summary>The corner chains from the main entrance to each wing arrival, used to open the doors on a route.</summary>
+    /// <summary>The walkable polylines from the main entrance to each wing arrival, used to open the doors on a route.</summary>
     private static List<Vector3[]> RoutePaths(AsylumHub hub)
     {
         List<Vector3[]> routes = new List<Vector3[]>();
-        NavMeshDataInstance instance = default;
-        try
+        WalkGrid grid = BuildWalkGrid(hub);
+        int start = grid.Nearest(hub.mainEntrance.position);
+        if (start < 0) return routes;
+        grid.Flood(start, out int[] parent);
+        foreach (WingDoor d in hub.wingDoors)
         {
-            instance = AddTemporaryNavMesh(hub);
-            if (!NavMesh.SamplePosition(hub.mainEntrance.position, out NavMeshHit ha, 1.5f, NavMesh.AllAreas)) return routes;
-            foreach (WingDoor d in hub.wingDoors)
-            {
-                if (d == null || d.arrivalPoint == null) continue;
-                if (!NavMesh.SamplePosition(d.arrivalPoint.position, out NavMeshHit hb, 1.5f, NavMesh.AllAreas)) continue;
-                NavMeshPath path = new NavMeshPath();
-                if (NavMesh.CalculatePath(ha.position, hb.position, NavMesh.AllAreas, path) && path.status == NavMeshPathStatus.PathComplete) routes.Add(path.corners);
-            }
-        }
-        finally
-        {
-            if (instance.valid) NavMesh.RemoveNavMeshData(instance);
+            if (d == null || d.arrivalPoint == null) continue;
+            int target = grid.Nearest(d.arrivalPoint.position);
+            if (target >= 0 && parent[target] >= 0) routes.Add(grid.PathTo(target, parent));
         }
         return routes;
     }

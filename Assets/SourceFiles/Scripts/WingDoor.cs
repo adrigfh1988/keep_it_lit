@@ -25,6 +25,8 @@ public class WingDoor : MonoBehaviour, IInteractable
     public TMP_Text plaque;
     public Light beacon;
     public Transform leafHinge;
+    [Tooltip("Second leaf of a double door (hinged on its far edge). Null for a single door.")]
+    public Transform leafHingeB;
     [Tooltip("1.5 m in front of the door, facing away from it.")]
     public Transform arrivalPoint;
 
