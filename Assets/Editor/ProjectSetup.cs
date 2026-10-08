@@ -198,6 +198,37 @@ public static class ProjectSetup
         },
         new Piece
         {
+            Name = "Asylum materials (F92: URP, 1024 px textures)",
+            FixMenu = "Build Missing Pieces (converts both packs in place)",
+            Problem = () =>
+            {
+                if (!AssetDatabase.IsValidFolder(AsylumMaterialUpgrade.AsylumFolder)) return null; // pack not imported: nothing to convert
+                if (AsylumMaterialUpgrade.NeedsConversion()) return $"{AsylumMaterialUpgrade.NonUrpCount()} materials still on Built-in shaders (magenta)";
+                if (AssetDatabase.LoadAssetAtPath<GameObject>(AsylumHubBuilder.PrefabPath) != null && AsylumMaterialUpgrade.UncappedTextures(AsylumHubBuilder.PrefabPath) > 0) return "textures above 1024 px";
+                return null;
+            },
+            Build = () =>
+            {
+                AsylumMaterialUpgrade.Convert();
+                if (AssetDatabase.LoadAssetAtPath<GameObject>(AsylumHubBuilder.PrefabPath) != null) AsylumMaterialUpgrade.CapTextures(new[] { AsylumHubBuilder.PrefabPath });
+            }
+        },
+        new Piece
+        {
+            Name = "Asylum hub (F92, between the mazes)",
+            FixMenu = "Build Missing Pieces (places Assets/Prefabs/AsylumHub.prefab, or saves the scene hub as it)",
+            Problem = AsylumHubBuilder.Problem,
+            Build = AsylumHubBuilder.Repair
+        },
+        new Piece
+        {
+            Name = "Asylum hub layout (lights, walking paths, doors)",
+            FixMenu = "edit Assets/Prefabs/AsylumHub.prefab by hand to clear what is listed",
+            Problem = AsylumHubBuilder.LayoutProblem,
+            Build = null
+        },
+        new Piece
+        {
             Name = "Hunter body (Adam)",
             FixMenu = "Build > Hunter Body",
             Problem = () =>
