@@ -222,6 +222,13 @@ public static class ProjectSetup
         },
         new Piece
         {
+            Name = "Asylum story layer (F93: hub navmesh, patients, records board)",
+            FixMenu = "Build Missing Pieces (adds only the missing pieces to the scene hub and applies them to the prefab)",
+            Problem = AsylumHubBuilder.StoryProblem,
+            Build = AsylumHubBuilder.StoryRepair
+        },
+        new Piece
+        {
             Name = "Asylum hub layout (lights, walking paths, doors)",
             FixMenu = "edit Assets/Prefabs/AsylumHub.prefab by hand to clear what is listed",
             Problem = AsylumHubBuilder.LayoutProblem,

@@ -76,6 +76,11 @@ public static partial class AsylumHubBuilder
         sb.AppendLine($"  static moving leaves: {staticLeaves} {(staticLeaves == 0 ? "OK" : "FIX")}");
         sb.AppendLine(blocked.Count == 0 ? "  door clearance: OK" : "  door clearance blocked at: " + string.Join(", ", blocked));
 
+        // ---- F93 story layer
+        sb.Append(HubNavMesh.Audit(hub));
+        List<string> storyMissing = StoryMissing(hub);
+        sb.AppendLine(storyMissing.Count == 0 ? "  story layer (patients, records board, morgue, navmesh): OK" : "  story layer missing: " + string.Join(", ", storyMissing));
+
         // ---- walk graph
         sb.Append(AuditWalkGraph(hub));
         return sb.ToString();

@@ -261,6 +261,20 @@ public static class InteractableKitBuilder
             }
         }
 
+
+        // F93: the patient case file, same build-missing-only rule. Needs the Morgue Room PBR notebook and the Alchemist shelf; without them
+        // the slot stays empty and MazeGenerator.BuildPatientFile logs an error naming this menu item.
+        SerializedProperty fileProp = so.FindProperty("patientFile");
+        if (fileProp.objectReferenceValue == null)
+        {
+            LoreNote patientFile = BuildPatientFile(root.transform, new Vector3(x, 1.2f, 0f));
+            if (patientFile != null)
+            {
+                fileProp.objectReferenceValue = patientFile;
+                x += PieceSpacing;
+                built++;
+            }
+        }
         so.ApplyModifiedPropertiesWithoutUndo();
         ThemeSurfaceUpgrade.Apply(); // F88/F90: the fixture materials (shutter, bell, valve) get their texture sets
         AssetDatabase.SaveAssets();
@@ -906,6 +920,93 @@ public static class InteractableKitBuilder
     private const float NoteBookYaw = 180f;
     /// <summary>Roll about Z after the yaw: the pack model's title page reads upside down with its spine on the right as it comes out of the prefab.</summary>
     private const float NoteBookRoll = 180f;
+
+    private const string MorgueNotebookPath = "Assets/Morgue Room PBR/Prefabs/props/notebook.prefab";
+    private const float PatientFileScale = 1.25f;
+
+    /// <summary>
+    /// F93: a patient case file - the Morgue Room PBR notebook (a red-tinted copy of its material) standing upright and leaning back
+    /// on the same small hung Alchemist shelf as the lore note, root on the wall face with +Z into the corridor, one BoxCollider on the
+    /// root, and a red point light pulsing through StarPulse so it can be found in the dark. It is a LoreNote (ids 100+). Null if the
+    /// Morgue pack or the Alchemist shelf is missing.
+    /// </summary>
+    private static LoreNote BuildPatientFile(Transform parent, Vector3 localPosition)
+    {
+        GameObject notebook = AssetDatabase.LoadAssetAtPath<GameObject>(MorgueNotebookPath);
+        if (notebook == null || !HasPackPrefab(PackShelf))
+        {
+            Debug.LogWarning($"InteractableKitBuilder: {MorgueNotebookPath} or the Alchemist {PackShelf} not found - the patient file template was not built.");
+            return null;
+        }
+
+        GameObject root = new GameObject("PatientFile");
+        root.transform.SetParent(parent, false);
+        root.transform.localPosition = localPosition;
+        Vector3 origin = root.transform.position;
+
+        GameObject shelf = AlchemistPack.Spawn(root.transform, PackShelf, PackShelfScale);
+        Bounds sb = AlchemistPack.RenderBounds(shelf);
+        if (sb.size.z > sb.size.x) shelf.transform.rotation = Quaternion.Euler(0f, 90f, 0f) * shelf.transform.rotation;
+        sb = AlchemistPack.RenderBounds(shelf);
+        shelf.transform.position += new Vector3(origin.x - sb.center.x, origin.y - 0.18f - sb.max.y, origin.z - 0.02f - sb.min.z);
+        sb = AlchemistPack.RenderBounds(shelf);
+
+        GameObject book = (GameObject)PrefabUtility.InstantiatePrefab(notebook, root.transform);
+        book.name = "Notebook";
+        foreach (Collider c in book.GetComponentsInChildren<Collider>(true)) Object.DestroyImmediate(c);
+        book.transform.localScale *= PatientFileScale;
+        // Flat (cover up) -> upright with the cover toward +Z, leaning back against the wall.
+        // The prefab root carries a stray demo-scene yaw (326 degrees); the mesh itself lies flat, cover up, so it is dropped here.
+        book.transform.rotation = Quaternion.Euler(-PackNoteLean, 0f, 0f) * Quaternion.Euler(90f, 0f, 0f);
+        Material tint = PatientFileMaterial(book);
+        if (tint != null)
+        {
+            foreach (Renderer r in book.GetComponentsInChildren<Renderer>(true))
+            {
+                Material[] mats = new Material[r.sharedMaterials.Length];
+                for (int i = 0; i < mats.Length; i++) mats[i] = tint;
+                r.sharedMaterials = mats;
+            }
+        }
+        Bounds b = AlchemistPack.RenderBounds(book);
+        book.transform.position += new Vector3(origin.x - b.center.x, sb.max.y + 0.003f - b.min.y, sb.min.z + 0.02f - b.min.z);
+        b = AlchemistPack.RenderBounds(book);
+
+        Bounds all = sb;
+        all.Encapsulate(b);
+        BoxCollider box = root.AddComponent<BoxCollider>();
+        box.center = root.transform.InverseTransformPoint(all.center);
+        box.size = new Vector3(all.size.x + 0.1f, all.size.y + 0.1f, Mathf.Max(0.25f, all.size.z));
+
+        GameObject glint = new GameObject("Glint");
+        glint.transform.SetParent(root.transform, false);
+        glint.transform.position = new Vector3(origin.x, b.center.y, origin.z + 0.5f);
+        Light light = glint.AddComponent<Light>();
+        light.type = LightType.Point;
+        light.color = new Color(1f, 0.32f, 0.22f);
+        light.range = 2.2f;
+        light.intensity = 0.4f;
+        light.shadows = LightShadows.None;
+        glint.AddComponent<StarPulse>();
+
+        return root.AddComponent<LoreNote>();
+    }
+
+    /// <summary>A red-tinted URP copy of the notebook's material, so a case file reads differently from a cream lore note.</summary>
+    private static Material PatientFileMaterial(GameObject book)
+    {
+        string path = $"{MaterialFolder}/Interactable_PatientFileBook.mat";
+        Material existing = AssetDatabase.LoadAssetAtPath<Material>(path);
+        if (existing != null) return existing;
+        Renderer r = book.GetComponentInChildren<Renderer>(true);
+        if (r == null || r.sharedMaterial == null) return null;
+        EnsureFolder();
+        Material copy = new Material(r.sharedMaterial) { name = "Interactable_PatientFileBook" };
+        if (copy.HasProperty("_BaseColor")) copy.SetColor("_BaseColor", new Color(1f, 0.38f, 0.32f));
+        if (copy.HasProperty("_Smoothness")) copy.SetFloat("_Smoothness", Mathf.Min(0.25f, copy.GetFloat("_Smoothness")));
+        AssetDatabase.CreateAsset(copy, path);
+        return copy;
+    }
 
     private static LoreNote BuildLoreNotePrimitive(Transform parent, Vector3 localPosition)
     {
