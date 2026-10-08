@@ -751,6 +751,7 @@ MonoBehaviour:
   stalker: {fileID: 6113732904811855743}
   keyPickup: {fileID: 1199783099}
   escapeHatch: {fileID: 1816171563}
+  patientFile: {fileID: 0}
   shardModel: {fileID: 1387055663}
 --- !u!4 &33102142
 Transform:

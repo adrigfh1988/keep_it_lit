@@ -78,7 +78,7 @@ public class ContractTracker : MonoBehaviour
         {
             foreach (LoreNote note in FindObjectsByType<LoreNote>(FindObjectsInactive.Exclude))
             {
-                if (note.GetComponentInParent<IntakeRoom>() == null) _notesPlaced++;
+                if (note.GetComponentInParent<IntakeRoom>() == null && note.NoteId < PatientFiles.FirstId) _notesPlaced++; // F93: the patient files (ids 100+) are not part of "Read it all"
             }
             if (_notesPlaced == 0) voidLine = "No notes down here - the contract's off.";
         }
@@ -129,7 +129,7 @@ public class ContractTracker : MonoBehaviour
 
     private void HandleNoteRead(int noteId)
     {
-        if (!Counting || _id != ContractState.Reader || noteId < 0) return;
+        if (!Counting || _id != ContractState.Reader || noteId < 0 || noteId >= PatientFiles.FirstId) return;
         _notesRead.Add(noteId);
         if (_notesRead.Count >= _notesPlaced) Complete();
         else RefreshLine();

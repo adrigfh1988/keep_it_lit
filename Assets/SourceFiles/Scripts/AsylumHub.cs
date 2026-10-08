@@ -34,6 +34,12 @@ public class AsylumHub : MonoBehaviour
     [Tooltip("The five wing doors.")]
     public Transform wings;
 
+    [Header("Story layer (F93, optional - not part of IsComplete)")]
+    [Tooltip("AsylumHub/Life: patients, records board, wristband, set pieces. Switched with the other content; the hub works without it.")]
+    public Transform life;
+    [Tooltip("Testing: > 0 forces HubState.Floor (and so the open wing and the patients) to this floor. 0 = off.")]
+    public int debugFloor;
+
     [Header("Points (always active)")]
     public Transform points;
     public Transform mainEntrance;
@@ -66,6 +72,17 @@ public class AsylumHub : MonoBehaviour
     /// <summary>True during the arrival and the walk-in (the player is held by a scripted move): PauseMenu does not open.</summary>
     public bool IsTransitioning { get; private set; }
 
+    /// <summary>Raised right before the hub switches off for a maze (a wing door was used). Story pieces reset on it. Subscribers unsubscribe in OnDestroy.</summary>
+    public static event Action OnLeaveHub;
+
+    /// <summary>The player systems handed over by MazeGenerator.SetUpAtmosphere (null until then).</summary>
+    public Transform Player => _player;
+    public Camera PlayerCamera => _camera;
+    public PlayerHud Hud => _hud;
+    public Flashlight Torch => _flashlight;
+    /// <summary>The reading panel the records board and the patient files use (F93).</summary>
+    public LoreReadingUi Reader => _reader;
+
     public bool IsComplete =>
         building != null && points != null && mainEntrance != null && wings != null && lights != null && dressing != null &&
         wingDoors != null && wingDoors.Length == 5 && AllWingsWired();
@@ -91,6 +108,7 @@ public class AsylumHub : MonoBehaviour
     private ThirdPersonController _controller;
     private CharacterController _characterController;
     private AsylumAmbience _ambience;
+    private LoreReadingUi _reader;
 
     private Vector3 _returnPosition;
     private float _returnYaw;
@@ -124,8 +142,9 @@ public class AsylumHub : MonoBehaviour
     }
 
     /// <summary>Called by MazeGenerator.SetUpAtmosphere once the player systems exist. `music` is the floor's base music, played at a whisper in the hub.</summary>
-    public void Configure(Transform player, Camera camera, PlayerHud hud, Flashlight flashlight, AudioClip music = null)
+    public void Configure(Transform player, Camera camera, PlayerHud hud, Flashlight flashlight, AudioClip music = null, LoreReadingUi reader = null)
     {
+        _reader = reader;
         _player = player;
         _camera = camera;
         _hud = hud;
@@ -145,6 +164,7 @@ public class AsylumHub : MonoBehaviour
         if (dressing != null) dressing.gameObject.SetActive(active);
         if (lights != null) lights.gameObject.SetActive(active);
         if (wings != null) wings.gameObject.SetActive(active);
+        if (life != null) life.gameObject.SetActive(active);
     }
 
     // ---------------------------------------------------------------- entering
@@ -174,6 +194,58 @@ public class AsylumHub : MonoBehaviour
         StartCoroutine(EnterRoutine(arrival, floor));
     }
 
+
+    // ---------------------------------------------------------------- debug entry points (F93 E11)
+
+    /// <summary>
+    /// Testing only (RunCommand in Play; never reachable from player UI): makes `floor` the current floor and runs the normal
+    /// enter path at that floor's arrival point (the front door for floor 1). Call it on the title screen, in the Intake or while
+    /// already in the hub - not during a maze run. Returns a one-line report.
+    /// </summary>
+    public static string DebugEnter(int floor)
+    {
+        AsylumHub h = Active;
+        if (h == null || !h.CanEnter) return "no usable hub";
+        if (h.IsTransitioning || h.Leaving) return "hub is busy";
+        if (GameFlow.IsRunActive) return "a maze run is active";
+        floor = Mathf.Clamp(floor, 1, 5);
+        GameFlow.CurrentFloor = floor;
+        HubState.IsFinale = false;
+        if (!GameFlow.IsInHub) h.RememberReturn();
+        Transform arrival = floor >= 2 && h.wingDoors[floor - 2] != null ? h.wingDoors[floor - 2].arrivalPoint : h.mainEntrance;
+        h.StartCoroutine(h.EnterRoutine(arrival, floor));
+        return $"entering the hub for floor {floor} at {arrival.name}";
+    }
+
+    /// <summary>
+    /// Testing only: the finale stage (G6 finishes it). Sets HubState.IsFinale, floor 5, optionally marks case files 100..104 read
+    /// (never 105 - that is read at the Director's desk), and enters at the Director_Desk point.
+    /// </summary>
+    public static string DebugFinale(bool allFiles)
+    {
+        AsylumHub h = Active;
+        if (h == null || !h.CanEnter) return "no usable hub";
+        if (h.IsTransitioning || h.Leaving) return "hub is busy";
+        if (GameFlow.IsRunActive) return "a maze run is active";
+        GameFlow.CurrentFloor = 5;
+        HubState.IsFinale = true;
+        if (allFiles)
+        {
+            for (int i = 0; i < PatientFiles.MazeFileCount; i++) LoreArchive.MarkRead(PatientFiles.FirstId + i);
+        }
+        if (!GameFlow.IsInHub) h.RememberReturn();
+        Transform desk = h.points != null ? h.points.Find("Director_Desk") : null;
+        Transform arrival = desk != null ? desk : h.mainEntrance;
+        h.StartCoroutine(h.EnterRoutine(arrival, 5));
+        return $"finale stage at {arrival.name}, files read {HubState.FilesRead}/5";
+    }
+
+    private void RememberReturn()
+    {
+        if (_player == null) return;
+        _returnPosition = _player.position;
+        _returnYaw = _player.eulerAngles.y;
+    }
     private IEnumerator EnterRoutine(Transform arrival, int floor)
     {
         IsTransitioning = true;
@@ -300,6 +372,7 @@ public class AsylumHub : MonoBehaviour
         SetBlackout(1f);
 
         // ---- at black: the hub goes away and floor n begins exactly as it always did
+        OnLeaveHub?.Invoke();
         for (int i = 0; i < hinges.Length; i++) hinges[i].localRotation = closed[i];
         RestoreAtmosphere();
         SetContentActive(false);

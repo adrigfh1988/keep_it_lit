@@ -428,6 +428,9 @@ public class MazeGenerator : MonoBehaviour
 
         BuildLantern(new System.Random(usedSeed + 15));
 
+        // F93, post-BuildLoreNotes: the floor's patient case file (+19, its own System.Random; +17 is MazeEscape's lift roll, +18 BuildKeys).
+        BuildPatientFile(new System.Random(usedSeed + 19));
+
         SpawnShards(usedSeed);
         PlacePlayer();
         PlaceAI();
@@ -2448,7 +2451,11 @@ public class MazeGenerator : MonoBehaviour
     {
         if (navMeshSurface == null)
         {
-            navMeshSurface = FindAnyObjectByType<NavMeshSurface>();
+            // F93: never the asylum hub's own surface (agent type "Hub"); the maze bakes with the default humanoid.
+            foreach (NavMeshSurface candidate in FindObjectsByType<NavMeshSurface>())
+            {
+                if (candidate.GetComponentInParent<AsylumHub>(true) == null) { navMeshSurface = candidate; break; }
+            }
         }
 
         if (navMeshSurface == null)
@@ -4004,6 +4011,57 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// F93 (E6): one case file per maze, id 99 + floor (100..104), text from PatientFiles. It IS a LoreNote (cloned from
+    /// InteractableKit.patientFile), so reading, the first-read bonus and the save all work through LoreArchive. Own RNG (+19). Prefers
+    /// a wall at least 4 BFS steps from the start; falls back to any free wall. Added to _loreNotes so SetUpAtmosphere binds it.
+    /// </summary>
+    private void BuildPatientFile(System.Random rng)
+    {
+        if (interactableKit == null) interactableKit = FindAnyObjectByType<InteractableKit>(FindObjectsInactive.Include);
+        if (interactableKit == null || !interactableKit.HasPatientFile)
+        {
+            Debug.LogError("MazeGenerator: no InteractableKit patient file in the scene - skipping this floor's case file. Run LIGHTS OUT > Build > Interactables in the Editor, then save the scene.", this);
+            return;
+        }
+
+        int floor = _profile != null ? _profile.Floor : 1;
+        int fileId = PatientFiles.IdForFloor(Mathf.Clamp(floor, 1, PatientFiles.MazeFileCount));
+
+        // Cells within 3 steps of the start are pre-claimed so the first pick lands further in; if nothing fits, try again without.
+        HashSet<Vector2Int> everything = new HashSet<Vector2Int>();
+        for (int x = 0; x < width; x++)
+        {
+            for (int z = 0; z < height; z++) everything.Add(new Vector2Int(x, z));
+        }
+        HashSet<Vector2Int> localUsed = new HashSet<Vector2Int>();
+        foreach (KeyValuePair<Vector2Int, int> kv in BfsWithin(Vector2Int.zero, everything))
+        {
+            if (kv.Value < 4) localUsed.Add(kv.Key);
+        }
+
+        if (!TryPlaceOnFreeWall(rng, localUsed, out Vector2Int cell, out int dir))
+        {
+            localUsed.Clear();
+            if (!TryPlaceOnFreeWall(rng, localUsed, out cell, out dir))
+            {
+                Debug.LogWarning($"MazeGenerator: the case file did not fit on floor {floor}.", this);
+                return;
+            }
+        }
+
+        Vector3 dirVec = DirVector(dir);
+        float backFaceDistance = cellSize * 0.5f - wallThickness * 0.5f;
+        Vector3 pos = CellCenter(cell.x, cell.y) + dirVec * (backFaceDistance - 0.03f) + Vector3.up * 1.4f;
+
+        LoreNote file = Instantiate(interactableKit.PatientFile, pos, Quaternion.LookRotation(-dirVec, Vector3.up), _mazeRoot);
+        file.gameObject.SetActive(true);
+        file.name = $"PatientFile_{fileId}";
+        file.Configure(fileId, PatientFiles.Text(fileId));
+        _loreNotes.Add(file);
+        Debug.Log($"MazeGenerator: patient file {fileId} placed in cell {cell} (wall {dir}).", this);
+    }
     /// <summary>The 10 lore texts, verbatim from plannings/darkness-and-interactivity-spec.md F74 item 4.</summary>
     private static string LoreNoteText(int id)
     {
@@ -4731,7 +4789,7 @@ public class MazeGenerator : MonoBehaviour
         {
             Debug.LogError("MazeGenerator: there is no AsylumHub in the scene, so the run goes straight from the Intake and the shop into the mazes. Run LIGHTS OUT > Build Missing Pieces in the Editor (it places Assets/Prefabs/AsylumHub.prefab), then save the scene.", this);
         }
-        if (asylum != null) asylum.Configure(player, camera, hud, flashlight, PickBaseMusic());
+        if (asylum != null) asylum.Configure(player, camera, hud, flashlight, PickBaseMusic(), loreReader);
 
         MazeEscape escape = null;
         if (escapeSequence)

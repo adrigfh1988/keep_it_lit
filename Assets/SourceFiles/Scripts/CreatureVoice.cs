@@ -116,12 +116,15 @@ public abstract class CreatureVoice : MonoBehaviour
     /// <summary>The GameOutcome the live gate reads; subclasses return the one they were configured with.</summary>
     protected abstract GameOutcome Outcome { get; }
 
+    /// <summary>F93: the live gate Update and TrySay read. Creatures of the run use RunIsLive; the hub patients override it to speak while GameFlow.IsInHub.</summary>
+    protected virtual bool IsLive() => RunIsLive(Outcome);
+
     private void Update()
     {
         if (!_voiceReady) return;
 
         bool busy = _bubble != null && _bubble.IsBusy;
-        if (!RunIsLive(Outcome))
+        if (!IsLive())
         {
             // An ending clears the bubble at once - except a line allowed to outlive it (the capture line),
             // which plays on under the blackout until the end screen.
@@ -148,7 +151,7 @@ public abstract class CreatureVoice : MonoBehaviour
     {
         if (!_voiceReady || category < 0 || category >= CategoryCount) return false;
         if (Time.timeScale <= 0f) return false;
-        bool live = RunIsLive(Outcome);
+        bool live = IsLive();
         if (!live && !(OutlivesEnding(category) && !GameOutcome.IsOver)) return false;
         if (!CanSpeak(category)) return false;
 

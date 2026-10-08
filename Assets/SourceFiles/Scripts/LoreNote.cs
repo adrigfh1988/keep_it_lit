@@ -12,6 +12,9 @@ public class LoreNote : MonoBehaviour, IInteractable
     public static event System.Action<int> Read;
 
     private int _noteId;
+
+    /// <summary>The id this note was configured with (F93: ContractTracker ignores the patient files, ids 100 and up).</summary>
+    public int NoteId => _noteId;
     private string _text;
     private LoreReadingUi _reader;
     private PlayerHud _hud;

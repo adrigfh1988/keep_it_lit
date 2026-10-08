@@ -65,6 +65,10 @@ public class InteractableKit : MonoBehaviour
     [Tooltip("Optional. The trapdoor MazeEscape.BuildHatch clones: a child 'Glow' renderer takes the hatch's emissive material, and children 'LidL'/'LidR' are the two leaves, hinged about their local Z. Empty = the old glowing slab.")]
     [SerializeField] private GameObject escapeHatch;
 
+    [Header("Patient file (F93)")]
+    [Tooltip("A case file on a small wall bracket: it IS a LoreNote (ids 100+), so reading, the first-read bonus and the save all work as for any note. MazeGenerator.BuildPatientFile clones it once per floor.")]
+    [SerializeField] private LoreNote patientFile;
+
     [Header("Shard model (F90)")]
     [Tooltip("The currency shard's model: a pack item (Alchemist House Bulb01, a lumpy cluster) centred on this object's origin. MazeGenerator.BuildShard clones its children under each shard and gives them the glowing Maze_Shard material; empty = the old primitive cube.")]
     [SerializeField] private GameObject shardModel;
@@ -88,6 +92,7 @@ public class InteractableKit : MonoBehaviour
     public KeyPickup KeyPickup => keyPickup;
     public GameObject EscapeHatch => escapeHatch;
     public GameObject ShardModel => shardModel;
+    public LoreNote PatientFile => patientFile;
 
     /// <summary>True once every F72 template slot is assigned - MazeGenerator.BuildDoors logs and skips the whole feature otherwise.</summary>
     public bool HasDoorsAndButtons => shutterDoor != null && wallButton != null && batteryCell != null;
@@ -112,6 +117,9 @@ public class InteractableKit : MonoBehaviour
 
     /// <summary>True once the stalker template is assigned - MazeGenerator.BuildStalker logs and skips otherwise.</summary>
     public bool HasStalker => stalker != null;
+
+    /// <summary>True once the patient file template is assigned - MazeGenerator.BuildPatientFile logs and skips otherwise.</summary>
+    public bool HasPatientFile => patientFile != null;
 
     /// <summary>True once the key pickup template is assigned - MazeGenerator.BuildKeys logs and skips otherwise.</summary>
     public bool HasKey => keyPickup != null;

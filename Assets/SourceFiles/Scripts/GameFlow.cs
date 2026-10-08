@@ -144,6 +144,7 @@ public static class GameFlow
         IsInShop = false;
         IsInIntake = false;
         IsInHub = false;
+        HubState.IsFinale = false; // F93
         // Restart can be called from the pause menu with both engaged. MainMenu.Awake zeroes the
         // clock again in the new scene anyway.
         Time.timeScale = 1f;

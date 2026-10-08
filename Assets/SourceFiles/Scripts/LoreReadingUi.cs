@@ -17,6 +17,7 @@ public class LoreReadingUi : MonoBehaviour, IInteractable
     private TextMeshProUGUI _text;
     private AIFollower _hunter;
     private PlayerInteractor _activeInteractor;
+    private RectTransform _panelRect;
 
     /// <summary>True while the panel is showing.</summary>
     public bool IsOpen { get; private set; }
@@ -36,6 +37,7 @@ public class LoreReadingUi : MonoBehaviour, IInteractable
 
         _holder = RuntimeUi.CreatePanel(canvas.transform, "LoreReadingPanel", new Color(0.02f, 0.02f, 0.02f, 0.78f));
         RectTransform rect = _holder.GetComponent<RectTransform>();
+        _panelRect = rect;
         RuntimeUi.Place(rect, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(760f, 300f));
 
         _text = RuntimeUi.CreateText(_holder.transform, "NoteText", "", 28f, new Color(0.92f, 0.9f, 0.85f));
@@ -51,6 +53,10 @@ public class LoreReadingUi : MonoBehaviour, IInteractable
         if (_holder == null) return;
 
         _text.text = text;
+        // F93: the patient case files are longer than a note - a taller panel and a slightly smaller type.
+        bool longText = text != null && text.Length > 200;
+        if (_panelRect != null) _panelRect.sizeDelta = longText ? new Vector2(860f, 480f) : new Vector2(760f, 300f);
+        _text.fontSize = longText ? 26f : 28f;
         _holder.SetActive(true);
         IsOpen = true;
 
