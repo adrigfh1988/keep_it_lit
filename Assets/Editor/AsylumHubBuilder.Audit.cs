@@ -150,8 +150,63 @@ public static partial class AsylumHubBuilder
             int[] keyIds = nodes.Select(n => grid.Nearest(n.Item2)).ToArray();
             all &= PathLine(grid, nodes, keyIds, 0, nodes.Count - 1, sb);
         }
+        all &= AuditNpcReach(hub, grid, ids[0], sb);
         sb.AppendLine($"  walk graph: {(all ? "complete OK" : "BROKEN")}");
         return sb.ToString();
+    }
+
+    /// <summary>
+    /// F98: every NPC can be talked to and every mission item picked up. A standing spot 1.0 - 1.9 m from each (a lying NPC counts from
+    /// the middle of its bed) must be on the walk graph and reachable from the main entrance.
+    /// </summary>
+    private static bool AuditNpcReach(AsylumHub hub, WalkGrid grid, int entranceNode, StringBuilder sb)
+    {
+        if (hub.life == null || entranceNode < 0) return true;
+        grid.Flood(entranceNode, out int[] parent);
+        bool ok = true;
+        int checkedCount = 0;
+
+        bool Reachable(Vector3 centre, float floorY, out float metres)
+        {
+            metres = 0f;
+            // A standing spot 1.0 - 1.8 m away (the interactor reaches 2.4 m from eye height) that is on the graph and reachable.
+            foreach (float radius in new[] { 1.0f, 1.3f, 1.6f, 1.9f })
+            {
+                for (int i = 0; i < 16; i++)
+                {
+                    float a = i * Mathf.PI * 2f / 16f;
+                    Vector3 p = centre + new Vector3(Mathf.Cos(a), 0f, Mathf.Sin(a)) * radius;
+                    p.y = floorY;
+                    int node = grid.Nearest(p);
+                    if (node < 0 || (grid.Pos(node) - p).sqrMagnitude > 0.3f * 0.3f || parent[node] < 0) continue;
+                    metres = WalkGrid.Length(grid.PathTo(node, parent));
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        foreach (HubNpc npc in hub.life.GetComponentsInChildren<HubNpc>(true))
+        {
+            Vector3 c = npc.anchor != null ? npc.anchor.position : npc.transform.position;
+            float floorY = c.y; foreach (float f in new[] { 0.07f, 1.15f, 5.0f, 8.82f }) if (f <= c.y + 0.6f && c.y - f < 1.7f) floorY = f; // the storey floor under the NPC (a raycast would land on its collider)
+            if (npc.lying) c = c - npc.anchor.forward * 0.95f;
+            checkedCount++;
+            if (Reachable(c, floorY, out float m)) sb.AppendLine($"  path npc {npc.name}: {m:F0} m OK");
+            else { sb.AppendLine($"  path npc {npc.name}: no walkable spot within reach"); ok = false; }
+        }
+        foreach (HubMissionItem item in hub.life.GetComponentsInChildren<HubMissionItem>(true))
+        {
+            Vector3 c = item.transform.position;
+            // Items sit on tables, so the storey floor under them is the nearest known floor at or below.
+            float lowest = c.y;
+            foreach (float f in new[] { 0.07f, 1.15f, 5.0f, 8.82f }) if (f <= c.y + 0.05f && c.y - f < 1.7f) lowest = f; // ascending: the highest floor within 1.7 m below wins
+            checkedCount++;
+            if (Reachable(c, lowest, out float m)) sb.AppendLine($"  path item {item.transform.parent.name}/{item.name}: {m:F0} m OK");
+            else { sb.AppendLine($"  path item {item.transform.parent.name}/{item.name}: no walkable spot within reach"); ok = false; }
+        }
+        sb.AppendLine($"  npcs + items reachable ({checkedCount} checked), longest dialogue line {HubDialogue.LongestLine()} characters (limit 100): {(ok && HubDialogue.LongestLine() <= 100 ? "OK" : "BROKEN")}");
+        return ok && HubDialogue.LongestLine() <= 100;
     }
 
     private static bool PathLine(WalkGrid grid, List<(string, Vector3)> nodes, int[] ids, int from, int to, StringBuilder sb)

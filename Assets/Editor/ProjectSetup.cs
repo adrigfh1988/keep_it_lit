@@ -257,6 +257,13 @@ public static class ProjectSetup
         },
         new Piece
         {
+            Name = "Asylum NPCs + missions (F98: six people, a dialogue panel, a mission per floor 1-4)",
+            FixMenu = "Build Missing Pieces (adds only what is missing to the scene hub and applies it to the prefab)",
+            Problem = AsylumHubBuilder.NpcProblem,
+            Build = AsylumHubBuilder.NpcRepair
+        },
+        new Piece
+        {
             Name = "Hunter body (Adam)",
             FixMenu = "Build > Hunter Body",
             Problem = () =>

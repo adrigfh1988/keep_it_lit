@@ -108,6 +108,8 @@ public class PauseMenu : MonoBehaviour
         // The Esc that closes the shop panel must not also open the pause menu in the same frame -
         // Update order between the two components is not defined.
         if (_shopMenu != null && (_shopMenu.IsOpen || _shopMenu.ClosedThisFrame)) return false;
+        // F98: same for the hospital's dialogue panel - Esc closes the conversation first.
+        if (DialoguePanel.BlocksPause) return false;
         return true;
     }
 

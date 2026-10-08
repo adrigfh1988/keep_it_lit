@@ -279,7 +279,7 @@ public class HubPatient : MonoBehaviour
     private void SeatLying()
     {
         if (_animator == null || !_animator.isHuman || _anchorUsed == null) return;
-        if (_skins == null) { _skins = body.GetComponentsInChildren<SkinnedMeshRenderer>(true); foreach (var r in _skins) r.updateWhenOffscreen = true; }
+        if (_skins == null || _skins.Length == 0) { _skins = body.GetComponentsInChildren<SkinnedMeshRenderer>(true); foreach (var r in _skins) r.updateWhenOffscreen = true; }
         Transform hips = _animator.GetBoneTransform(HumanBodyBones.Hips);
         if (hips == null || _head == null) return;
         Vector3 along = Vector3.ProjectOnPlane(_head.position - hips.position, Vector3.up);

@@ -80,6 +80,7 @@ public static partial class AsylumHubBuilder
     private sealed class DressRoomCtx
     {
         public RoomDef def; public Transform group; public System.Random rng; public List<Cell> cells = new List<Cell>();
+        public int childStart;
         public int placed, rejected; public List<string> rejects = new List<string>(); public Dictionary<string, int> perKey = new Dictionary<string, int>();
         public List<Placed> all = new List<Placed>();
         public List<Vector3> decalSpots = new List<Vector3>();
@@ -250,6 +251,8 @@ public static partial class AsylumHubBuilder
 
     private static string PropPath(string key)
     {
+        if (key.StartsWith("path:")) return key.Substring(5); // F98: a full asset path
+        if (key.StartsWith("alch:")) return CommonDir + "Alchemist/" + key.Substring(5) + ".prefab"; // F98: the composed Alchemist prefabs
         if (key.StartsWith("m:")) return MorgueDir + key.Substring(2) + ".prefab";
         if (key.StartsWith("pack:")) return CommonDir + "PackDressing/" + key.Substring(5) + ".prefab";
         if (key.StartsWith("blood:")) return CommonDir + "Kit_" + key.Substring(6) + ".prefab";

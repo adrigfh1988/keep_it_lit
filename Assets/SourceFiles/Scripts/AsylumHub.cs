@@ -347,6 +347,8 @@ public class AsylumHub : MonoBehaviour
 
     private static string ArrivalText(WingDoor door, int floor)
     {
+        // F98: floors 1-4 are locked behind a mission until somebody hands over the key.
+        if (floor <= 4 && door.StoryLocked) return $"FLOOR {floor} · THE {door.wingName} DOOR IS LOCKED · {door.levelName}";
         return $"FLOOR {floor} · THE {door.wingName} DOOR IS OPEN · {door.levelName}";
     }
 
@@ -356,7 +358,10 @@ public class AsylumHub : MonoBehaviour
         {
             yield return new WaitForSeconds(hintEverySeconds);
             if (Leaving || door == null) yield break;
-            if (_hud != null && Time.timeScale > 0f) _hud.ShowSubtitle($"{door.wingName} · {door.roomName} · {door.levelName}", 4f);
+            if (_hud == null || Time.timeScale <= 0f) continue;
+            // F98: while a floor's mission is running the repeating hint is the objective, not the door.
+            string objective = floor <= 4 ? HubMission.HintFor(floor) : null;
+            _hud.ShowSubtitle(objective != null ? objective : $"{door.wingName} · {door.roomName} · {door.levelName}", 4f);
         }
     }
 
@@ -491,7 +496,8 @@ public class AsylumHub : MonoBehaviour
         StartCoroutine(ShopWalkInRoutine(door));
     }
 
-    private bool PursuerAfterPlayer()
+    /// <summary>True while a hub pursuer is spotting, chasing or catching the player (the shop door and the dialogue panel refuse then).</summary>
+    public bool PursuerAfterPlayer()
     {
         if (life == null) return false;
         foreach (HubStalker pursuer in life.GetComponentsInChildren<HubStalker>(true))

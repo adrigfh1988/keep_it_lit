@@ -66,7 +66,7 @@ public static partial class AsylumHubBuilder
     {
         ("Look", "Look_Around"), ("Nervous", "Nervous_Look_Around"), ("Lie", "Laying_Idle"), ("SitIdle", "Sitting_Idle"),
         ("SitDisbelief", "Sitting_Disbelief"), ("Talking", "Talking"), ("StandUp", "Standing_Up"), ("StoopIdle", "Zombie_Idle"),
-        ("Walk", "Walking"),
+        ("Walk", "Walking"), ("Typing", "Typing"),
     });
 
     public static AnimatorController PursuerController() => EnsureController(PursuerControllerPath, new[]
