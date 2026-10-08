@@ -55,6 +55,8 @@ public static partial class AsylumHubBuilder
         if (life == null || life.Find(EliasMorgueName) == null) missing.Add("Life/" + EliasMorgueName);
         missing.AddRange(G4Missing(hub, life));
         missing.AddRange(G5Missing(life));
+        missing.AddRange(G6Missing(life));
+        missing.AddRange(G7Missing(life));
         return missing;
     }
 

@@ -56,7 +56,37 @@ public class HubStalker : MonoBehaviour
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetStatics() => _agentType = int.MinValue;
 
-    private void Awake() => EnsureAgent();
+    private void Awake()
+    {
+        EnsureAgent();
+        FitEyes();
+    }
+
+    /// <summary>
+    /// The red eye beads sit under the head bone. Mixamo "Standing Up" models are saved in a lying pose, so their edit-time bone frames say nothing
+    /// about where the face is: at the first activation the avatar is put in its own T-pose (controller off, Rebind) and the beads are placed
+    /// 11 cm in front of and 8.5 cm above the head joint, 4 cm either side, along the body's forward - then the controller is given back.
+    /// </summary>
+    private void FitEyes()
+    {
+        if (animator == null || !animator.isHuman) return;
+        Transform head = animator.GetBoneTransform(HumanBodyBones.Head);
+        if (head == null) return;
+        Transform left = head.Find("EyeL"), right = head.Find("EyeR");
+        if (left == null && right == null) return;
+        RuntimeAnimatorController controller = animator.runtimeAnimatorController;
+        animator.runtimeAnimatorController = null;
+        animator.Rebind();
+        animator.Update(0f);
+        Transform body = animator.transform;
+        foreach ((Transform eye, float side) in new[] { (left, -1f), (right, 1f) })
+        {
+            if (eye == null) continue;
+            eye.position = head.position + body.forward * 0.11f + body.up * 0.085f + body.right * (0.04f * side);
+        }
+        animator.runtimeAnimatorController = controller;
+        animator.Rebind();
+    }
 
     private void EnsureAgent()
     {

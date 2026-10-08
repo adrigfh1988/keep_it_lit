@@ -245,11 +245,23 @@ public class AsylumHub : MonoBehaviour
         {
             for (int i = 0; i < PatientFiles.MazeFileCount; i++) LoreArchive.MarkRead(PatientFiles.FirstId + i);
         }
-        if (!GameFlow.IsInHub) h.RememberReturn();
-        Transform desk = h.points != null ? h.points.Find("Director_Desk") : null;
-        Transform arrival = desk != null ? desk : h.mainEntrance;
-        h.StartCoroutine(h.EnterRoutine(arrival, 5));
-        return $"finale stage at {arrival.name}, files read {HubState.FilesRead}/5";
+        if (!h.CanFinale) return "the finale piece (AsylumHub/Life/Finale) is missing or incomplete";
+        h.EnterFinale();
+        return $"finale: the Director's desk, files read {HubState.FilesRead}/5";
+    }
+
+    /// <summary>F93 (E10): true when the hub can host the Director's-office finale (complete, configured, with its HubFinale piece).</summary>
+    public bool CanFinale => CanEnter && life != null && life.GetComponentInChildren<HubFinale>(true) != null && life.GetComponentInChildren<HubFinale>(true).IsComplete;
+
+    /// <summary>GameOutcome.FinaleSequence, at black: clearing floor 5 brings the player back to the Director's desk. Single use per run (GameOutcome guards).</summary>
+    public void EnterFinale()
+    {
+        if (!CanFinale) return;
+        HubState.IsFinale = true;
+        GameFlow.CurrentFloor = Mathf.Max(GameFlow.CurrentFloor, 5);
+        if (!GameFlow.IsInHub) RememberReturn();
+        Transform desk = points != null ? points.Find("Director_Desk") : null;
+        StartCoroutine(EnterRoutine(desk != null ? desk : mainEntrance, 5));
     }
 
     private void RememberReturn()
@@ -260,6 +272,8 @@ public class AsylumHub : MonoBehaviour
     }
     private IEnumerator EnterRoutine(Transform arrival, int floor)
     {
+        _overlayColor = Color.black;
+        if (_ambience != null) _ambience.Unmute();
         IsTransitioning = true;
         Leaving = false;
         // Set before the caller clears IsInIntake, so no frame is ever "neither".
@@ -295,6 +309,11 @@ public class AsylumHub : MonoBehaviour
         IsTransitioning = false;
         if (_blackoutRoot != null) _blackoutRoot.SetActive(false);
 
+        if (HubState.IsFinale)
+        {
+            if (_hud != null) _hud.ShowSubtitle("THE DIRECTOR'S OFFICE", 4f);
+            yield break;
+        }
         WingDoor next = wingDoors[Mathf.Clamp(floor, 1, wingDoors.Length) - 1];
         if (_hud != null && next != null) _hud.ShowSubtitle(ArrivalText(next, floor), 5f);
         if (_hint != null) StopCoroutine(_hint);
@@ -564,9 +583,19 @@ public class AsylumHub : MonoBehaviour
         panel.transform.SetAsLastSibling();
     }
 
+    private Color _overlayColor = Color.black;
     private void SetBlackout(float alpha)
     {
-        if (_blackout != null) _blackout.color = new Color(0f, 0f, 0f, alpha);
+        if (_blackout != null) _blackout.color = new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, alpha);
+    }
+
+    /// <summary>The finale's walk-out fades to a cold grey-white instead of black. `colour` stays until the next call.</summary>
+    public IEnumerator OverlayTo(Color colour, float alpha, float seconds)
+    {
+        EnsureBlackout();
+        _overlayColor = colour;
+        float from = _blackout != null ? _blackout.color.a : 0f;
+        yield return Fade(from, alpha, seconds);
     }
 
     private IEnumerator Fade(float from, float to, float seconds)

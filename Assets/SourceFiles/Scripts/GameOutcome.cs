@@ -215,6 +215,12 @@ public class GameOutcome : MonoBehaviour
 
         if (GameFlow.CurrentFloor >= FloorProfile.FinalFloor || _shop == null)
         {
+            // F93 (E10): the last floor ends in the Director's office when the asylum can host it; anything missing = the old plain win.
+            if (GameFlow.CurrentFloor >= FloorProfile.FinalFloor && AsylumHub.Active != null && AsylumHub.Active.CanFinale)
+            {
+                StartCoroutine(FinaleSequence());
+                return;
+            }
             Win();
             return;
         }
@@ -403,6 +409,69 @@ public class GameOutcome : MonoBehaviour
         if (group != null) group.alpha = 0f;
     }
 
+    /// <summary>The two ways out of the Director's office (F93).</summary>
+    public enum FinaleEnding { Discharged, LightsOut }
+
+    public const string DischargedText = "The main doors open on the night. The cold is real. Behind you, a light comes on in the Intake ward. Someone is making up a bed. You know who it is for.";
+    public const string LightsOutText = "You pull the switch. Every lamp in Karlheinz dies at once, and for the first time nothing moves in the dark. No footsteps. No knocking. No counting. Patient 7 is discharged. This time, nobody makes up the bed.";
+
+    /// <summary>
+    /// F93 (E10): floor 5 was cleared and the asylum can host the finale. Everything Win() does up to the end screen - the payout is read and
+    /// banked now (time left included), the hunt silenced - but the run stays "ending" (pause, dread and a second ending are held off) and
+    /// the player goes back to the Director's desk instead. The save is NOT deleted here; <see cref="CompleteFinale"/> does it when an
+    /// ending actually completes.
+    /// </summary>
+    private IEnumerator FinaleSequence()
+    {
+        IsEnding = true;
+        GameFlow.IsRunActive = false;
+        _runTime = Time.time - GameFlow.RunStartTime;
+        float secondsLeft = _escape != null ? _escape.TimeLeft : 0f;
+        _floorPayout = PlayerWallet.ComputeFloorClear(GameFlow.CurrentFloor, _collected, secondsLeft);
+        if (_contracts != null) _contracts.AppendTo(_floorPayout);
+        PlayerWallet.Deposit(_floorPayout);
+
+        EndTheHunt();
+        if (_escape != null) _escape.Stop();
+        if (_flashlight != null) { _flashlight.SetOn(false); _flashlight.InputEnabled = false; }
+        PlayerLock.Freeze(_player, true);
+
+        Canvas canvas = RuntimeUi.ResolveCanvas();
+        Image blackout = null;
+        if (canvas != null)
+        {
+            blackout = RuntimeUi.CreatePanel(canvas.transform, "Blackout", new Color(0f, 0f, 0f, 0f)).GetComponent<Image>();
+            blackout.transform.SetAsLastSibling();
+            yield return Fade(blackout, 0f, 1f, 0.6f);
+        }
+        else yield return new WaitForSeconds(0.6f);
+
+        AsylumHub hub = AsylumHub.Active;
+        if (hub != null && hub.CanFinale) hub.EnterFinale(); // makes its own black panel before its first yield
+        else
+        {
+            // The hub vanished between the check and now: fall back to the plain win, never strand the player.
+            if (blackout != null) Destroy(blackout.gameObject);
+            IsEnding = false;
+            Win();
+            yield break;
+        }
+        if (blackout != null) Destroy(blackout.gameObject);
+    }
+
+    /// <summary>One of the two endings was reached in the Director's office. Single-shot; deletes the save and shows the ending over the campaign total.</summary>
+    public void CompleteFinale(FinaleEnding ending)
+    {
+        if (IsOver) return;
+        IsOver = true;
+        IsEnding = false;
+        SaveSystem.Delete();
+        PlayerLock.Freeze(_player, true);
+        if (_flashlight != null) _flashlight.InputEnabled = false;
+        bool a = ending == FinaleEnding.Discharged;
+        ShowEndScreen(true, LoseReason.Caught, false, a ? "DISCHARGED" : "LIGHTS OUT", a ? DischargedText : LightsOutText);
+    }
+
     public void Win()
     {
         if (IsOver || IsEnding) return;
@@ -552,7 +621,7 @@ public class GameOutcome : MonoBehaviour
 
     // ---------------------------------------------------------------- end screen
 
-    private void ShowEndScreen(bool won, LoseReason reason, bool torchWasOn)
+    private void ShowEndScreen(bool won, LoseReason reason, bool torchWasOn, string titleOverride = null, string bodyOverride = null)
     {
         RuntimeUi.EnsureEventSystem();
 
@@ -570,6 +639,8 @@ public class GameOutcome : MonoBehaviour
             bool finalFloor = GameFlow.CurrentFloor >= FloorProfile.FinalFloor;
             title = finalFloor ? "YOU GOT OUT" : $"FLOOR {GameFlow.CurrentFloor} CLEARED";
             subtitle = finalFloor ? "The hatch closed behind you. There is nothing left below." : "The hatch closed behind you. It is darker down here.";
+            if (titleOverride != null) title = titleOverride;
+            if (bodyOverride != null) subtitle = bodyOverride;
         }
         else if (reason == LoseReason.Caught)
         {
@@ -603,13 +674,15 @@ public class GameOutcome : MonoBehaviour
         titleText.fontStyle = FontStyles.Bold;
         RuntimeUi.Place(titleText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -200f), new Vector2(1600f, 140f));
 
-        TextMeshProUGUI subText = RuntimeUi.CreateText(root, "Subtitle", subtitle, 36f, Grey);
-        RuntimeUi.Place(subText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -300f), new Vector2(1600f, 60f));
+        bool longBody = bodyOverride != null;
+        TextMeshProUGUI subText = RuntimeUi.CreateText(root, "Subtitle", subtitle, longBody ? 32f : 36f, Grey);
+        if (longBody) subText.textWrappingMode = TextWrappingModes.Normal;
+        RuntimeUi.Place(subText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, longBody ? -385f : -300f), new Vector2(longBody ? 1300f : 1600f, longBody ? 200f : 60f));
 
         string stats = $"FLOOR {GameFlow.CurrentFloor}     STARS {_collected} / {_total}     TIME {MazeEscape.FormatTime(_runTime)}     SEED {_seed}";
         TextMeshProUGUI statsText = RuntimeUi.CreateText(root, "Stats", stats, 32f, Grey);
         statsText.characterSpacing = 4f;
-        RuntimeUi.Place(statsText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -380f), new Vector2(1600f, 50f));
+        RuntimeUi.Place(statsText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, longBody ? -540f : -380f), new Vector2(1600f, 50f));
 
         // Second line: what this attempt paid into the campaign wallet.
         bool isFinalWin = won && GameFlow.CurrentFloor >= FloorProfile.FinalFloor;
@@ -632,7 +705,7 @@ public class GameOutcome : MonoBehaviour
         {
             TextMeshProUGUI stats2Text = RuntimeUi.CreateText(root, "Stats2", stats2, 32f, shardColor);
             stats2Text.characterSpacing = 4f;
-            RuntimeUi.Place(stats2Text.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -430f), new Vector2(1600f, 50f));
+            RuntimeUi.Place(stats2Text.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, longBody ? -590f : -430f), new Vector2(1600f, 50f));
         }
 
         // Wider than the title screen's buttons: "TRY THIS MAZE AGAIN" does not fit in 420 at 40 pt

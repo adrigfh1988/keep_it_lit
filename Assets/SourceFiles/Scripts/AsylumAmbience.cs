@@ -71,6 +71,11 @@ public class AsylumAmbience : MonoBehaviour
         _nextNoise = Mathf.Min(_nextNoise, Time.time + 6f);
     }
 
+    /// <summary>F93 (ending B): every hub sound fades out now and stays out until the next hub entry.</summary>
+    public void Mute() { _muted = true; fadeSeconds = Mathf.Min(fadeSeconds, 0.35f); }
+    private bool _muted;
+    public void Unmute() { _muted = false; }
+
     /// <summary>F93 (chase set piece): the escape track under the base music. `target` 0..1 is eased in/out.</summary>
     public void SetUrgent(AudioClip clip) { _urgentClip = clip; }
     public void SetUrgency(float target) { _urgencyTarget = Mathf.Clamp01(target); }
@@ -134,7 +139,7 @@ public class AsylumAmbience : MonoBehaviour
     private void Update()
     {
         if (!Application.isPlaying) return;
-        bool active = hub != null && hub.ContentActive && !hub.Leaving; // F92: fades out with the screen during the walk through a wing door
+        bool active = hub != null && hub.ContentActive && !hub.Leaving && !_muted; // F92: fades out with the screen during the walk through a wing door
         _fade = Mathf.MoveTowards(_fade, active ? 1f : 0f, Time.unscaledDeltaTime / Mathf.Max(0.05f, fadeSeconds));
 
         if (active && !_ready) { Init(); _nextNoise = Time.time + UnityEngine.Random.Range(8f, 20f); }
