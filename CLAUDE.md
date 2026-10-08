@@ -12,6 +12,13 @@ Not a git repository. There is no test suite and no assembly definitions under `
 
 Development happens in the Unity Editor (Rider / Visual Studio / VS Code attach via `.vscode/launch.json`). The generated `*.csproj`, `*.sln`, `Library/`, `Temp/`, `obj/` and `Logs/` are Unity-generated — do not edit them.
 
+**Drive the open Editor with the Unity CLI, never MCP** (Unity deprecated the AI Assistant package's in-Editor MCP server; don't call
+`mcp__unity-mcp__*` tools). The project has `com.unity.pipeline` (0.7.0-exp.1) and `com.unity.ai.assistant` 2.19 (≥ 2.13, so no
+conflict with the CLI). `unity status` → `ready`; `unity command eval --code '...'` / `unity command eval_file --file x.cs` (a
+statement block: no `using`, fully qualified types); `unity recompile` reports compile errors; long jobs (mass reimports, bakes,
+builds) with `--detach` + `unity job wait <id>` — a busy main thread fails the call after ~5 s while the work may still run (the
+F99 texture crunch did), so check `Logs/Editor.log` before retrying.
+
 Batch-mode compile check / build:
 
 ```

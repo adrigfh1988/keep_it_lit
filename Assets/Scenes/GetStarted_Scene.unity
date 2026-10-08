@@ -54896,7 +54896,7 @@ MonoBehaviour:
   debugStartInHub: 0
   debugStartInFinale: 0
   debugFinaleAllFiles: 0
-  superEasyMode: 1
+  superEasyMode: 0
   debugForceTouchControls: 0
   wallLamps: 1
   cellsPerLamp: 5

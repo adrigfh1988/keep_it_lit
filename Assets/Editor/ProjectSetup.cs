@@ -264,6 +264,13 @@ public static class ProjectSetup
         },
         new Piece
         {
+            Name = "Web texture budget (WebGL-only size caps + crunch on every build texture)",
+            FixMenu = "Build Missing Pieces (WebTextureBudget.Apply; the first run crunches hundreds of textures and takes a while)",
+            Problem = WebTextureBudget.Problem,
+            Build = () => WebTextureBudget.Apply()
+        },
+        new Piece
+        {
             Name = "Hunter body (Adam)",
             FixMenu = "Build > Hunter Body",
             Problem = () =>
