@@ -89,7 +89,7 @@ public static partial class AsylumHubBuilder
         Bounds clear = new Bounds(centre, new Vector3(Mathf.Abs(size.x), Mathf.Abs(size.y), Mathf.Abs(size.z)));
         foreach (Renderer r in room.GetComponentsInChildren<Renderer>(true))
         {
-            if (!r.bounds.Intersects(clear)) continue;
+            if (r == null || !r.bounds.Intersects(clear)) continue; // r is null when a parent prop went already
             Vector3 s = r.bounds.size;
             if (Mathf.Max(s.x, Mathf.Max(s.y, s.z)) > 3f) continue;
             string chain = "";
@@ -190,6 +190,7 @@ public static partial class AsylumHubBuilder
         wing.leafHingeB = hingeB;
         wing.arrivalPoint = arrival.transform;
         wing.Refresh();
+        beacon.enabled = true; // the saved prefab keeps every beacon on (Refresh switches a sealed wing off); the audit counts them
 
         // Interaction: a trigger box over the door (PlayerInteractor spherecasts for IInteractable colliders in Collide mode).
         BoxCollider trigger = root.AddComponent<BoxCollider>();

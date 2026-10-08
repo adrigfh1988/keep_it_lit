@@ -37,7 +37,7 @@ public static partial class AsylumHubBuilder
         foreach (string raw in Audit(root).Split('\n'))
         {
             string line = raw.Trim();
-            if (line.Length == 0 || line.StartsWith("Asylum audit") || line.StartsWith("bounds:") || line.StartsWith("path ") || line.EndsWith("OK")) continue;
+            if (line.Length == 0 || line.StartsWith("Asylum audit") || line.StartsWith("bounds:") || line.StartsWith("walk nodes") || line.StartsWith("path ") || line.EndsWith("OK")) continue;
             bad.Add(line);
         }
         return bad.Count == 0 ? null : string.Join("; ", bad);

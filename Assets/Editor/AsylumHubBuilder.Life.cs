@@ -81,6 +81,4 @@ public static partial class AsylumHubBuilder
         }
     }
 
-    // Phase C fills this in.
-    private static void BuildAmbienceAndDust(AsylumHub hub) { }
 }

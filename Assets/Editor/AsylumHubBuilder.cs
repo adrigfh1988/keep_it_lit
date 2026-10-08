@@ -320,7 +320,7 @@ public static partial class AsylumHubBuilder
             bool clinical = ClinicalRooms.Any(room => RoomBounds(building, room, 1.0f).Contains(l.transform.position));
             l.type = LightType.Point;
             l.color = clinical ? Clinical : Sodium;
-            l.intensity = Mathf.Max(l.intensity, 1f) * HubLightIntensity;
+            l.intensity = Mathf.Clamp(l.intensity, 1f, 1.3f) * HubLightIntensity; // the pack morgue lamp was 2.6: the tiles went neon
             l.range = Mathf.Clamp(l.range * 1.25f, HubLightRange, 12f);
             l.renderMode = LightRenderMode.Auto;
         }
@@ -349,7 +349,7 @@ public static partial class AsylumHubBuilder
     }
 
     // Tuned by eye in Play (screenshots): the pack values were baked-lightmap numbers, far too weak for realtime in a dark hub.
-    private const float HubLightIntensity = 2.2f;
+    private const float HubLightIntensity = 2.8f;
     private const float HubLightRange = 7f;
 
     /// <summary>The room a pack light belongs to: its top-level room object under a storey group, or PointLights_All.</summary>
