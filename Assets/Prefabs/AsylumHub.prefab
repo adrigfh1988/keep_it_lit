@@ -100395,7 +100395,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4288268249
   m_fontColor: {r: 0.85, g: 0.78, b: 0.6, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -100408,7 +100408,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -187640,13 +187640,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7262793802327388553}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.00000016391277, y: -0.70618933, z: 0.70802313, w: 0.00000016391277}
+  m_LocalPosition: {x: 0.00000088676416, y: 0.05599989, z: -0.0050022933}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6041970123784789593}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -269.855, y: 180, z: 0}
 --- !u!33 &6804855089303731291
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -196182,13 +196182,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7624032338695504383}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.00000002235174, y: 0.68926114, z: -0.7245131, w: -0.000000029802319}
+  m_LocalPosition: {x: -0, y: 0.046, z: -0.002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1421824506639137628}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 92.85602, y: -180, z: 0}
 --- !u!33 &6490467618468028909
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -239655,6 +239655,12 @@ MonoBehaviour:
   hubAmbient: {r: 0.035, g: 0.035, b: 0.04, a: 1}
   hubFogDensity: 0.03
   hubFogColor: {r: 0.01, g: 0.012, b: 0.02, a: 1}
+  doorOpenAngle: 95
+  doorOpenSeconds: 0.9
+  doorWalkSeconds: 1.3
+  doorStopDistance: 0.22
+  fadeInSeconds: 1.4
+  hintEverySeconds: 40
 --- !u!114 &6852729323794361623
 MonoBehaviour:
   m_ObjectHideFlags: 0
