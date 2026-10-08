@@ -51,6 +51,9 @@ namespace StarterAssets
         /// <summary>True this frame if the sprint key is held, allowed, and there is movement input.</summary>
         public bool IsSprinting { get; private set; }
 
+        /// <summary>F93: scales walk and sprint speed (the flooded hall in the asylum hub sets 0.75). 1 everywhere else.</summary>
+        public float SpeedMultiplier { get; set; } = 1f;
+
         [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
         public float Gravity = -15.0f;
 
@@ -274,7 +277,7 @@ public bool IsRespawning { get; set; } = false;
 
             // set target speed based on move speed, sprint speed and if sprint is pressed
             bool wantsSprint = _input.sprint && !SprintLocked && !MovementLocked;
-            float targetSpeed = wantsSprint ? SprintSpeed : MoveSpeed;
+            float targetSpeed = (wantsSprint ? SprintSpeed : MoveSpeed) * SpeedMultiplier;
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 

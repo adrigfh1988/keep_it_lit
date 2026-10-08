@@ -204,7 +204,18 @@ public class HubPatient : MonoBehaviour
 
     // ---------------------------------------------------------------- knocking
 
-    private int Knocks => HubState.Floor >= 4 ? 3 : 2;
+    private int _forcedKnocks;
+    private float _forcedUntil;
+    private int Knocks => Time.time < _forcedUntil ? _forcedKnocks : HubState.Floor >= 4 ? 3 : 2;
+
+    /// <summary>The flood set piece: Tomas starts a knock cycle now with `count` knocks (the next 9 s).</summary>
+    public void KnockNow(int count)
+    {
+        _forcedKnocks = count;
+        _forcedUntil = Time.time + 9f;
+        _clock = 0.35f;
+        _lastPulse = -1;
+    }
     private const float KnockStart = 1.2f, KnockGap = 0.5f, KnockLen = 0.2f;
 
     private void TickKnock()

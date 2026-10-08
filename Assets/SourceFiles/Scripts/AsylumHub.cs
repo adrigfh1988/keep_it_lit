@@ -475,6 +475,9 @@ public class AsylumHub : MonoBehaviour
     /// <summary>Moves the player without touching the view (rides, scripted carries).</summary>
     public void MovePlayerTo(Vector3 position) => MovePlayer(position);
 
+    /// <summary>A set piece is moving the player by script (the lift ride): pausing and catches are held off until it is switched off again.</summary>
+    public void SetScripted(bool on) { IsTransitioning = on; }
+
     public void SubtitleLine(string text, float seconds) { if (_hud != null) _hud.ShowSubtitle(text, seconds); }
 
     /// <summary>Fades the story blackout to `alpha` over `seconds` (unscaled). Used by set pieces for hard cuts.</summary>

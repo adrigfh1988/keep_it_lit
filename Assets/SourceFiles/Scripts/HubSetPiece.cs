@@ -15,13 +15,13 @@ public abstract class HubSetPiece : MonoBehaviour
 
     protected AsylumHub Hub => AsylumHub.Active;
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         AsylumHub.OnEnterHub += HandleEnter;
         AsylumHub.OnLeaveHub += HandleLeave;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         AsylumHub.OnEnterHub -= HandleEnter;
         AsylumHub.OnLeaveHub -= HandleLeave;
@@ -31,6 +31,7 @@ public abstract class HubSetPiece : MonoBehaviour
     private void HandleEnter(int enteredFloor)
     {
         Stop();
+        OnAnyEnter(enteredFloor);
         if (HubState.IsFinale || enteredFloor != floor || HubState.Floor != floor) return;
         Running = true;
         OnBegin();
@@ -44,6 +45,9 @@ public abstract class HubSetPiece : MonoBehaviour
         Running = false;
         OnEnd();
     }
+
+    /// <summary>The hub was entered, for any floor (and the finale): pieces with a look that depends on the floor set it here.</summary>
+    protected virtual void OnAnyEnter(int enteredFloor) { }
 
     /// <summary>The hub was entered for this piece's floor.</summary>
     protected abstract void OnBegin();

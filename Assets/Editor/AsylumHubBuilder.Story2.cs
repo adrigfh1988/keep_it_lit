@@ -138,6 +138,7 @@ public static partial class AsylumHubBuilder
 
         Transform echoRoute = life.Find("EchoRoute") ?? BuildEchoRoute(hub, life, report);
         if (life.Find("StanEcho") == null && echoRoute != null) BuildStanEcho(hub, life, echoRoute, report);
+        AddG5(hub, life, pursuerT, report);
     }
 
     // ---- the pursuer

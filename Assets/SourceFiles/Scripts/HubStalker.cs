@@ -31,6 +31,9 @@ public class HubStalker : MonoBehaviour
     public float chaseMultiplier = 1.15f;
     public float screamSeconds = 1.5f;
 
+    [Tooltip("The chase never loses track of the player (the floor-4 stair chase); a hidden player still breaks it.")]
+    public bool relentless;
+
     public Mode CurrentMode { get; private set; } = Mode.Idle;
     public int Catches { get; private set; }
     public bool IsActive => gameObject.activeInHierarchy && CurrentMode != Mode.Idle;
@@ -157,6 +160,9 @@ public class HubStalker : MonoBehaviour
 
     public void ResetCatches() => Catches = 0;
 
+    /// <summary>Goes straight to the scream and the chase (a set piece wants it on the player now).</summary>
+    public void ForceChase() { EnsureAgent(); if (_agent.isOnNavMesh) Spot(); }
+
     private void GoPatrol()
     {
         CurrentMode = Mode.Patrol;
@@ -241,7 +247,8 @@ public class HubStalker : MonoBehaviour
 
             case Mode.Chase:
                 _agent.speed = PlayerWalkSpeed * chaseMultiplier * (Catches >= 2 ? 0.85f : 1f);
-                bool sees = CanSee() || CanHear();
+                bool hiddenNow = hub.Stealth != null && hub.Stealth.Hidden;
+                bool sees = relentless ? !hiddenNow : CanSee() || CanHear();
                 if (sees)
                 {
                     _lastSeen = Time.time;
