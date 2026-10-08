@@ -100,7 +100,8 @@ public class PauseMenu : MonoBehaviour
     private bool CanPause()
     {
         // The shop is a third phase (decision 5): not a run, but pausing still works there.
-        if (!GameFlow.IsRunActive && !GameFlow.IsInShop && !GameFlow.IsInIntake) return false;
+        if (!GameFlow.IsRunActive && !GameFlow.IsInShop && !GameFlow.IsInIntake && !GameFlow.IsInHub) return false;
+        if (AsylumHub.Active != null && AsylumHub.Active.IsTransitioning) return false; // F92: not mid arrival or mid walk through a wing door
         if (_menu != null && _menu.IsOpen) return false;
         if (GameOutcome.IsOver) return false;
         if (_outcome != null && _outcome.IsEnding) return false;
@@ -122,7 +123,7 @@ public class PauseMenu : MonoBehaviour
 
         if (_panel == null) BuildPanel();
         // Replaying a cleared floor from the shop would re-earn its payout (decision 4c).
-        if (_restartButton != null) _restartButton.gameObject.SetActive(!GameFlow.IsInShop && !GameFlow.IsInIntake);
+        if (_restartButton != null) _restartButton.gameObject.SetActive(!GameFlow.IsInShop && !GameFlow.IsInIntake && !GameFlow.IsInHub); // F92: no replaying a floor from the hospital either
         // F86: only the Intake offers a way out of itself.
         if (_skipButton != null) _skipButton.gameObject.SetActive(GameFlow.IsInIntake);
         _panel.SetActive(true);

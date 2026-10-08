@@ -282,7 +282,13 @@ public class PlayerHud : MonoBehaviour
     private void Update()
     {
         // F86: the Intake is not a floor - hide the "FLOOR n" label (the TORCH bar stays, it is taught there).
-        if (_floorText != null) _floorText.gameObject.SetActive(!GameFlow.IsInIntake);
+        if (_floorText != null)
+        {
+            _floorText.gameObject.SetActive(!GameFlow.IsInIntake);
+            // F92: the hospital between mazes is not a floor.
+            string floorLabel = GameFlow.IsInHub ? "ASYLUM" : $"FLOOR {GameFlow.CurrentFloor}";
+            if (_floorText.text != floorLabel) _floorText.text = floorLabel;
+        }
         UpdateBattery();
         UpdateStamina();
         UpdateShardCounter();
@@ -301,7 +307,7 @@ public class PlayerHud : MonoBehaviour
         _slot1Text.gameObject.SetActive(!inShop);
         _slot2Text.gameObject.SetActive(!inShop);
         if (_secondWindText != null) _secondWindText.gameObject.SetActive(!inShop && secondWindHeld);
-        if (_throwText != null && GameFlow.IsInShop) _throwText.gameObject.SetActive(false);
+        if (_throwText != null && (GameFlow.IsInShop || GameFlow.IsInHub)) _throwText.gameObject.SetActive(false);
         if (GameFlow.IsInIntake)
         {
             if (_throwText != null)

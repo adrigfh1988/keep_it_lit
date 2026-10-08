@@ -195,7 +195,7 @@ public static class SaveSystem
         CopyRolledObjectives(d);
         GameFlow.ResumeInShop = d.inShop;
 
-        GameFlow.Restart(false, 0);
+        GameFlow.Restart(false, 0, !d.inShop); // F92: a floor-start save opens the floor in the Asylum hub (when the scene has one)
         return true;
     }
 

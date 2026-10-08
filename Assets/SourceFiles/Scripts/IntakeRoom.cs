@@ -289,8 +289,11 @@ public class IntakeRoom : MonoBehaviour
         if (viaHatch) yield return HatchWalkIn();
         else yield return Fade(0f, 1f, 0.5f);
 
-        // At black: back to the maze's start cell, torch full and on exactly as floor 1 always begins.
-        TeleportPlayer(_returnPosition, _returnYaw);
+        // F92: with a usable Asylum hub the player is handed over to it (it teleports, unfreezes and fades in on its own black);
+        // without one this is exactly the old path. At black: back to the maze start cell, torch full and on exactly as floor 1 always begins.
+        AsylumHub hub = AsylumHub.Active;
+        bool toHub = hub != null && hub.CanEnter;
+        if (!toHub) TeleportPlayer(_returnPosition, _returnYaw);
         SetCameraHeight(_cameraBaseLocalY);
         if (_throw != null) _throw.ClearCarried();
         if (_flashlight != null)
@@ -304,13 +307,21 @@ public class IntakeRoom : MonoBehaviour
         if (_uiRoot != null) _uiRoot.SetActive(false);
         if (bedBlocker != null) bedBlocker.enabled = true;
 
-        GameFlow.IsInIntake = false;
-        if (_controller != null) _controller.MovementLocked = false;
-        PlayerLock.Freeze(_player, false);
-        PlayerLock.SetCursorFree(false);
-        GameFlow.BeginRun(); // FloorIntroBanner, the hunter, the dread directors and the bed music all wake on this
+        if (toHub)
+        {
+            hub.EnterFromIntake(_returnPosition, _returnYaw); // sets GameFlow.IsInHub before IsInIntake clears: never a frame of neither
+            GameFlow.IsInIntake = false;
+        }
+        else
+        {
+            GameFlow.IsInIntake = false;
+            if (_controller != null) _controller.MovementLocked = false;
+            PlayerLock.Freeze(_player, false);
+            PlayerLock.SetCursorFree(false);
+            GameFlow.BeginRun(); // FloorIntroBanner, the hunter, the dread directors and the bed music all wake on this
 
-        yield return Fade(1f, 0f, 0.7f);
+            yield return Fade(1f, 0f, 0.7f);
+        }
         if (_uiRoot != null) Destroy(_uiRoot);
         if (Active == this) Active = null;
         _running = false;

@@ -4719,6 +4719,20 @@ public class MazeGenerator : MonoBehaviour
         }
         if (intake != null) intake.Configure(player, camera, hud, flashlight, stealth, interactor, throwController, loreReader, PickBaseMusic(), panicClip);
 
+        // F92: the Asylum hub - the hospital the player walks through between mazes (Assets/Prefabs/AsylumHub.prefab; LIGHTS OUT > Check
+        // Project). Without it, or with an incomplete one, the Intake and the shop door hand straight over to the maze as they always did.
+        AsylumHub asylum = FindAnyObjectByType<AsylumHub>(FindObjectsInactive.Include);
+        if (asylum != null && !asylum.IsComplete)
+        {
+            Debug.LogError("MazeGenerator: the AsylumHub in the scene is incomplete, so the run skips the asylum. Run LIGHTS OUT > Build Missing Pieces in the Editor (or fix Assets/Prefabs/AsylumHub.prefab), then save the scene.", asylum);
+            asylum = null;
+        }
+        else if (asylum == null && mainMenu)
+        {
+            Debug.LogError("MazeGenerator: there is no AsylumHub in the scene, so the run goes straight from the Intake and the shop into the mazes. Run LIGHTS OUT > Build Missing Pieces in the Editor (it places Assets/Prefabs/AsylumHub.prefab), then save the scene.", this);
+        }
+        if (asylum != null) asylum.Configure(player, camera, hud, flashlight, PickBaseMusic());
+
         MazeEscape escape = null;
         if (escapeSequence)
         {

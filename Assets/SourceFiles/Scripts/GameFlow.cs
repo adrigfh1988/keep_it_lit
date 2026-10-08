@@ -36,8 +36,16 @@ public static class GameFlow
     /// </summary>
     public static bool IsInIntake;
 
-    /// <summary>F86: a safe room that is not a run - the HUD star counter, shard counter and consumable slots stay hidden. Readers that must stay ON in the Intake test IsInIntake explicitly instead.</summary>
-    public static bool IsInSafeRoom => IsInShop || IsInIntake;
+    /// <summary>
+    /// F92: true while the player is in the Asylum hub (the hospital between mazes). Like the shop and the Intake it is not a run
+    /// (IsRunActive stays false, so the hunter, dread, phantoms, Stan and the escape timer are inert), but unlike the shop the
+    /// interactor works - the wing doors need it. Set by AsylumHub, cleared when the wing door hands over to the maze; reset in
+    /// Reload (every way out goes through it), ResetStatics and ReturnToMenu.
+    /// </summary>
+    public static bool IsInHub;
+
+    /// <summary>F86: a safe room that is not a run - the HUD star counter, shard counter and consumable slots stay hidden. Readers that must stay ON in the Intake test IsInIntake explicitly instead. F92: the hub is one too.</summary>
+    public static bool IsInSafeRoom => IsInShop || IsInIntake || IsInHub;
 
     /// <summary>F86: PlayerPrefs flag set once the Intake has been finished or skipped. Only changes wording ("Welcome back"); the Intake is still offered every new campaign.</summary>
     public const string TutorialDoneKey = "lightsout.tutorial.done";
@@ -71,9 +79,13 @@ public static class GameFlow
     /// SkipMenuOnLoad), which enters the shop via GameOutcome.EnterShopDirectly instead of starting a run. Reset here, in ResetStatics and in ReturnToMenu.</summary>
     public static bool ResumeInShop;
 
-    public static void Restart(bool sameMaze, int currentSeed)
+    /// <summary>F92: set by NextFloor and by CONTINUE from a floor-start save; consumed by MainMenu.Start, which then opens the floor in the Asylum hub (when the scene has a usable one) instead of starting the run. Retry, Restart and START NEW MAZE clear it. Reset here, in ResetStatics and in ReturnToMenu.</summary>
+    public static bool ArriveInHub;
+
+    public static void Restart(bool sameMaze, int currentSeed, bool viaHub = false)
     {
         SkipMenuOnLoad = true;
+        ArriveInHub = viaHub;
         PendingSeed = sameMaze ? currentSeed : 0;
         Reload();
     }
@@ -92,7 +104,7 @@ public static class GameFlow
         PlayerInventory.AdvanceFloor();
         // F83: floor-start checkpoint, after AdvanceFloor so ActiveModifiers are the perks for the floor being started.
         SaveSystem.WriteCheckpoint(CurrentFloor, false);
-        Restart(false, 0);
+        Restart(false, 0, true); // F92: the new floor opens in the Asylum hub when the scene has one
     }
 
     public static void ReturnToMenu()
@@ -102,6 +114,7 @@ public static class GameFlow
         PendingSeed = 0;
         UseKitMaze = false;
         ResumeInShop = false;
+        ArriveInHub = false;
         // F83: deliberately does NOT delete the save - that is what puts CONTINUE on the title screen.
         PlayerWallet.ResetCampaign();
         PlayerInventory.ResetCampaign();
@@ -130,6 +143,7 @@ public static class GameFlow
         IsRunActive = false;
         IsInShop = false;
         IsInIntake = false;
+        IsInHub = false;
         // Restart can be called from the pause menu with both engaged. MainMenu.Awake zeroes the
         // clock again in the new scene anyway.
         Time.timeScale = 1f;
@@ -149,8 +163,10 @@ public static class GameFlow
         CurrentFloor = 1;
         IsInShop = false;
         IsInIntake = false;
+        IsInHub = false;
         UseKitMaze = false;
         ResumeInShop = false;
+        ArriveInHub = false;
         System.Array.Clear(RolledObjectives, 0, RolledObjectives.Length);
     }
 }

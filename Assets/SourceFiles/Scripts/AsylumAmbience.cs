@@ -117,7 +117,7 @@ public class AsylumAmbience : MonoBehaviour
     private void Update()
     {
         if (!Application.isPlaying) return;
-        bool active = hub != null && hub.ContentActive;
+        bool active = hub != null && hub.ContentActive && !hub.Leaving; // F92: fades out with the screen during the walk through a wing door
         _fade = Mathf.MoveTowards(_fade, active ? 1f : 0f, Time.unscaledDeltaTime / Mathf.Max(0.05f, fadeSeconds));
 
         if (active && !_ready) { Init(); _nextNoise = Time.time + UnityEngine.Random.Range(8f, 20f); }

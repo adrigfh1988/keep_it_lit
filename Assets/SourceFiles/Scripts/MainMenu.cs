@@ -102,6 +102,18 @@ public class MainMenu : MonoBehaviour
                 return;
             }
 
+            // F92: the next floor (the shop door, or CONTINUE from a floor-start save) opens in the Asylum hub when the scene has a
+            // usable one; Retry / Restart / START NEW MAZE never set this flag. With no hub it is the plain StartGame it always was.
+            bool viaHub = GameFlow.ArriveInHub;
+            GameFlow.ArriveInHub = false;
+            AsylumHub hub = AsylumHub.Active;
+            if (viaHub && hub != null && hub.CanEnter)
+            {
+                CloseMenus();
+                hub.EnterFromMenu();
+                return;
+            }
+
             StartGame();
             return;
         }
