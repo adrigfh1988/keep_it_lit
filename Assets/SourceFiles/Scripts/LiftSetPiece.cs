@@ -27,11 +27,14 @@ public class LiftSetPiece : HubSetPiece
     [SerializeField] private LiftPoint pryPoint;
 
     [Header("Tuning")]
-    [SerializeField] private float doorSlide = 1.3f;
+    [Tooltip("How much of a shaft door's width is left showing at the frame edge once it is open (it retracts into the side of the frame).")]
+    [SerializeField, Range(0.02f, 1f)] private float doorRetracted = 0.06f;
     [SerializeField] private float jamDepth = 1.5f;
 
     private Vector3 _redStart;
     private Vector3 _carStart, _groundDoorStart, _basementDoorStart;
+    private Vector3 _groundDoorScale, _basementDoorScale;
+    private float _groundDoorWidth, _basementDoorWidth;
     private Vector3[] _partStart;
     private bool _captured;
     private bool _riding, _arrived, _pryReady;
@@ -99,6 +102,10 @@ public class LiftSetPiece : HubSetPiece
         _redStart = redLight != null ? redLight.transform.position : Vector3.zero;
         _groundDoorStart = groundDoor != null ? groundDoor.position : Vector3.zero;
         _basementDoorStart = basementDoor != null ? basementDoor.position : Vector3.zero;
+        _groundDoorScale = groundDoor != null ? groundDoor.localScale : Vector3.one;
+        _basementDoorScale = basementDoor != null ? basementDoor.localScale : Vector3.one;
+        _groundDoorWidth = DoorWidth(groundDoor);
+        _basementDoorWidth = DoorWidth(basementDoor);
         _partStart = new Vector3[carParts.Length];
         for (int i = 0; i < carParts.Length; i++) _partStart[i] = carParts[i] != null ? carParts[i].position : Vector3.zero;
     }
@@ -133,8 +140,8 @@ public class LiftSetPiece : HubSetPiece
             if (car != null) car.position = _carStart;
             if (redLight != null) redLight.transform.position = _redStart;
             for (int i = 0; i < carParts.Length; i++) if (carParts[i] != null) carParts[i].position = _partStart[i];
-            if (groundDoor != null) groundDoor.position = _groundDoorStart;
-            if (basementDoor != null) basementDoor.position = _basementDoorStart;
+            if (groundDoor != null) { groundDoor.position = _groundDoorStart; groundDoor.localScale = _groundDoorScale; }
+            if (basementDoor != null) { basementDoor.position = _basementDoorStart; basementDoor.localScale = _basementDoorScale; }
         }
         if (redLight != null) redLight.enabled = false;
         foreach (Transform part in carParts) { Renderer pr = part != null ? part.GetComponent<Renderer>() : null; if (pr != null) pr.SetPropertyBlock(null); }
@@ -187,20 +194,45 @@ public class LiftSetPiece : HubSetPiece
 
     // ---------------------------------------------------------------- the ride
 
+    /// <summary>
+    /// A shaft door is one 2.3 m panel: sliding it sideways left most of the opening covered (and a plaster wall right behind the gap),
+    /// so it read as shut. It retracts into the side of the frame instead - squeezed along its width toward its +right edge, which stays put -
+    /// until only <see cref="doorRetracted"/> of it shows, and the whole opening is clear.
+    /// </summary>
     private IEnumerator SlideDoor(Transform door, Vector3 closedPos, bool open, float seconds)
     {
         EnsureAudio();
         _audio.PlayOneShot(_grind, 0.6f);
-        Vector3 from = door.position;
-        Vector3 to = open ? closedPos + door.right * doorSlide : closedPos;
+        bool ground = door == groundDoor;
+        Vector3 closedScale = ground ? _groundDoorScale : _basementDoorScale;
+        float width = ground ? _groundDoorWidth : _basementDoorWidth;
+        float from = closedScale.x != 0f ? door.localScale.x / closedScale.x : 1f;
+        float to = open ? doorRetracted : 1f;
         float t = 0f;
         while (t < seconds)
         {
             t += Time.deltaTime;
-            door.position = Vector3.Lerp(from, to, Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t / seconds)));
+            SetDoorOpening(door, closedPos, closedScale, width, Mathf.Lerp(from, to, Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t / seconds))));
             yield return null;
         }
-        door.position = to;
+        SetDoorOpening(door, closedPos, closedScale, width, to);
+    }
+
+    /// <summary>`fraction` of the door's width left (1 = shut), kept against its +right edge.</summary>
+    private static void SetDoorOpening(Transform door, Vector3 closedPos, Vector3 closedScale, float width, float fraction)
+    {
+        door.localScale = new Vector3(closedScale.x * fraction, closedScale.y, closedScale.z);
+        door.position = closedPos + door.right * (width * 0.5f * (1f - fraction));
+    }
+
+    /// <summary>The door panel's world width along its own right axis, measured shut (at Capture).</summary>
+    private static float DoorWidth(Transform door)
+    {
+        if (door == null) return 0f;
+        Renderer r = door.GetComponentInChildren<Renderer>();
+        if (r == null) return 2.3f;
+        Vector3 size = r.bounds.size, right = door.right;
+        return Mathf.Abs(right.x) * size.x + Mathf.Abs(right.y) * size.y + Mathf.Abs(right.z) * size.z;
     }
 
     private void LockPlayer(bool on)
@@ -342,15 +374,34 @@ public class LiftSetPiece : HubSetPiece
         LockPlayer(true);
         hub.SetScripted(true);
         Vector3 from = hub.Player.position;
-        Vector3 to = new Vector3(_carStart.x, from.y, basementDoor.position.z - 1.7f);
+        Vector3 to = new Vector3(_carStart.x, from.y, _basementDoorStart.z - 1.7f);
+        // The corridor wall is ~2 m beyond the doors and looks like a shut door under the torch: as they step out, turn them down the
+        // corridor (the longer open side along the doors) instead of leaving them facing that wall.
+        Vector3 along = basementDoor.right;
+        along.y = 0f;
+        along.Normalize();
+        Vector3 eye = to + Vector3.up * 1.5f;
+        float plus = Physics.Raycast(eye, along, out RaycastHit hitPlus, 30f, ~0, QueryTriggerInteraction.Ignore) ? hitPlus.distance : 30f;
+        float minus = Physics.Raycast(eye, -along, out RaycastHit hitMinus, 30f, ~0, QueryTriggerInteraction.Ignore) ? hitMinus.distance : 30f;
+        Vector3 lookAt = eye + (plus >= minus ? along : -along) * 4f;
         float t = 0f;
         while (t < 1.5f)
         {
             t += Time.deltaTime;
-            hub.MovePlayerTo(Vector3.Lerp(from, to, Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t / 1.5f))));
+            float k = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t / 1.5f));
+            hub.MovePlayerTo(Vector3.Lerp(from, to, k));
+            if (k > 0.45f && hub.Controller != null) hub.Controller.LookAt(lookAt, 1f - Mathf.Exp(-5f * Time.deltaTime)); // once past the doors
             yield return null;
         }
         hub.MovePlayerTo(to);
+        // Finish the turn so they are free to walk on facing the corridor.
+        t = 0f;
+        while (t < 0.6f && hub.Controller != null)
+        {
+            t += Time.deltaTime;
+            hub.Controller.LookAt(lookAt, 1f - Mathf.Exp(-8f * Time.deltaTime));
+            yield return null;
+        }
     }
 
     private bool _panic;

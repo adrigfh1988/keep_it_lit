@@ -435,8 +435,7 @@ public class AsylumHub : MonoBehaviour
         Vector3 stop = doorway - into * Mathf.Max(doorStopDistance, 0.3f); // the camera near plane is 0.2 m: stay far enough back for the door void to be in front of it
         Vector3 Look(Vector3 from) => from + into * 4f + Vector3.up * 1.4f;
 
-        DoorAudio.Note("wing door clunk");
-        AudioSource.PlayClipAtPoint(DoorAudio.BuildCreakClip(1.0f, 170f, 2), doorway, 0.8f); // a hinge creaking open, not a hit
+        // Silent on purpose: the synthesized hinge creak that used to play here read as a weird noise on every way into a maze.
 
         // The leaves open away from the player, so a leaf never sweeps through them.
         Quaternion[] closed = new Quaternion[hinges.Length];

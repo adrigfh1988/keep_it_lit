@@ -19015,7 +19015,6 @@ MonoBehaviour:
   doorOpenAngle: 100
   doorOpenSeconds: 0.8
   doorWalkSeconds: 1.1
-  doorWalkDepth: 1.6
   headTurnSpeed: 40
   headYawLimit: 70
   humVolume: 0.22
@@ -54894,6 +54893,10 @@ MonoBehaviour:
   lockerTint: {r: 0.16, g: 0.17, b: 0.19, a: 1}
   debugShards: 0
   debugStartInShop: 0
+  debugStartInHub: 0
+  debugStartInFinale: 0
+  debugFinaleAllFiles: 0
+  superEasyMode: 1
   debugForceTouchControls: 0
   wallLamps: 1
   cellsPerLamp: 5
@@ -105913,6 +105916,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1732405700174511208, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.4700027
+      objectReference: {fileID: 0}
     - target: {fileID: 2172988053986730172, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 100
@@ -105977,6 +105984,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 1008417483836128056, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 1639609378369276916, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 6351388538048260538, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}

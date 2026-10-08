@@ -28,6 +28,8 @@ public class AsylumAmbience : MonoBehaviour
     [Header("Levels")]
     [SerializeField, Range(0f, 0.3f)] private float toneVolume = 0.05f;
     [SerializeField, Range(0f, 0.3f)] private float musicVolume = 0.08f;
+    [Tooltip("The escape track under a set piece (the lift jam, the floor-4 chase). 0.3 was barely audible in play.")]
+    [SerializeField, Range(0f, 1f)] private float urgentVolume = 0.8f;
     [SerializeField] private float fadeSeconds = 1.2f;
     [SerializeField] private Vector2 secondsBetweenNoises = new Vector2(25f, 60f);
 
@@ -154,7 +156,7 @@ public class AsylumAmbience : MonoBehaviour
         {
             if (_urgentSource == null) { _urgentSource = gameObject.AddComponent<AudioSource>(); _urgentSource.playOnAwake = false; _urgentSource.loop = true; _urgentSource.spatialBlend = 0f; }
             _urgentSource.clip = _urgentClip;
-            _urgentSource.volume = 0.3f * _urgency * _fade;
+            _urgentSource.volume = urgentVolume * _urgency * _fade;
             SetPlaying(_urgentSource, _urgency > 0.001f && _fade > 0.001f);
         }
         SetPlaying(_toneSource, _fade > 0.001f);
@@ -164,6 +166,13 @@ public class AsylumAmbience : MonoBehaviour
         {
             if (e.source == null || !e.source.gameObject.activeInHierarchy) continue;
             if (active && !e.source.isPlaying) e.source.Play();
+        }
+
+        // Leaving the hub (a wing door, the shop): footsteps still walking overhead must not follow the player into the maze.
+        if (!active && _stepWalkers.Count > 0)
+        {
+            foreach (GameObject g in _stepWalkers) if (g != null) Destroy(g);
+            _stepWalkers.Clear();
         }
 
         if (active && Time.time >= _nextNoise && soundPoints != null && soundPoints.Length > 0)

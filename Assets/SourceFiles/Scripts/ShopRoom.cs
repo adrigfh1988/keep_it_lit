@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using StarterAssets;
 using TMPro;
 using UnityEngine;
@@ -42,10 +43,8 @@ public class ShopRoom : MonoBehaviour
     [SerializeField] private float doorOpenAngle = 100f;
     [Tooltip("Seconds for the leaf to swing open, while the player steps up to the doorway")]
     [SerializeField] private float doorOpenSeconds = 0.8f;
-    [Tooltip("Seconds to walk through the doorway into the dark; the fade to black runs over this")]
+    [Tooltip("Seconds to walk up to the doorway; the fade to black runs over this")]
     [SerializeField] private float doorWalkSeconds = 1.1f;
-    [Tooltip("How far past the doorway the walk ends")]
-    [SerializeField] private float doorWalkDepth = 1.6f;
 
     [Header("Salesman")]
     [Tooltip("Degrees per second the head turns to track the player")]
@@ -267,8 +266,37 @@ public class ShopRoom : MonoBehaviour
         Vector3 doorway = new Vector3(_doorwayCentre.x, y, _doorwayCentre.z);
         Vector3 start = _player.position;
         Vector3 threshold = doorway - outward * 0.6f;
-        Vector3 beyond = doorway + outward * doorWalkDepth;
+        // Like the asylum's doors: stop just short of the doorway (the camera near plane is 0.2 m) and be black by then. Walking on through
+        // it went out of the room into empty space - the floor's grey fog, "a grey wall".
+        Vector3 stop = doorway - outward * 0.3f;
         Vector3 Look(Vector3 from) => from + outward * 4f + Vector3.up * 1.4f;
+
+        // Nothing is built outside the room: for the walk-out, empty space is black (sky and fog), restored before the hand-over.
+        Camera view = Camera.main;
+        CameraClearFlags clearFlags = view != null ? view.clearFlags : CameraClearFlags.Skybox;
+        Color background = view != null ? view.backgroundColor : Color.black;
+        Color fogColor = RenderSettings.fogColor;
+        if (view != null) { view.clearFlags = CameraClearFlags.SolidColor; view.backgroundColor = Color.black; }
+        RenderSettings.fogColor = Color.black;
+        // The room's Backdrop (the grey panels that close it off from outside) has one right behind the door: that is the "grey wall"
+        // the open door showed. Hidden for the walk-out, so the doorway is dark like every other door.
+        List<Renderer> hidden = new List<Renderer>();
+        Transform backdrop = transform.Find("Backdrop");
+        if (backdrop != null)
+        {
+            foreach (Renderer r in backdrop.GetComponentsInChildren<Renderer>())
+            {
+                if (!r.enabled || Vector3.Dot(r.bounds.center - _doorwayCentre, outward) <= 0.05f || r.bounds.SqrDistance(_doorwayCentre) > 1.5f * 1.5f) continue;
+                r.enabled = false;
+                hidden.Add(r);
+            }
+        }
+        void RestoreView()
+        {
+            if (view != null) { view.clearFlags = clearFlags; view.backgroundColor = background; }
+            RenderSettings.fogColor = fogColor;
+            foreach (Renderer r in hidden) if (r != null) r.enabled = true;
+        }
 
         AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.35f, 60f, 0.5f), _doorwayCentre, 0.8f);
         // Whichever way the swing carries the leaf's centre out of the room.
@@ -280,7 +308,7 @@ public class ShopRoom : MonoBehaviour
         float t = 0f;
         while (t < doorOpenSeconds)
         {
-            if (GameOutcome.IsOver) yield break;
+            if (GameOutcome.IsOver) { RestoreView(); yield break; }
 
             t += Time.deltaTime;
             float k = Mathf.SmoothStep(0f, 1f, t / doorOpenSeconds);
@@ -300,19 +328,21 @@ public class ShopRoom : MonoBehaviour
         t = 0f;
         while (t < doorWalkSeconds)
         {
-            if (GameOutcome.IsOver) yield break;
+            if (GameOutcome.IsOver) { RestoreView(); yield break; }
 
             t += Time.deltaTime;
             float k = Mathf.Clamp01(t / doorWalkSeconds);
             // Starts at walking pace, no ease-in: it continues the step-up without a stop at the threshold.
-            MovePlayer(characterController, Vector3.Lerp(threshold, beyond, 1f - (1f - k) * (1f - k)));
+            MovePlayer(characterController, Vector3.Lerp(threshold, stop, 1f - (1f - k) * (1f - k)));
             if (controller != null) controller.LookAt(Look(_player.position), 1f - Mathf.Exp(-8f * Time.deltaTime));
-            float fade = Mathf.Clamp01((k - 0.25f) / 0.75f);
+            float fade = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01((k - 0.1f) / 0.9f));
             if (blackout != null) blackout.color = new Color(0f, 0f, 0f, fade);
             if (_hum != null) _hum.volume = humStart * (1f - fade);
             yield return null;
         }
+        if (blackout != null) blackout.color = Color.black;
 
+        RestoreView();
         if (_hum != null) _hum.Stop();
         if (LeaveToHub(blackout)) yield break;
         GameFlow.NextFloor();
