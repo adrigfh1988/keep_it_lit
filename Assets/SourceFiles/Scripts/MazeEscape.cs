@@ -414,6 +414,10 @@ public class MazeEscape : MonoBehaviour
 
     private Vector3 ChooseHatchCell()
     {
+        // Debug (MazeGenerator.superEasyMode): the stars are packed round the start, so the hatch opens in the start cell itself -
+        // a step or two from wherever the last star was (never in a star cell, so never underfoot).
+        if (_maze.SuperEasyMode) return _maze.CellCenter(0, 0);
+
         var cells = _maze.CellCenters;
         var candidates = new System.Collections.Generic.List<Vector3>();
 

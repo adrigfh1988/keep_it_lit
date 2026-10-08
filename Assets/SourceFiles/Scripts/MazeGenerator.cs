@@ -118,6 +118,14 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField] private int debugShards = 0;
     [Tooltip("For testing: skip the title screen and open the floor as if the hatch had just been reached.")]
     [SerializeField] private bool debugStartInShop = false;
+    [Tooltip("For testing the Asylum hub: skip the title screen and the Intake and arrive in the hub as if the previous floor had just been cleared - the wings before Debug Floor are CLEARED, its wing is OPEN (and leads to that floor's maze), the hub has that floor's decay, patients and set piece. Debug Floor 0 = floor 1, at the front door. Fresh start only; ignored while Debug Start In Shop is on.")]
+    [SerializeField] private bool debugStartInHub = false;
+    [Tooltip("For testing the ending: skip the title screen and the Intake and arrive at the Director's desk in the hub, as if floor 5 had just been cleared (the finale). Takes priority over Debug Start In Hub; ignored while Debug Start In Shop is on. Fresh start only.")]
+    [SerializeField] private bool debugStartInFinale = false;
+    [Tooltip("With Debug Start In Finale: mark the five maze case files read first, so file 105 is in the desk drawer and ending B (the master switch) is possible. Off = ending A only.")]
+    [SerializeField] private bool debugFinaleAllFiles = true;
+    [Tooltip("For testing / getting through floors fast: every star, key, fuse box and the floor's case file go in the cells nearest the start, the hatch opens next to the player, and no shutters, security doors or vaults are built. The hunter still starts in the farthest cell.")]
+    [SerializeField] private bool superEasyMode = false;
     [Tooltip("F76: forces TouchInput.Active on regardless of Mode, so the on-screen controls show in the Editor without a touchscreen - click them with the mouse, or use the Device Simulator.")]
     [SerializeField] private bool debugForceTouchControls = false;
 
@@ -276,6 +284,8 @@ public class MazeGenerator : MonoBehaviour
 
     /// <summary>World size of one cell (F71: DreadDirector uses this to keep a kill-wave away from a star).</summary>
     public float CellSize => cellSize;
+    /// <summary>Debug: everything to collect is packed next to the start (see the Inspector tooltip). MazeEscape reads it to open the hatch next to the player.</summary>
+    public bool SuperEasyMode => superEasyMode;
 
     private float FloorTop => origin.y + 0.02f;
 
@@ -309,6 +319,20 @@ public class MazeGenerator : MonoBehaviour
 
         // Debug affordance: skip the title screen so a shop iteration does not cost a full floor.
         if (debugStartInShop) GameFlow.SkipMenuOnLoad = true;
+        // Same for the hub: MainMenu.Start takes the ArriveInHub path (the one NextFloor uses) and AsylumHub.EnterFromMenu reads
+        // GameFlow.CurrentFloor, which ApplyFloorProfile below sets from debugFloor on a fresh start.
+        // The finale goes the same way: AsylumHub.EnterFromMenu sends a HubState.IsFinale arrival to the Director's desk.
+        if ((debugStartInHub || debugStartInFinale) && !debugStartInShop && freshStart)
+        {
+            GameFlow.SkipMenuOnLoad = true;
+            GameFlow.ArriveInHub = true;
+            if (debugStartInFinale)
+            {
+                HubState.IsFinale = true;
+                if (debugFinaleAllFiles)
+                    for (int i = 0; i < PatientFiles.MazeFileCount; i++) LoreArchive.MarkRead(PatientFiles.FirstId + i);
+            }
+        }
 
         // Moved ahead of ApplyFloorProfile (F74) so RunRules.Resolve, called from inside it, can hash
         // the seed that is actually used rather than the Inspector's raw seed field - nothing between
@@ -2527,9 +2551,11 @@ public class MazeGenerator : MonoBehaviour
         Shuffle(preferred, rng);
         Shuffle(fallback, rng);
         preferred.AddRange(fallback);
+        // Super easy mode: the nearest cells to the start, side by side (after the shuffle, so the +1 stream is unchanged).
+        if (superEasyMode) SortByStartDistance(preferred);
 
         // Keep the stars apart, or a shuffle can drop two of them in neighbouring cells
-        int minSeparation = Mathf.Max(2, (width + height) / 4);
+        int minSeparation = superEasyMode ? 0 : Mathf.Max(2, (width + height) / 4);
         List<Vector2Int> chosen = new List<Vector2Int>();
 
         for (int pass = 0; pass < 2 && chosen.Count < starCount; pass++)
@@ -2873,6 +2899,21 @@ public class MazeGenerator : MonoBehaviour
         return clip;
     }
 
+    /// <summary>Super easy mode: orders `cells` nearest-to-the-start first (BFS steps), keeping the shuffled order among equals.</summary>
+    private void SortByStartDistance(List<Vector2Int> cells)
+    {
+        List<Vector2Int> ordered = new List<Vector2Int>(cells.Count);
+        int maxDistance = 0;
+        foreach (Vector2Int c in cells) maxDistance = Mathf.Max(maxDistance, _distance[c.x, c.y]);
+        for (int d = 0; d <= maxDistance; d++)
+        {
+            foreach (Vector2Int c in cells) if (_distance[c.x, c.y] == d) ordered.Add(c);
+        }
+        foreach (Vector2Int c in cells) if (_distance[c.x, c.y] < 0) ordered.Add(c); // unreachable, last
+        cells.Clear();
+        cells.AddRange(ordered);
+    }
+
     private bool IsFarEnough(Vector2Int candidate, List<Vector2Int> chosen, int minSeparation)
     {
         foreach (Vector2Int other in chosen)
@@ -2913,6 +2954,9 @@ public class MazeGenerator : MonoBehaviour
             Debug.LogError("MazeGenerator: no InteractableKit (doors/buttons/battery cell) in the scene - skipping doors, buttons and vaults. Run LIGHTS OUT > Build > Interactables in the Editor, then save the scene.", this);
             return;
         }
+
+        // Super easy mode: nothing may shut a star away, so no doors at all (a Lockdown floor has no lockdown).
+        if (superEasyMode) return;
 
         if (aiFollower == null) aiFollower = FindAnyObjectByType<AIFollower>();
         Transform player = FindPlayer();
@@ -3542,15 +3586,16 @@ public class MazeGenerator : MonoBehaviour
             for (int z = 0; z < height; z++)
             {
                 Vector2Int cell = new Vector2Int(x, z);
-                if (cell == start || starCellSet.Contains(cell) || _lockerCells.Contains(cell)) continue;
+                if (cell == start || (!superEasyMode && starCellSet.Contains(cell)) || _lockerCells.Contains(cell)) continue;
                 if (_setPieceCells.Contains(cell) || _doorUsedCells.Contains(cell)) continue;
                 if (HasFreeWall(cell)) candidates.Add(cell);
             }
         }
         Shuffle(candidates, rng);
+        if (superEasyMode) SortByStartDistance(candidates);
 
         List<Vector2Int> chosenCells = new List<Vector2Int>();
-        int minSeparation = Mathf.Max(3, (width + height) / 5);
+        int minSeparation = superEasyMode ? 1 : Mathf.Max(3, (width + height) / 5);
         while (minSeparation >= 1 && chosenCells.Count < _profile.FuseCount)
         {
             foreach (Vector2Int cell in candidates)
@@ -3739,16 +3784,17 @@ public class MazeGenerator : MonoBehaviour
             for (int z = 0; z < height; z++)
             {
                 Vector2Int cell = new Vector2Int(x, z);
-                if (cell == start || starCellSet.Contains(cell) || lockerCellSet.Contains(cell)) continue;
+                if (cell == start || (!superEasyMode && starCellSet.Contains(cell)) || lockerCellSet.Contains(cell)) continue;
                 if (_setPieceCells.Contains(cell) || _doorUsedCells.Contains(cell)) continue;
-                if (_distance[x, z] < 3) continue;
+                if (!superEasyMode && _distance[x, z] < 3) continue;
                 if (HasFreeWall(cell)) candidates.Add(cell);
             }
         }
         Shuffle(candidates, rng);
+        if (superEasyMode) SortByStartDistance(candidates);
 
         List<Vector2Int> chosenCells = new List<Vector2Int>();
-        int minSeparation = Mathf.Max(3, (width + height) / 5);
+        int minSeparation = superEasyMode ? 1 : Mathf.Max(3, (width + height) / 5);
         while (minSeparation >= 1 && chosenCells.Count < _profile.KeyCount)
         {
             foreach (Vector2Int cell in candidates)
@@ -4036,9 +4082,10 @@ public class MazeGenerator : MonoBehaviour
             for (int z = 0; z < height; z++) everything.Add(new Vector2Int(x, z));
         }
         HashSet<Vector2Int> localUsed = new HashSet<Vector2Int>();
+        // Super easy mode turns that around: the far cells are claimed, so the file lands within 3 steps of the start.
         foreach (KeyValuePair<Vector2Int, int> kv in BfsWithin(Vector2Int.zero, everything))
         {
-            if (kv.Value < 4) localUsed.Add(kv.Key);
+            if (superEasyMode ? kv.Value >= 4 : kv.Value < 4) localUsed.Add(kv.Key);
         }
 
         if (!TryPlaceOnFreeWall(rng, localUsed, out Vector2Int cell, out int dir))

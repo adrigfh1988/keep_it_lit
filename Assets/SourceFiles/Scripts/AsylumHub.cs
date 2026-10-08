@@ -200,6 +200,14 @@ public class AsylumHub : MonoBehaviour
         _returnPosition = _player.position;
         _returnYaw = _player.eulerAngles.y;
 
+        // MazeGenerator.debugStartInFinale sets HubState.IsFinale before this: arrive at the Director's desk instead of a wing.
+        if (HubState.IsFinale)
+        {
+            if (CanFinale) { EnterFinale(); return; }
+            Debug.LogError("AsylumHub: the finale piece (AsylumHub/Life/Finale) is missing or incomplete; entering the hub normally.", this);
+            HubState.IsFinale = false;
+        }
+
         int floor = Mathf.Clamp(GameFlow.CurrentFloor, 1, wingDoors.Length);
         // The door they came out of is the previous wing's; the very first arrival is the front door.
         Transform arrival = floor >= 2 && wingDoors[floor - 2] != null ? wingDoors[floor - 2].arrivalPoint : mainEntrance;
