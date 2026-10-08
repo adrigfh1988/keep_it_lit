@@ -4717,7 +4717,7 @@ public class MazeGenerator : MonoBehaviour
         {
             Debug.LogError("MazeGenerator: there is no IntakeRoom in the scene, so START GAME shows the rules screen instead of the tutorial. Run LIGHTS OUT > Build Missing Pieces in the Editor (it places Assets/Prefabs/IntakeRoom.prefab), then save the scene.", this);
         }
-        if (intake != null) intake.Configure(player, camera, hud, flashlight, stealth, interactor, throwController, loreReader);
+        if (intake != null) intake.Configure(player, camera, hud, flashlight, stealth, interactor, throwController, loreReader, PickBaseMusic(), panicClip);
 
         MazeEscape escape = null;
         if (escapeSequence)

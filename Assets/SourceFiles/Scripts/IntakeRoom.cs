@@ -75,6 +75,15 @@ public class IntakeRoom : MonoBehaviour
     [Tooltip("How far short of the doorway the silhouette waits until the player is hidden")]
     [SerializeField] private float holdDistance = 3.5f;
 
+    [Header("Music")]
+    [Tooltip("The floor's base music under rooms A and B (the maze's own musicVolume)")]
+    [SerializeField] private float musicVolume = 0.15f;
+    [Tooltip("The escape track, from the moment the hide step starts until the silhouette has passed")]
+    [SerializeField] private float urgentVolume = 0.45f;
+    [SerializeField] private float urgentFadeSeconds = 0.6f;
+    [Tooltip("How slowly the escape track gives way to the base music once the silhouette has gone")]
+    [SerializeField] private float reliefFadeSeconds = 3f;
+
     // Player systems, handed over by MazeGenerator.SetUpAtmosphere.
     private Transform _player;
     private Camera _camera;
@@ -98,6 +107,10 @@ public class IntakeRoom : MonoBehaviour
 
     private AudioSource _hum;
     private AudioClip _humClip;
+    // The Intake's own music: HorrorAudioDirector holds the floor's music until GameFlow.IsRunActive, which the Intake never sets.
+    private AudioSource _music;
+    private AudioSource _urgent;
+    private Coroutine _musicFade;
     private AudioSource _stepSource;
     private AudioSource _dragSource;
     private AudioClip _dragClip;
@@ -130,8 +143,12 @@ public class IntakeRoom : MonoBehaviour
 
     /// <summary>Called by MazeGenerator.SetUpAtmosphere. Everything physical already exists in the scene.</summary>
     public void Configure(Transform player, Camera camera, PlayerHud hud, Flashlight flashlight, PlayerStealthState stealth,
-        PlayerInteractor interactor, ThrowController throwController, LoreReadingUi reader)
+        PlayerInteractor interactor, ThrowController throwController, LoreReadingUi reader,
+        AudioClip music = null, AudioClip urgentMusic = null)
     {
+        _music = BuildMusicSource(music);
+        _urgent = BuildMusicSource(urgentMusic);
+
         _player = player;
         _camera = camera;
         _hud = hud;
@@ -240,6 +257,7 @@ public class IntakeRoom : MonoBehaviour
         }
 
         _hum.Play();
+        SetMusic(musicVolume, 0f, 2f);
         _run = StartCoroutine(Run());
     }
 
@@ -264,6 +282,7 @@ public class IntakeRoom : MonoBehaviour
         ApplyMarker(default);
         if (_stepSource != null) _stepSource.Stop();
         if (_dragSource != null) _dragSource.Stop();
+        SetMusic(0f, 0f, 1f); // out with the fade; the floor's own music starts on GameFlow.BeginRun
         PlayerLock.Freeze(_player, true);
         if (_flashlight != null) _flashlight.InputEnabled = false;
 
@@ -667,6 +686,7 @@ public class IntakeRoom : MonoBehaviour
             EnsureSilhouetteAudio();
             _stepDistance = 0f;
             if (_hud != null) _hud.ShowSubtitle("Footsteps. Something heavy is being dragged.", 3.5f);
+            SetMusic(0f, urgentVolume, urgentFadeSeconds); // the escape track: hide, now
         }
 
         if (_silhouettePassed) return !hidden;
@@ -709,6 +729,7 @@ public class IntakeRoom : MonoBehaviour
                 {
                     _silhouettePassed = true;
                     silhouette.gameObject.SetActive(false);
+                    SetMusic(musicVolume, 0f, reliefFadeSeconds); // it has gone: slowly back to the base music
                     if (_stepSource != null) _stepSource.Stop();
                     if (_dragSource != null) _dragSource.Stop();
                 }
@@ -755,6 +776,46 @@ public class IntakeRoom : MonoBehaviour
             _dragSource.volume = 0.5f;
             _dragSource.playOnAwake = false;
         }
+    }
+
+    // ---------------------------------------------------------------- music
+
+    private AudioSource BuildMusicSource(AudioClip clip)
+    {
+        if (clip == null) return null;
+        AudioSource source = gameObject.AddComponent<AudioSource>();
+        source.playOnAwake = false;
+        source.loop = true;
+        source.spatialBlend = 0f;
+        source.volume = 0f;
+        source.clip = clip;
+        return source;
+    }
+
+    /// <summary>Fades the base music and the escape track toward these volumes; a track that reaches 0 stops, one that rises from silence restarts.</summary>
+    private void SetMusic(float musicTarget, float urgentTarget, float seconds)
+    {
+        if (_music == null && _urgent == null) return;
+        if (_musicFade != null) StopCoroutine(_musicFade);
+        _musicFade = StartCoroutine(MusicFade(musicTarget, urgentTarget, seconds));
+    }
+
+    private IEnumerator MusicFade(float musicTarget, float urgentTarget, float seconds)
+    {
+        if (_music != null && musicTarget > 0f && !_music.isPlaying) _music.Play();
+        if (_urgent != null && urgentTarget > 0f && !_urgent.isPlaying) _urgent.Play();
+        float musicFrom = _music != null ? _music.volume : 0f;
+        float urgentFrom = _urgent != null ? _urgent.volume : 0f;
+        for (float t = 0f; t < seconds; t += Time.unscaledDeltaTime)
+        {
+            float k = t / seconds;
+            if (_music != null) _music.volume = Mathf.Lerp(musicFrom, musicTarget, k);
+            if (_urgent != null) _urgent.volume = Mathf.Lerp(urgentFrom, urgentTarget, k);
+            yield return null;
+        }
+        if (_music != null) { _music.volume = musicTarget; if (musicTarget <= 0f) _music.Stop(); }
+        if (_urgent != null) { _urgent.volume = urgentTarget; if (urgentTarget <= 0f) _urgent.Stop(); }
+        _musicFade = null;
     }
 
     private IEnumerator FlickerLampB()
