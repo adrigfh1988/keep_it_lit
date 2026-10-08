@@ -298,6 +298,16 @@ public class HorrorAudioDirector : MonoBehaviour
     public void PlayCaptureSting()
     {
         if (_drone != null) _drone.Stop();
+        AudioSlot recorded = GameAudio.Library.captureSting; // F97: the recorded stinger when the slot is filled
+        if (_sting != null && recorded.Has)
+        {
+            _sting.clip = recorded.Pick();
+            _sting.pitch = 1f;
+            _sting.volume = Mathf.Clamp01(recorded.volume);
+            _sting.Play();
+            _sting.SetScheduledEndTime(AudioSettings.dspTime + Mathf.Min(_sting.clip.length, 5.5f));
+            return;
+        }
         if (stingClip == null || _sting == null) return;
 
         _sting.clip = stingClip;
@@ -323,6 +333,7 @@ public class HorrorAudioDirector : MonoBehaviour
     /// <summary>F23 telegraph: a low sweep with a "whump" landing, synthesised once and cached.</summary>
     public void PlayRelocationCue()
     {
+        if (GameAudio.Play2D(GameAudio.Library.relocationCue, relocationCueVolume)) return; // F97
         if (_relocationCue == null) _relocationCue = BuildRelocationCueClip();
         if (_oneShots == null) return;
 
@@ -333,6 +344,7 @@ public class HorrorAudioDirector : MonoBehaviour
     /// <summary>F26 phantom: a breathy whisper panned hard to one ear. pan is -1 (left) to 1 (right).</summary>
     public void PlayWhisper(float pan)
     {
+        if (GameAudio.Play2D(GameAudio.Library.phantomWhisper, whisperVolume, 1f, pan)) return; // F97
         if (_whisperClip == null) _whisperClip = BuildWhisperClip();
         if (_whisper == null) return;
 

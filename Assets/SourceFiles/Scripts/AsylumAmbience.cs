@@ -81,6 +81,9 @@ public class AsylumAmbience : MonoBehaviour
 
     /// <summary>F93 (chase set piece): the escape track under the base music. `target` 0..1 is eased in/out.</summary>
     public void SetUrgent(AudioClip clip) { _urgentClip = clip; }
+    /// <summary>F97: a track for one set piece only (the floor-4 chase); dropped by itself once the urgency has faded out. Null = nothing to override.</summary>
+    public void SetUrgentOverride(AudioClip clip) { if (clip != null) _urgentOverride = clip; }
+    private AudioClip _urgentOverride;
     public void SetUrgency(float target, float seconds = 1.5f) { _urgencyTarget = Mathf.Clamp01(target); _urgencySeconds = Mathf.Max(0.05f, seconds); }
     private float _urgencySeconds = 1.5f;
 
@@ -105,7 +108,10 @@ public class AsylumAmbience : MonoBehaviour
         EnsureSources();
         _tone = _tone != null ? _tone : BuildLoop("AsylumTone", 2f, (t, i) =>
             0.5f * Mathf.Sin(2f * Mathf.PI * 50f * t) + 0.25f * Mathf.Sin(2f * Mathf.PI * 100f * t) + 0.1f * Mathf.Sin(2f * Mathf.PI * 150f * t) + 0.03f * Noise(i));
-        _toneSource.clip = _tone;
+        GameAudioLibrary lib = GameAudio.Library;
+        _toneFromLibrary = lib.roomTone.Has; // F97: the recording ends in silence, so it is restarted with a fade-in instead of looped
+        _toneSource.clip = _toneFromLibrary ? lib.roomTone.First() : _tone;
+        _toneSource.loop = !_toneFromLibrary;
 
         _machine = _machine != null ? _machine : BuildLoop("AsylumMachine", 4f, (t, i) =>
         {
@@ -114,6 +120,7 @@ public class AsylumAmbience : MonoBehaviour
         });
         _drip = _drip != null ? _drip : BuildDripLoop();
         _wind = _wind != null ? _wind : BuildWindLoop();
+        _dripAt = new float[emitters.Length];
 
         if (_noises == null || _noises.Length == 0 || _noises[0] == null) // Unity-null: runtime clips are destroyed when Play stops (domain reload may be off)
         {
@@ -129,16 +136,22 @@ public class AsylumAmbience : MonoBehaviour
         foreach (Emitter e in emitters)
         {
             if (e.source == null) continue;
-            e.source.clip = e.kind == EmitterKind.MachineHum ? _machine : e.kind == EmitterKind.Drip ? _drip : _wind;
-            e.source.loop = true;
+            AudioClip recorded = e.kind == EmitterKind.MachineHum ? lib.machinery.First() : e.kind == EmitterKind.Drip ? lib.drip.First() : null; // F97
+            e.source.clip = recorded != null ? recorded : e.kind == EmitterKind.MachineHum ? _machine : e.kind == EmitterKind.Drip ? _drip : _wind;
+            e.source.loop = !(e.kind == EmitterKind.Drip && recorded != null); // a recorded drip is one drop, retriggered at random in Update
             e.source.spatialBlend = 1f;
             e.source.rolloffMode = AudioRolloffMode.Linear;
             e.source.minDistance = 1.5f;
             e.source.maxDistance = e.kind == EmitterKind.Drip ? 7f : 12f;
-            e.source.volume = e.kind == EmitterKind.MachineHum ? 0.22f : e.kind == EmitterKind.Drip ? 0.5f : 0.3f;
+            float level = e.kind == EmitterKind.MachineHum ? 0.22f : e.kind == EmitterKind.Drip ? 0.5f : 0.3f;
+            if (recorded != null) level *= e.kind == EmitterKind.MachineHum ? lib.machinery.volume : lib.drip.volume;
+            e.source.volume = Mathf.Clamp01(level);
             e.source.playOnAwake = false;
         }
     }
+
+    private bool _toneFromLibrary;
+    private float[] _dripAt;
 
     private void Update()
     {
@@ -149,23 +162,36 @@ public class AsylumAmbience : MonoBehaviour
         if (active && !_ready) { Init(); _nextNoise = Time.time + UnityEngine.Random.Range(8f, 20f); }
         if (!_ready) return;
 
-        _toneSource.volume = toneVolume * _fade;
+        float toneEnv = 1f;
+        if (_toneFromLibrary) toneEnv = Mathf.Clamp01(_toneSource.time / 2.5f) * GameAudio.Library.roomTone.volume; // F97: the file starts abruptly - ease each pass in
+        _toneSource.volume = Mathf.Clamp01(toneVolume * _fade * toneEnv);
         _urgency = Mathf.MoveTowards(_urgency, _urgencyTarget, Time.unscaledDeltaTime / _urgencySeconds);
         _musicSource.volume = musicVolume * _fade * (1f - 0.85f * _urgency);
-        if (_urgentClip != null)
+        AudioClip urgentClip = _urgentOverride != null ? _urgentOverride : _urgentClip; // F97: the floor-4 chase brings its own recorded track
+        if (urgentClip != null)
         {
             if (_urgentSource == null) { _urgentSource = gameObject.AddComponent<AudioSource>(); _urgentSource.playOnAwake = false; _urgentSource.loop = true; _urgentSource.spatialBlend = 0f; }
-            _urgentSource.clip = _urgentClip;
+            if (_urgentSource.clip != urgentClip) _urgentSource.clip = urgentClip;
             _urgentSource.volume = urgentVolume * _urgency * _fade;
             SetPlaying(_urgentSource, _urgency > 0.001f && _fade > 0.001f);
         }
+        if (_urgentOverride != null && _urgency <= 0.001f && _urgencyTarget <= 0f) _urgentOverride = null; // faded out: the default track is back for the next set piece
         SetPlaying(_toneSource, _fade > 0.001f);
         SetPlaying(_musicSource, _fade > 0.001f && _musicSource.clip != null);
 
-        foreach (Emitter e in emitters)
+        for (int i = 0; i < emitters.Length; i++)
         {
+            Emitter e = emitters[i];
             if (e.source == null || !e.source.gameObject.activeInHierarchy) continue;
-            if (active && !e.source.isPlaying) e.source.Play();
+            if (!active || e.source.isPlaying) continue;
+            if (e.kind == EmitterKind.Drip && !e.source.loop && _dripAt != null && i < _dripAt.Length)
+            {
+                // F97: a recorded drip falls every 1.5-5 s rather than looping a fixed pattern.
+                if (Time.time < _dripAt[i]) continue;
+                _dripAt[i] = Time.time + e.source.clip.length + UnityEngine.Random.Range(1.5f, 5f);
+                e.source.pitch = UnityEngine.Random.Range(0.92f, 1.08f);
+            }
+            e.source.Play();
         }
 
         // Leaving the hub (a wing door, the shop): footsteps still walking overhead must not follow the player into the maze.
@@ -188,8 +214,10 @@ public class AsylumAmbience : MonoBehaviour
     {
         DoorAudio.Note("far event at " + position);
         float roll = UnityEngine.Random.value;
+        GameAudioLibrary lib = GameAudio.Library;
         if (_decayFloor >= 4 && roll < 0.25f)
         {
+            if (GameAudio.PlayAt(lib.farScream, position, 0.45f)) return; // F97
             if (_scream == null) _scream = BuildScream();
             AudioSource.PlayClipAtPoint(_scream, position, 0.45f);
         }
@@ -197,12 +225,28 @@ public class AsylumAmbience : MonoBehaviour
         {
             StartCoroutine(FootstepsOverhead(position + Vector3.up * 3.5f));
         }
-        else
+        else if (!PlayRecordedFarNoise(position, lib))
         {
             int pick = UnityEngine.Random.Range(0, _noises.Length);
             DoorAudio.Note("far noise #" + pick);
             AudioSource.PlayClipAtPoint(_noises[pick], position, UnityEngine.Random.Range(0.3f, 0.5f));
         }
+    }
+
+    /// <summary>F97: one of the recorded far noises (a slam, a pipe, the building settling, a rumble, a drip, something dragged overhead); false when none is filled.</summary>
+    private bool PlayRecordedFarNoise(Vector3 position, GameAudioLibrary lib)
+    {
+        AudioSlot[] pool = { lib.farSlam, lib.pipeClank, lib.buildingSettle, lib.farRumble, lib.drip, _decayFloor >= 2 ? lib.farDrag : null };
+        int start = UnityEngine.Random.Range(0, pool.Length);
+        for (int i = 0; i < pool.Length; i++)
+        {
+            AudioSlot slot = pool[(start + i) % pool.Length];
+            if (slot == null || !slot.Has) continue;
+            bool overhead = slot == lib.farDrag;
+            DoorAudio.Note("far recorded noise " + (slot.First() != null ? slot.First().name : "?"));
+            return GameAudio.PlayAt(slot, overhead ? position + Vector3.up * 3.5f : position, UnityEngine.Random.Range(0.3f, 0.5f) * (slot == lib.drip ? 0.6f : 1f));
+        }
+        return false;
     }
 
     /// <summary>
@@ -217,7 +261,9 @@ public class AsylumAmbience : MonoBehaviour
             ThirdPersonController tpc = UnityEngine.Object.FindAnyObjectByType<ThirdPersonController>();
             _stepClips = tpc != null && tpc.FootstepAudioClips != null && tpc.FootstepAudioClips.Length > 0 ? tpc.FootstepAudioClips : new[] { DoorAudio.BuildClunkClip(0.12f, 90f, 0.5f) };
         }
-        if (_creaks == null || _creaks.Length == 0) _creaks = new[] { DoorAudio.BuildCreakClip(0.45f, 150f, 3), DoorAudio.BuildCreakClip(0.6f, 190f, 5), DoorAudio.BuildCreakClip(0.35f, 230f, 8) };
+        if (_creaks == null || _creaks.Length == 0)
+            _creaks = GameAudio.Library.floorCreak.Has ? GameAudio.Library.floorCreak.clips // F97: recorded floorboards
+                : new[] { DoorAudio.BuildCreakClip(0.45f, 150f, 3), DoorAudio.BuildCreakClip(0.6f, 190f, 5), DoorAudio.BuildCreakClip(0.35f, 230f, 8) };
 
         GameObject stepsGo = new GameObject("OverheadSteps");
         _stepWalkers.Add(stepsGo);

@@ -83,7 +83,9 @@ public class FuseBox : MonoBehaviour, IInteractable
             lamp.SetPowered(true, steps * rippleSecondsPerStep);
         }
 
-        if (_audio != null)
+        bool recorded = GameAudio.PlayAt(GameAudio.Library.fuseClunk, transform.position, 0.8f); // F97: recorded breaker thunk + hum, generated pair as fallback
+        recorded |= GameAudio.PlayAt(GameAudio.Library.fuseHum, transform.position, 0.5f);
+        if (!recorded && _audio != null)
         {
             if (_clunkClip != null) _audio.PlayOneShot(_clunkClip, 0.8f);
             if (_humClip != null) _audio.PlayOneShot(_humClip, 0.5f);

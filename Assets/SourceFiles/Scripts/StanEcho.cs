@@ -97,6 +97,7 @@ public class StanEcho : HubSetPiece
     private void Vanish()
     {
         _gone = true;
+        if (GameAudio.PlayAt(GameAudio.Library.whisperEcho, body.position, 0.5f)) { body.gameObject.SetActive(false); return; } // F97
         if (_whisper == null) _whisper = DoorAudio.BuildClunkClip(0.9f, 300f, 0.95f);
         AudioSource.PlayClipAtPoint(_whisper, body.position, 0.35f);
         body.gameObject.SetActive(false);

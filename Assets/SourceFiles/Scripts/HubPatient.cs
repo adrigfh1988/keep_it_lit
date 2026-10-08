@@ -131,6 +131,7 @@ public class HubPatient : MonoBehaviour
         if (_present && _voice != null && _pose != Pose.Lie) PlayState(_voice.IsTalking ? "Talking" : _baseState, 0.3f);
         if (HubState.Floor != _stateFloor || HubState.IsFinale != _stateFinale) Refresh();
         if (_pose == Pose.Knock && _present) TickKnock();
+        if (_present && _pose != Pose.Lie) TickPatientSound();
     }
 
     /// <summary>Applies HubState: presence, placement and pose. Cheap and idempotent.</summary>
@@ -218,6 +219,21 @@ public class HubPatient : MonoBehaviour
     }
     private const float KnockStart = 1.2f, KnockGap = 0.5f, KnockLen = 0.2f;
 
+    private float _nextPatientSound = -1f;
+
+    /// <summary>F97: now and then a sob or a laugh from the patient, only when the player is within earshot. Recorded clips only; audio, no gameplay.</summary>
+    private void TickPatientSound()
+    {
+        if (!GameAudio.Library.patientSound.Has || body == null) return;
+        if (_nextPatientSound < 0f) _nextPatientSound = Time.time + Random.Range(10f, 30f);
+        if (Time.time < _nextPatientSound) return;
+        AsylumHub hub = AsylumHub.Active;
+        if (hub == null || hub.Player == null || (_voice != null && _voice.IsTalking)) { _nextPatientSound = Time.time + 5f; return; }
+        if ((hub.Player.position - body.position).sqrMagnitude > 10f * 10f) { _nextPatientSound = Time.time + 5f; return; }
+        _nextPatientSound = Time.time + Random.Range(25f, 60f);
+        GameAudio.PlayAt(GameAudio.Library.patientSound, body.position + Vector3.up * 1.2f, 0.5f);
+    }
+
     private void TickKnock()
     {
         _clock += Time.deltaTime;
@@ -233,7 +249,9 @@ public class HubPatient : MonoBehaviour
         if (pulse >= 0 && key != _lastPulse)
         {
             _lastPulse = key;
-            if (_audio != null && _knock != null) { DoorAudio.Note("Tomas knock"); _audio.PlayOneShot(_knock, knockVolume); }
+            AudioClip recorded = GameAudio.Library.pipeClank.Pick(); // F97: the recorded pipe clang, pitch-varied
+            if (_audio != null && recorded != null) { DoorAudio.Note("Tomas knock"); _audio.pitch = GameAudio.Library.pipeClank.PickPitch(); _audio.PlayOneShot(recorded, knockVolume * GameAudio.Library.pipeClank.volume); }
+            else if (_audio != null && _knock != null) { DoorAudio.Note("Tomas knock"); _audio.PlayOneShot(_knock, knockVolume); }
         }
     }
 

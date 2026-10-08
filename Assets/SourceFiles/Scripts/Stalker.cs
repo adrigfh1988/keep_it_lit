@@ -477,7 +477,7 @@ public class Stalker : MonoBehaviour
         {
             // "a single tick when it freezes within 8 m" - the moment it goes from moving to lit-frozen.
             float d = _player != null ? Vector3.Distance(transform.position, _player.position) : float.MaxValue;
-            if (d <= SingleTickRange && _audio != null && _tickClip != null) _audio.PlayOneShot(_tickClip, 0.6f);
+            if (d <= SingleTickRange) PlayCue(GameAudio.Library.stanTick, _tickClip, 0.6f);
 
             // F82: only remarks on it if he can see you - "too bright" at your back would be nonsense.
             if (_voice != null && _voice.CanSeePlayer) _voice.Say(StalkerPhraseBook.Category.Lit);
@@ -618,7 +618,7 @@ public class Stalker : MonoBehaviour
         // Force a step on this very frame so the first jump is immediate (and at the lunge's step rate).
         _nextStepIn = 1f / Mathf.Max(1f, lungeStepFps);
         _stepAccum = _nextStepIn;
-        if (_audio != null && _skitterClip != null) _audio.PlayOneShot(_skitterClip, 0.7f);
+        PlayCue(GameAudio.Library.stanSkitter, _skitterClip, 0.7f);
         if (_voice != null) _voice.Say(StalkerPhraseBook.Category.Lunge);
     }
 
@@ -843,7 +843,7 @@ public class Stalker : MonoBehaviour
         _headYaw = Mathf.Clamp(_headYaw + Random.Range(-1f, 1f) * litTwitchAngle, -headYawLimit, headYawLimit);
         _litRoll = (Random.value < 0.5f ? -1f : 1f) * litTwitchAngle;
         _litRollUntil = Time.time + 0.12f;
-        if (_audio != null && _tickClip != null) _audio.PlayOneShot(_tickClip, 0.35f);
+        PlayCue(GameAudio.Library.stanTick, _tickClip, 0.35f);
         _nextLitTwitchAt = Time.time + Random.Range(litTwitchIntervalMin, litTwitchIntervalMax);
     }
 
@@ -954,6 +954,15 @@ public class Stalker : MonoBehaviour
     /// touches GameOutcome.</summary>
     /// <summary>F87: raised on every touch, for ContractTracker's Not a scratch contract.</summary>
     public static event System.Action PlayerTouched;
+
+    /// <summary>F97: a recorded clip from the slot when it is filled, otherwise the generated one, through Stan's own 3D source.</summary>
+    private void PlayCue(AudioSlot slot, AudioClip fallback, float volume)
+    {
+        if (_audio == null) return;
+        AudioClip recorded = slot.Pick();
+        if (recorded != null) _audio.PlayOneShot(recorded, volume * slot.volume);
+        else if (fallback != null) _audio.PlayOneShot(fallback, volume);
+    }
 
     private void Touch()
     {

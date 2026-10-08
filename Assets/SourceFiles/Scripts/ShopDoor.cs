@@ -53,7 +53,7 @@ public class ShopDoor : MonoBehaviour, IInteractable
         if (_nudgeTimer > 0f) return;
         _nudgeTimer = 2f;
         if (_padlockClip == null) _padlockClip = DoorAudio.BuildClunkClip(0.18f, 160f, 0.35f);
-        AudioSource.PlayClipAtPoint(_padlockClip, transform.position, 0.7f);
+        if (!GameAudio.PlayAt(GameAudio.Library.lockedRattle, transform.position, 0.7f)) AudioSource.PlayClipAtPoint(_padlockClip, transform.position, 0.7f); // F97
         PlayerHud hud = Object.FindAnyObjectByType<PlayerHud>();
         if (hud != null) hud.ShowSubtitle("CLOSED · COME BACK WITH SHARDS", 2.2f);
     }

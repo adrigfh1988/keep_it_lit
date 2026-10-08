@@ -250,6 +250,13 @@ public static class ProjectSetup
         },
         new Piece
         {
+            Name = "Audio library (F97: recorded clips in place of the generated sounds)",
+            FixMenu = "Build Missing Pieces (creates GameAudioLibrary.asset, fills empty slots, applies import settings, assigns it to MazeGenerator)",
+            Problem = GameAudioLibraryBuilder.Problem,
+            Build = GameAudioLibraryBuilder.BuildSilently
+        },
+        new Piece
+        {
             Name = "Hunter body (Adam)",
             FixMenu = "Build > Hunter Body",
             Problem = () =>

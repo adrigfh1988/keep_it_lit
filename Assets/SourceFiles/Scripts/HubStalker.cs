@@ -363,6 +363,7 @@ public class HubStalker : MonoBehaviour
         CurrentMode = Mode.Spotted;
         _stateUntil = Time.time + (_locomotion ? stareSeconds : screamSeconds);
         SetEyes(true);
+        GameAudio.PlayAt(GameAudio.Library.timmySpot, transform.position + Vector3.up * 1.4f, 1f); // F97: servo screech (recorded clip only)
         PlayAnim(Scream, 0.1f);
     }
 
@@ -468,7 +469,10 @@ public class HubStalker : MonoBehaviour
             _stepDistance = 0f;
             _audio.pitch = Random.Range(0.9f, 1.05f);
             DoorAudio.Note("HubStalker step");
-            _audio.PlayOneShot(_step, CurrentMode == Mode.Chase ? 1f : 0.8f);
+            AudioSlot stepSlot = GameAudio.Library.timmyStep; // F97: heavy recorded steps, pitch-varied
+            AudioClip stepClip = stepSlot.Pick();
+            if (stepClip != null) { _audio.pitch *= stepSlot.PickPitch(); _audio.PlayOneShot(stepClip, (CurrentMode == Mode.Chase ? 1f : 0.8f) * stepSlot.volume); }
+            else _audio.PlayOneShot(_step, CurrentMode == Mode.Chase ? 1f : 0.8f);
         }
     }
 

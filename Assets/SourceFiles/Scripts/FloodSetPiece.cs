@@ -99,7 +99,7 @@ public class FloodSetPiece : HubSetPiece
                 {
                     l.dying = true;
                     DoorAudio.Note("hall lamp pop");
-                    _audio.PlayOneShot(_pop, 0.6f);
+                    if (!GameAudio.PlayAt(GameAudio.Library.bulbPop, l.light.transform.position, 0.8f)) _audio.PlayOneShot(_pop, 0.6f); // F97
                 }
             }
             else

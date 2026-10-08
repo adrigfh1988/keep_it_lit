@@ -156,6 +156,12 @@ public class MazeGenerator : MonoBehaviour
     [Tooltip("Scene gallery built by LIGHTS OUT > Build > Interactables. Found automatically; assign only to override.")]
     [SerializeField] private InteractableKit interactableKit;
 
+    [Header("Audio (F97)")]
+    [Tooltip("Recorded clips for the sounds that used to be generated. Built by LIGHTS OUT > Check Project > Build Missing Pieces (Audio library). Empty slots keep the generated sound.")]
+    [SerializeField] private GameAudioLibrary audioLibrary;
+    [Tooltip("Log which library slots are filled and which clip each sound played (once per clip).")]
+    [SerializeField] private bool logAudioResolution = false;
+
     [Header("Key Hunt (F77)")]
     [Tooltip("For testing: forces this floor's mechanics instead of rolling them. None = roll normally.")]
     [SerializeField] private FloorProfile.Objective debugObjectives = FloorProfile.Objective.None;
@@ -307,6 +313,9 @@ public class MazeGenerator : MonoBehaviour
 
     private void Awake()
     {
+        GameAudio.LogResolution = logAudioResolution;
+        GameAudio.Assign(audioLibrary); // F97: before anything plays, so every call site sees the recorded clips
+
         if (width < 2 || height < 2)
         {
             Debug.LogError("MazeGenerator needs at least a 2x2 grid.", this);

@@ -82,3 +82,7 @@ desktop.ini
 /Assets/GreenMossGames/
 /Assets/Abandoned_Asylum/
 /Assets/Morgue Room PBR/
+# F97 sound packs: only the clips GameAudioLibrary references are committed (the library asset lists them).
+/Assets/Free Pack/
+/Assets/Horror Elements/
+/Assets/Libraries/

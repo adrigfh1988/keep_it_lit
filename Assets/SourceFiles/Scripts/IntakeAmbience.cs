@@ -117,7 +117,21 @@ public class IntakeAmbience : MonoBehaviour
         {
             _nextSound = time + Random.Range(9f, 20f);
             Transform point = soundPoints[Random.Range(0, soundPoints.Length)];
-            if (point != null) AudioSource.PlayClipAtPoint(_clips[Random.Range(0, _clips.Length)], point.position, Random.Range(0.25f, 0.45f));
+            if (point != null && !PlayRecordedFarNoise(point.position)) AudioSource.PlayClipAtPoint(_clips[Random.Range(0, _clips.Length)], point.position, Random.Range(0.25f, 0.45f));
         }
+    }
+
+    /// <summary>F97: a far slam, pipe clank or drip from the recorded library; false when none of those slots is filled.</summary>
+    private bool PlayRecordedFarNoise(Vector3 position)
+    {
+        GameAudioLibrary lib = GameAudio.Library;
+        AudioSlot[] pool = { lib.farSlam, lib.pipeClank, lib.drip };
+        int start = Random.Range(0, pool.Length);
+        for (int i = 0; i < pool.Length; i++)
+        {
+            AudioSlot slot = pool[(start + i) % pool.Length];
+            if (slot.Has) return GameAudio.PlayAt(slot, position, Random.Range(0.25f, 0.45f));
+        }
+        return false;
     }
 }

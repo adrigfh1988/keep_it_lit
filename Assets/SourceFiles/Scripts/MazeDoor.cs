@@ -333,7 +333,7 @@ public class MazeDoor : MonoBehaviour, IInteractable
         StartSlide(true, bashOpenSeconds, entry.Silent);
         if (!entry.Silent)
         {
-            PlayClip(_slamClip, 1f);
+            if (!GameAudio.PlayAt(GameAudio.Library.shutterSlam, transform.position, 1f)) PlayClip(_slamClip, 1f); // F97
             entry.Stall?.Invoke(bashStallSeconds);
         }
     }
@@ -351,7 +351,7 @@ public class MazeDoor : MonoBehaviour, IInteractable
         _open = opening;
         _slideRoutine = StartCoroutine(Slide(opening, duration));
         // F75: the Stalker slips under a door silently - no clunk, no slam (see Bash).
-        if (!silent) PlayClip(_clunkClip, 0.7f);
+        if (!silent && !GameAudio.PlayAt(GameAudio.Library.shutterRoll, transform.position, 0.7f)) PlayClip(_clunkClip, 0.7f); // F97
     }
 
     private IEnumerator Slide(bool opening, float duration)

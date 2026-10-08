@@ -432,7 +432,7 @@ public class IntakeRoom : MonoBehaviour
                     if (star != null) star.gameObject.SetActive(false);
                     SetHatchLook(false);
                     SwingLid(16f, 0.8f);
-                    AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.3f, 70f, 0.6f), hatchZone.transform.position, 0.8f);
+                    if (!GameAudio.PlayAt(GameAudio.Library.hatchOpen, hatchZone.transform.position, 0.8f)) AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.3f, 70f, 0.6f), hatchZone.transform.position, 0.8f); // F97
                     if (_hud != null)
                     {
                         _hud.ShowSubtitle(again
@@ -607,7 +607,8 @@ public class IntakeRoom : MonoBehaviour
             if (mainLamp != null) mainLamp.intensity = _mainBase;
         }
         if (_hud != null) _hud.ShowSubtitle("The lamp sparks. The room goes dark.", 3f);
-        AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.18f, 1600f, 0.5f), mainLamp != null ? mainLamp.transform.position : transform.position, 0.7f);
+        Vector3 sparkAt = mainLamp != null ? mainLamp.transform.position : transform.position;
+        if (!GameAudio.PlayAt(GameAudio.Library.bulbPop, sparkAt, 0.9f)) AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.18f, 1600f, 0.5f), sparkAt, 0.7f); // F97
         float start = mainLamp != null ? (_mainBase > 0f ? _mainBase : mainLamp.intensity) : 0f;
         float t = 0f;
         while (t < 1.1f)
@@ -626,7 +627,7 @@ public class IntakeRoom : MonoBehaviour
 
     private IEnumerator OpenShutter()
     {
-        AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.5f, 90f, 0.7f), shutter.position, 0.9f);
+        if (!GameAudio.PlayAt(GameAudio.Library.shutterRoll, shutter.position, 0.9f)) AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.5f, 90f, 0.7f), shutter.position, 0.9f); // F97
         if (_hud != null) _hud.ShowSubtitle("The bell rings. Somewhere, a shutter rises.", 3f);
         Vector3 start = shutter.position;
         Vector3 end = start + Vector3.up * 2.7f;
@@ -777,9 +778,10 @@ public class IntakeRoom : MonoBehaviour
         }
         if (_dragSource == null)
         {
-            _dragClip = BuildDragClip();
+            AudioClip recordedDrag = GameAudio.Library.farDrag.Pick(); // F97: a recorded drag; the file is never destroyed with the room
+            _dragClip = recordedDrag != null ? null : BuildDragClip();
             _dragSource = silhouette.gameObject.AddComponent<AudioSource>();
-            _dragSource.clip = _dragClip;
+            _dragSource.clip = recordedDrag != null ? recordedDrag : _dragClip;
             _dragSource.loop = true;
             _dragSource.spatialBlend = 1f;
             _dragSource.maxDistance = 22f;
@@ -917,7 +919,7 @@ public class IntakeRoom : MonoBehaviour
     private IEnumerator HatchWalkIn()
     {
         SwingLid(100f, 0.4f);
-        AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.3f, 70f, 0.6f), hatchZone.transform.position, 0.8f);
+        if (!GameAudio.PlayAt(GameAudio.Library.hatchOpen, hatchZone.transform.position, 0.8f)) AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.3f, 70f, 0.6f), hatchZone.transform.position, 0.8f); // F97
 
         Vector3 start = _player.position;
         Vector3 centre = hatchZone.bounds.center;

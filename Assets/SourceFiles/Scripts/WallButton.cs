@@ -64,7 +64,7 @@ public class WallButton : MonoBehaviour, IInteractable
 
         _door.Unlock();
         _everPressed = true;
-        if (_audio != null && _clickClip != null) _audio.PlayOneShot(_clickClip, 0.7f);
+        if (!GameAudio.PlayAt(GameAudio.Library.wallButton, transform.position, 0.7f) && _audio != null && _clickClip != null) _audio.PlayOneShot(_clickClip, 0.7f); // F97
         _hunter?.HearNoise(transform.position, noiseRadius);
 
         if (_hud != null)

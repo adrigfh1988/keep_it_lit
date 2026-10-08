@@ -164,6 +164,7 @@ public class ThemeInteractable : MonoBehaviour, IInteractable
         _steamUntil = Time.time + 12f;
         if (_steamObstacle != null) _steamObstacle.enabled = true;
         if (_steamParticles != null) _steamParticles.Play();
+        GameAudio.PlayAt(GameAudio.Library.steamValve, transform.position, 0.8f); // F97 (recorded clip only)
         _hunter?.HearNoise(transform.position, 14f);
     }
 
@@ -175,6 +176,7 @@ public class ThemeInteractable : MonoBehaviour, IInteractable
             indicatorLight.enabled = true;
             indicatorLight.range = 4f;
         }
+        GameAudio.PlayAt(GameAudio.Library.candleSnuff, transform.position, 0.7f); // F97 (recorded clip only)
         LightPool.Register(transform, 4f, () => 1f);
     }
 
@@ -184,6 +186,7 @@ public class ThemeInteractable : MonoBehaviour, IInteractable
         _terminalActive = true;
         _terminalUntil = Time.time + 6f;
         _hud?.ShowSubtitle("CAM 3: MOVEMENT", 3f);
+        GameAudio.PlayAt(GameAudio.Library.terminalBeep, transform.position, 0.7f); // F97 (recorded clip only)
     }
 
     private void Update()

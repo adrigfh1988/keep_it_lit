@@ -72,6 +72,7 @@ public class ShopRoom : MonoBehaviour
 
     private AudioSource _hum;
     private AudioClip _humClip;
+    private bool _humIsAsset; // F97: _humClip is a library clip - never destroy it
 
     // The closed leaf's centre and the hinge's rest rotation, captured in Awake.
     private Vector3 _doorwayCentre;
@@ -115,13 +116,15 @@ public class ShopRoom : MonoBehaviour
             _doorwayCentre = leaf.size == Vector3.zero ? doorHinge.position : leaf.center;
         }
 
-        _humClip = BuildHumClip();
+        AudioClip shopMusic = GameAudio.Library.shopMusic.First(); // F97: a recorded safe-room track instead of the mains hum
+        _humIsAsset = shopMusic != null;
+        _humClip = _humIsAsset ? shopMusic : BuildHumClip();
         _hum = gameObject.GetComponent<AudioSource>();
         if (_hum == null) _hum = gameObject.AddComponent<AudioSource>();
         _hum.playOnAwake = false;
         _hum.loop = true;
         _hum.spatialBlend = 0f;
-        _hum.volume = humVolume;
+        _hum.volume = Mathf.Clamp01(humVolume * (_humIsAsset ? GameAudio.Library.shopMusic.volume : 1f));
         _hum.clip = _humClip;
     }
 
@@ -525,6 +528,6 @@ public class ShopRoom : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (_humClip != null) Destroy(_humClip);
+        if (_humClip != null && !_humIsAsset) Destroy(_humClip);
     }
 }

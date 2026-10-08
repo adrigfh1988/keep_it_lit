@@ -650,7 +650,8 @@ public class AsylumHub : MonoBehaviour
         PlayerLock.Freeze(_player, true);
         if (_hud != null) { _hud.SetPrompt(null); _hud.SetFocusPrompt(null); }
         HorrorAudioDirector director = FindAnyObjectByType<HorrorAudioDirector>();
-        if (director != null) director.PlayCaptureSting();
+        if (GameAudio.Play2D(GameAudio.Library.caught, 1f)) GameAudio.Play2D(GameAudio.Library.caughtLayer, 0.8f); // F97: a hard hit, with a dark boom under it
+        else if (director != null) director.PlayCaptureSting();
         else AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.9f, 55f, 0.9f), _player.position, 1f);
         EnsureBlackout();
         yield return Fade(_blackout != null ? _blackout.color.a : 0f, 1f, 0.25f);

@@ -119,7 +119,7 @@ public class NoisySurface : MonoBehaviour
         _strideTimer -= Time.deltaTime;
         if (_strideTimer <= 0f)
         {
-            if (_audio != null && _stepClip != null) _audio.PlayOneShot(_stepClip, 0.6f);
+            if (!(kind == Kind.Glass && GameAudio.PlayAt(GameAudio.Library.glassStep, transform.position, 0.6f)) && _audio != null && _stepClip != null) _audio.PlayOneShot(_stepClip, 0.6f); // F97: recorded glass underfoot; the puddle keeps its generated splash
             _strideTimer = Mathf.Lerp(0.55f, 0.3f, Mathf.Clamp01(bestSpeed / 6f));
         }
     }

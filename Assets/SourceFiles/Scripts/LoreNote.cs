@@ -48,6 +48,7 @@ public class LoreNote : MonoBehaviour, IInteractable
         }
 
         _reader.Show(_text, who);
+        GameAudio.PlayAt(GameAudio.Library.paper, transform.position, 0.6f); // F97 (recorded clip only)
         Read?.Invoke(_noteId);
         if (LoreArchive.MarkRead(_noteId))
         {

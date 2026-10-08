@@ -1,0 +1,470 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24a1959a3f345804a868b92d146bcb44, type: 3}
+  m_Name: GameAudioLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::GameAudioLibrary
+  roomTone:
+    clips:
+    - {fileID: 8300000, guid: ab8842b42fcaba04193bd8bc50c78cbf, type: 3}
+    volume: 4
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  machinery:
+    clips:
+    - {fileID: 8300000, guid: e93683c9c0a995d48b3f20927db0ac5a, type: 3}
+    volume: 3
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  drip:
+    clips:
+    - {fileID: 8300000, guid: ca515484853f74a469f7eb522a22a13d, type: 3}
+    volume: 1.2
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  farScream:
+    clips:
+    - {fileID: 8300000, guid: 2d4abed0203b15f4e8d4c72eeb4d8d16, type: 3}
+    - {fileID: 8300000, guid: 46cee7ba3d0514a49b52cc081ad6ca85, type: 3}
+    - {fileID: 8300000, guid: fd7d77c20c61c6c4ea00ca1caa23757b, type: 3}
+    - {fileID: 8300000, guid: 0bc705cdb1c349f44a9c510880ef5168, type: 3}
+    - {fileID: 8300000, guid: 32cb54188e18c6d4da7678f2db92311e, type: 3}
+    - {fileID: 8300000, guid: f0db07acd4058cf4d80ab30af3bef79d, type: 3}
+    volume: 0.65
+    pitchJitter: 0.05
+    startOffset: 0
+    maxSeconds: 9
+    lowPassHz: 3500
+  farSlam:
+    clips:
+    - {fileID: 8300000, guid: 2ff7baa8e5edcba47b97bbc6cc2b11f8, type: 3}
+    - {fileID: 8300000, guid: 56acb4f0a5b596442bfb479246925567, type: 3}
+    - {fileID: 8300000, guid: 9930d5b4be15bb04c9d0a6fa0d7e6b2e, type: 3}
+    volume: 0.6
+    pitchJitter: 0.05
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 1500
+  pipeClank:
+    clips:
+    - {fileID: 8300000, guid: 958408b32ccf3714ea02821877b0870c, type: 3}
+    - {fileID: 8300000, guid: 2e071f5b8b8467d45a5e6e24c23c6ad4, type: 3}
+    volume: 0.6
+    pitchJitter: 0.08
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  farRumble:
+    clips:
+    - {fileID: 8300000, guid: ee2ebb4c4ca5fad40bdac20c3eeaae1a, type: 3}
+    volume: 1
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  buildingSettle:
+    clips:
+    - {fileID: 8300000, guid: 95a4828741d096547b58dfec678adc38, type: 3}
+    - {fileID: 8300000, guid: 7c15bc7ba5017264c859e1a6ea72114e, type: 3}
+    volume: 1.3
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 6
+    lowPassHz: 2500
+  floorCreak:
+    clips:
+    - {fileID: 8300000, guid: 78838b72f8ea397439a70ffd0689498b, type: 3}
+    - {fileID: 8300000, guid: 735fe876150aad446b3981dddff7a78a, type: 3}
+    volume: 1.5
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  farDrag:
+    clips:
+    - {fileID: 8300000, guid: 8ad416819d894f546b4e4b8fbcc53ad9, type: 3}
+    - {fileID: 8300000, guid: 4f24593bc9e603947b5ce67526e2270c, type: 3}
+    volume: 1
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 900
+  timmyStep:
+    clips:
+    - {fileID: 8300000, guid: d047614f826bd5b439d5a7c1df578d97, type: 3}
+    - {fileID: 8300000, guid: c8e69f9a45dfd874a807eac7ce734deb, type: 3}
+    - {fileID: 8300000, guid: 57fd38b20a876d940aa6e6604a4eaf64, type: 3}
+    volume: 1.3
+    pitchJitter: 0.12
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  timmySpot:
+    clips:
+    - {fileID: 8300000, guid: 4d45d7bb73ea5074889a6378abd1f109, type: 3}
+    volume: 1.5
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  caught:
+    clips:
+    - {fileID: 8300000, guid: a37f44cbf8c2a7443a3c361efa2f233a, type: 3}
+    volume: 0.8
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  caughtLayer:
+    clips:
+    - {fileID: 8300000, guid: 57cb71e2ff6773d4a970f143464292c7, type: 3}
+    volume: 0.6
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 4
+    lowPassHz: 0
+  liftGrind:
+    clips:
+    - {fileID: 8300000, guid: 7465aaa75181ea24bbe564ba2cb77e1b, type: 3}
+    - {fileID: 8300000, guid: af1d0abe03d12d543af7966b88ae539b, type: 3}
+    - {fileID: 8300000, guid: 822f7139d3f940b4d973c7fff83b107a, type: 3}
+    volume: 0.9
+    pitchJitter: 0.04
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  liftBang:
+    clips:
+    - {fileID: 8300000, guid: 862e32085adc29949a12fee9d1ff11a0, type: 3}
+    - {fileID: 8300000, guid: a7091f7b917d7e943beb06db935303c5, type: 3}
+    volume: 1
+    pitchJitter: 0.04
+    startOffset: 0
+    maxSeconds: 3.5
+    lowPassHz: 0
+  liftThud:
+    clips:
+    - {fileID: 8300000, guid: 9930d5b4be15bb04c9d0a6fa0d7e6b2e, type: 3}
+    volume: 0.6
+    pitchJitter: 0.1
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  liftJamRumble:
+    clips:
+    - {fileID: 8300000, guid: 5ae4d298ed547ba4c88587effb75d7e1, type: 3}
+    volume: 0.35
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 6
+    lowPassHz: 0
+  bulbPop:
+    clips:
+    - {fileID: 8300000, guid: c042c112e16332f4390204d74eedfddd, type: 3}
+    volume: 1.4
+    pitchJitter: 0.08
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  keyJingle:
+    clips:
+    - {fileID: 8300000, guid: 3c272c5a6f2c71a4e95fbb4635776ad8, type: 3}
+    volume: 2.5
+    pitchJitter: 0.04
+    startOffset: 0.05
+    maxSeconds: 2.2
+    lowPassHz: 0
+  lockedRattle:
+    clips:
+    - {fileID: 8300000, guid: 4040ef1857bb0b44fa6c9a39f9076957, type: 3}
+    - {fileID: 8300000, guid: fb96dbc1d4fd05e4d8f681efd94800d6, type: 3}
+    volume: 1.2
+    pitchJitter: 0.05
+    startOffset: 0
+    maxSeconds: 1.8
+    lowPassHz: 0
+  exitDoorCreak:
+    clips:
+    - {fileID: 8300000, guid: 8fc66e2575f5fe24685dac29e828367c, type: 3}
+    volume: 0.8
+    pitchJitter: 0
+    startOffset: 0.2
+    maxSeconds: 7
+    lowPassHz: 0
+  masterLever:
+    clips:
+    - {fileID: 8300000, guid: 49dbc5f943f78c14a85757527f956b8c, type: 3}
+    volume: 1.2
+    pitchJitter: 0
+    startOffset: 0.35
+    maxSeconds: 3.5
+    lowPassHz: 0
+  powerDown:
+    clips:
+    - {fileID: 8300000, guid: 9eea4561cac01224b94404ae4111e3e9, type: 3}
+    volume: 1
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 4
+    lowPassHz: 0
+  deskDrawer:
+    clips:
+    - {fileID: 8300000, guid: fa01fe94b5827c644840c7441e2a2bd9, type: 3}
+    volume: 1.8
+    pitchJitter: 0
+    startOffset: 0.12
+    maxSeconds: 3
+    lowPassHz: 0
+  whisperEcho:
+    clips:
+    - {fileID: 8300000, guid: 727c90cef4c97c545a8860dda29b53b1, type: 3}
+    volume: 4
+    pitchJitter: 0
+    startOffset: 0.25
+    maxSeconds: 6
+    lowPassHz: 0
+  patientSound:
+    clips:
+    - {fileID: 8300000, guid: 539e54c3a324c7341a61c6edde66d718, type: 3}
+    - {fileID: 8300000, guid: 08b4ba6cd22a9ab4986a13fff034f354, type: 3}
+    volume: 1.3
+    pitchJitter: 0.05
+    startOffset: 0
+    maxSeconds: 7
+    lowPassHz: 0
+  flickerCrackle:
+    clips:
+    - {fileID: 8300000, guid: 6eef28af45924164daa9481f767aa345, type: 3}
+    - {fileID: 8300000, guid: c76b12f0596519d43a5ba9ba30599624, type: 3}
+    - {fileID: 8300000, guid: eec3bf121b316d64ca1c8aac7573a2f4, type: 3}
+    volume: 1
+    pitchJitter: 0.1
+    startOffset: 0
+    maxSeconds: 1
+    lowPassHz: 0
+  shutterRoll:
+    clips:
+    - {fileID: 8300000, guid: 070779cdcfbe3ff4688691fb33bc3e4e, type: 3}
+    volume: 0.7
+    pitchJitter: 0.05
+    startOffset: 0
+    maxSeconds: 3.2
+    lowPassHz: 0
+  shutterSlam:
+    clips:
+    - {fileID: 8300000, guid: 2e071f5b8b8467d45a5e6e24c23c6ad4, type: 3}
+    - {fileID: 8300000, guid: 4104495a448805b4e94dc83af000e0f6, type: 3}
+    volume: 0.6
+    pitchJitter: 0.06
+    startOffset: 0
+    maxSeconds: 2.5
+    lowPassHz: 0
+  fuseClunk:
+    clips:
+    - {fileID: 8300000, guid: c312b36521e615d4e830474ec15bed92, type: 3}
+    volume: 2
+    pitchJitter: 0
+    startOffset: 0.05
+    maxSeconds: 2.5
+    lowPassHz: 0
+  fuseHum:
+    clips:
+    - {fileID: 8300000, guid: 9eea4561cac01224b94404ae4111e3e9, type: 3}
+    volume: 0.8
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 3
+    lowPassHz: 0
+  wallButton:
+    clips:
+    - {fileID: 8300000, guid: e2cf25f6a4c7bf240b2e779a07381edb, type: 3}
+    volume: 3
+    pitchJitter: 0.03
+    startOffset: 0.24
+    maxSeconds: 1.2
+    lowPassHz: 0
+  hatchOpen:
+    clips:
+    - {fileID: 8300000, guid: 070779cdcfbe3ff4688691fb33bc3e4e, type: 3}
+    volume: 0.7
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 3.5
+    lowPassHz: 0
+  shardChime:
+    clips:
+    - {fileID: 8300000, guid: 34f9cbd28a9740349b6cc2f5e280dda3, type: 3}
+    volume: 0.8
+    pitchJitter: 0.05
+    startOffset: 0.65
+    maxSeconds: 2.5
+    lowPassHz: 0
+  glassStep:
+    clips:
+    - {fileID: 8300000, guid: fad818b1bba7a4f4d8b2e1a427603cad, type: 3}
+    volume: 0.35
+    pitchJitter: 0.1
+    startOffset: 0.1
+    maxSeconds: 0.9
+    lowPassHz: 0
+  bottleShatter:
+    clips:
+    - {fileID: 8300000, guid: a3f0cb29347c1d846a3572517526ee4b, type: 3}
+    volume: 0.9
+    pitchJitter: 0.05
+    startOffset: 0.05
+    maxSeconds: 2.4
+    lowPassHz: 0
+  canClatter:
+    clips:
+    - {fileID: 8300000, guid: 2eea5cca3ca0d2f448771273bbf97a59, type: 3}
+    volume: 0.9
+    pitchJitter: 0.05
+    startOffset: 0.1
+    maxSeconds: 2.2
+    lowPassHz: 0
+  steamValve:
+    clips:
+    - {fileID: 8300000, guid: 4144ed0d6abcc42479fe873c54bbe0fa, type: 3}
+    volume: 0.7
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 5
+    lowPassHz: 0
+  terminalBeep:
+    clips:
+    - {fileID: 8300000, guid: 67910a050ef05074bbddb1fc193635f7, type: 3}
+    volume: 1
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  candleSnuff:
+    clips:
+    - {fileID: 8300000, guid: d42124e8c3d90094ca1acc58c53cb903, type: 3}
+    volume: 1
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  stanTick:
+    clips:
+    - {fileID: 8300000, guid: 28d0cc52cb7474448a01cb9554f71717, type: 3}
+    volume: 0.6
+    pitchJitter: 0.1
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  stanSkitter:
+    clips:
+    - {fileID: 8300000, guid: ffaadebacf8cedb4aa5e5c32d55760ad, type: 3}
+    volume: 1
+    pitchJitter: 0.06
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  relocationCue:
+    clips:
+    - {fileID: 8300000, guid: 26fbf6bb6963666478f6992bc53b9145, type: 3}
+    - {fileID: 8300000, guid: 618be86712ffac947997f96463301683, type: 3}
+    volume: 0.7
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 6
+    lowPassHz: 0
+  phantomWhisper:
+    clips:
+    - {fileID: 8300000, guid: 727c90cef4c97c545a8860dda29b53b1, type: 3}
+    - {fileID: 8300000, guid: 57f5f9fc49e59cb4ca4ae0d069d09f33, type: 3}
+    volume: 3
+    pitchJitter: 0
+    startOffset: 0.3
+    maxSeconds: 5
+    lowPassHz: 0
+  captureSting:
+    clips:
+    - {fileID: 8300000, guid: 1689058eeeb072842b8c76940508c2a7, type: 3}
+    volume: 0.9
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  torchClick:
+    clips:
+    - {fileID: 8300000, guid: ef63163d7914a654bbc2cebda4c597ce, type: 3}
+    volume: 2.5
+    pitchJitter: 0.04
+    startOffset: 0.12
+    maxSeconds: 0.5
+    lowPassHz: 0
+  lockerDoor:
+    clips:
+    - {fileID: 8300000, guid: dea0ec7117563bc43908db8eb0d4c0cb, type: 3}
+    volume: 1.5
+    pitchJitter: 0.05
+    startOffset: 0.15
+    maxSeconds: 1.6
+    lowPassHz: 0
+  lockerBreath:
+    clips:
+    - {fileID: 8300000, guid: af6edb08e1f686041a968120f681aff9, type: 3}
+    volume: 2
+    pitchJitter: 0.03
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  paper:
+    clips:
+    - {fileID: 8300000, guid: bc8ffd99f8089ed44b9b611af0370ac5, type: 3}
+    - {fileID: 8300000, guid: 173354af479df74438f936478095b484, type: 3}
+    volume: 2.5
+    pitchJitter: 0.05
+    startOffset: 0
+    maxSeconds: 1.5
+    lowPassHz: 0
+  shopTick:
+    clips:
+    - {fileID: 8300000, guid: e157eff9cdd63ba42b1e0743fef59af6, type: 3}
+    volume: 2.5
+    pitchJitter: 0
+    startOffset: 0.19
+    maxSeconds: 0
+    lowPassHz: 0
+  chaseMusic:
+    clips:
+    - {fileID: 8300000, guid: 10546d9649879d14e8277d84c34d122e, type: 3}
+    volume: 1
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  chaseEnd:
+    clips:
+    - {fileID: 8300000, guid: 9ffb473a8305d8741a911f9eef94a48c, type: 3}
+    volume: 1
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  shopMusic:
+    clips:
+    - {fileID: 8300000, guid: 45400638a56be7a4ea9c7e920d8410b6, type: 3}
+    volume: 0.6
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0

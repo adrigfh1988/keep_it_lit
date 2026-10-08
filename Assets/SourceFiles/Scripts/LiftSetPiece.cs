@@ -202,7 +202,7 @@ public class LiftSetPiece : HubSetPiece
     private IEnumerator SlideDoor(Transform door, Vector3 closedPos, bool open, float seconds)
     {
         EnsureAudio();
-        _audio.PlayOneShot(_grind, 0.6f);
+        if (!GameAudio.Play2D(GameAudio.Library.liftGrind, 0.6f)) _audio.PlayOneShot(_grind, 0.6f); // F97: recorded clip when the slot is filled
         bool ground = door == groundDoor;
         Vector3 closedScale = ground ? _groundDoorScale : _basementDoorScale;
         float width = ground ? _groundDoorWidth : _basementDoorWidth;
@@ -295,7 +295,7 @@ public class LiftSetPiece : HubSetPiece
             }
             SetCar(total);
             Hum(false);
-            _audio.PlayOneShot(_thud, 0.7f);
+            if (!GameAudio.Play2D(GameAudio.Library.liftThud, 0.7f)) _audio.PlayOneShot(_thud, 0.7f);
             yield return SlideDoor(basementDoor, _basementDoorStart, true, 1.0f);
             yield return WalkOut();
             Finish(hub);
@@ -314,7 +314,8 @@ public class LiftSetPiece : HubSetPiece
         }
         SetCar(jamDepth);
         Hum(false);
-        _audio.PlayOneShot(_bang, 1f);
+        if (!GameAudio.Play2D(GameAudio.Library.liftBang, 1f)) _audio.PlayOneShot(_bang, 1f);
+        GameAudio.Play2D(GameAudio.Library.liftJamRumble, 0.4f); // F97: the shaft shaking, under the bang (recorded clip only)
         if (hub.Torch != null) hub.Torch.Stutter(0.9f);
         KillCarLights();
         if (redLight != null) { redLight.enabled = true; redLight.intensity = 1.8f; }
@@ -326,7 +327,7 @@ public class LiftSetPiece : HubSetPiece
         Vector3 roof = car.position + Vector3.up * 3.0f;
         for (int i = 0; i < 3; i++)
         {
-            AudioSource.PlayClipAtPoint(_thud, roof + Vector3.right * (i - 1) * 0.6f, 1f);
+            if (!GameAudio.PlayAt(GameAudio.Library.liftThud, roof + Vector3.right * (i - 1) * 0.6f, 1f, 0.8f)) AudioSource.PlayClipAtPoint(_thud, roof + Vector3.right * (i - 1) * 0.6f, 1f);
             yield return new WaitForSeconds(1.1f);
         }
         yield return new WaitForSeconds(1.3f);
@@ -343,7 +344,7 @@ public class LiftSetPiece : HubSetPiece
             yield return null;
         }
         SetCar(total);
-        _audio.PlayOneShot(_bang, 1f);
+        if (!GameAudio.Play2D(GameAudio.Library.liftBang, 1f)) _audio.PlayOneShot(_bang, 1f);
         if (hub.Torch != null) hub.Torch.Stutter(1.4f);
         if (redLight != null) redLight.intensity = 1.8f;
 

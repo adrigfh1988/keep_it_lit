@@ -21,12 +21,12 @@ public class HubFinaleDesk : MonoBehaviour, IInteractable
         int read = HubState.FilesRead;
         if (read < PatientFiles.MazeFileCount)
         {
-            AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.18f, 160f, 0.35f), transform.position, 0.7f);
+            if (!GameAudio.PlayAt(GameAudio.Library.lockedRattle, transform.position, 0.7f)) AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.18f, 160f, 0.35f), transform.position, 0.7f); // F97
             hub.SubtitleLine($"THE DRAWER IS LOCKED · CASE FILES {read} / {PatientFiles.MazeFileCount}", 3f);
             return;
         }
 
-        AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.3f, 120f, 0.5f), transform.position, 0.8f);
+        if (!GameAudio.PlayAt(GameAudio.Library.deskDrawer, transform.position, 0.8f)) AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.3f, 120f, 0.5f), transform.position, 0.8f); // F97
         LoreArchive.MarkRead(PatientFiles.DirectorId);
         if (who == null && hub.Player != null) who = hub.Player.GetComponent<PlayerInteractor>();
         if (hub.Reader != null) hub.Reader.Show(PatientFiles.Text(PatientFiles.DirectorId), who);

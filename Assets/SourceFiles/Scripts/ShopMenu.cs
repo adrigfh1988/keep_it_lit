@@ -484,6 +484,7 @@ public class ShopMenu : MonoBehaviour
             _tickSource.playOnAwake = false;
             _tickSource.spatialBlend = 0f;
         }
+        if (GameAudio.Play2D(GameAudio.Library.shopTick, 0.5f)) return; // F97
         if (_tickClip == null) _tickClip = BuildTickClip();
         _tickSource.PlayOneShot(_tickClip, 0.5f);
     }

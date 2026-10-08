@@ -147,10 +147,53 @@ public class Locker : MonoBehaviour, IHidingSpot
         _controller.TopClamp = pitchRange;
 
         if (_hud != null) _hud.SetPrompt("E  LEAVE");
+        GameAudio.PlayAt(GameAudio.Library.lockerDoor, transform.position, 0.7f); // F97: the door pulled shut (recorded clip only)
+        StartBreathing();
+    }
+
+    // F97: breathing inside the locker - a recorded loop-with-gaps at low volume, stopped on exit or when the hunter opens the door.
+    private Coroutine _breathing;
+    private AudioSource _breathSource;
+
+    private void StartBreathing()
+    {
+        if (!GameAudio.Library.lockerBreath.Has) return;
+        StopBreathing();
+        _breathing = StartCoroutine(BreathRoutine());
+    }
+
+    private void StopBreathing()
+    {
+        if (_breathing != null) StopCoroutine(_breathing);
+        _breathing = null;
+        if (_breathSource != null) { Destroy(_breathSource.gameObject); _breathSource = null; }
+    }
+
+    private IEnumerator BreathRoutine()
+    {
+        AudioSlot slot = GameAudio.Library.lockerBreath;
+        GameObject go = new GameObject("LockerBreath");
+        go.transform.SetParent(transform, false);
+        _breathSource = go.AddComponent<AudioSource>();
+        _breathSource.playOnAwake = false;
+        _breathSource.spatialBlend = 0f;
+        yield return new WaitForSeconds(0.6f);
+        while (Occupied)
+        {
+            AudioClip clip = slot.Pick();
+            if (clip == null) yield break;
+            _breathSource.clip = clip;
+            _breathSource.volume = Mathf.Clamp01(0.3f * slot.volume);
+            _breathSource.pitch = slot.PickPitch();
+            _breathSource.Play();
+            yield return new WaitForSeconds(clip.length / _breathSource.pitch + Random.Range(0.8f, 2.5f));
+        }
     }
 
     private void Leave()
     {
+        StopBreathing();
+        GameAudio.PlayAt(GameAudio.Library.lockerDoor, transform.position, 0.7f); // F97
         CharacterController cc = _player.GetComponent<CharacterController>();
         if (cc != null) cc.enabled = false;
         _player.position = FrontPosition;
@@ -179,6 +222,8 @@ public class Locker : MonoBehaviour, IHidingSpot
     {
         if (_exposed) return;
         _exposed = true;
+        StopBreathing(); // F97
+        GameAudio.PlayAt(GameAudio.Library.lockerDoor, transform.position, 0.9f);
 
         if (_door != null) StartCoroutine(OpenDoor());
 

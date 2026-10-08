@@ -36,6 +36,7 @@ public class RecordsSlot : MonoBehaviour, IInteractable
         if (reader == null || !Unlocked) return;
         if (reader.IsOpen) { reader.Close(); return; }
         reader.Show(PatientFiles.Text(FileId), who);
+        GameAudio.PlayAt(GameAudio.Library.paper, transform.position, 0.6f); // F97 (recorded clip only)
     }
 
     void IInteractable.OnFocus(bool focused) { }

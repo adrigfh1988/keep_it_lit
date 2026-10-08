@@ -92,6 +92,7 @@ public class ChaseSetPiece : HubSetPiece
         }
         pursuer.transform.rotation = riseSpot.rotation;
         pursuer.StartRise(riseSeconds, Rearm);
+        if (Hub != null && Hub.Ambience != null) Hub.Ambience.SetUrgentOverride(GameAudio.Library.chaseMusic.First()); // F97: the recorded chase loop (empty slot = the usual escape track)
         SetUrgency(1f);
     }
 
@@ -101,6 +102,7 @@ public class ChaseSetPiece : HubSetPiece
         SetUrgency(0f);
         pursuer.relentless = false;
         pursuer.Stop();
+        GameAudio.Play2D(GameAudio.Library.chaseEnd, 0.7f); // F97: the last bars, fading out by themselves
         Hub.SubtitleLine("IT STOPS AT THE DOOR", 2.6f);
         StartCoroutine(Fade());
     }

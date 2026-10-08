@@ -54910,6 +54910,8 @@ MonoBehaviour:
   kitTheme: {fileID: 0}
   kitCellSize: 5
   interactableKit: {fileID: 0}
+  audioLibrary: {fileID: 11400000, guid: 2d74051b40878d54fa8b46934d454990, type: 2}
+  logAudioResolution: 0
   debugObjectives: 0
 --- !u!1 &1901180370
 GameObject:
@@ -105916,10 +105918,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1732405700174511208, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -4.4700027
-      objectReference: {fileID: 0}
     - target: {fileID: 2172988053986730172, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 100

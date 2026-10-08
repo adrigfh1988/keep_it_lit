@@ -127,6 +127,7 @@ public class HubDecay : MonoBehaviour
                 b.nextStep = t;
                 b.bursting = true;
                 // F97: a quiet zap from the lamp on about half of the flicker bursts (recorded clips only, audio only).
+                if (!b.brown && Random.value < 0.5f) GameAudio.PlayAt(GameAudio.Library.flickerCrackle, b.light.transform.position, 0.35f, 1f, 14f);
             }
 
             if (!b.light.enabled) { EndBurst(b, false); continue; } // someone else switched it off: leave it off

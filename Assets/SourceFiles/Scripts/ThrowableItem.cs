@@ -103,13 +103,13 @@ public class ThrowableItem : MonoBehaviour, IInteractable
 
         if (kind == Kind.Bottle)
         {
-            PlayOneShotAt(point, GetBottleShatterClip(), 0.8f);
+            if (!GameAudio.PlayAt(GameAudio.Library.bottleShatter, point, 0.8f)) PlayOneShotAt(point, GetBottleShatterClip(), 0.8f); // F97
             NoisySurface.SpawnGlassShatter(_glassPatchTemplate, point, _mazeRoot);
             Destroy(gameObject);
         }
         else
         {
-            PlayOneShotAt(point, GetCanClatterClip(), 0.6f);
+            if (!GameAudio.PlayAt(GameAudio.Library.canClatter, point, 0.6f)) PlayOneShotAt(point, GetCanClatterClip(), 0.6f); // F97
             // Left rolling to a stop - SettleCan (above) flips it back to a pickup once it is still.
         }
     }

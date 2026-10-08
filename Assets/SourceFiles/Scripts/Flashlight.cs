@@ -251,6 +251,7 @@ public class Flashlight : MonoBehaviour
             ((Keyboard.current != null && Keyboard.current.fKey.wasPressedThisFrame) || TouchInput.Pressed(TouchInput.TouchAction.Torch)))
         {
             SetOn(!IsOn);
+            GameAudio.Play2D(GameAudio.Library.torchClick, 0.5f, 1f); // F97: the switch click (recorded clip only)
         }
 
         IsFocused = InputEnabled && hiddenGate &&
