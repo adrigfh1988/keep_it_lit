@@ -105997,9 +105997,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1907895248750027999, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 5535774755512720109, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
 --- !u!23 &7178550495498246162
 MeshRenderer:

@@ -33,7 +33,12 @@ public class AsylumAmbience : MonoBehaviour
     private static AudioClip _buzz, _tone, _machine, _drip, _wind;
     private static AudioClip[] _noises;
 
-    private AudioSource _toneSource, _musicSource;
+    private AudioSource _toneSource, _musicSource, _urgentSource;
+    private float _eventsPerMinute;      // F93 decay: 0 = the old 25-60 s spacing
+    private int _decayFloor = 1;
+    private float _urgencyTarget, _urgency;
+    private AudioClip _urgentClip;
+    private static AudioClip _scream;
     private float _fade;          // 0..1, follows the hub content switch
     private float _nextNoise;
     private bool _ready;
@@ -57,6 +62,18 @@ public class AsylumAmbience : MonoBehaviour
         _musicSource.clip = clip;
         _musicSource.loop = true;
     }
+
+    /// <summary>F93 (decay): how many far-off noises per minute (0 = the default slow spacing) and the floor, which adds footsteps overhead (2+) and a far scream (4+).</summary>
+    public void SetDecay(float eventsPerMinute, int floor)
+    {
+        _eventsPerMinute = eventsPerMinute;
+        _decayFloor = floor;
+        _nextNoise = Mathf.Min(_nextNoise, Time.time + 6f);
+    }
+
+    /// <summary>F93 (chase set piece): the escape track under the base music. `target` 0..1 is eased in/out.</summary>
+    public void SetUrgent(AudioClip clip) { _urgentClip = clip; }
+    public void SetUrgency(float target) { _urgencyTarget = Mathf.Clamp01(target); }
 
     private void EnsureSources()
     {
@@ -124,7 +141,15 @@ public class AsylumAmbience : MonoBehaviour
         if (!_ready) return;
 
         _toneSource.volume = toneVolume * _fade;
-        _musicSource.volume = musicVolume * _fade;
+        _urgency = Mathf.MoveTowards(_urgency, _urgencyTarget, Time.unscaledDeltaTime / 1.5f);
+        _musicSource.volume = musicVolume * _fade * (1f - 0.85f * _urgency);
+        if (_urgentClip != null)
+        {
+            if (_urgentSource == null) { _urgentSource = gameObject.AddComponent<AudioSource>(); _urgentSource.playOnAwake = false; _urgentSource.loop = true; _urgentSource.spatialBlend = 0f; }
+            _urgentSource.clip = _urgentClip;
+            _urgentSource.volume = 0.3f * _urgency * _fade;
+            SetPlaying(_urgentSource, _urgency > 0.001f && _fade > 0.001f);
+        }
         SetPlaying(_toneSource, _fade > 0.001f);
         SetPlaying(_musicSource, _fade > 0.001f && _musicSource.clip != null);
 
@@ -136,10 +161,57 @@ public class AsylumAmbience : MonoBehaviour
 
         if (active && Time.time >= _nextNoise && soundPoints != null && soundPoints.Length > 0)
         {
-            _nextNoise = Time.time + UnityEngine.Random.Range(secondsBetweenNoises.x, secondsBetweenNoises.y);
+            _nextNoise = Time.time + (_eventsPerMinute > 0.01f ? UnityEngine.Random.Range(0.6f, 1.4f) * 60f / _eventsPerMinute : UnityEngine.Random.Range(secondsBetweenNoises.x, secondsBetweenNoises.y));
             Transform point = soundPoints[UnityEngine.Random.Range(0, soundPoints.Length)];
-            if (point != null) AudioSource.PlayClipAtPoint(_noises[UnityEngine.Random.Range(0, _noises.Length)], point.position, UnityEngine.Random.Range(0.3f, 0.5f));
+            if (point != null) PlayFarEvent(point.position);
         }
+    }
+
+    /// <summary>One far-off event at `position`: a door/pipe/thud, from floor 2 also footsteps overhead, from floor 4 a scream.</summary>
+    private void PlayFarEvent(Vector3 position)
+    {
+        float roll = UnityEngine.Random.value;
+        if (_decayFloor >= 4 && roll < 0.25f)
+        {
+            if (_scream == null) _scream = BuildScream();
+            AudioSource.PlayClipAtPoint(_scream, position, 0.45f);
+        }
+        else if (_decayFloor >= 2 && roll < 0.55f)
+        {
+            StartCoroutine(FootstepsOverhead(position + Vector3.up * 3.5f));
+        }
+        else
+        {
+            AudioSource.PlayClipAtPoint(_noises[UnityEngine.Random.Range(0, _noises.Length)], position, UnityEngine.Random.Range(0.3f, 0.5f));
+        }
+    }
+
+    private System.Collections.IEnumerator FootstepsOverhead(Vector3 at)
+    {
+        AudioClip step = DoorAudio.BuildClunkClip(0.12f, 90f, 0.5f);
+        for (int i = 0; i < 5; i++)
+        {
+            AudioSource.PlayClipAtPoint(step, at + new Vector3(i * 0.6f, 0f, 0f), 0.5f);
+            yield return new WaitForSeconds(0.55f);
+        }
+    }
+
+    private static AudioClip BuildScream()
+    {
+        int n = Mathf.RoundToInt(1.4f * SampleRate);
+        float[] data = new float[n];
+        float phase = 0f;
+        for (int i = 0; i < n; i++)
+        {
+            float t = i / (float)SampleRate;
+            float env = Mathf.Sin(Mathf.PI * Mathf.Clamp01(t / 1.4f));
+            float freq = 620f + 520f * Mathf.Sin(Mathf.PI * t / 1.4f) + 35f * Mathf.Sin(2f * Mathf.PI * 7f * t);
+            phase += 2f * Mathf.PI * freq / SampleRate;
+            data[i] = env * (0.45f * Mathf.Sin(phase) + 0.2f * Mathf.Sin(2f * phase) + 0.12f * Noise(i)) * 0.7f;
+        }
+        AudioClip clip = AudioClip.Create("AsylumFarScream", n, 1, SampleRate, false);
+        clip.SetData(data, 0);
+        return clip;
     }
 
     private static void SetPlaying(AudioSource source, bool on)

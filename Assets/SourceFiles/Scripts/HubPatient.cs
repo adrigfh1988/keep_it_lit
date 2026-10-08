@@ -33,10 +33,18 @@ public class HubPatient : MonoBehaviour
     public Transform[] drawerParts = new Transform[0];
     public Vector3 drawerOpenOffset = new Vector3(0f, 0f, -1.25f);
 
+    [Header("Mixamo animation (F93 G4+)")]
+    [Tooltip("HubPeople.controller: states Look, Nervous, Lie, SitIdle, SitDisbelief, Talking, StandUp, StoopIdle. Assigned to the body Animator at Awake.")]
+    public RuntimeAnimatorController controller;
+    [Tooltip("Yaw added to the lying anchor so the Laying Idle clip's head end points where the anchor says (tuned by eye).")]
+    public float lieYawOffset;
+    [Tooltip("Metres added to the lying anchor height (the clip's hips sit above the root).")]
+    public float lieHeight;
+
     [Header("Tuning")]
     public float headRange = 5f;
     public float headMaxYaw = 70f;
-    public float rockDegrees = 4f;
+    public float rockDegrees = 2f;
     public float rockHertz = 0.45f;
     public float knockEverySeconds = 9f;
     public float knockVolume = 0.9f;
@@ -57,6 +65,12 @@ public class HubPatient : MonoBehaviour
     private float _headYaw;
     private float _clock;
     private int _lastPulse = -1;
+    private Transform _anchorUsed;
+    private int _seatFrames;
+    private SkinnedMeshRenderer[] _skins;
+    private PatientVoice _voice;
+    private string _baseState = "Look";
+    private string _playing;
 
     private enum Pose { Stand, Rock, Knock, Lie }
 
@@ -70,6 +84,7 @@ public class HubPatient : MonoBehaviour
             _animator = body.GetComponent<Animator>();
             if (_animator != null)
             {
+                if (controller != null) _animator.runtimeAnimatorController = controller;
                 _animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
                 if (_animator.isHuman)
                 {
@@ -78,6 +93,7 @@ public class HubPatient : MonoBehaviour
                 }
             }
         }
+        _voice = GetComponent<PatientVoice>();
         _drawerClosed = new Vector3[drawerParts != null ? drawerParts.Length : 0];
         for (int i = 0; i < _drawerClosed.Length; i++) _drawerClosed[i] = drawerParts[i] != null ? drawerParts[i].position : Vector3.zero;
         if (patient == HubState.Patient.Tomas)
@@ -112,6 +128,7 @@ public class HubPatient : MonoBehaviour
 
     private void Update()
     {
+        if (_present && _voice != null && _pose != Pose.Lie) PlayState(_voice.IsTalking ? "Talking" : _baseState, 0.3f);
         if (HubState.Floor != _stateFloor || HubState.IsFinale != _stateFinale) Refresh();
         if (_pose == Pose.Knock && _present) TickKnock();
     }
@@ -137,26 +154,39 @@ public class HubPatient : MonoBehaviour
 
         Transform anchor = defaultAnchor;
         _pose = Pose.Stand;
+        _baseState = "Look";
         if (finale)
         {
             anchor = finaleAnchor != null ? finaleAnchor : defaultAnchor;
+            _baseState = patient == HubState.Patient.Hilde ? "Look" : patient == HubState.Patient.Tomas ? "Look" : "Nervous";
         }
-        else if (patient == HubState.Patient.Hilde) _pose = Pose.Rock;
-        else if (patient == HubState.Patient.Tomas) _pose = Pose.Knock;
+        else if (patient == HubState.Patient.Hilde) { _pose = Pose.Rock; _baseState = "Nervous"; }
+        else if (patient == HubState.Patient.Tomas) { _pose = Pose.Knock; _baseState = "StoopIdle"; }
         else if (patient == HubState.Patient.Elias)
         {
-            if (floor <= 2) { anchor = bedAnchor != null ? bedAnchor : defaultAnchor; _pose = Pose.Lie; }
-            else anchor = standAnchor != null ? standAnchor : defaultAnchor;
+            if (floor <= 2) { anchor = bedAnchor != null ? bedAnchor : defaultAnchor; _pose = Pose.Lie; _baseState = "Lie"; }
+            else { anchor = standAnchor != null ? standAnchor : defaultAnchor; _baseState = "Nervous"; }
         }
         if (anchor == null) return;
 
         _basePos = anchor.position;
         _baseRot = anchor.rotation;
-        // Lying: the model's up becomes the bed's horizontal, face up, head toward the anchor's back.
-        if (_pose == Pose.Lie) _baseRot = anchor.rotation * Quaternion.Euler(-90f, 0f, 0f);
+        // Lying: the Mixamo Laying Idle clip already lies on its back; the offsets only turn and lift it onto the mattress.
+        if (_pose == Pose.Lie) { _baseRot = anchor.rotation * Quaternion.Euler(0f, lieYawOffset, 0f); _basePos += Vector3.up * lieHeight; }
+        _playing = null;
+        PlayState(_baseState, 0f);
+        _anchorUsed = anchor;
+        _seatFrames = _pose == Pose.Lie ? 8 : 0;
         ApplyRoot(0f);
         _lastPulse = -1;
         _clock = 0f;
+    }
+
+    private void PlayState(string state, float fade)
+    {
+        if (_animator == null || !_animator.isActiveAndEnabled || _animator.runtimeAnimatorController == null || _playing == state) return;
+        _playing = state;
+        if (fade <= 0f) _animator.Play(state, 0, Random.value); else _animator.CrossFadeInFixedTime(state, fade);
     }
 
     private void ApplyRoot(float t)
@@ -212,12 +242,39 @@ public class HubPatient : MonoBehaviour
         return raise * (78f - tap * 14f);
     }
 
+    /// <summary>
+    /// The Laying Idle clip lies the body on its back wherever its root is: turn it so the head points along the anchor's back, and seat
+    /// its renderer bounds on the mattress (centre over the mattress centre, underside on the surface). Runs for a few frames after a
+    /// refresh, until the skinned bounds follow the animated pose.
+    /// </summary>
+    private void SeatLying()
+    {
+        if (_animator == null || !_animator.isHuman || _anchorUsed == null) return;
+        if (_skins == null) { _skins = body.GetComponentsInChildren<SkinnedMeshRenderer>(true); foreach (var r in _skins) r.updateWhenOffscreen = true; }
+        Transform hips = _animator.GetBoneTransform(HumanBodyBones.Hips);
+        if (hips == null || _head == null) return;
+        Vector3 along = Vector3.ProjectOnPlane(_head.position - hips.position, Vector3.up);
+        Vector3 desired = -_anchorUsed.forward;
+        if (along.sqrMagnitude > 0.0004f)
+        {
+            float delta = Vector3.SignedAngle(along, desired, Vector3.up);
+            if (Mathf.Abs(delta) > 1f) { _baseRot = Quaternion.AngleAxis(delta, Vector3.up) * _baseRot; body.rotation = _baseRot; }
+        }
+        Bounds b = default; bool any = false;
+        foreach (var r in _skins) { if (!r.enabled) continue; if (!any) { b = r.bounds; any = true; } else b.Encapsulate(r.bounds); }
+        if (!any) return;
+        Vector3 centre = _anchorUsed.position - _anchorUsed.forward * 0.95f;
+        float surface = _anchorUsed.position.y - 0.13f + 0.03f + lieHeight;
+        _basePos += new Vector3(centre.x - b.center.x, surface - b.min.y, centre.z - b.center.z);
+    }
+
     // ---------------------------------------------------------------- LateUpdate: offsets on top of the animated pose
 
     private void LateUpdate()
     {
         if (!_present || body == null) return;
         ApplyRoot(Time.time);
+        if (_seatFrames > 0) { SeatLying(); _seatFrames--; ApplyRoot(Time.time); }
 
         if (_rightArm != null && _pose == Pose.Knock)
         {

@@ -199,7 +199,7 @@ public class WallLamp : MonoBehaviour
 
             if (_renderer != null)
             {
-                _renderer.GetPropertyBlock(_block);
+                _renderer.GetPropertyBlock(_block ??= new MaterialPropertyBlock());
                 _block.SetColor("_EmissionColor", Color.black);
                 _renderer.SetPropertyBlock(_block);
             }
@@ -276,7 +276,7 @@ public class WallLamp : MonoBehaviour
         {
             // A property block rather than an instance material: every lamp shares one Material, so
             // writing to it directly would flicker every other lamp in lockstep.
-            _renderer.GetPropertyBlock(_block);
+            _renderer.GetPropertyBlock(_block ??= new MaterialPropertyBlock());
             _block.SetColor("_EmissionColor", _emissionBaseColor * k);
             _renderer.SetPropertyBlock(_block);
         }

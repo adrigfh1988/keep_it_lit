@@ -18,6 +18,10 @@ public class PatientVoice : CreatureVoice
     private HubPatient _patient;
     private float _nextAt;
     private bool _saidFile;
+    private float _talkUntil;
+
+    /// <summary>True while this patient's bubble is up (HubPatient plays the Talking clip).</summary>
+    public bool IsTalking => Time.time < _talkUntil;
 
     private void Awake()
     {
@@ -74,6 +78,7 @@ public class PatientVoice : CreatureVoice
         if (TrySay((int)set))
         {
             if (isFile) _saidFile = true;
+            _talkUntil = Time.time + 3.6f;
             _nextAt = Time.time + cooldown;
         }
     }

@@ -53,6 +53,7 @@ public static partial class AsylumHubBuilder
         }
         if (life == null || life.Find(RecordsBoardName) == null) missing.Add("Life/" + RecordsBoardName);
         if (life == null || life.Find(EliasMorgueName) == null) missing.Add("Life/" + EliasMorgueName);
+        missing.AddRange(G4Missing(hub, life));
         return missing;
     }
 
@@ -103,8 +104,12 @@ public static partial class AsylumHubBuilder
         WireElias(hub, life);
         foreach (HubPatient settled in patients.GetComponentsInChildren<HubPatient>(true)) settled.Refresh(); // bodies rest at their floor-1 anchors in the saved prefab
 
+        int before = life.childCount;
+        AddG4(hub, life, report);
+        _rebakeNeeded = life.Find("Lockers") != null && before != life.childCount;
         // The hub NavMesh last: it is baked from the colliders in place. Skipped when it already exists.
         if (hub.transform.Find(HubNavMesh.NavigationName) == null) report.AppendLine("navmesh: " + HubNavMesh.Bake(hub));
+        else if (_rebakeNeeded) report.AppendLine("navmesh rebake: " + HubNavMesh.Bake(hub));
 
         if (!wasActive) hub.SetContentActive(false);
         EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
@@ -114,6 +119,7 @@ public static partial class AsylumHubBuilder
     }
 
     private static List<Vector3[]> _routes = new List<Vector3[]>();
+    private static bool _rebakeNeeded;
 
     // ---------------------------------------------------------------- patients
 

@@ -37,6 +37,10 @@ public class WingDoor : MonoBehaviour, IInteractable
     private static readonly Color ClearedColor = new Color(0.55f, 0.85f, 0.6f);
     private static readonly Color SealedColor = new Color(0.85f, 0.2f, 0.15f);
 
+    /// <summary>F93: a story piece (key run, chase) locks the open door by setting the line E answers with; null/empty = usable. Cleared when the hub is left.</summary>
+    [System.NonSerialized] public string lockedLine;
+    public bool StoryLocked => !string.IsNullOrEmpty(lockedLine);
+
     private float _nudgeTimer;
     private AudioClip _padlockClip;
 
@@ -59,7 +63,7 @@ public class WingDoor : MonoBehaviour, IInteractable
         {
             switch (State)
             {
-                case DoorState.Open: return $"ENTER {wingName}";
+                case DoorState.Open: return StoryLocked ? $"{wingName} · LOCKED" : $"ENTER {wingName}";
                 case DoorState.Cleared: return $"{wingName} · CLEARED";
                 default: return $"{wingName} · SEALED";
             }
@@ -77,6 +81,15 @@ public class WingDoor : MonoBehaviour, IInteractable
         switch (State)
         {
             case DoorState.Open:
+                if (StoryLocked)
+                {
+                    if (_nudgeTimer > 0f) break;
+                    _nudgeTimer = 2f;
+                    if (_padlockClip == null) _padlockClip = DoorAudio.BuildClunkClip(0.18f, 160f, 0.35f);
+                    AudioSource.PlayClipAtPoint(_padlockClip, transform.position, 0.7f);
+                    hud?.ShowSubtitle(lockedLine, 2.6f);
+                    break;
+                }
                 if (AsylumHub.Active != null) AsylumHub.Active.EnterWing(this);
                 break;
 

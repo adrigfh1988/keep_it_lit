@@ -82,6 +82,12 @@ public class AsylumHub : MonoBehaviour
     public Flashlight Torch => _flashlight;
     /// <summary>The reading panel the records board and the patient files use (F93).</summary>
     public LoreReadingUi Reader => _reader;
+    public AsylumAmbience Ambience => _ambience;
+    public PlayerStealthState Stealth => _stealth;
+    public ThirdPersonController Controller => _controller;
+    /// <summary>Where the last arrival put the player (a caught player wakes up here).</summary>
+    public Vector3 ArrivalPosition { get; private set; }
+    public float ArrivalYaw { get; private set; }
 
     public bool IsComplete =>
         building != null && points != null && mainEntrance != null && wings != null && lights != null && dressing != null &&
@@ -109,6 +115,8 @@ public class AsylumHub : MonoBehaviour
     private CharacterController _characterController;
     private AsylumAmbience _ambience;
     private LoreReadingUi _reader;
+    private PlayerStealthState _stealth;
+    private PlayerInteractor _interactor;
 
     private Vector3 _returnPosition;
     private float _returnYaw;
@@ -142,7 +150,7 @@ public class AsylumHub : MonoBehaviour
     }
 
     /// <summary>Called by MazeGenerator.SetUpAtmosphere once the player systems exist. `music` is the floor's base music, played at a whisper in the hub.</summary>
-    public void Configure(Transform player, Camera camera, PlayerHud hud, Flashlight flashlight, AudioClip music = null, LoreReadingUi reader = null)
+    public void Configure(Transform player, Camera camera, PlayerHud hud, Flashlight flashlight, AudioClip music = null, LoreReadingUi reader = null, AudioClip urgent = null)
     {
         _reader = reader;
         _player = player;
@@ -150,9 +158,13 @@ public class AsylumHub : MonoBehaviour
         _hud = hud;
         _flashlight = flashlight;
         _controller = player != null ? player.GetComponent<ThirdPersonController>() : null;
+        _stealth = player != null ? player.GetComponent<PlayerStealthState>() : null;
+        _interactor = player != null ? player.GetComponent<PlayerInteractor>() : null;
         _characterController = player != null ? player.GetComponent<CharacterController>() : null;
         _ambience = GetComponentInChildren<AsylumAmbience>(true);
         if (_ambience != null) _ambience.SetMusic(music);
+        if (_ambience != null) _ambience.SetUrgent(urgent);
+        BindLockers();
         _configured = player != null;
     }
 
@@ -260,6 +272,8 @@ public class AsylumHub : MonoBehaviour
         SetContentActive(true);
         foreach (WingDoor door in wingDoors) door.Refresh();
 
+        ArrivalPosition = arrival.position;
+        ArrivalYaw = arrival.eulerAngles.y;
         Teleport(arrival.position, arrival.eulerAngles.y);
         if (_controller != null)
         {
@@ -311,7 +325,7 @@ public class AsylumHub : MonoBehaviour
     /// </summary>
     public void EnterWing(WingDoor door)
     {
-        if (door == null || Leaving || IsTransitioning || !CanEnter || door.State != WingDoor.DoorState.Open) return;
+        if (door == null || Leaving || IsTransitioning || !CanEnter || door.State != WingDoor.DoorState.Open || door.StoryLocked) return;
         StartCoroutine(WalkInRoutine(door));
     }
 
@@ -438,6 +452,76 @@ public class AsylumHub : MonoBehaviour
         RenderSettings.fogMode = _fogMode;
         RenderSettings.fogDensity = _fogDensity;
         RenderSettings.fogColor = _fogColor;
+    }
+
+    // ---------------------------------------------------------------- story helpers (F93 G4+)
+
+    /// <summary>Binds every hub locker (AsylumHub/Life/Lockers, clones of the Ward locker) to the player systems, like MazeGenerator does for a maze's.</summary>
+    private void BindLockers()
+    {
+        if (life == null || _player == null) return;
+        foreach (Locker locker in life.GetComponentsInChildren<Locker>(true))
+        {
+            Vector3 inside = locker.InsideAnchor != null ? locker.InsideAnchor.position : locker.transform.TransformPoint(new Vector3(0f, 0f, 0.35f));
+            Vector3 front = locker.FrontAnchor != null ? locker.FrontAnchor.position : locker.transform.TransformPoint(new Vector3(0f, 0f, 1.6f));
+            locker.Configure(inside, front, locker.transform.eulerAngles.y, locker.Door);
+            locker.Bind(_player, _stealth, _flashlight, _hud, _interactor);
+        }
+    }
+
+    /// <summary>Moves the player (CharacterController off around the write) and turns the view.</summary>
+    public void TeleportPlayer(Vector3 position, float yaw) => Teleport(position, yaw);
+
+    /// <summary>Moves the player without touching the view (rides, scripted carries).</summary>
+    public void MovePlayerTo(Vector3 position) => MovePlayer(position);
+
+    public void SubtitleLine(string text, float seconds) { if (_hud != null) _hud.ShowSubtitle(text, seconds); }
+
+    /// <summary>Fades the story blackout to `alpha` over `seconds` (unscaled). Used by set pieces for hard cuts.</summary>
+    public IEnumerator BlackoutTo(float alpha, float seconds)
+    {
+        EnsureBlackout();
+        float from = _blackout != null ? _blackout.color.a : 0f;
+        yield return Fade(from, alpha, seconds);
+        if (alpha <= 0.001f && _blackoutRoot != null && !IsTransitioning) _blackoutRoot.SetActive(false);
+    }
+
+    /// <summary>
+    /// A creature caught the player in the hub (never GameOutcome - the hub has no run to lose): black, a sting, the player wakes at the
+    /// door they came through, `reset` puts the creature back, a line. False when something else is already moving the player.
+    /// </summary>
+    public bool BeginCatch(System.Action reset, string line = "You wake at the door.")
+    {
+        if (IsTransitioning || Leaving || !ContentActive || GameFlow.IsRunActive) return false;
+        StartCoroutine(CatchRoutine(reset, line));
+        return true;
+    }
+
+    private IEnumerator CatchRoutine(System.Action reset, string line)
+    {
+        IsTransitioning = true;
+        PlayerLock.Freeze(_player, true);
+        if (_hud != null) { _hud.SetPrompt(null); _hud.SetFocusPrompt(null); }
+        HorrorAudioDirector director = FindAnyObjectByType<HorrorAudioDirector>();
+        if (director != null) director.PlayCaptureSting();
+        else AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.9f, 55f, 0.9f), _player.position, 1f);
+        EnsureBlackout();
+        yield return Fade(_blackout != null ? _blackout.color.a : 0f, 1f, 0.25f);
+        yield return new WaitForSecondsRealtime(0.8f);
+        foreach (Locker locker in life != null ? life.GetComponentsInChildren<Locker>(true) : new Locker[0])
+        {
+            if (locker != null && locker.Occupied) locker.ForceLeave();
+        }
+        Teleport(ArrivalPosition, ArrivalYaw);
+        reset?.Invoke();
+        if (_flashlight != null) { _flashlight.InputEnabled = true; _flashlight.SetOn(true); }
+        if (_controller != null) _controller.MovementLocked = false;
+        PlayerLock.Freeze(_player, false);
+        PlayerLock.SetCursorFree(false);
+        if (_hud != null && !string.IsNullOrEmpty(line)) _hud.ShowSubtitle(line, 3.2f);
+        yield return Fade(1f, 0f, 0.9f);
+        if (_blackoutRoot != null) _blackoutRoot.SetActive(false);
+        IsTransitioning = false;
     }
 
     // ---------------------------------------------------------------- helpers
