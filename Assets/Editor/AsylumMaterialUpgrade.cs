@@ -123,7 +123,7 @@ public static class AsylumMaterialUpgrade
         List<string> files = new List<string>();
         foreach (string dep in AssetDatabase.GetDependencies(rootAssetPath, true))
         {
-            if (!IsPackPath(dep) || !dep.EndsWith(".png")) continue;
+            if (!IsPackPath(dep) || !(dep.EndsWith(".png") || dep.EndsWith(".tga"))) continue;
             files.Add(dep);
         }
         total = files.Count;
@@ -132,6 +132,7 @@ public static class AsylumMaterialUpgrade
         for (int i = skip; i < Mathf.Min(files.Count, skip + take); i++)
         {
             string path = files[i];
+            if (path.EndsWith(".tga")) { if (ShrinkTga(path, CapFor(path))) rewritten++; continue; }
             byte[] bytes = System.IO.File.ReadAllBytes(path);
             Texture2D source = new Texture2D(2, 2, TextureFormat.RGBA32, false, true);
             if (!source.LoadImage(bytes)) { Object.DestroyImmediate(source); continue; }
@@ -155,6 +156,37 @@ public static class AsylumMaterialUpgrade
             rewritten++;
         }
         return rewritten;
+    }
+
+    /// <summary>Box-filters an uncompressed true-colour TGA down to the cap in place (the Morgue Room PBR pack ships 2048 px TGAs). Keeps the .meta and GUID; false when untouched.</summary>
+    private static bool ShrinkTga(string path, int cap)
+    {
+        byte[] d = System.IO.File.ReadAllBytes(path);
+        if (d.Length < 18) return false;
+        int idLen = d[0], type = d[2], w = d[12] | (d[13] << 8), h = d[14] | (d[15] << 8), bpp = d[16];
+        if (d[1] != 0 || type != 2 || (bpp != 24 && bpp != 32)) { Debug.LogWarning($"Asylum: {path} is not an uncompressed true-colour TGA, left as it is."); return false; }
+        if (w <= cap && h <= cap) return false;
+        int px = bpp / 8, nw = Mathf.Min(w, cap), nh = Mathf.Min(h, cap);
+        if (w % nw != 0 || h % nh != 0) return false;
+        int fx = w / nw, fy = h / nh, start = 18 + idLen;
+        if (d.Length < start + w * h * px) return false;
+        byte[] o = new byte[18 + nw * nh * px];
+        System.Array.Copy(d, o, 18);
+        o[0] = 0; o[12] = (byte)(nw & 255); o[13] = (byte)(nw >> 8); o[14] = (byte)(nh & 255); o[15] = (byte)(nh >> 8);
+        for (int y = 0; y < nh; y++)
+        {
+            for (int x = 0; x < nw; x++)
+            {
+                for (int c = 0; c < px; c++)
+                {
+                    int sum = 0;
+                    for (int by = 0; by < fy; by++) { for (int bx = 0; bx < fx; bx++) sum += d[start + ((y * fy + by) * w + (x * fx + bx)) * px + c]; }
+                    o[18 + (y * nw + x) * px + c] = (byte)((sum + fx * fy / 2) / (fx * fy));
+                }
+            }
+        }
+        System.IO.File.WriteAllBytes(path, o);
+        return true;
     }
 
     /// <summary>Number of textures the dependencies of `root` still import above the cap (outside the tiled folder).</summary>

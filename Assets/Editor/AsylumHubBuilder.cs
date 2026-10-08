@@ -212,6 +212,7 @@ public static partial class AsylumHubBuilder
         BuildWings(hub);
         OpenRouteDoors(hub);
         BuildAmbienceAndDust(hub);
+        Dress(hub);
 
         EditorSceneManager.MarkSceneDirty(scene);
         SaveAsPrefab(rootGo);

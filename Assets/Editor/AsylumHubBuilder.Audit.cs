@@ -51,6 +51,11 @@ public static partial class AsylumHubBuilder
         sb.AppendLine($"  complete: {(hub != null && hub.IsComplete ? "OK" : "NO")}");
         if (hub == null) return sb.ToString();
 
+        // ---- dressing (phase D)
+        int props = 0;
+        if (hub.dressing != null) { foreach (Transform room in hub.dressing) { if (room.name != "Audio" && room.name != "Particles") props += room.childCount; } }
+        sb.AppendLine($"  dressing props: {props} {(props > 0 ? "OK" : "NONE (the room was never dressed)")}");
+
         // ---- wings
         int staticLeaves = 0;
         List<string> blocked = new List<string>();

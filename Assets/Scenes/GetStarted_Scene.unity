@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 364592f1b6ac3eb4099e4b9e4bcbd7b2, type: 2}
   m_HaloStrength: 0.5
@@ -105563,54 +105563,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 20617602845834518, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 113191426920311672, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 369970488249326614, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 388345287616219021, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 498685781850045273, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 562597520416456294, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 967570690158411409, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 1339349084090187623, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4280693721
-      objectReference: {fileID: 0}
-    - target: {fileID: 1339349084090187623, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_TextStyleHashCode
-      value: -1183493901
-      objectReference: {fileID: 0}
-    - target: {fileID: 1407420453605974165, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4285777919
-      objectReference: {fileID: 0}
-    - target: {fileID: 1407420453605974165, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_TextStyleHashCode
-      value: -1183493901
-      objectReference: {fileID: 0}
-    - target: {fileID: 1656925738941836573, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
     - target: {fileID: 2172988053986730172, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 100
@@ -105651,110 +105603,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2468691989728154177, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 2624149397203683839, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 2828681912700348821, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 3494901586611936293, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4280693721
-      objectReference: {fileID: 0}
-    - target: {fileID: 3494901586611936293, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_TextStyleHashCode
-      value: -1183493901
-      objectReference: {fileID: 0}
-    - target: {fileID: 3595267775215959572, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 3697031344330564699, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 4011795442186898414, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 4216952140676949316, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4280693721
-      objectReference: {fileID: 0}
-    - target: {fileID: 4216952140676949316, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_TextStyleHashCode
-      value: -1183493901
-      objectReference: {fileID: 0}
-    - target: {fileID: 4808759273740895831, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4280693721
-      objectReference: {fileID: 0}
-    - target: {fileID: 4808759273740895831, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_TextStyleHashCode
-      value: -1183493901
-      objectReference: {fileID: 0}
-    - target: {fileID: 4835547664337763491, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 5245075411470457326, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.076375
-      objectReference: {fileID: 0}
-    - target: {fileID: 5309853679811532708, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 5467060184312675086, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 5933167226381869146, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.070875
-      objectReference: {fileID: 0}
-    - target: {fileID: 6667975209317282900, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 7009799079578879000, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 7101920614440426934, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 7172376251665052863, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 7272518890668517420, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 7650839044844926687, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 7881642603530728353, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 8219322136504887125, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.0755
-      objectReference: {fileID: 0}
-    - target: {fileID: 8631202086160342575, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 0.07
-      objectReference: {fileID: 0}
     - target: {fileID: 9151998519638483984, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
       propertyPath: m_Name
       value: AsylumHub
@@ -105763,6 +105611,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3688187616271942833, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 2020357927099146697, guid: 22bd4dbc98c64074cb034dd8f0b6184b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
