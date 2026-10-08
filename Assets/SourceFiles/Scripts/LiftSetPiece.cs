@@ -126,6 +126,7 @@ public class LiftSetPiece : HubSetPiece
 
     private void ResetState()
     {
+        if (_panic) SetPanicMusic(false, 0.5f);
         if (_routine != null) { StopCoroutine(_routine); _routine = null; }
         if (_captured)
         {
@@ -286,6 +287,7 @@ public class LiftSetPiece : HubSetPiece
         KillCarLights();
         if (redLight != null) { redLight.enabled = true; redLight.intensity = 1.8f; }
         hub.SubtitleLine("THE LIFT STOPPED", 2.2f);
+        SetPanicMusic(true, 1f); // the escape track, in under a second, until they are out
 
         // 4. three heavy footsteps cross the roof
         yield return new WaitForSeconds(2.0f);
@@ -330,6 +332,7 @@ public class LiftSetPiece : HubSetPiece
         if (redLight != null) redLight.enabled = true; // it stays red down here
         yield return WalkOut();
         Finish(Hub);
+        SetPanicMusic(false, 3f); // stepped out: the track fades away over 3 s, the hub music comes back
     }
 
     /// <summary>The car's own door leaves are part of its mesh and stay half shut, so the player is eased out through the opened shaft door.</summary>
@@ -348,6 +351,19 @@ public class LiftSetPiece : HubSetPiece
             yield return null;
         }
         hub.MovePlayerTo(to);
+    }
+
+    private bool _panic;
+
+    /// <summary>F93 fix: the jam brings in the same escape track the maze plays once the hatch is open (hub ambience urgency: the base music ducks under it).</summary>
+    private void SetPanicMusic(bool on, float seconds)
+    {
+        AsylumHub hub = Hub;
+        if (hub == null || hub.Ambience == null) return;
+        if (!on && !_panic) return;
+        _panic = on;
+        DoorAudio.Note("lift panic music " + (on ? "in" : "out"));
+        hub.Ambience.SetUrgency(on ? 1f : 0f, seconds);
     }
 
     private void Finish(AsylumHub hub)

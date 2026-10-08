@@ -1,4 +1,5 @@
 using System;
+using StarterAssets;
 using UnityEngine;
 
 /// <summary>
@@ -78,7 +79,8 @@ public class AsylumAmbience : MonoBehaviour
 
     /// <summary>F93 (chase set piece): the escape track under the base music. `target` 0..1 is eased in/out.</summary>
     public void SetUrgent(AudioClip clip) { _urgentClip = clip; }
-    public void SetUrgency(float target) { _urgencyTarget = Mathf.Clamp01(target); }
+    public void SetUrgency(float target, float seconds = 1.5f) { _urgencyTarget = Mathf.Clamp01(target); _urgencySeconds = Mathf.Max(0.05f, seconds); }
+    private float _urgencySeconds = 1.5f;
 
     private void EnsureSources()
     {
@@ -111,13 +113,13 @@ public class AsylumAmbience : MonoBehaviour
         _drip = _drip != null ? _drip : BuildDripLoop();
         _wind = _wind != null ? _wind : BuildWindLoop();
 
-        if (_noises == null)
+        if (_noises == null || _noises.Length == 0 || _noises[0] == null) // Unity-null: runtime clips are destroyed when Play stops (domain reload may be off)
         {
             _noises = new[]
             {
-                DoorAudio.BuildClunkClip(0.5f, 120f, 0.7f),   // a door shutting somewhere deep in the building
-                DoorAudio.BuildClunkClip(0.16f, 480f, 0.3f),  // pipes knocking
-                DoorAudio.BuildClunkClip(0.7f, 65f, 0.8f),    // something heavy, far off
+                DoorAudio.Muffle(DoorAudio.BuildClunkClip(0.5f, 120f, 0.7f), 0.1f), // a door shutting somewhere deep in the building (dulled by walls)
+                DoorAudio.BuildPipeClankClip(),                                  // a pipe clanking in the walls
+                DoorAudio.BuildCreakClip(1.2f, 140f, 11),                        // the building settling
                 DoorAudio.BuildClunkClip(0.07f, 2200f, 0.3f), // a drip in a stairwell
             };
         }
@@ -146,7 +148,7 @@ public class AsylumAmbience : MonoBehaviour
         if (!_ready) return;
 
         _toneSource.volume = toneVolume * _fade;
-        _urgency = Mathf.MoveTowards(_urgency, _urgencyTarget, Time.unscaledDeltaTime / 1.5f);
+        _urgency = Mathf.MoveTowards(_urgency, _urgencyTarget, Time.unscaledDeltaTime / _urgencySeconds);
         _musicSource.volume = musicVolume * _fade * (1f - 0.85f * _urgency);
         if (_urgentClip != null)
         {
@@ -175,6 +177,7 @@ public class AsylumAmbience : MonoBehaviour
     /// <summary>One far-off event at `position`: a door/pipe/thud, from floor 2 also footsteps overhead, from floor 4 a scream.</summary>
     private void PlayFarEvent(Vector3 position)
     {
+        DoorAudio.Note("far event at " + position);
         float roll = UnityEngine.Random.value;
         if (_decayFloor >= 4 && roll < 0.25f)
         {
@@ -187,18 +190,71 @@ public class AsylumAmbience : MonoBehaviour
         }
         else
         {
-            AudioSource.PlayClipAtPoint(_noises[UnityEngine.Random.Range(0, _noises.Length)], position, UnityEngine.Random.Range(0.3f, 0.5f));
+            int pick = UnityEngine.Random.Range(0, _noises.Length);
+            DoorAudio.Note("far noise #" + pick);
+            AudioSource.PlayClipAtPoint(_noises[pick], position, UnityEngine.Random.Range(0.3f, 0.5f));
         }
     }
 
+    /// <summary>
+    /// Someone walking in the room above: the player's own footstep clips, low-passed (a ceiling in the way) and pitched down a little, alternating feet,
+    /// irregular timing with the odd hesitation, a floorboard creak now and then, travelling across and fading as they walk away.
+    /// </summary>
     private System.Collections.IEnumerator FootstepsOverhead(Vector3 at)
     {
-        AudioClip step = DoorAudio.BuildClunkClip(0.12f, 90f, 0.5f);
-        for (int i = 0; i < 5; i++)
+        DoorAudio.Note("footsteps overhead");
+        if (_stepClips == null || _stepClips.Length == 0)
         {
-            AudioSource.PlayClipAtPoint(step, at + new Vector3(i * 0.6f, 0f, 0f), 0.5f);
-            yield return new WaitForSeconds(0.55f);
+            ThirdPersonController tpc = UnityEngine.Object.FindAnyObjectByType<ThirdPersonController>();
+            _stepClips = tpc != null && tpc.FootstepAudioClips != null && tpc.FootstepAudioClips.Length > 0 ? tpc.FootstepAudioClips : new[] { DoorAudio.BuildClunkClip(0.12f, 90f, 0.5f) };
         }
+        if (_creaks == null || _creaks.Length == 0) _creaks = new[] { DoorAudio.BuildCreakClip(0.45f, 150f, 3), DoorAudio.BuildCreakClip(0.6f, 190f, 5), DoorAudio.BuildCreakClip(0.35f, 230f, 8) };
+
+        GameObject stepsGo = new GameObject("OverheadSteps");
+        _stepWalkers.Add(stepsGo);
+        stepsGo.transform.SetParent(transform, false);
+        AudioSource src = stepsGo.AddComponent<AudioSource>();
+        src.playOnAwake = false;
+        src.spatialBlend = 1f;
+        src.rolloffMode = AudioRolloffMode.Linear;
+        src.minDistance = 3f;
+        src.maxDistance = 20f;
+        AudioLowPassFilter lp = stepsGo.AddComponent<AudioLowPassFilter>();
+        lp.cutoffFrequency = 650f;
+
+        float angle = UnityEngine.Random.value * Mathf.PI * 2f;
+        Vector3 dir = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
+        int count = UnityEngine.Random.Range(8, 13);
+        for (int i = 0; i < count; i++)
+        {
+            float k = i / (float)(count - 1);
+            if (stepsGo == null) yield break; // the hub switched off under us
+            stepsGo.transform.position = at + dir * (-3.5f + 7f * k);
+            src.pitch = (i % 2 == 0 ? 0.78f : 0.86f) * UnityEngine.Random.Range(0.95f, 1.05f);
+            float vol = Mathf.Lerp(0.9f, 0.25f, k) * (i % 2 == 0 ? 1f : 0.85f);
+            AudioClip stepClip = _stepClips.Length > 0 ? _stepClips[UnityEngine.Random.Range(0, 1000) % _stepClips.Length] : null;
+            if (stepClip != null) src.PlayOneShot(stepClip, vol);
+            if (UnityEngine.Random.value < 0.22f)
+            {
+                src.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+                src.PlayOneShot(_creaks[UnityEngine.Random.Range(0, 1000) % _creaks.Length], vol * 0.8f);
+            }
+            float wait = 0.62f + UnityEngine.Random.Range(-0.1f, 0.16f);
+            if (UnityEngine.Random.value < 0.15f) wait += UnityEngine.Random.Range(0.5f, 0.9f); // a hesitation
+            yield return new WaitForSeconds(wait);
+        }
+        yield return new WaitForSeconds(1.5f);
+        if (stepsGo != null) Destroy(stepsGo);
+        _stepWalkers.Remove(stepsGo);
+    }
+
+    [System.NonSerialized] private AudioClip[] _stepClips, _creaks;
+    private readonly System.Collections.Generic.List<GameObject> _stepWalkers = new System.Collections.Generic.List<GameObject>();
+
+    private void OnDisable()
+    {
+        foreach (GameObject g in _stepWalkers) if (g != null) Destroy(g);
+        _stepWalkers.Clear();
     }
 
     private static AudioClip BuildScream()

@@ -406,6 +406,7 @@ public class HubStalker : MonoBehaviour
         {
             _stepDistance = 0f;
             _audio.pitch = Random.Range(0.9f, 1.05f);
+            DoorAudio.Note("HubStalker step");
             _audio.PlayOneShot(_step, CurrentMode == Mode.Chase ? 1f : 0.8f);
         }
     }

@@ -363,10 +363,11 @@ public class AsylumHub : MonoBehaviour
         Vector3 doorway = new Vector3(door.transform.position.x, _player.position.y, door.transform.position.z);
         Vector3 start = _player.position;
         Vector3 threshold = doorway - into * 0.9f;
-        Vector3 stop = doorway - into * doorStopDistance;
+        Vector3 stop = doorway - into * Mathf.Max(doorStopDistance, 0.3f); // the camera near plane is 0.2 m: stay far enough back for the door void to be in front of it
         Vector3 Look(Vector3 from) => from + into * 4f + Vector3.up * 1.4f;
 
-        AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.35f, 60f, 0.5f), doorway, 0.8f);
+        DoorAudio.Note("wing door clunk");
+        AudioSource.PlayClipAtPoint(DoorAudio.BuildCreakClip(1.0f, 170f, 2), doorway, 0.8f); // a hinge creaking open, not a hit
 
         // The leaves open away from the player, so a leaf never sweeps through them.
         Transform[] hinges = door.leafHingeB != null ? new[] { door.leafHinge, door.leafHingeB } : new[] { door.leafHinge };

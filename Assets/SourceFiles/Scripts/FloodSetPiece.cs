@@ -166,6 +166,7 @@ public class FloodSetPiece : HubSetPiece
                 if (inside && l.light.transform.position.x < p.x - lampBehindMetres)
                 {
                     l.dying = true;
+                    DoorAudio.Note("flood lamp pop");
                     _audio.PlayOneShot(_pop, 0.6f);
                 }
             }

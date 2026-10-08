@@ -103,8 +103,8 @@ public class HubPatient : MonoBehaviour
             _audio.spatialBlend = 1f;
             _audio.rolloffMode = AudioRolloffMode.Linear;
             _audio.minDistance = 2f;
-            _audio.maxDistance = 26f;
-            _knock = DoorAudio.BuildClunkClip(0.14f, 150f, 0.55f);
+            _audio.maxDistance = 14f; // clearly in the machine room, not through half the building
+            _knock = DoorAudio.BuildPipeClankClip();
         }
     }
 
@@ -233,7 +233,7 @@ public class HubPatient : MonoBehaviour
         if (pulse >= 0 && key != _lastPulse)
         {
             _lastPulse = key;
-            if (_audio != null && _knock != null) _audio.PlayOneShot(_knock, knockVolume);
+            if (_audio != null && _knock != null) { DoorAudio.Note("Tomas knock"); _audio.PlayOneShot(_knock, knockVolume); }
         }
     }
 

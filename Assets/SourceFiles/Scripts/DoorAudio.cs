@@ -7,6 +7,10 @@ using UnityEngine;
 /// </summary>
 public static class DoorAudio
 {
+    /// <summary>Testing only: when on, the asylum hub logs each sound event it makes ("[HubAudio] time what").</summary>
+    public static bool LogEvents;
+    public static void Note(string what) { if (LogEvents) Debug.Log("[HubAudio] " + Time.time.ToString("F1") + " " + what); }
+
     /// <summary>A low tone/noise thud - used for the shutter's slide and the hunter's slam (louder, lower, noisier).</summary>
     public static AudioClip BuildClunkClip(float duration, float baseFrequency, float noiseAmount)
     {
@@ -29,6 +33,83 @@ public static class DoorAudio
         Normalise(samples, 0.85f);
         AudioClip clip = AudioClip.Create("DoorClunk", sampleCount, 1, sampleRate, false);
         clip.SetData(samples, 0);
+        return clip;
+    }
+
+    /// <summary>
+    /// A knuckle or wrench on a metal pipe: a short noise tick, then inharmonic partials that ring for a fraction of a second
+    /// (the low ones longest). Reads as metal at any distance, unlike BuildClunkClip's single low tone.
+    /// </summary>
+    public static AudioClip BuildPipeClankClip()
+    {
+        const int sampleRate = 44100;
+        const float duration = 0.55f;
+        int sampleCount = Mathf.CeilToInt(sampleRate * duration);
+        float[] samples = new float[sampleCount];
+        float[] freq = { 412f, 667f, 1183f, 1794f, 2611f };
+        float[] amp = { 1.0f, 0.75f, 0.5f, 0.32f, 0.2f };
+        float[] decay = { 0.2f, 0.15f, 0.1f, 0.07f, 0.05f };
+        System.Random rng = new System.Random(4407);
+
+        for (int i = 0; i < sampleCount; i++)
+        {
+            float t = i / (float)sampleRate;
+            float s = 0f;
+            for (int p = 0; p < freq.Length; p++) s += amp[p] * Mathf.Exp(-t / decay[p]) * Mathf.Sin(2f * Mathf.PI * freq[p] * t);
+            float tick = (float)(rng.NextDouble() * 2.0 - 1.0) * Mathf.Exp(-t / 0.004f) * 1.4f;
+            samples[i] = (s + tick) * Mathf.Clamp01(t / 0.0008f);
+        }
+
+        Normalise(samples, 0.85f);
+        AudioClip clip = AudioClip.Create("PipeClank", sampleCount, 1, sampleRate, false);
+        clip.SetData(samples, 0);
+        return clip;
+    }
+
+    /// <summary>
+    /// A hinge or floorboard creak: a wobbling saw tone chopped by an irregular stick-slip pattern, softened by a one-pole low-pass.
+    /// `baseFrequency` ~120-260 Hz; `seed` varies the wobble so two creaks are not identical.
+    /// </summary>
+    public static AudioClip BuildCreakClip(float duration, float baseFrequency, int seed = 1)
+    {
+        const int sampleRate = 22050;
+        int sampleCount = Mathf.CeilToInt(sampleRate * duration);
+        float[] samples = new float[sampleCount];
+        System.Random rng = new System.Random(seed * 7919 + 13);
+        float wobbleA = 0.9f + (float)rng.NextDouble() * 1.2f, wobbleB = 2.5f + (float)rng.NextDouble() * 2f, slipRate = 30f + (float)rng.NextDouble() * 25f;
+        float phase = 0f, low = 0f;
+
+        for (int i = 0; i < sampleCount; i++)
+        {
+            float t = i / (float)sampleRate;
+            float f = baseFrequency * (1f + 0.25f * Mathf.Sin(2f * Mathf.PI * wobbleA * t) + 0.12f * Mathf.Sin(2f * Mathf.PI * wobbleB * t));
+            phase += f / sampleRate;
+            float saw = 2f * (phase - Mathf.Floor(phase)) - 1f;
+            float slip = 0.5f + 0.5f * Mathf.Sin(2f * Mathf.PI * (slipRate + 14f * Mathf.Sin(2f * Mathf.PI * 0.8f * t)) * t);
+            slip *= slip;
+            float noise = (float)(rng.NextDouble() * 2.0 - 1.0);
+            float env = Mathf.Pow(Mathf.Sin(Mathf.PI * Mathf.Clamp01(t / duration)), 0.7f);
+            float raw = (saw * 0.6f + noise * 0.25f) * slip * env;
+            low += (raw - low) * 0.3f;
+            samples[i] = low;
+        }
+
+        Normalise(samples, 0.7f);
+        AudioClip clip = AudioClip.Create("Creak", sampleCount, 1, sampleRate, false);
+        clip.SetData(samples, 0);
+        return clip;
+    }
+
+    /// <summary>A copy of `source` through a one-pole low-pass (`alpha` 0.02 = very dull, 1 = untouched): a sound heard through walls.</summary>
+    public static AudioClip Muffle(AudioClip source, float alpha)
+    {
+        float[] data = new float[source.samples * source.channels];
+        source.GetData(data, 0);
+        float low = 0f;
+        for (int i = 0; i < data.Length; i++) { low += (data[i] - low) * alpha; data[i] = low; }
+        Normalise(data, 0.85f);
+        AudioClip clip = AudioClip.Create(source.name + "Muffled", source.samples, source.channels, source.frequency, false);
+        clip.SetData(data, 0);
         return clip;
     }
 

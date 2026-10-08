@@ -51,7 +51,7 @@ public class HubExitDoor : MonoBehaviour, IInteractable
         Quaternion closed = _hinge != null ? _hinge.localRotation : Quaternion.identity;
         float sign = _hinge != null ? SwingSign(_hinge, into) : 1f;
         Quaternion opened = closed * Quaternion.Euler(0f, sign * openAngle, 0f);
-        AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.5f, 70f, 0.6f), doorway, 1f);
+        AudioSource.PlayClipAtPoint(DoorAudio.BuildCreakClip(1.4f, 120f, 4), doorway, 1f);
 
         float t = 0f;
         while (t < 1.4f)
