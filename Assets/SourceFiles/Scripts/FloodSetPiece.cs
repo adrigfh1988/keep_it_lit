@@ -2,58 +2,36 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// F93 (S2, floor 3): the walk from the Boiler Room to the Morgue is through a flooded hall. The basement hall (HallUnderground) is under
-/// 0.25 m of dark water (a transparent URP Lit plane, smoothness 0.8 - the documented exception to the 0.35 clamp, so the torch glints on it),
-/// the player wades at 0.75 x speed (ThirdPersonController.SpeedMultiplier) with splash footsteps, paper, cans and a sheeted body float and bob,
-/// the hall's lights die one by one behind the player as they advance, and Tomas knocks three times when the player first steps into the water.
-/// Everything is undone when the hub is left.
+/// F93 (S2, floor 3): the walk from the Boiler Room to the Morgue through the basement hall (HallUnderground). The hall's lights die one by
+/// one behind the player as they advance, and Tomas knocks three times when the player first steps into the hall. It used to be a flooded
+/// hall (water plane, wading, floaters); the water was removed on 8 Oct 2026 - it made no sense with a dry Boiler Room next to it - so the
+/// class and its FloodSet object keep the old name. Everything is undone when the hub is left.
 /// </summary>
 public class FloodSetPiece : HubSetPiece
 {
-    [SerializeField] private Transform water;
-    [Tooltip("A trigger box over the flooded part of the hall (world AABB used): the player is 'in the water' while inside it.")]
+    [Tooltip("A trigger box over the hall (world AABB used): the player is 'in the hall' while inside it.")]
     [SerializeField] private BoxCollider zone;
-    [SerializeField] private Transform[] floaters = new Transform[0];
-    [SerializeField, Range(0.3f, 1f)] private float wadeSpeed = 0.75f;
     [SerializeField] private float lampBehindMetres = 2.2f;
 
     private struct Lamp { public Light light; public float baseIntensity; public bool dying; public float t; public bool done; }
 
     private readonly List<Lamp> _lamps = new List<Lamp>();
-    private Vector3[] _floatBase;
-    private Quaternion[] _floatRot;
     private AudioSource _audio;
-    private AudioClip _splash, _pop;
-    private bool _inWater, _knocked;
-    private float _nextSplash;
-    private MaterialPropertyBlock _block;
-    private Renderer _waterRenderer;
+    private AudioClip _pop;
+    private bool _inside, _knocked;
 
-    public bool IsComplete => water != null && zone != null;
+    public bool IsComplete => zone != null;
 
     protected override void OnBegin()
     {
         AsylumHub hub = Hub;
         if (hub == null || !IsComplete)
         {
-            Debug.LogError("FloodSetPiece: the water or its zone is missing. Run LIGHTS OUT > Build Missing Pieces. The hall stays dry.", this);
+            Debug.LogError("FloodSetPiece: the hall zone is missing. Run LIGHTS OUT > Build Missing Pieces. The hall's lights stay on.", this);
             return;
         }
         _knocked = false;
-        _inWater = false;
-        water.gameObject.SetActive(true);
-        _waterRenderer = water.GetComponent<Renderer>();
-        _block = new MaterialPropertyBlock();
-
-        _floatBase = new Vector3[floaters.Length];
-        _floatRot = new Quaternion[floaters.Length];
-        for (int i = 0; i < floaters.Length; i++)
-        {
-            if (floaters[i] == null) continue;
-            floaters[i].gameObject.SetActive(true);
-            _floatBase[i] = floaters[i].position;
-            _floatRot[i] = floaters[i].rotation;
-        }
+        _inside = false;
 
         // The hall's own lamps, so they can die behind the player.
         _lamps.Clear();
@@ -69,10 +47,6 @@ public class FloodSetPiece : HubSetPiece
 
     protected override void OnEnd()
     {
-        AsylumHub hub = Hub;
-        if (hub != null && hub.Controller != null) hub.Controller.SpeedMultiplier = 1f;
-        if (water != null) water.gameObject.SetActive(false);
-        for (int i = 0; i < floaters.Length; i++) if (floaters[i] != null) floaters[i].gameObject.SetActive(false);
         foreach (Lamp l in _lamps)
         {
             if (l.light == null) continue;
@@ -80,7 +54,7 @@ public class FloodSetPiece : HubSetPiece
             l.light.enabled = true;
         }
         _lamps.Clear();
-        _inWater = false;
+        _inside = false;
     }
 
     private void EnsureAudio()
@@ -90,20 +64,6 @@ public class FloodSetPiece : HubSetPiece
         _audio.playOnAwake = false;
         _audio.spatialBlend = 0f;
         _audio.volume = 0.8f;
-        int rate = 22050, n = (int)(rate * 0.32f);
-        float[] d = new float[n];
-        uint seed = 7;
-        float low = 0f;
-        for (int i = 0; i < n; i++)
-        {
-            seed = seed * 1664525u + 1013904223u;
-            float noise = ((seed >> 16) & 0xFFFF) / 32767.5f - 1f;
-            low += (noise - low) * 0.25f;
-            float t = i / (float)rate;
-            d[i] = (low * 0.9f + noise * 0.15f) * Mathf.Exp(-t * 11f) * Mathf.Clamp01(t * 90f);
-        }
-        _splash = AudioClip.Create("WadeSplash", n, 1, rate, false);
-        _splash.SetData(d, 0);
         _pop = DoorAudio.BuildClunkClip(0.12f, 650f, 0.5f);
     }
 
@@ -112,46 +72,18 @@ public class FloodSetPiece : HubSetPiece
         AsylumHub hub = Hub;
         if (!Running || hub == null || hub.Player == null || !IsComplete || Time.timeScale <= 0f) return;
 
-        // water: a slow drift of the ripples
-        if (_waterRenderer != null)
-        {
-            _waterRenderer.GetPropertyBlock(_block);
-            _block.SetVector("_BaseMap_ST", new Vector4(5f, 12f, Time.time * 0.012f, Time.time * 0.02f));
-            _waterRenderer.SetPropertyBlock(_block);
-        }
-        for (int i = 0; i < floaters.Length; i++)
-        {
-            if (floaters[i] == null) continue;
-            float t = Time.time + i * 1.7f;
-            floaters[i].SetPositionAndRotation(_floatBase[i] + Vector3.up * (Mathf.Sin(t * 1.3f) * 0.025f),
-                _floatRot[i] * Quaternion.Euler(Mathf.Sin(t * 0.9f) * 2.5f, Mathf.Sin(t * 0.3f) * 6f, Mathf.Cos(t * 1.1f) * 2.5f));
-        }
-
-        // wading
         Vector3 p = hub.Player.position;
         Bounds zb = zone.bounds;
-        bool inside = zb.Contains(new Vector3(p.x, zb.center.y, p.z)) && p.y < water.position.y + 0.6f;
-        if (inside != _inWater)
+        bool inside = zb.Contains(new Vector3(p.x, zb.center.y, p.z)) && p.y < zb.min.y + 1.05f; // feet within 0.85 m of the hall floor (the zone starts 0.2 m under it), so not on the stairs above
+        if (inside != _inside)
         {
-            _inWater = inside;
-            if (hub.Controller != null) hub.Controller.SpeedMultiplier = inside ? wadeSpeed : 1f;
+            _inside = inside;
             if (inside && !_knocked)
             {
                 _knocked = true;
                 HubPatient tomas = hub.life != null ? hub.life.Find("Patients/Tomas")?.GetComponent<HubPatient>() : null;
                 if (tomas != null) tomas.KnockNow(3);
-                hub.SubtitleLine("THE WATER IS COLD. SOMETHING KNOCKS THREE TIMES.", 3.5f);
-            }
-        }
-        if (inside)
-        {
-            CharacterController cc = hub.Player.GetComponent<CharacterController>();
-            float speed = cc != null ? new Vector3(cc.velocity.x, 0f, cc.velocity.z).magnitude : 0f;
-            if (speed > 0.4f && Time.time >= _nextSplash)
-            {
-                _nextSplash = Time.time + (speed > 3f ? 0.3f : 0.5f);
-                _audio.pitch = Random.Range(0.85f, 1.15f);
-                _audio.PlayOneShot(_splash, 0.8f);
+                hub.SubtitleLine("SOMETHING KNOCKS THREE TIMES.", 3.5f);
             }
         }
 
@@ -166,7 +98,7 @@ public class FloodSetPiece : HubSetPiece
                 if (inside && l.light.transform.position.x < p.x - lampBehindMetres)
                 {
                     l.dying = true;
-                    DoorAudio.Note("flood lamp pop");
+                    DoorAudio.Note("hall lamp pop");
                     _audio.PlayOneShot(_pop, 0.6f);
                 }
             }

@@ -4,14 +4,12 @@ using UnityEditor;
 using UnityEngine;
 
 /// <summary>
-/// F93 G5: the set pieces between the wings - the lift (floor 2), the flood (floor 3) and the chase (floor 4). Added to the existing hub
+/// F93 G5: the set pieces between the wings - the lift (floor 2), the dark hall (floor 3, still called FloodSet) and the chase (floor 4). Added to the existing hub
 /// by <see cref="AddG5"/> (called from AddStoryLayer), build-missing-only: each piece exists once its named child under AsylumHub/Life does.
 /// The pack's lift car, shaft doors and stairs are probed by name and bounds, never by assumed pivots.
 /// </summary>
 public static partial class AsylumHubBuilder
 {
-    private const string WaterMatPath = "Assets/SourceFiles/Materials/Asylum/Asylum_Water.mat";
-    private const string WaterNormalPath = "Assets/SourceFiles/Textures/Asylum/WaterNormal.png";
     private const string PackModels = "Assets/Abandoned_Asylum/Models/";
 
     private static List<string> G5Missing(Transform life)
@@ -179,73 +177,13 @@ public static partial class AsylumHubBuilder
         report.AppendLine($"LiftSet: car {car.position}, shaft door at ground {ground.transform.position}, gate at {mouth}");
     }
 
-    // ---------------------------------------------------------------- flood
-
-    private static Material EnsureWaterMaterial()
-    {
-        Material existing = AssetDatabase.LoadAssetAtPath<Material>(WaterMatPath);
-        if (existing != null) return existing;
-        EnsureFolderPath("Assets/SourceFiles/Textures/Asylum");
-
-        // A small tileable ripple normal map (sum of periodic waves), saved once.
-        Texture2D normal = AssetDatabase.LoadAssetAtPath<Texture2D>(WaterNormalPath);
-        if (normal == null)
-        {
-            const int n = 128;
-            float[,] h = new float[n, n];
-            (int fx, int fy, float amp, float ph)[] waves = { (3, 2, 1f, 0.3f), (5, 7, 0.6f, 1.1f), (9, 4, 0.4f, 2.0f), (2, 11, 0.5f, 0.7f), (13, 9, 0.25f, 4f) };
-            for (int y = 0; y < n; y++)
-                for (int x = 0; x < n; x++)
-                    foreach (var w in waves) h[x, y] += w.amp * Mathf.Sin(2f * Mathf.PI * (w.fx * x + w.fy * y) / n + w.ph);
-            Texture2D tex = new Texture2D(n, n, TextureFormat.RGBA32, false);
-            for (int y = 0; y < n; y++)
-                for (int x = 0; x < n; x++)
-                {
-                    float dx = h[(x + 1) % n, y] - h[(x + n - 1) % n, y], dy = h[x, (y + 1) % n] - h[x, (y + n - 1) % n];
-                    Vector3 v = new Vector3(-dx * 0.18f, -dy * 0.18f, 1f).normalized;
-                    tex.SetPixel(x, y, new Color(v.x * 0.5f + 0.5f, v.y * 0.5f + 0.5f, v.z * 0.5f + 0.5f, 1f));
-                }
-            System.IO.File.WriteAllBytes(WaterNormalPath, tex.EncodeToPNG());
-            Object.DestroyImmediate(tex);
-            AssetDatabase.ImportAsset(WaterNormalPath);
-            TextureImporter imp = (TextureImporter)AssetImporter.GetAtPath(WaterNormalPath);
-            imp.textureType = TextureImporterType.NormalMap;
-            imp.wrapMode = TextureWrapMode.Repeat;
-            imp.mipmapEnabled = true;
-            imp.SaveAndReimport();
-            normal = AssetDatabase.LoadAssetAtPath<Texture2D>(WaterNormalPath);
-        }
-
-        Material m = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "Asylum_Water" };
-        m.SetFloat("_Surface", 1f);
-        m.SetFloat("_Blend", 0f);
-        m.SetFloat("_SrcBlend", (float)UnityEngine.Rendering.BlendMode.SrcAlpha);
-        m.SetFloat("_DstBlend", (float)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        m.SetFloat("_SrcBlendAlpha", (float)UnityEngine.Rendering.BlendMode.One);
-        m.SetFloat("_DstBlendAlpha", (float)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        m.SetFloat("_ZWrite", 0f);
-        m.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
-        m.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
-        m.SetOverrideTag("RenderType", "Transparent");
-        // Project gotcha: URP re-validates to premultiplied alpha unless this is 0.
-        if (m.HasProperty("_BlendModePreserveSpecular")) m.SetFloat("_BlendModePreserveSpecular", 0f);
-        m.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-        m.SetColor("_BaseColor", new Color(0.045f, 0.075f, 0.08f, 0.985f));
-        m.SetFloat("_Metallic", 0f);
-        m.SetFloat("_Smoothness", 0.85f); // documented exception to the hub's 0.35 clamp: the torch should glint on the water
-        m.EnableKeyword("_NORMALMAP");
-        m.SetTexture("_BumpMap", normal);
-        m.SetFloat("_BumpScale", 0.6f);
-        AssetDatabase.CreateAsset(m, WaterMatPath);
-        return m;
-    }
+    // ---------------------------------------------------------------- flood (dry since 8 Oct 2026: only the hall zone is left)
 
     private static void BuildFloodSet(AsylumHub hub, Transform life, System.Text.StringBuilder report)
     {
         Bounds hall = RoomBounds(_building, "HallUnderground", 0f);
         if (hall.size == Vector3.zero) { Debug.LogError("Asylum story layer: HallUnderground was not found; no flood set piece."); return; }
         float floorY = FloorHeight("HallUnderground", hall);
-        float waterY = floorY + 0.25f;
         Transform set = Group(life, "FloodSet");
 
         // The zone: the hall's footprint, floor to head height.
@@ -256,65 +194,12 @@ public static partial class AsylumHubBuilder
         zone.isTrigger = true;
         zone.size = new Vector3(hall.size.x, 2.4f, hall.size.z);
 
-        // The water: one quad over the hall.
-        GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
-        quad.name = "Water";
-        Object.DestroyImmediate(quad.GetComponent<Collider>());
-        quad.transform.SetParent(set, false);
-        quad.transform.position = new Vector3(hall.center.x, waterY, hall.center.z);
-        quad.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
-        quad.transform.localScale = new Vector3(hall.size.x, hall.size.z, 1f);
-        Renderer wr = quad.GetComponent<Renderer>();
-        wr.sharedMaterial = EnsureWaterMaterial();
-        wr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-        wr.receiveShadows = false;
-
-        // Floating things: paper, cans and a sheeted body, scattered along the route.
-        Transform group = Group(set, "Floaters");
-        GameObject paper = AssetDatabase.LoadAssetAtPath<GameObject>(PackPaper);
-        GameObject can = AssetDatabase.LoadAssetAtPath<GameObject>(PackModels + "CanOld.fbx");
-        GameObject body = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/DeadBody LITE/Prefabs/Body_Only/DeadBody (2).prefab");
-        Material sheet = AssetDatabase.LoadAssetAtPath<Material>("Assets/SourceFiles/Materials/Asylum/Asylum_Sheet.mat");
-        (GameObject prefab, Vector2 xz, float yaw, float scale)[] items =
-        {
-            (paper, new Vector2(115.2f, -53.1f), 20f, 1.8f), (paper, new Vector2(117.6f, -53.9f), 140f, 1.8f), (paper, new Vector2(120.2f, -54.2f), 75f, 1.8f),
-            (paper, new Vector2(122.6f, -54.6f), 200f, 1.8f), (paper, new Vector2(118.5f, -56.8f), 310f, 1.8f),
-            (can, new Vector2(116.4f, -54.0f), 0f, 1.3f), (can, new Vector2(121.4f, -55.2f), 90f, 1.3f),
-            (body, new Vector2(119.0f, -60.5f), 100f, 1f),
-        };
-        int made = 0;
-        foreach (var item in items)
-        {
-            if (item.prefab == null) continue;
-            Vector3 p = new Vector3(item.xz.x, waterY, item.xz.y);
-            if (Physics.CheckSphere(p + Vector3.up * 0.25f, 0.28f, ~0, QueryTriggerInteraction.Ignore) && item.prefab != body) continue; // not inside a wall or a prop
-            GameObject go = (GameObject)PrefabUtility.InstantiatePrefab(item.prefab, group);
-            go.name = item.prefab.name + "_Float";
-            StripPhysics(go);
-            go.transform.rotation = Quaternion.Euler(0f, item.yaw, 0f);
-            go.transform.localScale *= item.scale;
-            if (item.prefab == body && sheet != null)
-            {
-                foreach (Renderer r in go.GetComponentsInChildren<Renderer>(true)) { Material[] ms = new Material[r.sharedMaterials.Length]; for (int i = 0; i < ms.Length; i++) ms[i] = sheet; r.sharedMaterials = ms; }
-                go.transform.localScale = new Vector3(go.transform.localScale.x * 1.25f, go.transform.localScale.y * 1.6f, go.transform.localScale.z * 1.25f);
-            }
-            Bounds b = RendBounds(go);
-            go.transform.position += new Vector3(p.x - b.center.x, waterY - b.min.y - (item.prefab == body ? 0.12f : 0.01f), p.z - b.center.z);
-            go.SetActive(false);
-            made++;
-        }
-
         FloodSetPiece piece = set.gameObject.AddComponent<FloodSetPiece>();
         piece.floor = 3;
         SerializedObject so = new SerializedObject(piece);
-        so.FindProperty("water").objectReferenceValue = quad.transform;
         so.FindProperty("zone").objectReferenceValue = zone;
-        SerializedProperty arr = so.FindProperty("floaters");
-        arr.arraySize = group.childCount;
-        for (int i = 0; i < group.childCount; i++) arr.GetArrayElementAtIndex(i).objectReferenceValue = group.GetChild(i);
         so.ApplyModifiedPropertiesWithoutUndo();
-        quad.SetActive(false);
-        report.AppendLine($"FloodSet: water at y {waterY} over {hall.size.x:F1} x {hall.size.z:F1} m, {made} floaters");
+        report.AppendLine($"FloodSet: hall zone {hall.size.x:F1} x {hall.size.z:F1} m at floor y {floorY}");
     }
 
     // ---------------------------------------------------------------- chase

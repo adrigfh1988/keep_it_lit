@@ -51,7 +51,7 @@ namespace StarterAssets
         /// <summary>True this frame if the sprint key is held, allowed, and there is movement input.</summary>
         public bool IsSprinting { get; private set; }
 
-        /// <summary>F93: scales walk and sprint speed (the flooded hall in the asylum hub sets 0.75). 1 everywhere else.</summary>
+        /// <summary>F93: scales walk and sprint speed. 1 everywhere; nothing sets it since the asylum hall flood was removed (8 Oct 2026).</summary>
         public float SpeedMultiplier { get; set; } = 1f;
 
         [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
