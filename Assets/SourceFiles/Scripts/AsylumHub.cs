@@ -40,6 +40,10 @@ public class AsylumHub : MonoBehaviour
     [Tooltip("Testing: > 0 forces HubState.Floor (and so the open wing and the patients) to this floor. 0 = off.")]
     public int debugFloor;
 
+    [Header("Shop door (F94, optional - not part of IsComplete)")]
+    [Tooltip("AsylumHub/Wings/ShopDoor: the way into the shop room between floors. A hub without it still works; clearing a maze then goes to the shop directly, as before.")]
+    public ShopDoor shopDoor;
+
     [Header("Points (always active)")]
     public Transform points;
     public Transform mainEntrance;
@@ -96,6 +100,12 @@ public class AsylumHub : MonoBehaviour
     /// <summary>Complete and handed the player systems by MazeGenerator.SetUpAtmosphere: the run may go through it.</summary>
     public bool CanEnter => IsComplete && _configured;
 
+    /// <summary>F94: the hub can host the shop - usable, with a complete SHOP door, and the scene's shop room handed over. Deliberately not part of <see cref="IsComplete"/>.</summary>
+    public bool CanVisitShop => CanEnter && shopDoor != null && shopDoor.IsComplete && _shop != null && _shop.IsComplete;
+
+    /// <summary>F94: true when clearing floors 1-4 goes to the hub (and its SHOP door) instead of straight into the shop. The one place that decides it.</summary>
+    public static bool ShopInHub => Active != null && Active.CanVisitShop;
+
     private bool AllWingsWired()
     {
         foreach (WingDoor door in wingDoors)
@@ -117,6 +127,9 @@ public class AsylumHub : MonoBehaviour
     private LoreReadingUi _reader;
     private PlayerStealthState _stealth;
     private PlayerInteractor _interactor;
+
+    private ShopRoom _shop;
+    private int _mazeSeed;
 
     private Vector3 _returnPosition;
     private float _returnYaw;
@@ -150,8 +163,10 @@ public class AsylumHub : MonoBehaviour
     }
 
     /// <summary>Called by MazeGenerator.SetUpAtmosphere once the player systems exist. `music` is the floor's base music, played at a whisper in the hub.</summary>
-    public void Configure(Transform player, Camera camera, PlayerHud hud, Flashlight flashlight, AudioClip music = null, LoreReadingUi reader = null, AudioClip urgent = null)
+    public void Configure(Transform player, Camera camera, PlayerHud hud, Flashlight flashlight, AudioClip music = null, LoreReadingUi reader = null, AudioClip urgent = null, ShopRoom shop = null, int mazeSeed = 0)
     {
+        _shop = shop;
+        _mazeSeed = mazeSeed;
         _reader = reader;
         _player = player;
         _camera = camera;
@@ -278,7 +293,7 @@ public class AsylumHub : MonoBehaviour
         _returnPosition = _player.position;
         _returnYaw = _player.eulerAngles.y;
     }
-    private IEnumerator EnterRoutine(Transform arrival, int floor)
+    private IEnumerator EnterRoutine(Transform arrival, int floor, bool announce = true)
     {
         _overlayColor = Color.black;
         if (_ambience != null) _ambience.Unmute();
@@ -293,6 +308,7 @@ public class AsylumHub : MonoBehaviour
         ApplyHubAtmosphere();
         SetContentActive(true);
         foreach (WingDoor door in wingDoors) door.Refresh();
+        if (shopDoor != null) shopDoor.Refresh();
 
         ArrivalPosition = arrival.position;
         ArrivalYaw = arrival.eulerAngles.y;
@@ -323,7 +339,8 @@ public class AsylumHub : MonoBehaviour
             yield break;
         }
         WingDoor next = wingDoors[Mathf.Clamp(floor, 1, wingDoors.Length) - 1];
-        if (_hud != null && next != null) _hud.ShowSubtitle(ArrivalText(next, floor), 5f);
+        // F94: coming back from the shop is not an arrival - no line, no fresh hint loop beyond the usual one.
+        if (_hud != null && next != null && announce) _hud.ShowSubtitle(ArrivalText(next, floor), 5f);
         if (_hint != null) StopCoroutine(_hint);
         _hint = StartCoroutine(HintLoop(next, floor));
     }
@@ -361,14 +378,58 @@ public class AsylumHub : MonoBehaviour
         Leaving = true;
         IsTransitioning = true;
         if (_hint != null) { StopCoroutine(_hint); _hint = null; }
+
+        Transform[] hinges = door.leafHingeB != null ? new[] { door.leafHinge, door.leafHingeB } : new[] { door.leafHinge };
+        Quaternion[] closed = new Quaternion[hinges.Length];
+        for (int i = 0; i < hinges.Length; i++) closed[i] = hinges[i].localRotation;
+        yield return DoorWalk(door.transform, hinges);
+
+        // ---- at black: the hub goes away and floor n begins exactly as it always did
+        OnLeaveHub?.Invoke();
+        for (int i = 0; i < hinges.Length; i++) hinges[i].localRotation = closed[i];
+        RestoreAtmosphere();
+        SetContentActive(false);
+
+        // F94: perks bought in the hub shop apply to this floor, whose maze is already built without them: bank them and rebuild
+        // the same maze (same seed, same rolled pair) so they take effect. IsInHub stays set until the reload takes over.
+        if (PlayerInventory.PendingModifiers.Count > 0)
+        {
+            PlayerInventory.ActivatePending();
+            SaveSystem.WriteCheckpoint(GameFlow.CurrentFloor, false);
+            GameFlow.Restart(true, _mazeSeed, false);
+            yield break;
+        }
+
+        Teleport(_returnPosition, _returnYaw);
+        if (_flashlight != null) _flashlight.Refill();
+
+        GameFlow.IsInHub = false;
+        if (_controller != null) _controller.MovementLocked = false;
+        PlayerLock.Freeze(_player, false);
+        PlayerLock.SetCursorFree(false);
+        Leaving = false;
+        IsTransitioning = false;
+        GameFlow.BeginRun(); // FloorIntroBanner, the hunter, the dread directors and the floor's music all wake on this
+
+        yield return Fade(1f, 0f, 0.7f);
+        if (_blackoutRoot != null) _blackoutRoot.SetActive(false);
+    }
+
+    /// <summary>
+    /// The walk through a door, shared by the wing doors and the SHOP door: freeze, swing the leaf (both leaves of a double door) away
+    /// from the player, ease up to the doorway looking through it and fade to black as they reach it. Returns at full black with the
+    /// player still frozen and the leaves open; the caller decides what comes next and closes the leaves.
+    /// </summary>
+    private IEnumerator DoorWalk(Transform door, Transform[] hinges)
+    {
         PlayerLock.Freeze(_player, true);
         if (_hud != null) { _hud.SetPrompt(null); _hud.SetFocusPrompt(null); }
 
         // Into the door = the way the arrival point does not face.
-        Vector3 into = -door.transform.forward;
+        Vector3 into = -door.forward;
         into.y = 0f;
         into = into.sqrMagnitude > 0.0001f ? into.normalized : Vector3.forward;
-        Vector3 doorway = new Vector3(door.transform.position.x, _player.position.y, door.transform.position.z);
+        Vector3 doorway = new Vector3(door.position.x, _player.position.y, door.position.z);
         Vector3 start = _player.position;
         Vector3 threshold = doorway - into * 0.9f;
         Vector3 stop = doorway - into * Mathf.Max(doorStopDistance, 0.3f); // the camera near plane is 0.2 m: stay far enough back for the door void to be in front of it
@@ -378,7 +439,6 @@ public class AsylumHub : MonoBehaviour
         AudioSource.PlayClipAtPoint(DoorAudio.BuildCreakClip(1.0f, 170f, 2), doorway, 0.8f); // a hinge creaking open, not a hit
 
         // The leaves open away from the player, so a leaf never sweeps through them.
-        Transform[] hinges = door.leafHingeB != null ? new[] { door.leafHinge, door.leafHingeB } : new[] { door.leafHinge };
         Quaternion[] closed = new Quaternion[hinges.Length];
         Quaternion[] opened = new Quaternion[hinges.Length];
         for (int i = 0; i < hinges.Length; i++)
@@ -412,25 +472,82 @@ public class AsylumHub : MonoBehaviour
             yield return null;
         }
         SetBlackout(1f);
+    }
 
-        // ---- at black: the hub goes away and floor n begins exactly as it always did
+    // ---------------------------------------------------------------- the SHOP door (F94)
+
+    /// <summary>
+    /// E at an open SHOP door: the same walk-in as a wing door, but at black the player lands in the shop room (lit, no run, no torch)
+    /// instead of a maze. The shop's own door brings them back through <see cref="ReturnFromShop"/>. Refused while a hub pursuer is after
+    /// the player - the shop is not an escape hatch.
+    /// </summary>
+    public void EnterShop(ShopDoor door)
+    {
+        if (door == null || Leaving || IsTransitioning || !CanVisitShop || !door.IsOpen) return;
+        if (PursuerAfterPlayer())
+        {
+            if (_hud != null) _hud.ShowSubtitle("NOT NOW", 1.6f);
+            return;
+        }
+        StartCoroutine(ShopWalkInRoutine(door));
+    }
+
+    private bool PursuerAfterPlayer()
+    {
+        if (life == null) return false;
+        foreach (HubStalker pursuer in life.GetComponentsInChildren<HubStalker>(true))
+        {
+            if (pursuer == null || !pursuer.isActiveAndEnabled) continue;
+            HubStalker.Mode mode = pursuer.CurrentMode;
+            if (mode == HubStalker.Mode.Spotted || mode == HubStalker.Mode.Chase || mode == HubStalker.Mode.Catching) return true;
+        }
+        return false;
+    }
+
+    private IEnumerator ShopWalkInRoutine(ShopDoor door)
+    {
+        Leaving = true;
+        IsTransitioning = true;
+        if (_hint != null) { StopCoroutine(_hint); _hint = null; }
+
+        Transform[] hinges = door.leafHingeB != null ? new[] { door.leafHinge, door.leafHingeB } : new[] { door.leafHinge };
+        Quaternion[] closed = new Quaternion[hinges.Length];
+        for (int i = 0; i < hinges.Length; i++) closed[i] = hinges[i].localRotation;
+        yield return DoorWalk(door.transform, hinges);
+
+        // ---- at black: the hub goes away and the shop room takes over. _returnPosition/_returnYaw (the maze start) stay as they were.
         OnLeaveHub?.Invoke();
         for (int i = 0; i < hinges.Length; i++) hinges[i].localRotation = closed[i];
         RestoreAtmosphere();
         SetContentActive(false);
-        Teleport(_returnPosition, _returnYaw);
-        if (_flashlight != null) _flashlight.Refill();
 
+        GameFlow.ShopFromHub = true; // before ArrivePlayer: the door sign and the shop's floor reads depend on it
+        _shop.ArrivePlayer(_player);
+        // IsInShop before IsInHub clears: never a frame that is neither.
+        GameFlow.IsInShop = true;
         GameFlow.IsInHub = false;
+        if (_flashlight != null) { _flashlight.SetOn(false); _flashlight.InputEnabled = false; }
+        _shop.Open();
         if (_controller != null) _controller.MovementLocked = false;
         PlayerLock.Freeze(_player, false);
         PlayerLock.SetCursorFree(false);
         Leaving = false;
         IsTransitioning = false;
-        GameFlow.BeginRun(); // FloorIntroBanner, the hunter, the dread directors and the floor's music all wake on this
 
         yield return Fade(1f, 0f, 0.7f);
         if (_blackoutRoot != null) _blackoutRoot.SetActive(false);
+    }
+
+    /// <summary>
+    /// ShopRoom's exit when the shop was reached from the hub: back into the hospital, arriving at the SHOP door. The caller destroys its
+    /// own blackout panel after this (the hub makes its own black synchronously before its first yield).
+    /// </summary>
+    public void ReturnFromShop()
+    {
+        GameFlow.ShopFromHub = false;
+        if (shopDoor == null) { GameFlow.NextFloor(); return; }
+        StartCoroutine(EnterRoutine(shopDoor.arrivalPoint, GameFlow.CurrentFloor, false)); // sets IsInHub synchronously
+        GameFlow.IsInShop = false;
     }
 
     /// <summary>+1 or -1: the sign of the swing that carries the leaf's centre further along `into` (away from the player).</summary>

@@ -168,7 +168,7 @@ public class ShopMenu : MonoBehaviour
         if (_contractPanel == null) return;
 
         int[] offers = { ContractState.OfferA, ContractState.OfferB };
-        int rewardFloor = GameFlow.CurrentFloor + 1;
+        int rewardFloor = GameFlow.ShopNextFloor;
         for (int i = 0; i < 2; i++)
         {
             bool has = offers[i] >= 0;
@@ -198,8 +198,8 @@ public class ShopMenu : MonoBehaviour
         int id = slot == 0 ? ContractState.OfferA : ContractState.OfferB;
         if (id < 0 || ContractState.HasActive) return;
 
-        ContractState.Take(id, GameFlow.CurrentFloor + 1);
-        SaveSystem.WriteCheckpoint(GameFlow.CurrentFloor, true); // like a purchase: the taken contract survives a resume
+        ContractState.Take(id, GameFlow.ShopNextFloor);
+        WriteShopCheckpoint(); // like a purchase: the taken contract survives a resume
         if (_hud != null) _hud.ShowSubtitle("Bring it back in one piece.", 3f);
         Close();
     }
@@ -209,7 +209,7 @@ public class ShopMenu : MonoBehaviour
         if (ContractState.HasActive)
         {
             ContractState.ClearActive();
-            SaveSystem.WriteCheckpoint(GameFlow.CurrentFloor, true);
+            WriteShopCheckpoint();
         }
         if (_hud != null) _hud.ShowSubtitle("Suit yourself.", 2.5f);
         Close();
@@ -338,7 +338,7 @@ public class ShopMenu : MonoBehaviour
     {
         if (_walletText != null) _walletText.text = $"{PlayerWallet.CurrencyName}  {PlayerWallet.Shards}";
 
-        int shopFloor = GameFlow.CurrentFloor;
+        int shopFloor = GameFlow.ShopClearedFloor;
         foreach (ShopCard card in _cards)
         {
             ShopItemDef def = card.Def;
@@ -366,7 +366,7 @@ public class ShopMenu : MonoBehaviour
                 case ItemKind.FloorModifier:
                 {
                     bool pending = PlayerInventory.HasPending(def.Id);
-                    card.Status.text = pending ? $"READY FOR FLOOR {GameFlow.CurrentFloor + 1}" : "NEXT FLOOR ONLY";
+                    card.Status.text = pending ? $"READY FOR FLOOR {GameFlow.ShopNextFloor}" : "NEXT FLOOR ONLY";
                     bool canBuy = !pending && PlayerWallet.Shards >= price;
                     SetBuyButton(card, canBuy, pending ? "BOUGHT" : $"BUY  {price}");
                     break;
@@ -404,7 +404,7 @@ public class ShopMenu : MonoBehaviour
 
     private void TryBuy(ShopItemDef def)
     {
-        int price = ShopCatalogue.PriceFor(def, GameFlow.CurrentFloor);
+        int price = ShopCatalogue.PriceFor(def, GameFlow.ShopClearedFloor);
 
         switch (def.Kind)
         {
@@ -424,7 +424,7 @@ public class ShopMenu : MonoBehaviour
                 return; // cosmetics go through TrySelectCosmetic
         }
 
-        SaveSystem.WriteCheckpoint(GameFlow.CurrentFloor, true); // F83: purchases are kept (AdvanceFloor has not run yet)
+        WriteShopCheckpoint(); // F83: purchases are kept
         PlayTick();
         Refresh();
     }
@@ -437,7 +437,7 @@ public class ShopMenu : MonoBehaviour
 
         if (!owned)
         {
-            int price = ShopCatalogue.PriceFor(def, GameFlow.CurrentFloor);
+            int price = ShopCatalogue.PriceFor(def, GameFlow.ShopClearedFloor);
             if (!PlayerWallet.TrySpend(price)) return;
 
             if (isTorch) PlayerInventory.GrantTorchColour(paletteIndex);
@@ -461,9 +461,19 @@ public class ShopMenu : MonoBehaviour
             if (tension != null) tension.SetCalmColor(tint);
         }
 
-        SaveSystem.WriteCheckpoint(GameFlow.CurrentFloor, true); // F83
+        WriteShopCheckpoint(); // F83
         PlayTick();
         Refresh();
+    }
+
+    /// <summary>
+    /// F83/F94: the save every purchase and contract change writes. In the old flow (AdvanceFloor has not run yet) it is a shop save of
+    /// the cleared floor; in the hub shop CurrentFloor is already the floor about to be played, so it is that floor's start save
+    /// (CONTINUE then lands in the hub).
+    /// </summary>
+    private static void WriteShopCheckpoint()
+    {
+        SaveSystem.WriteCheckpoint(GameFlow.CurrentFloor, !GameFlow.ShopFromHub);
     }
 
     private void PlayTick()

@@ -79,6 +79,13 @@ public static class PlayerInventory
         PendingModifiers.Clear();
     }
 
+    /// <summary>F94: perks bought in the hub shop apply to the floor about to be entered, whose maze is already built - AsylumHub's wing walk-in activates them and rebuilds that maze.</summary>
+    public static void ActivatePending()
+    {
+        ActiveModifiers.UnionWith(PendingModifiers);
+        PendingModifiers.Clear();
+    }
+
     /// <summary>MazeGenerator.ApplyFloorProfile, before it copies the values out. Mutates the profile.</summary>
     public static void ApplyActiveModifiers(FloorProfile p)
     {

@@ -69,7 +69,15 @@ public static partial class AsylumHubBuilder
                     if (GameObjectUtility.GetStaticEditorFlags(t.gameObject) != 0) { staticLeaves++; break; }
                 }
             }
-            if (door.arrivalPoint != null && !ClearanceFree(door)) blocked.Add($"floor {door.floor} by {LastBlocker}");
+            if (door.arrivalPoint != null && !ClearanceFree(door.arrivalPoint)) blocked.Add($"floor {door.floor} by {LastBlocker}");
+        }
+        if (hub.shopDoor != null && hub.shopDoor.arrivalPoint != null && !ClearanceFree(hub.shopDoor.arrivalPoint)) blocked.Add($"shop by {LastBlocker}");
+        if (hub.shopDoor != null && hub.shopDoor.leafHinge != null)
+        {
+            foreach (Transform t in hub.shopDoor.leafHinge.GetComponentsInChildren<Transform>(true))
+            {
+                if (GameObjectUtility.GetStaticEditorFlags(t.gameObject) != 0) { staticLeaves++; break; }
+            }
         }
         int wired = hub.wingDoors.Count(d => d != null);
         sb.AppendLine($"  wing doors: {wired} / 5 {(wired == 5 ? "OK" : "MISSING")}");
@@ -89,14 +97,14 @@ public static partial class AsylumHubBuilder
     /// <summary>The 1.5 x 2.5 x 1.5 m box in front of a wing door has nothing solid in it.</summary>
     public static string LastBlocker;
 
-    private static bool ClearanceFree(WingDoor door)
+    private static bool ClearanceFree(Transform arrival)
     {
-        Vector3 forward = door.arrivalPoint.forward;
-        Vector3 centre = door.arrivalPoint.position - forward * 0.625f + Vector3.up * 1.3f;
-        Collider[] hits = Physics.OverlapBox(centre, new Vector3(0.75f, 1.15f, 0.625f), door.arrivalPoint.rotation, ~0, QueryTriggerInteraction.Ignore);
+        Vector3 forward = arrival.forward;
+        Vector3 centre = arrival.position - forward * 0.625f + Vector3.up * 1.3f;
+        Collider[] hits = Physics.OverlapBox(centre, new Vector3(0.75f, 1.15f, 0.625f), arrival.rotation, ~0, QueryTriggerInteraction.Ignore);
         foreach (Collider c in hits)
         {
-            if (c.GetComponentInParent<WingDoor>() != null) continue; // the door own leaf / frame
+            if (c.GetComponentInParent<WingDoor>() != null || c.GetComponentInParent<ShopDoor>() != null) continue; // the door own leaf / frame
             LastBlocker = c.name + " (" + c.transform.parent?.name + ")";
             return false;
         }

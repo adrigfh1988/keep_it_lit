@@ -250,7 +250,9 @@ public class GameOutcome : MonoBehaviour
         if (blackout != null) yield return Fade(blackout, 0f, 1f, 0.6f);
         else yield return new WaitForSeconds(0.6f); // the player is falling onto the platform meanwhile
 
-        _shop.ArrivePlayer(_player);
+        // F94: when the asylum can host the shop, the player goes to the hub instead (the SHOP door is there); the ledger is over black.
+        bool viaHub = AsylumHub.ShopInHub;
+        if (!viaHub) _shop.ArrivePlayer(_player);
 
         Payout payout = PlayerWallet.ComputeFloorClear(GameFlow.CurrentFloor, _collected, secondsLeft);
         // F87: the taken contract is decided and paid in this same payout; then the shop's board gets its two offers for the next floor
@@ -259,7 +261,8 @@ public class GameOutcome : MonoBehaviour
         ContractState.RollOffers(_seed, GameFlow.CurrentFloor);
         PlayerWallet.Deposit(payout);
         // F83: shop-arrival checkpoint, with the payout banked. Resumes straight into the shop.
-        SaveSystem.WriteCheckpoint(GameFlow.CurrentFloor, true);
+        // F94: not via the hub - NextFloor writes the floor-start checkpoint with the deposited wallet.
+        if (!viaHub) SaveSystem.WriteCheckpoint(GameFlow.CurrentFloor, true);
 
         Transform ledger = blackout != null ? BuildLedger(blackout.transform, payout) : null;
         _showingLedger = true; // Update frees the cursor while this is true
@@ -268,6 +271,14 @@ public class GameOutcome : MonoBehaviour
         _continuePressed = false;
         yield return new WaitUntil(() => _continuePressed);
         _showingLedger = false;
+
+        if (viaHub)
+        {
+            // The screen stays black; the reload lands in the hub at the cleared wing's arrival point (GameFlow.ArriveInHub).
+            IsEnding = false;
+            GameFlow.NextFloor();
+            yield break;
+        }
 
         GameFlow.IsInShop = true;
         IsEnding = false;

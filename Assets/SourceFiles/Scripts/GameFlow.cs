@@ -82,6 +82,15 @@ public static class GameFlow
     /// <summary>F92: set by NextFloor and by CONTINUE from a floor-start save; consumed by MainMenu.Start, which then opens the floor in the Asylum hub (when the scene has a usable one) instead of starting the run. Retry, Restart and START NEW MAZE clear it. Reset here, in ResetStatics and in ReturnToMenu.</summary>
     public static bool ArriveInHub;
 
+    /// <summary>F94: true while the player is in the shop reached through the hub's SHOP door (not straight from a cleared maze). CurrentFloor is then already the floor about to be played, so the shop reads ShopClearedFloor / ShopNextFloor instead. Transient, never saved: reset in Reload, ResetStatics and ReturnToMenu.</summary>
+    public static bool ShopFromHub;
+
+    /// <summary>F94: the floor the shop sits after (the one just cleared).</summary>
+    public static int ShopClearedFloor => ShopFromHub ? CurrentFloor - 1 : CurrentFloor;
+
+    /// <summary>F94: the floor the shop's door leads to.</summary>
+    public static int ShopNextFloor => ShopClearedFloor + 1;
+
     public static void Restart(bool sameMaze, int currentSeed, bool viaHub = false)
     {
         SkipMenuOnLoad = true;
@@ -115,6 +124,7 @@ public static class GameFlow
         UseKitMaze = false;
         ResumeInShop = false;
         ArriveInHub = false;
+        ShopFromHub = false;
         // F83: deliberately does NOT delete the save - that is what puts CONTINUE on the title screen.
         PlayerWallet.ResetCampaign();
         PlayerInventory.ResetCampaign();
@@ -144,6 +154,7 @@ public static class GameFlow
         IsInShop = false;
         IsInIntake = false;
         IsInHub = false;
+        ShopFromHub = false;
         HubState.IsFinale = false; // F93
         // Restart can be called from the pause menu with both engaged. MainMenu.Awake zeroes the
         // clock again in the new scene anyway.
@@ -168,6 +179,7 @@ public static class GameFlow
         UseKitMaze = false;
         ResumeInShop = false;
         ArriveInHub = false;
+        ShopFromHub = false;
         System.Array.Clear(RolledObjectives, 0, RolledObjectives.Length);
     }
 }

@@ -229,6 +229,13 @@ public static class ProjectSetup
         },
         new Piece
         {
+            Name = "Asylum shop door (F94: the SHOP door between the hub and the shop)",
+            FixMenu = "Build Missing Pieces (adds the SHOP door to the scene hub on a prop-free wall and applies it to the prefab)",
+            Problem = AsylumHubBuilder.ShopDoorProblem,
+            Build = AsylumHubBuilder.AddShopDoor
+        },
+        new Piece
+        {
             Name = "Asylum hub layout (lights, walking paths, doors)",
             FixMenu = "edit Assets/Prefabs/AsylumHub.prefab by hand to clear what is listed",
             Problem = AsylumHubBuilder.LayoutProblem,

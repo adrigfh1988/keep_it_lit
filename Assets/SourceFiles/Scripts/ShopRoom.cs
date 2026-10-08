@@ -143,7 +143,7 @@ public class ShopRoom : MonoBehaviour
 
         player.GetComponent<ThirdPersonController>()?.ResetCameraRotation(yaw);
 
-        if (doorSign != null) doorSign.text = $"FLOOR {GameFlow.CurrentFloor + 1}";
+        if (doorSign != null) doorSign.text = GameFlow.ShopFromHub ? "ASYLUM" : $"FLOOR {GameFlow.ShopNextFloor}";
     }
 
     /// <summary>Opens the room for free movement. Called once the ledger's CONTINUE is pressed.</summary>
@@ -155,7 +155,7 @@ public class ShopRoom : MonoBehaviour
         _inBoard = false;
         if (_hum != null) _hum.Play();
         // F87: after a contract was paid or failed the salesman says so instead of the usual greeting.
-        if (_hud != null) _hud.ShowSubtitle(ContractState.TakeSalesmanLine() ?? GreetingFor(GameFlow.CurrentFloor), 3f);
+        if (_hud != null) _hud.ShowSubtitle(ContractState.TakeSalesmanLine() ?? GreetingFor(GameFlow.ShopClearedFloor), 3f);
     }
 
     private void Update()
@@ -314,7 +314,33 @@ public class ShopRoom : MonoBehaviour
         }
 
         if (_hum != null) _hum.Stop();
+        if (LeaveToHub(blackout)) yield break;
         GameFlow.NextFloor();
+    }
+
+    /// <summary>
+    /// F94: when the shop was reached through the hub's SHOP door, its exit goes back to the hospital (not on to the next floor) and the
+    /// room is reset for a later visit. Returns false in the old flow (and for a legacy shop save), where the exit is GameFlow.NextFloor().
+    /// </summary>
+    private bool LeaveToHub(Image blackout)
+    {
+        if (!GameFlow.ShopFromHub) return false;
+
+        _open = false;
+        if (_hum != null) _hum.Stop();
+        if (doorHinge != null) doorHinge.localRotation = _hingeClosed;
+
+        AsylumHub hub = AsylumHub.Active;
+        if (hub != null && hub.CanVisitShop) hub.ReturnFromShop();
+        else
+        {
+            // The hub went away mid-visit (cannot normally happen): reload the floor we were about to play, do not skip one.
+            GameFlow.ShopFromHub = false;
+            GameFlow.Restart(false, 0, true);
+        }
+        // The hub has made its own black by now (EnterRoutine sets it before its first yield); this panel can go.
+        if (blackout != null) Destroy(blackout.gameObject);
+        return true;
     }
 
     /// <summary>A CharacterController overrides transform writes unless it is switched off around them.</summary>
@@ -391,7 +417,7 @@ public class ShopRoom : MonoBehaviour
     private IEnumerator DescendRoutine()
     {
         _open = false;
-        GameFlow.IsInShop = false;
+        if (!GameFlow.ShopFromHub) GameFlow.IsInShop = false; // from the hub, ReturnFromShop clears it after the hub is entered
         PlayerLock.Freeze(_player, true);
         if (_hud != null) _hud.SetPrompt(null);
         if (_hum != null) _hum.Stop();
@@ -411,6 +437,7 @@ public class ShopRoom : MonoBehaviour
             yield return null;
         }
 
+        if (LeaveToHub(blackout)) yield break;
         GameFlow.NextFloor();
     }
 

@@ -81,15 +81,27 @@ public static partial class AsylumHubBuilder
     /// </summary>
     private static void RemoveHangingProps(WingDef def, WallSpot spot)
     {
-        Transform room = _building.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == def.Room);
-        if (room == null) return;
+        foreach (Transform victim in HangingProps(def.Room, spot))
+        {
+            if (victim == null) continue; // a parent prop went already
+            Debug.Log($"Asylum {def.Name} door: removed hanging prop {victim.name}.");
+            Object.DestroyImmediate(victim.gameObject);
+        }
+    }
+
+    /// <summary>The collider-less dressing a door at `spot` in `roomName` would hang inside (what <see cref="RemoveHangingProps"/> deletes). Nothing is removed here.</summary>
+    private static List<Transform> HangingProps(string roomName, WallSpot spot)
+    {
+        List<Transform> found = new List<Transform>();
+        Transform room = _building.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == roomName);
+        if (room == null) return found;
         Vector3 across = Mathf.Abs(spot.Normal.z) > 0.5f ? Vector3.right : Vector3.forward;
         Vector3 centre = spot.Point + spot.Normal * 0.45f + Vector3.up * 1.5f;
         Vector3 size = across * 2.5f + spot.Normal * 1.0f + Vector3.up * 3.1f;
         Bounds clear = new Bounds(centre, new Vector3(Mathf.Abs(size.x), Mathf.Abs(size.y), Mathf.Abs(size.z)));
         foreach (Renderer r in room.GetComponentsInChildren<Renderer>(true))
         {
-            if (r == null || !r.bounds.Intersects(clear)) continue; // r is null when a parent prop went already
+            if (r == null || !r.bounds.Intersects(clear)) continue;
             Vector3 s = r.bounds.size;
             if (Mathf.Max(s.x, Mathf.Max(s.y, s.z)) > 3f) continue;
             string chain = "";
@@ -97,21 +109,55 @@ public static partial class AsylumHubBuilder
             if (KeepNames.Any(k => chain.Contains(k))) continue;
             Transform victim = r.transform;
             while (victim.parent != null && victim.parent != room) victim = victim.parent;
-            if (victim == room) continue;
-            Debug.Log($"Asylum {def.Name} door: removed hanging prop {victim.name}.");
-            Object.DestroyImmediate(victim.gameObject);
+            if (victim == room || found.Contains(victim)) continue;
+            found.Add(victim);
         }
+        return found;
+    }
+
+    /// <summary>What <see cref="BuildDoorShell"/> builds: the root plus the parts a door component needs wired.</summary>
+    private struct DoorShell
+    {
+        public GameObject Root;
+        public TextMeshPro Text;
+        public Light Beacon;
+        public Transform HingeA, HingeB, Arrival;
     }
 
     private static WingDoor BuildWingDoor(AsylumHub hub, WingDef def, WallSpot spot, float floorY, Material plate)
     {
-        GameObject root = new GameObject($"Wing_{def.Floor}_{def.Name.Replace(' ', '_')}");
+        DoorShell shell = BuildDoorShell(hub, $"Wing_{def.Floor}_{def.Name.Replace(' ', '_')}", def.DoorPrefab, def.Double,
+            $"{def.Name}\n<size=60%>{def.RoomLabel}</size>", spot, floorY, plate);
+
+        WingDoor wing = shell.Root.AddComponent<WingDoor>();
+        wing.floor = def.Floor;
+        wing.wingName = def.Name;
+        wing.roomName = def.RoomLabel;
+        wing.levelName = def.Level;
+        wing.plaque = shell.Text;
+        wing.beacon = shell.Beacon;
+        wing.leafHinge = shell.HingeA;
+        wing.leafHingeB = shell.HingeB;
+        wing.arrivalPoint = shell.Arrival;
+        wing.Refresh();
+        shell.Beacon.enabled = true; // the saved prefab keeps every beacon on (Refresh switches a sealed wing off); the audit counts them
+        return wing;
+    }
+
+    /// <summary>
+    /// The shared body of every hub door (wing doors, the SHOP door): the pack door with a hinge per leaf, a plaque plate and text, a
+    /// beacon, an arrival point 1.5 m in front and the interaction trigger, flush against `spot`. The caller adds its component.
+    /// </summary>
+    private static DoorShell BuildDoorShell(AsylumHub hub, string rootName, string doorPrefab, bool isDouble, string plaqueText,
+        WallSpot spot, float floorY, Material plate)
+    {
+        GameObject root = new GameObject(rootName);
         root.transform.SetParent(hub.wings, false);
         root.transform.position = new Vector3(spot.Point.x, floorY, spot.Point.z);
         root.transform.rotation = Quaternion.LookRotation(spot.Normal, Vector3.up);
 
         // The pack door: frame + leaf(s), pivot at floor level in the middle, thin along its local Z.
-        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PackPrefabs + def.DoorPrefab + ".prefab");
+        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PackPrefabs + doorPrefab + ".prefab");
         GameObject door = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
         PrefabUtility.UnpackPrefabInstance(door, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
         door.name = "Door";
@@ -121,7 +167,7 @@ public static partial class AsylumHubBuilder
         door.transform.localScale = Vector3.one;
 
         Transform leafA, leafB = null;
-        if (def.Double)
+        if (isDouble)
         {
             leafA = door.GetComponentsInChildren<Transform>(true).First(t => t.name.EndsWith("_Left") || t.name == "DoorD_Left");
             leafB = door.GetComponentsInChildren<Transform>(true).First(t => t.name.EndsWith("_Right") || t.name == "DoorD_Right");
@@ -159,7 +205,7 @@ public static partial class AsylumHubBuilder
         text.characterSpacing = 3f;
         text.alignment = TextAlignmentOptions.Center;
         text.rectTransform.sizeDelta = new Vector2(2.1f, 0.6f);
-        text.text = $"{def.Name}\n<size=60%>{def.RoomLabel}</size>";
+        text.text = plaqueText;
 
         // Beacon above the door, a little into the room.
         GameObject lightGo = new GameObject("Beacon");
@@ -179,19 +225,6 @@ public static partial class AsylumHubBuilder
         arrival.transform.localPosition = new Vector3(0f, 0.05f, 1.5f);
         arrival.transform.localRotation = Quaternion.identity;
 
-        WingDoor wing = root.AddComponent<WingDoor>();
-        wing.floor = def.Floor;
-        wing.wingName = def.Name;
-        wing.roomName = def.RoomLabel;
-        wing.levelName = def.Level;
-        wing.plaque = text;
-        wing.beacon = beacon;
-        wing.leafHinge = hingeA;
-        wing.leafHingeB = hingeB;
-        wing.arrivalPoint = arrival.transform;
-        wing.Refresh();
-        beacon.enabled = true; // the saved prefab keeps every beacon on (Refresh switches a sealed wing off); the audit counts them
-
         // Interaction: a trigger box over the door (PlayerInteractor spherecasts for IInteractable colliders in Collide mode).
         BoxCollider trigger = root.AddComponent<BoxCollider>();
         trigger.isTrigger = true;
@@ -199,7 +232,7 @@ public static partial class AsylumHubBuilder
         trigger.size = new Vector3(1.9f, 2.3f, 0.9f);
 
         MakeMovable(root.transform);
-        return wing;
+        return new DoorShell { Root = root, Text = text, Beacon = beacon, HingeA = hingeA, HingeB = hingeB, Arrival = arrival.transform };
     }
 
     // ---------------------------------------------------------------- wall search
@@ -207,7 +240,7 @@ public static partial class AsylumHubBuilder
     private static int _dbgNotFlat, _dbgBlocked;
     public static string LastDiagnostics;
 
-    private static bool FindWallSpot(Bounds room, float floorY, List<Vector3> entrances, out WallSpot best)
+    private static bool FindWallSpot(Bounds room, float floorY, List<Vector3> entrances, out WallSpot best, System.Func<WallSpot, bool> accept = null)
     {
         best = default;
         bool found = false;
@@ -246,8 +279,11 @@ public static partial class AsylumHubBuilder
                 float score = Mathf.Min(nearestEntrance, 7f) - 0.12f * Mathf.Abs(s) - 1.2f * props.Select(p => PropRoot(p.transform, "")).Distinct().Count();
                 if (found && score <= best.Score) continue;
 
+                WallSpot candidate = new WallSpot { Point = new Vector3(wallPoint.x, floorY, wallPoint.z), Normal = n, Score = score, Props = props };
+                if (accept != null && !accept(candidate)) continue;
+
                 found = true;
-                best = new WallSpot { Point = new Vector3(wallPoint.x, floorY, wallPoint.z), Normal = n, Score = score, Props = props };
+                best = candidate;
             }
         }
         if (!found) LastDiagnostics = ($"Asylum wall search {room.center} size {room.size} floorY {floorY}: not flat {_dbgNotFlat}, blocked {_dbgBlocked}");
