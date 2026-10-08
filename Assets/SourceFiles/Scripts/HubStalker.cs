@@ -2,7 +2,10 @@ using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
-/// F93 (E4): the thing that walks the asylum - a black Adam with two small red eyes, animated with the Mixamo zombie clips. Floor 5
+/// F93 (E4): the thing that walks the asylum - Timmy, the player's own robot, dulled, with two small red eyes. On a Starter Assets
+/// locomotion controller (Speed/MotionSpeed/Grounded) the Speed blend follows the agent's real velocity, so the feet match the ground,
+/// and it turns smoothly toward where it is going; a controller with Mixamo-style states (Idle/Walk/Run/Scream/Attack/StandUp) still
+/// works as before. Floor 5
 /// patrols a route of waypoints the whole visit; floor 4's chase set piece raises it at the foot of the basement stairs and sends it
 /// after the player. It never touches GameOutcome: a catch (about 1.1 m with sight) is a blackout, a sting and "You wake at the door."
 /// at the hub arrival, after which it resets. It ignores a hidden player (a locker), sees 60 degrees / 12 m (18 m with the focused torch
@@ -30,6 +33,10 @@ public class HubStalker : MonoBehaviour
     public float patrolSpeed = 1.6f;
     public float chaseMultiplier = 1.15f;
     public float screamSeconds = 1.5f;
+    [Tooltip("How long a locomotion rig (no scream clip) stands and stares when it spots the player, before the chase.")]
+    public float stareSeconds = 0.7f;
+    [Tooltip("How fast the body turns toward where it is walking (exponential, per second). Higher = snappier.")]
+    public float turnSharpness = 6f;
 
     [Tooltip("The chase never loses track of the player (the floor-4 stair chase); a hidden player still breaks it.")]
     public bool relentless;
@@ -51,15 +58,45 @@ public class HubStalker : MonoBehaviour
 
     private static readonly int Idle = Animator.StringToHash("Idle"), Walk = Animator.StringToHash("Walk"), Run = Animator.StringToHash("Run"),
         Scream = Animator.StringToHash("Scream"), Attack = Animator.StringToHash("Attack"), StandUp = Animator.StringToHash("StandUp");
+    private static readonly int AnimSpeed = Animator.StringToHash("Speed"), AnimMotionSpeed = Animator.StringToHash("MotionSpeed"),
+        AnimGrounded = Animator.StringToHash("Grounded");
     private int _animState;
+    private bool _locomotion;
+    private Renderer[] _eyes = new Renderer[0];
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetStatics() => _agentType = int.MinValue;
 
     private void Awake()
     {
+        DetectRig();
         EnsureAgent();
-        FitEyes();
+        if (!_locomotion) FitEyes(); // the robot is authored standing; only a lying-pose Mixamo body needs its eyes re-placed
+    }
+
+    /// <summary>A Starter Assets controller (a "Speed" float) is driven by parameters; anything else by named states.</summary>
+    private void DetectRig()
+    {
+        _locomotion = false;
+        if (animator == null || animator.runtimeAnimatorController == null) return;
+        foreach (AnimatorControllerParameter p in animator.parameters)
+            if (p.type == AnimatorControllerParameterType.Float && p.nameHash == AnimSpeed) _locomotion = true;
+        if (_locomotion)
+        {
+            animator.SetBool(AnimGrounded, true); // Starter Assets defaults Grounded to false, which holds the legs in the fall pose
+            animator.SetFloat(AnimMotionSpeed, 1f);
+        }
+        Transform head = animator.isHuman ? animator.GetBoneTransform(HumanBodyBones.Head) : null;
+        if (head != null)
+        {
+            Transform l = head.Find("EyeL"), r = head.Find("EyeR");
+            _eyes = new[] { l != null ? l.GetComponent<Renderer>() : null, r != null ? r.GetComponent<Renderer>() : null };
+        }
+    }
+
+    private void SetEyes(bool on)
+    {
+        foreach (Renderer r in _eyes) if (r != null) r.enabled = on;
     }
 
     /// <summary>
@@ -108,6 +145,7 @@ public class HubStalker : MonoBehaviour
         _agent.height = 1.8f;
         _agent.acceleration = 12f;
         _agent.angularSpeed = 240f;
+        _agent.updateRotation = false; // Turn() eases the body round instead of the agent snapping it
         _agent.stoppingDistance = 0.1f;
         _agent.autoBraking = false;
         _agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
@@ -155,6 +193,7 @@ public class HubStalker : MonoBehaviour
         _agent.Warp(hit.position);
         CurrentMode = Mode.Idle;
         _animState = 0;
+        SetEyes(true);
         PlayAnim(Idle, 0.1f);
         return true;
     }
@@ -170,7 +209,7 @@ public class HubStalker : MonoBehaviour
         GoPatrol();
     }
 
-    /// <summary>The chase set piece: it rises (zombie StandUp clip), screams, and hunts the player.</summary>
+    /// <summary>The chase set piece: it rises (zombie StandUp clip; a robot just stands dark until its eyes come on), screams, and hunts the player.</summary>
     public void StartRise(float seconds, System.Action onReset)
     {
         EnsureAgent();
@@ -178,6 +217,7 @@ public class HubStalker : MonoBehaviour
         _hasRoute = false;
         CurrentMode = Mode.Rising;
         _stateUntil = Time.time + seconds;
+        if (_locomotion) SetEyes(false);
         PlayAnim(StandUp, 0.05f);
     }
 
@@ -310,6 +350,7 @@ public class HubStalker : MonoBehaviour
                 break;
         }
 
+        Turn();
         UpdateAnimation();
         Footsteps();
     }
@@ -320,7 +361,8 @@ public class HubStalker : MonoBehaviour
         if (hub != null && hub.Player != null) _lastKnown = hub.Player.position;
         _lastSeen = Time.time;
         CurrentMode = Mode.Spotted;
-        _stateUntil = Time.time + screamSeconds;
+        _stateUntil = Time.time + (_locomotion ? stareSeconds : screamSeconds);
+        SetEyes(true);
         PlayAnim(Scream, 0.1f);
     }
 
@@ -371,15 +413,34 @@ public class HubStalker : MonoBehaviour
 
     private void PlayAnim(int state, float fade)
     {
-        if (animator == null || !animator.isActiveAndEnabled || _animState == state) return;
+        if (_locomotion || animator == null || !animator.isActiveAndEnabled || _animState == state) return; // a locomotion rig has no named clips
         _animState = state;
         animator.CrossFadeInFixedTime(state, fade);
+    }
+
+    /// <summary>While it walks, the body eases round toward where the agent wants to go (the agent itself never rotates it).</summary>
+    private void Turn()
+    {
+        if (CurrentMode != Mode.Patrol && CurrentMode != Mode.Chase && CurrentMode != Mode.Search) return;
+        Vector3 v = _agent.desiredVelocity;
+        v.y = 0f;
+        if (v.sqrMagnitude < 0.04f) return;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(v), 1f - Mathf.Exp(-turnSharpness * Time.deltaTime));
     }
 
     private void UpdateAnimation()
     {
         if (animator == null) return;
         float speed = _agent.velocity.magnitude;
+        if (_locomotion)
+        {
+            // Starter Assets' blend tree: Speed 0 idle, 2 walk, 6 run, in m/s - the agent's own speed keeps the feet on the ground.
+            animator.speed = 1f;
+            animator.SetBool(AnimGrounded, true);
+            animator.SetFloat(AnimMotionSpeed, 1f);
+            animator.SetFloat(AnimSpeed, _agent.isStopped ? 0f : speed, 0.12f, Time.deltaTime);
+            return;
+        }
         switch (CurrentMode)
         {
             case Mode.Patrol:

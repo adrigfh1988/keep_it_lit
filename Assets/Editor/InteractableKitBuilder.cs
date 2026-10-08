@@ -1190,6 +1190,34 @@ public static class InteractableKitBuilder
         root.transform.localRotation = Quaternion.identity;
         root.transform.localScale = Vector3.one * 1.15f;
 
+        StripRobotToVisuals(root);
+
+        Material bodyMat = LoadOrCreateMat("Stalker_Body", new Color(0.02f, 0.02f, 0.025f), null, 0.75f);
+        foreach (Renderer renderer in root.GetComponentsInChildren<Renderer>(true))
+        {
+            Material[] mats = renderer.sharedMaterials;
+            for (int i = 0; i < mats.Length; i++) mats[i] = bodyMat;
+            renderer.sharedMaterials = mats;
+        }
+
+        BuildStalkerEyes(root);
+
+        Stalker stalker = root.AddComponent<Stalker>();
+        StanPhraseBookBuilder.AssignTo(stalker); // F82: keep the phrase-book link across a full rebuild (no-op if the asset doesn't exist yet)
+        // An expensive skinned mesh + animator should not sit active (and animating/rendering) in the
+        // gallery - MazeGenerator.BuildStalker's Instantiate + SetActive(true) is what brings a clone
+        // to life at runtime, same pattern as CreateDoor.
+        root.SetActive(false);
+        return stalker;
+    }
+
+    /// <summary>
+    /// Unpacks a PlayerRobot.prefab instance and strips everything that is not visual (movement/input, the player's stealth/stamina
+    /// components, every camera/listener/CinemachineBrain/virtual camera), keeping the Animator, its controller and the skinned meshes.
+    /// Shared by the Stalker template and the asylum hub's pursuer (AsylumHubBuilder.SwapPursuerBody).
+    /// </summary>
+    internal static void StripRobotToVisuals(GameObject root)
+    {
         // Breaks the prefab connection so the strip below can freely remove components/children -
         // PlayerRobot.prefab itself is never modified.
         PrefabUtility.UnpackPrefabInstance(root, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
@@ -1224,24 +1252,6 @@ public static class InteractableKitBuilder
         {
             t.gameObject.tag = "Untagged";
         }
-
-        Material bodyMat = LoadOrCreateMat("Stalker_Body", new Color(0.02f, 0.02f, 0.025f), null, 0.75f);
-        foreach (Renderer renderer in root.GetComponentsInChildren<Renderer>(true))
-        {
-            Material[] mats = renderer.sharedMaterials;
-            for (int i = 0; i < mats.Length; i++) mats[i] = bodyMat;
-            renderer.sharedMaterials = mats;
-        }
-
-        BuildStalkerEyes(root);
-
-        Stalker stalker = root.AddComponent<Stalker>();
-        StanPhraseBookBuilder.AssignTo(stalker); // F82: keep the phrase-book link across a full rebuild (no-op if the asset doesn't exist yet)
-        // An expensive skinned mesh + animator should not sit active (and animating/rendering) in the
-        // gallery - MazeGenerator.BuildStalker's Instantiate + SetActive(true) is what brings a clone
-        // to life at runtime, same pattern as CreateDoor.
-        root.SetActive(false);
-        return stalker;
     }
 
     private static void DestroyAllOfType<T>(GameObject root) where T : Component
