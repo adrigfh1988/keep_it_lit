@@ -127,22 +127,34 @@ public static partial class AsylumHubBuilder
         }
 
         WalkGrid grid = BuildWalkGrid(hub);
-        List<(string, Transform)> nodes = new List<(string, Transform)> { ("entrance", hub.mainEntrance) };
-        foreach (WingDoor d in hub.wingDoors) nodes.Add(($"wing {d.floor}", d.arrivalPoint));
+        List<(string, Vector3)> nodes = new List<(string, Vector3)> { ("entrance", hub.mainEntrance.position) };
+        foreach (WingDoor d in hub.wingDoors) nodes.Add(($"wing {d.floor}", d.arrivalPoint.position));
 
         bool all = true;
-        int[] ids = nodes.Select(n => grid.Nearest(n.Item2.position)).ToArray();
+        int[] ids = nodes.Select(n => grid.Nearest(n.Item2)).ToArray();
         sb.AppendLine($"  walk nodes: {grid.Count}");
         for (int i = 1; i < nodes.Count; i++)
         {
             all &= PathLine(grid, nodes, ids, 0, i, sb);
             if (i >= 2) all &= PathLine(grid, nodes, ids, i - 1, i, sb);
         }
+
+        // The floor-5 key run: the Director's key must be reachable (the records room's pack door once sealed it). Measured from 1.5 m in
+        // front of the hook, at floor height, so the nearest walk node is inside the room and not in the hall behind the board's wall.
+        HubKey key = hub.life != null ? hub.life.GetComponentInChildren<HubKey>(true) : null;
+        if (key != null)
+        {
+            Vector3 front = key.transform.position + key.transform.forward * 1.5f;
+            front.y = hub.mainEntrance.position.y;
+            nodes.Add(("director's key", front));
+            int[] keyIds = nodes.Select(n => grid.Nearest(n.Item2)).ToArray();
+            all &= PathLine(grid, nodes, keyIds, 0, nodes.Count - 1, sb);
+        }
         sb.AppendLine($"  walk graph: {(all ? "complete OK" : "BROKEN")}");
         return sb.ToString();
     }
 
-    private static bool PathLine(WalkGrid grid, List<(string, Transform)> nodes, int[] ids, int from, int to, StringBuilder sb)
+    private static bool PathLine(WalkGrid grid, List<(string, Vector3)> nodes, int[] ids, int from, int to, StringBuilder sb)
     {
         string label = $"{nodes[from].Item1} -> {nodes[to].Item1}";
         if (ids[from] < 0 || ids[to] < 0) { sb.AppendLine($"  path {label}: {(ids[from] < 0 ? "start" : "end")} is off the walkable area"); return false; }

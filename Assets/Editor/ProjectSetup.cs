@@ -236,6 +236,13 @@ public static class ProjectSetup
         },
         new Piece
         {
+            Name = "Asylum look (F95: light palette, reflection probes, hub-only SSAO, aged materials)",
+            FixMenu = "Build Missing Pieces (adds only what is missing to the scene hub and applies it to the prefab)",
+            Problem = AsylumHubBuilder.LookProblem,
+            Build = AsylumHubBuilder.LookRepair
+        },
+        new Piece
+        {
             Name = "Asylum hub layout (lights, walking paths, doors)",
             FixMenu = "edit Assets/Prefabs/AsylumHub.prefab by hand to clear what is listed",
             Problem = AsylumHubBuilder.LayoutProblem,

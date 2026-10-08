@@ -17,6 +17,12 @@ public class MobilePerformance : MonoBehaviour
     private const float MobileRenderScale = 0.75f;
     private const float DetectionWindowSeconds = 2f;
 
+    /// <summary>True once the mobile / touch-first trims were applied (player builds only; always false in the Editor). HubRenderingLook keeps the hub's SSAO off when set.</summary>
+    public static bool IsMobileProfile { get; private set; }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics() => IsMobileProfile = false;
+
     private Flashlight _flashlight;
     private bool _applied;
 
@@ -61,6 +67,7 @@ public class MobilePerformance : MonoBehaviour
     {
         if (_applied) return;
         _applied = true;
+        IsMobileProfile = true;
 
         UniversalRenderPipelineAsset asset = GraphicsSettings.currentRenderPipeline as UniversalRenderPipelineAsset;
         if (asset != null) asset.renderScale = MobileRenderScale;
