@@ -18,6 +18,9 @@ public class HubLampFlicker : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float blackoutChance = 0.2f;
     [SerializeField] private float buzzVolume = 0.18f;
 
+    /// <summary>F96: a multiplier another system (HubDecay's flicker bursts) lays over the lamp's own flicker; 1 = none. At ~0 the buzz is muted with the light.</summary>
+    [System.NonSerialized] public float External = 1f;
+
     private float _baseIntensity;
     private Color _baseEmission = Color.black;
     private MaterialPropertyBlock _block;
@@ -62,7 +65,8 @@ public class HubLampFlicker : MonoBehaviour
     private void OnDisable()
     {
         if (lamp != null) lamp.intensity = _baseIntensity;
-        if (buzz != null) buzz.Stop();
+        External = 1f;
+        if (buzz != null) { buzz.mute = false; buzz.Stop(); }
         if (fixture != null && _block != null) fixture.SetPropertyBlock(null);
     }
 
@@ -78,6 +82,7 @@ public class HubLampFlicker : MonoBehaviour
             _nextDip = _dipEnd + Random.Range(secondsBetweenDips.x, secondsBetweenDips.y);
         }
         if (t < _dipEnd) factor *= _dipLevel;
+        factor *= External;
 
         lamp.intensity = _baseIntensity * factor;
 
@@ -92,6 +97,7 @@ public class HubLampFlicker : MonoBehaviour
         {
             buzz.pitch = 0.88f + 0.24f * Mathf.Clamp01(factor);
             buzz.volume = buzzVolume * Mathf.Clamp01(factor);
+            buzz.mute = factor < 0.05f; // F96: silent while the light is out
         }
     }
 }

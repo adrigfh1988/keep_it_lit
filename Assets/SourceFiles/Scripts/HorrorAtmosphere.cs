@@ -166,6 +166,7 @@ public class HorrorAtmosphere : MonoBehaviour
         {
             // volume.profile (not sharedProfile) lazily clones the asset, so every edit below lives only
             // for this play session and leaves the .asset on disk clean.
+            if (volume.GetComponentInParent<AsylumHub>(true) != null) continue; // F96: the hub's own darkening volume keeps its asset values
             if (volume.profile == null) continue;
 
             if (volume.profile.TryGet(out ColorAdjustments colorAdjustments))

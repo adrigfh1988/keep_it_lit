@@ -421,6 +421,46 @@ public static partial class AsylumHubBuilder
     private static void SetBool(SerializedProperty parent, string name, bool value) { SerializedProperty p = parent.FindPropertyRelative(name); if (p != null) p.boolValue = value; }
     private static void SetFloat(SerializedProperty parent, string name, float value) { SerializedProperty p = parent.FindPropertyRelative(name); if (p != null) p.floatValue = value; }
 
+    // ---------------------------------------------------------------- dark volume (F96)
+
+    private const string DarkVolumePath = "Assets/SourceFiles/Settings/AsylumHubVolume.asset";
+    private const string DarkVolumeName = "DarkVolume";
+
+    /// <summary>F96: the hub-only darkening volume (vignette, exposure, desaturation) and its profile asset; HubRenderingLook enables it with the hub. Idempotent (an existing profile's values are left alone).</summary>
+    private static void EnsureDarkVolume(AsylumHub hub, HubRenderingLook look)
+    {
+        VolumeProfile profile = AssetDatabase.LoadAssetAtPath<VolumeProfile>(DarkVolumePath);
+        if (profile == null)
+        {
+            profile = ScriptableObject.CreateInstance<VolumeProfile>();
+            AssetDatabase.CreateAsset(profile, DarkVolumePath);
+            Vignette vignette = profile.Add<Vignette>(true);
+            vignette.intensity.Override(0.45f);
+            vignette.smoothness.Override(0.45f);
+            vignette.color.Override(Color.black);
+            ColorAdjustments adjust = profile.Add<ColorAdjustments>(true);
+            adjust.postExposure.Override(DarkVolumeExposure); // absolute: HorrorAtmosphere's runtime clone of the scene volume sits at -0.2
+            adjust.saturation.Override(-10f);
+            foreach (VolumeComponent c in profile.components) { AssetDatabase.AddObjectToAsset(c, profile); EditorUtility.SetDirty(c); }
+            EditorUtility.SetDirty(profile);
+            AssetDatabase.SaveAssets();
+        }
+
+        Transform t = hub.lights.Find(DarkVolumeName);
+        if (t == null) { t = new GameObject(DarkVolumeName).transform; t.SetParent(hub.lights, false); }
+        Volume volume = t.GetComponent<Volume>();
+        if (volume == null) volume = t.gameObject.AddComponent<Volume>();
+        volume.isGlobal = true;
+        volume.priority = 10f; // above the scene's global volume (0)
+        volume.weight = 1f;
+        volume.sharedProfile = profile;
+        volume.enabled = false; // HubRenderingLook switches it on with the hub
+        look.darkVolume = volume;
+        EditorUtility.SetDirty(volume);
+    }
+
+    private const float DarkVolumeExposure = -0.45f;
+
     // ---------------------------------------------------------------- pipeline flags
 
     private static bool ProbeFlagsOn(UniversalRenderPipelineAsset asset)
@@ -456,6 +496,8 @@ public static partial class AsylumHubBuilder
         if (ssao != null) problems.Add(ssao);
         HubRenderingLook look = hub.lights.GetComponent<HubRenderingLook>();
         if (look == null || look.ambientOcclusion == null) problems.Add("Lights has no HubRenderingLook wired to the SSAO feature");
+
+        if (look != null && (look.darkVolume == null || look.darkVolume.sharedProfile == null)) problems.Add("Lights has no DarkVolume wired to HubRenderingLook");
 
         int unaged = AsylumLookUpgrade.UnagedCount();
         if (unaged > 0 || AsylumLookUpgrade.NeedsAging()) problems.Add($"{unaged} surface materials not aged");
@@ -502,6 +544,7 @@ public static partial class AsylumHubBuilder
         HubRenderingLook look = hub.lights.GetComponent<HubRenderingLook>();
         if (look == null) look = hub.lights.gameObject.AddComponent<HubRenderingLook>();
         look.ambientOcclusion = HubSsao();
+        EnsureDarkVolume(hub, look);
         EditorUtility.SetDirty(look);
         PrefabUtility.RecordPrefabInstancePropertyModifications(look);
 

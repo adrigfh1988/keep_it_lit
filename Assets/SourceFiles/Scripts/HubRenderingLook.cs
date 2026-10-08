@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 /// <summary>
@@ -16,6 +17,9 @@ public class HubRenderingLook : MonoBehaviour
     [Tooltip("The SSAO renderer feature (a sub-asset of the URP renderer). Left inactive in the asset; this component turns it on for the hub.")]
     public ScriptableRendererFeature ambientOcclusion;
 
+    [Tooltip("F96: the hub-only darkening volume (vignette, exposure, desaturation); enabled with the hub, off everywhere else.")]
+    public Volume darkVolume;
+
     /// <summary>True while this component has the feature switched on.</summary>
     public static bool IsOn { get; private set; }
 
@@ -28,6 +32,7 @@ public class HubRenderingLook : MonoBehaviour
 
     private void Apply(bool on)
     {
+        if (darkVolume != null) darkVolume.enabled = on;
         if (ambientOcclusion == null) return;
         if (on && (Application.isMobilePlatform || MobilePerformance.IsMobileProfile)) return;
         if (ambientOcclusion.isActive != on) ambientOcclusion.SetActive(on);

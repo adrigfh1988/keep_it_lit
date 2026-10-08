@@ -26,6 +26,26 @@ public class HubDecay : MonoBehaviour
     private readonly Dictionary<Light, HubLampFlicker> _flickers = new Dictionary<Light, HubLampFlicker>();
     private readonly List<Transform> _swingers = new List<Transform>();
     private readonly List<Quaternion> _swingRest = new List<Quaternion>();
+    [Header("F96 flicker bursts")]
+    [Tooltip("Share of the living lamps that get occasional flicker bursts (picked by a stable hash).")]
+    [SerializeField, Range(0f, 1f)] private float burstShare = 0.25f;
+    [SerializeField] private Vector2 secondsBetweenBursts = new Vector2(6f, 25f);
+    [SerializeField] private Vector2 burstSeconds = new Vector2(0.2f, 1.2f);
+    [SerializeField, Range(0f, 1f)] private float brownoutChance = 0.12f;
+    [SerializeField] private Vector2 brownoutSeconds = new Vector2(2f, 3f);
+
+    // One lamp that bursts. Only a light that is ON when the burst starts is touched, and exactly what was changed is put back.
+    private class Burster
+    {
+        public Light light;
+        public List<Renderer> fixtures;
+        public HubLampFlicker flicker; // a lamp with its own flicker takes the burst as a multiplier so the buzz follows
+        public float next, end, nextStep, level = 1f, baseIntensity, lastWritten = -1f;
+        public bool bursting, brown, useFlicker;
+        public Color[] baseEmission;
+    }
+
+    private readonly List<Burster> _bursters = new List<Burster>();
     private MaterialPropertyBlock _block;
     private bool _built;
     private int _floor = 1;
@@ -40,10 +60,12 @@ public class HubDecay : MonoBehaviour
     {
         AsylumHub.OnEnterHub -= HandleEnter;
         AsylumHub.OnLeaveHub -= HandleLeave;
+        EndAllBursts();
     }
 
     private void HandleLeave()
     {
+        EndAllBursts();
         RestoreDoors();
         _floor = 0;
     }
@@ -54,8 +76,114 @@ public class HubDecay : MonoBehaviour
         if (hub == null) return;
         if (!_built) Build();
         _floor = floor;
+        EndAllBursts();
         if (HubState.IsFinale) return; // HubFinale owns the lights then
         Apply(floor);
+        PickBursters(floor);
+    }
+
+    // ---------------------------------------------------------------- F96 flicker bursts
+
+    private void PickBursters(int floor)
+    {
+        _bursters.Clear();
+        int dead = Mathf.RoundToInt(HubState.LightsOffFraction(floor) * _slots.Count);
+        for (int i = dead; i < _slots.Count; i++) // the first `dead` slots are the dead ones: they stay dead
+        {
+            Slot s = _slots[i];
+            if (s.light == null || !s.light.transform.IsChildOf(hub.building)) continue;
+            bool builderFlicker = s.light.GetComponent<HubLampFlicker>() != null && !_flickers.ContainsKey(s.light); // the lamps with a buzz source: always burst
+            if (!builderFlicker &&(uint)s.hash % 100u >= burstShare * 100f) continue;
+            Burster b = new Burster { light = s.light, fixtures = s.fixtures, flicker = s.light.GetComponent<HubLampFlicker>() };
+            b.baseEmission = new Color[s.fixtures.Count];
+            for (int k = 0; k < s.fixtures.Count; k++)
+            {
+                Material m = s.fixtures[k] != null ? s.fixtures[k].sharedMaterial : null;
+                b.baseEmission[k] = m != null && m.HasProperty("_EmissionColor") ? m.GetColor("_EmissionColor") : Color.black;
+            }
+            float slow = s.light.shadows != LightShadows.None ? 2.5f : 1f; // the shadowed lamps flicker rarely
+            b.next = Time.time + Random.Range(2f, secondsBetweenBursts.y) * slow;
+            _bursters.Add(b);
+        }
+    }
+
+    private void UpdateBursts()
+    {
+        float t = Time.time;
+        for (int i = 0; i < _bursters.Count; i++)
+        {
+            Burster b = _bursters[i];
+            if (b.light == null) continue;
+            if (!b.bursting)
+            {
+                if (t < b.next) continue;
+                bool own = b.flicker != null && b.flicker.enabled;
+                // Only a lamp that is on right now: a dead or switched-off one is skipped and tried again later.
+                if (!b.light.enabled || (!own && b.light.intensity < 0.01f)) { b.next = t + Random.Range(secondsBetweenBursts.x, secondsBetweenBursts.y); continue; }
+                b.useFlicker = own;
+                b.baseIntensity = b.light.intensity;
+                b.brown = Random.value < brownoutChance;
+                b.end = t + (b.brown ? Random.Range(brownoutSeconds.x, brownoutSeconds.y) : Random.Range(burstSeconds.x, burstSeconds.y));
+                b.nextStep = t;
+                b.bursting = true;
+                // F97: a quiet zap from the lamp on about half of the flicker bursts (recorded clips only, audio only).
+            }
+
+            if (!b.light.enabled) { EndBurst(b, false); continue; } // someone else switched it off: leave it off
+            // Someone else is driving the intensity (the flood's dying lamps): hand it over, do not write it back.
+            if (!b.useFlicker && Mathf.Abs(b.light.intensity - b.lastWritten) > 0.001f && b.lastWritten >= 0f) { b.lastWritten = -1f; EndBurst(b, false, false); continue; }
+            if (t >= b.end) { EndBurst(b, true); continue; }
+            if (t >= b.nextStep)
+            {
+                if (b.brown) { b.level = Random.Range(0.12f, 0.38f); b.nextStep = t + Random.Range(0.08f, 0.3f); }
+                else
+                {
+                    float r = Random.value;
+                    b.level = r < 0.4f ? 0f : r < 0.65f ? Random.Range(0.1f, 0.35f) : r < 0.85f ? Random.Range(0.5f, 0.8f) : 1f;
+                    b.nextStep = t + Random.Range(0.03f, 0.12f);
+                }
+            }
+            SetBurstLevel(b, b.level);
+        }
+    }
+
+    private void SetBurstLevel(Burster b, float level)
+    {
+        if (b.useFlicker && b.flicker != null) b.flicker.External = level;
+        else { b.light.intensity = b.baseIntensity * level; b.lastWritten = b.light.intensity; }
+        for (int k = 0; k < b.fixtures.Count; k++)
+        {
+            Renderer r = b.fixtures[k];
+            if (r == null) continue;
+            _block.Clear();
+            _block.SetColor("_EmissionColor", b.baseEmission[k] * level);
+            r.SetPropertyBlock(_block);
+        }
+    }
+
+    private void EndBurst(Burster b, bool lampStillOn, bool restoreIntensity = true)
+    {
+        b.lastWritten = -1f;
+        if (b.bursting)
+        {
+            if (b.flicker != null) b.flicker.External = 1f;
+            if (!b.useFlicker && b.light != null && lampStillOn && restoreIntensity) b.light.intensity = b.baseIntensity;
+            for (int k = 0; k < b.fixtures.Count; k++)
+            {
+                Renderer r = b.fixtures[k];
+                if (r == null) continue;
+                if (b.light != null && b.light.enabled) r.SetPropertyBlock(null);
+                else { _block.Clear(); _block.SetColor("_EmissionColor", Color.black); r.SetPropertyBlock(_block); }
+            }
+        }
+        b.bursting = false;
+        b.next = Time.time + Random.Range(secondsBetweenBursts.x, secondsBetweenBursts.y) * (b.light != null && b.light.shadows != LightShadows.None ? 2.5f : 1f);
+    }
+
+    private void EndAllBursts()
+    {
+        if (_block == null) return;
+        foreach (Burster b in _bursters) if (b.bursting) EndBurst(b, b.light != null && b.light.enabled);
     }
 
     private void Build()
@@ -160,7 +288,9 @@ public class HubDecay : MonoBehaviour
 
     private void Update()
     {
-        if (!_built || _floor < 3 || HubState.IsFinale || hub == null || !hub.ContentActive) return;
+        if (!_built || HubState.IsFinale || hub == null || !hub.ContentActive) return;
+        UpdateBursts();
+        if (_floor < 3) return;
         for (int i = 0; i < _swingers.Count; i++)
         {
             if (_swingers[i] == null) continue;
