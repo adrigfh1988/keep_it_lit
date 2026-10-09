@@ -119,6 +119,10 @@ public abstract class CreatureVoice : MonoBehaviour
     /// <summary>F93: the live gate Update and TrySay read. Creatures of the run use RunIsLive; the hub patients override it to speak while GameFlow.IsInHub.</summary>
     protected virtual bool IsLive() => RunIsLive(Outcome);
 
+    /// <summary>10 Oct 2026: false = this creature shows no speech bubbles at all (the maze hunter and Stan are moving to recorded
+    /// voices; MazeGenerator.creatureSpeechBubbles sets it). Every line goes through TrySay, so nothing else needs a check.</summary>
+    public bool ShowBubbles { get; set; } = true;
+
     private void Update()
     {
         if (!_voiceReady) return;
@@ -149,6 +153,7 @@ public abstract class CreatureVoice : MonoBehaviour
     /// refused line is dropped, not queued. True if a line was shown.</summary>
     protected bool TrySay(int category)
     {
+        if (!ShowBubbles) return false;
         if (!_voiceReady || category < 0 || category >= CategoryCount) return false;
         if (Time.timeScale <= 0f) return false;
         bool live = IsLive();

@@ -126,6 +126,10 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField] private bool debugFinaleAllFiles = true;
     [Tooltip("For testing a maze: skip the title screen, the Intake and the hub and start the run straight away in Debug Floor's maze (floor 1 when Debug Floor is 0). Fresh start only; the shop, hub and finale debug starts take priority.")]
     [SerializeField] private bool debugStartInMaze = false;
+
+    [Header("Creature voices")]
+    [Tooltip("F82 speech bubbles over the maze hunter and Stan. Off since 10 Oct 2026: they read as goofy; recorded voices (OrderlyPa) replace them.")]
+    [SerializeField] private bool creatureSpeechBubbles = false;
     [Tooltip("For testing / getting through floors fast: every star, key, fuse box and the floor's case file go in the cells nearest the start, the hatch opens next to the player, and no shutters, security doors or vaults are built. The hunter still starts in the farthest cell.")]
     [SerializeField] private bool superEasyMode = false;
     [Tooltip("F76: forces TouchInput.Active on regardless of Mode, so the on-screen controls show in the Editor without a touchscreen - click them with the mouse, or use the Device Simulator.")]
@@ -4268,12 +4272,18 @@ public class MazeGenerator : MonoBehaviour
             HunterVoice hunterVoice = aiFollower.GetComponent<HunterVoice>();
             if (hunterVoice == null) hunterVoice = aiFollower.gameObject.AddComponent<HunterVoice>();
             hunterVoice.Configure(aiFollower, stealth, outcome);
+            hunterVoice.ShowBubbles = creatureSpeechBubbles;
+            // 10 Oct 2026: and in a real voice - the Orderly's PA lines while it patrols.
+            if (aiFollower.GetComponent<OrderlyPa>() == null) aiFollower.gameObject.AddComponent<OrderlyPa>();
         }
+        // 10 Oct 2026: wind gusts and far-off sounds through the maze (Scary Sound FX pack, GameAudioLibrary.mazeWind / mazeFar).
+        if (GetComponent<MazeAmbience>() == null) gameObject.AddComponent<MazeAmbience>();
 
         // F75: the second creature (floors 4-5 only, FloorProfile.HasStalker). Built earlier in Awake
         // (BuildStalker, +16), before the player/camera/flashlight/hunter/HUD/outcome existed -
         // late-bound here, same pattern as the lantern/lore notes above.
         _stalker?.Configure(this, player, flashlight, camera != null ? camera.transform : null, stealth, aiFollower, hud, outcome);
+        if (_stalker != null && _stalker.TryGetComponent(out StalkerVoice stanVoice)) stanVoice.ShowBubbles = creatureSpeechBubbles;
 
         // F75 shop depth: Focus Lens widens the focused beam and drops its drain penalty for this
         // floor; Fuse Map lights up every fuse box, button, vault door and (F77) key with a small beacon

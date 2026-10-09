@@ -411,6 +411,45 @@ MonoBehaviour:
     startOffset: 0
     maxSeconds: 0
     lowPassHz: 0
+  orderlyPatrol:
+    clips:
+    - {fileID: 8300000, guid: dcac7f3414c293f4095225a32bc8ecc2, type: 3}
+    volume: 1
+    pitchJitter: 0.03
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  hunterMoan:
+    clips:
+    - {fileID: 8300000, guid: 77f5320ff14eb744bbd0d97fe704ffd6, type: 3}
+    - {fileID: 8300000, guid: 71c6940793bbef34aa79a3f12ff4a038, type: 3}
+    volume: 1
+    pitchJitter: 0.05
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  mazeWind:
+    clips:
+    - {fileID: 8300000, guid: 226a5ce15bfcd914298357059bb06fed, type: 3}
+    - {fileID: 8300000, guid: ba9efddeda477ea43870d836154e26a2, type: 3}
+    - {fileID: 8300000, guid: f420f7e714c96eb48be7b4e7071ffc89, type: 3}
+    - {fileID: 8300000, guid: 6509c85623712d743befa34d53cdb9f4, type: 3}
+    - {fileID: 8300000, guid: 22dee1a254c295240bf58c9336df7785, type: 3}
+    - {fileID: 8300000, guid: d7fa695cc01d6f74b950d79b0d69978b, type: 3}
+    volume: 1
+    pitchJitter: 0.08
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  mazeFar:
+    clips:
+    - {fileID: 8300000, guid: 4a60d280eef65114c8e4926aac10628e, type: 3}
+    - {fileID: 8300000, guid: c84ad0a2609a5774b963f17a578f635b, type: 3}
+    volume: 1
+    pitchJitter: 0.05
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
   torchClick:
     clips:
     - {fileID: 8300000, guid: ef63163d7914a654bbc2cebda4c597ce, type: 3}
@@ -472,6 +511,13 @@ MonoBehaviour:
     clips:
     - {fileID: 8300000, guid: 45400638a56be7a4ea9c7e920d8410b6, type: 3}
     volume: 0.6
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  typewriter:
+    clips: []
+    volume: 1
     pitchJitter: 0
     startOffset: 0
     maxSeconds: 0

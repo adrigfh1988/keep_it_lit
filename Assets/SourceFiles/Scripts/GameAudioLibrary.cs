@@ -115,6 +115,10 @@ public class GameAudioLibrary : ScriptableObject
     public AudioSlot phantomWhisper = new AudioSlot(); // 38
     public AudioSlot captureSting = new AudioSlot();   // 39
     public AudioSlot heartbeat = new AudioSlot();      // one lub-dub, retriggered by HorrorAudioDirector (Unity AI generated, 9 Oct 2026)
+    public AudioSlot orderlyPatrol = new AudioSlot();  // the hunter's PA voice while patrolling (OrderlyPa; Unity AI text-to-speech, 10 Oct 2026)
+    public AudioSlot hunterMoan = new AudioSlot();     // the hunter's wordless moans; OrderlyPa uses these instead of orderlyPatrol while filled
+    public AudioSlot mazeWind = new AudioSlot();       // wind gusts through the maze (MazeAmbience)
+    public AudioSlot mazeFar = new AudioSlot();        // distant unsettling one-shots in the maze (MazeAmbience)
 
     [Header("Player, UI, music")]
     public AudioSlot torchClick = new AudioSlot();     // 53
