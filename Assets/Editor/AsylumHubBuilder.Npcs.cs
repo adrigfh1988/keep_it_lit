@@ -841,7 +841,7 @@ public static partial class AsylumHubBuilder
 
     // ---------------------------------------------------------------- props
 
-    private static DressRoomCtx NewDressCtx(AsylumHub hub, RoomDef def)
+    private static DressRoomCtx NewDressCtx(AsylumHub hub, RoomDef def, string tag = "F98")
     {
         Transform group = hub.dressing.Find(def.name);
         if (group == null)
@@ -850,21 +850,21 @@ public static partial class AsylumHubBuilder
             go.transform.SetParent(hub.dressing, false);
             group = go.transform;
         }
-        DressRoomCtx r = new DressRoomCtx { def = def, group = group, rng = new System.Random(StableHash("F98" + def.name)) };
+        DressRoomCtx r = new DressRoomCtx { def = def, group = group, rng = new System.Random(StableHash(tag + def.name)) };
         r.childStart = group.childCount;
         ScanCells(r);
         return r;
     }
 
     /// <summary>Names the new children F98_*, gives visual props the building's static flags (no batching) and returns how many were added.</summary>
-    private static int FinishDressCtx(DressRoomCtx r)
+    private static int FinishDressCtx(DressRoomCtx r, string namePrefix = "F98_")
     {
         const StaticEditorFlags flags = StaticEditorFlags.OccluderStatic | StaticEditorFlags.OccludeeStatic | StaticEditorFlags.ContributeGI | StaticEditorFlags.ReflectionProbeStatic;
         int added = 0;
         for (int i = r.childStart; i < r.group.childCount; i++)
         {
             Transform t = r.group.GetChild(i);
-            if (!t.name.StartsWith("F98_")) t.name = "F98_" + t.name;
+            if (!t.name.StartsWith(namePrefix)) t.name = namePrefix + t.name;
             foreach (Transform c in t.GetComponentsInChildren<Transform>(true))
             {
                 bool visual = c.GetComponent<Renderer>() != null || c.GetComponent<Collider>() != null;

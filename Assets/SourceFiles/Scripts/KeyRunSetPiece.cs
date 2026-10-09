@@ -8,6 +8,8 @@ using UnityEngine;
 public class KeyRunSetPiece : HubSetPiece
 {
     public const string LockedLine = "LOCKED · THE DIRECTOR'S KEY IS IN RECORDS";
+    /// <summary>F100: the readmission slip's order and the arrival line while the Director's door is locked.</summary>
+    public const string OrderLine = "KEY NOT ISSUED · RECORDS ROOM";
 
     [SerializeField] private HubStalker pursuer;
     [Tooltip("Waypoints of the patrol loop (AsylumHub/Life/PatrolRoute/*).")]

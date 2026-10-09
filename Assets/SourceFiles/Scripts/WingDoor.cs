@@ -43,6 +43,7 @@ public class WingDoor : MonoBehaviour, IInteractable
 
     private float _nudgeTimer;
     private AudioClip _padlockClip;
+    private bool _paintedLocked;
 
     public bool IsComplete => floor >= 1 && floor <= 5 && plaque != null && beacon != null && leafHinge != null && arrivalPoint != null;
 
@@ -115,8 +116,12 @@ public class WingDoor : MonoBehaviour, IInteractable
     {
         if (_nudgeTimer > 0f) _nudgeTimer -= Time.deltaTime;
 
+        // F100: a mission or the key run locks and unlocks the door while the hub is up - repaint when that flips.
+        if (StoryLocked != _paintedLocked) Refresh();
+
         if (beacon == null) return;
-        if (State == DoorState.Open)
+        // F100: only a door that can really be used pulses; a story-locked one stays dark (its plaque says LOCKED).
+        if (State == DoorState.Open && !StoryLocked)
         {
             beacon.enabled = true;
             beacon.intensity = beaconIntensity * (0.75f + 0.25f * Mathf.Sin(Time.time * 2.4f));
@@ -127,11 +132,13 @@ public class WingDoor : MonoBehaviour, IInteractable
     public void Refresh()
     {
         DoorState state = State;
-        Color color = state == DoorState.Open ? OpenColor : state == DoorState.Cleared ? ClearedColor : SealedColor;
+        bool locked = state == DoorState.Open && StoryLocked;
+        _paintedLocked = StoryLocked;
+        Color color = locked ? SealedColor : state == DoorState.Open ? OpenColor : state == DoorState.Cleared ? ClearedColor : SealedColor;
 
         if (plaque != null)
         {
-            string status = state == DoorState.Open ? "OPEN" : state == DoorState.Cleared ? "CLEARED" : "SEALED";
+            string status = locked ? "LOCKED" : state == DoorState.Open ? "OPEN" : state == DoorState.Cleared ? "CLEARED" : "SEALED";
             plaque.text = $"{wingName}\n<size=60%>{roomName}  ·  {status}</size>";
             plaque.color = color;
         }
@@ -139,7 +146,7 @@ public class WingDoor : MonoBehaviour, IInteractable
         if (beacon != null)
         {
             beacon.color = color;
-            beacon.enabled = state != DoorState.Sealed;
+            beacon.enabled = state != DoorState.Sealed && !locked;
             beacon.intensity = state == DoorState.Open ? beaconIntensity : beaconIntensity * 0.35f;
         }
     }

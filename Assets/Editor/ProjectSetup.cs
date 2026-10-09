@@ -278,6 +278,27 @@ public static class ProjectSetup
         },
         new Piece
         {
+            Name = "Asylum wayfinding (F100: mission where-words, shop door room name)",
+            FixMenu = "Build Missing Pieces (fills the missing words in the scene hub and applies them to the prefab)",
+            Problem = AsylumHubBuilder.WayfindingProblem,
+            Build = AsylumHubBuilder.WayfindingRepair
+        },
+        new Piece
+        {
+            Name = "Asylum wayfinding stars (F100: Patient 7's chalk stars on the way to the next key)",
+            FixMenu = "Build Missing Pieces (adds the star pool and the SHOP door star to the scene hub and applies them to the prefab)",
+            Problem = AsylumHubBuilder.StarsProblem,
+            Build = AsylumHubBuilder.StarsRepair
+        },
+        new Piece
+        {
+            Name = "Asylum hall props (F101: the statue bay, the halls, story vignettes, the rooms)",
+            FixMenu = "Build Missing Pieces (adds only the missing pieces to the scene hub, rebakes the NavMesh, refits fog and probes and applies it to the prefab)",
+            Problem = AsylumHubBuilder.PropsProblem,
+            Build = AsylumHubBuilder.PropsRepair
+        },
+        new Piece
+        {
             Name = "Web texture budget (WebGL-only size caps + crunch on every build texture)",
             FixMenu = "Build Missing Pieces (WebTextureBudget.Apply; the first run crunches hundreds of textures and takes a while)",
             Problem = WebTextureBudget.Problem,

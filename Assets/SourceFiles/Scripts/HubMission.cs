@@ -32,6 +32,8 @@ public class HubMission : MonoBehaviour
     [Tooltip("Shown with 'THE DOOR IS UNLOCKED' when the key is given, e.g. THE WARD A KEY.")]
     public string keyName = "THE KEY";
     public string objectiveOffered = "";
+    [Tooltip("F100: where the giver is, for the readmission slip's order and the arrival line, e.g. KITCHEN. Empty = the word after the '·' in objectiveOffered.")]
+    public string where = "";
     public string objectiveActive = "";
     public string objectiveFetched = "";
     [Tooltip("Second HUD line while Active / Fetched, {n} / {total} = items taken. Empty = none.")]
@@ -76,10 +78,18 @@ public class HubMission : MonoBehaviour
     private void OnDestroy()
     {
         if (_hud != null) Destroy(_hud.gameObject);
+        if (s_lightOwner == this) s_lightOwner = null;
     }
 
-    private bool IsOurLight() => goalLight != null && _ownsLight;
-    private bool _ownsLight;
+    private bool IsOurLight() => goalLight != null && OwnsLight;
+    // F100: the light is shared by four missions; only the one that last switched it on may switch it off (a mission that is not here and
+    // owned it on an earlier visit would otherwise kill the glow another mission has just put on its giver).
+    private static HubMission s_lightOwner;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics() { s_lightOwner = null; }
+    private HubNpc _glowNpc; // the person the glow follows (their head is only placed once their own Refresh has run)
+    private bool OwnsLight => s_lightOwner == this;
 
     private void HandleEnter(int enteredFloor)
     {
@@ -90,10 +100,11 @@ public class HubMission : MonoBehaviour
     {
         bool here = IsHere;
         if (here != _wasHere) Apply();
-        if (here && _ownsLight && goalLight != null && goalLight.enabled)
+        if (here && OwnsLight && goalLight != null && goalLight.enabled)
         {
             _pulse += Time.deltaTime;
             goalLight.intensity = 0.55f + 0.2f * Mathf.Sin(_pulse * 2.6f);
+            if (_glowNpc != null) goalLight.transform.position = _glowNpc.HeadPosition + Vector3.up * 0.6f;
         }
     }
 
@@ -121,23 +132,40 @@ public class HubMission : MonoBehaviour
             if (show && target == null) target = item;
         }
 
+        // F100: the glow is on the person who has the next word (the giver while Offered, the recipient - else the giver - once Fetched),
+        // or on the first item left to find while Active.
+        Vector3? glowAt = null;
+        HubNpc glowNpc = null;
+        if (here && target != null) glowAt = target.transform.position + Vector3.up * 0.35f;
+        else if (here && Current == Stage.Offered && Stands(giver)) { glowNpc = giver; glowAt = giver.HeadPosition + Vector3.up * 0.6f; }
+        else if (here && Current == Stage.Fetched)
+        {
+            HubNpc to = Stands(recipient) ? recipient : giver;
+            if (Stands(to)) { glowNpc = to; glowAt = to.HeadPosition + Vector3.up * 0.6f; }
+        }
+
         if (goalLight != null)
         {
-            if (target != null)
+            if (glowAt.HasValue)
             {
-                _ownsLight = true;
-                goalLight.transform.position = target.transform.position + Vector3.up * 0.35f;
+                s_lightOwner = this;
+                goalLight.transform.position = glowAt.Value;
+                _glowNpc = glowNpc;
                 goalLight.enabled = true;
             }
-            else if (_ownsLight)
+            else if (OwnsLight)
             {
-                _ownsLight = false;
+                s_lightOwner = null;
+                _glowNpc = null;
                 goalLight.enabled = false;
             }
         }
 
         RefreshHud(here);
     }
+
+    /// <summary>The person is in the hospital on this floor (derived from HubState, so it does not depend on whether the NPC has refreshed itself yet).</summary>
+    private static bool Stands(HubNpc npc) => npc != null && npc.body != null && HubNpc.PresentOn(npc.who, HubState.Floor, HubState.IsFinale);
 
     private void RefreshHud(bool here)
     {
@@ -189,6 +217,30 @@ public class HubMission : MonoBehaviour
         return string.IsNullOrEmpty(text) ? null : text;
     }
 
+    /// <summary>F100: where the giver is (the explicit field, else the word after the '·' in the offered objective).</summary>
+    public string Where
+    {
+        get
+        {
+            if (!string.IsNullOrEmpty(where)) return where;
+            int dot = objectiveOffered != null ? objectiveOffered.LastIndexOf('·') : -1;
+            return dot >= 0 ? objectiveOffered.Substring(dot + 1).Trim() : "";
+        }
+    }
+
+    /// <summary>
+    /// F100: the readmission slip's first order for the maze of `floor`: REPORT TO {GIVER} · {WHERE} (floors 1-4, from the mission's own data),
+    /// KEY NOT ISSUED · RECORDS ROOM on floor 5. Null when the floor has neither (no hub, a mission missing).
+    /// </summary>
+    public static string OrderFor(int floor)
+    {
+        if (floor == 5) return KeyRunSetPiece.OrderLine;
+        HubMission m = ForFloor(floor);
+        if (m == null || m.giver == null) return null;
+        string where = m.Where;
+        return string.IsNullOrEmpty(where) ? $"REPORT TO {m.giver.Name}" : $"REPORT TO {m.giver.Name} · {where}";
+    }
+
     // ---------------------------------------------------------------- items
 
     public bool IsItemAvailable(HubMissionItem item) => IsHere && Current == Stage.Active && item != null && !item.Taken;
@@ -232,7 +284,13 @@ public class HubMission : MonoBehaviour
         Vector3 at = giver != null && giver.body != null ? giver.body.position : transform.position;
         if (recipient != null && recipient.body != null && floor == 2) at = recipient.body.position;
         if (!GameAudio.PlayAt(GameAudio.Library.keyJingle, at, 0.8f)) GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.12f, 900f, 0.2f), at, 0.8f);
-        if (Hub != null) Hub.SubtitleLine($"{keyName} · THE DOOR IS UNLOCKED", 3.2f);
+        if (Hub != null)
+        {
+            // F100: say which door, and where (not just "the door"). Floor 2's lift line (the stairs are chained) follows, queued behind it.
+            WingDoor door = Door;
+            Hub.SubtitleLine(door != null ? $"THE {door.wingName} DOOR IS UNLOCKED · {door.levelName}" : $"{keyName} · THE DOOR IS UNLOCKED", 3.2f);
+            if (floor == 2) Hub.QueueSubtitleLine(LiftSetPiece.ChainedLine, 4f);
+        }
     }
 
     /// <summary>The nodes to say and what happens when they have been heard to the end. False = nothing to say (the panel does not open).</summary>

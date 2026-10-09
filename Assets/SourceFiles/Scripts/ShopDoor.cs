@@ -19,10 +19,14 @@ public class ShopDoor : MonoBehaviour, IInteractable
     [Tooltip("1.5 m in front of the door, facing away from it. Where the player comes back out of the shop.")]
     public Transform arrivalPoint;
 
+    [Tooltip("F100: where the door is, for the arrival line THE SHOP IS OPEN · ..., e.g. THE ENTRANCE HALL. Filled by LIGHTS OUT > Build Missing Pieces.")]
+    public string roomName = "";
+
     [Header("Look")]
     public float beaconIntensity = 1.4f;
 
-    private static readonly Color OpenColor = new Color(1f, 0.78f, 0.45f);
+    // F100: pale green-white, the dispensary: it must not read as the same "go here" signal as a wing door's amber.
+    private static readonly Color OpenColor = new Color(0.72f, 0.95f, 0.85f);
     private static readonly Color ClosedColor = new Color(0.45f, 0.4f, 0.35f);
 
     private float _nudgeTimer;
@@ -31,7 +35,10 @@ public class ShopDoor : MonoBehaviour, IInteractable
     public bool IsComplete => plaque != null && beacon != null && leafHinge != null && arrivalPoint != null;
 
     /// <summary>A floor has been cleared and the finale is not running.</summary>
-    public bool IsOpen => GameFlow.CurrentFloor >= 2 && !HubState.IsFinale;
+    public bool IsOpen => OpenFor(GameFlow.CurrentFloor);
+
+    /// <summary>F100: the open rule for a given current floor (the slip asks it for the floor about to be played).</summary>
+    public static bool OpenFor(int currentFloor) => currentFloor >= 2 && !HubState.IsFinale;
 
     // ---------------------------------------------------------------- IInteractable
 

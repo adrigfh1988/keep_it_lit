@@ -92,6 +92,38 @@ public static class ShopCatalogue
         return Mathf.RoundToInt(def.BasePrice * (1f + PriceGrowthPerFloor * Mathf.Max(0, shopFloor - 1)));
     }
 
+    /// <summary>
+    /// F100: the lowest price (at the prices of `shopFloor`, the floor just cleared) among the things the player could still buy right now,
+    /// ignoring the wallet; -1 when there is nothing left to buy. A held-out consumable, a held Second Wind and a modifier already
+    /// bought for the next floor do not count; a cosmetic counts while a palette entry is still unowned.
+    /// </summary>
+    public static int CheapestOpenPrice(int shopFloor)
+    {
+        int best = -1;
+        foreach (ShopItemDef def in Items)
+        {
+            bool open;
+            switch (def.Kind)
+            {
+                case ItemKind.Consumable: open = PlayerInventory.CanHoldMore(def.Id); break;
+                case ItemKind.SecondWind: open = PlayerInventory.Count(def.Id) == 0; break;
+                case ItemKind.FloorModifier: open = !PlayerInventory.HasPending(def.Id); break;
+                default:
+                {
+                    bool torch = def.Id == ShopItem.TorchColour;
+                    open = false;
+                    int count = torch ? TorchColours.Length : HudTints.Length;
+                    for (int i = 1; i < count && !open; i++) open = !(torch ? PlayerInventory.OwnsTorchColour(i) : PlayerInventory.OwnsHudTint(i));
+                    break;
+                }
+            }
+            if (!open) continue;
+            int price = PriceFor(def, shopFloor);
+            if (best < 0 || price < best) best = price;
+        }
+        return best;
+    }
+
     // Index 0 is the default look and is never for sale - GrantTorchColour/GrantHudTint start owning it.
     public static readonly (string Name, Color Colour)[] TorchColours =
     {

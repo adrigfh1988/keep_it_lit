@@ -14,6 +14,9 @@ using UnityEngine;
 /// </summary>
 public class LiftSetPiece : HubSetPiece
 {
+    /// <summary>The floor-2 reminder that the stairs are out (said once the Boiler Room key is in hand, and again on a return from the shop).</summary>
+    public const string ChainedLine = "THE STAIRS TO THE BASEMENT ARE CHAINED · TAKE THE LIFT";
+
     [Header("Parts")]
     [SerializeField] private Transform car;
     [Tooltip("Things that ride with the car (the pack's NeonLift fixture).")]
@@ -153,7 +156,7 @@ public class LiftSetPiece : HubSetPiece
     protected override void OnBegin()
     {
         if (!IsComplete) Debug.LogError("LiftSetPiece: a part of the lift set is missing (the car, a shaft door, the gate or a call point). Run LIGHTS OUT > Build Missing Pieces. Floor 2 will use the stairs.", this);
-        else if (Hub != null) Hub.SubtitleLine("THE STAIRS TO THE BASEMENT ARE CHAINED · TAKE THE LIFT", 4f);
+        else if (Hub != null && Hub.MissionDone(2)) Hub.QueueSubtitleLine(ChainedLine, 4f); // F100: before the key the arrival line is the order; HubMission.Complete says it once the wing is unlocked
     }
 
     protected override void OnEnd() { ResetState(); }

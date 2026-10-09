@@ -73,6 +73,9 @@ public class AsylumHub : MonoBehaviour
     /// <summary>True from the moment a wing door is used until the maze takes over: the ambience fades out and pausing is off.</summary>
     public bool Leaving { get; private set; }
 
+    /// <summary>F100: this arrival is the way back from the SHOP door, not a new floor: the star trail and the arrival lines stay as they were.</summary>
+    public bool IsShopReturn { get; private set; }
+
     /// <summary>True during the arrival and the walk-in (the player is held by a scripted move): PauseMenu does not open.</summary>
     public bool IsTransitioning { get; private set; }
 
@@ -339,6 +342,7 @@ public class AsylumHub : MonoBehaviour
             _flashlight.SetOn(true);
         }
 
+        IsShopReturn = !announce;
         OnEnterHub?.Invoke(floor);
 
         yield return Fade(1f, 0f, fadeInSeconds);
@@ -352,17 +356,43 @@ public class AsylumHub : MonoBehaviour
         }
         WingDoor next = wingDoors[Mathf.Clamp(floor, 1, wingDoors.Length) - 1];
         // F94: coming back from the shop is not an arrival - no line, no fresh hint loop beyond the usual one.
-        if (_hud != null && next != null && announce) _hud.ShowSubtitle(ArrivalText(next, floor), 5f);
+        if (_hud != null && next != null && announce)
+        {
+            _hud.ShowSubtitle(ArrivalText(next, floor), 5f);
+            // F100: the shop gets its one mention, queued behind the first line (~6 s in), only when the slip would have offered it.
+            if (!_shopLineShown && !_shopVisited && ShopWorthAVisit(floor - 1) && shopDoor != null)
+            {
+                _shopLineShown = true;
+                string where = string.IsNullOrEmpty(shopDoor.roomName) ? "" : " · " + shopDoor.roomName;
+                _hud.QueueSubtitle("THE SHOP IS OPEN" + where, 4f);
+            }
+        }
         if (_hint != null) StopCoroutine(_hint);
         _hint = StartCoroutine(HintLoop(next, floor));
     }
 
+    /// <summary>
+    /// F100: the first line of an arrival. While the floor's door is story-locked it is the readmission slip's order (REPORT TO BRUNO ·
+    /// KITCHEN, or the current objective once the job is taken; KEY NOT ISSUED on floor 5) - never the locked-door line, which a player
+    /// without the key cannot act on. Only a door that is really usable says OPEN.
+    /// </summary>
     private static string ArrivalText(WingDoor door, int floor)
     {
-        // F98: floors 1-4 are locked behind a mission until somebody hands over the key.
-        if (floor <= 4 && door.StoryLocked) return $"FLOOR {floor} · THE {door.wingName} DOOR IS LOCKED · {door.levelName}";
+        if (door.StoryLocked)
+        {
+            HubMission mission = floor <= 4 ? HubMission.ForFloor(floor) : null;
+            string order = mission != null && mission.Current != HubMission.Stage.Offered ? HubMission.HintFor(floor) : HubMission.OrderFor(floor);
+            if (!string.IsNullOrEmpty(order)) return order;
+            return $"FLOOR {floor} · THE {door.wingName} DOOR IS LOCKED · {door.levelName}";
+        }
         return $"FLOOR {floor} · THE {door.wingName} DOOR IS OPEN · {door.levelName}";
     }
+
+    // F100: the hint loop's cap survives a shop round trip (the loop restarts, the count does not); a scene reload resets it.
+    private int _hintStage = -2;
+    private int _hintRepeats;
+    private bool _shopLineShown, _shopVisited;
+    private const int MaxHintRepeats = 3;
 
     private IEnumerator HintLoop(WingDoor door, int floor)
     {
@@ -371,11 +401,38 @@ public class AsylumHub : MonoBehaviour
             yield return new WaitForSeconds(hintEverySeconds);
             if (Leaving || door == null) yield break;
             if (_hud == null || Time.timeScale <= 0f) continue;
+            // F100: at most MaxHintRepeats per mission stage - a player who is deliberately exploring is not nagged for ever.
+            HubMission mission = floor <= 4 ? HubMission.ForFloor(floor) : null;
+            int stage = mission != null ? (int)mission.Current : -1;
+            if (stage != _hintStage) { _hintStage = stage; _hintRepeats = 0; }
+            if (_hintRepeats >= MaxHintRepeats) continue;
+            _hintRepeats++;
             // F98: while a floor's mission is running the repeating hint is the objective, not the door.
             string objective = floor <= 4 ? HubMission.HintFor(floor) : null;
             _hud.ShowSubtitle(objective != null ? objective : $"{door.wingName} · {door.roomName} · {door.levelName}", 4f);
         }
     }
+
+    /// <summary>
+    /// F100: the readmission slip and the arrival both offer the shop only when it is worth the walk: the SHOP door will be open for the next
+    /// floor and the wallet holds at least the cheapest thing that can still be bought (at the prices of `clearedFloor`, the floor just cleared).
+    /// </summary>
+    public static bool ShopWorthAVisit(int clearedFloor)
+    {
+        if (!ShopInHub || clearedFloor < 1 || !ShopDoor.OpenFor(clearedFloor + 1)) return false;
+        int cheapest = ShopCatalogue.CheapestOpenPrice(clearedFloor);
+        return cheapest >= 0 && PlayerWallet.Shards >= cheapest;
+    }
+
+    /// <summary>F100: the floor's mission has been finished (key handed over). False when the floor has none.</summary>
+    public bool MissionDone(int floor)
+    {
+        HubMission m = HubMission.ForFloor(floor);
+        return m != null && m.Current == HubMission.Stage.Done;
+    }
+
+    /// <summary>F100: plays after the line on screen has finished (HUD queue).</summary>
+    public void QueueSubtitleLine(string text, float seconds) { if (_hud != null) _hud.QueueSubtitle(text, seconds); }
 
     // ---------------------------------------------------------------- the wing door
 
@@ -538,6 +595,7 @@ public class AsylumHub : MonoBehaviour
         RestoreAtmosphere();
         SetContentActive(false);
 
+        _shopVisited = true; // F100: the arrival line that mentions the shop is not repeated after a visit
         GameFlow.ShopFromHub = true; // before ArrivePlayer: the door sign and the shop's floor reads depend on it
         _shop.ArrivePlayer(_player);
         // IsInShop before IsInHub clears: never a frame that is neither.

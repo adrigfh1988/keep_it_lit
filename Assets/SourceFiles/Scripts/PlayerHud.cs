@@ -41,6 +41,7 @@ public class PlayerHud : MonoBehaviour
     private static readonly Color SubtitleColor = new Color(0.78f, 0.72f, 0.72f);
     private TextMeshProUGUI _subtitleText;
     private Coroutine _subtitleRoutine;
+    private readonly System.Collections.Generic.Queue<(string text, float seconds)> _subtitleQueue = new System.Collections.Generic.Queue<(string text, float seconds)>();
 
     private static readonly Color ShardColour = new Color(0.7f, 0.9f, 1f);
     private TextMeshProUGUI _shardText;
@@ -135,6 +136,14 @@ public class PlayerHud : MonoBehaviour
         _subtitleRoutine = StartCoroutine(SubtitleRoutine(text, Mathf.Max(0.2f, seconds)));
     }
 
+    /// <summary>F100: plays after the current line has finished (at once when none is showing). ShowSubtitle still replaces the line on screen; queued lines wait their turn behind it.</summary>
+    public void QueueSubtitle(string text, float seconds)
+    {
+        if (_subtitleText == null || string.IsNullOrEmpty(text)) return;
+        if (_subtitleRoutine == null) ShowSubtitle(text, seconds);
+        else _subtitleQueue.Enqueue((text, seconds));
+    }
+
     private IEnumerator SubtitleRoutine(string text, float seconds)
     {
         const float fadeIn = 0.15f;
@@ -173,6 +182,11 @@ public class PlayerHud : MonoBehaviour
         SetSubtitleAlpha(0f);
         _subtitleText.gameObject.SetActive(false);
         _subtitleRoutine = null;
+        if (_subtitleQueue.Count > 0)
+        {
+            (string next, float nextSeconds) = _subtitleQueue.Dequeue();
+            ShowSubtitle(next, nextSeconds);
+        }
     }
 
     private void SetSubtitleAlpha(float alpha)
