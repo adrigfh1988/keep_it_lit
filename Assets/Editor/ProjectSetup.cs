@@ -264,6 +264,13 @@ public static class ProjectSetup
         },
         new Piece
         {
+            Name = "Audio mixer (S2: settings volumes - Master, Music, Effects)",
+            FixMenu = "Build Missing Pieces (creates GameMixer.mixer with the Music / Effects groups and exposed volumes, assigns it to MazeGenerator)",
+            Problem = GameMixerBuilder.Problem,
+            Build = GameMixerBuilder.BuildSilently
+        },
+        new Piece
+        {
             Name = "Asylum NPCs + missions (F98: six people, a dialogue panel, a mission per floor 1-4)",
             FixMenu = "Build Missing Pieces (adds only what is missing to the scene hub and applies it to the prefab)",
             Problem = AsylumHubBuilder.NpcProblem,

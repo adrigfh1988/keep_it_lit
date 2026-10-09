@@ -41,6 +41,20 @@ public class HorrorAtmosphere : MonoBehaviour
     private Color _baseAmbient;
     private float _baseFogDensity;
     private Coroutine _darkenRoutine;
+    // S2: the runtime volume profile's colour adjustments, so the Brightness setting can offset postExposure live
+    private readonly System.Collections.Generic.List<ColorAdjustments> _exposures = new System.Collections.Generic.List<ColorAdjustments>();
+
+    private void OnEnable() => GameSettings.Changed += ApplyBrightness;
+    private void OnDisable() => GameSettings.Changed -= ApplyBrightness;
+
+    /// <summary>S2: Brightness is an EV offset on top of this component's postExposure, applied to the same runtime profile clone (never a second volume).</summary>
+    private void ApplyBrightness()
+    {
+        foreach (ColorAdjustments adjustments in _exposures)
+        {
+            if (adjustments != null) adjustments.postExposure.value = postExposure + GameSettings.Brightness;
+        }
+    }
 
     /// <summary>Per-floor light level, keeping whatever fog colour is already serialized. Awake has already applied the defaults, so this re-applies. Used by the primitive fallback path, which has no theme colour to hand in.</summary>
     public void ApplyProfile(Color ambient, float fogDensity)
@@ -172,7 +186,8 @@ public class HorrorAtmosphere : MonoBehaviour
             if (volume.profile.TryGet(out ColorAdjustments colorAdjustments))
             {
                 colorAdjustments.postExposure.overrideState = true;
-                colorAdjustments.postExposure.value = postExposure;
+                colorAdjustments.postExposure.value = postExposure + GameSettings.Brightness;
+                _exposures.Add(colorAdjustments);
                 colorAdjustments.contrast.overrideState = true;
                 colorAdjustments.contrast.value = contrast;
             }

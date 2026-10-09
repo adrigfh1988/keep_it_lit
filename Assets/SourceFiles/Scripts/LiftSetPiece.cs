@@ -382,7 +382,7 @@ public class LiftSetPiece : HubSetPiece
         Vector3 roof = car.position + Vector3.up * 3.0f;
         for (int i = 0; i < 3; i++)
         {
-            if (!GameAudio.PlayAt(GameAudio.Library.liftThud, roof + Vector3.right * (i - 1) * 0.6f, 1f, 0.8f)) AudioSource.PlayClipAtPoint(_thud, roof + Vector3.right * (i - 1) * 0.6f, 1f);
+            if (!GameAudio.PlayAt(GameAudio.Library.liftThud, roof + Vector3.right * (i - 1) * 0.6f, 1f, 0.8f)) GameAudio.ClipAtPoint(_thud, roof + Vector3.right * (i - 1) * 0.6f, 1f);
             Jolt(0.35f, 0.03f); // its weight lands on the roof
             Dust(25);
             yield return new WaitForSeconds(1.1f);
@@ -533,12 +533,13 @@ public class LiftSetPiece : HubSetPiece
         _dip += _dipVelocity * dt;
         _listNow = Mathf.MoveTowards(_listNow, _list, 3f * dt);
 
-        float amp = shakeStrength * Mathf.Clamp01(_rumble + _trauma * _trauma);
+        float shake = shakeStrength * GameSettings.CameraShake; // S2: the Camera shake setting (0 = a still lift)
+        float amp = shake * Mathf.Clamp01(_rumble + _trauma * _trauma);
         float t = Time.time * 18f;
         float n0 = Mathf.PerlinNoise(t, 0.3f) * 2f - 1f, n1 = Mathf.PerlinNoise(t, 7.1f) * 2f - 1f;
         float n2 = Mathf.PerlinNoise(t, 13.7f) * 2f - 1f, n3 = Mathf.PerlinNoise(t, 21.9f) * 2f - 1f;
-        Vector3 offset = new Vector3(n0, n1, 0f) * (shakeMaxOffset * amp) + Vector3.up * (_dip * shakeStrength);
-        Quaternion tilt = Quaternion.Euler(n2 * shakeMaxAngle * amp, 0f, n3 * shakeMaxAngle * 0.7f * amp + _listNow * shakeStrength);
+        Vector3 offset = new Vector3(n0, n1, 0f) * (shakeMaxOffset * amp) + Vector3.up * (_dip * shake);
+        Quaternion tilt = Quaternion.Euler(n2 * shakeMaxAngle * amp, 0f, n3 * shakeMaxAngle * 0.7f * amp + _listNow * shake);
         _cam.localPosition = _camPos + offset;
         _cam.localRotation = _camRot * tilt;
     }

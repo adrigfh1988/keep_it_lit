@@ -251,7 +251,7 @@ public class MazeEscape : MonoBehaviour
 
         _hud?.ShowSubtitle($"LOCKED · {_keys.Held} / {_keys.Total} KEYS", 1.8f);
         if (_padlockClip == null) _padlockClip = DoorAudio.BuildClunkClip(0.18f, 160f, 0.35f);
-        if (!GameAudio.PlayAt(GameAudio.Library.lockedRattle, _hatchPosition, 0.7f)) AudioSource.PlayClipAtPoint(_padlockClip, _hatchPosition, 0.7f); // F97
+        if (!GameAudio.PlayAt(GameAudio.Library.lockedRattle, _hatchPosition, 0.7f)) GameAudio.ClipAtPoint(_padlockClip, _hatchPosition, 0.7f); // F97
     }
 
     /// <summary>Standing inside the ring fills liftProgress at 1 s/s; standing outside it drains at liftDecayFraction s/s. Completes through the exact same path as the hatch trigger above.</summary>
@@ -652,7 +652,7 @@ public class MazeEscape : MonoBehaviour
         _entering = true;
         PlayerLock.Freeze(_player, true);
         SetLidAngle(LidOpenAngle, 0.4f);
-        if (!GameAudio.PlayAt(GameAudio.Library.hatchOpen, _hatchPosition, 0.8f)) AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.3f, 70f, 0.6f), _hatchPosition, 0.8f); // F97
+        if (!GameAudio.PlayAt(GameAudio.Library.hatchOpen, _hatchPosition, 0.8f)) GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.3f, 70f, 0.6f), _hatchPosition, 0.8f); // F97
 
         ThirdPersonController controller = _player.GetComponent<ThirdPersonController>();
         CharacterController characterController = _player.GetComponent<CharacterController>();

@@ -87,3 +87,6 @@ desktop.ini
 /Assets/Free Pack/
 /Assets/Horror Elements/
 /Assets/Libraries/
+
+# Player builds (LIGHTS OUT > Build > Windows Player)
+/Builds/

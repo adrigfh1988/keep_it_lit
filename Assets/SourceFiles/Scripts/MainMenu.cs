@@ -131,6 +131,7 @@ public class MainMenu : MonoBehaviour
         _music.loop = true;
         _music.spatialBlend = 0f;
         _music.clip = _musicClip;
+        GameSettings.RouteMusic(_music); // S2: the Music mixer group
         _music.volume = musicVolume;
         _music.Play();
     }
@@ -271,25 +272,30 @@ public class MainMenu : MonoBehaviour
         if (SaveSystem.TryLoad(out SaveData save))
         {
             Button continueButton = RuntimeUi.CreateButton(_titleScreen.transform, "CONTINUE",
-                new Vector2(0f, 520f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+                new Vector2(0f, 630f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
             continueButton.onClick.AddListener(ContinueSavedRun);
             _savedFloor = save.floor;
         }
 
         Button start = RuntimeUi.CreateButton(_titleScreen.transform, "START GAME",
-            new Vector2(0f, 410f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+            new Vector2(0f, 520f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
         start.onClick.AddListener(() => ConfirmThenStart(BeginNewCampaign));
 
         // F48: builds one floor out of the Maze Modular Puzzle Kit instead of the FloorThemes gallery.
         // A test button - it skips the Intake and drops straight into the run.
         Button startNewMaze = RuntimeUi.CreateButton(_titleScreen.transform, "START NEW MAZE",
-            new Vector2(0f, 300f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+            new Vector2(0f, 410f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
         startNewMaze.onClick.AddListener(() => ConfirmThenStart(StartKitMaze));
 
         // F86: the old rules screen, kept as a reference sheet now that START GAME opens the Intake.
         Button controls = RuntimeUi.CreateButton(_titleScreen.transform, "CONTROLS",
-            new Vector2(0f, 190f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+            new Vector2(0f, 300f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
         controls.onClick.AddListener(ShowControls);
+
+        // S2: the settings screen opens over the title screen and closes back onto it.
+        Button settings = RuntimeUi.CreateButton(_titleScreen.transform, "SETTINGS",
+            new Vector2(0f, 190f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+        settings.onClick.AddListener(SettingsMenu.Show);
 
         Button exit = RuntimeUi.CreateButton(_titleScreen.transform, "EXIT",
             new Vector2(0f, 80f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);

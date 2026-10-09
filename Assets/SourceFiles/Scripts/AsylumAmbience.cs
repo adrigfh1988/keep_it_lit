@@ -100,6 +100,7 @@ public class AsylumAmbience : MonoBehaviour
         _musicSource.loop = true;
         _musicSource.spatialBlend = 0f;
         _musicSource.volume = 0f;
+        GameSettings.RouteMusic(_musicSource); // S2: Music mixer group
     }
 
     private void Init()
@@ -170,7 +171,7 @@ public class AsylumAmbience : MonoBehaviour
         AudioClip urgentClip = _urgentOverride != null ? _urgentOverride : _urgentClip; // F97: the floor-4 chase brings its own recorded track
         if (urgentClip != null)
         {
-            if (_urgentSource == null) { _urgentSource = gameObject.AddComponent<AudioSource>(); _urgentSource.playOnAwake = false; _urgentSource.loop = true; _urgentSource.spatialBlend = 0f; }
+            if (_urgentSource == null) { _urgentSource = gameObject.AddComponent<AudioSource>(); _urgentSource.playOnAwake = false; _urgentSource.loop = true; _urgentSource.spatialBlend = 0f; GameSettings.RouteMusic(_urgentSource); }
             if (_urgentSource.clip != urgentClip) _urgentSource.clip = urgentClip;
             _urgentSource.volume = urgentVolume * _urgency * _fade;
             SetPlaying(_urgentSource, _urgency > 0.001f && _fade > 0.001f);
@@ -219,7 +220,7 @@ public class AsylumAmbience : MonoBehaviour
         {
             if (GameAudio.PlayAt(lib.farScream, position, 0.45f)) return; // F97
             if (_scream == null) _scream = BuildScream();
-            AudioSource.PlayClipAtPoint(_scream, position, 0.45f);
+            GameAudio.ClipAtPoint(_scream, position, 0.45f);
         }
         else if (_decayFloor >= 2 && roll < 0.55f)
         {
@@ -229,7 +230,7 @@ public class AsylumAmbience : MonoBehaviour
         {
             int pick = UnityEngine.Random.Range(0, _noises.Length);
             DoorAudio.Note("far noise #" + pick);
-            AudioSource.PlayClipAtPoint(_noises[pick], position, UnityEngine.Random.Range(0.3f, 0.5f));
+            GameAudio.ClipAtPoint(_noises[pick], position, UnityEngine.Random.Range(0.3f, 0.5f));
         }
     }
 

@@ -126,6 +126,7 @@ public class ShopRoom : MonoBehaviour
         _hum.spatialBlend = 0f;
         _hum.volume = Mathf.Clamp01(humVolume * (_humIsAsset ? GameAudio.Library.shopMusic.volume : 1f));
         _hum.clip = _humClip;
+        if (_humIsAsset) GameSettings.RouteMusic(_hum); // S2: the recorded safe-room track is music; the synthesised mains hum stays an effect
     }
 
     // ---------------------------------------------------------------- lifecycle
@@ -301,7 +302,7 @@ public class ShopRoom : MonoBehaviour
             foreach (Renderer r in hidden) if (r != null) r.enabled = true;
         }
 
-        AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.35f, 60f, 0.5f), _doorwayCentre, 0.8f);
+        GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.35f, 60f, 0.5f), _doorwayCentre, 0.8f);
         // Whichever way the swing carries the leaf's centre out of the room.
         Vector3 leafOffset = _doorwayCentre - doorHinge.position;
         float angle = Vector3.Dot(Quaternion.AngleAxis(doorOpenAngle, doorHinge.up) * leafOffset - leafOffset, outward) >= 0f ? doorOpenAngle : -doorOpenAngle;

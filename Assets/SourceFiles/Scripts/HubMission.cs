@@ -210,7 +210,7 @@ public class HubMission : MonoBehaviour
     {
         if (key && GameAudio.PlayAt(GameAudio.Library.keyJingle, at, 0.7f)) return;
         if (GameAudio.PlayAt(GameAudio.Library.paper, at, 0.7f)) return;
-        AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.1f, key ? 900f : 520f, 0.18f), at, 0.7f);
+        GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.1f, key ? 900f : 520f, 0.18f), at, 0.7f);
     }
 
     // ---------------------------------------------------------------- conversations
@@ -231,7 +231,7 @@ public class HubMission : MonoBehaviour
         Apply();
         Vector3 at = giver != null && giver.body != null ? giver.body.position : transform.position;
         if (recipient != null && recipient.body != null && floor == 2) at = recipient.body.position;
-        if (!GameAudio.PlayAt(GameAudio.Library.keyJingle, at, 0.8f)) AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.12f, 900f, 0.2f), at, 0.8f);
+        if (!GameAudio.PlayAt(GameAudio.Library.keyJingle, at, 0.8f)) GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.12f, 900f, 0.2f), at, 0.8f);
         if (Hub != null) Hub.SubtitleLine($"{keyName} · THE DOOR IS UNLOCKED", 3.2f);
     }
 

@@ -20,7 +20,7 @@ public class HubKey : MonoBehaviour, IInteractable
     {
         if (_owner == null || _owner.KeyHeld) return;
         if (_clink == null) _clink = DoorAudio.BuildClunkClip(0.12f, 900f, 0.2f);
-        if (!GameAudio.PlayAt(GameAudio.Library.keyJingle, transform.position, 0.7f)) AudioSource.PlayClipAtPoint(_clink, transform.position, 0.7f); // F97
+        if (!GameAudio.PlayAt(GameAudio.Library.keyJingle, transform.position, 0.7f)) GameAudio.ClipAtPoint(_clink, transform.position, 0.7f); // F97
         _owner.TakeKey();
     }
 

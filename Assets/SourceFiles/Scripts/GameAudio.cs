@@ -63,9 +63,25 @@ public static class GameAudio
     }
 
     /// <summary>Plays one of the slot's clips flat (no positioning). Returns false when the slot is empty.</summary>
-    public static bool Play2D(AudioSlot slot, float volume = 1f, float pitch = 1f, float pan = 0f)
+    public static bool Play2D(AudioSlot slot, float volume = 1f, float pitch = 1f, float pan = 0f, bool music = false)
     {
-        return Spawn(slot, Vector3.zero, false, volume, pitch, 0f, pan) != null;
+        return Spawn(slot, Vector3.zero, false, volume, pitch, 0f, pan, music) != null;
+    }
+
+    /// <summary>S2: AudioSource.PlayClipAtPoint with the Effects mixer group set before the first sample (Unity's own helper has no group to set).</summary>
+    public static void ClipAtPoint(AudioClip clip, Vector3 position, float volume = 1f)
+    {
+        if (clip == null) return;
+        GameObject go = new GameObject("OneShot_" + clip.name);
+        go.transform.position = position;
+        AudioSource src = go.AddComponent<AudioSource>();
+        src.clip = clip;
+        src.playOnAwake = false;
+        src.spatialBlend = 1f;
+        src.volume = Mathf.Clamp01(volume);
+        GameSettings.RouteEffect(src);
+        src.Play();
+        Object.Destroy(go, clip.length / Mathf.Max(0.01f, Mathf.Abs(src.pitch)) + 0.1f);
     }
 
     /// <summary>Like <see cref="PlayAt"/> but returns the voice (null = empty slot) so the caller can follow it or parent it.</summary>
@@ -74,7 +90,7 @@ public static class GameAudio
         return Spawn(slot, position, true, volume, pitch, maxDistance);
     }
 
-    private static AudioSource Spawn(AudioSlot slot, Vector3 position, bool spatial, float volume, float pitch, float maxDistance = 0f, float pan = 0f)
+    private static AudioSource Spawn(AudioSlot slot, Vector3 position, bool spatial, float volume, float pitch, float maxDistance = 0f, float pan = 0f, bool music = false)
     {
         if (slot == null) return null;
         AudioClip clip = slot.Pick();
@@ -86,6 +102,7 @@ public static class GameAudio
         src.clip = clip;
         src.playOnAwake = false;
         src.loop = false;
+        if (music) GameSettings.RouteMusic(src); else GameSettings.RouteEffect(src);
         src.panStereo = Mathf.Clamp(pan, -1f, 1f);
         src.spatialBlend = spatial ? 1f : 0f;
         if (spatial && maxDistance > 0f) { src.rolloffMode = AudioRolloffMode.Linear; src.minDistance = 1.5f; src.maxDistance = maxDistance; } // short-range sounds only (a lamp zap); default rolloff otherwise

@@ -165,7 +165,7 @@ public class HubFinale : MonoBehaviour
         if (masterSwitch != null && !masterSwitch.gameObject.activeSelf)
         {
             masterSwitch.gameObject.SetActive(true);
-            AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.4f, 140f, 0.6f), masterSwitch.transform.position, 0.8f);
+            GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.4f, 140f, 0.6f), masterSwitch.transform.position, 0.8f);
         }
     }
 
@@ -205,7 +205,7 @@ public class HubFinale : MonoBehaviour
         Vector3 switchAt = masterSwitch != null ? masterSwitch.transform.position : Vector3.zero;
         // F97: the recorded lever, then the building winding down (one-shots live at the scene root, so the sweep below leaves them alone).
         bool lever = GameAudio.PlayAt(GameAudio.Library.masterLever, switchAt, 1f);
-        if (!lever) AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.5f, 70f, 0.7f), switchAt, 1f);
+        if (!lever) GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.5f, 70f, 0.7f), switchAt, 1f);
         // Everything that makes a sound in the hub is silent now: stop any source under the hub.
         if (hub != null) foreach (AudioSource a in hub.GetComponentsInChildren<AudioSource>(true)) if (a.isPlaying) a.Stop();
         if (lever) yield return new WaitForSecondsRealtime(0.6f);

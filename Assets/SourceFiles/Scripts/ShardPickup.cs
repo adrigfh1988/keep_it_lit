@@ -47,7 +47,7 @@ public class ShardPickup : MonoBehaviour
 
         _taken = true;
         PlayerWallet.CollectMazeShard();
-        if (!GameAudio.PlayAt(GameAudio.Library.shardChime, transform.position, 0.6f) && _chime != null) AudioSource.PlayClipAtPoint(_chime, transform.position, 0.6f);
+        if (!GameAudio.PlayAt(GameAudio.Library.shardChime, transform.position, 0.6f) && _chime != null) GameAudio.ClipAtPoint(_chime, transform.position, 0.6f);
         Destroy(gameObject);
     }
 }

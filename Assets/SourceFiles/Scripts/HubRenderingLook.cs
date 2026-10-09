@@ -30,9 +30,52 @@ public class HubRenderingLook : MonoBehaviour
     private UniversalAdditionalCameraData _depthCamera;
     private CameraOverrideOption _depthBefore;
 
-    private void OnEnable() => Apply(true);
-    private void OnDisable() => Apply(false);
-    private void OnDestroy() => Apply(false);
+    private ColorAdjustments _darkExposure;
+    private float _darkExposureBase;
+    private readonly System.Collections.Generic.Dictionary<Light, LightShadows> _shadowed = new System.Collections.Generic.Dictionary<Light, LightShadows>();
+
+    private void OnEnable() { Apply(true); GameSettings.Changed += ApplySettings; ApplySettings(); }
+    private void OnDisable() { GameSettings.Changed -= ApplySettings; RestoreShadows(); Apply(false); }
+    private void OnDestroy() { GameSettings.Changed -= ApplySettings; Apply(false); }
+
+    /// <summary>
+    /// S2: the three settings the hub owns. Brightness offsets the dark volume's absolute post-exposure (the maze's HorrorAtmosphere offsets its own
+    /// clone the same way, so the setting moves both consistently); Ambient occlusion switches the SSAO feature; Shadows Off drops the hub's few
+    /// shadow-casting lights (remembered and restored, so Low / High read as the authored shadows).
+    /// </summary>
+    private void ApplySettings()
+    {
+        if (darkVolume != null)
+        {
+            if (_darkExposure == null && darkVolume.profile != null && darkVolume.profile.TryGet(out _darkExposure)) _darkExposureBase = _darkExposure.postExposure.value;
+            if (_darkExposure != null) _darkExposure.postExposure.value = _darkExposureBase + GameSettings.Brightness;
+        }
+
+        if (ambientOcclusion != null && !(Application.isMobilePlatform || MobilePerformance.IsMobileProfile))
+        {
+            bool want = GameSettings.AmbientOcclusion && isActiveAndEnabled;
+            if (ambientOcclusion.isActive != want) ambientOcclusion.SetActive(want);
+            IsOn = want;
+        }
+
+        if (GameSettings.Shadows == GameSettings.ShadowTier.Off)
+        {
+            AsylumHub hub = GetComponentInParent<AsylumHub>(true);
+            foreach (Light light in (hub != null ? hub.transform : transform).GetComponentsInChildren<Light>(true))
+            {
+                if (light.shadows == LightShadows.None || _shadowed.ContainsKey(light)) continue;
+                _shadowed[light] = light.shadows;
+                light.shadows = LightShadows.None;
+            }
+        }
+        else RestoreShadows();
+    }
+
+    private void RestoreShadows()
+    {
+        foreach (var pair in _shadowed) if (pair.Key != null) pair.Key.shadows = pair.Value;
+        _shadowed.Clear();
+    }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetStatics() => IsOn = false;
@@ -43,8 +86,9 @@ public class HubRenderingLook : MonoBehaviour
         DepthForFog(on);
         if (ambientOcclusion == null) return;
         if (on && (Application.isMobilePlatform || MobilePerformance.IsMobileProfile)) return;
-        if (ambientOcclusion.isActive != on) ambientOcclusion.SetActive(on);
-        IsOn = on;
+        bool wanted = on && GameSettings.AmbientOcclusion; // S2: the Ambient occlusion setting
+        if (ambientOcclusion.isActive != wanted) ambientOcclusion.SetActive(wanted);
+        IsOn = wanted;
     }
 
     private void DepthForFog(bool on)

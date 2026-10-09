@@ -203,6 +203,28 @@ public class Flashlight : MonoBehaviour
         ApplyState();
     }
 
+    private void OnEnable() => GameSettings.Changed += ApplyShadowSetting;
+    private void OnDisable() => GameSettings.Changed -= ApplyShadowSetting;
+
+    /// <summary>
+    /// S2: the Shadows setting. The torch is the only shadow-casting light in a maze (every lamp and glow is LightShadows.None), so this is the
+    /// cheapest correct hook (the hub's few shadowed lights follow in HubRenderingLook): Off = no shadow, Low = the 256 px tier, High = 1024 px (the tier it always had). MobilePerformance's Medium tier
+    /// still wins on a mobile profile until the player changes the setting.
+    /// </summary>
+    private void ApplyShadowSetting()
+    {
+        if (_light == null) return;
+        GameSettings.ShadowTier tier = GameSettings.Shadows;
+        _light.shadows = tier == GameSettings.ShadowTier.Off ? LightShadows.None : LightShadows.Soft;
+        UniversalAdditionalLightData data = _light.GetUniversalAdditionalLightData();
+        if (data != null)
+        {
+            data.additionalLightsShadowResolutionTier = tier == GameSettings.ShadowTier.Low
+                ? UniversalAdditionalLightData.AdditionalLightsShadowResolutionTierLow
+                : UniversalAdditionalLightData.AdditionalLightsShadowResolutionTierHigh;
+        }
+    }
+
     private void Awake()
     {
         SecondsLeft = batterySeconds;
@@ -230,6 +252,7 @@ public class Flashlight : MonoBehaviour
         _light.shadowBias = 0.05f;
         _light.shadowNormalBias = 0.35f;
 
+        ApplyShadowSetting();
         ApplyState();
     }
 

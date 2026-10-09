@@ -167,6 +167,8 @@ public class MazeGenerator : MonoBehaviour
     [Header("Audio (F97)")]
     [Tooltip("Recorded clips for the sounds that used to be generated. Built by LIGHTS OUT > Check Project > Build Missing Pieces (Audio library). Empty slots keep the generated sound.")]
     [SerializeField] private GameAudioLibrary audioLibrary;
+    [Tooltip("S2: GameMixer.mixer (Master > Music, Effects; the three volumes exposed). Assigned by LIGHTS OUT > Build Missing Pieces. Empty = only the Master volume works.")]
+    [SerializeField] private UnityEngine.Audio.AudioMixer gameMixer;
     [Tooltip("Log which library slots are filled and which clip each sound played (once per clip).")]
     [SerializeField] private bool logAudioResolution = false;
 
@@ -323,6 +325,7 @@ public class MazeGenerator : MonoBehaviour
     {
         GameAudio.LogResolution = logAudioResolution;
         GameAudio.Assign(audioLibrary); // F97: before anything plays, so every call site sees the recorded clips
+        GameSettings.BindMixer(gameMixer); // S2: before any component creates an AudioSource, so music / effects are routed from the first sample
 
         if (width < 2 || height < 2)
         {
@@ -1656,6 +1659,7 @@ public class MazeGenerator : MonoBehaviour
                 ParticleSystem.ShapeModule shape = fog.shape;
                 shape.scale = new Vector3(size.x, 0f, size.z);
                 fog.Simulate(life, true, true); // settled when the floor starts, not filling in
+                fog.gameObject.AddComponent<FogScale>(); // S2: the Fog setting scales / switches this chunk
                 fog.Play();
             }
         }
@@ -4963,6 +4967,11 @@ public class MazeGenerator : MonoBehaviour
         MobilePerformance mobilePerf = FindAnyObjectByType<MobilePerformance>();
         if (mobilePerf == null) mobilePerf = gameObject.AddComponent<MobilePerformance>();
         mobilePerf.Configure(flashlight);
+
+        // S2: settings. The router sweeps unrouted AudioSources into the Effects mixer group; the menu is built lazily on first Open.
+        if (FindAnyObjectByType<AudioRouter>() == null) gameObject.AddComponent<AudioRouter>();
+        if (SettingsMenu.Active == null) gameObject.AddComponent<SettingsMenu>();
+        GameSettings.SweepToEffects();
 
         // Campaign cosmetics (F35), applied on every scene build so the choice survives a reload.
         if (flashlight != null) flashlight.SetBeamColor(ShopCatalogue.TorchColours[PlayerInventory.TorchColourIndex].Colour);

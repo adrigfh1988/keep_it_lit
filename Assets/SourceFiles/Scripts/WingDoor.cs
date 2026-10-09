@@ -86,7 +86,7 @@ public class WingDoor : MonoBehaviour, IInteractable
                     if (_nudgeTimer > 0f) break;
                     _nudgeTimer = 2f;
                     if (_padlockClip == null) _padlockClip = DoorAudio.BuildClunkClip(0.18f, 160f, 0.35f);
-                    if (!GameAudio.PlayAt(GameAudio.Library.lockedRattle, transform.position, 0.7f)) AudioSource.PlayClipAtPoint(_padlockClip, transform.position, 0.7f); // F97
+                    if (!GameAudio.PlayAt(GameAudio.Library.lockedRattle, transform.position, 0.7f)) GameAudio.ClipAtPoint(_padlockClip, transform.position, 0.7f); // F97
                     hud?.ShowSubtitle(lockedLine, 2.6f);
                     break;
                 }
@@ -101,7 +101,7 @@ public class WingDoor : MonoBehaviour, IInteractable
                 if (_nudgeTimer > 0f) break;
                 _nudgeTimer = 2f;
                 if (_padlockClip == null) _padlockClip = DoorAudio.BuildClunkClip(0.18f, 160f, 0.35f);
-                if (!GameAudio.PlayAt(GameAudio.Library.lockedRattle, transform.position, 0.7f)) AudioSource.PlayClipAtPoint(_padlockClip, transform.position, 0.7f); // F97
+                if (!GameAudio.PlayAt(GameAudio.Library.lockedRattle, transform.position, 0.7f)) GameAudio.ClipAtPoint(_padlockClip, transform.position, 0.7f); // F97
                 hud?.ShowSubtitle($"SEALED · YOU NEED THE {PreviousWingName()} KEY", 2.2f);
                 break;
         }

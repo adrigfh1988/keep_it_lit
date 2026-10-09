@@ -117,7 +117,7 @@ public class IntakeAmbience : MonoBehaviour
         {
             _nextSound = time + Random.Range(9f, 20f);
             Transform point = soundPoints[Random.Range(0, soundPoints.Length)];
-            if (point != null && !PlayRecordedFarNoise(point.position)) AudioSource.PlayClipAtPoint(_clips[Random.Range(0, _clips.Length)], point.position, Random.Range(0.25f, 0.45f));
+            if (point != null && !PlayRecordedFarNoise(point.position)) GameAudio.ClipAtPoint(_clips[Random.Range(0, _clips.Length)], point.position, Random.Range(0.25f, 0.45f));
         }
     }
 

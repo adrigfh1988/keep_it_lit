@@ -76,6 +76,9 @@ public class PauseMenu : MonoBehaviour
         if (TouchInput.Pressed(TouchInput.TouchAction.Pause)) pressed = true;
         if (!pressed) return;
 
+        // S2: Esc / B / Start while the settings screen is up (or closed it this very frame) belong to the settings screen, not to us.
+        if (SettingsMenu.BlocksPause) return;
+
         if (_paused) Resume();
         else if (CanPause()) Pause();
     }
@@ -183,114 +186,31 @@ public class PauseMenu : MonoBehaviour
         Vector2 size = new Vector2(420f, 86f);
 
         Button resume = RuntimeUi.CreateButton(_panel.transform, "RESUME",
-            new Vector2(0f, 400f), size, 40f, ButtonIdle, ButtonHover, Color.white);
+            new Vector2(0f, 520f), size, 40f, ButtonIdle, ButtonHover, Color.white);
         resume.onClick.AddListener(Resume);
 
         _restartButton = RuntimeUi.CreateButton(_panel.transform, "RESTART MAZE",
-            new Vector2(0f, 290f), size, 40f, ButtonIdle, ButtonHover, Color.white);
+            new Vector2(0f, 410f), size, 40f, ButtonIdle, ButtonHover, Color.white);
         _restartButton.onClick.AddListener(() => GameFlow.Restart(true, _seed));
 
         // F86: SKIP TUTORIAL shares the RESTART slot - the two are never shown together (see Pause).
         _skipButton = RuntimeUi.CreateButton(_panel.transform, "SKIP TUTORIAL",
-            new Vector2(0f, 290f), size, 40f, ButtonIdle, ButtonHover, Color.white);
+            new Vector2(0f, 410f), size, 40f, ButtonIdle, ButtonHover, Color.white);
         _skipButton.onClick.AddListener(SkipTutorial);
         _skipButton.gameObject.SetActive(false);
 
+        // S2: SETTINGS (the touch-controls toggle and look-sensitivity slider that used to sit here live in its CONTROLS tab now)
+        Button settings = RuntimeUi.CreateButton(_panel.transform, "SETTINGS",
+            new Vector2(0f, 300f), size, 40f, ButtonIdle, ButtonHover, Color.white);
+        settings.onClick.AddListener(SettingsMenu.Show);
+
         Button menu = RuntimeUi.CreateButton(_panel.transform, "MAIN MENU",
-            new Vector2(0f, 180f), size, 40f, ButtonIdle, ButtonHover, Color.white);
+            new Vector2(0f, 190f), size, 40f, ButtonIdle, ButtonHover, Color.white);
         menu.onClick.AddListener(GameFlow.ReturnToMenu);
 
         Button quit = RuntimeUi.CreateButton(_panel.transform, "QUIT",
-            new Vector2(0f, 70f), size, 40f, ButtonIdle, ButtonHover, Color.white);
+            new Vector2(0f, 80f), size, 40f, ButtonIdle, ButtonHover, Color.white);
         quit.onClick.AddListener(GameFlow.Quit);
         quit.gameObject.SetActive(GameFlow.CanQuit);
-
-        BuildTouchOptions(size);
-    }
-
-    // ---------------------------------------------------------------- F76: touch controls options
-
-    private TextMeshProUGUI _touchModeLabel;
-
-    private void BuildTouchOptions(Vector2 size)
-    {
-        Button touchMode = RuntimeUi.CreateButton(_panel.transform, TouchModeLabel(TouchInput.CurrentMode),
-            new Vector2(0f, 520f), size, 30f, ButtonIdle, ButtonHover, Color.white);
-        _touchModeLabel = touchMode.GetComponentInChildren<TextMeshProUGUI>();
-        touchMode.onClick.AddListener(CycleTouchMode);
-
-        BuildSensitivitySlider();
-    }
-
-    private static string TouchModeLabel(TouchInput.Mode mode) => $"TOUCH CONTROLS: {mode.ToString().ToUpperInvariant()}";
-
-    private void CycleTouchMode()
-    {
-        TouchInput.Mode next;
-        switch (TouchInput.CurrentMode)
-        {
-            case TouchInput.Mode.Auto: next = TouchInput.Mode.On; break;
-            case TouchInput.Mode.On: next = TouchInput.Mode.Off; break;
-            default: next = TouchInput.Mode.Auto; break;
-        }
-        TouchInput.SetMode(next);
-        if (_touchModeLabel != null) _touchModeLabel.text = TouchModeLabel(next);
-    }
-
-    /// <summary>Built by hand: RuntimeUi has no slider helper (a plain UGUI Slider - Background,
-    /// Fill Area/Fill, Handle Slide Area/Handle - the same structure Unity's own Slider prefab uses).</summary>
-    private void BuildSensitivitySlider()
-    {
-        GameObject holder = new GameObject("SensitivitySlider");
-        holder.transform.SetParent(_panel.transform, false);
-        holder.layer = _panel.layer;
-        RectTransform holderRect = holder.AddComponent<RectTransform>();
-        RuntimeUi.Place(holderRect, new Vector2(0.5f, 0f), new Vector2(0f, 640f), new Vector2(420f, 70f));
-
-        TextMeshProUGUI label = RuntimeUi.CreateText(holder.transform, "Label", "LOOK SENSITIVITY", 24f, Color.white);
-        RuntimeUi.Place(label.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, 0f), new Vector2(420f, 26f));
-
-        GameObject trackObj = new GameObject("Track");
-        trackObj.transform.SetParent(holder.transform, false);
-        trackObj.layer = holder.layer;
-        Image track = trackObj.AddComponent<Image>();
-        track.color = new Color(0f, 0f, 0f, 0.55f);
-        RuntimeUi.Place(track.rectTransform, new Vector2(0.5f, 0f), new Vector2(0f, 6f), new Vector2(420f, 14f));
-
-        GameObject fillAreaObj = new GameObject("FillArea");
-        fillAreaObj.transform.SetParent(trackObj.transform, false);
-        fillAreaObj.layer = holder.layer;
-        RectTransform fillAreaRect = fillAreaObj.AddComponent<RectTransform>();
-        RuntimeUi.Stretch(fillAreaRect);
-
-        GameObject fillObj = new GameObject("Fill");
-        fillObj.transform.SetParent(fillAreaObj.transform, false);
-        fillObj.layer = holder.layer;
-        Image fill = fillObj.AddComponent<Image>();
-        fill.color = ButtonHover;
-        RuntimeUi.Stretch(fill.rectTransform);
-
-        GameObject handleAreaObj = new GameObject("HandleArea");
-        handleAreaObj.transform.SetParent(trackObj.transform, false);
-        handleAreaObj.layer = holder.layer;
-        RectTransform handleAreaRect = handleAreaObj.AddComponent<RectTransform>();
-        RuntimeUi.Stretch(handleAreaRect);
-
-        GameObject handleObj = new GameObject("Handle");
-        handleObj.transform.SetParent(handleAreaObj.transform, false);
-        handleObj.layer = holder.layer;
-        Image handle = handleObj.AddComponent<Image>();
-        handle.color = Color.white;
-        RuntimeUi.Place(handle.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(26f, 26f));
-
-        Slider slider = holder.AddComponent<Slider>();
-        slider.fillRect = fill.rectTransform;
-        slider.handleRect = handle.rectTransform;
-        slider.targetGraphic = handle;
-        slider.direction = Slider.Direction.LeftToRight;
-        slider.minValue = TouchInput.MinLookSensitivity;
-        slider.maxValue = TouchInput.MaxLookSensitivity;
-        slider.value = TouchInput.LookSensitivity;
-        slider.onValueChanged.AddListener(TouchInput.SetLookSensitivity);
     }
 }

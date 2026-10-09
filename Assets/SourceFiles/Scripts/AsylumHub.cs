@@ -189,9 +189,21 @@ public class AsylumHub : MonoBehaviour
         ContentActive = active;
         if (building != null) building.gameObject.SetActive(active);
         if (dressing != null) dressing.gameObject.SetActive(active);
+        if (active) ScaleFog();
         if (lights != null) lights.gameObject.SetActive(active);
         if (wings != null) wings.gameObject.SetActive(active);
         if (life != null) life.gameObject.SetActive(active);
+    }
+
+    /// <summary>S2: every fog emitter under Dressing/Fog follows the Fog setting (a FogScale is added on first activation and applies on its own enable).</summary>
+    private void ScaleFog()
+    {
+        Transform fog = dressing != null ? dressing.Find("Fog") : null;
+        if (fog == null) return;
+        foreach (ParticleSystem ps in fog.GetComponentsInChildren<ParticleSystem>(true))
+        {
+            if (ps.GetComponent<FogScale>() == null) ps.gameObject.AddComponent<FogScale>();
+        }
     }
 
     // ---------------------------------------------------------------- entering
@@ -658,7 +670,7 @@ public class AsylumHub : MonoBehaviour
         HorrorAudioDirector director = FindAnyObjectByType<HorrorAudioDirector>();
         if (GameAudio.Play2D(GameAudio.Library.caught, 1f)) GameAudio.Play2D(GameAudio.Library.caughtLayer, 0.8f); // F97: a hard hit, with a dark boom under it
         else if (director != null) director.PlayCaptureSting();
-        else AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.9f, 55f, 0.9f), _player.position, 1f);
+        else GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.9f, 55f, 0.9f), _player.position, 1f);
         EnsureBlackout();
         yield return Fade(_blackout != null ? _blackout.color.a : 0f, 1f, 0.25f);
         yield return new WaitForSecondsRealtime(0.8f);

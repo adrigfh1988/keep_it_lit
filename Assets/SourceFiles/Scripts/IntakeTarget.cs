@@ -29,6 +29,6 @@ public class IntakeTarget : MonoBehaviour
     {
         if (Hit) return;
         Hit = true;
-        AudioSource.PlayClipAtPoint(DoorAudio.BuildClunkClip(0.9f, 1250f, 0.7f), transform.position, 1f);
+        GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.9f, 1250f, 0.7f), transform.position, 1f);
     }
 }

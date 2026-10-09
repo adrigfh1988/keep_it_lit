@@ -175,6 +175,7 @@ public class HorrorAudioDirector : MonoBehaviour
         _drone.playOnAwake = false;
         _drone.loop = true;
         _drone.spatialBlend = 0f;
+        GameSettings.RouteMusic(_drone); // S2: the base music bed and the panic track share this source
 
         // There used to be a fourth source here, a synthesised "tension bed" (two detuned 55 Hz tones
         // beating against each other, swelling with star progress). Removed 4 Oct 2026: it read as a

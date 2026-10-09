@@ -76,7 +76,7 @@ public class FirstPersonRig : MonoBehaviour
         PlayerCamera = cameraObject.GetComponent<Camera>();
         if (PlayerCamera != null)
         {
-            PlayerCamera.fieldOfView = fieldOfView;
+            PlayerCamera.fieldOfView = GameSettings.FieldOfView; // S2: the setting owns the FOV now (its default, GameSettings.DefaultFov, mirrors the 70 serialized above)
         }
 
         MoveAudioListener(cameraObject);
@@ -92,6 +92,15 @@ public class FirstPersonRig : MonoBehaviour
             Flashlight = cameraObject.AddComponent<Flashlight>();
             Flashlight.Bind(Stealth);
         }
+    }
+
+    private void OnEnable() => GameSettings.Changed += ApplyFieldOfView;
+    private void OnDisable() => GameSettings.Changed -= ApplyFieldOfView;
+
+    /// <summary>S2: the player camera's base FOV follows the Field of view setting. Scripted camera moves in this project never touch fieldOfView, so nothing fights it.</summary>
+    private void ApplyFieldOfView()
+    {
+        if (PlayerCamera != null) PlayerCamera.fieldOfView = GameSettings.FieldOfView;
     }
 
     private void ConfigureController()

@@ -249,8 +249,11 @@ public bool IsRespawning { get; set; } = false;
     {
         float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-        _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier * LookSensitivity.x;
-        _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier * LookSensitivity.y;
+        // S2: the Settings menu's look multiplier and invert-Y (mouse and gamepad; touch keeps its own TouchInput.LookSensitivity inside TouchControls)
+        float lookScale = TouchInput.Active ? 1f : GameSettings.MouseSensitivity;
+        float invertY = GameSettings.InvertY ? -1f : 1f;
+        _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier * LookSensitivity.x * lookScale;
+        _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier * LookSensitivity.y * lookScale * invertY;
     }
 
     _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
@@ -466,7 +469,7 @@ public bool IsRespawning { get; set; } = false;
                 if (FootstepAudioClips.Length > 0)
                 {
                     var index = Random.Range(0, FootstepAudioClips.Length);
-                    AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
+                    GameAudio.ClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
                 }
             }
         }
@@ -477,7 +480,7 @@ public bool IsRespawning { get; set; } = false;
 
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
-                AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
+                GameAudio.ClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
         }
         /// Points the view at a world position. Only meaningful with LockCameraPosition = true,

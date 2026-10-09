@@ -102,7 +102,7 @@ public class ChaseSetPiece : HubSetPiece
         SetUrgency(0f);
         pursuer.relentless = false;
         pursuer.Stop();
-        GameAudio.Play2D(GameAudio.Library.chaseEnd, 0.7f); // F97: the last bars, fading out by themselves
+        GameAudio.Play2D(GameAudio.Library.chaseEnd, 0.7f, music: true); // F97: the last bars, fading out by themselves
         Hub.SubtitleLine("IT STOPS AT THE DOOR", 2.6f);
         StartCoroutine(Fade());
     }

@@ -59844,6 +59844,7 @@ MonoBehaviour:
   fogChunkCells: 4
   fogMaxParticles: 700
   audioLibrary: {fileID: 11400000, guid: 2d74051b40878d54fa8b46934d454990, type: 2}
+  gameMixer: {fileID: 24100000, guid: f0e4c16d855783247b1d498d7d5f2424, type: 2}
   logAudioResolution: 0
   debugObjectives: 0
 --- !u!1 &1901180370

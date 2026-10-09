@@ -128,7 +128,7 @@ public class ThrowableItem : MonoBehaviour, IInteractable
     private static void PlayOneShotAt(Vector3 point, AudioClip clip, float volume)
     {
         if (clip == null) return;
-        AudioSource.PlayClipAtPoint(clip, point, volume);
+        GameAudio.ClipAtPoint(clip, point, volume);
     }
 
     private static AudioClip GetBottleShatterClip()
