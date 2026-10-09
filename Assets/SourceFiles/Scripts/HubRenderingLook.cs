@@ -20,8 +20,15 @@ public class HubRenderingLook : MonoBehaviour
     [Tooltip("F96: the hub-only darkening volume (vignette, exposure, desaturation); enabled with the hub, off everywhere else.")]
     public Volume darkVolume;
 
+    [Tooltip("The hub fog's soft particles fade where they meet floors and walls, which needs the camera depth texture (off in the URP " +
+             "asset): the main camera asks for it while the hub is in play, and goes back to the asset's setting after.")]
+    public bool depthTextureForFog = true;
+
     /// <summary>True while this component has the feature switched on.</summary>
     public static bool IsOn { get; private set; }
+
+    private UniversalAdditionalCameraData _depthCamera;
+    private CameraOverrideOption _depthBefore;
 
     private void OnEnable() => Apply(true);
     private void OnDisable() => Apply(false);
@@ -33,9 +40,26 @@ public class HubRenderingLook : MonoBehaviour
     private void Apply(bool on)
     {
         if (darkVolume != null) darkVolume.enabled = on;
+        DepthForFog(on);
         if (ambientOcclusion == null) return;
         if (on && (Application.isMobilePlatform || MobilePerformance.IsMobileProfile)) return;
         if (ambientOcclusion.isActive != on) ambientOcclusion.SetActive(on);
         IsOn = on;
+    }
+
+    private void DepthForFog(bool on)
+    {
+        if (on && depthTextureForFog && Application.isPlaying && _depthCamera == null)
+        {
+            Camera cam = Camera.main;
+            if (cam == null || !cam.TryGetComponent(out _depthCamera)) return;
+            _depthBefore = _depthCamera.requiresDepthOption;
+            _depthCamera.requiresDepthOption = CameraOverrideOption.On;
+        }
+        else if (!on && _depthCamera != null)
+        {
+            _depthCamera.requiresDepthOption = _depthBefore;
+            _depthCamera = null;
+        }
     }
 }

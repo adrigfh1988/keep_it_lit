@@ -114,6 +114,7 @@ public class GameAudioLibrary : ScriptableObject
     public AudioSlot relocationCue = new AudioSlot();  // 37
     public AudioSlot phantomWhisper = new AudioSlot(); // 38
     public AudioSlot captureSting = new AudioSlot();   // 39
+    public AudioSlot heartbeat = new AudioSlot();      // one lub-dub, retriggered by HorrorAudioDirector (Unity AI generated, 9 Oct 2026)
 
     [Header("Player, UI, music")]
     public AudioSlot torchClick = new AudioSlot();     // 53

@@ -261,7 +261,11 @@ public class HorrorAudioDirector : MonoBehaviour
         // Curved rather than straight: a linear ramp spends most of the range around half volume,
         // which reads as a constant thud. This stays faint until it is close, then climbs fast.
         float loudness = Mathf.Pow(closeness, proximityFalloff);
-        _oneShots.PlayOneShot(_heartbeat, Mathf.Lerp(minHeartbeatVolume, heartbeatVolume, loudness));
+        float volume = Mathf.Lerp(minHeartbeatVolume, heartbeatVolume, loudness);
+        AudioSlot slot = GameAudio.Library.heartbeat;
+        AudioClip recorded = slot.Pick();
+        if (recorded != null) _oneShots.PlayOneShot(recorded, volume * slot.volume);
+        else _oneShots.PlayOneShot(_heartbeat, volume);
     }
 
     private void HandleChaseStateChanged(bool chasing)

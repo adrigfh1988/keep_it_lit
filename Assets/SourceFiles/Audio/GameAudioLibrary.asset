@@ -145,7 +145,7 @@ MonoBehaviour:
     volume: 0.9
     pitchJitter: 0.04
     startOffset: 0
-    maxSeconds: 0
+    maxSeconds: 1.2
     lowPassHz: 0
   liftBang:
     clips:
@@ -399,6 +399,14 @@ MonoBehaviour:
     clips:
     - {fileID: 8300000, guid: 1689058eeeb072842b8c76940508c2a7, type: 3}
     volume: 0.9
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  heartbeat:
+    clips:
+    - {fileID: 8300000, guid: 6efdf56d1ede01c4d9b181a1ef437737, type: 3}
+    volume: 1
     pitchJitter: 0
     startOffset: 0
     maxSeconds: 0

@@ -243,6 +243,13 @@ public static class ProjectSetup
         },
         new Piece
         {
+            Name = "Asylum fog (low fog banks in every room, Fog Particles pack)",
+            FixMenu = "Build Missing Pieces (adds the fog of rooms that have none to the scene hub and applies it to the prefab)",
+            Problem = AsylumHubBuilder.FogProblem,
+            Build = AsylumHubBuilder.FogRepair
+        },
+        new Piece
+        {
             Name = "Asylum hub layout (lights, walking paths, doors)",
             FixMenu = "edit Assets/Prefabs/AsylumHub.prefab by hand to clear what is listed",
             Problem = AsylumHubBuilder.LayoutProblem,

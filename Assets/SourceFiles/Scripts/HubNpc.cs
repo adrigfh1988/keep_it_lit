@@ -29,6 +29,9 @@ public class HubNpc : MonoBehaviour, IInteractable
     [Tooltip("State while the panel is open. Empty = keep the base state (Josef lies on, the Clerk keeps typing).")]
     public string talkState = "Talking";
     public bool lying;
+    [Tooltip("Forward lean (degrees) added on top of the base clip, half at the spine and half at the chest, eased out while talking. " +
+             "For a generated clip that stays upright where the work is lower (Bruno over the kitchen table).")]
+    public float leanDegrees;
 
     [Header("Behaviour")]
     [Tooltip("The head follows the player within headRange. The Clerk never looks up.")]
@@ -53,6 +56,7 @@ public class HubNpc : MonoBehaviour, IInteractable
     private SkinnedMeshRenderer[] _skins;
     private Vector3 _basePos;
     private Quaternion _baseRot;
+    private float _lean;
 
     public bool IsPresent => _present && body != null && body.gameObject.activeInHierarchy;
     public bool IgnoresGaze => !playerFacesMe;
@@ -202,6 +206,8 @@ public class HubNpc : MonoBehaviour, IInteractable
             }
         }
 
+        if (!lying) ApplyLean();
+
         if (_head == null || !turnsHead || lying) return;
         float target = 0f;
         AsylumHub hub = AsylumHub.Active;
@@ -220,6 +226,22 @@ public class HubNpc : MonoBehaviour, IInteractable
         }
         _headYaw = Mathf.MoveTowardsAngle(_headYaw, target, 90f * Time.deltaTime);
         if (Mathf.Abs(_headYaw) > 0.01f) _head.rotation = Quaternion.AngleAxis(_headYaw, body.up) * _head.rotation;
+    }
+
+    /// <summary>World-space pitch about the body's right axis on top of the pose the Animator just wrote (as Stalker's hunch),
+    /// so it never compounds. Positive = forward/down.</summary>
+    private void ApplyLean()
+    {
+        _lean = Mathf.MoveTowards(_lean, _talking ? 0f : leanDegrees, 40f * Time.deltaTime);
+        if (Mathf.Abs(_lean) < 0.01f || _animator == null || !_animator.isHuman) return;
+        Vector3 fwd = Vector3.ProjectOnPlane(body.forward, Vector3.up);
+        if (fwd.sqrMagnitude < 0.0001f) return;
+        Vector3 right = Vector3.Cross(Vector3.up, fwd.normalized);
+        Transform spine = _animator.GetBoneTransform(HumanBodyBones.Spine);
+        Transform chest = _animator.GetBoneTransform(HumanBodyBones.Chest);
+        float half = chest != null ? _lean * 0.5f : _lean;
+        if (spine != null) spine.rotation = Quaternion.AngleAxis(half, right) * spine.rotation;
+        if (chest != null) chest.rotation = Quaternion.AngleAxis(half, right) * chest.rotation;
     }
 
     // ---------------------------------------------------------------- IInteractable
