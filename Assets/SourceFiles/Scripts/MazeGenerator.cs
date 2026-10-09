@@ -156,6 +156,14 @@ public class MazeGenerator : MonoBehaviour
     [Tooltip("Scene gallery built by LIGHTS OUT > Build > Interactables. Found automatically; assign only to override.")]
     [SerializeField] private InteractableKit interactableKit;
 
+    [Header("Ground fog")]
+    [Tooltip("Fog banks alive per m² of maze floor (the hub uses 0.24). 0 = no fog. Clones InteractableKit.fogBank per chunk of cells.")]
+    [SerializeField, Min(0f)] private float fogDensity = 0.24f;
+    [Tooltip("Cells per side of one fog emitter. Smaller chunks pause more of the fog off screen; more emitters cost more draw calls.")]
+    [SerializeField, Min(1)] private int fogChunkCells = 4;
+    [Tooltip("Cap on fog banks alive in the whole maze (overdraw is the cost, on the web build most of all); the density is scaled down to fit.")]
+    [SerializeField, Min(0)] private int fogMaxParticles = 700;
+
     [Header("Audio (F97)")]
     [Tooltip("Recorded clips for the sounds that used to be generated. Built by LIGHTS OUT > Check Project > Build Missing Pieces (Audio library). Empty slots keep the generated sound.")]
     [SerializeField] private GameAudioLibrary audioLibrary;
@@ -428,6 +436,7 @@ public class MazeGenerator : MonoBehaviour
         BuildFloorProps(new System.Random(usedSeed + 6));
         BuildDecals(new System.Random(usedSeed + 7));
         BuildDust();
+        BuildFog(); // no rng draw: a chunk grid, the particle system randomises itself
 
         DisableExistingPickups();
         SpawnStars(usedSeed);
@@ -1602,6 +1611,54 @@ public class MazeGenerator : MonoBehaviour
         clone.gameObject.SetActive(true);
         clone.MarkRuntimeClone();
         clone.name = "DustMotes";
+    }
+
+    /// <summary>
+    /// Ground fog: the kit's fogBank (the hub fog's look) cloned once per chunk of fogChunkCells x fogChunkCells cells, its flat box sized
+    /// to the chunk at FloorTop and its count to the chunk's area. Every cell of the grid is corridor, so the box needs no walkable mask;
+    /// a bank half inside a wall fades out against it (soft particles). Off-screen chunks pause. Post-bake, collider-less, no rng draw.
+    /// </summary>
+    private bool _fogBuilt;
+
+    private void BuildFog()
+    {
+        if (fogDensity <= 0f || fogMaxParticles <= 0) return;
+        if (interactableKit == null) interactableKit = FindAnyObjectByType<InteractableKit>(FindObjectsInactive.Include);
+        ParticleSystem template = interactableKit != null ? interactableKit.FogBank : null;
+        if (template == null)
+        {
+            Debug.LogError("MazeGenerator: InteractableKit has no fogBank, so this maze has no ground fog. Run LIGHTS OUT > Build > Interactables.", this);
+            return;
+        }
+
+        float density = Mathf.Min(fogDensity, fogMaxParticles / Mathf.Max(1f, width * cellSize * height * cellSize));
+        _fogBuilt = true;
+        Transform group = new GameObject("Fog").transform;
+        group.SetParent(_mazeRoot, false);
+        for (int cz = 0; cz < height; cz += fogChunkCells)
+        {
+            for (int cx = 0; cx < width; cx += fogChunkCells)
+            {
+                int nx = Mathf.Min(fogChunkCells, width - cx), nz = Mathf.Min(fogChunkCells, height - cz);
+                Vector3 size = new Vector3(nx * cellSize, 0f, nz * cellSize);
+                Vector3 centre = new Vector3(origin.x + (cx + nx * 0.5f) * cellSize, FloorTop, origin.z + (cz + nz * 0.5f) * cellSize);
+                int alive = Mathf.Max(2, Mathf.RoundToInt(size.x * size.z * density));
+
+                ParticleSystem fog = Instantiate(template, centre, Quaternion.identity, group);
+                fog.name = $"Fog_{cx}_{cz}";
+                fog.gameObject.SetActive(true);
+                fog.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                ParticleSystem.MainModule main = fog.main;
+                main.maxParticles = alive + 2;
+                ParticleSystem.EmissionModule emission = fog.emission;
+                float life = (main.startLifetime.constantMin + main.startLifetime.constantMax) * 0.5f;
+                emission.rateOverTime = alive / Mathf.Max(1f, life);
+                ParticleSystem.ShapeModule shape = fog.shape;
+                shape.scale = new Vector3(size.x, 0f, size.z);
+                fog.Simulate(life, true, true); // settled when the floor starts, not filling in
+                fog.Play();
+            }
+        }
     }
 
     // ---------------------------------------------------------------- wall lamps
@@ -4690,6 +4747,10 @@ public class MazeGenerator : MonoBehaviour
         // `outcome` for IsEnding, which is why they are wired here rather than beside TensionDirector.
         AIPresence presence = aiFollower != null ? aiFollower.GetComponent<AIPresence>() : null;
         Camera camera = rig != null ? rig.PlayerCamera : null;
+
+        // Ground fog: its soft edges (where a bank meets the floor or a wall) read the camera depth texture, which the URP asset leaves off.
+        if (_fogBuilt && camera != null && camera.TryGetComponent(out UnityEngine.Rendering.Universal.UniversalAdditionalCameraData cameraData))
+            cameraData.requiresDepthOption = UnityEngine.Rendering.Universal.CameraOverrideOption.On;
 
         // F74: throwables, noisy floors, lantern, lore, theme interactables. All built earlier in Awake,
         // before the camera/HUD/interactor existed - late-bound here, same pattern as the block above.

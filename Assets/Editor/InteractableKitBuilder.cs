@@ -261,6 +261,23 @@ public static class InteractableKitBuilder
             }
         }
 
+        // Ground fog: the maze's fog-bank emitter (the hub fog's look, AsylumHubBuilder.ConfigureFogParticles), same build-missing-only
+        // rule. Needs the Fog Particles pack's smoke sheet; without it the slot stays empty and the mazes have no fog.
+        SerializedProperty fogProp = so.FindProperty("fogBank");
+        if (fogProp.objectReferenceValue == null)
+        {
+            Material fogMat = AsylumHubBuilder.FogMaterial();
+            if (fogMat != null)
+            {
+                GameObject fog = new GameObject("FogBank");
+                fog.transform.SetParent(root.transform, false);
+                fog.transform.localPosition = new Vector3(x, 0f, 0f);
+                fogProp.objectReferenceValue = AsylumHubBuilder.ConfigureFogParticles(fog, 12, fogMat);
+                x += PieceSpacing;
+                built++;
+            }
+        }
+
 
         // F93: the patient case file, same build-missing-only rule. Needs the Morgue Room PBR notebook and the Alchemist shelf; without them
         // the slot stays empty and MazeGenerator.BuildPatientFile logs an error naming this menu item.

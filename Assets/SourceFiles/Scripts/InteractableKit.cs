@@ -73,6 +73,11 @@ public class InteractableKit : MonoBehaviour
     [Tooltip("The currency shard's model: a pack item (Alchemist House Bulb01, a lumpy cluster) centred on this object's origin. MazeGenerator.BuildShard clones its children under each shard and gives them the glowing Maze_Shard material; empty = the old primitive cube.")]
     [SerializeField] private GameObject shardModel;
 
+    [Header("Ground fog")]
+    [Tooltip("A low fog-bank emitter (the hub fog's settings, a Box shape). MazeGenerator.BuildFog clones it per chunk of cells and sizes " +
+             "its box and particle count to the chunk; empty = no fog in the mazes.")]
+    [SerializeField] private ParticleSystem fogBank;
+
     public MazeDoor ShutterDoor => shutterDoor;
     public WallButton WallButton => wallButton;
     public BatteryCellPickup BatteryCell => batteryCell;
@@ -92,6 +97,7 @@ public class InteractableKit : MonoBehaviour
     public KeyPickup KeyPickup => keyPickup;
     public GameObject EscapeHatch => escapeHatch;
     public GameObject ShardModel => shardModel;
+    public ParticleSystem FogBank => fogBank;
     public LoreNote PatientFile => patientFile;
 
     /// <summary>True once every F72 template slot is assigned - MazeGenerator.BuildDoors logs and skips the whole feature otherwise.</summary>

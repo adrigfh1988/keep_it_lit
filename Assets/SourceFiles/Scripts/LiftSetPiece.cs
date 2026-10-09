@@ -104,6 +104,14 @@ public class LiftSetPiece : HubSetPiece
             case LiftPoint.Role.Call:
                 if (_riding || _arrived) return;
                 if (HubState.IsFinale || HubState.Floor < 2) { hub.SubtitleLine("THE LIFT DOES NOT MOVE", 2.2f); return; }
+                // Floor 2: the ride is one way (the stairs are chained), and everything the floor's mission needs is upstairs - riding
+                // down before the wing key is in hand would strand the player at a locked door. The lift waits for the key.
+                HubMission mission = HubState.Floor == 2 ? HubMission.ForFloor(2) : null;
+                if (mission != null && mission.Current != HubMission.Stage.Done)
+                {
+                    hub.SubtitleLine("THE LIFT WILL NOT COME · THE BOILER ROOM IS STILL LOCKED", 3f);
+                    return;
+                }
                 _routine = StartCoroutine(Ride(HubState.Floor == 2));
                 break;
 

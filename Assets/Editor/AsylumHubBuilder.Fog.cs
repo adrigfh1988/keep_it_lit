@@ -24,7 +24,7 @@ public static partial class AsylumHubBuilder
     /// <summary>Flat walkable floor (m²) at one height before it counts as a storey the fog lies on.</summary>
     private const float FogLevelArea = 25f;
 
-    private static Material FogMaterial()
+    public static Material FogMaterial()
     {
         Material mat = AssetDatabase.LoadAssetAtPath<Material>(FogMaterialPath);
         if (mat != null) return mat;
@@ -156,9 +156,23 @@ public static partial class AsylumHubBuilder
         go.transform.SetParent(group, false);
         go.transform.SetPositionAndRotation(origin, Quaternion.identity);
 
+        int alive = Mathf.Clamp(Mathf.RoundToInt(FloorArea(tris) * FogPerSquareMetre), 4, FogMaxPerRoom);
+        ParticleSystem ps = ConfigureFogParticles(go, alive, mat);
+        ParticleSystem.ShapeModule shape = ps.shape;
+        shape.shapeType = ParticleSystemShapeType.Mesh;
+        shape.meshShapeType = ParticleSystemMeshShapeType.Triangle;
+        shape.mesh = mesh;
+    }
+
+    /// <summary>
+    /// The ground-fog look, shared by the hub rooms and the maze template (InteractableKitBuilder's fogBank): wide flat banks that drift
+    /// sideways at knee height, `alive` of them at a time. The shape is a flat Box at 0.45 m; the hub swaps it for its room's floor mesh,
+    /// the maze sizes the box to each chunk of cells.
+    /// </summary>
+    public static ParticleSystem ConfigureFogParticles(GameObject go, int alive, Material mat)
+    {
         ParticleSystem ps = go.AddComponent<ParticleSystem>();
         ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-        int alive = Mathf.Clamp(Mathf.RoundToInt(FloorArea(tris) * FogPerSquareMetre), 4, FogMaxPerRoom);
         const float lifeMin = 14f, lifeMax = 20f;
 
         ParticleSystem.MainModule main = ps.main;
@@ -185,9 +199,8 @@ public static partial class AsylumHubBuilder
 
         ParticleSystem.ShapeModule shape = ps.shape;
         shape.enabled = true;
-        shape.shapeType = ParticleSystemShapeType.Mesh;
-        shape.meshShapeType = ParticleSystemMeshShapeType.Triangle;
-        shape.mesh = mesh;
+        shape.shapeType = ParticleSystemShapeType.Box;
+        shape.scale = new Vector3(4f, 0f, 4f);
         shape.position = new Vector3(0f, 0.45f, 0f); // on the floor: the lower part sinks in and the soft edge fades it out
         shape.randomPositionAmount = 0.15f;
 
@@ -226,6 +239,7 @@ public static partial class AsylumHubBuilder
         renderer.receiveShadows = false;
         renderer.lightProbeUsage = UnityEngine.Rendering.LightProbeUsage.Off;
         renderer.reflectionProbeUsage = UnityEngine.Rendering.ReflectionProbeUsage.Off;
+        return ps;
     }
 
     // ---------------------------------------------------------------- ProjectSetup piece
