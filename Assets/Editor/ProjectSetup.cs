@@ -58,21 +58,21 @@ public static class ProjectSetup
         new Piece
         {
             Name = "Blood decals (Blood decal pack)",
-            FixMenu = "Build Missing Pieces (or any Build > Floor Themes / Kit Maze Theme run)",
+            FixMenu = "Build Missing Pieces (or any Build > Floor Themes run)",
             Problem = () => BloodDecalUpgrade.NeedsUpgrade() ? "some blood decals still use the code-drawn placeholder textures" : null,
             Build = () => BloodDecalUpgrade.Apply()
         },
         new Piece
         {
             Name = "Set-piece decals",
-            FixMenu = "Build Missing Pieces (or any Build > Floor Themes / Kit Maze Theme run)",
+            FixMenu = "Build Missing Pieces (or any Build > Floor Themes run)",
             Problem = () => SetPieceDecalFix.NeedsFix() ? "set-piece wall decals float 2 m off their wall, or blood quads are mis-shaped" : null,
             Build = () => SetPieceDecalFix.Apply()
         },
         new Piece
         {
             Name = "Corpses (DeadBody LITE)",
-            FixMenu = "Build Missing Pieces (or any Build > Floor Themes / Kit Maze Theme run)",
+            FixMenu = "Build Missing Pieces (or any Build > Floor Themes run)",
             Problem = () => CorpseUpgrade.NeedsUpgrade() ? "the FallenRunner set piece still has the primitive capsule body" : null,
             Build = () => CorpseUpgrade.Apply()
         },
@@ -86,31 +86,16 @@ public static class ProjectSetup
         new Piece
         {
             Name = "Pack dressing (beds, baths, bodies, furniture, vents)",
-            FixMenu = "Build Missing Pieces (or any Build > Floor Themes / Kit Maze Theme run)",
-            Problem = () => PackDressing.NeedsUpgrade() ? "a gallery row or the kit maze lacks pieces from the DeadBody LITE / Socket Pack / Alchemist furniture set" : null,
+            FixMenu = "Build Missing Pieces (or any Build > Floor Themes run)",
+            Problem = () => PackDressing.NeedsUpgrade() ? "a gallery row lacks pieces from the DeadBody LITE / Socket Pack / Alchemist furniture set" : null,
             Build = () => PackDressing.Apply()
         },
         new Piece
         {
             Name = "Primitive dressing cleanup (F89)",
-            FixMenu = "Build Missing Pieces (or any Build > Floor Themes / Kit Maze Theme run)",
-            Problem = () => PrimitiveDressingCleanup.NeedsUpgrade() ? "untextured primitive props / set pieces (or their prefabs) are still in a gallery row or the kit maze" : null,
+            FixMenu = "Build Missing Pieces (or any Build > Floor Themes run)",
+            Problem = () => PrimitiveDressingCleanup.NeedsUpgrade() ? "untextured primitive props / set pieces (or their prefabs) are still in a gallery row" : null,
             Build = () => PrimitiveDressingCleanup.Apply()
-        },
-        new Piece
-        {
-            Name = "Kit maze theme",
-            FixMenu = "Build > Kit Maze Theme",
-            Problem = () =>
-            {
-                KitMazeTheme kit = Object.FindAnyObjectByType<KitMazeTheme>(FindObjectsInactive.Include);
-                if (kit == null) return "missing";
-                return kit.IsComplete ? null : "incomplete";
-            },
-            Build = () =>
-            {
-                if (Object.FindAnyObjectByType<KitMazeTheme>(FindObjectsInactive.Include) == null) KitMazeThemeBuilder.Build();
-            }
         },
         new Piece
         {
@@ -306,15 +291,15 @@ public static class ProjectSetup
         },
         new Piece
         {
-            Name = "Hunter body (Adam)",
+            Name = "Hunter body (Orderly robot, F102)",
             FixMenu = "Build > Hunter Body",
             Problem = () =>
             {
                 AIFollower hunter = Object.FindAnyObjectByType<AIFollower>(FindObjectsInactive.Include);
                 if (hunter == null) return "no AIFollower in the scene";
-                return hunter.transform.Find(HunterBodyBuilder.BodyChildName) == null ? "still the placeholder robot" : null;
+                return HunterBodyBuilder.HasOrderlyBody(hunter.transform) ? null : "the hunter is not wearing the Orderly robot body yet";
             },
-            Build = HunterBodyBuilder.Build
+            Build = HunterBodyBuilder.BuildSilently
         },
         new Piece
         {

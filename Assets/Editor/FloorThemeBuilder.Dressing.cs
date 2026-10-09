@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 
 /// <summary>
 /// F70 maze dressing: shared helpers used by every theme's Build* method in FloorThemeBuilder.cs, plus
-/// the common (non-themed) prop/set-piece/dust set both the theme builders and KitMazeThemeBuilder pull
+/// the common (non-themed) prop/set-piece/dust set the theme builders pull
 /// from. Kept in its own file per plannings/maze-dressing-plan.md decision 13; FloorThemeBuilder itself
 /// is now `partial` so these helpers see its private consts (ThemesRoot, PieceSpacing, ...) and existing
 /// low-level helpers (Box, CylinderRH, LoadOrCreateMat, SaveAsPrefab, FinishProp, ...) as if written in
@@ -371,7 +371,7 @@ public static partial class FloorThemeBuilder
 
     /// <summary>
     /// The common decal set (3.2), built into `folder` under prefab names prefixed with `prefix` (a
-    /// theme's own prefab folder for a themed row, or CommonRoot for the kit's copies) - decal prefabs
+    /// theme's own prefab folder for a themed row, or CommonRoot for shared copies) - decal prefabs
     /// are per-theme because weight is serialized on the prefab, but the blood/handprint/claw/footprint
     /// materials passed in via `common` are the shared common assets; grime/drip/floorGrime get the
     /// per-theme-tinted material the caller built. bloodWeightScale/handClawWeightScale apply the F70
@@ -399,7 +399,7 @@ public static partial class FloorThemeBuilder
     private static PropPiece[] _commonFloorProps;
 
     /// <summary>
-    /// The shared floor props every theme and the kit maze used to list: Papers, Debris, Bucket, Bottles. They were
+    /// The shared floor props every theme used to list: Papers, Debris, Bucket, Bottles. They were
     /// built from primitives with plain materials (the white sheets and grey discs on the Ward floor) and F89 removed
     /// them: Alchemist book piles, bottles and baskets (FloorThemeBuilder.Alchemist.cs) already cover paper, bottle and
     /// bucket, and nothing in the packs reads as debris. Kept as a call so the builders' structure is unchanged.
@@ -438,7 +438,7 @@ public static partial class FloorThemeBuilder
 
     private static SetPiece _fallenRunner;
 
-    /// <summary>The one set piece shared by every theme and the kit maze (decision: theme setPieces = its 2 + FallenRunner; kit setPieces = FallenRunner). Built once and cached.</summary>
+    /// <summary>The one set piece shared by every theme (theme setPieces = its 2 + FallenRunner). Built once and cached.</summary>
     private static SetPiece BuildFallenRunnerSetPiece(CommonDecalMaterials common)
     {
         if (_fallenRunner != null) return _fallenRunner;
@@ -589,50 +589,5 @@ public static partial class FloorThemeBuilder
         renderer.shadowCastingMode = ShadowCastingMode.Off;
 
         return ps;
-    }
-
-    // ---------------------------------------------------------------- kit common dressing (F70)
-
-    /// <summary>What KitMazeThemeBuilder assigns to KitMazeTheme.Props/SetPieces/Dust: common floor clutter, common decal copies (weighted "Kit"), the Switch wrapped as a collider-less Floor prop, the shared FallenRunner set piece and the kit's own dust prefab. No wall/ceiling props (decision 7).</summary>
-    internal struct CommonDressing
-    {
-        public PropPiece[] Props;
-        public SetPiece[] SetPieces;
-        public DustMotes Dust;
-    }
-
-    internal static CommonDressing BuildCommonDressing(GameObject switchPrefab)
-    {
-        List<PropPiece> props = new List<PropPiece>();
-        props.AddRange(BuildCommonFloorProps());
-        props.AddRange(KitPropFilter(BuildAlchemistProps(KitSet))); // F79
-
-        CommonDecalMaterials common = GetCommonDecalMaterials();
-        Material kitGrime = LoadOrCreateDecalMat(CommonRoot, "Kit_Grime", EnsureDecalTexture("Decal_Grime"), new Color(0.07f, 0.07f, 0.06f), 0.1f);
-        Material kitDrip = LoadOrCreateDecalMat(CommonRoot, "Kit_Drip", EnsureDecalTexture("Decal_Drip"), new Color(0.15f, 0.09f, 0.04f), 0.2f);
-        Material kitFloorGrime = LoadOrCreateDecalMat(CommonRoot, "Kit_FloorGrime", EnsureDecalTexture("Decal_Grime"), new Color(0.06f, 0.06f, 0.05f), 0.1f);
-        props.AddRange(BuildThemeDecals(CommonRoot, "Kit", common, kitGrime, kitDrip, kitFloorGrime));
-
-        if (switchPrefab != null)
-        {
-            GameObject switchRoot = new GameObject("SwitchLever");
-            GameObject switchInstance = (GameObject)PrefabUtility.InstantiatePrefab(switchPrefab, switchRoot.transform);
-            switchInstance.transform.localPosition = new Vector3(0f, 0f, -0.1f);
-            foreach (Collider collider in switchInstance.GetComponentsInChildren<Collider>(true))
-            {
-                Object.DestroyImmediate(collider);
-            }
-            props.Add(FinishProp(switchRoot, CommonRoot, PropPiece.MountKind.Floor, 0.3f, 0.6f));
-        }
-
-        SetPiece fallenRunner = BuildFallenRunnerSetPiece(common);
-        DustMotes dust = BuildDustPrefab(CommonRoot, "Kit_Dust", new Color(0.8f, 0.8f, 0.75f), 25f, 0.015f, 0.03f);
-
-        return new CommonDressing
-        {
-            Props = props.ToArray(),
-            SetPieces = KitSetPieces(fallenRunner), // F85: + the DeadBody LITE morgue bed and bath
-            Dust = dust
-        };
     }
 }

@@ -15,7 +15,7 @@ using UnityEngine.UI;
 /// hunter is held (AIFollower.Update), and everything else that would hurt stays inert because it already waits for
 /// GameFlow.IsRunActive, which only flips when the player leaves (GameFlow.BeginRun). Nothing here can capture the
 /// player and nothing here writes a save. Entered by MainMenu.BeginNewCampaign (START GAME only - CONTINUE, Retry,
-/// START NEW MAZE and NEXT FLOOR never see it); left by walking onto the hatch or PauseMenu's SKIP TUTORIAL.
+/// and NEXT FLOOR never see it); left by walking onto the hatch or PauseMenu's SKIP TUTORIAL.
 /// Spec: plannings/intake-and-contracts-plan.md.
 /// </summary>
 public class IntakeRoom : MonoBehaviour

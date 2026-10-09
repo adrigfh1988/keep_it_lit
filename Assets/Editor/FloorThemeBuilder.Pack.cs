@@ -12,8 +12,8 @@ using UnityEngine;
 ///     bodies as ceiling props and the Socket Pack's vents / sockets / fuse boxes as hung wall props. Prefabs land in
 ///     Themes/Common/Prefabs/PackDressing; look-alike models are children behind a ModelVariants (picked by a hash of
 ///     the cell at runtime, never an rng draw).
-/// The full-rebuild builders include these natively (BuildPackProps / BuildPackSetPieces / KitSetPieces);
-/// PackDressing.Apply appends them to an existing scene's gallery rows and KitMazeTheme without rebuilding them.
+/// The full-rebuild builders include these natively (BuildPackProps / BuildPackSetPieces);
+/// PackDressing.Apply appends them to an existing scene's gallery rows without rebuilding them.
 /// </summary>
 public static partial class FloorThemeBuilder
 {
@@ -21,8 +21,8 @@ public static partial class FloorThemeBuilder
     private const string DeadBodyRoot = "Assets/DeadBody LITE/Prefabs/";
     private const string SocketRoot = "Assets/Socket Pack/Prefabs/";
 
-    // Theme bits for PackDef.Themes: one per gallery row (Ward, Boiler Deck, Crypt, Lab, Hollow) plus the kit maze.
-    internal const int PackWard = 1, PackBoiler = 2, PackCrypt = 4, PackLab = 8, PackHollow = 16, PackKit = 32;
+    // Theme bits for PackDef.Themes: one per gallery row (Ward, Boiler Deck, Crypt, Lab, Hollow).
+    internal const int PackWard = 1, PackBoiler = 2, PackCrypt = 4, PackLab = 8, PackHollow = 16;
 
     internal static int PackBitForRow(int rowIndex) => 1 << rowIndex;
 
@@ -162,9 +162,9 @@ public static partial class FloorThemeBuilder
 
         return new List<PackDef>
         {
-            new PackDef { Name = "Pack_MorgueBed", Themes = PackWard | PackLab | PackKit, Kind = PackKind.Set, Weight = 1f, RequiredFolder = dead, Compose = () => ComposeLying("Pack_MorgueBed", DeadBodyRoot, bedBodies, 90f) },
+            new PackDef { Name = "Pack_MorgueBed", Themes = PackWard | PackLab, Kind = PackKind.Set, Weight = 1f, RequiredFolder = dead, Compose = () => ComposeLying("Pack_MorgueBed", DeadBodyRoot, bedBodies, 90f) },
             new PackDef { Name = "Pack_EmptyBed", Themes = PackWard | PackCrypt | PackHollow, Kind = PackKind.Set, Weight = 0.8f, RequiredFolder = dead, Compose = () => ComposeLying("Pack_EmptyBed", DeadBodyRoot, beds, 90f) },
-            new PackDef { Name = "Pack_BloodyBath", Themes = PackWard | PackCrypt | PackHollow | PackKit, Kind = PackKind.Set, Weight = 0.8f, RequiredFolder = dead, Compose = () => ComposeLying("Pack_BloodyBath", DeadBodyRoot, tubs, 0f) },
+            new PackDef { Name = "Pack_BloodyBath", Themes = PackWard | PackCrypt | PackHollow, Kind = PackKind.Set, Weight = 0.8f, RequiredFolder = dead, Compose = () => ComposeLying("Pack_BloodyBath", DeadBodyRoot, tubs, 0f) },
             new PackDef { Name = "Pack_StandingShroud", Themes = PackCrypt | PackHollow, Kind = PackKind.Wall, Weight = 0.5f, Enabled = false, RequiredFolder = dead, Compose = () => ComposeStanding("Pack_StandingShroud", stands) },
             new PackDef { Name = "Pack_HangingBody", Themes = PackCrypt | PackHollow, Kind = PackKind.Ceiling, Weight = 1f, AllowLowHang = true, RequiredFolder = dead, Compose = () => ComposeHanging("Pack_HangingBody", hangs, CryptCeiling) },
             new PackDef { Name = "Pack_AirVent", Themes = PackWard | PackBoiler | PackLab, Kind = PackKind.Wall, Weight = 0.7f, RequiredFolder = socket, Compose = () => ComposeHungModels("Pack_AirVent", SocketRoot, vents, 2.6f, 2f, false) },
@@ -177,7 +177,7 @@ public static partial class FloorThemeBuilder
 
     // ---- public build / load ----
 
-    /// <summary>Wall and ceiling PropPieces of the DeadBody LITE / Socket Pack set for one theme bit (PackWard ... PackKit). Built once, loaded afterwards.</summary>
+    /// <summary>Wall and ceiling PropPieces of the DeadBody LITE / Socket Pack set for one theme bit (PackWard ... PackHollow). Built once, loaded afterwards.</summary>
     internal static PropPiece[] BuildPackProps(int themeBit)
     {
         List<PropPiece> result = new List<PropPiece>();
@@ -201,15 +201,7 @@ public static partial class FloorThemeBuilder
         return result.ToArray();
     }
 
-    /// <summary>The common set pieces the kit maze lists: its FallenRunner plus the pack's morgue bed and bath.</summary>
-    internal static SetPiece[] KitSetPieces(SetPiece fallenRunner)
-    {
-        List<SetPiece> list = new List<SetPiece> { fallenRunner };
-        list.AddRange(BuildPackSetPieces(PackKit));
-        return list.ToArray();
-    }
-
-    /// <summary>Names of every F85 prefab a theme (or the kit) should list, for PackDressing.NeedsUpgrade. Only pieces whose pack is in the project.</summary>
+    /// <summary>Names of every F85 prefab a theme should list, for PackDressing.NeedsUpgrade. Only pieces whose pack is in the project.</summary>
     internal static List<string> ExpectedPackNames(int themeBit, bool sets)
     {
         List<string> names = new List<string>();
@@ -218,7 +210,7 @@ public static partial class FloorThemeBuilder
             if ((def.Themes & themeBit) == 0 || !PackAvailable(def) || (def.Kind == PackKind.Set) != sets) continue;
             names.Add(def.Name);
         }
-        if (!sets && themeBit != PackKit)
+        if (!sets)
         {
             int row = 0;
             while ((1 << row) != themeBit) row++;
@@ -301,7 +293,7 @@ public static partial class FloorThemeBuilder
         try
         {
             int count = BuildAlchemistProps(AlchemistSet.FurnitureAll).Length;
-            for (int bit = PackWard; bit <= PackKit; bit <<= 1)
+            for (int bit = PackWard; bit <= PackHollow; bit <<= 1)
             {
                 count += BuildPackProps(bit).Length + BuildPackSetPieces(bit).Length;
             }

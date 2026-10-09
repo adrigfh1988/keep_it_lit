@@ -9,7 +9,7 @@ using UnityEngine;
 ///    FloorThemeBuilder.WallDecalInset, just in front of the wall face (the set piece's pivot);
 ///  - a quad using a shared blood material (BloodSplat/BloodSmear/BloodPool, now Blood decal pack textures - see
 ///    BloodDecalUpgrade) is reshaped to its texture's aspect, longest side kept, so a 2.6:1 smear isn't squashed square.
-/// Run automatically by Build &gt; Floor Themes and Build &gt; Kit Maze Theme; Check Project flags what's left.
+/// Run automatically by Build &gt; Floor Themes; Check Project flags what's left.
 /// </summary>
 public static class SetPieceDecalFix
 {

@@ -323,9 +323,12 @@ public class FloorProfile
 
         // The hunter's walking pace on floor 1 is below the player's own walk (2.0 m/s), and it does
         // not really run even once the hatch opens: 1.8 m/s "running" is a brisk walk.
-        p.DormantSpeed = Blend(0.5f, 0.7f, t);
-        p.WalkSpeed = Blend(1.6f, 3.5f, t);
-        p.RunSpeed = Blend(1.8f, 4.5f, t);
+        // 10 Oct 2026: the later floors were slowed (walk 3.5 -> 2.4, run 4.5 -> 3.4 at floor 5) so the
+        // hunter moves near the speed its recorded clips cover (zombie run 3.0 m/s) instead of gliding;
+        // the player still has to sprint (5.3 m/s) to get away, never just walk (2.0 m/s).
+        p.DormantSpeed = Blend(0.4f, 0.6f, t); // the hunter never moves this slowly: AIFollower starts its speed at one star's progress
+        p.WalkSpeed = Blend(1.4f, 2.4f, t);
+        p.RunSpeed = Blend(1.8f, 3.4f, t);
         p.ViewDistance = Blend(9f, 18f, t);
         p.ViewAngle = Blend(80f, 110f, t);
         p.HearingScale = Blend(0.4f, 1f, t);

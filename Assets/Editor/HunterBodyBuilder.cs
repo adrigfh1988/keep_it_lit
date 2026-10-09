@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Unity.AI.Navigation;
 using UnityEditor;
@@ -8,27 +9,31 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// LIGHTS OUT &gt; Build &gt; Hunter Body (F47, second attempt). Swaps whatever is under Weeping_Angel - the
-/// placeholder Timmy robot, or the missing-prefab zombie from the first attempt - for an instance of
-/// Adam from the Adam Character Pack, used as-is: no importer edits, no material, no rescale (the pack
-/// already ships a correctly rigged, textured, unit-scaled Humanoid).
+/// LIGHTS OUT &gt; Build &gt; Hunter Body (F47, redone as F102). The hunter is Timmy again - the player's own robot
+/// (PlayerRobot.prefab, unpacked and stripped to its Animator + mesh like the Stalker and the hub pursuer) - in the
+/// "Hospital orderly" skin made by <see cref="HunterSkinBuilder"/>. Adam (Adam Character Pack, F47) is retired as the
+/// hunter body.
 ///
-/// Locomotion clips are looked up by keyword in Assets/SourceFiles/Animation/Hunter/ (Mixamo drops),
-/// with pack clips as fallbacks so the swap works before any Mixamo download. Hunter.controller is
-/// generated data and is rebuilt from scratch every run, unlike Adam's own assets. See
-/// plannings/hunter-body-adam-plan.md for the full decision record; plannings/hunter-body-plan.md is the
-/// superseded zombie attempt, kept for the AIPresence background.
+/// Locomotion is Timmy's own Starter Assets Idle / Walk_N / Run_N (their ground speeds are measured and written to
+/// AIFollower.locomotionWalkSpeed/RunSpeed); the pose states (look / lurk / stun / reach, F50) keep the Mixamo clips from
+/// Assets/SourceFiles/Animation/Hunter/, retargeted onto Timmy's Humanoid avatar. Hunter.controller is generated data and is
+/// rebuilt from scratch every run. AIFollower.UpdateAnimator drives the Locomotion tree by gait (Speed 0 idle / 1 walk / 2 run).
+/// See plannings/hunter-timmy-orderly-plan.md.
 ///
 /// Nothing here runs in a build; it is a one-shot scene edit, same pattern as ShopRoomBuilder.
 /// </summary>
 public static class HunterBodyBuilder
 {
-    private const string PackFolder = "Assets/UnityTechnologies/Adam Character Pack";
-    private const string ModelPath = PackFolder + "/Adam/Adam.FBX";
-    private const string PackWalkPath = PackFolder + "/Adam/Adam_Walk.FBX";
-    private const string PackIdlePath = PackFolder + "/Guard/Guard_Idle.FBX";
-    private const string PackWalkClipName = "Adam_Walk";
-    private const string PackIdleClipName = "Guard_Idle";
+    private const string RobotPrefabPath = "Assets/Prefabs/PlayerRobot.prefab";
+    private const string StarterClipFolder = "Assets/SourceFiles/StarterAssets/ThirdPersonController/Character/Animations";
+    private const string StarterIdlePath = StarterClipFolder + "/Stand--Idle.anim.fbx";
+    private const string StarterWalkPath = StarterClipFolder + "/Locomotion--Walk_N.anim.fbx";
+    private const string StarterRunPath = StarterClipFolder + "/Locomotion--Run_N.anim.fbx";
+    private const string StarterIdleName = "Idle";
+    private const string StarterWalkName = "Walk_N";
+    private const string StarterRunName = "Run_N";
+    /// <summary>Scale of the hunter's robot, so it is not exactly the player's own size.</summary>
+    private const float BodyScale = 1.05f;
 
     private const string ClipFolder = "Assets/SourceFiles/Animation/Hunter";
     private const string AnimationFolder = "Assets/SourceFiles/Animation";
@@ -36,9 +41,10 @@ public static class HunterBodyBuilder
     internal const string BodyChildName = "HunterBody";
     private const string PlayerRobotFileName = "PlayerRobot.prefab";
 
-    private const float DefaultWalkSpeed = 1.6f;
-    private const float DefaultRunSpeed = 4.0f;
+    private const float DefaultWalkSpeed = 2.3f;   // fallback: measured stance speed of Starter Assets Walk_N on the robot (F102)
+    private const float DefaultRunSpeed = 6.2f;    // fallback: measured stance speed of Run_N on the robot (F102)
     private const float DefaultEyeHeight = 1.6f;
+    private const float DefaultMaxWalkPlayback = 1.75f;
     private const float EyeHeightPadding = 0.10f;
 
     // F50: written into AIFollower alongside animator/eyeHeight/modelFacingYaw below. The scene's
@@ -64,28 +70,32 @@ public static class HunterBodyBuilder
     private const float PoseCrossfadeSeconds = 0.25f;
 
     [MenuItem("LIGHTS OUT/Build/Hunter Body", priority = 105)]
-    public static void Build()
+    public static void Build() => Build(true);
+
+    /// <summary>Dialog-free rebuild: replaces an existing HunterBody / leftover robot child without asking.</summary>
+    public static void BuildSilently() => Build(false);
+
+    private static void Build(bool dialogs)
     {
         Scene scene = SceneManager.GetActiveScene();
         if (!scene.IsValid() || !scene.isLoaded)
         {
-            EditorUtility.DisplayDialog("Build Hunter Body", "Open the game scene first.", "OK");
+            if (dialogs) EditorUtility.DisplayDialog("Build Hunter Body", "Open the game scene first.", "OK");
             return;
         }
 
-        // Loaded, never (re)imported - Adam.FBX's importer belongs to the pack and must not be touched.
-        GameObject adamPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(ModelPath);
-        if (adamPrefab == null)
+        GameObject robotPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(RobotPrefabPath);
+        if (robotPrefab == null)
         {
-            EditorUtility.DisplayDialog("Build Hunter Body",
-                "Import the Adam Character Pack from Package Manager > My Assets first.", "OK");
+            Debug.LogError($"HunterBodyBuilder: {RobotPrefabPath} not found.");
             return;
         }
 
         AIFollower aiFollower = UnityEngine.Object.FindAnyObjectByType<AIFollower>();
         if (aiFollower == null)
         {
-            EditorUtility.DisplayDialog("Build Hunter Body", "No AIFollower found in the scene (looked for Weeping_Angel).", "OK");
+            if (dialogs) EditorUtility.DisplayDialog("Build Hunter Body", "No AIFollower found in the scene (looked for Weeping_Angel).", "OK");
+            else Debug.LogError("HunterBodyBuilder: no AIFollower found in the scene.");
             return;
         }
         Transform aiRoot = aiFollower.transform;
@@ -94,57 +104,33 @@ public static class HunterBodyBuilder
 
         EnsureFolder(ClipFolder);
 
-        ResolveClip("idle", true, PackIdlePath, PackIdleClipName, out AnimationClip idleClip, out string idleSource);
-        ResolveClip("walk", true, PackWalkPath, PackWalkClipName, out AnimationClip walkClip, out string walkSource);
-
-        string runFbx = FindClipFbx("run");
-        AnimationClip runClipFound = null;
-        if (runFbx != null)
+        // Timmy's own Starter Assets clips, loaded and never re-imported (the player and the other robots use the same files).
+        AnimationClip idleClip = LoadClip(StarterIdlePath, StarterIdleName);
+        AnimationClip walkClip = LoadClip(StarterWalkPath, StarterWalkName);
+        AnimationClip runClip = LoadClip(StarterRunPath, StarterRunName);
+        if (idleClip == null || walkClip == null || runClip == null)
         {
-            PrepareClipFbx(runFbx, true);
-            runClipFound = LoadClip(runFbx, null);
+            Debug.LogError($"HunterBodyBuilder: a Starter Assets locomotion clip is missing (idle={idleClip != null}, walk={walkClip != null}, run={runClip != null}).");
+            return;
         }
 
-        bool runIsSpedUpWalk = runClipFound == null;
-        AnimationClip runClipForTree = runIsSpedUpWalk ? walkClip : runClipFound;
+        // The Starter clips are in place (root-locked, no travel to measure), so these are the Starter Assets design speeds; the hunter robot is
+        // scaled by BodyScale, which does not change the stride a humanoid clip covers (measured: the same stance speed at scale 1.0 and 1.05).
+        float walkSpeed = GetClipSpeed(walkClip, DefaultWalkSpeed, robotPrefab);
+        float runSpeed = GetClipSpeed(runClip, DefaultRunSpeed, robotPrefab);
 
-        float walkThreshold = GetClipSpeed(walkClip, DefaultWalkSpeed);
-        float runThreshold = runIsSpedUpWalk ? DefaultRunSpeed : GetClipSpeed(runClipForTree, DefaultRunSpeed);
-        string runSource = runIsSpedUpWalk
-            ? $"{walkSource} ×{(runThreshold / Mathf.Max(0.0001f, walkThreshold)):0.#}"
-            : Path.GetFileNameWithoutExtension(runFbx);
-
-        if (idleClip == null)
-        {
-            Debug.LogError("HunterBodyBuilder: no idle clip could be loaded (neither a custom clip nor the Guard_Idle fallback) - the Locomotion blend tree will be missing its idle pose.");
-        }
-
-        // F50: the new optional keywords. Each degrades to "missing" - no state, Pose maps to Idle - when
-        // no clip resolves, exactly like the pre-existing idle/walk/run keywords did before this feature.
+        // F50: the optional pose clips. Each degrades to "missing" - no state, Pose maps to Idle - when no clip resolves.
         AnimationClip turnClip = ResolveTurnClip(out AnimationClip turnMirroredClip, out string turnSource);
         AnimationClip lookClip = ResolveOptionalClip("look", true, out string lookSource);
         AnimationClip lurkClip = ResolveOptionalClip("lurk", true, out string lurkSource);
         AnimationClip stunClip = ResolveOptionalClip("stun", true, out string stunSource);
         AnimationClip reachClip = ResolveOptionalClip("reach", false, out string reachSource);
 
-        // ---------------------------------------------------------------- controller (rebuilt every run)
+        // ---------------------------------------------------------------- skin + controller (rebuilt every run)
 
-        AnimatorController controller = BuildController(idleClip, walkClip, runClipForTree, runIsSpedUpWalk,
-            walkThreshold, runThreshold, turnClip, turnMirroredClip, lookClip, lurkClip, stunClip, reachClip);
-
-        // ---------------------------------------------------------------- measurement (needs the controller for the idle pose)
-
-        float headHeightY = MeasureHeadHeight(adamPrefab, controller, out bool headHeightOk);
-        float eyeHeight;
-        if (headHeightOk)
-        {
-            eyeHeight = headHeightY + EyeHeightPadding;
-        }
-        else
-        {
-            eyeHeight = DefaultEyeHeight;
-            Debug.LogWarning($"HunterBodyBuilder: could not measure the Humanoid Head bone on Adam; eyeHeight falls back to {DefaultEyeHeight:F2} m.", adamPrefab);
-        }
+        Material skin = HunterSkinBuilder.EnsureSkin();
+        AnimatorController controller = BuildController(idleClip, walkClip, runClip, turnClip, turnMirroredClip,
+            lookClip, lurkClip, stunClip, reachClip);
 
         // ---------------------------------------------------------------- scene swap, one undo step
 
@@ -154,7 +140,7 @@ public static class HunterBodyBuilder
         Transform existingBody = aiRoot.Find(BodyChildName);
         if (existingBody != null)
         {
-            if (!EditorUtility.DisplayDialog("Build Hunter Body",
+            if (dialogs && !EditorUtility.DisplayDialog("Build Hunter Body",
                     "Weeping_Angel already has a HunterBody child. Replace it?", "Replace", "Cancel"))
             {
                 return;
@@ -165,9 +151,8 @@ public static class HunterBodyBuilder
         Transform robotChild = FindRobotChild(aiRoot);
         if (robotChild != null)
         {
-            if (!EditorUtility.DisplayDialog("Build Hunter Body",
-                    $"Remove the Timmy robot body ('{robotChild.name}') from Weeping_Angel? It will be replaced by Adam. " +
-                    "To restore it later, drag PlayerRobot.prefab back under Weeping_Angel (Ctrl+Z right after this also restores it, in one step).",
+            if (dialogs && !EditorUtility.DisplayDialog("Build Hunter Body",
+                    $"Remove the plain robot body ('{robotChild.name}') from Weeping_Angel? It will be replaced by the stripped Orderly robot.",
                     "Remove", "Cancel"))
             {
                 return;
@@ -175,14 +160,28 @@ public static class HunterBodyBuilder
             Undo.DestroyObjectImmediate(robotChild.gameObject);
         }
 
-        GameObject bodyInstance = (GameObject)PrefabUtility.InstantiatePrefab(adamPrefab, aiRoot);
+        bool aiWasActive = aiRoot.gameObject.activeSelf;
+        aiRoot.gameObject.SetActive(true); // Animator.Rebind / Update need an active object
+
+        GameObject bodyInstance = (GameObject)PrefabUtility.InstantiatePrefab(robotPrefab, aiRoot);
         Undo.RegisterCreatedObjectUndo(bodyInstance, "Build Hunter Body");
+        InteractableKitBuilder.StripRobotToVisuals(bodyInstance); // unpacks the instance; PlayerRobot.prefab itself is never touched
         bodyInstance.name = BodyChildName;
         bodyInstance.transform.localPosition = Vector3.zero;
         bodyInstance.transform.localRotation = Quaternion.identity;
-        bodyInstance.transform.localScale = Vector3.one;
+        bodyInstance.transform.localScale = Vector3.one * BodyScale;
+
+        foreach (Renderer renderer in bodyInstance.GetComponentsInChildren<Renderer>(true))
+        {
+            Material[] mats = renderer.sharedMaterials;
+            for (int i = 0; i < mats.Length; i++) mats[i] = skin;
+            renderer.sharedMaterials = mats;
+        }
+
+        HunterSkinBuilder.AttachChestStencil(bodyInstance);
 
         Animator bodyAnimator = bodyInstance.GetComponentInChildren<Animator>();
+        float eyeHeight = DefaultEyeHeight;
         if (bodyAnimator != null)
         {
             bodyAnimator.runtimeAnimatorController = controller;
@@ -190,11 +189,19 @@ public static class HunterBodyBuilder
             // The hunter is very often just out of view; a culled animator freezes the skeleton the
             // eyes and the face light hang from.
             bodyAnimator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+
+            bodyAnimator.Rebind();
+            bodyAnimator.Update(0f);
+            Transform head = bodyAnimator.isHuman ? bodyAnimator.GetBoneTransform(HumanBodyBones.Head) : null;
+            float rise = head != null ? head.position.y - aiRoot.position.y : 0f;
+            if (rise > 0.5f) eyeHeight = rise + EyeHeightPadding;
+            else Debug.LogWarning($"HunterBodyBuilder: could not measure the Head bone on the robot; eyeHeight falls back to {DefaultEyeHeight:F2} m.", bodyInstance);
         }
         else
         {
             Debug.LogWarning("HunterBodyBuilder: the instantiated body has no Animator.", bodyInstance);
         }
+        aiRoot.gameObject.SetActive(aiWasActive);
 
         HunterGaze gaze = Undo.AddComponent<HunterGaze>(bodyInstance);
         SerializedObject gazeSo = new SerializedObject(gaze);
@@ -204,60 +211,51 @@ public static class HunterBodyBuilder
         SerializedObject so = new SerializedObject(aiFollower);
         so.FindProperty("animator").objectReferenceValue = bodyAnimator;
         so.FindProperty("eyeHeight").floatValue = eyeHeight;
-        // Humanoid: the body faces the Animator's own +Z, so there is nothing to measure - unlike the
-        // Generic zombie rig, whose node could face any which way inside its own transform.
+        // The robot's Animator sits on a child node that is yawed from the root; AIFollower.VisualForward already adds that node yaw,
+        // and the mesh itself faces the node's +Z, so there is nothing more to add.
         so.FindProperty("modelFacingYaw").floatValue = 0f;
-        // F50 decision 10: the scene's Weeping_Angel already has its own serialized acceleration/turnSpeed/
-        // animationBlendRate values baked in from before this feature, so the "mannequin" fix has to be
-        // written here, the same way eyeHeight already is, or a new C# field default never takes effect.
+        // F50 decision 10: the scene's Weeping_Angel carries its own serialized acceleration/turnSpeed/animationBlendRate values, so the
+        // "mannequin" fix is written here, the same way eyeHeight is, or a new C# field default never takes effect.
         so.FindProperty("acceleration").floatValue = DefaultAcceleration;
         so.FindProperty("speedRampRate").floatValue = DefaultSpeedRampRate;
         so.FindProperty("animationBlendRate").floatValue = DefaultAnimationBlendRate;
+        so.FindProperty("locomotionWalkSpeed").floatValue = walkSpeed;
+        so.FindProperty("locomotionRunSpeed").floatValue = runSpeed;
+        // F102: the walk clip carries the chase up to about walk x 1.75 (see AIFollower.WalkToRunSpeed); the run clip is for anything faster.
+        so.FindProperty("maxWalkPlayback").floatValue = DefaultMaxWalkPlayback;
         so.FindProperty("turnSpeedMoving").floatValue = DefaultTurnSpeedMoving;
         so.FindProperty("turnSpeedStationary").floatValue = DefaultTurnSpeedStationary;
-        // F50 decision 8: true (the body keeps spinning during a search dwell) whenever no look clip
-        // resolved - it is the only way left to show a sweep at all without one.
+        // F50 decision 8: true (the body keeps spinning during a search dwell) whenever no look clip resolved.
         so.FindProperty("bodySweepsDuringSearch").boolValue = lookClip == null;
         so.ApplyModifiedProperties();
 
-        Debug.Log($"HunterBodyBuilder: idle={idleSource}, walk={walkSource}, run={runSource} " +
-            $"(walkThreshold={walkThreshold:F2}, runThreshold={runThreshold:F2}), turn={turnSource}, " +
+        Debug.Log($"HunterBodyBuilder: idle={StarterIdleName}, walk={StarterWalkName}, run={StarterRunName} " +
+            $"(walkSpeed={walkSpeed:F2}, runSpeed={runSpeed:F2}), turn={turnSource}, " +
             $"look={lookSource}, lurk={lurkSource}, stun={stunSource}, reach={reachSource}, " +
-            $"eyeHeight={eyeHeight:F2} m, bodySweepsDuringSearch={(lookClip == null)}.", bodyInstance);
+            $"eyeHeight={eyeHeight:F2} m, skin={skin.name}, bodySweepsDuringSearch={(lookClip == null)}.", bodyInstance);
 
         Undo.CollapseUndoOperations(undoGroup);
 
-        Selection.activeGameObject = bodyInstance;
-        SceneView.lastActiveSceneView?.FrameSelected();
+        if (dialogs)
+        {
+            Selection.activeGameObject = bodyInstance;
+            SceneView.lastActiveSceneView?.FrameSelected();
+        }
         EditorSceneManager.MarkSceneDirty(scene);
 
         Debug.Log("Hunter body built. Save the scene (Ctrl+S) to keep it.", bodyInstance);
     }
 
-    // ---------------------------------------------------------------- clips
-
-    /// <summary>
-    /// A custom clip from ClipFolder if one matches `keyword`, else the named clip loaded from
-    /// `packFbxPath`. The pack fallback is only ever read from, except for the defensive loop-time fix
-    /// in <see cref="EnsurePackClipLoops"/> (expected to be a no-op - both pack clips already loop).
-    /// </summary>
-    private static void ResolveClip(string keyword, bool loop, string packFbxPath, string packClipName, out AnimationClip clip, out string source)
+    /// <summary>True when the scene hunter wears the stripped Orderly robot (HunterBody child with the Orderly skin).</summary>
+    internal static bool HasOrderlyBody(Transform aiRoot)
     {
-        string customFbx = FindClipFbx(keyword);
-        if (customFbx != null)
-        {
-            PrepareClipFbx(customFbx, loop);
-            clip = LoadClip(customFbx, null);
-            if (clip != null)
-            {
-                source = Path.GetFileNameWithoutExtension(customFbx);
-                return;
-            }
-        }
-
-        clip = EnsurePackClipLoops(packFbxPath, packClipName);
-        source = packClipName;
+        Transform body = aiRoot.Find(BodyChildName);
+        if (body == null) return false;
+        Renderer renderer = body.GetComponentInChildren<Renderer>(true);
+        return renderer != null && renderer.sharedMaterial != null && renderer.sharedMaterial.name == HunterSkinBuilder.MaterialName;
     }
+
+    // ---------------------------------------------------------------- clips
 
     /// <summary>
     /// F50: a keyword with no pack fallback - look/lurk/stun/reach. Missing (no file, or no non-preview
@@ -500,37 +498,6 @@ public static class HunterBodyBuilder
         clip.keepOriginalPositionXZ = true;
         return clip;
     }
-
-    /// <summary>
-    /// Loads `packClipName` from `packFbxPath` and, only if its loopTime is somehow false, sets it true
-    /// via the importer and reimports - the one write this builder is allowed to make inside the pack
-    /// folder. Both pack clips already loop, so in practice this never touches the importer.
-    /// </summary>
-    private static AnimationClip EnsurePackClipLoops(string packFbxPath, string packClipName)
-    {
-        AnimationClip clip = LoadClip(packFbxPath, packClipName);
-        if (clip == null) return null;
-        if (AnimationUtility.GetAnimationClipSettings(clip).loopTime) return clip;
-
-        ModelImporter importer = AssetImporter.GetAtPath(packFbxPath) as ModelImporter;
-        if (importer == null) return clip;
-
-        ModelImporterClipAnimation[] current = importer.clipAnimations;
-        ModelImporterClipAnimation[] baseline = current != null && current.Length > 0 ? current : importer.defaultClipAnimations;
-        ModelImporterClipAnimation[] configured = new ModelImporterClipAnimation[baseline.Length];
-        for (int i = 0; i < baseline.Length; i++)
-        {
-            ModelImporterClipAnimation c = baseline[i];
-            if (c.name == packClipName) c.loopTime = true;
-            configured[i] = c;
-        }
-        importer.clipAnimations = configured;
-        importer.SaveAndReimport();
-
-        // The clip reference from before SaveAndReimport is stale.
-        return LoadClip(packFbxPath, packClipName);
-    }
-
     /// <summary>First non-preview AnimationClip in the model's asset representations, preferring one named `preferredName` if given.</summary>
     private static AnimationClip LoadClip(string path, string preferredName)
     {
@@ -544,11 +511,99 @@ public static class HunterBodyBuilder
         return fallback;
     }
 
-    private static float GetClipSpeed(AnimationClip clip, float fallback)
+    private static float GetClipSpeed(AnimationClip clip, float fallback, GameObject robotPrefab = null)
     {
         if (clip == null) return fallback;
         float magnitude = clip.averageSpeed.magnitude;
-        return magnitude < 0.05f ? fallback : magnitude;
+        if (magnitude >= 0.05f) return magnitude;
+        // The clips are imported root-locked (PrepareClipFbx), which zeroes averageSpeed - read the ground speed from the
+        // humanoid root curves instead, or every in-place clip falls back to the default and the hunter glides.
+        float measured = RootGroundSpeed(clip);
+        if (measured >= 0.05f) return measured;
+        // In-place clip (the Starter Assets ones): the speed the stance foot travels backwards through the body is the ground speed it covers.
+        float stance = robotPrefab != null ? StanceGroundSpeed(robotPrefab, clip) : 0f;
+        return stance >= 0.3f ? stance : fallback;
+    }
+
+    /// <summary>
+    /// Ground speed (m/s, robot at scale 1) of an in-place locomotion clip: a temporary instance of the robot is posed through
+    /// the clip and the toes that are on the floor (lowest centimetre of their travel) are followed in the body's own frame;
+    /// they move backwards at exactly the speed the clip "walks". Returns 0 when the clip cannot be sampled.
+    /// </summary>
+    private static float StanceGroundSpeed(GameObject robotPrefab, AnimationClip clip)
+    {
+        if (clip == null || clip.length < 0.1f) return 0f;
+        GameObject instance = (GameObject)PrefabUtility.InstantiatePrefab(robotPrefab);
+        try
+        {
+            instance.transform.SetPositionAndRotation(new Vector3(0f, 1000f, 0f), Quaternion.identity);
+            instance.transform.localScale = Vector3.one;
+            Animator animator = instance.GetComponentInChildren<Animator>();
+            if (animator == null || !animator.isHuman) return 0f;
+            Transform[] toes = { animator.GetBoneTransform(HumanBodyBones.LeftToes), animator.GetBoneTransform(HumanBodyBones.RightToes) };
+            if (toes[0] == null || toes[1] == null) return 0f;
+            animator.runtimeAnimatorController = null;
+            animator.Rebind();
+            Vector3 forward = Vector3.ProjectOnPlane(animator.transform.forward, Vector3.up).normalized;
+
+            const int frames = 120;
+            float dt = clip.length / frames;
+            float[,] along = new float[2, frames + 1];
+            float[,] height = new float[2, frames + 1];
+            float[] minHeight = { float.MaxValue, float.MaxValue };
+            for (int f = 0; f <= frames; f++)
+            {
+                clip.SampleAnimation(animator.gameObject, f * dt);
+                for (int k = 0; k < 2; k++)
+                {
+                    along[k, f] = Vector3.Dot(toes[k].position, forward);
+                    height[k, f] = toes[k].position.y;
+                    minHeight[k] = Mathf.Min(minHeight[k], height[k, f]);
+                }
+            }
+
+            // Each stretch of frames with a toe on the floor is one stance: its net backwards travel over its duration is that
+            // step's ground speed (the toe rolls through a stance, so single frames are noisy); the median over stances is returned.
+            List<float> speeds = new List<float>();
+            for (int k = 0; k < 2; k++)
+            {
+                int start = -1;
+                for (int f = 0; f <= frames + 1; f++)
+                {
+                    bool planted = f <= frames && height[k, f] - minHeight[k] < 0.01f;
+                    if (planted && start < 0) start = f;
+                    if (!planted && start >= 0)
+                    {
+                        int end = f - 1;
+                        if (end - start >= 3) speeds.Add(-(along[k, end] - along[k, start]) / ((end - start) * dt));
+                        start = -1;
+                    }
+                }
+            }
+            if (speeds.Count < 2) return 0f;
+            speeds.Sort();
+            return speeds[speeds.Count / 2];
+        }
+        finally
+        {
+            UnityEngine.Object.DestroyImmediate(instance);
+        }
+    }
+
+    /// <summary>Metres per second the clip's humanoid root (RootT x/z) travels from its first to its last frame.</summary>
+    private static float RootGroundSpeed(AnimationClip clip)
+    {
+        if (clip.length <= 0.0001f) return 0f;
+        float dx = 0f, dz = 0f;
+        foreach (EditorCurveBinding binding in AnimationUtility.GetCurveBindings(clip))
+        {
+            if (binding.propertyName != "RootT.x" && binding.propertyName != "RootT.z") continue;
+            AnimationCurve curve = AnimationUtility.GetEditorCurve(clip, binding);
+            if (curve == null) continue;
+            float delta = curve.Evaluate(clip.length) - curve.Evaluate(0f);
+            if (binding.propertyName == "RootT.x") dx = delta; else dz = delta;
+        }
+        return Mathf.Sqrt(dx * dx + dz * dz) / clip.length;
     }
 
     // ---------------------------------------------------------------- controller
@@ -558,15 +613,14 @@ public static class HunterBodyBuilder
     /// from scratch on every run of LIGHTS OUT &gt; Build &gt; Hunter Body, wiring whatever clips resolved this
     /// run into a fixed shape - a Locomotion blend tree (1D on Speed, or 2D on Speed/Turn once a turn clip
     /// exists), one state each for LookAround/Lurk/Stunned when their clip resolved, and a Reach one-shot
-    /// from Any State when a reach clip resolved. Unlike Adam's own imported assets, nothing here is meant
+    /// from Any State when a reach clip resolved. Nothing here is meant
     /// to survive being hand-edited in the Animator window - a state added, a transition retimed, a
     /// parameter renamed by hand is silently wiped the next time this runs, same as it already was before
     /// F50 for the single-state version. Treat the asset itself as disposable; this method is the only
     /// source of truth for its contents.
     /// </summary>
     private static AnimatorController BuildController(
-        AnimationClip idleClip, AnimationClip walkClip, AnimationClip runClip, bool runIsSpedUpWalk,
-        float walkThreshold, float runThreshold,
+        AnimationClip idleClip, AnimationClip walkClip, AnimationClip runClip,
         AnimationClip turnClip, AnimationClip turnMirroredClip,
         AnimationClip lookClip, AnimationClip lurkClip, AnimationClip stunClip, AnimationClip reachClip)
     {
@@ -590,7 +644,7 @@ public static class HunterBodyBuilder
         AnimatorStateMachine root = controller.layers[0].stateMachine;
 
         AnimatorState locomotionState = BuildLocomotionState(controller, idleClip, walkClip, runClip,
-            runIsSpedUpWalk, walkThreshold, runThreshold, turnClip, turnMirroredClip);
+            turnClip, turnMirroredClip);
         root.defaultState = locomotionState;
 
         AddPoseState(root, locomotionState, "LookAround", lookClip, AIFollower.Pose.LookAround);
@@ -604,17 +658,19 @@ public static class HunterBodyBuilder
     }
 
     /// <summary>
-    /// The Locomotion blend tree. A 1D tree on Speed alone, as before F50, unless a turn clip (and its
-    /// mirrored copy) resolved - then a 2D freeform-cartesian tree on (Speed, Turn), with the turn clip at
-    /// (0, +1) and its mirror at (0, -1) for the opposite direction. Explicit thresholds throughout, not
-    /// automatic - the run child's threshold is the actual clip speed (or, for a sped-up walk, the walk
-    /// threshold's own timeScale multiple), not wherever AddChild happened to land it.
+    /// The Locomotion blend tree, driven by gait (AIFollower.UpdateAnimator): Speed 0 = idle, 1 = walk, 2 = run, so a tree
+    /// time-syncs only the two gaits it is crossfading and the feet are never blended between a long and a short stride.
+    /// A 1D tree on Speed alone unless a turn clip (and its mirrored copy) resolved - then a 2D freeform-cartesian tree on
+    /// (Speed, Turn), with the turn clip at (0, +1) and its mirror at (0, -1). Explicit thresholds throughout, not automatic.
+    /// The state's own speed parameter is MotionSpeed = body speed / clip ground speed, written by AIFollower.
     /// </summary>
     private static AnimatorState BuildLocomotionState(AnimatorController controller,
-        AnimationClip idleClip, AnimationClip walkClip, AnimationClip runClip, bool runIsSpedUpWalk,
-        float walkThreshold, float runThreshold, AnimationClip turnClip, AnimationClip turnMirroredClip)
+        AnimationClip idleClip, AnimationClip walkClip, AnimationClip runClip,
+        AnimationClip turnClip, AnimationClip turnMirroredClip)
     {
         AnimatorState locomotionState = controller.CreateBlendTreeInController("Locomotion", out BlendTree tree, 0);
+        locomotionState.speedParameter = "MotionSpeed";
+        locomotionState.speedParameterActive = true;
 
         if (turnClip != null && turnMirroredClip != null)
         {
@@ -622,25 +678,11 @@ public static class HunterBodyBuilder
             tree.blendParameter = "Speed";
             tree.blendParameterY = "Turn";
 
-            if (idleClip != null) tree.AddChild(idleClip, new Vector2(0f, 0f));
-            if (walkClip != null) tree.AddChild(walkClip, new Vector2(walkThreshold, 0f));
-
-            int runChildIndex = -1;
-            if (runClip != null)
-            {
-                tree.AddChild(runClip, new Vector2(runThreshold, 0f));
-                runChildIndex = tree.children.Length - 1;
-            }
-
+            tree.AddChild(idleClip, new Vector2(0f, 0f));
+            tree.AddChild(walkClip, new Vector2(1f, 0f));
+            tree.AddChild(runClip, new Vector2(2f, 0f));
             tree.AddChild(turnClip, new Vector2(0f, 1f));
             tree.AddChild(turnMirroredClip, new Vector2(0f, -1f));
-
-            if (runIsSpedUpWalk && runChildIndex >= 0 && walkThreshold > 0.0001f)
-            {
-                ChildMotion[] children = tree.children;
-                children[runChildIndex].timeScale = runThreshold / walkThreshold;
-                tree.children = children;
-            }
         }
         else
         {
@@ -648,22 +690,9 @@ public static class HunterBodyBuilder
             tree.blendParameter = "Speed";
             tree.useAutomaticThresholds = false;
 
-            if (idleClip != null) tree.AddChild(idleClip, 0f);
-            if (walkClip != null) tree.AddChild(walkClip, walkThreshold);
-
-            int runChildIndex = -1;
-            if (runClip != null)
-            {
-                tree.AddChild(runClip, runThreshold);
-                runChildIndex = tree.children.Length - 1;
-            }
-
-            if (runIsSpedUpWalk && runChildIndex >= 0 && walkThreshold > 0.0001f)
-            {
-                ChildMotion[] children = tree.children;
-                children[runChildIndex].timeScale = runThreshold / walkThreshold;
-                tree.children = children;
-            }
+            tree.AddChild(idleClip, 0f);
+            tree.AddChild(walkClip, 1f);
+            tree.AddChild(runClip, 2f);
         }
 
         return locomotionState;
@@ -723,45 +752,6 @@ public static class HunterBodyBuilder
         toLocomotion.hasExitTime = true;
         toLocomotion.exitTime = 1.0f;
         toLocomotion.duration = PoseCrossfadeSeconds;
-    }
-
-    // ---------------------------------------------------------------- measurement
-
-    /// <summary>
-    /// Instantiates Adam at the world origin, assigns the freshly built controller so Animator.Update(0f)
-    /// poses him at the blend tree's idle (Speed defaults to 0), and reads back the Humanoid Head bone's
-    /// world Y - which, at the origin with identity rotation/scale, is exactly the height AIFollower.eyeHeight
-    /// needs once the body is parented under Weeping_Angel. Destroys the temporary instance before returning.
-    /// </summary>
-    private static float MeasureHeadHeight(GameObject prefabAsset, AnimatorController controller, out bool ok)
-    {
-        GameObject instance = (GameObject)PrefabUtility.InstantiatePrefab(prefabAsset);
-        instance.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
-        instance.transform.localScale = Vector3.one;
-
-        ok = false;
-        float headY = 0f;
-
-        Animator animator = instance.GetComponentInChildren<Animator>();
-        if (animator != null)
-        {
-            animator.runtimeAnimatorController = controller;
-            animator.Rebind();
-            animator.Update(0f);
-
-            if (animator.isHuman)
-            {
-                Transform head = animator.GetBoneTransform(HumanBodyBones.Head);
-                if (head != null && head.position.y > 0.5f)
-                {
-                    headY = head.position.y;
-                    ok = true;
-                }
-            }
-        }
-
-        UnityEngine.Object.DestroyImmediate(instance);
-        return headY;
     }
 
     // ---------------------------------------------------------------- scene lookup

@@ -24,7 +24,7 @@ public static class InteractableKitBuilder
     // 30 m+ clear of every existing authored/generated spot (CLAUDE.md "The one thing to understand
     // first" + F70's dressing note): the largest maze footprint (floor 4, 12x8 cells at 5.5 m, so
     // origin (-70,4.98,-70) out to roughly x:[-70,-4] z:[-70,-26]), FloorThemes (-70,5,-6), ShopRoom
-    // (-92,5,-45) and KitMazeTheme (-70,5,10). +60 in Z clears all four with margin to spare.
+    // (-92,5,-45). +60 in Z clears all of them with margin to spare.
     private static readonly Vector3 GalleryOrigin = new Vector3(-70f, 5f, 60f);
     private const float PieceSpacing = 5f;
 

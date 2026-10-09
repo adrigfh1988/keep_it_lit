@@ -103,7 +103,7 @@ public class MainMenu : MonoBehaviour
             }
 
             // F92: the next floor (the shop door, or CONTINUE from a floor-start save) opens in the Asylum hub when the scene has a
-            // usable one; Retry / Restart / START NEW MAZE never set this flag. With no hub it is the plain StartGame it always was.
+            // usable one; Retry / Restart never set this flag. With no hub it is the plain StartGame it always was.
             bool viaHub = GameFlow.ArriveInHub;
             GameFlow.ArriveInHub = false;
             AsylumHub hub = AsylumHub.Active;
@@ -272,20 +272,14 @@ public class MainMenu : MonoBehaviour
         if (SaveSystem.TryLoad(out SaveData save))
         {
             Button continueButton = RuntimeUi.CreateButton(_titleScreen.transform, "CONTINUE",
-                new Vector2(0f, 630f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+                new Vector2(0f, 520f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
             continueButton.onClick.AddListener(ContinueSavedRun);
             _savedFloor = save.floor;
         }
 
         Button start = RuntimeUi.CreateButton(_titleScreen.transform, "START GAME",
-            new Vector2(0f, 520f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
-        start.onClick.AddListener(() => ConfirmThenStart(BeginNewCampaign));
-
-        // F48: builds one floor out of the Maze Modular Puzzle Kit instead of the FloorThemes gallery.
-        // A test button - it skips the Intake and drops straight into the run.
-        Button startNewMaze = RuntimeUi.CreateButton(_titleScreen.transform, "START NEW MAZE",
             new Vector2(0f, 410f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
-        startNewMaze.onClick.AddListener(() => ConfirmThenStart(StartKitMaze));
+        start.onClick.AddListener(() => ConfirmThenStart(BeginNewCampaign));
 
         // F86: the old rules screen, kept as a reference sheet now that START GAME opens the Intake.
         Button controls = RuntimeUi.CreateButton(_titleScreen.transform, "CONTROLS",
@@ -303,10 +297,6 @@ public class MainMenu : MonoBehaviour
         exit.gameObject.SetActive(GameFlow.CanQuit);
     }
 
-    private void StartKitMaze()
-    {
-        GameFlow.StartKitMaze();
-    }
 
     // ---------------------------------------------------------------- F83: saved run
 
@@ -326,7 +316,7 @@ public class MainMenu : MonoBehaviour
         if (!SaveSystem.ResumeCampaign()) RefreshTitleScreen();
     }
 
-    /// <summary>START GAME / START NEW MAZE: with a saved run in the way, ask before throwing it away.</summary>
+    /// <summary>START GAME: with a saved run in the way, ask before throwing it away.</summary>
     private void ConfirmThenStart(System.Action begin)
     {
         if (!SaveSystem.HasSave)

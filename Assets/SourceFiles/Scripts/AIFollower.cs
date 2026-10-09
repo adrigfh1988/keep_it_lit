@@ -114,6 +114,24 @@ public class AIFollower : MonoBehaviour
     [Header("Animation")]
     [SerializeField] private Animator animator;
     [SerializeField] private float animationBlendRate = 6f;
+    [Tooltip("Ground speed (m/s) the walk and run clips cover at normal playback, measured from their root motion and written by LIGHTS OUT > Build > Hunter Body. The clip in use plays at body speed / this (MotionSpeed) so the feet keep up instead of gliding.")]
+    [SerializeField] private float locomotionWalkSpeed = 1.6f;
+    [SerializeField] private float locomotionRunSpeed = 4f;
+    [Tooltip("Cap on how much faster than recorded a walk/run clip may play to keep up with the agent.")]
+    [SerializeField] private float maxLocomotionPlayback = 2f;
+    [Tooltip("F102: the walk clip plays up to this much faster than recorded before the run clip takes over (so a fast walk covers chases up to about walk clip speed x this; above it the run clip plays, slowed to match the ground it covers).")]
+    [SerializeField] private float maxWalkPlayback = 1.75f;
+    private const float MinLocomotionPlayback = 0.4f;
+    private float _gait;
+    private bool _gaitRunning;
+
+    /// <summary>Body speed (m/s) above which the run clip replaces the walk: as far as the walk can be sped up, but no further than
+    /// the point between the two clips' own speeds (geometric mean), so neither clip is stretched much past natural.</summary>
+    private float WalkToRunSpeed()
+    {
+        if (locomotionWalkSpeed < 0.05f || locomotionRunSpeed < 0.05f) return 1.5f;
+        return Mathf.Min(locomotionWalkSpeed * Mathf.Min(maxWalkPlayback, maxLocomotionPlayback), Mathf.Sqrt(locomotionWalkSpeed * locomotionRunSpeed));
+    }
     [Tooltip("Yaw (degrees) the visible mesh faces relative to its Animator node's +Z. 0 for the Timmy robot. A Generic rig whose model faces sideways in its file (ZombieSmooth.fbx faces +X) needs this so the sight cone, the turn-to-face and the eyes all use the face, not the node axis. Written by LIGHTS OUT > Build > Hunter Body.")]
     [SerializeField] private float modelFacingYaw = 0f;
     [Tooltip("Set by LIGHTS OUT > Build > Hunter Body: true when no 'look' clip resolved. While true, a search dwell keeps spinning the body in place (the only way to show a sweep with no clip); while false, the body stays still and HunterGaze's head sweep (plus the matching CanSeeTarget cone offset) does the work instead.")]
@@ -378,6 +396,14 @@ public class AIFollower : MonoBehaviour
         _hunting = hunting;
     }
 
+    private float _speedThreatFloor;
+
+    /// <summary>10 Oct 2026: the hunter's pace starts where one collected star would put it (1 / stars on the floor) - from zero it crept
+    /// too slowly. Speed only: hearing, search and sight still grow from zero progress.</summary>
+    public void SetStarCount(int total) => _speedThreatFloor = total > 0 ? 1f / total : 0f;
+
+    private float SpeedThreat => Mathf.Max(_threat, _speedThreatFloor);
+
     /// <summary>
     /// Sets how dangerous this floor's hunter is. Called by MazeGenerator before Awake, so it only
     /// writes fields. The speed cap against the player's sprint still applies afterwards in Start.
@@ -404,7 +430,7 @@ public class AIFollower : MonoBehaviour
     /// <summary>Speed while patrolling or searching.</summary>
     private float WanderSpeed()
     {
-        return _hunting ? runSpeed : Mathf.Lerp(dormantSpeed, moveSpeed, _threat);
+        return _hunting ? runSpeed : Mathf.Lerp(dormantSpeed, moveSpeed, SpeedThreat);
     }
 
     /// <summary>
@@ -414,7 +440,7 @@ public class AIFollower : MonoBehaviour
     /// </summary>
     private float ChaseSpeed()
     {
-        return _hunting ? runSpeed : Mathf.Lerp(dormantSpeed, moveSpeed, _threat);
+        return _hunting ? runSpeed : Mathf.Lerp(dormantSpeed, moveSpeed, SpeedThreat);
     }
 
     void Awake()
@@ -501,6 +527,9 @@ public class AIFollower : MonoBehaviour
             // The starter animator controller defaults these to false / 0, which freezes the legs in the air pose
             animator.SetBool(AnimGrounded, true);
             animator.SetFloat(AnimMotionSpeed, 1f);
+            // F102: the Starter Assets locomotion clips fire OnFootstep/OnLand at a ThirdPersonController this stripped body no longer
+            // has; AIPresence plays the hunter's footsteps by distance walked anyway.
+            animator.fireEvents = false;
 
             // F50: checked once, not every frame - SetInteger/SetFloat/SetTrigger on a parameter the
             // controller does not have logs a warning each call, and the Timmy robot's untouched Starter
@@ -1624,8 +1653,20 @@ public class AIFollower : MonoBehaviour
         }
         _turnRaw = 0f;
 
-        animator.SetFloat(AnimSpeed, _animationBlend);
-        animator.SetFloat(AnimMotionSpeed, 1f);
+        // Gait, not speed, drives the Locomotion tree (idle 0, walk 1, run 2 - see HunterBodyBuilder.BuildLocomotionState): a blend tree
+        // time-syncs its children, so blending a 4 s walk cycle with a 0.8 s run cycle by speed gave long slow strides under a fast body
+        // (it glided). One gait at a time instead, played at body speed / clip speed so the feet always cover the ground the body does.
+        float v = _animationBlend;
+        float switchSpeed = WalkToRunSpeed();
+        float targetGait;
+        if (v < 0.05f) targetGait = 0f;
+        else if (_gaitRunning ? v > switchSpeed * 0.85f : v > switchSpeed) { targetGait = 2f; _gaitRunning = true; }
+        else { targetGait = 1f; _gaitRunning = false; }
+        _gait = Mathf.MoveTowards(_gait, targetGait, Time.deltaTime * 4f); // ~0.25 s crossfade between gaits
+        float clipSpeed = _gaitRunning ? locomotionRunSpeed : locomotionWalkSpeed;
+        float playback = v < 0.05f || clipSpeed < 0.05f ? 1f : Mathf.Clamp(v / clipSpeed, MinLocomotionPlayback, maxLocomotionPlayback);
+        animator.SetFloat(AnimSpeed, _gait);
+        animator.SetFloat(AnimMotionSpeed, playback);
         animator.SetBool(AnimGrounded, true);
 
         if (_hasPoseParam) animator.SetInteger(AnimPose, (int)pose);

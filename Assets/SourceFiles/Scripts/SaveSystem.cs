@@ -16,7 +16,6 @@ public class SaveData
     public int floor;
     /// <summary>Resume inside the shop after clearing <see cref="floor"/> rather than at the start of it.</summary>
     public bool inShop;
-    public bool useKitMaze;
     /// <summary>GameFlow.RolledObjectives, the whole array.</summary>
     public int[] rolledObjectives;
 
@@ -146,7 +145,6 @@ public static class SaveSystem
                 version = Version,
                 floor = Mathf.Clamp(floor, 1, FloorProfile.FinalFloor),
                 inShop = inShop,
-                useKitMaze = GameFlow.UseKitMaze,
                 rolledObjectives = (int[])GameFlow.RolledObjectives.Clone()
             };
 
@@ -191,7 +189,6 @@ public static class SaveSystem
         ContractState.RestoreFrom(d);
 
         GameFlow.CurrentFloor = d.floor;
-        GameFlow.UseKitMaze = d.useKitMaze;
         CopyRolledObjectives(d);
         GameFlow.ResumeInShop = d.inShop;
 

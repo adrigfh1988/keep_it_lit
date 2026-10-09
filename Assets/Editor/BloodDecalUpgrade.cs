@@ -16,7 +16,7 @@ using UnityEngine.Rendering;
 ///  3. every *_BloodSplat / *_BloodSmear / *_BloodPool PropPiece prefab under Themes gets a DecalVariants
 ///     component listing its look-alikes and their aspect ratios (MazeGenerator picks one per decal).
 ///
-/// Run automatically at the end of LIGHTS OUT &gt; Build &gt; Floor Themes and Build &gt; Kit Maze Theme (their
+/// Run automatically at the end of LIGHTS OUT &gt; Build &gt; Floor Themes (its
 /// LoadOrCreate materials would otherwise keep the old drawn textures); Check Project flags anything not yet
 /// upgraded and Build Missing Pieces runs it. Without the pack, it does nothing and the drawn decals stay.
 /// </summary>

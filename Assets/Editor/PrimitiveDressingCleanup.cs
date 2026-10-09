@@ -7,13 +7,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// F89: brings an existing scene (FloorThemes gallery, KitMazeTheme) and the Themes prefabs to the state a fresh
-/// Build &gt; Floor Themes / Kit Maze Theme now produces, without rebuilding anything: the untextured primitive dressing
+/// F89: brings an existing scene (FloorThemes gallery) and the Themes prefabs to the state a fresh
+/// Build &gt; Floor Themes now produces, without rebuilding anything: the untextured primitive dressing
 /// (white sheets, discs and squares on the floor, cylinder barrels, cube crates, sphere rubble...) is removed and, where
 /// a pack model fits, replaced by it. What goes and what replaces it is the table below; the reasoning is in
 /// plannings/primitive-cleanup-plan.md.
 ///
-/// No menu item: Build &gt; Floor Themes and Build &gt; Kit Maze Theme call Apply at the end, Check Project flags
+/// No menu item: Build &gt; Floor Themes calls Apply at the end, Check Project flags
 /// NeedsUpgrade, Build Missing Pieces runs Apply. Idempotent. Marks the scene dirty, never saves.
 /// </summary>
 public static class PrimitiveDressingCleanup
@@ -23,7 +23,7 @@ public static class PrimitiveDressingCleanup
     /// <summary>Props deleted outright (no pack model reads as the same thing) or replaced by a new Alch_* prefab that PackDressing appends.</summary>
     private static readonly string[] RemovedProps =
     {
-        // common (every theme + the kit maze)
+        // common (every theme)
         "Papers", "Debris", "Bucket", "Bottles",
         // Ward
         "Gurney", "IVStand", "WallPipe", "Vent", "Wheelchair", "MedTrolley", "PrivacyCurtain", "WallChart", "ExitSign", "BrokenGlass", "Syringes",
@@ -103,14 +103,10 @@ public static class PrimitiveDressingCleanup
         StringBuilder sb = new StringBuilder("Primitive cleanup - ");
         int removedEntries = 0;
 
-        // 1. Rows and the kit theme: drop the list entries, destroy their showcase instances (and plinths), re-seat the sample cell.
+        // 1. Rows: drop the list entries, destroy their showcase instances (and plinths), re-seat the sample cell.
         foreach (FloorTheme theme in Object.FindObjectsByType<FloorTheme>(FindObjectsInactive.Include, FindObjectsSortMode.None))
         {
             removedEntries += CleanTheme(new SerializedObject(theme), theme.transform);
-        }
-        foreach (KitMazeTheme kit in Object.FindObjectsByType<KitMazeTheme>(FindObjectsInactive.Include, FindObjectsSortMode.None))
-        {
-            removedEntries += CleanTheme(new SerializedObject(kit), kit.transform);
         }
         sb.Append($"{removedEntries} list entries removed; ");
 
@@ -175,7 +171,6 @@ public static class PrimitiveDressingCleanup
     private static IEnumerable<SerializedObject> ThemeObjects()
     {
         foreach (FloorTheme theme in Object.FindObjectsByType<FloorTheme>(FindObjectsInactive.Include, FindObjectsSortMode.None)) yield return new SerializedObject(theme);
-        foreach (KitMazeTheme kit in Object.FindObjectsByType<KitMazeTheme>(FindObjectsInactive.Include, FindObjectsSortMode.None)) yield return new SerializedObject(kit);
     }
 
     private static string SourceName(Object o)
@@ -244,7 +239,7 @@ public static class PrimitiveDressingCleanup
         removed += RemoveEntries(so.FindProperty("setPieces"), RemovedSets);
         so.ApplyModifiedPropertiesWithoutUndo();
 
-        // Showcase instances (gallery rows: children of the row; kit: children of "Showcase"), plus the SampleCell copies.
+        // Showcase instances (gallery rows: children of the row), plus the SampleCell copies.
         List<Transform> doomed = new List<Transform>();
         foreach (Transform t in themeRoot.GetComponentsInChildren<Transform>(true))
         {

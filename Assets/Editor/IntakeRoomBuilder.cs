@@ -17,7 +17,7 @@ using UnityEngine.SceneManagement;
 /// the Ward's own pieces (the DeadBody LITE beds, Alchemist furniture) and the live InteractableKit templates.
 ///
 /// Sits at (-100, 5, -100): clear of the maze (x -70..-4, z -70..-26), the shop (-92, 5, -45), the FloorThemes
-/// gallery (-70, 5, -6) and the KitMazeTheme (-70, 5, 10), and outside the maze's NavMeshSurface volume.
+/// gallery (-70, 5, -6), and outside the maze's NavMeshSurface volume.
 /// Rebuilding replaces the existing room. Spec: plannings/intake-and-contracts-plan.md.
 /// </summary>
 public static partial class IntakeRoomBuilder
@@ -716,7 +716,7 @@ public static partial class IntakeRoomBuilder
         sb.AppendLine($"  bounds: {b.min} .. {b.max}");
 
         List<string> clashes = new List<string>();
-        foreach (string other in new[] { "ShopRoom", "FloorThemes", "KitMazeTheme", "MazeGenerator" })
+        foreach (string other in new[] { "ShopRoom", "FloorThemes", "MazeGenerator" })
         {
             GameObject go = GameObject.Find(other);
             if (go == null) continue;

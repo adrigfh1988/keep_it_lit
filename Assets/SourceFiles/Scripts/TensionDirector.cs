@@ -150,7 +150,11 @@ public class TensionDirector : MonoBehaviour
         }
 
         if (_audio != null) _audio.SetIntensity(progress);
-        if (_follower != null) _follower.SetThreatLevel(progress, _hunting);
+        if (_follower != null)
+        {
+            _follower.SetStarCount(_total);
+            _follower.SetThreatLevel(progress, _hunting);
+        }
     }
 
     private void BuildCounter()

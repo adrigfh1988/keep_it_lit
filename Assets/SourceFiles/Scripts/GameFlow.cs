@@ -63,13 +63,6 @@ public static class GameFlow
         IsRunActive = true;
     }
 
-    /// <summary>
-    /// F48: build the next maze from the Maze Modular Puzzle Kit instead of the FloorThemes gallery.
-    /// Lasts the campaign - set once by START NEW MAZE, cleared only by ReturnToMenu (and the
-    /// SubsystemRegistration reset). Read by MazeGenerator.ResolveKitTheme in Awake.
-    /// </summary>
-    public static bool UseKitMaze;
-
     /// <summary>F77: the mechanics pair each floor rolled this campaign, by floor (0 = not rolled yet). FloorProfile.RollObjectives
     /// reads floor n-1's entry so two consecutive floors never roll the same pair; a Retry of floor n re-reads n-1 and lands on the
     /// same pair. Campaign-scoped: reset here and in ResetStatics.</summary>
@@ -79,7 +72,7 @@ public static class GameFlow
     /// SkipMenuOnLoad), which enters the shop via GameOutcome.EnterShopDirectly instead of starting a run. Reset here, in ResetStatics and in ReturnToMenu.</summary>
     public static bool ResumeInShop;
 
-    /// <summary>F92: set by NextFloor and by CONTINUE from a floor-start save; consumed by MainMenu.Start, which then opens the floor in the Asylum hub (when the scene has a usable one) instead of starting the run. Retry, Restart and START NEW MAZE clear it. Reset here, in ResetStatics and in ReturnToMenu.</summary>
+    /// <summary>F92: set by NextFloor and by CONTINUE from a floor-start save; consumed by MainMenu.Start, which then opens the floor in the Asylum hub (when the scene has a usable one) instead of starting the run. Retry and Restart clear it. Reset here, in ResetStatics and in ReturnToMenu.</summary>
     public static bool ArriveInHub;
 
     /// <summary>F94: true while the player is in the shop reached through the hub's SHOP door (not straight from a cleared maze). CurrentFloor is then already the floor about to be played, so the shop reads ShopClearedFloor / ShopNextFloor instead. Transient, never saved: reset in Reload, ResetStatics and ReturnToMenu.</summary>
@@ -99,13 +92,6 @@ public static class GameFlow
         Reload();
     }
 
-    /// <summary>F48: the title screen's "START NEW MAZE" button. Sets the kit-maze flag for the whole campaign, then reloads straight into the run (SkipMenuOnLoad, no rules screen - this is a test button).</summary>
-    public static void StartKitMaze()
-    {
-        UseKitMaze = true;
-        Restart(false, 0);
-    }
-
     /// <summary>Go up one floor with a fresh maze. Callers only offer this below the final floor.</summary>
     public static void NextFloor()
     {
@@ -121,7 +107,6 @@ public static class GameFlow
         SkipMenuOnLoad = false;
         CurrentFloor = 1;
         PendingSeed = 0;
-        UseKitMaze = false;
         ResumeInShop = false;
         ArriveInHub = false;
         ShopFromHub = false;
@@ -176,7 +161,6 @@ public static class GameFlow
         IsInShop = false;
         IsInIntake = false;
         IsInHub = false;
-        UseKitMaze = false;
         ResumeInShop = false;
         ArriveInHub = false;
         ShopFromHub = false;

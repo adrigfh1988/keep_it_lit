@@ -11,7 +11,7 @@ using UnityEngine;
 /// at the model's centre. The torch, its flickering light and the blood/drag/handprint decals are kept.
 ///
 /// Used two ways: FloorThemeBuilder.BuildFallenRunnerSetPiece calls AddBodies for a fresh build, and Apply
-/// rewrites an existing FallenRunner prefab (idempotent; run by Build &gt; Floor Themes / Kit Maze Theme and
+/// rewrites an existing FallenRunner prefab (idempotent; run by Build &gt; Floor Themes and
 /// flagged by Check Project). Without the pack nothing changes and the capsule body stays.
 /// </summary>
 public static class CorpseUpgrade

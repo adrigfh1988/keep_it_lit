@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 /// (MazeGenerator.BuildWallProps / BuildFloorProps / BuildDecals) with no new pass and no new RNG offset.
 /// Kept in its own partial file like FloorThemeBuilder.Dressing.cs. Spec: plannings/alchemist-maze-dressing-plan.md.
 ///
-/// The full-rebuild builders reach these prefabs: each theme builder and BuildCommonDressing call
+/// The full-rebuild builders reach these prefabs: each theme builder calls
 /// BuildAlchemistProps with their subset. (The one-off Add Alchemist Dressing migration that appended them
 /// to pre-F79 galleries has been applied and removed - it is in git history.)
 /// </summary>
@@ -49,8 +49,6 @@ public static partial class FloorThemeBuilder
         AlchemistSet.Legacy | AlchemistSet.Cabinets | AlchemistSet.Shelves | AlchemistSet.Tables | AlchemistSet.Stove | AlchemistSet.Nursery | AlchemistSet.Candles
     };
 
-    /// <summary>The kit maze's subset. Kit mode forces wall/ceiling prop chances to 0, so only the Floor and FloorDecal kinds of these are ever listed (see KitPropFilter).</summary>
-    internal const AlchemistSet KitSet = AlchemistSet.Books | AlchemistSet.Bottles | AlchemistSet.Dishes | AlchemistSet.Lab | AlchemistSet.Organic | AlchemistSet.Storage | AlchemistSet.Rugs;
 
     private static readonly string[] AlchemistRowNames = { "Ward", "Boiler Deck", "Crypt", "Lab", "Hollow" };
 
@@ -410,7 +408,7 @@ public static partial class FloorThemeBuilder
     /// No-dialog entry point for unity-mcp / scripts: builds (or loads) every Alchemist prefab and returns
     /// how many there are. With overwrite, every prefab is recomposed from the current layouts and saved
     /// over its existing file (the one deliberate exception to "hand edits survive"). It overwrites in
-    /// place rather than deleting first, so the prefabs keep their GUIDs and the gallery / KitMazeTheme
+    /// place rather than deleting first, so the prefabs keep their GUIDs and the gallery
     /// references to them stay valid.
     /// </summary>
     public static int BuildAllAlchemistProps(bool overwrite = false)
@@ -428,15 +426,4 @@ public static partial class FloorThemeBuilder
     }
 
     private static bool _overwriteExisting;
-
-    /// <summary>Floor and FloorDecal kinds only - the kit maze never places wall or ceiling props (kit mode forces those chances to 0).</summary>
-    internal static PropPiece[] KitPropFilter(PropPiece[] props)
-    {
-        List<PropPiece> kept = new List<PropPiece>();
-        foreach (PropPiece p in props)
-        {
-            if (p != null && (p.Mount == PropPiece.MountKind.Floor || p.Mount == PropPiece.MountKind.FloorDecal)) kept.Add(p);
-        }
-        return kept.ToArray();
-    }
 }

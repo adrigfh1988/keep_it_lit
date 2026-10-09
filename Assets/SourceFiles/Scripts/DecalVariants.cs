@@ -8,7 +8,7 @@ using UnityEngine;
 ///
 /// The decal's placed size (PropPiece.decalSizeRange, the root's uniform scale) is the variant's LONGEST
 /// side: a wide smear gets shorter, never wider than a square decal of the same size.
-/// Written by LIGHTS OUT &gt; Build &gt; Floor Themes / Kit Maze Theme (BloodDecalUpgrade); never edited by hand.
+/// Written by LIGHTS OUT &gt; Build &gt; Floor Themes (BloodDecalUpgrade); never edited by hand.
 /// </summary>
 public class DecalVariants : MonoBehaviour
 {

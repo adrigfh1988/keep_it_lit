@@ -21,7 +21,7 @@ public class DustMotes : MonoBehaviour
 
     /// <summary>
     /// Called once by MazeGenerator.BuildDust right after Instantiate. A gallery showcase instance (built
-    /// by FloorThemeBuilder/KitMazeThemeBuilder) is never marked, so Update below leaves it as a static
+    /// by FloorThemeBuilder) is never marked, so Update below leaves it as a static
     /// preview on its plinth instead of hunting for a player camera in the Editor.
     /// </summary>
     public void MarkRuntimeClone()

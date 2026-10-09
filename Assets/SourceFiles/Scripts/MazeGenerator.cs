@@ -124,6 +124,8 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField] private bool debugStartInFinale = false;
     [Tooltip("With Debug Start In Finale: mark the five maze case files read first, so file 105 is in the desk drawer and ending B (the master switch) is possible. Off = ending A only.")]
     [SerializeField] private bool debugFinaleAllFiles = true;
+    [Tooltip("For testing a maze: skip the title screen, the Intake and the hub and start the run straight away in Debug Floor's maze (floor 1 when Debug Floor is 0). Fresh start only; the shop, hub and finale debug starts take priority.")]
+    [SerializeField] private bool debugStartInMaze = false;
     [Tooltip("For testing / getting through floors fast: every star, key, fuse box and the floor's case file go in the cells nearest the start, the hatch opens next to the player, and no shutters, security doors or vaults are built. The hunter still starts in the farthest cell.")]
     [SerializeField] private bool superEasyMode = false;
     [Tooltip("F76: forces TouchInput.Active on regardless of Mode, so the on-screen controls show in the Editor without a touchscreen - click them with the mouse, or use the Device Simulator.")]
@@ -145,12 +147,6 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField] private FloorThemeSet themeSet;
     [Tooltip("Combine the static themed geometry (walls, pillars, floor, ceiling) after the navmesh bake. Off until profiled.")]
     [SerializeField] private bool staticBatchThemedGeometry = false;
-
-    [Header("Kit maze (F48)")]
-    [Tooltip("Scene object built by LIGHTS OUT > Build > Kit Maze Theme. Found automatically; assign only to override.")]
-    [SerializeField] private KitMazeTheme kitTheme;
-    [Tooltip("Corridor pitch when GameFlow.UseKitMaze is set. Whole metres so 3M/2M/1M pieces fill a wall exactly.")]
-    [SerializeField] private int kitCellSize = 5;
 
     [Header("Interactables (F72)")]
     [Tooltip("Scene gallery built by LIGHTS OUT > Build > Interactables. Found automatically; assign only to override.")]
@@ -178,8 +174,7 @@ public class MazeGenerator : MonoBehaviour
 
     /// <summary>
     /// F70: one dressing source, two providers. Every prop pass (wall/ceiling/floor props, decals, set
-    /// pieces, dust) reads this instead of _theme directly, so the kit maze gets the shared prop set
-    /// without faking a FloorTheme. Resolved once by ResolveDressing, right after ResolveKitTheme.
+    /// pieces, dust) reads this instead of _theme directly. Resolved once by ResolveDressing, right after ResolveTheme.
     /// </summary>
     private struct MazeDressing
     {
@@ -188,16 +183,6 @@ public class MazeGenerator : MonoBehaviour
         public DustMotes Dust;
         public float WallPropChance, CeilingPropChance, FloorPropChance, WallDecalChance, FloorDecalChance;
         public int MaxDecalsPerCell, SetPieceCount;
-    }
-
-    /// <summary>F70: bookkeeping for one recorded 3 m kit wall piece (SpawnKitWallRun), so BuildKitGates can
-    /// replace it and BuildKitWallLights can tell which of its two faces look into a real (non-void,
-    /// non-set-piece) cell.</summary>
-    private struct KitWallSegment
-    {
-        public GameObject Piece;
-        public Vector2Int? CellPlus;
-        public Vector2Int? CellMinus;
     }
 
     // Wall flags per cell. The west/south walls are the ones actually built; the east wall of cell
@@ -231,8 +216,6 @@ public class MazeGenerator : MonoBehaviour
     private Material _ceilingMat;
 
     private FloorTheme _theme;
-    /// <summary>F48: true when GameFlow.UseKitMaze is set and a complete KitMazeTheme was found. _theme stays null in this mode - see ResolveKitTheme.</summary>
-    private bool _kitMode;
     private Transform _wallsGroup, _pillarsGroup, _floorGroup, _ceilingGroup, _lampsGroup, _lockersGroup, _propsGroup;
     /// <summary>F70: parents for set-piece and decal clones, created alongside the other groups in BuildGeometry.</summary>
     private Transform _setPiecesGroup, _decalsGroup;
@@ -240,10 +223,8 @@ public class MazeGenerator : MonoBehaviour
     private readonly Dictionary<Vector2Int, List<Vector3>> _propWalls = new Dictionary<Vector2Int, List<Vector3>>();
     /// <summary>F70: resolved once by ResolveDressing. Every prop/decal/set-piece pass reads this, never _theme directly.</summary>
     private MazeDressing _dressing;
-    /// <summary>F70: cells a set piece has reserved this run. Skipped by wall/ceiling/floor props and decals; also used by kit trees so a tree does not double up with a set piece.</summary>
+    /// <summary>F70: cells a set piece has reserved this run. Skipped by wall/ceiling/floor props and decals.</summary>
     private readonly HashSet<Vector2Int> _setPieceCells = new HashSet<Vector2Int>();
-    /// <summary>F70 kit mode: every 3 m wall piece SpawnKitWallRun laid down, keyed by its wall-segment name prefix (e.g. "Wall_W_0_3"), so BuildKitGates can replace one and BuildKitWallLights can dress the rest.</summary>
-    private readonly Dictionary<string, List<KitWallSegment>> _kitWallSegments = new Dictionary<string, List<KitWallSegment>>();
 
     /// <summary>F72: every door/button/vault-loot instance built this run, kept so SetUpAtmosphere can late-bind the HUD/flashlight once they exist (same pattern as _lockers).</summary>
     private readonly List<MazeDoor> _doors = new List<MazeDoor>();
@@ -268,7 +249,7 @@ public class MazeGenerator : MonoBehaviour
     /// <summary>F74: Lab terminals specifically - ConfigureTerminal needs the player camera, which does not exist yet when BuildThemeInteractables runs.</summary>
     private readonly List<ThemeInteractable> _pendingTerminals = new List<ThemeInteractable>();
 
-    /// <summary>F75: this floor's stalker (floors 4-5 only, FloorProfile.HasStalker), late-bound once the player/camera/flashlight/hunter/HUD/outcome exist. Null on every other floor or an incomplete kit.</summary>
+    /// <summary>F75: this floor's stalker (floors 4-5 only, FloorProfile.HasStalker), late-bound once the player/camera/flashlight/hunter/HUD/outcome exist. Null on every other floor.</summary>
     private Stalker _stalker;
 
     /// <summary>The theme this maze was built from, or null when the primitive fallback was used.</summary>
@@ -353,6 +334,12 @@ public class MazeGenerator : MonoBehaviour
                     for (int i = 0; i < PatientFiles.MazeFileCount; i++) LoreArchive.MarkRead(PatientFiles.FirstId + i);
             }
         }
+        // And straight into the maze: the reload path Retry / Next Floor use (MainMenu.Start -> StartGame -> BeginRun), with
+        // ArriveInHub left off so the hub is not entered; ApplyFloorProfile below still picks the floor from debugFloor.
+        else if (debugStartInMaze && !debugStartInShop && freshStart)
+        {
+            GameFlow.SkipMenuOnLoad = true;
+        }
 
         // Moved ahead of ApplyFloorProfile (F74) so RunRules.Resolve, called from inside it, can hash
         // the seed that is actually used rather than the Inspector's raw seed field - nothing between
@@ -365,28 +352,7 @@ public class MazeGenerator : MonoBehaviour
         ApplyFloorProfile(freshStart, usedSeed);
         ResolveTheme();
 
-        ResolveKitTheme(); // sets _kitMode; when true also forces _theme = null
         ResolveDressing();
-        if (_kitMode)
-        {
-            // Guard ahead of the general clamp below: at minCorridorWidth 4 and wallThickness 0.4 the
-            // clamp's minCellSize is 4.4, which would push a 4 m kitCellSize up and break the
-            // whole-metre 3/2/1 filler. Round up to the smallest whole metre that still clears it instead.
-            int minKitCellSize = Mathf.CeilToInt(minCorridorWidth + 0.4f);
-            if (kitCellSize < minKitCellSize)
-            {
-                Debug.LogWarning($"MazeGenerator: kitCellSize {kitCellSize} would give halls narrower than {minCorridorWidth} m; raised to {minKitCellSize}.", this);
-                kitCellSize = minKitCellSize;
-            }
-
-            // F40 slice A decision 4: kit mode keeps overriding scale on purpose. The profile's
-            // Width/Height still apply (a 10x6 kit maze is fine), but its CellSize/WallHeight are
-            // ignored here in favour of the kit's fixed 3/2/1 m pieces.
-            cellSize = Mathf.Max(1, kitCellSize);
-            wallThickness = 0.4f;   // kit walls are 0.37
-            wallHeight = 3.9f;      // kit walls stand 4 m from kitY = FloorTop - 0.1
-            Debug.Log($"MazeGenerator: kit maze, cell {cellSize} m.", this);
-        }
 
         // Saved scenes carry their own cellSize, so the width rule is enforced here rather than trusted
         float minCellSize = minCorridorWidth + wallThickness;
@@ -420,9 +386,6 @@ public class MazeGenerator : MonoBehaviour
         System.Random propRng = new System.Random(usedSeed + 4);
         BuildWallProps(propRng);
 
-        // F70, pre-bake: kit-only gates and trees carry colliders, so they must go in before the bake too.
-        if (_kitMode) BuildKitDressingPreBake(new System.Random(usedSeed + 9));
-
         // Bake before anything else is placed inside the volume: the surface collects render meshes on
         // every layer, so a star, a ceiling or a robot standing in the maze would be carved out of the
         // navmesh. Lockers and wall props are built above, before this line, so their bodies are carved
@@ -432,7 +395,6 @@ public class MazeGenerator : MonoBehaviour
         BuildCeiling();
         BuildCeilingProps(propRng);
         BuildWallLamps();
-        if (_kitMode) BuildKitWallLights(new System.Random(usedSeed + 10));
 
         // F70, post-bake: flat, collider-less dressing - safe to add after the navmesh has already
         // been carved from the bodies built above.
@@ -492,7 +454,7 @@ public class MazeGenerator : MonoBehaviour
         // lights and locker triggers live in the scene during a run.
         if (themeSet != null) themeSet.gameObject.SetActive(false);
         // F72: same reasoning - the InteractableKit gallery has nothing left to show once its templates
-        // are cloned, and an incomplete kit must not leave a live MazeDoor/WallButton sitting in the scene.
+        // are cloned, and an incomplete InteractableKit must not leave a live MazeDoor/WallButton sitting in the scene.
         if (interactableKit != null) interactableKit.gameObject.SetActive(false);
     }
 
@@ -526,33 +488,9 @@ public class MazeGenerator : MonoBehaviour
     }
 
     /// <summary>
-    /// F48: when GameFlow.UseKitMaze is set, finds the KitMazeTheme scene object and switches to the
-    /// Maze Modular Puzzle Kit geometry (BuildKitGeometry / BuildKitPillars) instead of the FloorThemes
-    /// gallery. _theme is forced null so the ceiling, lockers, wall lamps, props and atmosphere profile
-    /// all keep taking their existing primitive branches unchanged (decision 1 in the plan).
-    /// </summary>
-    private void ResolveKitTheme()
-    {
-        _kitMode = false;
-        if (!GameFlow.UseKitMaze) return;
-
-        if (kitTheme == null) kitTheme = FindAnyObjectByType<KitMazeTheme>(FindObjectsInactive.Include);
-        if (kitTheme == null || !kitTheme.IsComplete)
-        {
-            Debug.LogError("MazeGenerator: GameFlow.UseKitMaze is set but there is no complete KitMazeTheme in the scene. Run LIGHTS OUT > Build > Kit Maze Theme, then save the scene. Building the normal maze.", this);
-            return;
-        }
-
-        _kitMode = true;
-        _theme = null;
-    }
-
-    /// <summary>
-    /// F70 decision 6: one dressing source, two providers. Called right after ResolveKitTheme, so
-    /// _theme/_kitMode are both settled. Themed floor -> _theme's fields. Kit mode -> kitTheme's common
-    /// dressing fields, with wall/ceiling prop chances forced to 0 (decision 7: the kit set never gets
-    /// theme wall/ceiling props). Anything else (primitive fallback) -> every field stays at its C#
-    /// default (null/0), so BuildWallProps and friends' empty/zero checks make every new pass a no-op -
+    /// F70 decision 6: one dressing source. Called right after ResolveTheme. Themed floor -> _theme's fields.
+    /// Anything else (primitive fallback) -> every field stays at its C# default (null/0), so
+    /// BuildWallProps and friends' empty/zero checks make every new pass a no-op -
     /// the graceful-degradation rule in decision 14.
     /// </summary>
     private void ResolveDressing()
@@ -571,22 +509,6 @@ public class MazeGenerator : MonoBehaviour
                 FloorDecalChance = _theme.FloorDecalChance,
                 MaxDecalsPerCell = _theme.MaxDecalsPerCell,
                 SetPieceCount = _theme.SetPieceCount > 0 ? _theme.SetPieceCount + setPieceBonus : 0
-            };
-        }
-        else if (_kitMode && kitTheme != null)
-        {
-            _dressing = new MazeDressing
-            {
-                Props = kitTheme.Props,
-                SetPieces = kitTheme.SetPieces,
-                Dust = kitTheme.Dust,
-                WallPropChance = 0f,
-                CeilingPropChance = 0f,
-                FloorPropChance = DenserProps(kitTheme.FloorPropChance),
-                WallDecalChance = kitTheme.WallDecalChance,
-                FloorDecalChance = kitTheme.FloorDecalChance,
-                MaxDecalsPerCell = kitTheme.MaxDecalsPerCell,
-                SetPieceCount = kitTheme.SetPieceCount
             };
         }
         else
@@ -1113,12 +1035,6 @@ public class MazeGenerator : MonoBehaviour
     /// </summary>
     private void BuildPillars()
     {
-        if (_kitMode)
-        {
-            BuildKitPillars();
-            return;
-        }
-
         if (_theme == null || _theme.Pillar == null) return;
 
         for (int vx = 0; vx <= width; vx++)
@@ -1174,7 +1090,7 @@ public class MazeGenerator : MonoBehaviour
     /// <summary>
     /// Built before the navmesh bake so a prop's body collider carves the navmesh like a locker does.
     /// One prop per eligible cell at most. Skips the start cell, the AI cell and every locker cell
-    /// (decision 6). Themed floor or kit mode via _dressing (F70 decision 6/16) - reads _dressing instead
+    /// (decision 6). Themed floor via _dressing (F70 decision 6/16) - reads _dressing instead
     /// of _theme directly, but draws from propRng in exactly the order it always has (chance, wall pick,
     /// prop pick), so an existing seed's props land on the same walls as before this feature. The new
     /// _setPieceCells skip is checked only after all of those draws (F70 decision 16).
@@ -1429,7 +1345,7 @@ public class MazeGenerator : MonoBehaviour
         return null; // floating point edge case only
     }
 
-    /// <summary>Chebyshev (grid/king-move) separation check, used by set pieces and kit trees so neither clusters in one corner. Manhattan (IsFarEnough) is what stars/lockers/shards use; Chebyshev is what the F70 plan specifies for these two.</summary>
+    /// <summary>Chebyshev (grid/king-move) separation check, used by set pieces so they do not cluster in one corner. Manhattan (IsFarEnough) is what stars/lockers/shards use; Chebyshev is what the F70 plan specifies for these two.</summary>
     private static bool ChebyshevFarEnough(Vector2Int candidate, List<Vector2Int> chosen, int minSeparation)
     {
         foreach (Vector2Int other in chosen)
@@ -1757,38 +1673,6 @@ public class MazeGenerator : MonoBehaviour
         Vector3 position = cellCenter + wallDirection * (backFaceDistance - 0.08f) + Vector3.up * lampHeight;
         Quaternion rotation = Quaternion.LookRotation(-wallDirection, Vector3.up);
 
-        // F70 (4.6): kit mode gets its own plaque lamp instead of the grey primitive cube. _theme is
-        // always null in kit mode (ResolveKitTheme), so this never competes with the themed branch below.
-        // Draws faulty then the phase exactly like the primitive branch (rng.NextDouble() < chance, then
-        // rng.Next(1000)), so the lamp RNG stream (UsedSeed + 2) is unchanged either way.
-        if (_kitMode && kitTheme != null && kitTheme.WallLamp != null)
-        {
-            // Flush with the wall face: the plaque's back is at its pivot (z = 0) and it is only 0.1 m
-            // deep, so the 0.08 m inset the other branches use would bury it in the wall.
-            Vector3 plaquePosition = cellCenter + wallDirection * backFaceDistance + Vector3.up * lampHeight;
-            GameObject plaque = Instantiate(kitTheme.WallLamp, plaquePosition, rotation, _lampsGroup);
-            plaque.SetActive(true);
-            plaque.name = $"WallLamp_{x}_{z}";
-
-            GameObject kitLightHolder = new GameObject("Light");
-            kitLightHolder.transform.SetParent(plaque.transform, false);
-            kitLightHolder.transform.localPosition = new Vector3(0f, 0f, 0.25f);
-
-            Light kitLight = kitLightHolder.AddComponent<Light>();
-            kitLight.type = LightType.Point;
-            kitLight.color = lampColor;
-            kitLight.range = lampRange;
-            kitLight.intensity = lampIntensity;
-            kitLight.shadows = LightShadows.None;
-
-            WallLamp kitLamp = plaque.AddComponent<WallLamp>();
-            bool kitFaulty = rng.NextDouble() < faultyLampChance;
-            kitLamp.Configure(kitLight, plaque.GetComponentInChildren<Renderer>(), lampIntensity, kitFaulty, rng.Next(1000), isLockerCell);
-            _lamps.Add(kitLamp);
-            _lampCells.Add(cell);
-            return;
-        }
-
         if (_theme != null && _theme.Lamp != null)
         {
             WallLamp themedLamp = Instantiate(_theme.Lamp, position, rotation, _lampsGroup);
@@ -1890,11 +1774,7 @@ public class MazeGenerator : MonoBehaviour
         _floorMat = DarkCopy(floorMaterial, floorTint, "Maze_Floor");
         _ceilingMat = DarkCopy(wallMaterial, ceilingTint, "Maze_Ceiling");
 
-        if (_kitMode)
-        {
-            BuildKitGeometry();
-        }
-        else if (_theme != null)
+        if (_theme != null)
         {
             BuildThemedGeometry();
         }
@@ -2035,445 +1915,6 @@ public class MazeGenerator : MonoBehaviour
                         _wallsGroup);
                 }
             }
-        }
-    }
-
-    // ---------------------------------------------------------------- kit maze (F48)
-
-    /// <summary>
-    /// Assembles the maze from the Maze Modular Puzzle Kit: floors are tiled per cell with the
-    /// recursive square-tile filler (TileFloorRect), walls are laid out per shared segment with the
-    /// greedy 3/2/1 span filler (FillSpan/SpawnKitWallRun) - the same west+south-per-cell,
-    /// east-on-last-column, north-on-last-row walk BuildPrimitiveGeometry uses, just spanning a whole
-    /// cell edge with multiple pieces instead of one box. All pieces sit at kitY = FloorTop - 0.1 (the
-    /// kit convention: the bottom 0.1 m of a wall is buried in the floor slab).
-    /// </summary>
-    private void BuildKitGeometry()
-    {
-        float kitY = FloorTop - 0.1f;
-        int cell = Mathf.RoundToInt(cellSize);
-        int[] fill = FillSpan(cell);
-        _kitWallSegments.Clear();
-
-        for (int x = 0; x < width; x++)
-        {
-            for (int z = 0; z < height; z++)
-            {
-                TileFloorRect(origin.x + x * cell, origin.z + z * cell, kitY, cell, cell);
-            }
-        }
-
-        for (int x = 0; x < width; x++)
-        {
-            for (int z = 0; z < height; z++)
-            {
-                // Walls are shared, so only the west and south sides are built per cell; the outer
-                // east and north sides are added once on the last column / row - same walk as
-                // BuildPrimitiveGeometry, but each side is a run of kit pieces rather than one box.
-                // F70: each call also hands SpawnKitWallRun the (nullable) cell on either side of the
-                // segment, so it can record which face of any 3 m piece looks into a real cell versus the
-                // void beyond the maze - BuildKitWallLights and BuildKitGates need that later.
-                if (_wallW[x, z])
-                {
-                    SpawnKitWallRun(
-                        new Vector3(origin.x + x * cell, kitY, origin.z + z * cell),
-                        alongX: false, fill, $"Wall_W_{x}_{z}",
-                        new Vector2Int(x, z), x > 0 ? (Vector2Int?)new Vector2Int(x - 1, z) : null);
-                }
-
-                if (_wallS[x, z])
-                {
-                    SpawnKitWallRun(
-                        new Vector3(origin.x + x * cell, kitY, origin.z + z * cell),
-                        alongX: true, fill, $"Wall_S_{x}_{z}",
-                        new Vector2Int(x, z), z > 0 ? (Vector2Int?)new Vector2Int(x, z - 1) : null);
-                }
-
-                if (x == width - 1 && _wallE[x, z])
-                {
-                    SpawnKitWallRun(
-                        new Vector3(origin.x + (x + 1) * cell, kitY, origin.z + z * cell),
-                        alongX: false, fill, $"Wall_E_{x}_{z}",
-                        null, new Vector2Int(x, z));
-                }
-
-                if (z == height - 1 && _wallN[x, z])
-                {
-                    SpawnKitWallRun(
-                        new Vector3(origin.x + x * cell, kitY, origin.z + (z + 1) * cell),
-                        alongX: true, fill, $"Wall_N_{x}_{z}",
-                        null, new Vector2Int(x, z));
-                }
-            }
-        }
-
-        LogKitBoundsCheck();
-    }
-
-    /// <summary>
-    /// Recursively tiles a w x d integer-metre rectangle (a maze cell) with the kit's square floor
-    /// tiles: the biggest square (3, 2 or 1 m) that fits in the corner, then the two leftover strips.
-    /// Depth is bounded by the cell size; no allocation. Every clone's collider is repaired - Floor_3M
-    /// ships with a degenerate (zero-thickness) collider, harmless to also touch on the 1M/2M ones.
-    /// </summary>
-    private void TileFloorRect(float x0, float z0, float kitY, int w, int d)
-    {
-        if (w <= 0 || d <= 0) return;
-
-        int s = Mathf.Min(3, Mathf.Min(w, d));
-        GameObject prefab = kitTheme.FloorFor(s);
-        GameObject tile = Instantiate(prefab, new Vector3(x0 + s, kitY, z0), Quaternion.identity, _floorGroup);
-        tile.SetActive(true);
-        tile.name = $"Floor_{s}M_{x0:0}_{z0:0}";
-        RepairKitFloorCollider(tile);
-
-        TileFloorRect(x0 + s, z0, kitY, w - s, d);     // strip to the east, full depth
-        TileFloorRect(x0, z0 + s, kitY, s, d - s);     // strip to the north, under the square just placed
-    }
-
-    /// <summary>Floor_3M's BoxCollider is degenerate (zero thickness at the top surface) straight out of the kit; fix it on every clone.</summary>
-    private static void RepairKitFloorCollider(GameObject tile)
-    {
-        BoxCollider box = tile.GetComponent<BoxCollider>();
-        if (box == null) return;
-
-        Vector3 size = box.size;
-        size.y = 0.1f;
-        box.size = size;
-
-        Vector3 center = box.center;
-        center.y = 0.05f;
-        box.center = center;
-    }
-
-    /// <summary>
-    /// Lays a run of kit wall pieces along one shared cell-edge segment, from vertex A toward +X
-    /// (alongX) or +Z (!alongX), using the lengths in fill (see FillSpan). Placement matches the
-    /// measured pivot conventions: an east-west run's pivot sits at its +X end (position = A + offset +
-    /// n along X, identity rotation); a north-south run's pivot sits at its start (position = A + offset
-    /// along Z, rotated 90 degrees about Y so local +X extends toward world +Z).
-    ///
-    /// F70: cellPlus/cellMinus are the (nullable) cells on the local +Z / -Z side of this whole segment -
-    /// constant for every piece in the run, since a run is one wall of one cell-pair just split into
-    /// multiple prefab lengths. Every 3 m piece is recorded in _kitWallSegments (keyed by namePrefix) so
-    /// BuildKitGates can replace one and BuildKitWallLights can dress the rest.
-    /// </summary>
-    private void SpawnKitWallRun(Vector3 a, bool alongX, int[] fill, string namePrefix, Vector2Int? cellPlus, Vector2Int? cellMinus)
-    {
-        float offset = 0f;
-        for (int i = 0; i < fill.Length; i++)
-        {
-            int n = fill[i];
-            GameObject prefab = kitTheme.WallFor(n);
-            Vector3 position = alongX
-                ? new Vector3(a.x + offset + n, a.y, a.z)
-                : new Vector3(a.x, a.y, a.z + offset);
-            Quaternion rotation = alongX ? Quaternion.identity : Quaternion.Euler(0f, 90f, 0f);
-
-            GameObject wall = Instantiate(prefab, position, rotation, _wallsGroup);
-            wall.SetActive(true);
-            wall.name = $"{namePrefix}_{i}";
-
-            if (n == 3)
-            {
-                if (!_kitWallSegments.TryGetValue(namePrefix, out List<KitWallSegment> pieces))
-                {
-                    pieces = new List<KitWallSegment>();
-                    _kitWallSegments[namePrefix] = pieces;
-                }
-                pieces.Add(new KitWallSegment { Piece = wall, CellPlus = cellPlus, CellMinus = cellMinus });
-            }
-
-            offset += n;
-        }
-    }
-
-    /// <summary>Greedy fill of an integer span with 3/2/1 m kit pieces - as many 3s as fit, then 2s, then 1s. Empty for length &lt;= 0.</summary>
-    private static int[] FillSpan(int length)
-    {
-        List<int> pieces = new List<int>();
-        int remaining = length;
-        while (remaining >= 3) { pieces.Add(3); remaining -= 3; }
-        while (remaining >= 2) { pieces.Add(2); remaining -= 2; }
-        while (remaining >= 1) { pieces.Add(1); remaining -= 1; }
-        return pieces.ToArray();
-    }
-
-    /// <summary>Instantiates kitTheme.Pillar at every vertex a wall touches (closedCount &gt; 0) - every straight-run seam too, not only corners/junctions, since that is what hides the 3M|2M seams and is how the kit is meant to be assembled (decision 6).</summary>
-    private void BuildKitPillars()
-    {
-        if (kitTheme == null || kitTheme.Pillar == null) return;
-        float kitY = FloorTop - 0.1f;
-
-        for (int vx = 0; vx <= width; vx++)
-        {
-            for (int vz = 0; vz <= height; vz++)
-            {
-                bool west = HorizontalWallClosed(vx - 1, vz);
-                bool east = HorizontalWallClosed(vx, vz);
-                bool south = VerticalWallClosed(vx, vz - 1);
-                bool north = VerticalWallClosed(vx, vz);
-                int closedCount = (west ? 1 : 0) + (east ? 1 : 0) + (south ? 1 : 0) + (north ? 1 : 0);
-                if (closedCount == 0) continue;
-
-                Vector3 position = new Vector3(origin.x + vx * cellSize, kitY, origin.z + vz * cellSize);
-                GameObject pillar = Instantiate(kitTheme.Pillar, position, Quaternion.identity, _pillarsGroup);
-                pillar.SetActive(true);
-                pillar.name = $"Pillar_{vx}_{vz}";
-            }
-        }
-    }
-
-    /// <summary>
-    /// Regression guard for the measured pivot conventions (plannings/kit-maze-plan.md): logs the
-    /// combined renderer bounds of the Walls and Floor groups against the expected maze footprint. A
-    /// flipped pivot shows up immediately as a bounds box shifted by roughly one cell.
-    /// </summary>
-    private void LogKitBoundsCheck()
-    {
-        Bounds? wallBounds = CombinedRendererBounds(_wallsGroup);
-        Bounds? floorBounds = CombinedRendererBounds(_floorGroup);
-
-        float expectedMinX = origin.x, expectedMaxX = origin.x + width * cellSize;
-        float expectedMinZ = origin.z, expectedMaxZ = origin.z + height * cellSize;
-
-        string wallText = wallBounds.HasValue
-            ? $"x [{wallBounds.Value.min.x:0.00}, {wallBounds.Value.max.x:0.00}] z [{wallBounds.Value.min.z:0.00}, {wallBounds.Value.max.z:0.00}]"
-            : "none";
-        string floorText = floorBounds.HasValue
-            ? $"x [{floorBounds.Value.min.x:0.00}, {floorBounds.Value.max.x:0.00}] z [{floorBounds.Value.min.z:0.00}, {floorBounds.Value.max.z:0.00}]"
-            : "none";
-
-        Debug.Log($"MazeGenerator: kit bounds check - expected x [{expectedMinX:0.00}, {expectedMaxX:0.00}] z [{expectedMinZ:0.00}, {expectedMaxZ:0.00}] (+/- {wallThickness * 0.5f:0.00} m for walls). Walls: {wallText}. Floor: {floorText}.", this);
-    }
-
-    private static Bounds? CombinedRendererBounds(Transform group)
-    {
-        if (group == null) return null;
-        Renderer[] renderers = group.GetComponentsInChildren<Renderer>();
-        if (renderers.Length == 0) return null;
-
-        Bounds bounds = renderers[0].bounds;
-        for (int i = 1; i < renderers.Length; i++) bounds.Encapsulate(renderers[i].bounds);
-        return bounds;
-    }
-
-    // ---------------------------------------------------------------- kit dressing (F70)
-
-    /// <summary>Pre-bake kit-only dressing: gates and trees both carry a body collider, so both must go in before BuildRuntimeNavMesh.</summary>
-    private void BuildKitDressingPreBake(System.Random rng)
-    {
-        BuildKitGates(rng);
-        BuildKitTrees(rng);
-    }
-
-    /// <summary>
-    /// Replaces one 3 m wall piece per chosen perimeter segment with a barred Wall_Door - an exact
-    /// drop-in swap (same measured pivot as Wall_3M). Never a segment adjacent to the start cell or
-    /// already claimed by a set piece. The outside of the maze is a void, so the gate shows fog/black
-    /// through the bars - the intended "locked exit" look.
-    /// </summary>
-    private void BuildKitGates(System.Random rng)
-    {
-        if (kitTheme.WallDoor == null || kitTheme.GateCount <= 0) return;
-
-        List<(string Prefix, Vector2Int Cell)> perimeter = new List<(string, Vector2Int)>();
-        for (int z = 0; z < height; z++)
-        {
-            if (_wallW[0, z]) perimeter.Add(($"Wall_W_0_{z}", new Vector2Int(0, z)));
-        }
-        for (int x = 0; x < width; x++)
-        {
-            if (_wallS[x, 0]) perimeter.Add(($"Wall_S_{x}_0", new Vector2Int(x, 0)));
-        }
-        for (int z = 0; z < height; z++)
-        {
-            if (_wallE[width - 1, z]) perimeter.Add(($"Wall_E_{width - 1}_{z}", new Vector2Int(width - 1, z)));
-        }
-        for (int x = 0; x < width; x++)
-        {
-            if (_wallN[x, height - 1]) perimeter.Add(($"Wall_N_{x}_{height - 1}", new Vector2Int(x, height - 1)));
-        }
-
-        perimeter.RemoveAll(segment => IsAdjacentToStart(segment.Cell) || _setPieceCells.Contains(segment.Cell));
-        ShuffleList(perimeter, rng);
-
-        List<Vector2Int> chosenCells = new List<Vector2Int>();
-        int placed = 0;
-        foreach ((string prefix, Vector2Int cell) in perimeter)
-        {
-            if (placed >= kitTheme.GateCount) break;
-            if (!ChebyshevFarEnough(cell, chosenCells, 3)) continue;
-
-            BuildKitGate(prefix, cell);
-            chosenCells.Add(cell);
-            placed++;
-        }
-    }
-
-    /// <summary>True for the start cell and its immediate (Chebyshev) neighbours - a gate must not be the first thing the player faces.</summary>
-    private static bool IsAdjacentToStart(Vector2Int cell)
-    {
-        return Mathf.Max(Mathf.Abs(cell.x), Mathf.Abs(cell.y)) <= 1;
-    }
-
-    /// <summary>Swaps the first recorded 3 m piece of one wall segment for a barred gate: same parent/position/rotation/scale, old piece disabled immediately (Destroy is deferred to end of frame, and the bake runs before then) then destroyed.</summary>
-    private void BuildKitGate(string prefix, Vector2Int cell)
-    {
-        if (!_kitWallSegments.TryGetValue(prefix, out List<KitWallSegment> pieces) || pieces.Count == 0) return;
-
-        KitWallSegment segment = pieces[0];
-        pieces.RemoveAt(0);
-        GameObject old = segment.Piece;
-        if (old == null) return;
-
-        GameObject gate = Instantiate(kitTheme.WallDoor, old.transform.position, old.transform.rotation, old.transform.parent);
-        gate.transform.localScale = old.transform.localScale;
-        gate.SetActive(true);
-        gate.name = old.name + "_Gate";
-
-        // Defensive fallback: the prefab is expected to ship its own barred colliders (measured in the
-        // plan), but if a hand edit ever strips them, the opening must still stop the player.
-        if (gate.GetComponentInChildren<Collider>() == null)
-        {
-            BoxCollider box = gate.AddComponent<BoxCollider>();
-            box.size = new Vector3(3f, 4f, 0.4f);
-            box.center = new Vector3(-1.5f, 2f, 0f);
-        }
-
-        old.SetActive(false);
-        Destroy(old);
-    }
-
-    /// <summary>
-    /// One scaled-down tree per chosen L-corner cell (exactly two closed, perpendicular walls) - never
-    /// the start/AI/locker/set-piece cell. Kept collider (trunk), so the hunter paths round it like any
-    /// other pre-bake body. Reserves the cell's two walls in _propWalls and the cell itself in
-    /// _setPieceCells, so later decal/clutter passes leave it alone.
-    /// </summary>
-    private void BuildKitTrees(System.Random rng)
-    {
-        if (kitTheme.Trees == null || kitTheme.Trees.Length == 0 || kitTheme.TreeCount <= 0) return;
-
-        Vector2Int aiCell = FarthestCell();
-        HashSet<Vector2Int> lockerCellSet = new HashSet<Vector2Int>(_lockerCells);
-
-        List<(Vector2Int Cell, Vector3 DirA, Vector3 DirB)> candidates = new List<(Vector2Int, Vector3, Vector3)>();
-        for (int x = 0; x < width; x++)
-        {
-            for (int z = 0; z < height; z++)
-            {
-                Vector2Int cell = new Vector2Int(x, z);
-                if (x == 0 && z == 0) continue;
-                if (cell == aiCell) continue;
-                if (lockerCellSet.Contains(cell)) continue;
-                if (_setPieceCells.Contains(cell)) continue;
-                if (WallCount(x, z) != 2) continue;
-
-                bool northSouth = _wallN[x, z] && _wallS[x, z];
-                bool eastWest = _wallE[x, z] && _wallW[x, z];
-                if (northSouth || eastWest) continue; // collinear - a straight wall, not a corner
-
-                Vector3 dirA = Vector3.zero;
-                Vector3 dirB = Vector3.zero;
-                if (_wallN[x, z]) dirA = Vector3.forward;
-                if (_wallE[x, z]) { if (dirA == Vector3.zero) dirA = Vector3.right; else dirB = Vector3.right; }
-                if (_wallS[x, z]) { if (dirA == Vector3.zero) dirA = Vector3.back; else dirB = Vector3.back; }
-                if (_wallW[x, z]) { if (dirA == Vector3.zero) dirA = Vector3.left; else dirB = Vector3.left; }
-
-                candidates.Add((cell, dirA, dirB));
-            }
-        }
-
-        ShuffleList(candidates, rng);
-
-        List<Vector2Int> chosenCells = new List<Vector2Int>();
-        int placed = 0;
-        float maxHeight = FloorTop + wallHeight - 0.1f;
-
-        foreach ((Vector2Int cell, Vector3 dirA, Vector3 dirB) in candidates)
-        {
-            if (placed >= kitTheme.TreeCount) break;
-            if (!ChebyshevFarEnough(cell, chosenCells, 4)) continue;
-
-            GameObject prefab = kitTheme.Trees[rng.Next(kitTheme.Trees.Length)];
-            if (prefab == null) continue;
-
-            Vector3 corner = CellCenter(cell.x, cell.y) + (dirA + dirB) * (cellSize * 0.5f - wallThickness * 0.5f - 0.9f);
-            float yaw = (float)rng.NextDouble() * 360f;
-
-            GameObject tree = Instantiate(prefab, corner, Quaternion.Euler(0f, yaw, 0f), _propsGroup);
-            tree.SetActive(true);
-            tree.name = $"Tree_{cell.x}_{cell.y}";
-            tree.transform.localScale = Vector3.one * 0.55f;
-
-            Renderer[] renderers = tree.GetComponentsInChildren<Renderer>();
-            if (renderers.Length > 0)
-            {
-                Bounds bounds = renderers[0].bounds;
-                for (int i = 1; i < renderers.Length; i++) bounds.Encapsulate(renderers[i].bounds);
-
-                float excess = bounds.max.y - corner.y;
-                float allowed = maxHeight - corner.y;
-                if (excess > 0.001f && allowed < excess)
-                {
-                    tree.transform.localScale *= Mathf.Clamp01(allowed / excess);
-                }
-            }
-
-            if (!_propWalls.TryGetValue(cell, out List<Vector3> taken))
-            {
-                taken = new List<Vector3>();
-                _propWalls[cell] = taken;
-            }
-            taken.Add(dirA);
-            taken.Add(dirB);
-            _setPieceCells.Add(cell);
-
-            chosenCells.Add(cell);
-            placed++;
-        }
-    }
-
-    /// <summary>
-    /// Post-bake: dresses every still-standing (not replaced by a gate) recorded 3 m wall piece with a
-    /// chance of a Wall_Light emissive overlay on whichever face(s) look into a real, non-reserved cell -
-    /// both faces for an interior wall (one picked at random), only the inward face for a perimeter one.
-    /// No Light component of its own (decision 10) - it is glowing geometry only.
-    /// </summary>
-    private void BuildKitWallLights(System.Random rng)
-    {
-        if (kitTheme.WallLight == null || kitTheme.WallLightChance <= 0f) return;
-
-        foreach (List<KitWallSegment> pieces in _kitWallSegments.Values)
-        {
-            foreach (KitWallSegment segment in pieces)
-            {
-                if (segment.Piece == null || !segment.Piece.activeSelf) continue; // replaced by a gate
-                if (rng.NextDouble() >= kitTheme.WallLightChance) continue;
-
-                bool plusInside = segment.CellPlus.HasValue && !_setPieceCells.Contains(segment.CellPlus.Value);
-                bool minusInside = segment.CellMinus.HasValue && !_setPieceCells.Contains(segment.CellMinus.Value);
-                if (!plusInside && !minusInside) continue; // both faces are void or reserved
-
-                bool useMinus = plusInside && minusInside ? rng.NextDouble() < 0.5 : minusInside;
-
-                GameObject overlay = Instantiate(kitTheme.WallLight, segment.Piece.transform);
-                overlay.transform.localPosition = useMinus ? new Vector3(-3f, 0f, 0f) : Vector3.zero;
-                overlay.transform.localRotation = useMinus ? Quaternion.Euler(0f, 180f, 0f) : Quaternion.identity;
-                overlay.SetActive(true);
-                overlay.name = segment.Piece.name + "_Light";
-            }
-        }
-    }
-
-    /// <summary>Same Fisher-Yates as Shuffle(List&lt;Vector2Int&gt;, rng), generic so the F70 kit-dressing passes can shuffle tuples without duplicating it.</summary>
-    private static void ShuffleList<T>(List<T> list, System.Random rng)
-    {
-        for (int i = list.Count - 1; i > 0; i--)
-        {
-            int j = rng.Next(i + 1);
-            (list[i], list[j]) = (list[j], list[i]);
         }
     }
 
@@ -4198,12 +3639,12 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
-    /// <summary>Ward -> bell, Boiler -> valve, Crypt -> candles x2, Lab -> terminal. Never in kit mode, and never on the primitive fallback (no theme to key off - see decision D11's graceful-degradation rule).</summary>
+    /// <summary>Ward -> bell, Boiler -> valve, Crypt -> candles x2, Lab -> terminal. Never on the primitive fallback (no theme to key off - see decision D11's graceful-degradation rule).</summary>
     private void BuildThemeInteractables(System.Random rng)
     {
         _themeInteractables.Clear();
         _pendingTerminals.Clear();
-        if (_kitMode || _theme == null || _profile == null) return;
+        if (_theme == null || _profile == null) return;
 
         if (interactableKit == null) interactableKit = FindAnyObjectByType<InteractableKit>(FindObjectsInactive.Include);
         if (interactableKit == null || !interactableKit.HasThemeInteractables)
@@ -4979,7 +4420,7 @@ public class MazeGenerator : MonoBehaviour
         tension.SetCalmColor(ShopCatalogue.HudTints[PlayerInventory.HudTintIndex].Colour);
         if (_profile != null && stealth != null) stealth.NoiseScale = _profile.NoiseScale;
 
-        // F74: the "FLOOR n - THE X" card. Built last, once every other system (theme, kit mode,
+        // F74: the "FLOOR n - THE X" card. Built last, once every other system (theme,
         // RunRules, FloorProfile) is settled - its own coroutine waits out the title screen itself.
         FloorIntroBanner banner = FindAnyObjectByType<FloorIntroBanner>();
         if (banner == null) banner = gameObject.AddComponent<FloorIntroBanner>();
@@ -4995,11 +4436,10 @@ public class MazeGenerator : MonoBehaviour
         outcome.FloorCleared();
     }
 
-    /// <summary>F74 FloorIntroBanner title line. Kit maze and the primitive fallback both have no FloorTheme to name, so they get their own generic text instead.</summary>
+    /// <summary>F74 FloorIntroBanner title line. The primitive fallback has no FloorTheme to name, so it gets a generic text.</summary>
     private string FloorTitleText()
     {
         int floor = GameFlow.CurrentFloor;
-        if (_kitMode) return $"FLOOR {floor} — THE KIT";
         if (_theme != null) return $"FLOOR {floor} — {_theme.DisplayName.ToUpperInvariant()}";
         return $"FLOOR {floor}";
     }
