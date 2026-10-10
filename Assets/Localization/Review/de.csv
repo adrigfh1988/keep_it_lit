@@ -1,0 +1,849 @@
+table,key,context,en,text
+Dialogue,dlg.agnes.offer.0,"Sister Agnes, agnes.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","There you are. Late again, and no coat. It's February, dear.","Da bist du ja. Schon wieder zu spät, und ohne Mantel. Es ist Februar, Liebes."
+Dialogue,dlg.agnes.offer.1,"Sister Agnes, agnes.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Ward A is locked, and the keys are on my ring, and my ring is in the kitchen.","Station A ist abgeschlossen, und die Schlüssel sind an meinem Bund, und mein Bund ist in der Küche."
+Dialogue,dlg.agnes.offer.2,"Sister Agnes, agnes.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",I left it on its hook when the lights went. I don't go where the lights go.,"Ich hab ihn am Haken gelassen, als das Licht ausging. Wo das Licht hingeht, geh ich nicht hin."
+Dialogue,dlg.agnes.offer.3,"Sister Agnes, agnes.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Be a love. West end, past the dining hall. A big brass ring. You'll hear it.","Sei so lieb. Westende, hinter dem Speisesaal. Ein großer Messingring. Du wirst ihn hören."
+Dialogue,dlg.agnes.offer.4,"Sister Agnes, agnes.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",And mind the floor. They haven't mopped since the... well. Since.,Und pass auf den Boden auf. Gewischt wurde nicht mehr seit dem... na ja. Seitdem.
+Dialogue,dlg.agnes.remind.0,"Sister Agnes, agnes.remind (job taken but not finished: a reminder), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","The kitchen, dear. West end. A brass ring on a hook.","Die Küche, Liebes. Westende. Ein Messingring an einem Haken."
+Dialogue,dlg.agnes.remind.1,"Sister Agnes, agnes.remind (job taken but not finished: a reminder), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","I'd fetch it myself, but you know how I am about the dark.","Ich würde ihn selbst holen, aber du weißt ja, wie ich mit der Dunkelheit bin."
+Dialogue,dlg.agnes.return.0,"Sister Agnes, agnes.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",That's the one. Heavier than I remember.,"Das ist er. Schwerer, als ich ihn in Erinnerung hatte."
+Dialogue,dlg.agnes.return.1,"Sister Agnes, agnes.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Ward A is the long door on the east side. Day room first, then the wing.","Station A ist die lange Tür auf der Ostseite. Erst der Aufenthaltsraum, dann der Flügel."
+Dialogue,dlg.agnes.return.2,"Sister Agnes, agnes.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Matron says there will be fewer of you each night. I tell her, nonsense. Nonsense, Matron.","Die Oberschwester sagt, jede Nacht werden es weniger von euch. Ich sage, Unsinn. Unsinn, Oberschwester."
+Dialogue,dlg.agnes.return.3,"Sister Agnes, agnes.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Take the key. Bring it back before the morning count.,Nimm den Schlüssel. Bring ihn vor der Morgenzählung zurück.
+Dialogue,dlg.agnes.after.0,"Sister Agnes, agnes.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",The morning count is at six. You'll be back by six?,Die Morgenzählung ist um sechs. Bist du bis sechs zurück?
+Dialogue,dlg.agnes.after.1,"Sister Agnes, agnes.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",It's always six. It's been six for such a long time.,Es ist immer sechs. Es ist schon so lange sechs.
+Dialogue,dlg.agnes.later2.0,"Sister Agnes, agnes.later2 (revisit on floor 2), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Back so soon? Did you wipe your feet?,Schon zurück? Hast du dir die Füße abgetreten?
+Dialogue,dlg.agnes.later2.1,"Sister Agnes, agnes.later2 (revisit on floor 2), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Mind the lift. It sticks. It sticks on purpose, I think.","Vorsicht mit dem Aufzug. Er bleibt hängen. Mit Absicht, glaube ich."
+Dialogue,dlg.agnes.later3.0,"Sister Agnes, agnes.later3 (revisit on floor 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",I counted the beds twice tonight. One of them keeps being one more.,Ich hab die Betten heute Nacht zweimal gezählt. Eins davon ist immer wieder eins mehr.
+Dialogue,dlg.agnes.later3.1,"Sister Agnes, agnes.later3 (revisit on floor 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Don't tell Matron. She's very tired.,Sag's nicht der Oberschwester. Sie ist sehr müde.
+Dialogue,dlg.agnes.later4.0,"Sister Agnes, agnes.later4 (revisit on floor 4), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Don't mention the lamps to Dr. Weiss. He takes it so personally.,Erwähn die Lampen nicht vor Dr. Weiss. Er nimmt das so persönlich.
+Dialogue,dlg.agnes.later4.1,"Sister Agnes, agnes.later4 (revisit on floor 4), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Oh, and if you hear someone calling my name, it isn't me. I'm right here.","Ach, und wenn du jemanden meinen Namen rufen hörst, das bin nicht ich. Ich bin genau hier."
+Dialogue,dlg.bruno.pre.0,"Bruno, bruno.pre (talked to before their floor), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Salt on the sill. That's what my mother said. Nobody listens.,Salz aufs Fensterbrett. Hat meine Mutter immer gesagt. Keiner hört zu.
+Dialogue,dlg.bruno.pre.1,"Bruno, bruno.pre (talked to before their floor), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Don't whistle down here. Just don't.,Pfeif hier unten nicht. Lass es einfach.
+Dialogue,dlg.bruno.offer.0,"Bruno, bruno.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Boiler room, aye. I've got the key. It's on me somewhere.","Kesselraum, ja. Ich hab den Schlüssel. Hab ihn irgendwo bei mir."
+Dialogue,dlg.bruno.offer.1,"Bruno, bruno.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",I'm not going down there myself. Not for money. Not for anything.,Ich geh da selber nicht runter. Nicht für Geld. Für gar nichts.
+Dialogue,dlg.bruno.offer.2,"Bruno, bruno.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Do me a turn first. Josef's supper. Tray's on the pass. He bites when he's hungry.,"Tu mir erst einen Gefallen. Josefs Abendessen. Das Tablett steht auf der Durchreiche. Er beißt, wenn er Hunger hat."
+Dialogue,dlg.bruno.offer.2.choice.0,"Bruno conversation (first talk of the floor: offers the job): the player's reply option on a button (540 x 58, 26 pt, auto-size; the key 1 / 2 is added by the game). Short, first person",He bites?,Er beißt?
+Dialogue,dlg.bruno.offer.2.choice.0.reply.0,"Bruno, bruno.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Figure of speech. Mostly.,Redensart. Meistens.
+Dialogue,dlg.bruno.offer.2.choice.1,"Bruno conversation (first talk of the floor: offers the job): the player's reply option on a button (540 x 58, 26 pt, auto-size; the key 1 / 2 is added by the game). Short, first person",Why don't you take it?,Warum bringst du es nicht?
+Dialogue,dlg.bruno.offer.2.choice.1.reply.0,"Bruno, bruno.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",He knows things. About me. About everyone. I'd sooner not be looked at.,Er weiß Dinge. Über mich. Über alle. Ich werd lieber nicht angesehen.
+Dialogue,dlg.bruno.offer.3,"Bruno, bruno.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Bedroom, top of the stairs. Take the tray up, then come and see me.","Schlafsaal, oben an der Treppe. Bring das Tablett hoch, dann komm zu mir."
+Dialogue,dlg.bruno.remind.0,"Bruno, bruno.remind (job taken but not finished: a reminder), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Tray's on the pass, by the stove. Don't let it go cold. He minds.","Das Tablett steht auf der Durchreiche, beim Herd. Lass es nicht kalt werden. Das mag er nicht."
+Dialogue,dlg.bruno.carry.0,"Bruno, bruno.carry (the item is in hand: sends you on to the recipient), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Go on, then. Don't spill it. Don't look at him too long.",Na los. Verschütt nichts. Schau ihn nicht zu lange an.
+Dialogue,dlg.bruno.after.0,"Bruno, bruno.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",He gave you the key? Huh.,Er hat dir den Schlüssel gegeben? Hm.
+Dialogue,dlg.bruno.after.1,"Bruno, bruno.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Then I never had it. Funny. I could've sworn it was on my belt.,"Dann hatte ich ihn nie. Komisch. Ich hätte schwören können, er hing an meinem Gürtel."
+Dialogue,dlg.bruno.after.2,"Bruno, bruno.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Boiler room's down in the basement. Lift's the only way. Don't ask me what it's like.,"Der Kesselraum ist unten im Keller. Nur mit dem Aufzug. Frag mich nicht, wie's da ist."
+Dialogue,dlg.bruno.later3.0,"Bruno, bruno.later3 (revisit on floor 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Heard the pipes again. Three knocks, then two. I put my hands over my ears.","Hab die Rohre wieder gehört. Dreimal klopfen, dann zweimal. Ich hab mir die Ohren zugehalten."
+Dialogue,dlg.bruno.later3.1,"Bruno, bruno.later3 (revisit on floor 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Don't tell Tomas I said so.,"Sag Tomas nicht, dass ich das gesagt hab."
+Dialogue,dlg.bruno.later4.0,"Bruno, bruno.later4 (revisit on floor 4), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",The salt's gone off the sill. All of it. Who takes salt?,Das Salz ist weg vom Fensterbrett. Alles. Wer nimmt denn Salz?
+Dialogue,dlg.bruno.later4.1,"Bruno, bruno.later4 (revisit on floor 4), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",I'm staying in the kitchen. The kitchen has a door.,Ich bleib in der Küche. Die Küche hat eine Tür.
+Dialogue,dlg.josef.pre.0,"Josef, josef.pre (talked to before their floor), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",You walk like the new one. They always walk like they were told where the stairs are.,"Du gehst wie der Neue. Die gehen immer, als hätte man ihnen gesagt, wo die Treppe ist."
+Dialogue,dlg.josef.pre.1,"Josef, josef.pre (talked to before their floor), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Sit. No, don't sit. That's Elias's bed, and he's particular.","Setz dich. Nein, setz dich nicht. Das ist Elias' Bett, und er ist eigen."
+Dialogue,dlg.josef.hello.0,"Josef, josef.hello (before the job is taken), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",No tray. Then you're not here for me.,Kein Tablett. Dann bist du nicht meinetwegen hier.
+Dialogue,dlg.josef.hello.1,"Josef, josef.hello (before the job is taken), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Come back with supper. Boiled something, grey, late. I'll know it by the smell.","Komm mit dem Abendessen wieder. Irgendwas Gekochtes, grau, zu spät. Ich erkenne es am Geruch."
+Dialogue,dlg.josef.remind.0,"Josef, josef.remind (job taken but not finished: a reminder), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","The tray, boy. The kitchen. Bruno knows where the food is. Bruno always knows.","Das Tablett, Junge. Die Küche. Bruno weiß, wo das Essen ist. Bruno weiß es immer."
+Dialogue,dlg.josef.deliver.0,"Josef, josef.deliver (you deliver the item: the recipient hands over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Cold. Of course it's cold. Thank you.,Kalt. Natürlich ist es kalt. Danke.
+Dialogue,dlg.josef.deliver.1,"Josef, josef.deliver (you deliver the item: the recipient hands over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Nobody's brought me anything since the doctor stopped coming. The one who stopped being a doctor.,"Mir hat keiner mehr was gebracht, seit der Doktor nicht mehr kommt. Der, der aufgehört hat, Doktor zu sein."
+Dialogue,dlg.josef.deliver.2,"Josef, josef.deliver (you deliver the item: the recipient hands over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",You'll want the Boiler Room. Bruno says he has the key.,"Du willst in den Kesselraum. Bruno sagt, er hat den Schlüssel."
+Dialogue,dlg.josef.deliver.3,"Josef, josef.deliver (you deliver the item: the recipient hands over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Bruno lies. Poor man, he believes every word of it.","Bruno lügt. Der Arme, er glaubt jedes Wort davon."
+Dialogue,dlg.josef.deliver.4,"Josef, josef.deliver (you deliver the item: the recipient hands over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Under the pillow. My pillow, you impertinent thing. There.","Unterm Kissen. Meinem Kissen, du unverschämtes Ding. Da."
+Dialogue,dlg.josef.deliver.5,"Josef, josef.deliver (you deliver the item: the recipient hands over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Brass, with a tag. I took it off his belt last October. The October.","Messing, mit Anhänger. Hab ihn ihm letzten Oktober vom Gürtel genommen. Jenem Oktober."
+Dialogue,dlg.josef.deliver.6,"Josef, josef.deliver (you deliver the item: the recipient hands over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Mind the lift. It will stop for you. They always do.,Vorsicht mit dem Aufzug. Er wird für dich anhalten. Das tun sie immer.
+Dialogue,dlg.josef.after.0,"Josef, josef.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Go on. I'll finish my supper. Cold is how I like it now.,Geh nur. Ich ess mein Abendessen auf. Kalt mag ich es inzwischen.
+Dialogue,dlg.josef.after.1,"Josef, josef.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",You'll be back. They all come back. It's only a question of how many of you.,"Du kommst wieder. Alle kommen wieder. Die Frage ist nur, wie viele von euch."
+Dialogue,dlg.josef.later3.0,"Josef, josef.later3 (revisit on floor 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Elias is up. Standing with his face to the wall, since the lights went.","Elias ist auf. Steht mit dem Gesicht zur Wand, seit das Licht weg ist."
+Dialogue,dlg.josef.later3.1,"Josef, josef.later3 (revisit on floor 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Don't speak to him. He thinks it's rude to be answered.,"Sprich ihn nicht an. Er findet es unhöflich, wenn man ihm antwortet."
+Dialogue,dlg.josef.later4.0,"Josef, josef.later4 (revisit on floor 4), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",They took Elias down this morning. Drawer five. He'd have wanted a window.,Sie haben Elias heute Morgen runtergebracht. Schublade fünf. Er hätte gern ein Fenster gehabt.
+Dialogue,dlg.josef.later4.1,"Josef, josef.later4 (revisit on floor 4), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Someone should have told him the drawers have no windows. I'd have done it.,"Jemand hätte ihm sagen sollen, dass die Schubladen keine Fenster haben. Ich hätte es getan."
+Dialogue,dlg.marta.pre.0,"Marta, marta.pre (talked to before their floor), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Do you want to see my drawing? It's the house. It has more windows than the real one.,Willst du mein Bild sehen? Das ist das Haus. Es hat mehr Fenster als das echte.
+Dialogue,dlg.marta.pre.1,"Marta, marta.pre (talked to before their floor), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Shh. The chalk is sleeping.,Pst. Die Kreide schläft.
+Dialogue,dlg.marta.offer.0,"Marta, marta.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","I had a music box. It was blue on the inside, like water.","Ich hatte eine Spieluhr. Innen war sie blau, wie Wasser."
+Dialogue,dlg.marta.offer.1,"Marta, marta.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",I took it down to the long cold hall to show the pipes. They liked it.,"Ich hab sie in den langen kalten Gang mitgenommen, um sie den Rohren zu zeigen. Sie mochten sie."
+Dialogue,dlg.marta.offer.2,"Marta, marta.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Then the lights went away one at a time, and I came upstairs. I forgot it.","Dann ist das Licht weggegangen, eins nach dem anderen, und ich bin nach oben. Ich hab sie vergessen."
+Dialogue,dlg.marta.offer.3,"Marta, marta.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Will you fetch it? I'm not allowed down there. The pipes get jealous.,Holst du sie? Ich darf da nicht runter. Die Rohre werden eifersüchtig.
+Dialogue,dlg.marta.offer.4,"Marta, marta.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","It's on the floor, I think. By the wall. Tell it I'm not cross.","Sie liegt auf dem Boden, glaub ich. An der Wand. Sag ihr, ich bin nicht böse."
+Dialogue,dlg.marta.remind.0,"Marta, marta.remind (job taken but not finished: a reminder), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",The long cold hall. By the wall. Tell it I'm not cross.,"Der lange kalte Gang. An der Wand. Sag ihr, ich bin nicht böse."
+Dialogue,dlg.marta.return.0,"Marta, marta.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",You found it! It's still warm. It's always warm.,Du hast sie gefunden! Sie ist noch warm. Sie ist immer warm.
+Dialogue,dlg.marta.return.1,"Marta, marta.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Here. This is for you. I took it from the cold man's coat. He didn't mind.,Hier. Der ist für dich. Ich hab ihn aus dem Mantel vom kalten Mann genommen. Er hatte nichts dagegen.
+Dialogue,dlg.marta.return.2,"Marta, marta.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",It opens the Morgue. Don't be scared of the Morgue. Everyone is very quiet there.,Er macht die Leichenhalle auf. Hab keine Angst vor der Leichenhalle. Dort sind alle ganz still.
+Dialogue,dlg.marta.return.3,"Marta, marta.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Thank you. Now you can go and be quiet with them.,Danke. Jetzt kannst du hingehen und mit ihnen still sein.
+Dialogue,dlg.marta.after.0,"Marta, marta.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",It's singing in the other room. Can you hear it?,Sie singt im anderen Zimmer. Hörst du sie?
+Dialogue,dlg.marta.after.1,"Marta, marta.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",No? Oh. Good. Don't wind it. It winds itself.,Nein? Oh. Gut. Zieh sie nicht auf. Sie zieht sich selbst auf.
+Dialogue,dlg.marta.later4.0,"Marta, marta.later4 (revisit on floor 4), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",I can't hear it any more. I think it went very far away.,"Ich kann sie nicht mehr hören. Ich glaub, sie ist ganz weit weggegangen."
+Dialogue,dlg.marta.later4.1,"Marta, marta.later4 (revisit on floor 4), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Don't go and look. Please. It was only a box.,Geh nicht nachsehen. Bitte. Es war nur ein Kästchen.
+Dialogue,dlg.weiss.pre.0,"Dr. Weiss, weiss.pre (talked to before their floor), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Sorry! Sorry. Rounds. I'm late for rounds. Are you on my list?,Verzeihung! Verzeihung. Visite. Ich bin spät dran für die Visite. Stehst du auf meiner Liste?
+Dialogue,dlg.weiss.pre.1,"Dr. Weiss, weiss.pre (talked to before their floor), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","No. No, you're not on my list. Good. That's good.","Nein. Nein, du stehst nicht auf meiner Liste. Gut. Das ist gut."
+Dialogue,dlg.weiss.offer.0,"Dr. Weiss, weiss.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Thank God. Hands. I need hands. Are you steady? You look steady.,Gott sei Dank. Hände. Ich brauche Hände. Hast du eine ruhige Hand? Du siehst so aus.
+Dialogue,dlg.weiss.offer.1,"Dr. Weiss, weiss.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","Room 4. The injection. Three ampoules, clear glass, blue cap. I counted them. I count every shift.","Zimmer 4. Die Injektion. Drei Ampullen, klares Glas, blaue Kappe. Ich habe sie gezählt. Ich zähle jede Schicht."
+Dialogue,dlg.weiss.offer.2,"Dr. Weiss, weiss.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","I put them down somewhere on this floor. The surgery side, the offices. I don't know.","Ich habe sie irgendwo auf diesem Stockwerk abgelegt. Die Chirurgie, die Büros. Ich weiß es nicht."
+Dialogue,dlg.weiss.offer.3,"Dr. Weiss, weiss.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",They roll. They're small. They'll be wherever the light isn't.,"Sie rollen. Sie sind klein. Sie sind dort, wo das Licht nicht ist."
+Dialogue,dlg.weiss.offer.4,"Dr. Weiss, weiss.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Bring all three. I won't give him a short dose. I won't.,Bring alle drei. Ich gebe ihm keine halbe Dosis. Niemals.
+Dialogue,dlg.weiss.remind.0,"Dr. Weiss, weiss.remind (job taken but not finished: a reminder), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages). {n} = items found so far","{n} of three. Blue caps, clear glass. Room 4 is waiting.","{n} von drei. Blaue Kappen, klares Glas. Zimmer 4 wartet."
+Dialogue,dlg.weiss.remind.1,"Dr. Weiss, weiss.remind (job taken but not finished: a reminder), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",He's been waiting such a long time.,Er wartet schon so lange.
+Dialogue,dlg.weiss.return.0,"Dr. Weiss, weiss.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Three. All three. You're a marvel. I could kiss you. I won't. Protocol.,Drei. Alle drei. Du bist ein Wunder. Ich könnte dich küssen. Tu ich nicht. Vorschrift.
+Dialogue,dlg.weiss.return.1,"Dr. Weiss, weiss.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","The Surgery key. Here. Take it, take it, I'll need both hands.","Der Schlüssel zur Chirurgie. Hier. Nimm ihn, nimm ihn, ich brauche beide Hände."
+Dialogue,dlg.weiss.return.2,"Dr. Weiss, weiss.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Room 4. Room four...,Zimmer 4. Zimmer vier...
+Dialogue,dlg.weiss.return.3,"Dr. Weiss, weiss.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","...it's been empty for years, hasn't it?","...das steht seit Jahren leer, nicht wahr?"
+Dialogue,dlg.weiss.return.4,"Dr. Weiss, weiss.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Who was I giving these to?,Wem wollte ich die eigentlich geben?
+Dialogue,dlg.weiss.after.0,"Dr. Weiss, weiss.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Rounds. I should do my rounds.,Visite. Ich sollte meine Visite machen.
+Dialogue,dlg.weiss.after.1,"Dr. Weiss, weiss.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",There's always a light on in Room 4. Isn't there? Isn't there always?,In Zimmer 4 brennt immer Licht. Nicht wahr? Brennt da nicht immer Licht?
+Dialogue,dlg.clerk.a.0,"The Clerk, clerk.a (ambient conversation 1 of 3 (the clerk cycles them)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Name?,Name?
+Dialogue,dlg.clerk.a.1,"The Clerk, clerk.a (ambient conversation 1 of 3 (the clerk cycles them)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",No. Don't tell me. I have it here somewhere.,Nein. Sag's mir nicht. Ich hab ihn hier irgendwo.
+Dialogue,dlg.clerk.a.2,"The Clerk, clerk.a (ambient conversation 1 of 3 (the clerk cycles them)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",The file's with the Director. The file is always with the Director.,Die Akte ist beim Direktor. Die Akte ist immer beim Direktor.
+Dialogue,dlg.clerk.a.3,"The Clerk, clerk.a (ambient conversation 1 of 3 (the clerk cycles them)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Name?,Name?
+Dialogue,dlg.clerk.b.0,"The Clerk, clerk.b (ambient conversation 2 of 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Page forty-one. Page forty-one. Page forty-two.,Seite einundvierzig. Seite einundvierzig. Seite zweiundvierzig.
+Dialogue,dlg.clerk.b.1,"The Clerk, clerk.b (ambient conversation 2 of 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",I have typed this one before.,Die hier habe ich schon einmal getippt.
+Dialogue,dlg.clerk.b.2,"The Clerk, clerk.b (ambient conversation 2 of 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",Don't read over my shoulder. It isn't finished.,Lies mir nicht über die Schulter. Es ist nicht fertig.
+Dialogue,dlg.clerk.c.0,"The Clerk, clerk.c (ambient conversation 3 of 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)","You're in here, you know. Page seventeen. Under 'Present'.","Du stehst hier drin, weißt du. Seite siebzehn. Unter 'Anwesend'."
+Dialogue,dlg.clerk.c.1,"The Clerk, clerk.c (ambient conversation 3 of 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",It's very good of you to come. It saves me looking.,"Sehr nett, dass du kommst. Das erspart mir das Suchen."
+Dialogue,dlg.clerk.finale.0,"The Clerk, clerk.finale (finale), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",It's finished.,Es ist fertig.
+Dialogue,dlg.clerk.finale.1,"The Clerk, clerk.finale (finale), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)",It was always going to be finished. I only had to type it out.,"Es stand immer fest, dass es fertig wird. Ich musste es nur abtippen."
+HUD,hud.contract.done,"Contract HUD line under the counter, finished (26 pt amber/green, NoWrap, 1100 px, auto-size). {name} = contract name",CONTRACT  -  {name}  -  DONE,AUFTRAG  -  {name}  -  ERLEDIGT
+HUD,hud.contract.failed,"Contract HUD line, failed. {name} = contract name",CONTRACT  -  {name}  -  FAILED,AUFTRAG  -  {name}  -  GESCHEITERT
+HUD,hud.contract.void,"Contract HUD line, voided (the floor cannot offer it). {name} = contract name",CONTRACT  -  {name}  -  VOID,AUFTRAG  -  {name}  -  ENTFALLEN
+HUD,hud.contract.plain,"Contract HUD line, in progress with no counter. {name} = contract name",CONTRACT  -  {name},AUFTRAG  -  {name}
+HUD,hud.contract.progress_dark,"Contract HUD line, Walk in the dark: {n} of {total} seconds walked with the torch off",CONTRACT  -  {name}  -  {n} / {total} s,AUFTRAG  -  {name}  -  {n} / {total} s
+HUD,hud.contract.progress_count,"Contract HUD line with a plain count: {n} of {total} (shards found, notes read, noises made)",CONTRACT  -  {name}  -  {n} / {total},AUFTRAG  -  {name}  -  {n} / {total}
+HUD,hud.contract.progress_time,"Contract HUD line, Don't dawdle: {time} = m:ss left",CONTRACT  -  {name}  -  {time} left,AUFTRAG  -  {name}  -  noch {time}
+HUD,hud.torch,"HUD torch battery label bottom-left (20 pt, one line, 220 px, auto-size)",TORCH,LAMPE
+HUD,hud.torch_dead,"HUD torch battery label when the battery is empty (20 pt, 220 px, auto-size)",TORCH DEAD,LAMPE LEER
+HUD,hud.floor,"HUD floor label top-left under the star counter (26 pt, letter-spaced, 320 px, auto-size) and the shop door sign. {floor} = floor number",FLOOR {floor},ETAGE {floor}
+HUD,hud.asylum,"HUD floor label while in the hospital hub; also the shop door sign when the shop is entered from the hub (26 pt, 320 px)",ASYLUM,ANSTALT
+HUD,hud.shards,"HUD shard counter top-left (26 pt, letter-spaced, 320 px, auto-size). {currency} = currency name, {shards} = balance",{currency}  {shards},{currency}  {shards}
+HUD,hud.second_wind,"HUD label shown while a Second Wind is held (22 pt, bottom-right, 360 px)",SECOND WIND,ZWEITER ATEM
+HUD,hud.slot.battery,"HUD consumable slot, bottom-right (24 pt, 360 px, auto-size). {key} = 1 on keyboard or TAP on touch (do not translate the key), {count} = batteries held",{key}   BATTERY  x{count},{key}   BATTERIE  x{count}
+HUD,hud.slot.compass,"HUD consumable slot, bottom-right (24 pt, 360 px). {key} = 2 or TAP, {count} = compasses held",{key}   COMPASS  x{count},{key}   KOMPASS  x{count}
+HUD,hud.slot.throw,"HUD throwable slot, bottom-right (24 pt, 360 px). {key} = G or TAP, {count} = bottles/cans carried",{key}   THROW  x{count},{key}   WERFEN  x{count}
+HUD,hud.prompt.hide,"Interaction prompt next to a locker: climb in. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Imperative/infinitive",HIDE,VERSTECKEN
+HUD,hud.prompt.leave,Interaction prompt inside a locker: climb out,LEAVE,VERLASSEN
+HUD,hud.prompt.talk,Interaction prompt at the shop counter: open the shop menu,TALK,SPRECHEN
+HUD,hud.prompt.contracts,Interaction prompt at the shop contract board,CONTRACTS,AUFTRÄGE
+HUD,hud.prompt.descend,Interaction prompt at the shop door: go down to the next floor,DESCEND,ABSTEIGEN
+HUD,hud.prompt.close,"Interaction prompt while a lore note panel is open: close it. Shown as ""E  <text>""",CLOSE,SCHLIEßEN
+HUD,hud.counter.stars,"HUD counter, first segment, top-left (38 pt, one line, 1100 px for all segments, auto-size). {n} of {total} stars; the noun stays plural as a label",STARS  {n} / {total},STERNE  {n} / {total}
+HUD,hud.counter.fuses,"HUD counter, second segment on blackout floors. Joined to the first with three spaces. {n} of {total} fuse boxes restored",FUSES  {n} / {total},SICHERUNGEN  {n} / {total}
+HUD,hud.counter.keys,"HUD counter, third segment on key-hunt floors. Joined with three spaces. {n} of {total} keys held",KEYS  {n} / {total},SCHLÜSSEL  {n} / {total}
+HUD,hud.keys_locked,"Subtitle-style reminder when stepping on a locked hatch (1.8 s, one line). {h} keys held of {t}",LOCKED · {h} / {t} KEYS,GESPERRT · {h} / {t} SCHLÜSSEL
+HUD,hud.lift_locked,"Text above the lift ring while the lift is locked (28 pt, 400 x 50, auto-size). {h} keys held of {t}",LIFT LOCKED · {h} / {t} KEYS,AUFZUG GESPERRT · {h} / {t} SCHLÜSSEL
+HUD,hud.lift_arriving,"Text above the lift ring while it fills (28 pt, 400 x 50, auto-size). {percent} = 0-100",LIFT ARRIVING {percent}%,AUFZUG KOMMT {percent}%
+HUD,hud.records.header,"Records board header in the asylum office (world-space sign, auto-size). {n} of {total} maze case files found",CASE FILES  {n} / {total},KRANKENAKTEN  {n} / {total}
+HUD,hud.prompt.pick_up_bottle,"Interaction prompt on a bottle on the floor. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",PICK UP BOTTLE,FLASCHE AUFHEBEN
+HUD,hud.prompt.pick_up_can,Interaction prompt on a can on the floor,PICK UP CAN,DOSE AUFHEBEN
+HUD,hud.prompt.take_key,Interaction prompt on a brass key,TAKE KEY,SCHLÜSSEL NEHMEN
+HUD,hud.prompt.pick_up_lantern,Interaction prompt on a lantern on the floor,PICK UP LANTERN,LATERNE AUFHEBEN
+HUD,hud.prompt.put_down_lantern,Interaction prompt while carrying the lantern: set it down,PUT DOWN LANTERN,LATERNE ABSTELLEN
+HUD,hud.prompt.read,Interaction prompt on a lore note: open it,READ,LESEN
+HUD,hud.prompt.pick_up_battery_cell,Interaction prompt on a battery cell in a vault,PICK UP BATTERY CELL,BATTERIEZELLE AUFHEBEN
+HUD,hud.prompt.restore_power,Interaction prompt on a fuse box (hold E; the hold percentage is appended by the game),RESTORE POWER,STROM EINSCHALTEN
+HUD,hud.prompt.open,Interaction prompt on a shutter door,OPEN,ÖFFNEN
+HUD,hud.prompt.press,Interaction prompt on a wall button,PRESS,DRÜCKEN
+HUD,hud.prompt.ring_bell,Interaction prompt on the call bell (Ward floor),RING BELL,GLOCKE LÄUTEN
+HUD,hud.prompt.open_valve,"Interaction prompt on the steam valve (Boiler floor, hold E)",OPEN VALVE,VENTIL ÖFFNEN
+HUD,hud.prompt.light_candles,Interaction prompt on the candles (Crypt floor),LIGHT CANDLES,KERZEN ANZÜNDEN
+HUD,hud.prompt.use_terminal,Interaction prompt on the terminal (Lab floor),USE TERMINAL,TERMINAL BENUTZEN
+Hub,hub.wing.plaque,"World-space sign over each asylum wing door (auto-size not applied: keep it short). Two lines: {wing} big, then {room} and {status} at 60 % size separated by a middle dot. Keep the <size=60%> tag and the line break","{wing}
+<size=60%>{room}  ·  {status}</size>","{wing}
+<size=60%>{room}  ·  {status}</size>"
+Hub,hub.wing.status.open,"Status word on a wing door plaque (second line, 60 % size): the wing can be entered now",OPEN,OFFEN
+Hub,hub.wing.status.locked,Status word on a wing door plaque: the wing is open but a story piece (a mission or the key run) has it locked until a person hands over the key,LOCKED,VERSCHLOSSEN
+Hub,hub.wing.status.cleared,Status word on a wing door plaque: this floor has been cleared already,CLEARED,ERLEDIGT
+Hub,hub.wing.status.sealed,Status word on a wing door plaque: the floor is not reachable yet,SEALED,VERSIEGELT
+Hub,hub.wing.hint,Hub hint subtitle that repeats now and then when no mission objective is active (4 s). {wing} {room} {level} are the names of the next wing,{wing} · {room} · {level},{wing} · {room} · {level}
+Hub,hub.wing.1.name,"Wing 1 name on its door plaque, and inside the sentences below when glued by code (ALL CAPS, short). Glossary term",WARD A,STATION A
+Hub,hub.wing.1.room,"Wing 1 room name, plaque second line (ALL CAPS)",DAY ROOM,AUFENTHALTSRAUM
+Hub,hub.wing.1.level,"Wing 1 storey name (GROUND FLOOR / BASEMENT / UPPER FLOOR), used in the arrival, hint and objective lines",GROUND FLOOR,ERDGESCHOSS
+Hub,hub.wing.1.enter,"Interaction prompt at the open door of wing 1. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Imperative or infinitive",ENTER WARD A,STATION A BETRETEN
+Hub,hub.wing.1.locked,Interaction prompt at the door of wing 1 while a mission or the key run has it locked,WARD A · LOCKED,STATION A · VERSCHLOSSEN
+Hub,hub.wing.1.cleared,Interaction prompt at the door of wing 1 once its floor is cleared,WARD A · CLEARED,STATION A · ERLEDIGT
+Hub,hub.wing.1.sealed,Interaction prompt at the door of wing 1 before its floor can be reached,WARD A · SEALED,STATION A · VERSIEGELT
+Hub,hub.wing.1.already_cleared,Subtitle (1.8 s) when E is pressed at the cleared door of wing 1,WARD A · ALREADY CLEARED,STATION A · BEREITS ERLEDIGT
+Hub,hub.wing.1.go_to_door,"Objective card goal (big card 42 pt one line, 650 px, auto-size; compact card wraps) when the player only has to walk to the door of wing 1",GO TO THE WARD A DOOR · GROUND FLOOR,GEH ZUR TÜR DER STATION A · ERDGESCHOSS
+Hub,hub.wing.1.door_open,Arrival subtitle (5 s) when the door of wing 1 is usable. {floor} = floor number. One whole sentence: it names the door with an article,FLOOR {floor} · THE WARD A DOOR IS OPEN · GROUND FLOOR,ETAGE {floor} · DIE TÜR ZUR STATION A IST OFFEN · ERDGESCHOSS
+Hub,hub.wing.1.door_locked,Arrival subtitle (5 s) when the door of wing 1 is locked and no order applies. {floor} = floor number,FLOOR {floor} · THE WARD A DOOR IS LOCKED · GROUND FLOOR,ETAGE {floor} · DIE TÜR ZUR STATION A IST VERSCHLOSSEN · ERDGESCHOSS
+Hub,hub.wing.1.door_unlocked,"Subtitle (3.2 s) when a person hands over the key to wing 1 (floor 5: not used, see hub.keyrun.taken)",THE WARD A DOOR IS UNLOCKED · GROUND FLOOR,DIE TÜR ZUR STATION A IST AUFGESCHLOSSEN · ERDGESCHOSS
+Hub,hub.wing.1.order,"Readmission slip order line and arrival subtitle for floor 1: who to report to and where (ALL CAPS, one line, 34 pt typed). Giver: Sister Agnes. Write the whole sentence (article, title)",REPORT TO SISTER AGNES · NURSE STATION,MELDE DICH BEI SCHWESTER AGNES · SCHWESTERNZIMMER
+Hub,hub.wing.2.name,"Wing 2 name on its door plaque, and inside the sentences below when glued by code (ALL CAPS, short). Glossary term",BOILER ROOM,KESSELRAUM
+Hub,hub.wing.2.room,"Wing 2 room name, plaque second line (ALL CAPS)",MACHINE ROOM,MASCHINENRAUM
+Hub,hub.wing.2.level,"Wing 2 storey name (GROUND FLOOR / BASEMENT / UPPER FLOOR), used in the arrival, hint and objective lines",BASEMENT,KELLER
+Hub,hub.wing.2.enter,"Interaction prompt at the open door of wing 2. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Imperative or infinitive",ENTER BOILER ROOM,KESSELRAUM BETRETEN
+Hub,hub.wing.2.locked,Interaction prompt at the door of wing 2 while a mission or the key run has it locked,BOILER ROOM · LOCKED,KESSELRAUM · VERSCHLOSSEN
+Hub,hub.wing.2.cleared,Interaction prompt at the door of wing 2 once its floor is cleared,BOILER ROOM · CLEARED,KESSELRAUM · ERLEDIGT
+Hub,hub.wing.2.sealed,Interaction prompt at the door of wing 2 before its floor can be reached,BOILER ROOM · SEALED,KESSELRAUM · VERSIEGELT
+Hub,hub.wing.2.already_cleared,Subtitle (1.8 s) when E is pressed at the cleared door of wing 2,BOILER ROOM · ALREADY CLEARED,KESSELRAUM · BEREITS ERLEDIGT
+Hub,hub.wing.2.sealed_need_key,Subtitle (2.2 s) when E is pressed at the sealed door of wing 2. The key named is the previous wing's (WARD A): write the whole sentence with its article,SEALED · YOU NEED THE WARD A KEY,VERSIEGELT · DU BRAUCHST DEN SCHLÜSSEL ZUR STATION A
+Hub,hub.wing.2.go_to_door,"Objective card goal (big card 42 pt one line, 650 px, auto-size; compact card wraps) when the player only has to walk to the door of wing 2",GO TO THE BOILER ROOM DOOR · BASEMENT,GEH ZUR TÜR DES KESSELRAUMS · KELLER
+Hub,hub.wing.2.door_open,Arrival subtitle (5 s) when the door of wing 2 is usable. {floor} = floor number. One whole sentence: it names the door with an article,FLOOR {floor} · THE BOILER ROOM DOOR IS OPEN · BASEMENT,ETAGE {floor} · DIE TÜR ZUM KESSELRAUM IST OFFEN · KELLER
+Hub,hub.wing.2.door_locked,Arrival subtitle (5 s) when the door of wing 2 is locked and no order applies. {floor} = floor number,FLOOR {floor} · THE BOILER ROOM DOOR IS LOCKED · BASEMENT,ETAGE {floor} · DIE TÜR ZUM KESSELRAUM IST VERSCHLOSSEN · KELLER
+Hub,hub.wing.2.door_unlocked,"Subtitle (3.2 s) when a person hands over the key to wing 2 (floor 5: not used, see hub.keyrun.taken)",THE BOILER ROOM DOOR IS UNLOCKED · BASEMENT,DIE TÜR ZUM KESSELRAUM IST AUFGESCHLOSSEN · KELLER
+Hub,hub.wing.2.order,"Readmission slip order line and arrival subtitle for floor 2: who to report to and where (ALL CAPS, one line, 34 pt typed). Giver: Bruno. Write the whole sentence (article, title)",REPORT TO BRUNO · KITCHEN,MELDE DICH BEI BRUNO · KÜCHE
+Hub,hub.wing.3.name,"Wing 3 name on its door plaque, and inside the sentences below when glued by code (ALL CAPS, short). Glossary term",MORGUE,LEICHENHALLE
+Hub,hub.wing.3.room,"Wing 3 room name, plaque second line (ALL CAPS)",COLD STORAGE,KÜHLKAMMER
+Hub,hub.wing.3.level,"Wing 3 storey name (GROUND FLOOR / BASEMENT / UPPER FLOOR), used in the arrival, hint and objective lines",BASEMENT,KELLER
+Hub,hub.wing.3.enter,"Interaction prompt at the open door of wing 3. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Imperative or infinitive",ENTER MORGUE,LEICHENHALLE BETRETEN
+Hub,hub.wing.3.locked,Interaction prompt at the door of wing 3 while a mission or the key run has it locked,MORGUE · LOCKED,LEICHENHALLE · VERSCHLOSSEN
+Hub,hub.wing.3.cleared,Interaction prompt at the door of wing 3 once its floor is cleared,MORGUE · CLEARED,LEICHENHALLE · ERLEDIGT
+Hub,hub.wing.3.sealed,Interaction prompt at the door of wing 3 before its floor can be reached,MORGUE · SEALED,LEICHENHALLE · VERSIEGELT
+Hub,hub.wing.3.already_cleared,Subtitle (1.8 s) when E is pressed at the cleared door of wing 3,MORGUE · ALREADY CLEARED,LEICHENHALLE · BEREITS ERLEDIGT
+Hub,hub.wing.3.sealed_need_key,Subtitle (2.2 s) when E is pressed at the sealed door of wing 3. The key named is the previous wing's (BOILER ROOM): write the whole sentence with its article,SEALED · YOU NEED THE BOILER ROOM KEY,VERSIEGELT · DU BRAUCHST DEN SCHLÜSSEL ZUM KESSELRAUM
+Hub,hub.wing.3.go_to_door,"Objective card goal (big card 42 pt one line, 650 px, auto-size; compact card wraps) when the player only has to walk to the door of wing 3",GO TO THE MORGUE DOOR · BASEMENT,GEH ZUR TÜR DER LEICHENHALLE · KELLER
+Hub,hub.wing.3.door_open,Arrival subtitle (5 s) when the door of wing 3 is usable. {floor} = floor number. One whole sentence: it names the door with an article,FLOOR {floor} · THE MORGUE DOOR IS OPEN · BASEMENT,ETAGE {floor} · DIE TÜR ZUR LEICHENHALLE IST OFFEN · KELLER
+Hub,hub.wing.3.door_locked,Arrival subtitle (5 s) when the door of wing 3 is locked and no order applies. {floor} = floor number,FLOOR {floor} · THE MORGUE DOOR IS LOCKED · BASEMENT,ETAGE {floor} · DIE TÜR ZUR LEICHENHALLE IST VERSCHLOSSEN · KELLER
+Hub,hub.wing.3.door_unlocked,"Subtitle (3.2 s) when a person hands over the key to wing 3 (floor 5: not used, see hub.keyrun.taken)",THE MORGUE DOOR IS UNLOCKED · BASEMENT,DIE TÜR ZUR LEICHENHALLE IST AUFGESCHLOSSEN · KELLER
+Hub,hub.wing.3.order,"Readmission slip order line and arrival subtitle for floor 3: who to report to and where (ALL CAPS, one line, 34 pt typed). Giver: Marta. Write the whole sentence (article, title)",REPORT TO MARTA · CLASSROOM,MELDE DICH BEI MARTA · KLASSENZIMMER
+Hub,hub.wing.4.name,"Wing 4 name on its door plaque, and inside the sentences below when glued by code (ALL CAPS, short). Glossary term",SURGERY,CHIRURGIE
+Hub,hub.wing.4.room,"Wing 4 room name, plaque second line (ALL CAPS)",OPERATING THEATRE,OPERATIONSSAAL
+Hub,hub.wing.4.level,"Wing 4 storey name (GROUND FLOOR / BASEMENT / UPPER FLOOR), used in the arrival, hint and objective lines",UPPER FLOOR,OBERGESCHOSS
+Hub,hub.wing.4.enter,"Interaction prompt at the open door of wing 4. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Imperative or infinitive",ENTER SURGERY,CHIRURGIE BETRETEN
+Hub,hub.wing.4.locked,Interaction prompt at the door of wing 4 while a mission or the key run has it locked,SURGERY · LOCKED,CHIRURGIE · VERSCHLOSSEN
+Hub,hub.wing.4.cleared,Interaction prompt at the door of wing 4 once its floor is cleared,SURGERY · CLEARED,CHIRURGIE · ERLEDIGT
+Hub,hub.wing.4.sealed,Interaction prompt at the door of wing 4 before its floor can be reached,SURGERY · SEALED,CHIRURGIE · VERSIEGELT
+Hub,hub.wing.4.already_cleared,Subtitle (1.8 s) when E is pressed at the cleared door of wing 4,SURGERY · ALREADY CLEARED,CHIRURGIE · BEREITS ERLEDIGT
+Hub,hub.wing.4.sealed_need_key,Subtitle (2.2 s) when E is pressed at the sealed door of wing 4. The key named is the previous wing's (MORGUE): write the whole sentence with its article,SEALED · YOU NEED THE MORGUE KEY,VERSIEGELT · DU BRAUCHST DEN SCHLÜSSEL ZUR LEICHENHALLE
+Hub,hub.wing.4.go_to_door,"Objective card goal (big card 42 pt one line, 650 px, auto-size; compact card wraps) when the player only has to walk to the door of wing 4",GO TO THE SURGERY DOOR · UPPER FLOOR,GEH ZUR TÜR DER CHIRURGIE · OBERGESCHOSS
+Hub,hub.wing.4.door_open,Arrival subtitle (5 s) when the door of wing 4 is usable. {floor} = floor number. One whole sentence: it names the door with an article,FLOOR {floor} · THE SURGERY DOOR IS OPEN · UPPER FLOOR,ETAGE {floor} · DIE TÜR ZUR CHIRURGIE IST OFFEN · OBERGESCHOSS
+Hub,hub.wing.4.door_locked,Arrival subtitle (5 s) when the door of wing 4 is locked and no order applies. {floor} = floor number,FLOOR {floor} · THE SURGERY DOOR IS LOCKED · UPPER FLOOR,ETAGE {floor} · DIE TÜR ZUR CHIRURGIE IST VERSCHLOSSEN · OBERGESCHOSS
+Hub,hub.wing.4.door_unlocked,"Subtitle (3.2 s) when a person hands over the key to wing 4 (floor 5: not used, see hub.keyrun.taken)",THE SURGERY DOOR IS UNLOCKED · UPPER FLOOR,DIE TÜR ZUR CHIRURGIE IST AUFGESCHLOSSEN · OBERGESCHOSS
+Hub,hub.wing.4.order,"Readmission slip order line and arrival subtitle for floor 4: who to report to and where (ALL CAPS, one line, 34 pt typed). Giver: Dr. Weiss. Write the whole sentence (article, title)",REPORT TO DR. WEISS · EXAM ROOM,MELDE DICH BEI DR. WEISS · UNTERSUCHUNGSRAUM
+Hub,hub.wing.5.name,"Wing 5 name on its door plaque, and inside the sentences below when glued by code (ALL CAPS, short). Glossary term",DIRECTOR,DIREKTOR
+Hub,hub.wing.5.room,"Wing 5 room name, plaque second line (ALL CAPS)",DIRECTOR'S OFFICE,DIREKTORENBÜRO
+Hub,hub.wing.5.level,"Wing 5 storey name (GROUND FLOOR / BASEMENT / UPPER FLOOR), used in the arrival, hint and objective lines",UPPER FLOOR,OBERGESCHOSS
+Hub,hub.wing.5.enter,"Interaction prompt at the open door of wing 5. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Imperative or infinitive",ENTER DIRECTOR,ZUM DIREKTOR GEHEN
+Hub,hub.wing.5.locked,Interaction prompt at the door of wing 5 while a mission or the key run has it locked,DIRECTOR · LOCKED,DIREKTOR · VERSCHLOSSEN
+Hub,hub.wing.5.cleared,Interaction prompt at the door of wing 5 once its floor is cleared,DIRECTOR · CLEARED,DIREKTOR · ERLEDIGT
+Hub,hub.wing.5.sealed,Interaction prompt at the door of wing 5 before its floor can be reached,DIRECTOR · SEALED,DIREKTOR · VERSIEGELT
+Hub,hub.wing.5.already_cleared,Subtitle (1.8 s) when E is pressed at the cleared door of wing 5,DIRECTOR · ALREADY CLEARED,DIREKTOR · BEREITS ERLEDIGT
+Hub,hub.wing.5.sealed_need_key,Subtitle (2.2 s) when E is pressed at the sealed door of wing 5. The key named is the previous wing's (SURGERY): write the whole sentence with its article,SEALED · YOU NEED THE SURGERY KEY,VERSIEGELT · DU BRAUCHST DEN SCHLÜSSEL ZUR CHIRURGIE
+Hub,hub.wing.5.go_to_door,"Objective card goal (big card 42 pt one line, 650 px, auto-size; compact card wraps) when the player only has to walk to the door of wing 5",GO TO THE DIRECTOR'S OFFICE · UPPER FLOOR,GEH ZUM DIREKTORENBÜRO · OBERGESCHOSS
+Hub,hub.wing.5.door_open,Arrival subtitle (5 s) when the door of wing 5 is usable. {floor} = floor number. One whole sentence: it names the door with an article,FLOOR {floor} · THE DIRECTOR DOOR IS OPEN · UPPER FLOOR,ETAGE {floor} · DIE TÜR DES DIREKTORS IST OFFEN · OBERGESCHOSS
+Hub,hub.wing.5.door_locked,Arrival subtitle (5 s) when the door of wing 5 is locked and no order applies. {floor} = floor number,FLOOR {floor} · THE DIRECTOR DOOR IS LOCKED · UPPER FLOOR,ETAGE {floor} · DIE TÜR DES DIREKTORS IST VERSCHLOSSEN · OBERGESCHOSS
+Hub,hub.wing.5.door_unlocked,"Subtitle (3.2 s) when a person hands over the key to wing 5 (floor 5: not used, see hub.keyrun.taken)",THE DIRECTOR DOOR IS UNLOCKED · UPPER FLOOR,DIE TÜR DES DIREKTORS IST AUFGESCHLOSSEN · OBERGESCHOSS
+Hub,hub.wing.5.order,"Readmission slip order line and arrival subtitle for floor 5: who to report to and where (ALL CAPS, one line, 34 pt typed). Giver: nobody (the Director's key is on the records board). Write the whole sentence (article, title)",KEY NOT ISSUED · RECORDS ROOM,SCHLÜSSEL NICHT AUSGEGEBEN · ARCHIV
+Hub,hub.wing.5.locked_line,Subtitle (2.6 s) when E is pressed at the Director's door while the key run has it locked,LOCKED · THE DIRECTOR'S KEY IS IN RECORDS,VERSCHLOSSEN · DER SCHLÜSSEL DES DIREKTORS IST IM ARCHIV
+Hub,hub.mission.1.locked_line,"Floor 1 mission ""THE WARD KEYS"": subtitle (2.6 s) when E is pressed at the still-locked wing door. Names who has the key and where",LOCKED · SISTER AGNES HAS THE KEY · NURSE STATION,VERSCHLOSSEN · SCHWESTER AGNES HAT DEN SCHLÜSSEL · SCHWESTERNZIMMER
+Hub,hub.mission.1.key_name,Floor 1 mission: name of the key handed over (only used in a fallback sentence),THE WARD A KEY,DER SCHLÜSSEL ZUR STATION A
+Hub,hub.mission.1.objective_offered,"Floor 1 mission ""THE WARD KEYS"": objective while nobody has been talked to yet (objective card goal, hub hint subtitle 4 s)",TALK TO SISTER AGNES · NURSE STATION,SPRICH MIT SCHWESTER AGNES · SCHWESTERNZIMMER
+Hub,hub.mission.1.where,"Floor 1 mission: where the giver is (a short noun phrase, ALL CAPS). Used on the readmission slip and by the arrival line",NURSE STATION,SCHWESTERNZIMMER
+Hub,hub.mission.1.objective_active,"Floor 1 mission: objective once the job is taken (objective card goal, also said as a subtitle for 3.2 s when the job is accepted)",FIND AGNES'S KEY RING · THE KITCHEN,FINDE AGNES' SCHLÜSSELBUND · KÜCHE
+Hub,hub.mission.1.objective_fetched,Floor 1 mission: objective once the item is in hand,BRING THE KEY RING BACK TO SISTER AGNES,BRING DEN SCHLÜSSELBUND ZU SCHWESTER AGNES ZURÜCK
+Hub,hub.mission.1.item.0.prompt,"Floor 1 mission item 1: interaction prompt. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",TAKE THE KEY RING,SCHLÜSSELBUND NEHMEN
+Hub,hub.mission.1.item.0.taken,Floor 1 mission item 1: subtitle on pickup (2.4 s),KEY RING · TAKEN,SCHLÜSSELBUND · GENOMMEN
+Hub,hub.mission.2.locked_line,"Floor 2 mission ""THE TRAY"": subtitle (2.6 s) when E is pressed at the still-locked wing door. Names who has the key and where",LOCKED · BRUNO HAS THE KEY · KITCHEN,VERSCHLOSSEN · BRUNO HAT DEN SCHLÜSSEL · KÜCHE
+Hub,hub.mission.2.key_name,Floor 2 mission: name of the key handed over (only used in a fallback sentence),THE BOILER ROOM KEY,DER SCHLÜSSEL ZUM KESSELRAUM
+Hub,hub.mission.2.objective_offered,"Floor 2 mission ""THE TRAY"": objective while nobody has been talked to yet (objective card goal, hub hint subtitle 4 s)",TALK TO BRUNO · KITCHEN,SPRICH MIT BRUNO · KÜCHE
+Hub,hub.mission.2.where,"Floor 2 mission: where the giver is (a short noun phrase, ALL CAPS). Used on the readmission slip and by the arrival line",KITCHEN,KÜCHE
+Hub,hub.mission.2.objective_active,"Floor 2 mission: objective once the job is taken (objective card goal, also said as a subtitle for 3.2 s when the job is accepted)",TAKE JOSEF'S SUPPER TRAY FROM THE KITCHEN,HOL JOSEFS ABENDTABLETT AUS DER KÜCHE
+Hub,hub.mission.2.objective_fetched,Floor 2 mission: objective once the item is in hand,TAKE THE TRAY UP TO JOSEF · BEDROOM,BRING DAS TABLETT HOCH ZU JOSEF · SCHLAFSAAL
+Hub,hub.mission.2.progress_fetched,Floor 2 mission: second line of the objective card once everything is in hand,CARRYING · JOSEF'S TRAY,IN DER HAND · JOSEFS TABLETT
+Hub,hub.mission.2.item.0.prompt,"Floor 2 mission item 1: interaction prompt. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",TAKE JOSEF'S TRAY,JOSEFS TABLETT NEHMEN
+Hub,hub.mission.2.item.0.taken,Floor 2 mission item 1: subtitle on pickup (2.4 s),CARRYING · JOSEF'S TRAY,IN DER HAND · JOSEFS TABLETT
+Hub,hub.mission.3.locked_line,"Floor 3 mission ""THE MUSIC BOX"": subtitle (2.6 s) when E is pressed at the still-locked wing door. Names who has the key and where",LOCKED · MARTA HAS THE KEY · CLASSROOM,VERSCHLOSSEN · MARTA HAT DEN SCHLÜSSEL · KLASSENZIMMER
+Hub,hub.mission.3.key_name,Floor 3 mission: name of the key handed over (only used in a fallback sentence),THE MORGUE KEY,DER SCHLÜSSEL ZUR LEICHENHALLE
+Hub,hub.mission.3.objective_offered,"Floor 3 mission ""THE MUSIC BOX"": objective while nobody has been talked to yet (objective card goal, hub hint subtitle 4 s)",TALK TO MARTA · CLASSROOM,SPRICH MIT MARTA · KLASSENZIMMER
+Hub,hub.mission.3.where,"Floor 3 mission: where the giver is (a short noun phrase, ALL CAPS). Used on the readmission slip and by the arrival line",CLASSROOM,KLASSENZIMMER
+Hub,hub.mission.3.objective_active,"Floor 3 mission: objective once the job is taken (objective card goal, also said as a subtitle for 3.2 s when the job is accepted)",FIND MARTA'S MUSIC BOX · THE BASEMENT HALL,FINDE MARTAS SPIELUHR · KELLERGANG
+Hub,hub.mission.3.objective_fetched,Floor 3 mission: objective once the item is in hand,BRING THE MUSIC BOX BACK TO MARTA,BRING DIE SPIELUHR ZU MARTA ZURÜCK
+Hub,hub.mission.3.item.0.prompt,"Floor 3 mission item 1: interaction prompt. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",TAKE THE MUSIC BOX,SPIELUHR NEHMEN
+Hub,hub.mission.3.item.0.taken,Floor 3 mission item 1: subtitle on pickup (2.4 s),MUSIC BOX · TAKEN,SPIELUHR · GENOMMEN
+Hub,hub.mission.4.locked_line,"Floor 4 mission ""ROUNDS"": subtitle (2.6 s) when E is pressed at the still-locked wing door. Names who has the key and where",LOCKED · DR. WEISS HAS THE KEY · EXAM ROOM,VERSCHLOSSEN · DR. WEISS HAT DEN SCHLÜSSEL · UNTERSUCHUNGSRAUM
+Hub,hub.mission.4.key_name,Floor 4 mission: name of the key handed over (only used in a fallback sentence),THE SURGERY KEY,DER SCHLÜSSEL ZUR CHIRURGIE
+Hub,hub.mission.4.objective_offered,"Floor 4 mission ""ROUNDS"": objective while nobody has been talked to yet (objective card goal, hub hint subtitle 4 s)",TALK TO DR. WEISS · EXAM ROOM,SPRICH MIT DR. WEISS · UNTERSUCHUNGSRAUM
+Hub,hub.mission.4.where,"Floor 4 mission: where the giver is (a short noun phrase, ALL CAPS). Used on the readmission slip and by the arrival line",EXAM ROOM,UNTERSUCHUNGSRAUM
+Hub,hub.mission.4.objective_active,"Floor 4 mission: objective once the job is taken (objective card goal, also said as a subtitle for 3.2 s when the job is accepted)",FIND THE THREE AMPOULES · UPPER FLOOR,FINDE DIE DREI AMPULLEN · OBERGESCHOSS
+Hub,hub.mission.4.objective_fetched,Floor 4 mission: objective once the item is in hand,BRING THE AMPOULES TO DR. WEISS,BRING DIE AMPULLEN ZU DR. WEISS
+Hub,hub.mission.4.progress_active,Floor 4 mission: second line of the objective card while collecting. {n} found of {total},AMPOULES  {n} / {total},AMPULLEN  {n} / {total}
+Hub,hub.mission.4.progress_fetched,Floor 4 mission: second line of the objective card once everything is in hand. {n} / {total} as above,AMPOULES  {n} / {total},AMPULLEN  {n} / {total}
+Hub,hub.mission.4.item.0.prompt,"Floor 4 mission item 1: interaction prompt. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",TAKE THE AMPOULE,AMPULLE NEHMEN
+Hub,hub.mission.4.item.0.taken,"Floor 4 mission item 1: subtitle on pickup (2.4 s). {n} = items taken so far, {total} = items in the mission",AMPOULE {n} / {total},AMPULLE {n} / {total}
+Hub,hub.mission.4.item.1.prompt,"Floor 4 mission item 2: interaction prompt. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",TAKE THE AMPOULE,AMPULLE NEHMEN
+Hub,hub.mission.4.item.1.taken,"Floor 4 mission item 2: subtitle on pickup (2.4 s). {n} = items taken so far, {total} = items in the mission",AMPOULE {n} / {total},AMPULLE {n} / {total}
+Hub,hub.mission.4.item.2.prompt,"Floor 4 mission item 3: interaction prompt. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",TAKE THE AMPOULE,AMPULLE NEHMEN
+Hub,hub.mission.4.item.2.taken,"Floor 4 mission item 3: subtitle on pickup (2.4 s). {n} = items taken so far, {total} = items in the mission",AMPOULE {n} / {total},AMPULLE {n} / {total}
+Hub,hub.mission.door_unlocked,Fallback subtitle (3.2 s) when a key is handed over and the wing door cannot be found. {key} = the key name,{key} · THE DOOR IS UNLOCKED,{key} · DIE TÜR IST AUFGESCHLOSSEN
+Hub,hub.npc.agnes,"Speaker name of the nurse in the gatehouse (dialogue panel name 26 pt, interaction prompt, readmission slip). Title translated, name kept",SISTER AGNES,SCHWESTER AGNES
+Hub,hub.npc.bruno,Speaker name: the cook in the kitchen. Name kept,BRUNO,BRUNO
+Hub,hub.npc.josef,Speaker name: the patient in the bedroom. Name kept,JOSEF,JOSEF
+Hub,hub.npc.marta,Speaker name: the child in the classroom. Name kept,MARTA,MARTA
+Hub,hub.npc.weiss,Speaker name: the doctor in the exam room. Name kept,DR. WEISS,DR. WEISS
+Hub,hub.npc.clerk,Speaker name: the clerk typing at the records desk,THE CLERK,DER SCHREIBER
+Hub,hub.npc.talk_to,"Interaction prompt on a person in the asylum. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). {name} = the speaker name above (already capitalised, with its title)",TALK TO {name},SPRECHEN: {name}
+Hub,hub.not_now,Subtitle (1.6 s) when a person or the shop door refuses because something is hunting the player,NOT NOW,NICHT JETZT
+Hub,hub.catch.wake,Subtitle (3.2 s) after the hub pursuer catches the player: they wake at the door they came in by. Sentence case,You wake at the door.,Du erwachst an der Tür.
+Hub,hub.finale.office,Subtitle (4 s) on arriving at the Director's office in the finale,THE DIRECTOR'S OFFICE,DAS DIREKTORENBÜRO
+Hub,hub.shopdoor.room,"Where the SHOP door is, after ""THE SHOP IS OPEN · "". A noun phrase with its article, ALL CAPS",THE GROUND FLOOR HALL,DIE ERDGESCHOSSHALLE
+Hub,hub.shopdoor.enter,"Interaction prompt at the open SHOP door. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",ENTER SHOP,LADEN BETRETEN
+Hub,hub.shopdoor.closed,Interaction prompt at the SHOP door while it is closed (before a floor has been cleared),SHOP · CLOSED,LADEN · GESCHLOSSEN
+Hub,hub.shopdoor.closed_line,Subtitle (2.2 s) when E is pressed at the closed SHOP door,CLOSED · COME BACK WITH SHARDS,GESCHLOSSEN · KOMM MIT SPLITTERN WIEDER
+Hub,hub.shopdoor.plaque,"World-space sign over the SHOP door. Two lines: SHOP big, then the salesman and {status} at 60 % size. Keep the <size=60%> tag and the line break","SHOP
+<size=60%>THE SALESMAN  ·  {status}</size>","LADEN
+<size=60%>DER HÄNDLER  ·  {status}</size>"
+Hub,hub.shopdoor.status_open,Status word on the SHOP door plaque (second line),OPEN,OFFEN
+Hub,hub.shopdoor.status_closed,Status word on the SHOP door plaque (second line),CLOSED,GESCHLOSSEN
+Hub,hub.shopdoor.open_line,"Arrival subtitle (4 s, queued behind the first line): the SHOP door is worth a visit (used when the door has no room name)",THE SHOP IS OPEN,DER LADEN IST OFFEN
+Hub,hub.shopdoor.open_line_room,"Arrival subtitle (4 s, queued): the SHOP door is worth a visit. {room} = hub.shopdoor.room",THE SHOP IS OPEN · {room},DER LADEN IST OFFEN · {room}
+Hub,hub.examine.tally.prompt,"Interaction prompt on the tally marks on the wall (examine, subtitle follows). Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Readable cards use hud.prompt.read / hud.prompt.close instead",EXAMINE,UNTERSUCHEN
+Hub,hub.examine.barricade.prompt,"Interaction prompt on the barricade. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Readable cards use hud.prompt.read / hud.prompt.close instead",EXAMINE,UNTERSUCHEN
+Hub,hub.examine.room4.prompt,"Interaction prompt on the door of Room 4. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Readable cards use hud.prompt.read / hud.prompt.close instead",EXAMINE,UNTERSUCHEN
+Hub,hub.examine.admissions.prompt,"Interaction prompt on the admissions ledger. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Readable cards use hud.prompt.read / hud.prompt.close instead",READ THE LEDGER,AUFNAHMEBUCH LESEN
+Hub,hub.examine.pipe.prompt,"Interaction prompt on the pipe Tomas knocks on. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Readable cards use hud.prompt.read / hud.prompt.close instead",LISTEN,LAUSCHEN
+Hub,hub.records.read_file,"Interaction prompt on a folder on the records board in the asylum office. Shown as ""E  <text>"". {label} = the case file label from the file itself (a patient name and number)",READ FILE · {label},AKTE LESEN · {label}
+Hub,hub.wristband.prompt,Interaction prompt on Elias's wristband on the morgue table (floor 4 on),READ WRISTBAND · ELIAS VOGT · PATIENT 5,ARMBAND LESEN · ELIAS VOGT · PATIENT 5
+Hub,hub.exit.prompt,Interaction prompt at the asylum main doors in the finale (ending A),LEAVE THE ASYLUM,ANSTALT VERLASSEN
+Hub,hub.key.prompt,Interaction prompt on the Director's key on the records board (floor 5),TAKE THE DIRECTOR'S KEY,SCHLÜSSEL DES DIREKTORS NEHMEN
+Hub,hub.switch.prompt,Interaction prompt (hold E 3 s) on the master switch in the finale (ending B). LIGHTS OUT is the game title: keep it,PULL THE MASTER SWITCH · LIGHTS OUT,HAUPTSCHALTER UMLEGEN · LIGHTS OUT
+Hub,hub.desk.open,Interaction prompt on the Director's desk drawer when all five case files were read,OPEN THE DRAWER,SCHUBLADE ÖFFNEN
+Hub,hub.desk.closed,Interaction prompt on the Director's desk drawer while the case files are incomplete,THE DRAWER,DIE SCHUBLADE
+Hub,hub.desk.locked,Subtitle (3 s) when E is pressed at the locked drawer. {n} of {total} case files read,THE DRAWER IS LOCKED · CASE FILES {n} / {total},DIE SCHUBLADE IST VERSCHLOSSEN · KRANKENAKTEN {n} / {total}
+Hub,hub.keyrun.taken,Subtitle (3 s) after taking the Director's key on floor 5,THE DIRECTOR'S KEY · THE DOOR IS UNLOCKED,DER SCHLÜSSEL DES DIREKTORS · DIE TÜR IST AUFGESCHLOSSEN
+Hub,hub.card.find_key,"Objective card goal (floor 5, step 1 of 2): fetch the Director's key (42 pt one line, 650 px, auto-size)",FIND THE DIRECTOR'S KEY · RECORDS ROOM,FINDE DEN SCHLÜSSEL DES DIREKTORS · ARCHIV
+Hub,hub.lift.chained,"Floor 2: second line of the objective card, subtitle after the wing is unlocked (4 s) and on a return from the shop. The stairs down are chained shut",THE STAIRS TO THE BASEMENT ARE CHAINED · TAKE THE LIFT,DIE KELLERTREPPE IST MIT KETTEN VERSPERRT · NIMM DEN AUFZUG
+Hub,hub.lift.call,"Interaction prompt at the lift call button on floor 2. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",CALL THE LIFT,AUFZUG RUFEN
+Hub,hub.lift.lift,Interaction prompt at the lift call button on other floors / the finale (it does not work),THE LIFT,DER AUFZUG
+Hub,hub.lift.gate,Interaction prompt on the chained gate across the basement stairs,THE GATE,DAS GITTER
+Hub,hub.lift.force,Interaction prompt (hold E 1.5 s) on the stuck basement lift doors,FORCE THE DOORS,TÜREN AUFSTEMMEN
+Hub,hub.lift.gate_chained,Subtitle (2.6 s) when E is pressed at the chained gate,THE GATE IS CHAINED · TAKE THE LIFT,DAS GITTER IST ANGEKETTET · NIMM DEN AUFZUG
+Hub,hub.lift.does_not_move,Subtitle (2.2 s) when the lift is called on floor 1 or in the finale,THE LIFT DOES NOT MOVE,DER AUFZUG BEWEGT SICH NICHT
+Hub,hub.lift.will_not_come,Subtitle (3 s) when the lift is called on floor 2 before the Boiler Room key is in hand. Names the Boiler Room (wing 2) with its article,THE LIFT WILL NOT COME · THE BOILER ROOM IS STILL LOCKED,DER AUFZUG KOMMT NICHT · DER KESSELRAUM IST NOCH VERSCHLOSSEN
+Hub,hub.lift.stopped,Subtitle (2.2 s) when the lift jams half-way down,THE LIFT STOPPED,DER AUFZUG IST STEHEN GEBLIEBEN
+Hub,hub.lift.doors_stuck,Subtitle (4 s) at the bottom of the lift. {key} = E on keyboard or USE on touch (do not translate the key),THE DOORS ARE STUCK · HOLD {key} TO FORCE THEM,"DIE TÜREN KLEMMEN · HALTE {key}, UM SIE AUFZUSTEMMEN"
+Hub,hub.flood.knocks,Subtitle (3.5 s) in the basement hall on floor 3: Tomas knocks in the pipes. Sentence in capitals with a final full stop,SOMETHING KNOCKS THREE TIMES.,ETWAS KLOPFT DREIMAL.
+Hub,hub.chase.stops,Subtitle (2.6 s) when the floor-4 chase ends at the surgery door,IT STOPS AT THE DOOR,ES BLEIBT AN DER TÜR STEHEN
+Hub,hub.stars.first,"Subtitle (4.5 s, queued) the first time the player walks up to a chalk star on the wall (floor 2)",SOMEONE HAS DRAWN STARS ON THE WALL. THEY STILL GLOW.,JEMAND HAT STERNE AN DIE WAND GEMALT. SIE LEUCHTEN NOCH.
+Intake,intake.goal.look,"Tutorial objective card, step 1 of 9 (42 pt bold, one line, auto-size down to 26 pt, ~1000 px). ALL CAPS, imperative",LOOK AROUND,SIEH DICH UM
+Intake,intake.goal.move,"Tutorial objective card, step 2 of 9: walk to the glowing marker on the floor (42 pt, one line, auto-size)",WALK TO THE MARKER,GEH ZUR MARKIERUNG
+Intake,intake.goal.torch,"Tutorial objective card, step 3 of 9: press the torch key (42 pt, one line, auto-size)",TURN ON YOUR TORCH,SCHALTE DEINE LAMPE EIN
+Intake,intake.goal.focus,"Tutorial objective card, step 4 of 9: hold the right mouse button to focus the beam on a far sign (42 pt, one line, auto-size)",HOLD THE BEAM ON THE SIGN,HALTE DEN STRAHL AUF DAS SCHILD
+Intake,intake.goal.battery,"Tutorial objective card, step 5 of 9 (42 pt, one line, auto-size). A battery cell recharges the torch",TAKE THE BATTERY CELL,NIMM DIE BATTERIEZELLE
+Intake,intake.goal.read,"Tutorial objective card, step 6 of 9: read the note on the shelf (42 pt, one line, auto-size)",READ THE NOTE,LIES DIE NOTIZ
+Intake,intake.goal.read_close,"Tutorial objective card, step 6 of 9, once the note is open (42 pt, one line, auto-size)",CLOSE THE NOTE,SCHLIEß DIE NOTIZ
+Intake,intake.goal.throw_pick,"Tutorial objective card, step 7 of 9, before the bottle is in hand (42 pt, one line, auto-size)",PICK UP THE BOTTLE,HEB DIE FLASCHE AUF
+Intake,intake.goal.throw,"Tutorial objective card, step 7 of 9, bottle in hand: throw it at the bell on the far wall (42 pt, one line, auto-size)",THROW IT AT THE BELL,WIRF SIE AN DIE GLOCKE
+Intake,intake.goal.hide_go,"Tutorial objective card, step 8 of 9, before entering the holding room (42 pt, one line, auto-size)",GO THROUGH THE SHUTTER,GEH DURCH DEN ROLLLADEN
+Intake,intake.goal.hide,"Tutorial objective card, step 8 of 9: hide in the locker (42 pt, one line, auto-size)",HIDE IN THE LOCKER,VERSTECK DICH IM SPIND
+Intake,intake.goal.hide_still,"Tutorial objective card, step 8 of 9, while hidden and something passes (42 pt, one line, auto-size)",STAY STILL,BEWEG DICH NICHT
+Intake,intake.goal.hide_leave,"Tutorial objective card, step 8 of 9, once the danger has passed (42 pt, one line, auto-size). IT = the creature, never named",IT IS GONE. LEAVE THE LOCKER,ES IST FORT. VERLASS DEN SPIND
+Intake,intake.goal.star,"Tutorial objective card, step 9 of 9: pick up the star (42 pt, one line, auto-size)",TAKE THE STAR,NIMM DEN STERN
+Intake,intake.goal.hatch,"Tutorial objective card, step 9 of 9, after the star: walk onto the hatch in the floor (42 pt, one line, auto-size)",STEP ONTO THE HATCH,TRITT AUF DIE LUKE
+Intake,intake.key.mouse,"Key chip on the objective card: look around with the mouse (keyboard-and-mouse players). ALL CAPS, short, ~7 characters",MOUSE,MAUS
+Intake,intake.key.rmb,"Key chip on the objective card: the right mouse button, hold to focus the torch beam. ALL CAPS, short, ~6 characters",RMB,RECHTSKLICK
+Intake,intake.key.right_thumb,"Key chip on the objective card for touch screens: look around with the right thumb. ALL CAPS, short, ~12 characters",RIGHT THUMB,RECHTER DAUMEN
+Intake,intake.key.left_thumb,"Key chip on the objective card for touch screens: move with the left thumb. ALL CAPS, short, ~12 characters",LEFT THUMB,LINKER DAUMEN
+Intake,intake.key.torch,"Key chip on the objective card for touch screens: the on-screen torch button. Must match ui.touch.torch. ALL CAPS, short",TORCH,LAMPE
+Intake,intake.key.focus,"Key chip on the objective card for touch screens: the on-screen focus-beam button. Must match ui.touch.focus. ALL CAPS, short",FOCUS,FOKUS
+Intake,intake.key.throw,"Key chip on the objective card for touch screens: the on-screen throw button. ALL CAPS, short",THROW,WERFEN
+Intake,intake.sub.wake,Tutorial subtitle when the Intake begins for the first time (shown 4 s). The player wakes up in a hospital bed,You wake. The bed is cold. Nobody is here.,Du wachst auf. Das Bett ist kalt. Niemand ist hier.
+Intake,intake.sub.welcome_back,Tutorial subtitle when the Intake begins again after the tutorial was completed once (shown 4 s),Welcome back. You know the way - or skip it from the pause menu.,Willkommen zurück. Du kennst den Weg - oder überspring ihn im Pausenmenü.
+Intake,intake.sub.get_up,Tutorial subtitle as the player stands up from the bed (shown 2 s),Get up.,Steh auf.
+Intake,intake.sub.focus_hint,Tutorial subtitle at the focus step (shown 5 s),The focused beam is narrower and reaches further. Hold it on the sign.,Der fokussierte Strahl ist schmaler und reicht weiter. Halte ihn auf das Schild.
+Intake,intake.sub.battery_hint,Tutorial subtitle at the battery step (shown 4 s),Your torch is fading. A battery cell tops it up.,Deine Lampe wird schwächer. Eine Batteriezelle lädt sie wieder auf.
+Intake,intake.sub.recharge,Tutorial subtitle after taking the battery cell (shown 5 s),"Switched off, the torch slowly recharges - but never all the way.",Ausgeschaltet lädt sich die Lampe langsam auf - aber nie ganz.
+Intake,intake.sub.lamp_sparks,Tutorial subtitle when the room lamp dies (shown 3 s),The lamp sparks. The room goes dark.,Die Lampe sprüht Funken. Der Raum wird dunkel.
+Intake,intake.sub.bell_rings,Tutorial subtitle when the thrown bottle hits the bell (shown 3 s),"The bell rings. Somewhere, a shutter rises.",Die Glocke läutet. Irgendwo hebt sich ein Rollladen.
+Intake,intake.sub.another_bottle,Tutorial subtitle when a missed bottle is replaced on the table (shown 2.5 s),Another bottle on the table.,Noch eine Flasche auf dem Tisch.
+Intake,intake.sub.footsteps,"Tutorial subtitle when the silhouette starts walking past the hiding place (shown 3.5 s). Something = a creature, never named",Footsteps. Something heavy is being dragged.,Schritte. Etwas Schweres wird geschleift.
+Intake,intake.sub.hatch_again,"Tutorial subtitle after taking the star, for a player who has done the tutorial before (shown 6 s)",Stars open the hatch. Down you go.,Sterne öffnen die Luke. Ab nach unten.
+Intake,intake.sub.hatch_first,"Tutorial subtitle after taking the star, the first time (shown 6 s). A spoken line in quotes: the voice of the asylum. ""Something"" = the hunter, never named","""Stars open the hatch. The hatch is the way down. Something down there is hunting.""","""Sterne öffnen die Luke. Die Luke ist der Weg nach unten. Etwas da unten jagt."""
+Lore,lore.note.0,"Maze lore note, floor 1+ (reading panel; a diegetic document: a found shift rota, keep the style and line breaks; the signature after the dash is part of the text)","Night shift rota. Rule 1: the lights stay on. Rule 2: if the lights go out, do not run. Running is how it finds you. — Supervisor Okafor","Dienstplan Nachtschicht. Regel 1: Das Licht bleibt an. Regel 2: Wenn das Licht ausgeht, renn nicht. Am Rennen findet es dich. — Schichtleiter Okafor"
+Lore,lore.note.1,Maze lore note (reading panel; diegetic document: a staff observation. Patient 7 is the player's own character; the quoted phrase is Patient 7's words. Keep the quotation marks),"Patient 7 keeps drawing stars on the walls. Says they are ""the way down"". We paint over them. By morning they are back, and they glow.","Patient 7 malt immer wieder Sterne an die Wände. Sagt, sie seien ""der Weg nach unten"". Wir übermalen sie. Am Morgen sind sie wieder da, und sie leuchten."
+Lore,lore.note.2,Maze lore note (reading panel; diegetic document: a maintenance log entry),Maintenance log: pressure nominal. Fuse 3 tripped again. Someone keeps pressing the lockdown buttons at 3 a.m. Nobody is on shift at 3 a.m.,Wartungsprotokoll: Druck normal. Sicherung 3 schon wieder ausgelöst. Jemand drückt um 3 Uhr nachts immer wieder die Sperrknöpfe. Um 3 Uhr nachts hat niemand Dienst.
+Lore,lore.note.3,"Maze lore note (reading panel; diegetic document: a handwritten warning to whoever finds it. ""it"" = the hunter, never named)",To whoever finds this: the shutters were never meant to keep you in. They were built to slow it down. It hates doors. Close them behind you.,"An den, der das hier findet: Die Rollläden sollten dich nie einsperren. Sie wurden gebaut, um es zu bremsen. Es hasst Türen. Schließ sie hinter dir."
+Lore,lore.note.4,Maze lore note (reading panel; diegetic document: a handwritten warning about the chapel candles),The chapel candles are the only lights they could not cut. Light one. It does not help much. It helps enough.,"Die Kapellenkerzen sind die einzigen Lichter, die sie nicht abschalten konnten. Zünde eine an. Es hilft nicht viel. Es hilft genug."
+Lore,lore.note.5,Maze lore note (reading panel; diegetic document: the last page of a burial register. Subject A is a character name; keep the quotation marks),"Burial register, final page: ""Subject A — released to lower levels."" There is no grave. There was never a grave.","Begräbnisregister, letzte Seite: ""Subjekt A — in die unteren Ebenen entlassen."" Es gibt kein Grab. Es gab nie ein Grab."
+Lore,lore.note.6,"Maze lore note (reading panel; diegetic document: an engineer's trial report on the old service robots, which freeze when watched. ""it"" = a robot)",Service unit trial 14: the old robots freeze under direct observation. Engineering calls it a bug. I watched one move every time my torch flickered. It is not a bug.,"Serviceeinheiten, Versuch 14: Die alten Roboter erstarren unter direkter Beobachtung. Die Technik nennt es einen Fehler. Ich habe gesehen, wie sich einer bewegte, jedes Mal, wenn meine Lampe flackerte. Es ist kein Fehler."
+Lore,lore.note.7,Maze lore note (reading panel; diegetic document: a staff confession about the service robots),"We never switched the service units off. We turned off the lights in their bay and stopped looking. That was enough, for a while.","Wir haben die Serviceeinheiten nie abgeschaltet. Wir haben das Licht in ihrer Halle ausgemacht und nicht mehr hingesehen. Das reichte, eine Weile."
+Lore,lore.note.8,Maze lore note (reading panel; diegetic document: a message to the next patient),"If you are reading this, you got further than we did. The way out at the bottom is real. It opens once. Take the stars with you.","Wenn du das liest, bist du weiter gekommen als wir. Der Ausgang ganz unten ist echt. Er öffnet sich einmal. Nimm die Sterne mit."
+Lore,lore.note.9,"Maze lore note (reading panel; diegetic document: the last entry in a diary. ""It"" = the hunter, never named)","Last entry. It is not hunting you. It is following. Every floor you clear, it comes one floor down. Do not stop.","Letzter Eintrag. Es jagt dich nicht. Es folgt dir. Mit jeder Etage, die du schaffst, kommt es eine Etage tiefer. Hör nicht auf."
+Lore,lore.note.intake,"The note on the shelf in the Intake tutorial room (reading panel; diegetic document: a night nurse's note to the next patient; keep the blank lines, the heading in capitals and the signature line)","TO WHOEVER WAKES NEXT
+
+They keep the lights low down here, and something walks the halls between the beds. Five stars lie in the dark. Gather them and the hatch will open. It always opens. It never stays open long.
+
+- a night nurse, Ward 1","AN DEN, DER ALS NÄCHSTES AUFWACHT
+
+Hier unten halten sie das Licht gedämpft, und etwas geht zwischen den Betten durch die Flure. Fünf Sterne liegen im Dunkeln. Sammle sie, und die Luke öffnet sich. Sie öffnet sich immer. Sie bleibt nie lange offen.
+
+- eine Nachtschwester, Station 1"
+Lore,lore.file.100.text,"Case file 1 of 6, found in the floor 1 maze and shown on the records board (reading panel; diegetic document: a psychiatric case file; keep the heading in capitals, the blank lines and the names)","CASE FILE · PATIENT 3 · HILDE BRANDT
+
+Admitted for counting. Counts the doors on Ward A, aloud, all night. Insists there is always one more door than yesterday.
+
+Staff note: she is right. Maintenance cannot explain the new door on Ward A. Keep her away from it.","KRANKENAKTE · PATIENTIN 3 · HILDE BRANDT
+
+Aufgenommen wegen Zählens. Zählt die ganze Nacht laut die Türen auf Station A. Besteht darauf, dass es immer eine Tür mehr gibt als gestern.
+
+Personalvermerk: Sie hat recht. Die Wartung kann sich die neue Tür auf Station A nicht erklären. Patientin ist davon fernzuhalten."
+Lore,lore.file.101.text,"Case file 2 of 6, floor 2 maze (reading panel; diegetic document: a psychiatric case file; keep the heading in capitals, the blank lines and the names)","CASE FILE · PATIENT 11 · TOMAS REINER
+
+Former stoker. Hears footsteps in the pipes and answers them. Two knocks: all clear. Three knocks: hide.
+
+Staff note: since the Boiler Room was sealed, the pipes knock back. Nobody on staff knocks three times.","KRANKENAKTE · PATIENT 11 · TOMAS REINER
+
+Ehemaliger Heizer. Hört Schritte in den Rohren und antwortet ihnen. Zweimal klopfen: alles sicher. Dreimal klopfen: verstecken.
+
+Personalvermerk: Seit der Kesselraum versiegelt wurde, klopfen die Rohre zurück. Niemand vom Personal klopft dreimal."
+Lore,lore.file.102.text,"Case file 3 of 6, floor 3 maze (reading panel; diegetic document: a psychiatric case file; keep the heading in capitals, the blank lines, the names and the quotation marks)","CASE FILE · PATIENT 5 · ELIAS VOGT
+
+Sleepwalker. Found every morning at the morgue doors, eyes open, holding his own wristband. Says drawer five ""has his name on"".
+
+Staff note: drawer five does have his name on. Nobody wrote it. Transfer to Surgery approved.","KRANKENAKTE · PATIENT 5 · ELIAS VOGT
+
+Schlafwandler. Wird jeden Morgen an den Türen der Leichenhalle gefunden, mit offenen Augen, sein eigenes Armband in der Hand. Sagt, auf Schublade fünf ""steht sein Name"".
+
+Personalvermerk: Auf Schublade fünf steht tatsächlich sein Name. Niemand hat ihn geschrieben. Verlegung in die Chirurgie genehmigt."
+Lore,lore.file.103.text,"Case file 4 of 6, floor 4 maze (reading panel; diegetic document: a psychiatric case file about the creature called Subject A; keep the heading, the blank lines)","CASE FILE · SUBJECT A
+
+Procedure 1: removal of fear. Successful. The subject no longer sleeps, no longer speaks, no longer stops.
+
+Released to the lower levels to keep them quiet. Staff note: the lower levels are quiet now. Everyone down there is very, very quiet.","KRANKENAKTE · SUBJEKT A
+
+Eingriff 1: Entfernung der Angst. Erfolgreich. Das Subjekt schläft nicht mehr, spricht nicht mehr, hört nicht mehr auf.
+
+In die unteren Ebenen entlassen, um dort für Ruhe zu sorgen. Personalvermerk: In den unteren Ebenen ist es jetzt ruhig. Alle dort unten sind sehr, sehr still."
+Lore,lore.file.104.text,"Case file 5 of 6, floor 5 maze (reading panel; diegetic document: the asylum Director's private note; keep the heading in capitals and the blank lines)","DIRECTOR KARLHEINZ · PRIVATE
+
+The service units keep the lights. Subject A keeps the dark. The stars show the patients the way down, and the way down brings them back to Intake. A closed system.
+
+It needs one more patient to close. The file is on my desk.","DIREKTOR KARLHEINZ · PRIVAT
+
+Die Serviceeinheiten hüten das Licht. Subjekt A hütet die Dunkelheit. Die Sterne zeigen den Patienten den Weg nach unten, und der Weg nach unten bringt sie zurück zur Aufnahme. Ein geschlossenes System.
+
+Es braucht noch einen Patienten, um sich zu schließen. Die Akte liegt auf meinem Schreibtisch."
+Lore,lore.file.105.text,"The Director's own file, read only in the finale, in the desk drawer (reading panel; diegetic document; Patient 7 is the player's character; keep the heading, the blank lines and the names)","CASE FILE · PATIENT 7
+
+Admitted: fourteen times. Draws stars on the walls. Reaches the bottom every time, holding the stars, and walks back in through Intake asking where the beds are.
+
+Treatment: none effective.
+
+Director's note: there is a switch behind this desk. It turns everything off. The units, the dark, the subject, the Asylum. I never had the courage. Patient 7 might.","KRANKENAKTE · PATIENT 7
+
+Aufgenommen: vierzehnmal. Malt Sterne an die Wände. Erreicht jedes Mal den Grund, die Sterne in der Hand, kommt durch die Aufnahme wieder herein und fragt, wo die Betten sind.
+
+Behandlung: keine wirksam.
+
+Vermerk des Direktors: Hinter diesem Schreibtisch ist ein Schalter. Er schaltet alles ab. Die Einheiten, die Dunkelheit, das Subjekt, die Anstalt. Mir fehlte immer der Mut. Patient 7 hat ihn vielleicht."
+Lore,lore.file.100.label,"Records board folder label for case file 1 (hub prompt ""READ FILE · {label}"", ~30 characters max). P3 = Patient 3; names are not translated",P3 · HILDE BRANDT,P3 · HILDE BRANDT
+Lore,lore.file.101.label,"Records board folder label for case file 2 (hub prompt, ~30 characters max). P11 = Patient 11; names are not translated",P11 · TOMAS REINER,P11 · TOMAS REINER
+Lore,lore.file.102.label,"Records board folder label for case file 3 (hub prompt, ~30 characters max). P5 = Patient 5; names are not translated",P5 · ELIAS VOGT,P5 · ELIAS VOGT
+Lore,lore.file.103.label,"Records board folder label for case file 4 (hub prompt, ~30 characters max)",SUBJECT A,SUBJEKT A
+Lore,lore.file.104.label,"Records board folder label for case file 5 (hub prompt, ~30 characters max)",DIRECTOR · PRIVATE,DIREKTOR · PRIVAT
+Lore,lore.file.105.label,"Records board folder label for the Director's file (finale only, hub prompt, ~30 characters max)",PATIENT 7,PATIENT 7
+Lore,lore.wristband.line,Subtitle when the player examines Elias's wristband on the morgue table (shown 5 s),The wristband is cold. Drawer five is open.,Das Armband ist kalt. Schublade fünf steht offen.
+Lore,lore.ending.discharged.title,"End screen title of ending A, leaving through the main doors (one line, large). Discharged = formally released from hospital",DISCHARGED,ENTLASSEN
+Lore,lore.ending.discharged.body,"End screen body of ending A (wraps over ~6 lines, 1400 px). The Intake ward is where new patients are admitted","The main doors open on the night. The cold is real. Behind you, a light comes on in the Intake ward. Someone is making up a bed. You know who it is for.","Die Haupttüren öffnen sich zur Nacht. Die Kälte ist echt. Hinter dir geht auf der Aufnahmestation ein Licht an. Jemand bezieht ein Bett. Du weißt, für wen."
+Lore,lore.ending.lights_out.title,"End screen title of ending B, pulling the master switch. This is the game's title phrase LIGHTS OUT used as a phrase: translators may keep it in English as the brand",LIGHTS OUT,LIGHTS OUT
+Lore,lore.ending.lights_out.body,"End screen body of ending B (wraps over ~6 lines, 1400 px). Karlheinz = the asylum. Patient 7 = the player's character","You pull the switch. Every lamp in Karlheinz dies at once, and for the first time nothing moves in the dark. No footsteps. No knocking. No counting. Patient 7 is discharged. This time, nobody makes up the bed.","Du legst den Schalter um. Jede Lampe in Karlheinz erlischt auf einmal, und zum ersten Mal bewegt sich nichts im Dunkeln. Keine Schritte. Kein Klopfen. Kein Zählen. Patient 7 ist entlassen. Diesmal bezieht niemand das Bett."
+Lore,lore.vignette.bay_card,"Readable card in the hub's statue bay, examined with E (reading panel, ALL CAPS, two short lines max)",ADMITTED AGAIN. ASKED WHERE THE BEDS ARE. SLEPT BEHIND THE STATUE.,"WIEDER AUFGENOMMEN. FRAGTE, WO DIE BETTEN SIND. SCHLIEF HINTER DER STATUE."
+Lore,lore.vignette.bay_card_truth,"The same card once the Director's file was read: a second line is added (reading panel, ALL CAPS)","ADMITTED AGAIN. ASKED WHERE THE BEDS ARE. SLEPT BEHIND THE STATUE.
+IT IS YOUR HANDWRITING.","WIEDER AUFGENOMMEN. FRAGTE, WO DIE BETTEN SIND. SCHLIEF HINTER DER STATUE.
+ES IST DEINE HANDSCHRIFT."
+Lore,lore.vignette.evac,"Hub vignette subtitle: an evacuation order pinned up. Ends mid-word on purpose (shown 4.5 s, ALL CAPS, one line, max 100 characters; 120 in other languages)",EVACUATION ORDER · NIGHT OF THE 14TH · WARD A FIRST. DO NOT,RÄUMUNGSBEFEHL · NACHT DES 14. · STATION A ZUERST. NICHT
+Lore,lore.vignette.tally,"Hub vignette subtitle: tally marks on a wall (shown 4.5 s, ALL CAPS, one line, max 100 characters)",SOMEONE HAS BEEN COUNTING THE DOORS.,JEMAND HAT DIE TÜREN GEZÄHLT.
+Lore,lore.vignette.admissions,"Hub vignette subtitle: the admissions ledger on the reception desk, up to 5 entries (shown 4.5 s, ALL CAPS, max 100 characters). {list} = entries joined by commas, see lore.vignette.admissions.entry",ADMISSIONS: {list},AUFNAHMEN: {list}
+Lore,lore.vignette.admissions_more,"Hub vignette subtitle: the admissions ledger when it has more than 5 entries (ALL CAPS, max 100 characters). {list} = 5 entries joined by commas, {n} = how many more entries there are","ADMISSIONS: {list}, AND {n} MORE",AUFNAHMEN: {list} UND {n} WEITERE
+Lore,lore.vignette.admissions.entry,One ledger entry inside the admissions list (ALL CAPS). {mark} = the patient number: # (redacted) or 7 once the Director's file was read,PATIENT {mark},PATIENT {mark}
+Lore,lore.vignette.rota,"Hub vignette subtitle: the night-shift rota (ALL CAPS, max 100 characters). Okafor is a character name",ROTA · OKAFOR · LIGHTS STAY ON.,DIENSTPLAN · OKAFOR · LICHT BLEIBT AN.
+Lore,lore.vignette.rota_late,"The same rota from floor 3 on: a second line in another hand (ALL CAPS, two lines, max 100 characters each)","ROTA · OKAFOR · LIGHTS STAY ON.
+COUNT AT SIX. COUNT AT SIX.","DIENSTPLAN · OKAFOR · LICHT BLEIBT AN.
+ZÄHLEN UM SECHS. ZÄHLEN UM SECHS."
+Lore,lore.vignette.room4,"Hub vignette subtitle: door of room 4 (ALL CAPS, max 100 characters)",ROOM 4. EMPTY. THE LAMP IS WARM.,ZIMMER 4. LEER. DIE LAMPE IST WARM.
+Lore,lore.vignette.stanbay,"Hub vignette subtitle: the robot stalker's storage bay (ALL CAPS, max 100 characters)",BAY LIGHTS: OFF. DO NOT LOOK IN.,HALLENLICHT: AUS. NICHT HINEINSEHEN.
+Lore,lore.vignette.pipe_early,"Hub vignette subtitle: dents in a heating pipe, floors 1-3 (ALL CAPS, max 100 characters). The dents are knocks: two knocks = all clear",TWO DENTS IN THE PIPE. THE STEEL IS STILL WARM.,ZWEI DELLEN IM ROHR. DER STAHL IST NOCH WARM.
+Lore,lore.vignette.pipe_late,"Hub vignette subtitle: dents in a heating pipe, floor 4 on (ALL CAPS, max 100 characters). Three knocks = hide",THREE DENTS IN THE PIPE. THE STEEL IS STILL WARM.,DREI DELLEN IM ROHR. DER STAHL IST NOCH WARM.
+Lore,lore.vignette.lower,"Hub vignette subtitle: a tag on a door to the lower levels (ALL CAPS, max 100 characters). Subject A is a character name",RELEASED TO LOWER LEVELS. SUBJECT A. DO NOT FOLLOW.,IN DIE UNTEREN EBENEN ENTLASSEN. SUBJEKT A. NICHT FOLGEN.
+Lore,lore.vignette.barricade_early,"Hub vignette subtitle: a barricaded door, floors 1-3 (ALL CAPS, max 100 characters)",THEY BARRICADED THE DOOR. FROM THE INSIDE.,SIE HABEN DIE TÜR VERBARRIKADIERT. VON INNEN.
+Lore,lore.vignette.barricade_late,"Hub vignette subtitle: the same barricade from floor 4 on (ALL CAPS, max 100 characters)",THE TABLE HAS BEEN SHOVED. FROM THE OTHER SIDE.,DER TISCH WURDE VERSCHOBEN. VON DER ANDEREN SEITE.
+Lore,lore.vignette.chalkhouse_early,"Hub vignette subtitle: a child's chalk drawing of a house, floors 1-3 (ALL CAPS, max 100 characters)",A CHALK HOUSE WITH MORE WINDOWS THAN THE REAL ONE.,EIN KREIDEHAUS MIT MEHR FENSTERN ALS DAS ECHTE.
+Lore,lore.vignette.chalkhouse_late,"Hub vignette subtitle: the same chalk drawing from floor 4 on (ALL CAPS, max 100 characters)","A CHALK HOUSE, SMEARED OUT BY A HAND.","EIN KREIDEHAUS, VON EINER HAND VERWISCHT."
+Shop,shop.currency,"Name of the shards currency; passed as {currency} into the HUD shard counter, shop wallet, ledger and end screens. Plural noun in ALL CAPS",SHARDS,SPLITTER
+Shop,shop.item.spare_battery.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Spare Battery,Ersatzbatterie
+Shop,shop.item.spare_battery.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). {key} = the physical key that uses the item (1)",A fresh cell. Refills the torch and switches it on. Press {key}.,Eine frische Zelle. Füllt die Lampe auf und schaltet sie ein. Drück {key}.
+Shop,shop.item.star_compass.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Star Compass,Sternenkompass
+Shop,shop.item.star_compass.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). {key} = the physical key that uses the item (2)",Points at the nearest star for five seconds. Press {key}.,Zeigt fünf Sekunden lang auf den nächsten Stern. Drück {key}.
+Shop,shop.item.second_wind.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Second Wind,Zweiter Atem
+Shop,shop.item.second_wind.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). ""It"" = the hunter, never named","When it catches you, it lets go. Once.","Wenn es dich fängt, lässt es los. Einmal."
+Shop,shop.item.long_fuse.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Long Fuse,Lange Lunte
+Shop,shop.item.long_fuse.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). The hatch timer is the escape countdown","Ten more seconds on the hatch timer, next floor.",Nächste Etage: zehn Sekunden mehr auf dem Lukentimer.
+Shop,shop.item.quiet_shoes.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Quiet Shoes,Leise Schuhe
+Shop,shop.item.quiet_shoes.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)","Your footsteps carry a third less, next floor.",Nächste Etage: Deine Schritte tragen ein Drittel weniger weit.
+Shop,shop.item.extra_lamps.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Extra Lamps,Zusatzlampen
+Shop,shop.item.extra_lamps.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)",More lamps lit on the next floor.,Mehr brennende Lampen auf der nächsten Etage.
+Shop,shop.item.stamina_tonic.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Stamina Tonic,Ausdauertonikum
+Shop,shop.item.stamina_tonic.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)","Four more seconds of sprint, next floor.",Nächste Etage: vier Sekunden länger sprinten.
+Shop,shop.item.torch_colour.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size). The colour of the torch beam",Torch Colour,Lampenfarbe
+Shop,shop.item.torch_colour.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). Lists the three colours sold (see shop.palette.torch.1-3) in the same order",Cold. Ember. Violet.,Kalt. Glut. Violett.
+Shop,shop.item.hud_tint.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size). The colour of the HUD text",HUD Tint,HUD-Farbton
+Shop,shop.item.hud_tint.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). Lists the three tints sold (see shop.palette.hud.1-3) in the same order",Phosphor. Amber. Ice.,Phosphor. Bernstein. Eis.
+Shop,shop.item.bottle_pack.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Bottle Pack,Flaschenpack
+Shop,shop.item.bottle_pack.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)",Start the next floor already carrying three bottles.,Starte die nächste Etage schon mit drei Flaschen.
+Shop,shop.item.focus_lens.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size). The torch's focused beam",Focus Lens,Fokuslinse
+Shop,shop.item.focus_lens.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)","The focused beam reaches further, next floor, for no extra battery cost.","Nächste Etage: Der fokussierte Strahl reicht weiter, ohne mehr Batterie zu kosten."
+Shop,shop.item.fuse_map.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Fuse Map,Sicherungskarte
+Shop,shop.item.fuse_map.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). Fuse boxes, wall buttons, vault doors and keys","Fuses, buttons, vaults and keys glow faintly. The compass points at them too.","Sicherungen, Knöpfe, Tresorräume und Schlüssel leuchten schwach. Auch der Kompass zeigt auf sie."
+Shop,shop.palette.torch.0,"Torch colour name, the default look (not for sale; shown as ""in use""). ALL CAPS, one word",WARM,WARM
+Shop,shop.palette.torch.1,"Torch colour name on a shop swatch button (118 x 42 px, 17 pt, auto-size). ALL CAPS, one word",COLD,KALT
+Shop,shop.palette.torch.2,"Torch colour name on a shop swatch button (118 x 42 px, 17 pt, auto-size). ALL CAPS, one word",EMBER,GLUT
+Shop,shop.palette.torch.3,"Torch colour name on a shop swatch button (118 x 42 px, 17 pt, auto-size). ALL CAPS, one word",VIOLET,VIOLETT
+Shop,shop.palette.hud.0,"HUD tint name, the default look (not for sale; shown as ""in use""). ALL CAPS, one word",BONE,KNOCHEN
+Shop,shop.palette.hud.1,"HUD tint name on a shop swatch button (118 x 42 px, 17 pt, auto-size). ALL CAPS, one word",PHOSPHOR,PHOSPHOR
+Shop,shop.palette.hud.2,"HUD tint name on a shop swatch button (118 x 42 px, 17 pt, auto-size). ALL CAPS, one word",AMBER,BERNSTEIN
+Shop,shop.palette.hud.3,"HUD tint name on a shop swatch button (118 x 42 px, 17 pt, auto-size). ALL CAPS, one word",ICE,EIS
+Shop,shop.theme.1,"Name of floor 1's look, in the floor intro banner after ""FLOOR n —"" (ALL CAPS, one line, 1400 px)",THE WARD,DIE STATION
+Shop,shop.theme.2,"Name of floor 2's look, in the floor intro banner after ""FLOOR n —"" (ALL CAPS, one line, 1400 px)",BOILER DECK,DAS KESSELDECK
+Shop,shop.theme.3,"Name of floor 3's look (and floor 5, which reuses it), in the floor intro banner after ""FLOOR n —"" (ALL CAPS, one line, 1400 px)",THE CRYPT,DIE GRUFT
+Shop,shop.theme.4,"Name of floor 4's look, in the floor intro banner after ""FLOOR n —"" (ALL CAPS, one line, 1400 px)",THE LAB,DAS LABOR
+Shop,shop.theme.5,"Name of the Hollow look (currently unused), floor intro banner (ALL CAPS)",THE HOLLOW,DIE SENKE
+Shop,shop.rule.dying_grid.name,"Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)",DYING GRID,STERBENDES NETZ
+Shop,shop.rule.dying_grid.desc,"Floor rule description in the floor intro banner, after the dash (one short sentence)",A lamp loses power every minute.,Jede Minute verliert eine Lampe den Strom.
+Shop,shop.rule.keen_ears.name,"Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)",KEEN EARS,SCHARFES GEHÖR
+Shop,shop.rule.keen_ears.desc,"Floor rule description in the floor intro banner, after the dash. ""It"" = the hunter, never named",It hears farther here. Shards are worth more.,Es hört hier weiter. Splitter sind mehr wert.
+Shop,shop.rule.heavy_fog.name,"Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)",HEAVY FOG,DICHTER NEBEL
+Shop,shop.rule.heavy_fog.desc,"Floor rule description in the floor intro banner, after the dash. ""it"" = the hunter",You see less; so does it.,Du siehst weniger; es auch.
+Shop,shop.rule.weak_battery.name,"Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)",WEAK BATTERY,SCHWACHE BATTERIE
+Shop,shop.rule.weak_battery.desc,"Floor rule description in the floor intro banner, after the dash","You start half-charged, but it stores faster off.","Du startest halb geladen, doch ausgeschaltet lädt sie schneller."
+Shop,shop.rule.restless.name,"Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)",RESTLESS,RASTLOS
+Shop,shop.rule.restless.desc,"Floor rule description in the floor intro banner, after the dash. ""It"" = the hunter",It moves and appears more often.,Es wechselt öfter den Ort und taucht häufiger auf.
+Shop,shop.rule.glass_floors.name,"Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)",GLASS FLOORS,GLASBÖDEN
+Shop,shop.rule.glass_floors.desc,"Floor rule description in the floor intro banner, after the dash",More broken glass and puddles underfoot.,Mehr Glasscherben und Pfützen unter den Füßen.
+Shop,shop.rule.rich_veins.name,"Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)",RICH VEINS,REICHE ADERN
+Shop,shop.rule.rich_veins.desc,"Floor rule description in the floor intro banner, after the dash. ""it"" = the hunter","More shards, but it walks a little faster.","Mehr Splitter, aber es geht etwas schneller."
+Shop,shop.temperament.listens,"Floor 3 temperament line in the floor intro banner. ""It"" = the hunter, never named",It hunts by sound here.,Hier jagt es nach Gehör.
+Shop,shop.temperament.sprints,"Floor 4 temperament line in the floor intro banner. ""It"" = the hunter, never named","It is fast here, but forgets quickly.","Hier ist es schnell, doch es vergisst rasch."
+Shop,shop.contract.title,"Contract offer card title (40 pt, one line). {name} = the contract name from shop.contract.*.name, which carries no final period; this sentence adds one. A translation may drop the period",{name}.,{name}.
+Shop,shop.contract.never_hide.name,"Contract name (card title, HUD line, ledger line, subtitles). Short imperative, no final period",Never hide,Nie verstecken
+Shop,shop.contract.never_hide.text,"Contract description on the offer card (28 pt, up to 3 lines). Locker = hiding place",Finish the floor without entering a locker.,"Schaff die Etage, ohne einen Spind zu betreten."
+Shop,shop.contract.not_a_scratch.name,"Contract name (card title, HUD line, ledger line, subtitles). Short, no final period",Not a scratch,Kein Kratzer
+Shop,shop.contract.not_a_scratch.text,"Contract description on the offer card (28 pt, up to 3 lines). Stan = the robot stalker, keep his name",Never get caught - and never let Stan touch you.,Lass dich nie fangen - und lass dich nie von Stan berühren.
+Shop,shop.contract.walk_in_dark.name,"Contract name (card title, HUD line, ledger line, subtitles). Short imperative, no final period",Walk in the dark,Im Dunkeln gehen
+Shop,shop.contract.walk_in_dark.text,"Contract description on the offer card (28 pt, up to 3 lines). Keep the number 60 as is",Spend 60 seconds walking with your torch off.,Geh 60 Sekunden lang mit ausgeschalteter Lampe.
+Shop,shop.contract.take_what_glitters.name,"Contract name (card title, HUD line, ledger line, subtitles). Idiom, a play on ""all that glitters"", no final period",Take what glitters,"Nimm, was glänzt"
+Shop,shop.contract.take_what_glitters.text,"Contract description on the offer card (28 pt, up to 3 lines). Shards = the currency (see shop.currency)",Collect at least 60% of the shards on the floor.,Sammle mindestens 60% der Splitter auf der Etage.
+Shop,shop.contract.read_it_all.name,"Contract name (card title, HUD line, ledger line, subtitles). Short imperative, no final period",Read it all,Alles lesen
+Shop,shop.contract.read_it_all.text,"Contract description on the offer card (28 pt, up to 3 lines)",Read every note on the floor.,Lies jede Notiz auf der Etage.
+Shop,shop.contract.dont_dawdle.name,"Contract name (card title, HUD line, ledger line, subtitles). Short imperative, no final period",Don't dawdle,Nicht trödeln
+Shop,shop.contract.dont_dawdle.text,"Contract description on the offer card (28 pt, up to 3 lines). The clock = the floor's time limit",Clear the floor before the clock runs out.,"Schaff die Etage, bevor die Uhr abläuft."
+Shop,shop.contract.make_noise.name,"Contract name (card title, HUD line, ledger line, subtitles). Short imperative, no final period",Make some noise,Lärm machen
+Shop,shop.contract.make_noise.text,"Contract description on the offer card (28 pt, up to 3 lines). ""the hunter"" = the creature that chases the player","Make the hunter come and investigate a thrown bottle or can, twice.",Lock das Ding zweimal mit einer geworfenen Flasche oder Dose an.
+Shop,shop.contract.light_feet.name,"Contract name (card title, HUD line, ledger line, subtitles). Short, no final period",Light feet,Leichte Füße
+Shop,shop.contract.light_feet.text,"Contract description on the offer card (28 pt, up to 3 lines)",Never sprint.,Niemals sprinten.
+Shop,shop.payout.title_floor,"Ledger heading after clearing a floor (84 pt green, one line, 1600 px). {floor} = floor number",FLOOR {floor} CLEARED,ETAGE {floor} GESCHAFFT
+Shop,shop.payout.stars,"Ledger line label (36 pt, left column 900 px). {stars} = stars collected, {value} = shards per star",STARS  {stars} x {value},STERNE  {stars} x {value}
+Shop,shop.payout.time_left,"Ledger line label (36 pt, left column 900 px). {time} = m:ss left on the hatch timer",TIME LEFT  {time},RESTZEIT  {time}
+Shop,shop.payout.floor_cleared,"Ledger line label for the floor-clear bonus (36 pt, left column 900 px). {floor} = floor number",FLOOR {floor} CLEARED,ETAGE {floor} GESCHAFFT
+Shop,shop.payout.shards_found,"Ledger line label, informational (36 pt, left column 900 px, auto-size). {n} = shards found on the floor, {value} = shards each; the amount column says ""already yours""",SHARDS FOUND  {n} x {value}  (already yours),SPLITTER GEFUNDEN  {n} x {value}  (schon deins)
+Shop,shop.payout.consolation_title,"End screen heading for a consolation payout after dying (84 pt, one line)",CONSOLATION,TROSTPREIS
+Shop,shop.payout.consolation,"Ledger line label for the consolation payout (36 pt, left column 900 px). {percent} = 35, {stars} = stars collected (plural: 1 star / 2 stars)",CONSOLATION  {percent}% of {stars} {stars:plural:star|stars},TROSTPREIS  {percent}% von {stars} {stars:plural:Stern|Sternen}
+Subtitles,sub.second_wind.release,"Subtitle after a Second Wind frees you from the hunter (shown ~3 s, one line at the bottom of the screen)",It let go. It will not do that twice.,Es hat losgelassen. Das tut es kein zweites Mal.
+Subtitles,sub.shop.contract_taken,Salesman subtitle after the player takes a contract (shown 3 s),Bring it back in one piece.,Bring ihn heil zurück.
+Subtitles,sub.shop.contract_declined,Salesman subtitle after the player declines or drops a contract (shown 2.5 s),Suit yourself.,Wie du willst.
+Subtitles,sub.star.heard,Subtitle after a star is taken loudly enough for the hunter to hear (shown ~2 s),It heard that.,Es hat das gehört.
+Subtitles,sub.consumable.no_battery,Subtitle: pressed the spare-battery key with none held (1.8 s),No spare battery.,Keine Ersatzbatterie.
+Subtitles,sub.consumable.not_in_here,Subtitle: tried to use a consumable while hidden in a locker (1.8 s),Not in here.,Nicht hier drin.
+Subtitles,sub.consumable.torch_full,Subtitle: tried to use a spare battery with a full torch (1.8 s),The torch is full.,Die Lampe ist voll.
+Subtitles,sub.consumable.fresh_cell,Subtitle: a spare battery was used (1.8 s),Fresh cell.,Frische Zelle.
+Subtitles,sub.consumable.no_compass,Subtitle: pressed the star-compass key with none held (1.8 s),No star compass.,Kein Sternenkompass.
+Subtitles,sub.consumable.nothing_to_point,Subtitle: the star compass has nothing left to point at (1.8 s),Nothing left to point at.,Nichts mehr zum Zeigen.
+Subtitles,sub.escape.hatch_unlocked,Subtitle when the last key is picked up on a key-hunt floor with a hatch (2.5 s),THE HATCH IS UNLOCKED,DIE LUKE IST ENTRIEGELT
+Subtitles,sub.escape.lift_unlocked,Subtitle when the last key is picked up on a key-hunt floor with a lift (2.5 s),THE LIFT IS UNLOCKED,DER AUFZUG IST ENTRIEGELT
+Subtitles,sub.pickup.battery_cell,"Subtitle after picking up a battery cell in the maze (shown 2 s, one line at the bottom of the screen)",BATTERY CELL,BATTERIEZELLE
+Subtitles,sub.pickup.second_wind,Subtitle after a vault battery cell also grants a Second Wind (shown 3 s). Second Wind = the shop item that frees you once when the hunter catches you,+ SECOND WIND,+ ZWEITER ATEM
+Subtitles,sub.pickup.key,"Subtitle after picking up a key on a key-hunt floor (shown 2 s). {held} = keys held, {total} = keys on the floor",KEY {held} / {total},SCHLÜSSEL {held} / {total}
+Subtitles,sub.lore.bonus,"Subtitle the first time a note or file is read this campaign (shown 2.5 s). {amount} = shards awarded, {currency} = currency name (SHARDS)",+{amount} {currency},+{amount} {currency}
+Subtitles,sub.lantern.lure,"Subtitle when an unattended lantern lures the hunter (shown 3 s, only when the player is far away). ""Something"" = the hunter, never named",Something is drawn to the light.,Etwas wird vom Licht angezogen.
+Subtitles,sub.button.shutter,Subtitle after pressing a wall button whose shutter is out of sight (shown 3 s),"Somewhere, a shutter rolls up.",Irgendwo rollt ein Rollladen hoch.
+Subtitles,sub.theme.terminal,"Subtitle when the Laboratory terminal is used and shows the hunter's position (shown 3 s). CAM 3 = a security camera name, keep it short",CAM 3: MOVEMENT,CAM 3: BEWEGUNG
+Subtitles,sub.stalker.screamed,"Subtitle when the robot stalker (Stan) touches you and screams, when he has no speech voice (shown 2.5 s). ""IT"" = Stan",IT SCREAMED.,ES HAT GESCHRIEN.
+Subtitles,sub.contract.failed,Subtitle when the active contract is failed mid-floor (shown 3 s). {name} = contract name (no final period; the sentence adds one),CONTRACT FAILED  -  {name}.,AUFTRAG GESCHEITERT  -  {name}.
+Subtitles,sub.contract.done,Subtitle when the active contract is completed mid-floor (shown 3 s). {name} = contract name (no final period; the sentence adds one),CONTRACT DONE  -  {name}.,AUFTRAG ERLEDIGT  -  {name}.
+Subtitles,sub.contract.void_shards,"Subtitle at the start of a floor that has no shards when the ""Take what glitters"" contract was taken (shown on run start)",Nothing glitters down here - the contract's off.,Hier unten glitzert nichts - der Auftrag ist hinfällig.
+Subtitles,sub.contract.void_notes,"Subtitle at the start of a floor that has no notes when the ""Read it all"" contract was taken (shown on run start)",No notes down here - the contract's off.,Keine Notizen hier unten - der Auftrag ist hinfällig.
+Subtitles,sub.shop.deal_done,Salesman line the next time the shop opens after a contract was completed (shown 3 s),A deal's a deal.,Abgemacht ist abgemacht.
+Subtitles,sub.shop.deal_failed,Salesman line the next time the shop opens after a contract was failed (shown 3 s),Can't win them all.,Man kann nicht immer gewinnen.
+Subtitles,sub.shop.greeting.1,Salesman greeting when the shop opens after floor 1 (shown 3 s). Shards = the currency,Shards for the dark. What'll it be?,Splitter für die Dunkelheit. Was darf es sein?
+Subtitles,sub.shop.greeting.2,Salesman greeting when the shop opens after floor 2 (shown 3 s),Back again.,Schon wieder da.
+Subtitles,sub.shop.greeting.3,Salesman greeting when the shop opens after floor 3 (shown 3 s),It's getting louder up there.,Da oben wird es lauter.
+Subtitles,sub.shop.greeting.4,Salesman greeting when the shop opens after floor 4 (shown 3 s),Last stop before the bottom.,Letzter Halt vor dem Grund.
+Subtitles,sub.dread.far,"Subtitle when the hunter relocated far away from the player (shown 2.6 s). ""Something"" = the hunter, never named",Something moved behind you.,Hinter dir hat sich etwas bewegt.
+Subtitles,sub.dread.mid,"Subtitle when the hunter relocated at a middle distance (shown 2.6 s). ""It"" = the hunter",It's getting closer.,Es kommt näher.
+Subtitles,sub.dread.near,"Subtitle when the hunter relocated very close (shown 2.6 s). ""It"" = the hunter",It's right behind you.,Es ist direkt hinter dir.
+Subtitles,sub.dread.lights_dying,Subtitle when the first lamps die as the maze empties of stars (shown 2.6 s),The lights are dying.,Die Lichter sterben.
+Subtitles,sub.dread.it_knows,"Subtitle when the last star is taken (shown 2.6 s). ""It"" = the hunter",It knows.,Es weiß es.
+Subtitles,sub.dread.ambushed,"Subtitle, once per campaign, the first time an ambush ends because the star it guarded was taken (shown 2.6 s). ""It"" = the hunter",It was waiting.,Es hat gewartet.
+Subtitles,sub.banner.floor,"Floor intro banner title when the floor has no named look (96 pt, one line). {floor} = floor number",FLOOR {floor},ETAGE {floor}
+Subtitles,sub.banner.floor_theme,"Floor intro banner title (96 pt, one line, 1400 px, auto-size). {floor} = floor number, {theme} = the look's name in capitals (shop.theme.*)",FLOOR {floor} — {theme},ETAGE {floor} — {theme}
+Subtitles,sub.banner.find_stars,Floor intro banner objective part (always 2 or more stars; parts are joined with a middle dot). {n} = stars to find,FIND {n} STARS,FINDE {n} STERNE
+Subtitles,sub.banner.restore_fuses,Floor intro banner objective part on a blackout floor. {n} = fuse boxes to restore (3),RESTORE {n} FUSES,SCHALTE {n} SICHERUNGEN EIN
+Subtitles,sub.banner.find_keys,Floor intro banner objective part on a key-hunt floor. {n} = keys to find (2 or 3); the hatch is the floor exit,FIND {n} KEYS FOR THE HATCH,FINDE {n} SCHLÜSSEL FÜR DIE LUKE
+Subtitles,sub.banner.lockdown,Floor intro banner objective part on a floor with a timed security door,SECURITY LOCKDOWN,SICHERHEITSSPERRE
+Subtitles,sub.banner.rule,"Floor intro banner rule line (one line, auto-size). {name} = the rule name (shop.rule.*.name), {description} = its sentence (shop.rule.*.desc)",{name} — {description},{name} — {description}
+UI,ui.settings.title,"Settings screen heading (76 pt, one line, 1200 px)",SETTINGS,EINSTELLUNGEN
+UI,ui.settings.tab.general,"Settings tab caption (330 px button, 34 pt)",GENERAL,ALLGEMEIN
+UI,ui.settings.tab.display,"Settings tab caption (330 px button, 34 pt)",DISPLAY,ANZEIGE
+UI,ui.settings.tab.graphics,"Settings tab caption (330 px button, 34 pt)",GRAPHICS,GRAFIK
+UI,ui.settings.tab.audio,"Settings tab caption (330 px button, 34 pt)",AUDIO,AUDIO
+UI,ui.settings.tab.controls,"Settings tab caption (330 px button, 34 pt)",CONTROLS,STEUERUNG
+UI,ui.settings.reset,"Settings button: resets the current tab (440 px button, 32 pt)",RESET TO DEFAULTS,ZURÜCKSETZEN
+UI,ui.settings.back,Settings button: closes the panel (440 px button),BACK,ZURÜCK
+UI,ui.settings.language,"Settings row label: UI language (600 px, auto-size)",LANGUAGE,SPRACHE
+UI,ui.settings.window_mode,Settings row label: window mode,WINDOW MODE,FENSTERMODUS
+UI,ui.settings.resolution,Settings row label: screen resolution,RESOLUTION,AUFLÖSUNG
+UI,ui.settings.vsync,Settings row label: vertical sync,VSYNC,VSYNC
+UI,ui.settings.frame_cap,Settings row label: frame rate limit,FRAME CAP,BILDRATENLIMIT
+UI,ui.settings.quality,Settings row label: graphics quality tier,QUALITY,QUALITÄT
+UI,ui.settings.shadows,Settings row label: shadow quality,SHADOWS,SCHATTEN
+UI,ui.settings.ambient_occlusion,Settings row label: ambient occlusion (SSAO),AMBIENT OCCLUSION,UMGEBUNGSVERDECKUNG
+UI,ui.settings.fog,Settings row label: fog amount,FOG,NEBEL
+UI,ui.settings.brightness,Settings row label: brightness offset (value shown in EV),BRIGHTNESS,HELLIGKEIT
+UI,ui.settings.fov,Settings row label: camera field of view,FIELD OF VIEW,SICHTFELD
+UI,ui.settings.camera_shake,Settings row label: camera shake strength,CAMERA SHAKE,KAMERAWACKELN
+UI,ui.settings.master_volume,Settings row label: master volume,MASTER VOLUME,GESAMTLAUTSTÄRKE
+UI,ui.settings.music_volume,Settings row label: music volume,MUSIC VOLUME,MUSIKLAUTSTÄRKE
+UI,ui.settings.effects_volume,Settings row label: sound effects volume,EFFECTS VOLUME,EFFEKTLAUTSTÄRKE
+UI,ui.settings.look,Settings row label: mouse and gamepad look sensitivity,MOUSE / GAMEPAD LOOK,MAUS-/PAD-EMPFINDLICHKEIT
+UI,ui.settings.invert_y,Settings row label: invert vertical look,INVERT Y,Y-ACHSE INVERTIEREN
+UI,ui.settings.touch_controls,Settings row label: on-screen touch controls mode,TOUCH CONTROLS,TOUCH-STEUERUNG
+UI,ui.settings.touch_look,Settings row label: touch look sensitivity,TOUCH LOOK,TOUCH-EMPFINDLICHKEIT
+UI,ui.settings.opt.fullscreen,"Window mode option (stepper, 560 px)",FULLSCREEN,VOLLBILD
+UI,ui.settings.opt.exclusive,Window mode option: exclusive fullscreen,EXCLUSIVE,EXKLUSIV
+UI,ui.settings.opt.windowed,Window mode option,WINDOWED,FENSTER
+UI,ui.settings.opt.unlimited,Frame cap option: no limit,UNLIMITED,UNBEGRENZT
+UI,ui.settings.opt.off,Toggle / tier option: off,OFF,AUS
+UI,ui.settings.opt.on,Toggle option: on,ON,AN
+UI,ui.settings.opt.auto,Touch controls option: detect automatically,AUTO,AUTO
+UI,ui.settings.opt.low,"Tier option shared by quality, shadows and fog (feminine in ES/FR)",LOW,NIEDRIG
+UI,ui.settings.opt.medium,Tier option shared by quality,MEDIUM,MITTEL
+UI,ui.settings.opt.high,Tier option shared by quality and shadows,HIGH,HOCH
+UI,ui.settings.opt.normal,Fog tier option: default amount,NORMAL,NORMAL
+UI,ui.common.back,"Shared BACK button caption (menus, 420 x 86 button, 40 pt, auto-size)",BACK,ZURÜCK
+UI,ui.common.continue,"Shared CONTINUE caption (button, 420 x 86, 40 pt)",CONTINUE,WEITER
+UI,ui.menu.tagline,"Title screen tagline under the game title (38 pt, one line, 1200 px, auto-size)",Collect. Escape. Don't be seen.,Sammeln. Entkommen. Nicht gesehen werden.
+UI,ui.menu.continue,"Title screen: resume the saved run (420 x 86 button, 40 pt)",CONTINUE,WEITER
+UI,ui.menu.start_game,"Title screen: start a new campaign (420 x 86 button, 40 pt)",START GAME,SPIEL STARTEN
+UI,ui.menu.controls,"Title screen: open the controls sheet (420 x 86 button, 40 pt)",CONTROLS,STEUERUNG
+UI,ui.menu.settings,"Title screen: open the settings screen (420 x 86 button, 40 pt)",SETTINGS,EINSTELLUNGEN
+UI,ui.menu.exit,"Title screen: quit the game (420 x 86 button, 40 pt)",EXIT,BEENDEN
+UI,ui.menu.start_over_heading,"Confirm panel heading when START GAME would discard a saved run (76 pt, one line, 1400 px)",START OVER?,NEU BEGINNEN?
+UI,ui.menu.start_over_body,"Confirm panel body (40 pt, one line, 1400 px). {floor} = floor number of the saved run",Your saved run (floor {floor}) will be lost.,Dein gespeicherter Lauf (Etage {floor}) geht verloren.
+UI,ui.menu.start_over,"Confirm panel: discard the save and start (420 x 86 button, 40 pt)",START OVER,NEU BEGINNEN
+UI,ui.rules.heading,"Rules screen heading (76 pt, one line, 1400 px)",HOW TO PLAY,SO WIRD GESPIELT
+UI,ui.rules.item1,"Rules screen, rule 1 (36 pt, left aligned, 1100 px wide block of four rules). Keep the <b> tag",<b>1.</b>   Collect every star hidden in the maze.,"<b>1.</b>   Sammle jeden Stern ein, der im Labyrinth versteckt ist."
+UI,ui.rules.item2,"Rules screen, rule 2",<b>2.</b>   A hatch will open somewhere. Find it before the timer runs out.,"<b>2.</b>   Irgendwo öffnet sich eine Luke. Finde sie, bevor die Zeit abläuft."
+UI,ui.rules.item3,"Rules screen, rule 3. Keep the red <color> and <b> tags around the word RUN","<b>3.</b>   You are not alone down here. If it sees you, <color=#DB1F17><b>run</b></color>.","<b>3.</b>   Du bist hier unten nicht allein. Wenn es dich sieht, <color=#DB1F17><b>lauf</b></color>."
+UI,ui.rules.item4,"Rules screen, rule 4","<b>4.</b>   Shards glint in the dark. Between floors, someone will sell you things for them.",<b>4.</b>   Splitter glitzern im Dunkeln. Zwischen den Etagen verkauft dir jemand Dinge dafür.
+UI,ui.rules.start,"Rules screen: begin the run (420 x 90 button, 44 pt)",START,STARTEN
+UI,ui.controls.keyboard,"Controls sheet, keyboard and mouse (34 pt, two lines, 1400 px). Key names in <b> stay as they are (WASD, SHIFT, F, E, 1, 2, ESC); MOUSE is translated","<b>WASD</b>  move   <b>SHIFT</b>  sprint   <b>MOUSE</b>  look   <b>F</b>  flashlight   <b>E</b>  hide / talk
+<b>1</b>  spare battery   <b>2</b>  star compass   <b>ESC</b>  pause","<b>WASD</b>  bewegen   <b>SHIFT</b>  sprinten   <b>MAUS</b>  umsehen   <b>F</b>  Lampe   <b>E</b>  verstecken / sprechen
+<b>1</b>  Ersatzbatterie   <b>2</b>  Sternenkompass   <b>ESC</b>  Pause"
+UI,ui.controls.touch,"Controls sheet, touch layout (34 pt, one line, 1400 px). The button names in <b> must match the on-screen button captions (ui.touch.*)","<b>LEFT THUMB</b>  move   <b>RIGHT THUMB</b>  look   buttons: <b>TORCH</b>, <b>FOCUS</b>, <b>INTERACT</b>, <b>THROW</b>, <b>SPRINT</b>","<b>LINKER DAUMEN</b>  bewegen   <b>RECHTER DAUMEN</b>  umsehen   Tasten: <b>LAMPE</b>, <b>FOKUS</b>, <b>INTERAGIEREN</b>, <b>WERFEN</b>, <b>SPRINTEN</b>"
+UI,ui.controls.tip,"Controls sheet and rules, tip line below the controls (30 pt, 1400 px)",Your torch has three minutes of light in it. Your legs have less. Lockers hide you — unless it saw you climb in.,Deine Lampe hat Licht für drei Minuten. Deine Beine haben weniger. Spinde verstecken dich — außer es hat dich hineinklettern sehen.
+UI,ui.pause.title,"Pause screen heading (84 pt, one line, 1200 px)",PAUSED,PAUSE
+UI,ui.pause.resume,"Pause menu: resume (420 x 86 button, 40 pt)",RESUME,FORTSETZEN
+UI,ui.pause.restart,"Pause menu: restart the same maze (420 x 86 button, 40 pt)",RESTART MAZE,NEU STARTEN
+UI,ui.pause.skip_tutorial,"Pause menu in the Intake only: skip the tutorial (420 x 86 button, 40 pt)",SKIP TUTORIAL,ÜBERSPRINGEN
+UI,ui.pause.main_menu,"Pause menu: back to the title screen (420 x 86 button, 40 pt)",MAIN MENU,HAUPTMENÜ
+UI,ui.pause.quit,"Pause menu: quit the game (420 x 86 button, 40 pt)",QUIT,BEENDEN
+UI,ui.ledger.slip_heading,"Readmission slip heading above the ledger (30 pt amber, one line, 1400 px, auto-size). {admission} = admission number, {patient} = 7 or a redaction glyph (#)",READMITTED  ·  ADMISSION {admission}  ·  PATIENT {patient},WIEDERAUFGENOMMEN  ·  AUFNAHME {admission}  ·  PATIENT {patient}
+UI,ui.ledger.slip_subtitle,"Readmission slip subtitle, typed out (34 pt, one line, 1400 px)",THE CLERK HAS TYPED YOUR RETURN.,DER SCHREIBER HAT DEINE RÜCKKEHR ABGETIPPT.
+UI,ui.ledger.subtitle,"Floor-clear ledger subtitle in the legacy shop flow (34 pt, one line, 1400 px)",The hatch closed behind you. Something down here is open.,Die Luke hat sich hinter dir geschlossen. Etwas hier unten steht offen.
+UI,ui.ledger.already_yours,"Ledger amount column for the informational SHARDS FOUND line (36 pt, right aligned, 300 px)",already yours,schon deins
+UI,ui.ledger.no_pay,"Ledger amount column for a contract line that paid nothing (36 pt, right aligned, 300 px)",no pay,kein Lohn
+UI,ui.ledger.payout,"Ledger total line (44 pt green, 900 px). {amount} = shards paid",PAYOUT  +{amount},AUSZAHLUNG  +{amount}
+UI,ui.ledger.wallet,"Ledger wallet line (44 pt, 900 px). {currency} = the currency name (SHARDS), {shards} = wallet balance",{currency}  {shards},{currency}  {shards}
+UI,ui.ledger.shop_held,"Readmission slip order line, typed (34 pt amber, one line, 1500 px). {shards} = wallet balance, {currency} = the currency name",EFFECTS HELD AT THE SHOP  ·  {shards} {currency},EFFEKTEN IM LADEN VERWAHRT  ·  {shards} {currency}
+UI,ui.ledger.contract_done,"Ledger line for a finished contract (36 pt, left column 900 px, auto-size). {name} = contract name",CONTRACT  {name}  DONE,AUFTRAG  {name}  ERLEDIGT
+UI,ui.ledger.contract_failed,"Ledger line for a failed contract (36 pt, left column 900 px). {name} = contract name",CONTRACT  {name}  FAILED,AUFTRAG  {name}  GESCHEITERT
+UI,ui.ledger.contract_void,"Ledger line for a voided contract (36 pt, left column 900 px). {name} = contract name",CONTRACT  {name}  VOID,AUFTRAG  {name}  ENTFALLEN
+UI,ui.end.won_final,"End screen title, campaign won (96 pt bold green, one line, 1600 px)",YOU GOT OUT,DU BIST ENTKOMMEN
+UI,ui.end.floor_cleared,"End screen title, floor cleared in the no-shop fallback (96 pt). {floor} = floor number",FLOOR {floor} CLEARED,ETAGE {floor} GESCHAFFT
+UI,ui.end.won_final_body,"End screen subtitle after the final floor (36 pt, one line, 1600 px)",The hatch closed behind you. There is nothing left below.,Die Luke hat sich hinter dir geschlossen. Darunter ist nichts mehr.
+UI,ui.end.floor_cleared_body,"End screen subtitle after floors 1-4 (36 pt, one line, 1600 px)",The hatch closed behind you. It is darker down here.,Die Luke hat sich hinter dir geschlossen. Hier unten ist es dunkler.
+UI,ui.end.caught,End screen title when the hunter caught you (96 pt bold red),IT FOUND YOU,ES HAT DICH GEFUNDEN
+UI,ui.end.caught_hidden,End screen subtitle: caught after being seen hiding in a locker (36 pt),It watched you hide.,Es sah dir beim Verstecken zu.
+UI,ui.end.caught_torch,End screen subtitle: caught with the torch on (36 pt),It was faster in the dark.,Im Dunkeln war es schneller.
+UI,ui.end.caught_silent,End screen subtitle: caught with the torch off (36 pt),You never heard it coming.,Du hast es nie kommen hören.
+UI,ui.end.out_of_time,End screen title when the escape timer ran out (96 pt bold red),OUT OF TIME,ZEIT ABGELAUFEN
+UI,ui.end.out_of_time_body,"End screen subtitle (36 pt, one line, 1600 px). {stars} = stars collected, {metres} = distance to the hatch in metres",The hatch sealed. You were {stars} {stars:plural:star|stars} in and {metres} {metres:plural:metre|metres} away.,Die Luke ist versiegelt. Du hattest {stars} {stars:plural:Stern|Sterne} und warst {metres} {metres:plural:Meter|Meter} entfernt.
+UI,ui.end.stats,"End screen stats line (32 pt, letter-spaced, one line, 1600 px, auto-size). {floor}, {collected} of {total} stars, {time} = m:ss run time, {seed}",FLOOR {floor}     STARS {collected} / {total}     TIME {time}     SEED {seed},ETAGE {floor}     STERNE {collected} / {total}     ZEIT {time}     SEED {seed}
+UI,ui.end.consolation,"End screen second line after a loss with a consolation payout (32 pt, one line, 1600 px). {amount} = shards paid, {currency}, {shards} = balance",CONSOLATION  +{amount}     {currency}  {shards},TROSTPREIS  +{amount}     {currency}  {shards}
+UI,ui.end.no_consolation,End screen second line after a loss with no consolation payout (32 pt),NO CONSOLATION     {currency}  {shards},KEIN TROSTPREIS     {currency}  {shards}
+UI,ui.end.final_payout,"End screen second line after the final win (32 pt). {amount} = last payout, {total} = shards earned this campaign",PAYOUT  +{amount}     CAMPAIGN TOTAL  {total},AUSZAHLUNG  +{amount}     KAMPAGNEN-SUMME  {total}
+UI,ui.end.next_floor,"End screen button: go to the next floor (560 x 86, 42 pt)",NEXT FLOOR,NÄCHSTE ETAGE
+UI,ui.end.replay,"End screen button after a win: replay the same floor (560 x 86, 38 pt)",REPLAY THIS FLOOR,ETAGE WIEDERHOLEN
+UI,ui.end.retry,"End screen button after a loss: same maze again (560 x 86, 38 pt)",TRY THIS MAZE AGAIN,DASSELBE LABYRINTH
+UI,ui.end.new_maze,"End screen button: a new random maze (560 x 86, 38 pt)",NEW MAZE,NEUES LABYRINTH
+UI,ui.end.main_menu,"End screen button: back to the title screen (560 x 86, 38 pt)",MAIN MENU,HAUPTMENÜ
+UI,ui.shop.title,"Shop panel heading (64 pt bold, one line, 1400 px)",BETWEEN FLOORS,ZWISCHEN DEN ETAGEN
+UI,ui.shop.wallet,"Shop panel wallet line (38 pt, one line, 900 px). {currency} = currency name (SHARDS), {shards} = balance",{currency}  {shards},{currency}  {shards}
+UI,ui.shop.tip,"Shop panel tip under the wallet (24 pt, one line, 900 px, auto-size)",Prices rise the deeper you go.,"Je tiefer, desto teurer."
+UI,ui.shop.buy,"Shop card buy button default caption (160 x 46, 22 pt)",BUY,KAUFEN
+UI,ui.shop.buy_price,"Shop card buy button with the price (160 x 46, 22 pt, auto-size). {price} = shards",BUY  {price},KAUFEN  {price}
+UI,ui.shop.held_max,"Shop card buy button when the player already holds the maximum (160 x 46, 22 pt)",HELD MAX,MAXIMUM
+UI,ui.shop.bought,"Shop card buy button after buying a next-floor-only item (160 x 46, 22 pt)",BOUGHT,GEKAUFT
+UI,ui.shop.held_count,"Shop card status for consumables (19 pt, 340 x 30). {count} held of {cap} maximum",HELD  x{count} / {cap},IM BESITZ  x{count} / {cap}
+UI,ui.shop.held,Shop card status for Second Wind when owned (19 pt),HELD,IM BESITZ
+UI,ui.shop.not_held,Shop card status for Second Wind when not owned (19 pt),NOT HELD,NICHT IM BESITZ
+UI,ui.shop.ready_for_floor,"Shop card status once a next-floor item is bought (19 pt, 340 x 30). {floor} = the floor it will apply to",READY FOR FLOOR {floor},BEREIT FÜR ETAGE {floor}
+UI,ui.shop.next_floor_only,"Shop card status for an unbought next-floor-only item (19 pt, 340 x 30)",NEXT FLOOR ONLY,NUR NÄCHSTE ETAGE
+UI,ui.shop.in_use_named,"Shop card status for a cosmetic: the colour in use (19 pt, 340 x 30). {name} = colour name, already in capitals",IN USE: {name},AKTIV: {name}
+UI,ui.shop.in_use,"Cosmetic swatch button: this colour is selected (118 x 42, 17 pt, auto-size)",IN USE,AKTIV
+UI,ui.shop.use,"Cosmetic swatch button: an owned colour that can be selected (118 x 42, 17 pt)",USE,WÄHLEN
+UI,ui.shop.swatch_price,"Cosmetic swatch button for an unowned colour (118 x 42, 17 pt, auto-size). {name} = colour name, {price} = shards",{name}  {price},{name}  {price}
+UI,ui.contracts.title,"Contract board panel heading (64 pt bold, one line, 1400 px)",CONTRACTS,AUFTRÄGE
+UI,ui.contracts.tip,"Contract board panel tip (26 pt, one line, 1500 px, auto-size)",Optional work for the next floor. One at a time. Paid on the ledger when you clear it.,"Optionale Arbeit für die nächste Etage. Immer nur einer. Bezahlt wird bei der Abrechnung, wenn du sie schaffst."
+UI,ui.contracts.take,"Contract offer card button: take the contract (260 x 62, 30 pt)",TAKE,ANNEHMEN
+UI,ui.contracts.taken,"Contract offer card button: this offer is the one taken (260 x 62, 30 pt)",TAKEN,ANGENOMMEN
+UI,ui.contracts.decline,"Contract board button: leave without a contract (380 x 70, 34 pt)",DECLINE,ABLEHNEN
+UI,ui.contracts.drop,"Contract board button: give up the contract already taken (380 x 70, 34 pt)",DROP IT,AUFGEBEN
+UI,ui.contracts.reward,"Contract offer card reward line (32 pt, one line, 600 px). {amount} = shards, {currency} = currency name",REWARD  {amount}  {currency},BELOHNUNG  {amount}  {currency}
+UI,ui.contracts.empty,"Contract board status when there are no offers (32 pt, one line, 1500 px)",Nothing on the board.,Nichts am Brett.
+UI,ui.contracts.took,"Contract board status after taking one (32 pt, one line, 1500 px). {name} = contract name, {floor} = floor it applies to",You took: {name}.  Floor {floor}.,Angenommen: {name}.  Etage {floor}.
+UI,ui.key.tap,"Key chip on touch devices in place of a keyboard key (HUD item slots, objective card). Short: ~4 characters",TAP,TIPPEN
+UI,ui.key.use,Key chip on touch devices for the interact key at the contract board (HUD prompt). Short,USE,BENUTZEN
+UI,ui.touch.interact,"Touch screen INTERACT button caption when nothing is targeted (190 x 190 round button, 26 pt, auto-size). Replaced by the target's action word while something is in reach",INTERACT,INTERAGIEREN
+UI,ui.touch.torch,"Touch screen torch button caption (130 x 130, 22 pt, auto-size)",TORCH,LAMPE
+UI,ui.touch.focus,"Touch screen focus-beam button caption (130 x 130, 22 pt, auto-size)",FOCUS,FOKUS
+UI,ui.touch.throw,"Touch screen throw button caption (130 x 130, 20 pt, auto-size). {count} = bottles/cans carried",THROW x{count},WERFEN x{count}
+UI,ui.touch.battery,"Touch screen spare-battery button caption (120 x 100, 18 pt, auto-size). {count} = batteries held",BATTERY x{count},BATTERIE x{count}
+UI,ui.touch.compass,"Touch screen star-compass button caption (120 x 100, 18 pt, auto-size). {count} = compasses held",COMPASS x{count},KOMPASS x{count}
+UI,ui.touch.sprint,"Touch screen sprint toggle caption (150 x 100, 22 pt, auto-size)",SPRINT,SPRINTEN
+UI,ui.touch.pause,"Touch screen pause button caption: a pause symbol, not a word - leave unchanged (110 x 90, 30 pt)",II,II
+UI,ui.touch.rotate,"Overlay shown on a touch device held in portrait (52 pt, 900 x 220, wraps)",ROTATE YOUR DEVICE,DREH DEIN GERÄT
+UI,ui.key.back,"Key chip on touch devices in place of the ESC key in the dialogue hint (short, ~4 characters)",BACK,ZURÜCK
+UI,ui.objective.label,"Small grey label at the top of the objective card (20 pt, letter-spaced, 300 px)",OBJECTIVE,ZIEL
+UI,ui.dialogue.hint_next,"Dialogue panel hint, bottom-right (20 pt, one line, 760 px, auto-size) while the conversation continues. {key} = E on keyboard or TAP on touch, {back} = ESC or BACK on touch - do not translate the key names",{key}  CONTINUE    ·    {back}  LEAVE,{key}  WEITER    ·    {back}  VERLASSEN
+UI,ui.dialogue.hint_end,"Dialogue panel hint on the last line of a conversation (20 pt, 760 px). {key}, {back} as in hint_next",{key}  END    ·    {back}  LEAVE,{key}  ENDE    ·    {back}  VERLASSEN
+UI,ui.dialogue.hint_leave,"Dialogue panel hint while two reply choices are on screen (20 pt, 760 px). {key} = ESC",{key}  LEAVE,{key}  VERLASSEN
+Voices,voice.hunter.spotted.0,"The hunter (never named; 'it'), speech bubble, category spotted: it sees you after a while without seeing you. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",don't blink.,nicht blinzeln.
+Voices,voice.hunter.spotted.1,"The hunter (never named; 'it'), speech bubble, category spotted: it sees you after a while without seeing you. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",there's my little light.,da ist mein kleines licht.
+Voices,voice.hunter.spotted.2,"The hunter (never named; 'it'), speech bubble, category spotted: it sees you after a while without seeing you. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",run.,lauf.
+Voices,voice.hunter.spotted.3,"The hunter (never named; 'it'), speech bubble, category spotted: it sees you after a while without seeing you. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",you're mine.,du gehörst mir.
+Voices,voice.hunter.spotted.4,"The hunter (never named; 'it'), speech bubble, category spotted: it sees you after a while without seeing you. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",too slow.,zu langsam.
+Voices,voice.hunter.spotted.5,"The hunter (never named; 'it'), speech bubble, category spotted: it sees you after a while without seeing you. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",i smell your battery.,ich rieche deine batterie.
+Voices,voice.hunter.spotted.6,"The hunter (never named; 'it'), speech bubble, category spotted: it sees you after a while without seeing you. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number","hello, thief.","hallo, dieb."
+Voices,voice.hunter.chasing.0,"The hunter (never named; 'it'), speech bubble, category chasing: a long chase with you in sight. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",run faster.,lauf schneller.
+Voices,voice.hunter.chasing.1,"The hunter (never named; 'it'), speech bubble, category chasing: a long chase with you in sight. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",your legs are tired.,deine beine sind müde.
+Voices,voice.hunter.chasing.2,"The hunter (never named; 'it'), speech bubble, category chasing: a long chase with you in sight. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",i don't get tired.,ich werde nicht müde.
+Voices,voice.hunter.chasing.3,"The hunter (never named; 'it'), speech bubble, category chasing: a long chase with you in sight. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",closer…,näher…
+Voices,voice.hunter.chasing.4,"The hunter (never named; 'it'), speech bubble, category chasing: a long chase with you in sight. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",the stars won't save you.,die sterne retten dich nicht.
+Voices,voice.hunter.chasing.5,"The hunter (never named; 'it'), speech bubble, category chasing: a long chase with you in sight. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",keep running. i like it.,lauf weiter. das gefällt mir.
+Voices,voice.hunter.lost.0,"The hunter (never named; 'it'), speech bubble, category lost: it lost you mid-chase and starts searching. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",you can't hide forever.,du kannst dich nicht ewig verstecken.
+Voices,voice.hunter.lost.1,"The hunter (never named; 'it'), speech bubble, category lost: it lost you mid-chase and starts searching. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",i'll find you.,ich finde dich.
+Voices,voice.hunter.lost.2,"The hunter (never named; 'it'), speech bubble, category lost: it lost you mid-chase and starts searching. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",i know this maze better.,ich kenne das labyrinth besser.
+Voices,voice.hunter.lost.3,"The hunter (never named; 'it'), speech bubble, category lost: it lost you mid-chase and starts searching. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",hiding? good.,versteckst du dich? gut.
+Voices,voice.hunter.searching.0,"The hunter (never named; 'it'), speech bubble, category searching: muttered while searching nearby. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",where are you…,wo bist du…
+Voices,voice.hunter.searching.1,"The hunter (never named; 'it'), speech bubble, category searching: muttered while searching nearby. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",come out.,komm raus.
+Voices,voice.hunter.searching.2,"The hunter (never named; 'it'), speech bubble, category searching: muttered while searching nearby. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",i can hear your heart.,ich höre dein herz.
+Voices,voice.hunter.searching.3,"The hunter (never named; 'it'), speech bubble, category searching: muttered while searching nearby. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number","little light, little light…","kleines licht, kleines licht…"
+Voices,voice.hunter.searching.4,"The hunter (never named; 'it'), speech bubble, category searching: muttered while searching nearby. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",the dark is mine.,das dunkel gehört mir.
+Voices,voice.hunter.searching.5,"The hunter (never named; 'it'), speech bubble, category searching: muttered while searching nearby. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",floor {floor}. you won't leave it.,etage {floor}. die verlässt du nicht.
+Voices,voice.hunter.ambush.0,"The hunter (never named; 'it'), speech bubble, category ambush: SHOUTED, all caps: it springs out of an ambush. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",SURPRISE.,ÜBERRASCHUNG.
+Voices,voice.hunter.ambush.1,"The hunter (never named; 'it'), speech bubble, category ambush: SHOUTED, all caps: it springs out of an ambush. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",WAITED SO LONG.,SO LANGE GEWARTET.
+Voices,voice.hunter.ambush.2,"The hunter (never named; 'it'), speech bubble, category ambush: SHOUTED, all caps: it springs out of an ambush. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",THIS WAY? GOOD.,HIER ENTLANG? GUT.
+Voices,voice.hunter.ambush.3,"The hunter (never named; 'it'), speech bubble, category ambush: SHOUTED, all caps: it springs out of an ambush. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",HELLO.,HALLO.
+Voices,voice.hunter.locker.0,"The hunter (never named; 'it'), speech bubble, category locker: you are hiding in a locker and it is close. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",is someone in there?,ist da jemand drin?
+Voices,voice.hunter.locker.1,"The hunter (never named; 'it'), speech bubble, category locker: you are hiding in a locker and it is close. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",i smell you.,ich rieche dich.
+Voices,voice.hunter.locker.2,"The hunter (never named; 'it'), speech bubble, category locker: you are hiding in a locker and it is close. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",open up.,mach auf.
+Voices,voice.hunter.locker.3,"The hunter (never named; 'it'), speech bubble, category locker: you are hiding in a locker and it is close. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",one of these…,einer von denen…
+Voices,voice.hunter.locker.4,"The hunter (never named; 'it'), speech bubble, category locker: you are hiding in a locker and it is close. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",warm metal.,warmes metall.
+Voices,voice.hunter.door.0,"The hunter (never named; 'it'), speech bubble, category door: it just bashed a shutter door open. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",doors don't stop me.,türen halten mich nicht auf.
+Voices,voice.hunter.door.1,"The hunter (never named; 'it'), speech bubble, category door: it just bashed a shutter door open. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",let me in.,lass mich rein.
+Voices,voice.hunter.door.2,"The hunter (never named; 'it'), speech bubble, category door: it just bashed a shutter door open. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",knock knock.,"klopf, klopf."
+Voices,voice.hunter.door.3,"The hunter (never named; 'it'), speech bubble, category door: it just bashed a shutter door open. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",no more doors.,keine türen mehr.
+Voices,voice.hunter.caught.0,"The hunter (never named; 'it'), speech bubble, category caught: SHOUTED, all caps: it caught you (plays into the capture blackout). Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",GOTCHA.,HAB DICH.
+Voices,voice.hunter.caught.1,"The hunter (never named; 'it'), speech bubble, category caught: SHOUTED, all caps: it caught you (plays into the capture blackout). Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",MINE.,MEINS.
+Voices,voice.hunter.caught.2,"The hunter (never named; 'it'), speech bubble, category caught: SHOUTED, all caps: it caught you (plays into the capture blackout). Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",LIGHTS OUT.,LIGHTS OUT.
+Voices,voice.hunter.caught.3,"The hunter (never named; 'it'), speech bubble, category caught: SHOUTED, all caps: it caught you (plays into the capture blackout). Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number",FOUND YOU.,GEFUNDEN.
+Voices,voice.stan.spotted.0,"Stan (the broken toy, playful and childlike), speech bubble, category spotted: sight acquired after a while without it. Short, lower-case unless noted. {floor} = current floor number",there you are.,da bist du ja.
+Voices,voice.stan.spotted.1,"Stan (the broken toy, playful and childlike), speech bubble, category spotted: sight acquired after a while without it. Short, lower-case unless noted. {floor} = current floor number",i see you.,ich seh dich.
+Voices,voice.stan.spotted.2,"Stan (the broken toy, playful and childlike), speech bubble, category spotted: sight acquired after a while without it. Short, lower-case unless noted. {floor} = current floor number",found you.,gefunden.
+Voices,voice.stan.spotted.3,"Stan (the broken toy, playful and childlike), speech bubble, category spotted: sight acquired after a while without it. Short, lower-case unless noted. {floor} = current floor number",hello again.,hallo nochmal.
+Voices,voice.stan.spotted.4,"Stan (the broken toy, playful and childlike), speech bubble, category spotted: sight acquired after a while without it. Short, lower-case unless noted. {floor} = current floor number",peekaboo.,kuckuck.
+Voices,voice.stan.spotted.5,"Stan (the broken toy, playful and childlike), speech bubble, category spotted: sight acquired after a while without it. Short, lower-case unless noted. {floor} = current floor number",don't run. please run.,lauf nicht weg. bitte lauf.
+Voices,voice.stan.spotted.6,"Stan (the broken toy, playful and childlike), speech bubble, category spotted: sight acquired after a while without it. Short, lower-case unless noted. {floor} = current floor number",you look tired.,du siehst müde aus.
+Voices,voice.stan.spotted.7,"Stan (the broken toy, playful and childlike), speech bubble, category spotted: sight acquired after a while without it. Short, lower-case unless noted. {floor} = current floor number",i was waiting.,ich hab gewartet.
+Voices,voice.stan.lit.0,"Stan (the broken toy, playful and childlike), speech bubble, category lit: the torch just froze him while he can see you. Short, lower-case unless noted. {floor} = current floor number",too bright.,zu hell.
+Voices,voice.stan.lit.1,"Stan (the broken toy, playful and childlike), speech bubble, category lit: the torch just froze him while he can see you. Short, lower-case unless noted. {floor} = current floor number",you can't keep it on forever.,du kannst es nicht ewig anlassen.
+Voices,voice.stan.lit.2,"Stan (the broken toy, playful and childlike), speech bubble, category lit: the torch just froze him while he can see you. Short, lower-case unless noted. {floor} = current floor number",click. click.,klick. klick.
+Voices,voice.stan.lit.3,"Stan (the broken toy, playful and childlike), speech bubble, category lit: the torch just froze him while he can see you. Short, lower-case unless noted. {floor} = current floor number",blink.,blinzel.
+Voices,voice.stan.lit.4,"Stan (the broken toy, playful and childlike), speech bubble, category lit: the torch just froze him while he can see you. Short, lower-case unless noted. {floor} = current floor number",i'll wait.,ich warte.
+Voices,voice.stan.lit.5,"Stan (the broken toy, playful and childlike), speech bubble, category lit: the torch just froze him while he can see you. Short, lower-case unless noted. {floor} = current floor number",your battery is dying.,deine batterie stirbt.
+Voices,voice.stan.lit.6,"Stan (the broken toy, playful and childlike), speech bubble, category lit: the torch just froze him while he can see you. Short, lower-case unless noted. {floor} = current floor number",statue game?,ochs am berg?
+Voices,voice.stan.lit.7,"Stan (the broken toy, playful and childlike), speech bubble, category lit: the torch just froze him while he can see you. Short, lower-case unless noted. {floor} = current floor number",don't look away.,schau nicht weg.
+Voices,voice.stan.staring.0,"Stan (the broken toy, playful and childlike), speech bubble, category staring: he stops dead and stares. Short, lower-case unless noted. {floor} = current floor number",stay still.,bleib stehen.
+Voices,voice.stan.staring.1,"Stan (the broken toy, playful and childlike), speech bubble, category staring: he stops dead and stares. Short, lower-case unless noted. {floor} = current floor number",one… two…,eins… zwei…
+Voices,voice.stan.staring.2,"Stan (the broken toy, playful and childlike), speech bubble, category staring: he stops dead and stares. Short, lower-case unless noted. {floor} = current floor number",shhh.,pssst.
+Voices,voice.stan.staring.3,"Stan (the broken toy, playful and childlike), speech bubble, category staring: he stops dead and stares. Short, lower-case unless noted. {floor} = current floor number",let me look at you.,lass dich ansehen.
+Voices,voice.stan.staring.4,"Stan (the broken toy, playful and childlike), speech bubble, category staring: he stops dead and stares. Short, lower-case unless noted. {floor} = current floor number",closer.,näher.
+Voices,voice.stan.staring.5,"Stan (the broken toy, playful and childlike), speech bubble, category staring: he stops dead and stares. Short, lower-case unless noted. {floor} = current floor number",don't move.,nicht bewegen.
+Voices,voice.stan.lunge.0,"Stan (the broken toy, playful and childlike), speech bubble, category lunge: SHOUTED, all caps: he rushes you. Short, lower-case unless noted. {floor} = current floor number",BOO.,BUH.
+Voices,voice.stan.lunge.1,"Stan (the broken toy, playful and childlike), speech bubble, category lunge: SHOUTED, all caps: he rushes you. Short, lower-case unless noted. {floor} = current floor number",TAG!,ERWISCHT!
+Voices,voice.stan.lunge.2,"Stan (the broken toy, playful and childlike), speech bubble, category lunge: SHOUTED, all caps: he rushes you. Short, lower-case unless noted. {floor} = current floor number",GOT YOU—,HAB DICH—
+Voices,voice.stan.lunge.3,"Stan (the broken toy, playful and childlike), speech bubble, category lunge: SHOUTED, all caps: he rushes you. Short, lower-case unless noted. {floor} = current floor number",MINE.,MEINS.
+Voices,voice.stan.lunge.4,"Stan (the broken toy, playful and childlike), speech bubble, category lunge: SHOUTED, all caps: he rushes you. Short, lower-case unless noted. {floor} = current floor number",NOW.,JETZT.
+Voices,voice.stan.touch.0,"Stan (the broken toy, playful and childlike), speech bubble, category touch: SHOUTED: he touches you, just before he vanishes. Short, lower-case unless noted. {floor} = current floor number",tag. you're it.,abgeschlagen. du bist dran.
+Voices,voice.stan.touch.1,"Stan (the broken toy, playful and childlike), speech bubble, category touch: SHOUTED: he touches you, just before he vanishes. Short, lower-case unless noted. {floor} = current floor number",warm.,warm.
+Voices,voice.stan.touch.2,"Stan (the broken toy, playful and childlike), speech bubble, category touch: SHOUTED: he touches you, just before he vanishes. Short, lower-case unless noted. {floor} = current floor number",he heard that.,er hat das gehört.
+Voices,voice.stan.touch.3,"Stan (the broken toy, playful and childlike), speech bubble, category touch: SHOUTED: he touches you, just before he vanishes. Short, lower-case unless noted. {floor} = current floor number",i told him where you are.,"ich hab ihm gesagt, wo du bist."
+Voices,voice.stan.touch.4,"Stan (the broken toy, playful and childlike), speech bubble, category touch: SHOUTED: he touches you, just before he vanishes. Short, lower-case unless noted. {floor} = current floor number",your light tastes good.,dein licht schmeckt gut.
+Voices,voice.stan.lost.0,"Stan (the broken toy, playful and childlike), speech bubble, category lost: he loses sight of you after watching. Short, lower-case unless noted. {floor} = current floor number",where did you go?,wo bist du hin?
+Voices,voice.stan.lost.1,"Stan (the broken toy, playful and childlike), speech bubble, category lost: he loses sight of you after watching. Short, lower-case unless noted. {floor} = current floor number","hide and seek, then.",dann eben verstecken spielen.
+Voices,voice.stan.lost.2,"Stan (the broken toy, playful and childlike), speech bubble, category lost: he loses sight of you after watching. Short, lower-case unless noted. {floor} = current floor number",i can hear you breathing.,ich hör dich atmen.
+Voices,voice.stan.lost.3,"Stan (the broken toy, playful and childlike), speech bubble, category lost: he loses sight of you after watching. Short, lower-case unless noted. {floor} = current floor number",you'll come back.,du kommst zurück.
+Voices,voice.stan.lost.4,"Stan (the broken toy, playful and childlike), speech bubble, category lost: he loses sight of you after watching. Short, lower-case unless noted. {floor} = current floor number",ready or not…,ich komme…
+Voices,voice.stan.locker.0,"Stan (the broken toy, playful and childlike), speech bubble, category locker: you are hiding in a locker and he is close. Short, lower-case unless noted. {floor} = current floor number",knock knock.,"klopf, klopf."
+Voices,voice.stan.locker.1,"Stan (the broken toy, playful and childlike), speech bubble, category locker: you are hiding in a locker and he is close. Short, lower-case unless noted. {floor} = current floor number",i know which one.,"ich weiß, welcher."
+Voices,voice.stan.locker.2,"Stan (the broken toy, playful and childlike), speech bubble, category locker: you are hiding in a locker and he is close. Short, lower-case unless noted. {floor} = current floor number","it's cramped in there, isn't it?","eng da drin, oder?"
+Voices,voice.stan.locker.3,"Stan (the broken toy, playful and childlike), speech bubble, category locker: you are hiding in a locker and he is close. Short, lower-case unless noted. {floor} = current floor number","come out, come out.","komm raus, komm raus."
+Voices,voice.stan.locker.4,"Stan (the broken toy, playful and childlike), speech bubble, category locker: you are hiding in a locker and he is close. Short, lower-case unless noted. {floor} = current floor number",i can wait all night.,ich kann die ganze nacht warten.
+Voices,voice.stan.idle.0,"Stan (the broken toy, playful and childlike), speech bubble, category idle: he has been watching you for a long time. Short, lower-case unless noted. {floor} = current floor number",do you like the maze?,magst du das labyrinth?
+Voices,voice.stan.idle.1,"Stan (the broken toy, playful and childlike), speech bubble, category idle: he has been watching you for a long time. Short, lower-case unless noted. {floor} = current floor number",he's closer than me.,er ist näher als ich.
+Voices,voice.stan.idle.2,"Stan (the broken toy, playful and childlike), speech bubble, category idle: he has been watching you for a long time. Short, lower-case unless noted. {floor} = current floor number",floor {floor}. not many left.,etage {floor}. nicht mehr viele.
+Voices,voice.stan.idle.3,"Stan (the broken toy, playful and childlike), speech bubble, category idle: he has been watching you for a long time. Short, lower-case unless noted. {floor} = current floor number",your heart is loud.,dein herz ist laut.
+Voices,voice.stan.idle.4,"Stan (the broken toy, playful and childlike), speech bubble, category idle: he has been watching you for a long time. Short, lower-case unless noted. {floor} = current floor number",the stars aren't for you.,die sterne sind nicht für dich.
+Voices,voice.stan.idle.5,"Stan (the broken toy, playful and childlike), speech bubble, category idle: he has been watching you for a long time. Short, lower-case unless noted. {floor} = current floor number",keep walking.,geh weiter.
+Voices,voice.patient.hilde.default.0,"Patient hilde speech bubble (said on approach, any floor). A short line, normal sentence case, under 60 characters","Forty-one doors. Yesterday, forty.",Einundvierzig Türen. Gestern vierzig.
+Voices,voice.patient.hilde.default.1,"Patient hilde speech bubble (said on approach, any floor). A short line, normal sentence case, under 60 characters",Don't open the new one.,Mach die neue nicht auf.
+Voices,voice.patient.hilde.default.2,"Patient hilde speech bubble (said on approach, any floor). A short line, normal sentence case, under 60 characters",Count with me. One...,Zähl mit mir. Eins...
+Voices,voice.patient.hilde.fileread.0,"Patient hilde speech bubble (once, after the player read this patient's case file). A short line, normal sentence case, under 60 characters",You read my file. So you count too.,Du hast meine Akte gelesen. Dann zählst du auch.
+Voices,voice.patient.hilde.late.0,"Patient hilde speech bubble (later floors, 50 % of the approaches). A short line, normal sentence case, under 60 characters",Forty-four. They keep coming.,Vierundvierzig. Es werden immer mehr.
+Voices,voice.patient.hilde.finale.0,"Patient hilde speech bubble (in the finale). A short line, normal sentence case, under 60 characters",One more door. Yours.,Noch eine Tür. Deine.
+Voices,voice.patient.tomas.default.0,"Patient tomas speech bubble (said on approach, any floor). A short line, normal sentence case, under 60 characters",Two knocks. All clear.,Zweimal klopfen. Alles sicher.
+Voices,voice.patient.tomas.default.1,"Patient tomas speech bubble (said on approach, any floor). A short line, normal sentence case, under 60 characters",Listen. Hear them walking?,Hör mal. Hörst du sie gehen?
+Voices,voice.patient.tomas.default.2,"Patient tomas speech bubble (said on approach, any floor). A short line, normal sentence case, under 60 characters",The pipes are warm tonight.,Die Rohre sind heute Nacht warm.
+Voices,voice.patient.tomas.fileread.0,"Patient tomas speech bubble (once, after the player read this patient's case file). A short line, normal sentence case, under 60 characters",They wrote that I answer the pipes. The pipes answer me.,"Da steht, ich antworte den Rohren. Die Rohre antworten mir."
+Voices,voice.patient.tomas.late.0,"Patient tomas speech bubble (later floors, 50 % of the approaches). A short line, normal sentence case, under 60 characters",Three. Three knocks. Hide.,Drei. Dreimal klopfen. Versteck dich.
+Voices,voice.patient.tomas.finale.0,"Patient tomas speech bubble (in the finale). A short line, normal sentence case, under 60 characters",It stopped knocking. Why did it stop?,Es hat aufgehört zu klopfen. Warum hat es aufgehört?
+Voices,voice.patient.elias.default.0,"Patient elias speech bubble (said on approach, any floor). A short line, normal sentence case, under 60 characters",The drawers are cold. Mine is number five.,Die Schubladen sind kalt. Meine ist Nummer fünf.
+Voices,voice.patient.elias.default.1,"Patient elias speech bubble (said on approach, any floor). A short line, normal sentence case, under 60 characters",I walk at night. I don't remember where.,"Ich laufe nachts. Ich weiß nicht mehr, wohin."
+Voices,voice.patient.elias.fileread.0,"Patient elias speech bubble (once, after the player read this patient's case file). A short line, normal sentence case, under 60 characters",You've seen drawer five. Did it have my name on?,Du hast Schublade fünf gesehen. Stand mein Name drauf?
+Voices,voice.patient.elias.late.0,"Patient elias speech bubble (later floors, 50 % of the approaches). A short line, normal sentence case, under 60 characters",They're moving me to Surgery tomorrow.,Morgen verlegen sie mich in die Chirurgie.
+Voices,voice.patient.elias.finale.0,"Patient elias speech bubble (in the finale). A short line, normal sentence case, under 60 characters",Thank you for coming down.,"Danke, dass du runtergekommen bist."
+World,world.hub.admissions,"World sign above the asylum's reception desk (3D text on the wall, two lines, ALL CAPS, ~16 characters per line). Karlheinz = the asylum's name, keep it","KARLHEINZ ASYLUM
+ADMISSIONS","ANSTALT KARLHEINZ
+AUFNAHME"
+World,world.hub.slot.100,"World sign on the records board slot for case file 1 (small label on a wall folder, two lines, ~16 characters per line, ALL CAPS). P3 = Patient 3; the name is not translated","P3
+HILDE BRANDT","P3
+HILDE BRANDT"
+World,world.hub.slot.101,"World sign on the records board slot for case file 2 (small label, two lines, ~16 characters per line, ALL CAPS). P11 = Patient 11","P11
+TOMAS REINER","P11
+TOMAS REINER"
+World,world.hub.slot.102,"World sign on the records board slot for case file 3 (small label, two lines, ~16 characters per line, ALL CAPS). P5 = Patient 5","P5
+ELIAS VOGT","P5
+ELIAS VOGT"
+World,world.hub.slot.103,"World sign on the records board slot for case file 4 (small label, one line, ~16 characters, ALL CAPS)",SUBJECT A,SUBJEKT A
+World,world.hub.slot.104,"World sign on the records board slot for case file 5 (small label, two lines, ~16 characters per line, ALL CAPS)","DIRECTOR
+PRIVATE","DIREKTOR
+PRIVAT"
+World,world.hub.wristband,"World sign on the patient card beside Elias's wristband on the morgue table (two lines, ALL CAPS, ~14 characters per line). Names are not translated","ELIAS VOGT
+PATIENT 5","ELIAS VOGT
+PATIENT 5"
+World,world.hub.lower_level,"World sign stencilled on a door to the lower levels (two lines, ALL CAPS, ~14 characters per line). Subject A is a character name","SUBJECT A
+LOWER LEVEL","SUBJEKT A
+UNTERE EBENE"
+World,world.hub.service_unit,"World sign stencilled on a service robot's bay (one line, ALL CAPS, ~14 characters). Service units are the old maintenance robots",SERVICE UNIT,SERVICEEINHEIT
+World,world.intake.holding,"World sign above the door of the holding room in the Intake tutorial ward (one line, ALL CAPS, ~10 characters)",HOLDING,VERWAHRUNG
+World,world.intake.no_entry,"World sign on a door in the Intake ward that cannot be opened (one line, ALL CAPS, ~10 characters)",NO ENTRY,KEIN ZUTRITT
+World,world.intake.ward,"World sign in the Intake ward naming the ward (one line, ALL CAPS, ~20 characters). Keep the middle dot and the number",INTAKE  ·  WARD 1,AUFNAHME  ·  STATION 1
+World,world.intake.keep_quiet,"Warning stencil on the wall of the Intake corridor (two lines, ALL CAPS, ~20 characters per line). ""IT"" = the hunter, never named","KEEP QUIET.
+IT HEARS EVERYTHING.","SEI LEISE.
+ES HÖRT ALLES."
+World,world.intake.stay_in_bed,"World sign at the foot of the Intake bed, visible only in the focused torch beam (one line, ALL CAPS, ~16 characters)",STAY IN YOUR BED,BLEIB IM BETT
+World,world.shop.contracts,"World sign above the contract board in the shop (one line, ALL CAPS, ~10 characters)",CONTRACTS,AUFTRÄGE
+World,world.shop.shards_accepted,"World sign on the shop counter (one line, ALL CAPS, ~18 characters). Shards = the currency (see shop.currency)",SHARDS ACCEPTED,SPLITTER ANGENOMMEN

@@ -92,6 +92,7 @@ public class ObjectiveCard : MonoBehaviour
         {
             _goal = goal;
             _goalText.text = goal;
+            FitGoal(goal);
             if (_compactGoal != null) _compactGoal.text = goal;
             layout = true;
         }
@@ -119,6 +120,24 @@ public class ObjectiveCard : MonoBehaviour
         if (layout) Layout();
     }
 
+    private float _goalExtra;
+
+    /// <summary>S9 (D14): a goal that would shrink below its minimum on one line (a longer translation) wraps onto two lines and the card grows.</summary>
+    private void FitGoal(string goal)
+    {
+        _goalText.enableAutoSizing = false;
+        _goalText.textWrappingMode = TextWrappingModes.NoWrap;
+        _goalText.fontSize = 42f;
+        float single = _goalText.GetPreferredValues(goal).x;
+        bool two = single * (26f / 42f) > CardWidth - 130f;
+        _goalExtra = two ? 28f : 0f;
+        _goalText.textWrappingMode = two ? TextWrappingModes.Normal : TextWrappingModes.NoWrap;
+        _goalText.enableAutoSizing = true;
+        _goalText.fontSizeMin = two ? 24f : 26f;
+        _goalText.fontSizeMax = two ? 34f : 42f;
+        _goalText.rectTransform.sizeDelta = new Vector2(CardWidth - 130f, 56f + _goalExtra);
+    }
+
     /// <summary>The second line shows in the chip row's place when there are no keys; the card and the compact card size to their content.</summary>
     private void Layout()
     {
@@ -127,7 +146,9 @@ public class ObjectiveCard : MonoBehaviour
         _subText.text = hasKeys ? "" : _sub;
         _subText.gameObject.SetActive(!hasKeys && hasSub);
         bool row = hasKeys || hasSub;
-        _card.sizeDelta = new Vector2(CardWidth, row || !_shrinkWhenEmpty ? CardHeight : CardHeightNoRow);
+        _card.sizeDelta = new Vector2(CardWidth, (row || !_shrinkWhenEmpty ? CardHeight : CardHeightNoRow) + _goalExtra);
+        _chipRow.anchoredPosition = new Vector2(30f, -112f - _goalExtra);
+        _subText.rectTransform.anchoredPosition = new Vector2(30f, -112f - _goalExtra);
 
         if (_compact == null) return;
         _compactSub.text = _sub;

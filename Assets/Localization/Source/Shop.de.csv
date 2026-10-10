@@ -23,7 +23,7 @@ shop.item.bottle_pack.blurb,Starte die nächste Etage schon mit drei Flaschen.
 shop.item.focus_lens.name,Fokuslinse
 shop.item.focus_lens.blurb,"Nächste Etage: Der fokussierte Strahl reicht weiter, ohne mehr Batterie zu kosten."
 shop.item.fuse_map.name,Sicherungskarte
-shop.item.fuse_map.blurb,"Sicherungen, Knöpfe, Tresorräume und Schlüssel leuchten schwach. Auch der Kompass zeigt auf sie."
+shop.item.fuse_map.blurb,"Sicherungen, Knöpfe, Tresore und Schlüssel leuchten schwach. Der Kompass zeigt sie auch."
 shop.palette.torch.0,WARM
 shop.palette.torch.1,KALT
 shop.palette.torch.2,GLUT

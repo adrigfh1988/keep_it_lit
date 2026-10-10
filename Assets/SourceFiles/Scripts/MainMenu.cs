@@ -408,6 +408,7 @@ public class MainMenu : MonoBehaviour
         // Text is filled in by ShowRules() (touch-aware - see ControlsText), not here: TouchInput.Active
         // is not settled yet this early (Start runs before the first tap that could turn it on).
         _controlText = RuntimeUi.CreateText(_rulesScreen.transform, "Controls", "", 34f, new Color(0.62f, 0.62f, 0.66f));
+        RuntimeUi.AutoFit(_controlText, 0.7f);
         RuntimeUi.Place(_controlText.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0f, -210f), new Vector2(1400f, 170f));
 
         Button start = RuntimeUi.CreateButton(_rulesScreen.transform, L10n.T("ui.rules.start"),

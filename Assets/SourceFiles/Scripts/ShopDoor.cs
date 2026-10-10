@@ -98,6 +98,7 @@ public class ShopDoor : MonoBehaviour, IInteractable
         if (plaque != null)
         {
             plaque.text = L10n.T("hub.shopdoor.plaque", ("status", L10n.T(open ? "hub.shopdoor.status_open" : "hub.shopdoor.status_closed")));
+            WingDoor.FitPlaque(plaque);
             plaque.color = color;
         }
 

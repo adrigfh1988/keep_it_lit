@@ -186,6 +186,20 @@ public class WingDoor : MonoBehaviour, IInteractable
         }
     }
 
+    /// <summary>S9 (D14): a longer translation shrinks (down to 65 %) on one line instead of wrapping off the plate. Shared with ShopDoor.</summary>
+    internal static void FitPlaque(TMP_Text t)
+    {
+        if (t == null) return;
+        if (!t.enableAutoSizing)
+        {
+            float max = t.fontSize;
+            t.enableAutoSizing = true;
+            t.fontSizeMax = max;
+            t.fontSizeMin = max * 0.65f;
+        }
+        t.textWrappingMode = TextWrappingModes.NoWrap;
+    }
+
     /// <summary>Re-reads GameFlow and repaints the plaque and beacon. Called whenever the hub switches on.</summary>
     public void Refresh()
     {
@@ -201,6 +215,7 @@ public class WingDoor : MonoBehaviour, IInteractable
             plaque.text = L10n.Has("hub.wing.plaque")
                 ? L10n.T("hub.wing.plaque", ("wing", WingName), ("room", RoomName), ("status", status))
                 : $"{wingName}\n<size=60%>{roomName}  ·  {status}</size>";
+            FitPlaque(plaque);
             plaque.color = color;
         }
 

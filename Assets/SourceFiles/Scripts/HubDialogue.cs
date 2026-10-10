@@ -208,7 +208,7 @@ public static class HubDialogue
         {
             J("Cold. Of course it's cold. Thank you."),
             J("Nobody's brought me anything since the doctor stopped coming. The one who stopped being a doctor."),
-            J("You'll want the Boiler room. Bruno says he has the key."),
+            J("You'll want the Boiler Room. Bruno says he has the key."),
             J("Bruno lies. Poor man, he believes every word of it."),
             J("Under the pillow. My pillow, you impertinent thing. There."),
             J("Brass, with a tag. I took it off his belt last October. The October."),

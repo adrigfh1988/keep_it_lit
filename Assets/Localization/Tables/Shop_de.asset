@@ -118,7 +118,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 375296023
-    m_Localized: "Sicherungen, Kn\xF6pfe, Tresorr\xE4ume und Schl\xFCssel leuchten schwach. Auch der Kompass zeigt auf sie."
+    m_Localized: "Sicherungen, Kn\xF6pfe, Tresore und Schl\xFCssel leuchten schwach. Der Kompass zeigt sie auch."
     m_Metadata:
       m_Items: []
   - m_Id: 375296024

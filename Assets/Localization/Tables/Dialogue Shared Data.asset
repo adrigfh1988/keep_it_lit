@@ -840,7 +840,7 @@ MonoBehaviour:
     - rid: 4707331672703762523
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: 'Dr. Weiss, weiss.remind (job taken but not finished: a reminder), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages). {n} = items found so far, {total} = items in the mission'
+        m_CommentText: 'Dr. Weiss, weiss.remind (job taken but not finished: a reminder), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages). {n} = items found so far'
     - rid: 4707331672703762524
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:

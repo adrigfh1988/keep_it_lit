@@ -91,7 +91,7 @@ ui.end.no_consolation,KEIN TROSTPREIS     {currency}  {shards}
 ui.end.final_payout,AUSZAHLUNG  +{amount}     KAMPAGNEN-SUMME  {total}
 ui.end.next_floor,NÄCHSTE ETAGE
 ui.end.replay,ETAGE WIEDERHOLEN
-ui.end.retry,DIESES LABYRINTH NOCHMAL
+ui.end.retry,DASSELBE LABYRINTH
 ui.end.new_maze,NEUES LABYRINTH
 ui.end.main_menu,HAUPTMENÜ
 ui.shop.title,ZWISCHEN DEN ETAGEN
