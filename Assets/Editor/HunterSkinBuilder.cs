@@ -17,7 +17,7 @@ using UnityEngine;
 ///
 /// Idempotent: <see cref="EnsureSkin"/> only paints when the material or a texture is missing; the menu item repaints.
 /// </summary>
-public static class HunterSkinBuilder
+public static partial class HunterSkinBuilder
 {
     public const string MaterialName = "Orderly";
     private const string Folder = "Assets/SourceFiles/Characters/HunterOrderly";
@@ -61,7 +61,14 @@ public static class HunterSkinBuilder
         public float[] dist = new float[Size * Size];
     }
 
-    private static Material Generate()
+    /// <summary>Paints one texel; <see cref="Paint"/> is the Orderly, HunterSkinBuilder.Shopkeeper.cs has the shop's brass.</summary>
+    private delegate void Painter(Buffers b, int i, int x, int y, Vector4 chest, out Color albedo, out Color metal, out Color emission, out float height);
+
+    private static Material Generate() => GenerateSkin(Folder, MaterialName, Paint, 1.4f);
+
+    /// <summary>Rasterises the robot into UV space, runs <paramref name="paint"/> on every texel and writes {name}_Albedo /
+    /// _MetalSmooth / _Emission / _Normal plus {name}.mat (URP Lit) into <paramref name="folder"/>.</summary>
+    private static Material GenerateSkin(string folder, string name, Painter paint, float emissionIntensity)
     {
         GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(RobotPrefabPath);
         SkinnedMeshRenderer smr = prefab != null ? prefab.GetComponentInChildren<SkinnedMeshRenderer>(true) : null;
@@ -97,26 +104,25 @@ public static class HunterSkinBuilder
             for (int x = 0; x < Size; x++)
             {
                 int i = y * Size + x;
-                Paint(b, i, x, y, chest, out albedo[i], out metal[i], out emission[i], out height[i]);
+                paint(b, i, x, y, chest, out albedo[i], out metal[i], out emission[i], out height[i]);
             }
         }
 
         Dilate(b, albedo, metal, emission, height);
         Color[] normal = HeightToNormal(height);
 
-        if (!AssetDatabase.IsValidFolder("Assets/SourceFiles/Characters")) AssetDatabase.CreateFolder("Assets/SourceFiles", "Characters");
-        if (!AssetDatabase.IsValidFolder(Folder)) AssetDatabase.CreateFolder("Assets/SourceFiles/Characters", "HunterOrderly");
+        EnsureFolderPath(folder);
 
-        Texture2D tAlbedo = WriteTexture("Orderly_Albedo", albedo, true, false);
-        Texture2D tMetal = WriteTexture("Orderly_MetalSmooth", metal, false, false);
-        Texture2D tEmission = WriteTexture("Orderly_Emission", emission, true, false);
-        Texture2D tNormal = WriteTexture("Orderly_Normal", normal, false, true);
+        Texture2D tAlbedo = WriteTexture(folder, name + "_Albedo", albedo, true, false);
+        Texture2D tMetal = WriteTexture(folder, name + "_MetalSmooth", metal, false, false);
+        Texture2D tEmission = WriteTexture(folder, name + "_Emission", emission, true, false);
+        Texture2D tNormal = WriteTexture(folder, name + "_Normal", normal, false, true);
 
-        string matPath = Folder + "/" + MaterialName + ".mat";
+        string matPath = folder + "/" + name + ".mat";
         Material mat = AssetDatabase.LoadAssetAtPath<Material>(matPath);
         if (mat == null)
         {
-            mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = MaterialName };
+            mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = name };
             AssetDatabase.CreateAsset(mat, matPath);
         }
         mat.SetTexture("_BaseMap", tAlbedo);
@@ -132,7 +138,7 @@ public static class HunterSkinBuilder
         mat.SetFloat("_BumpScale", 1f);
         mat.SetTexture("_EmissionMap", tEmission);
         mat.EnableKeyword("_EMISSION");
-        mat.SetColor("_EmissionColor", new Color(1.4f, 1.4f, 1.4f, 1f));
+        mat.SetColor("_EmissionColor", new Color(emissionIntensity, emissionIntensity, emissionIntensity, 1f));
         mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
         EditorUtility.SetDirty(mat);
         AssetDatabase.SaveAssets();
@@ -741,14 +747,14 @@ public static class HunterSkinBuilder
         return result;
     }
 
-    private static Texture2D WriteTexture(string name, Color[] pixels, bool sRgb, bool normalMap)
+    private static Texture2D WriteTexture(string folder, string name, Color[] pixels, bool sRgb, bool normalMap)
     {
         Texture2D t = new Texture2D(Size, Size, TextureFormat.RGBA32, false, !sRgb);
         t.SetPixels(pixels);
         t.Apply();
         byte[] png = t.EncodeToPNG();
         Object.DestroyImmediate(t);
-        string path = Folder + "/" + name + ".png";
+        string path = folder + "/" + name + ".png";
         File.WriteAllBytes(path, png);
         AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
         TextureImporter importer = (TextureImporter)AssetImporter.GetAtPath(path);

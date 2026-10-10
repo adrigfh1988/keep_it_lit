@@ -46,6 +46,7 @@ public static partial class ShopRoomBuilder
         if (so.FindProperty("shopkeeper").objectReferenceValue == null) return "the salesman is still the Guard (no Timmy / ShopkeeperAnimator wired)";
         if (!IsSalesmanPrefabInstance(salesman)) return $"the salesman is not an instance of {SalesmanPrefabPath}";
         if (WaveAvailable() && !ControllerHasWave()) return "Waving.fbx is available but Timmy's controller has no Wave state";
+        if (WearsPlainTimmy(salesman)) return "the salesman still wears the plain Timmy material (no Shopkeeper brass skin)";
         return null;
     }
 
@@ -64,7 +65,7 @@ public static partial class ShopRoomBuilder
 
         SerializedObject so = new SerializedObject(shop);
         bool isTimmy = salesman != null && so.FindProperty("shopkeeper").objectReferenceValue != null;
-        if (isTimmy && IsSalesmanPrefabInstance(salesman)) return false;
+        if (isTimmy && IsSalesmanPrefabInstance(salesman)) return SkinSalesmanPrefab();
 
         bool prefabExists = AssetDatabase.LoadAssetAtPath<GameObject>(SalesmanPrefabPath) != null;
         if (isTimmy && !prefabExists)
@@ -79,6 +80,7 @@ public static partial class ShopRoomBuilder
             salesman = PlaceSalesman(shop.transform);
         }
 
+        SkinSalesmanPrefab();
         Transform head = SalesmanParts(salesman, out ShopkeeperAnimator shopkeeper);
         so.FindProperty("headPivot").objectReferenceValue = head;
         so.FindProperty("shopkeeper").objectReferenceValue = shopkeeper;
@@ -130,6 +132,57 @@ public static partial class ShopRoomBuilder
         return head;
     }
 
+    private const string PlainTimmyMaterialPath = "Assets/SourceFiles/TimmyRobot/Materials/TimmyRobot.mat";
+
+    /// <summary>True while any of the salesman's renderers still uses the Starter Assets TimmyRobot material.</summary>
+    private static bool WearsPlainTimmy(Transform salesman)
+    {
+        Material plain = AssetDatabase.LoadAssetAtPath<Material>(PlainTimmyMaterialPath);
+        foreach (Renderer r in salesman.GetComponentsInChildren<Renderer>(true))
+        {
+            foreach (Material mat in r.sharedMaterials) if (mat != null && mat == plain) return true;
+        }
+        return false;
+    }
+
+    /// <summary>Swaps the plain TimmyRobot material for <paramref name="skin"/>; any other material (a hand change) is kept.</summary>
+    private static void ReplaceTimmyMaterial(GameObject body, Material skin)
+    {
+        Material plain = AssetDatabase.LoadAssetAtPath<Material>(PlainTimmyMaterialPath);
+        foreach (Renderer r in body.GetComponentsInChildren<Renderer>(true))
+        {
+            Material[] mats = r.sharedMaterials;
+            bool changed = false;
+            for (int i = 0; i < mats.Length; i++)
+            {
+                if (mats[i] != plain) continue;
+                mats[i] = skin;
+                changed = true;
+            }
+            if (changed) r.sharedMaterials = mats;
+        }
+    }
+
+    /// <summary>Puts the Shopkeeper brass skin on ShopSalesman.prefab if it still wears the plain Timmy material. Edits the prefab asset.</summary>
+    private static bool SkinSalesmanPrefab()
+    {
+        GameObject root = PrefabUtility.LoadPrefabContents(SalesmanPrefabPath);
+        try
+        {
+            if (!WearsPlainTimmy(root.transform)) return false;
+            Material skin = HunterSkinBuilder.EnsureShopkeeperSkin();
+            if (skin == null) return false;
+            ReplaceTimmyMaterial(root, skin);
+            PrefabUtility.SaveAsPrefabAsset(root, SalesmanPrefabPath);
+            Debug.Log($"Shop salesman: the brass Shopkeeper skin is on {SalesmanPrefabPath}.");
+            return true;
+        }
+        finally
+        {
+            PrefabUtility.UnloadPrefabContents(root);
+        }
+    }
+
     private static bool IsSalesmanPrefabInstance(Transform salesman) =>
         PrefabUtility.IsPartOfPrefabInstance(salesman.gameObject) &&
         PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(salesman.gameObject) == SalesmanPrefabPath;
@@ -155,6 +208,8 @@ public static partial class ShopRoomBuilder
         timmy.transform.localRotation = Quaternion.identity;
         timmy.transform.localScale = Vector3.one;
         MakeMovable(timmy.transform); // the room is static; a skinned, animated body must not be
+        Material skin = HunterSkinBuilder.EnsureShopkeeperSkin();
+        if (skin != null) ReplaceTimmyMaterial(timmy, skin);
 
         Animator animator = timmy.GetComponentInChildren<Animator>();
         if (animator == null) animator = timmy.AddComponent<Animator>();
