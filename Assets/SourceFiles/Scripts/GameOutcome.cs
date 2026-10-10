@@ -18,7 +18,7 @@ public enum LoseReason
 /// buttons. Added at runtime by MazeGenerator. Single-shot - the first ending wins, and a hatch drop
 /// or a timeout that lands mid-capture is ignored.
 /// </summary>
-public class GameOutcome : MonoBehaviour
+public partial class GameOutcome : MonoBehaviour
 {
     private static readonly Color Green = new Color(0.25f, 1f, 0.7f);
     private static readonly Color Red = new Color(0.9f, 0.15f, 0.1f);
@@ -149,6 +149,7 @@ public class GameOutcome : MonoBehaviour
             return;
         }
 
+        DescentRun.Cause = DescentCause.Hunter; // F107
         Lose(LoseReason.Caught);
     }
 
@@ -169,6 +170,7 @@ public class GameOutcome : MonoBehaviour
 
         _captureLookAt = lookAt;
         _hasCaptureLookAt = true;
+        DescentRun.Cause = DescentCause.Visitor; // F107: read only by the descent end screen
         Lose(LoseReason.Caught);
     }
 
@@ -248,6 +250,13 @@ public class GameOutcome : MonoBehaviour
         // F105 C6: the floor was cleared, so what the player leaned on this floor is learned (before the shop checkpoint / the finale).
         if (_habits != null) _habits.CommitLearning();
         LoopCorridor.CommitFloor(); // F105 C4: a loop on this floor counts as the campaign's one
+
+        // F107 B2: a descent never wins, never visits the shop or the finale and never saves: always the hatch drop, a typed slip, the next level.
+        if (GameFlow.IsDescent)
+        {
+            StartCoroutine(DescentClearSequence());
+            return;
+        }
 
         if (GameFlow.CurrentFloor >= FloorProfile.FinalFloor || _shop == null)
         {
@@ -646,6 +655,13 @@ public class GameOutcome : MonoBehaviour
     {
         if (IsOver || IsEnding) return;
 
+        // F107: a descent has no ending to win; anything that reaches here is a floor clear.
+        if (GameFlow.IsDescent)
+        {
+            FloorCleared();
+            return;
+        }
+
         IsOver = true;
         GameFlow.IsRunActive = false;
         _runTime = Time.time - GameFlow.RunStartTime;
@@ -678,9 +694,9 @@ public class GameOutcome : MonoBehaviour
         IsOver = true;
         GameFlow.IsRunActive = false;
         _runTime = Time.time - GameFlow.RunStartTime;
+        if (GameFlow.IsDescent) DescentRun.Cause = DescentCause.Timer; // F107
 
-        _consolationPayout = PlayerWallet.ComputeConsolation(GameFlow.CurrentFloor, _collected);
-        PlayerWallet.Deposit(_consolationPayout);
+        BankConsolation();
 
         EndTheHunt();
         if (_escape != null) _escape.Stop();
@@ -753,8 +769,7 @@ public class GameOutcome : MonoBehaviour
         IsOver = true;
         IsEnding = false;
 
-        _consolationPayout = PlayerWallet.ComputeConsolation(GameFlow.CurrentFloor, _collected);
-        PlayerWallet.Deposit(_consolationPayout);
+        BankConsolation();
 
         yield return new WaitForSeconds(0.2f);
 
@@ -794,6 +809,13 @@ public class GameOutcome : MonoBehaviour
     private void ShowEndScreen(bool won, LoseReason reason, bool torchWasOn, string titleOverride = null, string bodyOverride = null)
     {
         RuntimeUi.EnsureEventSystem();
+
+        // F107 B2: a descent has its own end screen (the readmission slip); no shards are paid, no maze is retried.
+        if (GameFlow.IsDescent && !won)
+        {
+            ShowDescentEndScreen();
+            return;
+        }
 
         Canvas canvas = RuntimeUi.ResolveCanvas();
         if (canvas == null) return;

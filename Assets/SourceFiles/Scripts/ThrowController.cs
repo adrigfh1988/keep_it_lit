@@ -14,7 +14,7 @@ using UnityEngine.InputSystem;
 [DefaultExecutionOrder(-10)]
 public class ThrowController : MonoBehaviour
 {
-    private const int MaxCarried = 3;
+    public const int MaxCarried = 3;
     private const float ThrowSpeed = 11f;
     private const float ThrowLift = 2.5f;
 
@@ -30,6 +30,9 @@ public class ThrowController : MonoBehaviour
 
     /// <summary>How many items are currently carried - shown by PlayerHud next to the consumable slots.</summary>
     public int Carried => _carried.Count;
+
+    /// <summary>F107: true when no more can be carried (an item cache then offers something else).</summary>
+    public bool IsFull => _carried.Count >= MaxCarried;
 
     /// <summary>Called once by MazeGenerator.SetUpAtmosphere. Any template argument may be null (an incomplete InteractableKit - throwing just never fires).</summary>
     public void Configure(Camera playerCamera, AIFollower hunter, PlayerStealthState stealth, Transform mazeRoot,

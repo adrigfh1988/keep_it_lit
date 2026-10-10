@@ -214,6 +214,56 @@ MonoBehaviour:
     m_Localized: MAPA
     m_Metadata:
       m_Items: []
+  - m_Id: 171011829829632
+    m_Localized: NIVEL -{n}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763201
+  - m_Id: 171011926298624
+    m_Localized: "TU M\xC1S PROFUNDO: -{best}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763201
+  - m_Id: 171011926298625
+    m_Localized: HAS LLEGADO TAN HONDO COMO NUNCA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 171011926298626
+    m_Localized: "NADIE HA VUELTO DE AQU\xCD"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 171011926298627
+    m_Localized: "NIVEL -{n}  \xB7  SUPERADO"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763201
+  - m_Id: 171011926298628
+    m_Localized: "ESTRELLAS {stars}  \xB7  TIEMPO ABAJO {time}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763201
+  - m_Id: 171011926298629
+    m_Localized: "M\xC1S HONDO."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 171011926298630
+    m_Localized: 'ENCONTRADO: {item}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763201
+  - m_Id: 171011926298631
+    m_Localized: "ENCONTRADO: {item}  \xB7  SIGUIENTE NIVEL"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763201
+  - m_Id: 171011926298632
+    m_Localized: MANOS LLENAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 171011926298633
+    m_Localized: ABRIR ALIJO
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -241,3 +291,9 @@ MonoBehaviour:
         - id: 740200466
         - id: 740200467
         - id: 740200468
+        - id: 171011829829632
+        - id: 171011926298624
+        - id: 171011926298627
+        - id: 171011926298628
+        - id: 171011926298630
+        - id: 171011926298631

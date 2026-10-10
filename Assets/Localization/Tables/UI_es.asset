@@ -595,6 +595,101 @@ MonoBehaviour:
     m_Localized: MAPA
     m_Metadata:
       m_Items: []
+  - m_Id: 193175870148608
+    m_Localized: DESCENSO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617600
+    m_Localized: "M\xC1S PROFUNDO  \xB7  NIVEL -{n}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 193175966617601
+    m_Localized: TERMINA ANTES EL INGRESO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617602
+    m_Localized: SALIR TERMINA EL DESCENSO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617603
+    m_Localized: DESCENDER DE NUEVO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617604
+    m_Localized: "READMISI\xD3N  \xB7  INGRESO ##  \xB7  PACIENTE #"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617605
+    m_Localized: RECUPERADO EN EL NIVEL -{n}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 193175966617606
+    m_Localized: "ESTRELLAS {stars}  \xB7  TIEMPO ABAJO {time}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 193175966617607
+    m_Localized: 'CAUSA: {cause}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 193175966617608
+    m_Localized: SEGUIDO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617609
+    m_Localized: RETENIDO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617610
+    m_Localized: LUCES RESTAURADAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617611
+    m_Localized: LLEVADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617612
+    m_Localized: "HAB\xCDA APRENDIDO: {habits}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 193175966617613
+    m_Localized: CASILLEROS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617614
+    m_Localized: LANZAMIENTOS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617615
+    m_Localized: OSCURIDAD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617616
+    m_Localized: CARRERA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617617
+    m_Localized: SEMILLA {seed}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 193175966617618
+    m_Localized: "M\xC1S PROFUNDO REGISTRADO: NIVEL -{n}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 193175966617619
+    m_Localized: "LAS ESTRELLAS LLEGAN M\xC1S HONDO QUE LA VEZ ANTERIOR."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617620
+    m_Localized: "SIN ALTA M\xC9DICA."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -631,3 +726,10 @@ MonoBehaviour:
         - id: 22165078315102
         - id: 22165078315103
         - id: 22165078315104
+        - id: 193175966617600
+        - id: 193175966617605
+        - id: 193175966617606
+        - id: 193175966617607
+        - id: 193175966617612
+        - id: 193175966617617
+        - id: 193175966617618

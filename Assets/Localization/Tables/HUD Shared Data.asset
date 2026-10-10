@@ -235,6 +235,61 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331677479764493
+  - m_Id: 171011829829632
+    m_Key: hud.descent.level
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308437
+  - m_Id: 171011926298624
+    m_Key: hud.descent.deepest
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308438
+  - m_Id: 171011926298625
+    m_Key: hud.descent.at_record
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308439
+  - m_Id: 171011926298626
+    m_Key: hud.descent.past_record
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308440
+  - m_Id: 171011926298627
+    m_Key: hud.descent.cleared
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308441
+  - m_Id: 171011926298628
+    m_Key: hud.descent.stats
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308442
+  - m_Id: 171011926298629
+    m_Key: hud.descent.deeper
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308443
+  - m_Id: 171011926298630
+    m_Key: hud.descent.found
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308444
+  - m_Id: 171011926298631
+    m_Key: hud.descent.found_next
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308445
+  - m_Id: 171011926298632
+    m_Key: hud.descent.hands_full
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308446
+  - m_Id: 171011926298633
+    m_Key: hud.prompt.open_cache
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308447
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -422,3 +477,47 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: 'Hint on the prompt line (not tied to a door) the first time the floor map can be opened: "M  MAP" (34 pt, 600 x 50, auto-size, shown 4 s). Noun'
+    - rid: 4707331682537308437
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'DESCENT level label: HUD floor label (26 pt, top left, 320 px) and the level intro banner title (38 pt). {n} = depth, shown as -n'
+    - rid: 4707331682537308438
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Level intro banner record line (22 pt, one line, 900 px): this level is above the record. {best} = deepest level ever reached, shown as -best'
+    - rid: 4707331682537308439
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Level intro banner record line: this level equals the record'
+    - rid: 4707331682537308440
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Level intro banner record line: this level is deeper than the record'
+    - rid: 4707331682537308441
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Typed slip over black after a DESCENT level is cleared (76 pt green, one line, 1500 px). {n} = level just cleared, shown as -n
+    - rid: 4707331682537308442
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Typed slip line (40 pt, one line). {stars} = stars taken over the whole descent, {time} = m:ss total run time
+    - rid: 4707331682537308443
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Typed slip last line (52 pt amber)
+    - rid: 4707331682537308444
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle after opening an item cache, item usable now. {item} = the item's shop name
+    - rid: 4707331682537308445
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle after opening an item cache, item applies from the next level. {item} = the item's shop name
+    - rid: 4707331682537308446
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Item cache prompt when nothing it holds fits (all-caps prompt, after the E key cap)
+    - rid: 4707331682537308447
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Prompt after the E key cap while looking at a closed item cache in a DESCENT (hold E)

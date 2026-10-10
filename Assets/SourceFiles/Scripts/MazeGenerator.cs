@@ -440,6 +440,9 @@ public partial class MazeGenerator : MonoBehaviour
         GameFlow.PendingSeed = 0;
         UsedSeed = usedSeed;
 
+        // F107 B3: the Inspector entry into a descent at depth debugFloor (fresh starts only, so a reload keeps the run going).
+        if (debugDescent && debugStartInMaze && !debugStartInShop && freshStart && debugFloor > 0 && !GameFlow.IsDescent) BeginDebugDescent();
+
         ApplyFloorProfile(freshStart, usedSeed);
         ResolveTheme();
 
@@ -484,7 +487,9 @@ public partial class MazeGenerator : MonoBehaviour
         // every layer, so a star, a ceiling or a robot standing in the maze would be carved out of the
         // navmesh. Lockers and wall props are built above, before this line, so their bodies are carved
         // out too and the hunter paths around them instead of through them.
+        System.Diagnostics.Stopwatch bakeWatch = GameFlow.IsDescent ? System.Diagnostics.Stopwatch.StartNew() : null; // F107: a descent grid can be 16 x 13, so its bake time is logged
         BuildRuntimeNavMesh();
+        if (bakeWatch != null) Debug.Log($"[Descent] navmesh bake {bakeWatch.ElapsedMilliseconds} ms for {width}x{height}", this);
 
         BuildCeiling();
         BuildCeilingProps(propRng);
@@ -516,6 +521,9 @@ public partial class MazeGenerator : MonoBehaviour
         // key walls). +18: +17 is MazeEscape's lift roll.
         BuildKeys(new System.Random(usedSeed + 18));
 
+        // F107 C, after BuildKeys: a DESCENT's item caches (+24). Draws nothing outside a descent.
+        BuildItemCaches(new System.Random(usedSeed + ItemCacheSalt));
+
         // F74, post-bake, after BuildFuses so every free-wall/free-cell pass below sees _doorUsedCells
         // fully populated. Decision D15: +13 threaded through both throwable passes (one continuous
         // stream, same convention as propRng above), +14 threaded through notes and theme interactables,
@@ -526,13 +534,13 @@ public partial class MazeGenerator : MonoBehaviour
         BuildNoisySurfaces(throwRng);
 
         System.Random noteRng = new System.Random(usedSeed + 14);
-        BuildLoreNotes(noteRng);
+        if (!GameFlow.IsDescent) BuildLoreNotes(noteRng); // F107: a descent has no lore notes
         BuildThemeInteractables(noteRng);
 
         BuildLantern(new System.Random(usedSeed + 15));
 
         // F93, post-BuildLoreNotes: the floor's patient case file (+19, its own System.Random; +17 is MazeEscape's lift roll, +18 BuildKeys).
-        BuildPatientFile(new System.Random(usedSeed + 19));
+        if (!GameFlow.IsDescent) BuildPatientFile(new System.Random(usedSeed + 19)); // F107: nor a case file
 
         SpawnShards(usedSeed);
         PlacePlayer();
@@ -646,10 +654,15 @@ public partial class MazeGenerator : MonoBehaviour
     {
         _profile = null;
 
+        // F107 B3: a descent level keeps its story-floor lookups in range by pinning CurrentFloor to min(depth, FinalFloor), and lives far from
+        // every authored piece. Set before RunRules.Resolve so a level's rule hashes the real depth.
+        bool descent = GameFlow.IsDescent;
+        if (descent) EnterDescentLevel(usedSeed);
+
         // F74 decision D9: resolved before the useFloorProfile-off early return, so RunRules.Current is
         // never left stale (it is a pure function of usedSeed/floor, always safe to recompute even on
         // an Inspector-only test maze where nothing below reads it).
-        RunRules.Resolve(usedSeed, GameFlow.CurrentFloor);
+        RunRules.Resolve(usedSeed, descent ? DescentRun.Depth : GameFlow.CurrentFloor);
 
         if (!useFloorProfile) return;
 
@@ -657,13 +670,15 @@ public partial class MazeGenerator : MonoBehaviour
         // screens and Next Floor all agree with it. Only on a fresh start: a reload that came from the
         // shop door or a retry (SkipMenuOnLoad) must keep the floor the game set, or the shop's door
         // would lead straight back to the same floor forever.
-        if (debugFloor > 0 && freshStart) GameFlow.CurrentFloor = Mathf.Clamp(debugFloor, 1, FloorProfile.FinalFloor);
+        if (debugFloor > 0 && freshStart && !descent) GameFlow.CurrentFloor = Mathf.Clamp(debugFloor, 1, FloorProfile.FinalFloor);
 
         // F77: debugObjectives (Inspector) forces this floor's mechanics instead of rolling them from the
         // seed; None means "roll normally" (null forced, not Objective.None - that would mean "force no
         // mechanics", see FloorProfile.For's doc comment).
         FloorProfile.Objective? forcedObjectives = debugObjectives != FloorProfile.Objective.None ? debugObjectives : (FloorProfile.Objective?)null;
-        _profile = FloorProfile.For(GameFlow.CurrentFloor, usedSeed, forcedObjectives);
+        _profile = descent
+            ? FloorProfile.ForDescent(DescentRun.Depth, usedSeed, forcedObjectives)
+            : FloorProfile.For(GameFlow.CurrentFloor, usedSeed, forcedObjectives);
         PlayerInventory.ApplyActiveModifiers(_profile);
         // F74: run rules (DyingGrid, KeenEars, HeavyFog, WeakBattery, Restless, GlassFloors, RichVeins)
         // layer on top of the shop's own modifiers - see RunRules.ApplyToProfile's doc comment for which
@@ -4727,6 +4742,11 @@ public partial class MazeGenerator : MonoBehaviour
             lantern.BindPlayerSystems(player, stamina, stealth, aiFollower, hud);
         }
 
+        foreach (DescentItem cache in _itemCaches)
+        {
+            cache.Bind(hud, aiFollower, throwController, flashlight); // F107 C
+        }
+
         foreach (ThemeInteractable theme in _themeInteractables)
         {
             theme.BindHud(hud);
@@ -4969,7 +4989,7 @@ public partial class MazeGenerator : MonoBehaviour
         // RunRules, FloorProfile) is settled - its own coroutine waits out the title screen itself.
         FloorIntroBanner banner = FindAnyObjectByType<FloorIntroBanner>();
         if (banner == null) banner = gameObject.AddComponent<FloorIntroBanner>();
-        banner.Show(FloorTitleText(), ObjectiveLineText(), RuleLineText(), _profile != null ? _profile.TemperamentText : "");
+        banner.Show(FloorTitleText(), ObjectiveLineText(), RuleLineText(), _profile != null ? _profile.TemperamentText : "", DescentRecordLineText());
 
         // Debug affordance: open the floor as if the hatch had just been reached.
         if (debugStartInShop) StartCoroutine(DebugEnterShop(outcome));
@@ -4984,6 +5004,7 @@ public partial class MazeGenerator : MonoBehaviour
     /// <summary>F74 FloorIntroBanner title line. The primitive fallback has no FloorTheme to name, so it gets a generic text.</summary>
     private string FloorTitleText()
     {
+        if (GameFlow.IsDescent) return L10n.T("hud.descent.level", ("n", DescentRun.Depth)); // F107
         int floor = GameFlow.CurrentFloor;
         if (_theme != null)
         {

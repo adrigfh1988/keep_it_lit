@@ -43,3 +43,14 @@ hud.prompt.open_valve,"Interaction prompt on the steam valve (Boiler floor, hold
 hud.prompt.light_candles,Interaction prompt on the candles (Crypt floor),LIGHT CANDLES
 hud.prompt.use_terminal,Interaction prompt on the terminal (Lab floor),USE TERMINAL
 hud.prompt.map,"Hint on the prompt line (not tied to a door) the first time the floor map can be opened: ""M  MAP"" (34 pt, 600 x 50, auto-size, shown 4 s). Noun",MAP
+hud.descent.level,"DESCENT level label: HUD floor label (26 pt, top left, 320 px) and the level intro banner title (38 pt). {n} = depth, shown as -n",LEVEL -{n}
+hud.descent.deepest,"Level intro banner record line (22 pt, one line, 900 px): this level is above the record. {best} = deepest level ever reached, shown as -best",YOUR DEEPEST: -{best}
+hud.descent.at_record,"Level intro banner record line: this level equals the record",THIS IS AS DEEP AS YOU HAVE GONE
+hud.descent.past_record,"Level intro banner record line: this level is deeper than the record",NO ONE HAS COME BACK FROM HERE
+hud.descent.cleared,"Typed slip over black after a DESCENT level is cleared (76 pt green, one line, 1500 px). {n} = level just cleared, shown as -n",LEVEL -{n}  ·  CLEARED
+hud.descent.stats,"Typed slip line (40 pt, one line). {stars} = stars taken over the whole descent, {time} = m:ss total run time",STARS HELD {stars}  ·  TIME BELOW {time}
+hud.descent.deeper,"Typed slip last line (52 pt amber)",DEEPER.
+hud.descent.found,"Subtitle after opening an item cache, item usable now. {item} = the item's shop name",FOUND: {item}
+hud.descent.found_next,"Subtitle after opening an item cache, item applies from the next level. {item} = the item's shop name",FOUND: {item}  ·  NEXT LEVEL
+hud.descent.hands_full,"Item cache prompt when nothing it holds fits (all-caps prompt, after the E key cap)",HANDS FULL
+hud.prompt.open_cache,"Prompt after the E key cap while looking at a closed item cache in a DESCENT (hold E)",OPEN CACHE

@@ -214,6 +214,56 @@ MonoBehaviour:
     m_Localized: MAP
     m_Metadata:
       m_Items: []
+  - m_Id: 171011829829632
+    m_Localized: LEVEL -{n}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663390
+  - m_Id: 171011926298624
+    m_Localized: 'YOUR DEEPEST: -{best}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663390
+  - m_Id: 171011926298625
+    m_Localized: THIS IS AS DEEP AS YOU HAVE GONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 171011926298626
+    m_Localized: NO ONE HAS COME BACK FROM HERE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 171011926298627
+    m_Localized: "LEVEL -{n}  \xB7  CLEARED"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663390
+  - m_Id: 171011926298628
+    m_Localized: "STARS HELD {stars}  \xB7  TIME BELOW {time}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663390
+  - m_Id: 171011926298629
+    m_Localized: DEEPER.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 171011926298630
+    m_Localized: 'FOUND: {item}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663390
+  - m_Id: 171011926298631
+    m_Localized: "FOUND: {item}  \xB7  NEXT LEVEL"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663390
+  - m_Id: 171011926298632
+    m_Localized: HANDS FULL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 171011926298633
+    m_Localized: OPEN CACHE
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -241,3 +291,9 @@ MonoBehaviour:
         - id: 740200466
         - id: 740200467
         - id: 740200468
+        - id: 171011829829632
+        - id: 171011926298624
+        - id: 171011926298627
+        - id: 171011926298628
+        - id: 171011926298630
+        - id: 171011926298631

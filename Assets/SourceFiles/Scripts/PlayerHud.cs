@@ -297,7 +297,7 @@ public class PlayerHud : MonoBehaviour
 
         // Sits under TensionDirector's star counter (top-left, 36 px in, 30 px down, 60 px tall)
         TextMeshProUGUI floorText = _floorText = RuntimeUi.CreateText(canvas.transform, "FloorLabel",
-            L10n.T("hud.floor", ("floor", GameFlow.CurrentFloor)), 26f, new Color(0.62f, 0.62f, 0.66f));
+            GameFlow.IsDescent ? L10n.T("hud.descent.level", ("n", DescentRun.Depth)) : L10n.T("hud.floor", ("floor", GameFlow.CurrentFloor)), 26f, new Color(0.62f, 0.62f, 0.66f));
         RuntimeUi.AutoFit(floorText, 0.7f);
         floorText.alignment = TextAlignmentOptions.TopLeft;
         floorText.characterSpacing = 6f;
@@ -407,13 +407,13 @@ public class PlayerHud : MonoBehaviour
             _floorText.gameObject.SetActive(!GameFlow.IsInIntake);
             // F92: the hospital between mazes is not a floor.
             bool hub = GameFlow.IsInHub;
-            int floor = GameFlow.CurrentFloor;
+            int floor = GameFlow.IsDescent ? DescentRun.Depth : GameFlow.CurrentFloor; // F107: a descent shows its true depth
             if (!_floorShownValid || _floorShownHub != hub || _floorShownFloor != floor)
             {
                 _floorShownValid = true;
                 _floorShownHub = hub;
                 _floorShownFloor = floor;
-                _floorText.text = hub ? L10n.T("hud.asylum") : L10n.T("hud.floor", ("floor", floor));
+                _floorText.text = hub ? L10n.T("hud.asylum") : GameFlow.IsDescent ? L10n.T("hud.descent.level", ("n", floor)) : L10n.T("hud.floor", ("floor", floor));
             }
         }
         UpdateBattery();

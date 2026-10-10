@@ -170,7 +170,7 @@ public partial class MazeGenerator
     {
         _loopActive = false;
         _loopRng = null;
-        if (!terror.loopCorridor || _theme == null || _profile == null || _profile.Floor < loopFromFloor || LoopCorridor.UsedThisCampaign) return;
+        if (!terror.loopCorridor || _theme == null || _profile == null || !LoopAllowedHere()) return; // F107: a descent has its own spacing rule
 
         System.Random rng = new System.Random(usedSeed + LoopSalt);
         if (rng.NextDouble() >= loopChance)

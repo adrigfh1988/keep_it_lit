@@ -24,6 +24,7 @@ public class PauseMenu : MonoBehaviour
 
     private GameObject _panel;
     private Button _restartButton;
+    private TextMeshProUGUI _descentWarning; // F107
     private Button _skipButton;
     private Button _mapButton;
     private bool _paused;
@@ -133,7 +134,8 @@ public class PauseMenu : MonoBehaviour
 
         if (_panel == null) BuildPanel();
         // Replaying a cleared floor from the shop would re-earn its payout (decision 4c).
-        if (_restartButton != null) _restartButton.gameObject.SetActive(!GameFlow.IsInShop && !GameFlow.IsInIntake && !GameFlow.IsInHub); // F92: no replaying a floor from the hospital either
+        if (_restartButton != null) _restartButton.gameObject.SetActive(!GameFlow.IsInShop && !GameFlow.IsInIntake && !GameFlow.IsInHub && !GameFlow.IsDescent); // F92: no replaying a floor from the hospital either; F107: nor a descent level (a new maze each time)
+        if (_descentWarning != null) _descentWarning.gameObject.SetActive(GameFlow.IsDescent);
         // F86: only the Intake offers a way out of itself.
         if (_skipButton != null) _skipButton.gameObject.SetActive(GameFlow.IsInIntake);
         // F106: the map button is for touch players (no M key) and anyone who forgot it; only once the loop corridor has handed the map over.
@@ -215,6 +217,13 @@ public class PauseMenu : MonoBehaviour
         _restartButton = RuntimeUi.CreateButton(_panel.transform, L10n.T("ui.pause.restart"),
             new Vector2(0f, 410f), size, 40f, ButtonIdle, ButtonHover, Color.white);
         RuntimeUi.BindButton(_restartButton, "ui.pause.restart");
+
+        // F107: leaving a descent loses it (there is no save), so the pause menu says so.
+        _descentWarning = RuntimeUi.CreateText(_panel.transform, "DescentWarning", L10n.T("ui.pause.descent_warning"), 30f, new Color(0.95f, 0.7f, 0.3f));
+        RuntimeUi.Bind(_descentWarning, "ui.pause.descent_warning", 0.6f);
+        _descentWarning.characterSpacing = 4f;
+        RuntimeUi.Place(_descentWarning.rectTransform, new Vector2(0.5f, 0f), new Vector2(0f, 740f), new Vector2(1200f, 44f));
+        _descentWarning.gameObject.SetActive(false);
         _restartButton.onClick.AddListener(() => GameFlow.Restart(true, _seed));
 
         // F86: SKIP TUTORIAL shares the RESTART slot - the two are never shown together (see Pause).

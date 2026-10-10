@@ -214,6 +214,56 @@ MonoBehaviour:
     m_Localized: CARTE
     m_Metadata:
       m_Items: []
+  - m_Id: 171011829829632
+    m_Localized: NIVEAU -{n}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763193
+  - m_Id: 171011926298624
+    m_Localized: 'VOTRE PLUS PROFOND: -{best}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763193
+  - m_Id: 171011926298625
+    m_Localized: "VOUS N'\xCATES JAMAIS ALL\xC9 PLUS BAS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 171011926298626
+    m_Localized: PERSONNE N'EN EST REVENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 171011926298627
+    m_Localized: "NIVEAU -{n}  \xB7  TERMIN\xC9"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763193
+  - m_Id: 171011926298628
+    m_Localized: "\xC9TOILES {stars}  \xB7  TEMPS EN BAS {time}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763193
+  - m_Id: 171011926298629
+    m_Localized: PLUS BAS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 171011926298630
+    m_Localized: "TROUV\xC9: {item}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763193
+  - m_Id: 171011926298631
+    m_Localized: "TROUV\xC9: {item}  \xB7  NIVEAU SUIVANT"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763193
+  - m_Id: 171011926298632
+    m_Localized: MAINS PLEINES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 171011926298633
+    m_Localized: OUVRIR LA CACHE
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -241,3 +291,9 @@ MonoBehaviour:
         - id: 740200466
         - id: 740200467
         - id: 740200468
+        - id: 171011829829632
+        - id: 171011926298624
+        - id: 171011926298627
+        - id: 171011926298628
+        - id: 171011926298630
+        - id: 171011926298631

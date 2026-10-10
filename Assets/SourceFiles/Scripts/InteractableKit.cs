@@ -65,6 +65,10 @@ public class InteractableKit : MonoBehaviour
     [Tooltip("Optional. The trapdoor MazeEscape.BuildHatch clones: a child 'Glow' renderer takes the hatch's emissive material, and children 'LidL'/'LidR' are the two leaves, hinged about their local Z. Empty = the old glowing slab.")]
     [SerializeField] private GameObject escapeHatch;
 
+    [Header("DESCENT item cache (F107)")]
+    [Tooltip("A small chest against a wall: hold E to open it for one item. MazeGenerator.BuildItemCaches clones it in a DESCENT only.")]
+    [SerializeField] private DescentItem itemCache;
+
     [Header("Patient file (F93)")]
     [Tooltip("A case file on a small wall bracket: it IS a LoreNote (ids 100+), so reading, the first-read bonus and the save all work as for any note. MazeGenerator.BuildPatientFile clones it once per floor.")]
     [SerializeField] private LoreNote patientFile;
@@ -99,6 +103,7 @@ public class InteractableKit : MonoBehaviour
     public GameObject ShardModel => shardModel;
     public ParticleSystem FogBank => fogBank;
     public LoreNote PatientFile => patientFile;
+    public DescentItem ItemCache => itemCache;
 
     /// <summary>True once every F72 template slot is assigned - MazeGenerator.BuildDoors logs and skips the whole feature otherwise.</summary>
     public bool HasDoorsAndButtons => shutterDoor != null && wallButton != null && batteryCell != null;
@@ -129,4 +134,7 @@ public class InteractableKit : MonoBehaviour
 
     /// <summary>True once the key pickup template is assigned - MazeGenerator.BuildKeys logs and skips otherwise.</summary>
     public bool HasKey => keyPickup != null;
+
+    /// <summary>F107: true once the item cache template is assigned - MazeGenerator.BuildItemCaches logs and skips otherwise.</summary>
+    public bool HasItemCache => itemCache != null;
 }

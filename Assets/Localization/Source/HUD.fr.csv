@@ -43,3 +43,14 @@ hud.prompt.open_valve,OUVRIR LA VANNE
 hud.prompt.light_candles,ALLUMER LES BOUGIES
 hud.prompt.use_terminal,UTILISER LE TERMINAL
 hud.prompt.map,CARTE
+hud.descent.level,NIVEAU -{n}
+hud.descent.deepest,VOTRE PLUS PROFOND: -{best}
+hud.descent.at_record,VOUS N'ÊTES JAMAIS ALLÉ PLUS BAS
+hud.descent.past_record,PERSONNE N'EN EST REVENU
+hud.descent.cleared,NIVEAU -{n}  ·  TERMINÉ
+hud.descent.stats,ÉTOILES {stars}  ·  TEMPS EN BAS {time}
+hud.descent.deeper,PLUS BAS.
+hud.descent.found,TROUVÉ: {item}
+hud.descent.found_next,TROUVÉ: {item}  ·  NIVEAU SUIVANT
+hud.descent.hands_full,MAINS PLEINES
+hud.prompt.open_cache,OUVRIR LA CACHE

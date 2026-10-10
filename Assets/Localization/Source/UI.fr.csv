@@ -137,3 +137,25 @@ ui.dialogue.hint_next,{key}  CONTINUER    ·    {back}  QUITTER
 ui.dialogue.hint_end,{key}  TERMINER    ·    {back}  QUITTER
 ui.dialogue.hint_leave,{key}  QUITTER
 ui.pause.map,CARTE
+ui.menu.descent,DESCENTE
+ui.menu.descent_best,PLUS PROFOND  ·  NIVEAU -{n}
+ui.menu.descent_locked,TERMINEZ D'ABORD L'ADMISSION
+ui.pause.descent_warning,QUITTER MET FIN À LA DESCENTE
+ui.descent.again,DESCENDRE ENCORE
+ui.descent.end.heading,RÉADMISSION  ·  ENTRÉE ##  ·  PATIENT #
+ui.descent.end.depth,RÉCUPÉRÉ AU NIVEAU -{n}
+ui.descent.end.stats,ÉTOILES {stars}  ·  TEMPS EN BAS {time}
+ui.descent.end.cause,CAUSE: {cause}
+ui.descent.cause.hunter,SUIVI
+ui.descent.cause.visitor,RETENU
+ui.descent.cause.timer,LUMIÈRES RÉTABLIES
+ui.descent.cause.entity,EMPORTÉ
+ui.descent.end.learned,ÇA AVAIT APPRIS: {habits}
+ui.descent.habit.lockers,CASIERS
+ui.descent.habit.throws,JETS
+ui.descent.habit.dark,OBSCURITÉ
+ui.descent.habit.sprint,COURSE
+ui.descent.end.seed,GRAINE {seed}
+ui.descent.end.best,PLUS PROFOND ENREGISTRÉ: NIVEAU -{n}
+ui.descent.end.new_best,LES ÉTOILES VONT PLUS BAS QUE LA DERNIÈRE FOIS.
+ui.descent.end.close,PAS DE SORTIE AUTORISÉE.

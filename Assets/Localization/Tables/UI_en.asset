@@ -597,6 +597,101 @@ MonoBehaviour:
     m_Localized: MAP
     m_Metadata:
       m_Items: []
+  - m_Id: 193175870148608
+    m_Localized: DESCENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617600
+    m_Localized: "DEEPEST  \xB7  LEVEL -{n}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 193175966617601
+    m_Localized: FINISH THE INTAKE FIRST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617602
+    m_Localized: LEAVING ENDS THE DESCENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617603
+    m_Localized: DESCEND AGAIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617604
+    m_Localized: "READMITTED  \xB7  ADMISSION ##  \xB7  PATIENT #"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617605
+    m_Localized: RECOVERED AT LEVEL -{n}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 193175966617606
+    m_Localized: "STARS HELD {stars}  \xB7  TIME BELOW {time}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 193175966617607
+    m_Localized: 'CAUSE: {cause}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 193175966617608
+    m_Localized: FOLLOWED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617609
+    m_Localized: KEPT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617610
+    m_Localized: LIGHTS RESTORED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617611
+    m_Localized: TAKEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617612
+    m_Localized: 'IT HAD LEARNED: {habits}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 193175966617613
+    m_Localized: LOCKERS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617614
+    m_Localized: THROWS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617615
+    m_Localized: DARK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617616
+    m_Localized: SPRINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617617
+    m_Localized: SEED {seed}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 193175966617618
+    m_Localized: 'DEEPEST ON RECORD: LEVEL -{n}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 193175966617619
+    m_Localized: THE STARS GO DEEPER THAN LAST TIME.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617620
+    m_Localized: NO DISCHARGE.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -633,3 +728,10 @@ MonoBehaviour:
         - id: 22165078315102
         - id: 22165078315103
         - id: 22165078315104
+        - id: 193175966617600
+        - id: 193175966617605
+        - id: 193175966617606
+        - id: 193175966617607
+        - id: 193175966617612
+        - id: 193175966617617
+        - id: 193175966617618

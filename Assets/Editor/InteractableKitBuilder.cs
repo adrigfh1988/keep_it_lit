@@ -292,6 +292,20 @@ public static class InteractableKitBuilder
                 built++;
             }
         }
+
+        // F107: the DESCENT item cache, same build-missing-only rule. Needs the Alchemist trunk; without it the slot stays empty and
+        // MazeGenerator.BuildItemCaches logs an error naming this menu item (no primitive fallback, CLAUDE.md F89).
+        SerializedProperty cacheProp = so.FindProperty("itemCache");
+        if (cacheProp.objectReferenceValue == null)
+        {
+            DescentItem cache = BuildItemCache(root.transform, new Vector3(x, 0f, 0f));
+            if (cache != null)
+            {
+                cacheProp.objectReferenceValue = cache;
+                x += PieceSpacing;
+                built++;
+            }
+        }
         so.ApplyModifiedPropertiesWithoutUndo();
         ThemeSurfaceUpgrade.Apply(); // F88/F90: the fixture materials (shutter, bell, valve) get their texture sets
         AssetDatabase.SaveAssets();
@@ -1007,6 +1021,59 @@ public static class InteractableKitBuilder
         glint.AddComponent<StarPulse>();
 
         return root.AddComponent<LoreNote>();
+    }
+
+    private const string PackTrunk = "Items/Misc/Trunk01";
+    /// <summary>The cache's width along the wall (m): the pack trunk is scaled so its long side is this.</summary>
+    private const float ItemCacheWidth = 0.8f;
+
+    /// <summary>
+    /// F107 C: the DESCENT item cache - the Alchemist trunk (long side along X, back against the wall plane at the root, sitting on the floor,
+    /// opening toward +Z into the corridor), one BoxCollider on the root as the E target and a faint warm point light pulsing through
+    /// StarPulse so it can be found in the dark. Null if the pack is missing.
+    /// </summary>
+    private static DescentItem BuildItemCache(Transform parent, Vector3 localPosition)
+    {
+        if (!HasPackPrefab(PackTrunk))
+        {
+            Debug.LogWarning($"InteractableKitBuilder: {AlchemistPack.Prefabs}{PackTrunk}.prefab not found - the item cache template was not built.");
+            return null;
+        }
+
+        GameObject root = new GameObject("ItemCache");
+        root.transform.SetParent(parent, false);
+        root.transform.localPosition = localPosition;
+        Vector3 origin = root.transform.position;
+
+        GameObject trunk = AlchemistPack.Spawn(root.transform, PackTrunk);
+        Bounds b = AlchemistPack.RenderBounds(trunk);
+        if (b.size.z > b.size.x) trunk.transform.rotation = Quaternion.Euler(0f, 90f, 0f) * trunk.transform.rotation;
+        b = AlchemistPack.RenderBounds(trunk);
+        trunk.transform.localScale *= ItemCacheWidth / Mathf.Max(0.01f, b.size.x);
+        b = AlchemistPack.RenderBounds(trunk);
+        trunk.transform.position += new Vector3(origin.x - b.center.x, origin.y - b.min.y, origin.z - b.min.z);
+        b = AlchemistPack.RenderBounds(trunk);
+
+        BoxCollider box = root.AddComponent<BoxCollider>();
+        box.center = root.transform.InverseTransformPoint(b.center);
+        box.size = new Vector3(b.size.x + 0.1f, b.size.y + 0.1f, b.size.z + 0.1f);
+
+        GameObject glint = new GameObject("Glint");
+        glint.transform.SetParent(root.transform, false);
+        glint.transform.position = new Vector3(origin.x, b.max.y + 0.3f, origin.z + b.size.z + 0.3f);
+        Light light = glint.AddComponent<Light>();
+        light.type = LightType.Point;
+        light.color = new Color(1f, 0.78f, 0.45f);
+        light.range = 2.2f;
+        light.intensity = 0.3f;
+        light.shadows = LightShadows.None;
+        glint.AddComponent<StarPulse>();
+
+        DescentItem item = root.AddComponent<DescentItem>();
+        SerializedObject itemSo = new SerializedObject(item);
+        itemSo.FindProperty("glintLight").objectReferenceValue = light;
+        itemSo.ApplyModifiedPropertiesWithoutUndo();
+        return item;
     }
 
     /// <summary>A red-tinted URP copy of the notebook's material, so a case file reads differently from a cream lore note.</summary>

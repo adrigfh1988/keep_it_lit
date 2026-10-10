@@ -137,3 +137,25 @@ ui.dialogue.hint_next,{key}  WEITER    ·    {back}  VERLASSEN
 ui.dialogue.hint_end,{key}  ENDE    ·    {back}  VERLASSEN
 ui.dialogue.hint_leave,{key}  VERLASSEN
 ui.pause.map,KARTE
+ui.menu.descent,ABSTIEG
+ui.menu.descent_best,TIEFSTE  ·  EBENE -{n}
+ui.menu.descent_locked,SCHLIESSE ZUERST DIE AUFNAHME AB
+ui.pause.descent_warning,VERLASSEN BEENDET DEN ABSTIEG
+ui.descent.again,ERNEUT ABSTEIGEN
+ui.descent.end.heading,WIEDERAUFGENOMMEN  ·  AUFNAHME ##  ·  PATIENT #
+ui.descent.end.depth,GEBORGEN AUF EBENE -{n}
+ui.descent.end.stats,STERNE {stars}  ·  ZEIT UNTEN {time}
+ui.descent.end.cause,URSACHE: {cause}
+ui.descent.cause.hunter,VERFOLGT
+ui.descent.cause.visitor,FESTGEHALTEN
+ui.descent.cause.timer,LICHT WIEDERHERGESTELLT
+ui.descent.cause.entity,GEHOLT
+ui.descent.end.learned,ES HATTE GELERNT: {habits}
+ui.descent.habit.lockers,SPINDE
+ui.descent.habit.throws,WÜRFE
+ui.descent.habit.dark,DUNKEL
+ui.descent.habit.sprint,RENNEN
+ui.descent.end.seed,SEED {seed}
+ui.descent.end.best,TIEFSTER WERT: EBENE -{n}
+ui.descent.end.new_best,DIE STERNE REICHEN TIEFER ALS BEIM LETZTEN MAL.
+ui.descent.end.close,KEINE ENTLASSUNG.

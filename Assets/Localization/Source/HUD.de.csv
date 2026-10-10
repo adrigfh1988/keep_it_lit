@@ -43,3 +43,14 @@ hud.prompt.open_valve,VENTIL ÖFFNEN
 hud.prompt.light_candles,KERZEN ANZÜNDEN
 hud.prompt.use_terminal,TERMINAL BENUTZEN
 hud.prompt.map,KARTE
+hud.descent.level,EBENE -{n}
+hud.descent.deepest,DEIN TIEFSTER: -{best}
+hud.descent.at_record,SO TIEF BIST DU BISHER GEKOMMEN
+hud.descent.past_record,NIEMAND IST VON HIER ZURÜCKGEKEHRT
+hud.descent.cleared,EBENE -{n}  ·  GESCHAFFT
+hud.descent.stats,STERNE {stars}  ·  ZEIT UNTEN {time}
+hud.descent.deeper,TIEFER.
+hud.descent.found,GEFUNDEN: {item}
+hud.descent.found_next,GEFUNDEN: {item}  ·  NÄCHSTE EBENE
+hud.descent.hands_full,HÄNDE VOLL
+hud.prompt.open_cache,VERSTECK ÖFFNEN

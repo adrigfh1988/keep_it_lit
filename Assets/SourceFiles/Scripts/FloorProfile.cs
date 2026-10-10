@@ -128,17 +128,9 @@ public class FloorProfile
     /// picks the first entry that is not the pair the previous floor rolled (GameFlow.RolledObjectives),
     /// so two consecutive floors are never identical. Writes the result back to RolledObjectives[floor].
     /// </summary>
-    private static Objective RollObjectives(int floor, int usedSeed)
+    /// <summary>Every MechanicsPerFloor-sized combination of the three mechanics (built from a bitmask loop, not hard-coded), shuffled by a System.Random seeded with `hash`.</summary>
+    private static List<Objective> ShuffledMechanicPairs(int hash)
     {
-        if (floor < FirstRolledFloor) return Objective.None;
-
-        // F105 F5: the final floor is fixed, not rolled; keep RolledObjectives consistent for the next lookup.
-        if (floor == FinalFloor)
-        {
-            if (floor < GameFlow.RolledObjectives.Length) GameFlow.RolledObjectives[floor] = (int)FinalFloorObjectives;
-            return FinalFloorObjectives;
-        }
-
         Objective[] singles = { Objective.Lockdown, Objective.Blackout, Objective.KeyHunt };
         List<Objective> pairs = new List<Objective>();
         int comboCount = 1 << singles.Length;
@@ -155,13 +147,28 @@ public class FloorProfile
             if (popcount == MechanicsPerFloor) pairs.Add(combo);
         }
 
-        int hash = RunRules.HashSeedFloor(usedSeed ^ unchecked((int)0x4B455953), floor);
         System.Random rng = new System.Random(hash);
         for (int i = pairs.Count - 1; i > 0; i--)
         {
             int j = rng.Next(i + 1);
             (pairs[i], pairs[j]) = (pairs[j], pairs[i]);
         }
+
+        return pairs;
+    }
+
+    private static Objective RollObjectives(int floor, int usedSeed)
+    {
+        if (floor < FirstRolledFloor) return Objective.None;
+
+        // F105 F5: the final floor is fixed, not rolled; keep RolledObjectives consistent for the next lookup.
+        if (floor == FinalFloor)
+        {
+            if (floor < GameFlow.RolledObjectives.Length) GameFlow.RolledObjectives[floor] = (int)FinalFloorObjectives;
+            return FinalFloorObjectives;
+        }
+
+        List<Objective> pairs = ShuffledMechanicPairs(RunRules.HashSeedFloor(usedSeed ^ unchecked((int)0x4B455953), floor));
 
         int[] rolled = GameFlow.RolledObjectives;
         int previous = floor - 1 >= 1 && floor - 1 < rolled.Length ? rolled[floor - 1] : 0;
@@ -296,7 +303,10 @@ public class FloorProfile
     /// floor's pair. `forced` overrides the roll entirely (MazeGenerator's debugObjectives) - pass null to
     /// roll normally, or Objective.None explicitly to roll nothing (see the seedless For() above).
     /// </summary>
-    public static FloorProfile For(int floor, int usedSeed, Objective? forced = null)
+    public static FloorProfile For(int floor, int usedSeed, Objective? forced = null) => Build(floor, usedSeed, forced, true);
+
+    /// <summary>The story profile for a floor. `storyTemperament` off (F107 DESCENT) leaves the hunter's blended values unmultiplied and the banner line empty - ForDescent picks its own.</summary>
+    private static FloorProfile Build(int floor, int usedSeed, Objective? forced, bool storyTemperament)
     {
         floor = Mathf.Clamp(floor, 1, FinalFloor);
         float t = FinalFloor > 1 ? (floor - 1) / (float)(FinalFloor - 1) : 1f;
@@ -393,32 +403,7 @@ public class FloorProfile
 
         // F74 hunter temperament (B3.2): per-floor multipliers layered on top of the blend above, plus
         // the banner's one-line flavour text. Every other floor is untouched (implicit x1, no line).
-        if (floor == 3)
-        {
-            p.ViewDistance *= 0.6f;
-            p.HearingScale *= 1.5f;
-            p.TemperamentKey = "shop.temperament.listens";
-        }
-        else if (floor == 4)
-        {
-            p.RunSpeed *= 1.15f;
-            p.LoseSightTime *= 0.6f;
-            p.TemperamentKey = "shop.temperament.sprints";
-        }
-        else if (floor == FinalFloor)
-        {
-            // F105 F5: "it will not let you leave" - a final-floor hunter hunts, it doesn't wait.
-            // RunSpeed 3.4 x 1.2 = 4.08, still under the chase sprint cap.
-            p.RunSpeed *= 1.2f;
-            p.HearingScale *= 1.25f;
-            p.LoseSightTime *= 1.3f;
-            p.AmbushBias = Mathf.Max(0f, p.AmbushBias - 0.15f);
-            p.TemperamentKey = "shop.temperament.final";
-        }
-        else
-        {
-            p.TemperamentKey = "";
-        }
+        if (storyTemperament) ApplyTemperament(p, floor == 3 ? Temperament.Listens : floor == 4 ? Temperament.Sprints : floor == FinalFloor ? Temperament.Final : Temperament.None);
 
         // F105 F5: the final floor always ends in the lift, and the lift takes longer to fill.
         p.ForceLift = floor == FinalFloor;
@@ -436,6 +421,189 @@ public class FloorProfile
         p.DeadEndBaitStars = floor <= 1 ? 0 : floor <= 3 ? 1 : 2;
 
         return p;
+    }
+
+    // ---------------------------------------------------------------- hunter temperament
+
+    private enum Temperament { None, Listens, Sprints, Final }
+
+    /// <summary>F74 temperament multipliers on top of the first/final blend, plus the banner's one-line flavour text (shared by the story floors and F107's levels).</summary>
+    private static void ApplyTemperament(FloorProfile p, Temperament temperament)
+    {
+        switch (temperament)
+        {
+            case Temperament.Listens:
+                p.ViewDistance *= 0.6f;
+                p.HearingScale *= 1.5f;
+                p.TemperamentKey = "shop.temperament.listens";
+                break;
+            case Temperament.Sprints:
+                p.RunSpeed *= 1.15f;
+                p.LoseSightTime *= 0.6f;
+                p.TemperamentKey = "shop.temperament.sprints";
+                break;
+            case Temperament.Final:
+                // F105 F5: "it will not let you leave" - a final-floor hunter hunts, it doesn't wait.
+                // RunSpeed 3.4 x 1.2 = 4.08, still under the chase sprint cap.
+                p.RunSpeed *= 1.2f;
+                p.HearingScale *= 1.25f;
+                p.LoseSightTime *= 1.3f;
+                p.AmbushBias = Mathf.Max(0f, p.AmbushBias - 0.15f);
+                p.TemperamentKey = "shop.temperament.final";
+                break;
+            default:
+                p.TemperamentKey = "";
+                break;
+        }
+    }
+
+    // ---------------------------------------------------------------- F107 DESCENT
+
+    /// <summary>F107 B3: the themes a descent cycles through, in depth order. The Hollow row never plays (its index would be 5; FloorThemeSet.ForFloor must never be handed it).</summary>
+    private static readonly int[] DescentThemeCycle = { Theme.Ward, Theme.BoilerDeck, Theme.Crypt, Theme.Lab };
+
+    /// <summary>F107 B3: stars + keys + fuses the player has to find on this level. The maze grid is sized from it.</summary>
+    public int RequiredItems => StarCount + KeyCount + FuseCount;
+
+    private const float DescentRunSpeedCap = 4.3f;   // the player sprints at 5.3 m/s; the hunter must stay beatable
+    private const float DescentMinAmbient = 0.004f;
+    private const int DescentCellsPerLampCap = 11;
+    private const float DescentFogCap = 0.16f;
+    private const float DescentPhantomFloor = 12f;
+    private const float DescentChaseWalkCap = 1.15f;
+    private const int DescentBossEvery = 5;
+    private const int DescentSalt = 0x44455343; // "DESC"
+
+    /// <summary>
+    /// F107 B3: the profile of one DESCENT level. Starts from the story profile of floor min(depth, FinalFloor) (so everything keyed to a story
+    /// floor number, such as the footprint tables and the Terror tiers, behaves as on that floor) and overrides what a descent decides itself:
+    /// the item counts, the grid (sized from the items), the cycling theme, the shard count (none: there is no shop) and, past depth 5, a set of
+    /// capped difficulty curves. `forced` (MazeGenerator.debugObjectives) overrides the objective roll exactly as in the story.
+    /// </summary>
+    public static FloorProfile ForDescent(int depth, int usedSeed, Objective? forced = null)
+    {
+        depth = Mathf.Max(1, depth);
+        Objective objectives = forced ?? RollDescentObjectives(depth, usedSeed);
+        FloorProfile p = Build(Mathf.Min(depth, FinalFloor), usedSeed, objectives, false);
+
+        // What has to be found. The story's "Blackout costs 2 stars / KeyHunt costs 1" trims do not apply.
+        p.StarCount = Mathf.Min(3 + depth / 3, 8);
+        p.KeyCount = p.Has(Objective.KeyHunt) ? Mathf.Min(2 + depth / 6, 4) : 0;
+        p.FuseCount = p.Has(Objective.Blackout) ? Mathf.Min(3 + depth / 10, 4) : 0;
+
+        // Look and footprint: the theme cycles, and the corridor scale comes from the story floor that wears that theme.
+        int cycle = (depth - 1) % DescentThemeCycle.Length;
+        p.ThemeIndex = DescentThemeCycle[cycle];
+        Footprint footprint = Footprints[DescentFootprintIndex(cycle, depth)];
+        p.CellSize = footprint.CellSize;
+        p.WallHeight = footprint.WallHeight;
+        DescentGrid(p.RequiredItems, usedSeed, out p.Width, out p.Height);
+
+        int cells = p.Width * p.Height;
+        int lockers = Mathf.Max(5, Mathf.RoundToInt(cells * 10f / 121f)); // the story's floor-5 lockers per cell
+        if (depth >= 15) lockers = Mathf.Max(5, lockers - (depth - 10) / 5);
+        p.LockerCount = lockers;
+
+        p.ShardCount = 0;
+        p.HasStalker = depth >= 4;
+
+        // Every fifth level is a boss level: the final floor's temperament and its lift.
+        bool boss = depth % DescentBossEvery == 0;
+        p.ForceLift = boss;
+        p.LiftFillSeconds = boss ? 12f : 8f;
+        // Depths 1-5 keep the story's temperaments (a gentle start); deeper levels pick one from the seed.
+        Temperament temperament = boss ? Temperament.Final
+            : depth <= FinalFloor ? (depth == 3 ? Temperament.Listens : depth == 4 ? Temperament.Sprints : Temperament.None)
+            : DescentTemperament(depth, usedSeed);
+        ApplyTemperament(p, temperament);
+
+        ApplyDescentCurves(p, depth, cells);
+        return p;
+    }
+
+    /// <summary>The Footprints row a level of this theme-cycle slot uses: Ward floor 1, Boiler floor 2, Crypt floor 3 or 5 (alternating each time the Crypt comes round), Lab floor 4.</summary>
+    private static int DescentFootprintIndex(int cycle, int depth)
+    {
+        switch (DescentThemeCycle[cycle])
+        {
+            case Theme.Ward: return 0;
+            case Theme.BoilerDeck: return 1;
+            case Theme.Crypt: return ((depth - 3) / DescentThemeCycle.Length) % 2 == 0 ? 2 : 4;
+            default: return 3;
+        }
+    }
+
+    private static Temperament DescentTemperament(int depth, int usedSeed)
+    {
+        int pick = ((RunRules.HashSeedFloor(usedSeed ^ unchecked((int)0x54454D50), depth) % 3) + 3) % 3; // "TEMP"
+        return pick == 1 ? Temperament.Listens : pick == 2 ? Temperament.Sprints : Temperament.None;
+    }
+
+    /// <summary>
+    /// F107 B3: the grid for `required` items, the user's rule: cells = clamp(18 + 7 * required, 42, 196), a seeded aspect of 1.0-1.35, then each
+    /// side clamped to 6..16 by 6..13. Depth 1 (3 items) gives 7x6; depth 12 (15 items) 12x10.
+    /// </summary>
+    public static void DescentGrid(int required, int seed, out int width, out int height)
+    {
+        int cells = Mathf.Clamp(18 + 7 * required, 42, 196);
+        int hash = RunRules.HashSeedFloor(seed ^ unchecked((int)0x41535043), 0); // "ASPC"
+        float aspect = 1f + 0.35f * ((hash & 0x7FFFFFFF) / (float)int.MaxValue);
+        width = Mathf.Clamp(Mathf.RoundToInt(Mathf.Sqrt(cells * aspect)), 6, 16);
+        height = Mathf.Clamp(Mathf.RoundToInt(cells / (float)width), 6, 13);
+    }
+
+    /// <summary>
+    /// Depth 1 stars only; 2-9 two mechanics rolled like the story but never the pair DescentRun.PreviousObjectives holds; 10+ all three.
+    /// Writes the result back to DescentRun.PreviousObjectives (a forced value from the Inspector never reaches here).
+    /// </summary>
+    private static Objective RollDescentObjectives(int depth, int usedSeed)
+    {
+        Objective chosen;
+        if (depth <= 1) chosen = Objective.None;
+        else if (depth >= 10) chosen = Objective.Lockdown | Objective.Blackout | Objective.KeyHunt;
+        else
+        {
+            List<Objective> pairs = ShuffledMechanicPairs(RunRules.HashSeedFloor(usedSeed ^ DescentSalt, depth));
+            chosen = pairs[0];
+            for (int i = 0; i < pairs.Count; i++)
+            {
+                if ((int)pairs[i] == DescentRun.PreviousObjectives) continue;
+                chosen = pairs[i];
+                break;
+            }
+        }
+
+        DescentRun.PreviousObjectives = (int)chosen;
+        return chosen;
+    }
+
+    /// <summary>
+    /// Past depth 5 every term follows c = 1 - exp(-(depth - 5) / 8): 0 at depth 5, 0.47 at 10, 0.85 at 20. A saturating curve, never a Lerp
+    /// extrapolated past 1, and each result is capped.
+    /// </summary>
+    private static void ApplyDescentCurves(FloorProfile p, int depth, int cells)
+    {
+        int past = Mathf.Max(0, depth - FinalFloor);
+        float c = 1f - Mathf.Exp(-past / 8f);
+
+        p.RunSpeed = Mathf.Min(DescentRunSpeedCap, p.RunSpeed * (1f + 0.25f * c));
+        p.HearingScale *= 1f + 0.5f * c;
+        p.ViewDistance *= 1f + 0.25f * c;
+        p.ChaseWalkFraction = Mathf.Min(DescentChaseWalkCap, p.ChaseWalkFraction + 0.05f * c);
+        p.CellsPerLamp = Mathf.Min(DescentCellsPerLampCap, Mathf.RoundToInt(p.CellsPerLamp + 4f * c));
+        p.FogDensity = Mathf.Min(DescentFogCap, p.FogDensity + 0.04f * c);
+
+        float scale = 1f - 0.4f * c;
+        Color a = p.Ambient;
+        p.Ambient = new Color(Mathf.Max(a.r * scale, DescentMinAmbient), Mathf.Max(a.g * scale, DescentMinAmbient), Mathf.Max(a.b * scale, DescentMinAmbient * 1.25f), 1f);
+
+        if (past > 0)
+        {
+            float escape = Mathf.Clamp(25f + 0.3f * cells, 45f, 90f) - Mathf.Max(0, depth - 10);
+            p.EscapeSeconds = Mathf.Max(40f, escape);
+            p.PhantomInterval = Mathf.Max(DescentPhantomFloor, p.PhantomInterval - past);
+            p.DeadEndKeep = Mathf.Lerp(p.DeadEndKeep, 0.5f, Mathf.Clamp01(past / 15f));
+        }
     }
 
     public override string ToString()

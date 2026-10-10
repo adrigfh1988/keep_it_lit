@@ -156,7 +156,10 @@ public class LoopCorridor : MonoBehaviour
     /// <summary>Called from GameOutcome.FloorCleared: the floor that was just cleared counts as the campaign's one loop, if it had one.</summary>
     public static void CommitFloor()
     {
-        if (s_current != null) UsedThisCampaign = true;
+        if (s_current == null) return;
+
+        UsedThisCampaign = true;
+        if (GameFlow.IsDescent) DescentRun.LastLoopDepth = DescentRun.Depth; // F107: a descent spaces loops by depth, not once per campaign
     }
 
     public static void ResetCampaign()

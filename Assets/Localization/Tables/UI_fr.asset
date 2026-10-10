@@ -595,6 +595,101 @@ MonoBehaviour:
     m_Localized: CARTE
     m_Metadata:
       m_Items: []
+  - m_Id: 193175870148608
+    m_Localized: DESCENTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617600
+    m_Localized: "PLUS PROFOND  \xB7  NIVEAU -{n}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 193175966617601
+    m_Localized: TERMINEZ D'ABORD L'ADMISSION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617602
+    m_Localized: "QUITTER MET FIN \xC0 LA DESCENTE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617603
+    m_Localized: DESCENDRE ENCORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617604
+    m_Localized: "R\xC9ADMISSION  \xB7  ENTR\xC9E ##  \xB7  PATIENT #"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617605
+    m_Localized: "R\xC9CUP\xC9R\xC9 AU NIVEAU -{n}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 193175966617606
+    m_Localized: "\xC9TOILES {stars}  \xB7  TEMPS EN BAS {time}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 193175966617607
+    m_Localized: 'CAUSE: {cause}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 193175966617608
+    m_Localized: SUIVI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617609
+    m_Localized: RETENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617610
+    m_Localized: "LUMI\xC8RES R\xC9TABLIES"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617611
+    m_Localized: "EMPORT\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617612
+    m_Localized: "\xC7A AVAIT APPRIS: {habits}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 193175966617613
+    m_Localized: CASIERS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617614
+    m_Localized: JETS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617615
+    m_Localized: "OBSCURIT\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617616
+    m_Localized: COURSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617617
+    m_Localized: GRAINE {seed}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 193175966617618
+    m_Localized: "PLUS PROFOND ENREGISTR\xC9: NIVEAU -{n}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 193175966617619
+    m_Localized: "LES \xC9TOILES VONT PLUS BAS QUE LA DERNI\xC8RE FOIS."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617620
+    m_Localized: "PAS DE SORTIE AUTORIS\xC9E."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -631,3 +726,10 @@ MonoBehaviour:
         - id: 22165078315102
         - id: 22165078315103
         - id: 22165078315104
+        - id: 193175966617600
+        - id: 193175966617605
+        - id: 193175966617606
+        - id: 193175966617607
+        - id: 193175966617612
+        - id: 193175966617617
+        - id: 193175966617618

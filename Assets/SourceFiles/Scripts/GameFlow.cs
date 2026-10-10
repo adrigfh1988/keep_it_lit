@@ -47,6 +47,13 @@ public static class GameFlow
     /// <summary>F86: a safe room that is not a run - the HUD star counter, shard counter and consumable slots stay hidden. Readers that must stay ON in the Intake test IsInIntake explicitly instead. F92: the hub is one too.</summary>
     public static bool IsInSafeRoom => IsInShop || IsInIntake || IsInHub;
 
+    /// <summary>
+    /// F107 B1: true while the player is in a DESCENT (the endless mode outside the story). Set by the title button, cleared by START GAME and CONTINUE
+    /// (the story can never start with it on). Unlike the flags above it is NOT reset by Reload: it has to survive the reload between levels. Reset in
+    /// ResetStatics and ReturnToMenu. Every descent behaviour sits behind it, so with it false the story code path is unchanged.
+    /// </summary>
+    public static bool IsDescent;
+
     /// <summary>F86: PlayerPrefs flag set once the Intake has been finished or skipped. Only changes wording ("Welcome back"); the Intake is still offered every new campaign.</summary>
     public const string TutorialDoneKey = "lightsout.tutorial.done";
 
@@ -95,6 +102,17 @@ public static class GameFlow
     /// <summary>Go up one floor with a fresh maze. Callers only offer this below the final floor.</summary>
     public static void NextFloor()
     {
+        if (IsDescent)
+        {
+            // F107 B2: one level deeper. No save, no clamp at the final floor, no hub; CurrentFloor follows min(depth, FinalFloor) so the story
+            // lookups stay in range. AdvanceFloor makes what was found for "next level" active (the level's seconds and stars were committed by the caller).
+            DescentRun.Depth++;
+            CurrentFloor = Mathf.Min(DescentRun.Depth, FloorProfile.FinalFloor);
+            PlayerInventory.AdvanceFloor();
+            Restart(false, 0);
+            return;
+        }
+
         CurrentFloor = Mathf.Min(CurrentFloor + 1, FloorProfile.FinalFloor);
         PlayerInventory.AdvanceFloor();
         // F83: floor-start checkpoint, after AdvanceFloor so ActiveModifiers are the perks for the floor being started.
@@ -110,6 +128,8 @@ public static class GameFlow
         ResumeInShop = false;
         ArriveInHub = false;
         ShopFromHub = false;
+        IsDescent = false; // F107
+        DescentRun.ResetState();
         // F83: deliberately does NOT delete the save - that is what puts CONTINUE on the title screen.
         PlayerWallet.ResetCampaign();
         PlayerInventory.ResetCampaign();
@@ -166,6 +186,7 @@ public static class GameFlow
         ResumeInShop = false;
         ArriveInHub = false;
         ShopFromHub = false;
+        IsDescent = false; // F107
         System.Array.Clear(RolledObjectives, 0, RolledObjectives.Length);
     }
 }

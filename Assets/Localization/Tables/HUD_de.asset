@@ -214,6 +214,56 @@ MonoBehaviour:
     m_Localized: KARTE
     m_Metadata:
       m_Items: []
+  - m_Id: 171011829829632
+    m_Localized: EBENE -{n}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763209
+  - m_Id: 171011926298624
+    m_Localized: 'DEIN TIEFSTER: -{best}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763209
+  - m_Id: 171011926298625
+    m_Localized: SO TIEF BIST DU BISHER GEKOMMEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 171011926298626
+    m_Localized: "NIEMAND IST VON HIER ZUR\xDCCKGEKEHRT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 171011926298627
+    m_Localized: "EBENE -{n}  \xB7  GESCHAFFT"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763209
+  - m_Id: 171011926298628
+    m_Localized: "STERNE {stars}  \xB7  ZEIT UNTEN {time}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763209
+  - m_Id: 171011926298629
+    m_Localized: TIEFER.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 171011926298630
+    m_Localized: 'GEFUNDEN: {item}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763209
+  - m_Id: 171011926298631
+    m_Localized: "GEFUNDEN: {item}  \xB7  N\xC4CHSTE EBENE"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763209
+  - m_Id: 171011926298632
+    m_Localized: "H\xC4NDE VOLL"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 171011926298633
+    m_Localized: "VERSTECK \xD6FFNEN"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -241,3 +291,9 @@ MonoBehaviour:
         - id: 740200466
         - id: 740200467
         - id: 740200468
+        - id: 171011829829632
+        - id: 171011926298624
+        - id: 171011926298627
+        - id: 171011926298628
+        - id: 171011926298630
+        - id: 171011926298631

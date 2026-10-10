@@ -20,6 +20,7 @@ public class FloorIntroBanner : MonoBehaviour
     private TextMeshProUGUI _objective;
     private TextMeshProUGUI _rule;
     private TextMeshProUGUI _temperament;
+    private TextMeshProUGUI _record; // F107: a descent's "YOUR DEEPEST" line
     private Coroutine _routine;
 
     private void EnsureUi()
@@ -58,9 +59,15 @@ public class FloorIntroBanner : MonoBehaviour
         _temperament.fontStyle = FontStyles.Italic;
         RuntimeUi.Place(_temperament.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -110f), new Vector2(900f, 28f));
         RuntimeUi.AutoFit(_temperament, 0.65f); // D14: longer in FR/DE
+
+        _record = RuntimeUi.CreateText(_holder.transform, "Record", "", 22f, new Color(0.95f, 0.45f, 0.35f));
+        _record.characterSpacing = 4f;
+        RuntimeUi.Place(_record.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -142f), new Vector2(900f, 30f));
+        RuntimeUi.AutoFit(_record, 0.65f);
     }
 
-    public void Show(string title, string objective, string rule, string temperament)
+    /// <param name="record">F107: the DESCENT record line under the card, or empty.</param>
+    public void Show(string title, string objective, string rule, string temperament, string record = "")
     {
         EnsureUi();
         if (_holder == null) return;
@@ -71,6 +78,8 @@ public class FloorIntroBanner : MonoBehaviour
         _rule.text = rule;
         _temperament.gameObject.SetActive(!string.IsNullOrEmpty(temperament));
         _temperament.text = temperament;
+        _record.gameObject.SetActive(!string.IsNullOrEmpty(record));
+        _record.text = record;
 
         if (_routine != null) StopCoroutine(_routine);
         _routine = StartCoroutine(Routine());

@@ -137,3 +137,25 @@ ui.dialogue.hint_next,{key}  CONTINUAR    ·    {back}  SALIR
 ui.dialogue.hint_end,{key}  TERMINAR    ·    {back}  SALIR
 ui.dialogue.hint_leave,{key}  SALIR
 ui.pause.map,MAPA
+ui.menu.descent,DESCENSO
+ui.menu.descent_best,MÁS PROFUNDO  ·  NIVEL -{n}
+ui.menu.descent_locked,TERMINA ANTES EL INGRESO
+ui.pause.descent_warning,SALIR TERMINA EL DESCENSO
+ui.descent.again,DESCENDER DE NUEVO
+ui.descent.end.heading,READMISIÓN  ·  INGRESO ##  ·  PACIENTE #
+ui.descent.end.depth,RECUPERADO EN EL NIVEL -{n}
+ui.descent.end.stats,ESTRELLAS {stars}  ·  TIEMPO ABAJO {time}
+ui.descent.end.cause,CAUSA: {cause}
+ui.descent.cause.hunter,SEGUIDO
+ui.descent.cause.visitor,RETENIDO
+ui.descent.cause.timer,LUCES RESTAURADAS
+ui.descent.cause.entity,LLEVADO
+ui.descent.end.learned,HABÍA APRENDIDO: {habits}
+ui.descent.habit.lockers,CASILLEROS
+ui.descent.habit.throws,LANZAMIENTOS
+ui.descent.habit.dark,OSCURIDAD
+ui.descent.habit.sprint,CARRERA
+ui.descent.end.seed,SEMILLA {seed}
+ui.descent.end.best,MÁS PROFUNDO REGISTRADO: NIVEL -{n}
+ui.descent.end.new_best,LAS ESTRELLAS LLEGAN MÁS HONDO QUE LA VEZ ANTERIOR.
+ui.descent.end.close,SIN ALTA MÉDICA.

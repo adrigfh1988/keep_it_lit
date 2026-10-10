@@ -700,6 +700,116 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331677479764494
+  - m_Id: 193175870148608
+    m_Key: ui.menu.descent
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308448
+  - m_Id: 193175966617600
+    m_Key: ui.menu.descent_best
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308449
+  - m_Id: 193175966617601
+    m_Key: ui.menu.descent_locked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308450
+  - m_Id: 193175966617602
+    m_Key: ui.pause.descent_warning
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308451
+  - m_Id: 193175966617603
+    m_Key: ui.descent.again
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308452
+  - m_Id: 193175966617604
+    m_Key: ui.descent.end.heading
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308453
+  - m_Id: 193175966617605
+    m_Key: ui.descent.end.depth
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308454
+  - m_Id: 193175966617606
+    m_Key: ui.descent.end.stats
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308455
+  - m_Id: 193175966617607
+    m_Key: ui.descent.end.cause
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308456
+  - m_Id: 193175966617608
+    m_Key: ui.descent.cause.hunter
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308457
+  - m_Id: 193175966617609
+    m_Key: ui.descent.cause.visitor
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308458
+  - m_Id: 193175966617610
+    m_Key: ui.descent.cause.timer
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308459
+  - m_Id: 193175966617611
+    m_Key: ui.descent.cause.entity
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308460
+  - m_Id: 193175966617612
+    m_Key: ui.descent.end.learned
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308461
+  - m_Id: 193175966617613
+    m_Key: ui.descent.habit.lockers
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308462
+  - m_Id: 193175966617614
+    m_Key: ui.descent.habit.throws
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308463
+  - m_Id: 193175966617615
+    m_Key: ui.descent.habit.dark
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308464
+  - m_Id: 193175966617616
+    m_Key: ui.descent.habit.sprint
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308465
+  - m_Id: 193175966617617
+    m_Key: ui.descent.end.seed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308466
+  - m_Id: 193175966617618
+    m_Key: ui.descent.end.best
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308467
+  - m_Id: 193175966617619
+    m_Key: ui.descent.end.new_best
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308468
+  - m_Id: 193175966617620
+    m_Key: ui.descent.end.close
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308469
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -1259,3 +1369,91 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: 'Pause menu: close the menu and open the floor map (420 x 86 button, 40 pt). Only shown once the map is unlocked. Noun'
+    - rid: 4707331682537308448
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Title screen: start the endless DESCENT mode (420 x 86 button, 40 pt, under START GAME)'
+    - rid: 4707331682537308449
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Title screen note beside the DESCENT button once a record exists (26 pt, left-aligned, one line, 520 px, auto-size). {n} = deepest level reached, shown as -n
+    - rid: 4707331682537308450
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Title screen note beside the dimmed DESCENT button until the Intake tutorial has been finished or skipped (26 pt, one line, 520 px, auto-size)
+    - rid: 4707331682537308451
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Pause menu line shown only during a DESCENT: there is no save, leaving loses the run (30 pt amber, one line, 1200 px)'
+    - rid: 4707331682537308452
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'DESCENT end screen button: begin a new descent from level -1 (560 x 86, 40 pt)'
+    - rid: 4707331682537308453
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: DESCENT end screen slip heading (34 pt amber, letter-spaced, one line, 1500 px). The ## and # are literal redactions, keep them
+    - rid: 4707331682537308454
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: DESCENT end screen headline (84 pt red, one line, 1500 px, auto-size). {n} = the level the player died on, shown as -n
+    - rid: 4707331682537308455
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: DESCENT end screen stats line (36 pt, one line, 1500 px). {stars} = stars taken over the whole descent, {time} = m:ss total run time
+    - rid: 4707331682537308456
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: DESCENT end screen cause line (36 pt, one line). {cause} = one of the ui.descent.cause.* words
+    - rid: 4707331682537308457
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'DESCENT cause word: the hunter caught you. Ends the sentence ''CAUSE: ...'' (a single word or short phrase, all caps)'
+    - rid: 4707331682537308458
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'DESCENT cause word: the looping corridor''s visitor caught you'
+    - rid: 4707331682537308459
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'DESCENT cause word: the escape timer ran out'
+    - rid: 4707331682537308460
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'DESCENT cause word: another entity took you'
+    - rid: 4707331682537308461
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: "DESCENT end screen line, shown only if the hunter learned a habit (32 pt, one line, 1500 px). {habits} = e.g. LOCKERS \u25AE\u25AE\u25AF \xB7 DARK \u25AE\u25AF\u25AF"
+    - rid: 4707331682537308462
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Habit name inside the IT HAD LEARNED line: you hid in lockers (one word, all caps)'
+    - rid: 4707331682537308463
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Habit name inside the IT HAD LEARNED line: you threw things (one word, all caps)'
+    - rid: 4707331682537308464
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Habit name inside the IT HAD LEARNED line: you moved without the torch (one word, all caps)'
+    - rid: 4707331682537308465
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Habit name inside the IT HAD LEARNED line: you ran (one word, all caps)'
+    - rid: 4707331682537308466
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'DESCENT end screen: the seed of the level you died on (30 pt, dim). {seed} = number'
+    - rid: 4707331682537308467
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'DESCENT end screen: the record (36 pt green, one line). {n} = deepest level ever reached, shown as -n'
+    - rid: 4707331682537308468
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'DESCENT end screen: shown only when this run beat the record (36 pt amber, one line)'
+    - rid: 4707331682537308469
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'DESCENT end screen: closing line (44 pt red, one line)'

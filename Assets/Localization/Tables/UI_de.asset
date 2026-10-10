@@ -597,6 +597,101 @@ MonoBehaviour:
     m_Localized: KARTE
     m_Metadata:
       m_Items: []
+  - m_Id: 193175870148608
+    m_Localized: ABSTIEG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617600
+    m_Localized: "TIEFSTE  \xB7  EBENE -{n}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 193175966617601
+    m_Localized: SCHLIESSE ZUERST DIE AUFNAHME AB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617602
+    m_Localized: VERLASSEN BEENDET DEN ABSTIEG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617603
+    m_Localized: ERNEUT ABSTEIGEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617604
+    m_Localized: "WIEDERAUFGENOMMEN  \xB7  AUFNAHME ##  \xB7  PATIENT #"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617605
+    m_Localized: GEBORGEN AUF EBENE -{n}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 193175966617606
+    m_Localized: "STERNE {stars}  \xB7  ZEIT UNTEN {time}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 193175966617607
+    m_Localized: 'URSACHE: {cause}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 193175966617608
+    m_Localized: VERFOLGT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617609
+    m_Localized: FESTGEHALTEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617610
+    m_Localized: LICHT WIEDERHERGESTELLT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617611
+    m_Localized: GEHOLT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617612
+    m_Localized: 'ES HATTE GELERNT: {habits}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 193175966617613
+    m_Localized: SPINDE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617614
+    m_Localized: "W\xDCRFE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617615
+    m_Localized: DUNKEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617616
+    m_Localized: RENNEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617617
+    m_Localized: SEED {seed}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 193175966617618
+    m_Localized: 'TIEFSTER WERT: EBENE -{n}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 193175966617619
+    m_Localized: DIE STERNE REICHEN TIEFER ALS BEIM LETZTEN MAL.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193175966617620
+    m_Localized: KEINE ENTLASSUNG.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -633,3 +728,10 @@ MonoBehaviour:
         - id: 22165078315102
         - id: 22165078315103
         - id: 22165078315104
+        - id: 193175966617600
+        - id: 193175966617605
+        - id: 193175966617606
+        - id: 193175966617607
+        - id: 193175966617612
+        - id: 193175966617617
+        - id: 193175966617618

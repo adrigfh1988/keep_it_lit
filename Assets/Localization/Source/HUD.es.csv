@@ -43,3 +43,14 @@ hud.prompt.open_valve,ABRIR LA VÁLVULA
 hud.prompt.light_candles,ENCENDER LAS VELAS
 hud.prompt.use_terminal,USAR TERMINAL
 hud.prompt.map,MAPA
+hud.descent.level,NIVEL -{n}
+hud.descent.deepest,TU MÁS PROFUNDO: -{best}
+hud.descent.at_record,HAS LLEGADO TAN HONDO COMO NUNCA
+hud.descent.past_record,NADIE HA VUELTO DE AQUÍ
+hud.descent.cleared,NIVEL -{n}  ·  SUPERADO
+hud.descent.stats,ESTRELLAS {stars}  ·  TIEMPO ABAJO {time}
+hud.descent.deeper,MÁS HONDO.
+hud.descent.found,ENCONTRADO: {item}
+hud.descent.found_next,ENCONTRADO: {item}  ·  SIGUIENTE NIVEL
+hud.descent.hands_full,MANOS LLENAS
+hud.prompt.open_cache,ABRIR ALIJO

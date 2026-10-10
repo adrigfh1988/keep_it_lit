@@ -145,6 +145,7 @@ public static class SaveSystem
     /// </summary>
     public static void WriteCheckpoint(int floor, bool inShop)
     {
+        if (GameFlow.IsDescent) return; // F107: a descent never touches the story save
         try
         {
             SaveData d = new SaveData
@@ -173,6 +174,7 @@ public static class SaveSystem
 
     public static void Delete()
     {
+        if (GameFlow.IsDescent) return; // F107: nor deletes it
         try { Store.Delete(); }
         catch (Exception e)
         {

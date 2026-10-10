@@ -50,6 +50,9 @@ public class MainMenu : MonoBehaviour
     private AudioSource _music;
     private bool _musicFading;
 
+    /// <summary>F107 B2: how long the torch stays off and locked at the start of a descent level (s, real time).</summary>
+    private const float ColdOpenSeconds = 1.5f;
+
     /// <summary>True while the title or rules screen is up. The pause menu stays out of the way.</summary>
     public bool IsOpen => _menuOpen;
 
@@ -191,6 +194,21 @@ public class MainMenu : MonoBehaviour
         CloseMenus();
 
         GameFlow.BeginRun();
+        if (GameFlow.IsDescent) StartCoroutine(ColdOpenRoutine()); // F107 B2
+    }
+
+    /// <summary>F107 B2: every descent level opens in the dark - the torch is off and locked for a beat, so the first thing the player does is stand in it.</summary>
+    private System.Collections.IEnumerator ColdOpenRoutine()
+    {
+        Flashlight torch = FindAnyObjectByType<Flashlight>();
+        if (torch == null) yield break;
+
+        torch.SetOn(false);
+        torch.InputEnabled = false;
+        yield return new WaitForSecondsRealtime(ColdOpenSeconds);
+
+        // An ending inside the beat has already taken the torch away for good.
+        if (torch != null && !GameOutcome.IsOver) torch.InputEnabled = true;
     }
 
     /// <summary>
@@ -199,6 +217,7 @@ public class MainMenu : MonoBehaviour
     /// </summary>
     private void BeginNewCampaign()
     {
+        GameFlow.IsDescent = false; // F107: the story can never start with a descent flag left on
         IntakeRoom room = FindAnyObjectByType<IntakeRoom>();
         if (room == null || !room.IsComplete)
         {
@@ -272,36 +291,82 @@ public class MainMenu : MonoBehaviour
         if (SaveSystem.TryLoad(out SaveData save))
         {
             Button continueButton = RuntimeUi.CreateButton(_titleScreen.transform, L10n.T("ui.menu.continue"),
-                new Vector2(0f, 520f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+                new Vector2(0f, 560f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
         RuntimeUi.BindButton(continueButton, "ui.menu.continue");
             continueButton.onClick.AddListener(ContinueSavedRun);
             _savedFloor = save.floor;
         }
 
         Button start = RuntimeUi.CreateButton(_titleScreen.transform, L10n.T("ui.menu.start_game"),
-            new Vector2(0f, 410f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+            new Vector2(0f, 460f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
         RuntimeUi.BindButton(start, "ui.menu.start_game");
         start.onClick.AddListener(() => ConfirmThenStart(BeginNewCampaign));
 
+        BuildDescentButton();
+
         // F86: the old rules screen, kept as a reference sheet now that START GAME opens the Intake.
         Button controls = RuntimeUi.CreateButton(_titleScreen.transform, L10n.T("ui.menu.controls"),
-            new Vector2(0f, 300f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+            new Vector2(0f, 260f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
         RuntimeUi.BindButton(controls, "ui.menu.controls");
         controls.onClick.AddListener(ShowControls);
 
         // S2: the settings screen opens over the title screen and closes back onto it.
         Button settings = RuntimeUi.CreateButton(_titleScreen.transform, L10n.T("ui.menu.settings"),
-            new Vector2(0f, 190f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+            new Vector2(0f, 160f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
         RuntimeUi.BindButton(settings, "ui.menu.settings");
         settings.onClick.AddListener(SettingsMenu.Show);
 
         Button exit = RuntimeUi.CreateButton(_titleScreen.transform, L10n.T("ui.menu.exit"),
-            new Vector2(0f, 80f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+            new Vector2(0f, 60f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
         RuntimeUi.BindButton(exit, "ui.menu.exit");
         exit.onClick.AddListener(GameFlow.Quit);
         exit.gameObject.SetActive(GameFlow.CanQuit);
     }
 
+
+    // ---------------------------------------------------------------- F107: DESCENT
+
+    /// <summary>
+    /// F107 B2: the DESCENT button under START GAME, and beside it a small line: the deepest level reached once a record exists, or (while the
+    /// button is dimmed) why it is dimmed. It is enabled once the Intake has been finished or skipped.
+    /// </summary>
+    private void BuildDescentButton()
+    {
+        bool unlocked = GameFlow.TutorialDone;
+        Button descent = RuntimeUi.CreateButton(_titleScreen.transform, L10n.T("ui.menu.descent"),
+            new Vector2(0f, 360f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, unlocked ? Color.white : new Color(1f, 1f, 1f, 0.35f));
+        RuntimeUi.BindButton(descent, "ui.menu.descent");
+        descent.interactable = unlocked;
+        descent.onClick.AddListener(StartDescent);
+
+        if (unlocked && !DescentRecords.HasRecord) return; // nothing to say yet
+
+        TextMeshProUGUI note = RuntimeUi.CreateText(_titleScreen.transform, "DescentNote", "", 26f, new Color(0.75f, 0.75f, 0.78f));
+        if (unlocked) RuntimeUi.Bind(note, "ui.menu.descent_best", 0.6f, ("n", DescentRecords.BestDepth));
+        else RuntimeUi.Bind(note, "ui.menu.descent_locked", 0.6f);
+        note.alignment = TextAlignmentOptions.Left;
+        note.characterSpacing = 3f;
+        RectTransform rect = note.rectTransform;
+        rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0f);
+        rect.pivot = new Vector2(0f, 0.5f);
+        rect.anchoredPosition = new Vector2(240f, 360f);
+        rect.sizeDelta = new Vector2(520f, 40f);
+    }
+
+    /// <summary>
+    /// DESCENT: a brand-new endless run from level -1, through the same reload a Retry uses (SkipMenuOnLoad -> StartGame). Never the Intake, the
+    /// hub, the shop or the story save: it leaves them all alone.
+    /// </summary>
+    private void StartDescent()
+    {
+        if (!GameFlow.TutorialDone) return;
+
+        RequestFullscreenOnTouch();
+        DescentRun.Begin();
+        GameFlow.IsDescent = true;
+        GameFlow.CurrentFloor = 1;
+        GameFlow.Restart(false, 0);
+    }
 
     // ---------------------------------------------------------------- F83: saved run
 
@@ -311,14 +376,20 @@ public class MainMenu : MonoBehaviour
     /// <summary>CONTINUE: restore the save and reload through the normal SkipMenuOnLoad path (StartGame, or the shop for a shop save).</summary>
     private void ContinueSavedRun()
     {
-        // The reload throws the fullscreen gesture away, so ask for it now, on the tap itself (same as StartGame).
+        GameFlow.IsDescent = false; // F107
+        RequestFullscreenOnTouch();
+
+        if (!SaveSystem.ResumeCampaign()) RefreshTitleScreen();
+    }
+
+    /// <summary>The reload throws the fullscreen gesture away, so ask for it now, on the tap itself (same as StartGame).</summary>
+    private static void RequestFullscreenOnTouch()
+    {
         TouchInput.Poll();
         if (TouchInput.Active)
         {
             try { Screen.fullScreen = true; } catch { /* best effort only */ }
         }
-
-        if (!SaveSystem.ResumeCampaign()) RefreshTitleScreen();
     }
 
     /// <summary>START GAME: with a saved run in the way, ask before throwing it away.</summary>
