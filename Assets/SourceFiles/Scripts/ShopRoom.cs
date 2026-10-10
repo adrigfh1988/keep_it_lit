@@ -51,6 +51,8 @@ public class ShopRoom : MonoBehaviour
     [SerializeField] private float headTurnSpeed = 40f;
     [Tooltip("How far either side of its authored facing the head is allowed to turn")]
     [SerializeField] private float headYawLimit = 70f;
+    [Tooltip("Timmy's animations: waves on arrival and at the counter, talks while the menu is open. Optional.")]
+    [SerializeField] private ShopkeeperAnimator shopkeeper;
 
     [Header("Ambience")]
     [SerializeField] private float humVolume = 0.22f;
@@ -159,11 +161,13 @@ public class ShopRoom : MonoBehaviour
         if (_hum != null) _hum.Play();
         // F87: after a contract was paid or failed the salesman says so instead of the usual greeting.
         if (_hud != null) _hud.ShowSubtitle(ContractState.TakeSalesmanLine() ?? GreetingFor(GameFlow.ShopClearedFloor), 3f);
+        if (shopkeeper != null) shopkeeper.Greet();
     }
 
     private void Update()
     {
         UpdateSignWaver();
+        if (shopkeeper != null) shopkeeper.SetTalking(_open && GameFlow.IsInShop && _menu != null && _menu.IsOpen);
 
         if (!_open || !GameFlow.IsInShop || (_menu != null && _menu.IsOpen) || Time.timeScale <= 0f) return;
 
@@ -189,6 +193,7 @@ public class ShopRoom : MonoBehaviour
         _inCounter = inCounter;
         _inDoor = inDoor;
         _inBoard = inBoard;
+        if (_inCounter && shopkeeper != null) shopkeeper.Greet();
         if (_hud == null) return;
 
         if (_inCounter) _hud.SetPrompt("E  TALK");

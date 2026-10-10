@@ -169,6 +169,13 @@ public static class ProjectSetup
         },
         new Piece
         {
+            Name = "Shop salesman (Timmy)",
+            FixMenu = "Build Missing Pieces (swaps the Guard for Timmy in the existing shop; a full Build > Shop Room builds him too)",
+            Problem = ShopRoomBuilder.TimmySalesmanProblem,
+            Build = () => ShopRoomBuilder.SwapSalesmanToTimmy()
+        },
+        new Piece
+        {
             Name = "Intake room (F86 tutorial)",
             FixMenu = "Build Missing Pieces (places Assets/Prefabs/IntakeRoom.prefab, or saves the scene room as it)",
             Problem = IntakeRoomBuilder.Problem,

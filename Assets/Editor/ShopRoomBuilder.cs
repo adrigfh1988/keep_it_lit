@@ -23,7 +23,6 @@ public static partial class ShopRoomBuilder
     // Where the room sits, west of the 11x11 maze (which spans x -70..-20 and z -70..-20). Floor top of
     // the maze is y = 5.0. It must stay above y = -5 or RespawnPlayer bounces the player out of it.
     private static readonly Vector3 RoomPosition = new Vector3(-92f, 5f, -45f);
-    private const string GuardFolder = "Assets/UnityTechnologies/Adam Character Pack/Guard";
 
     private const float HalfX = 4.5f;        // inner half-width  (3 modules x 3 m)
     private const float HalfZ = 6f;          // inner half-depth  (4 modules x 3 m)
@@ -108,7 +107,7 @@ public static partial class ShopRoomBuilder
         BuildColliders(root.transform);
         Transform doorHinge = BuildDoor(root.transform);
         GameObject[] counterTables = BuildCounter(root.transform);
-        Transform head = BuildSalesman(root.transform, mats);
+        Transform head = BuildSalesman(root.transform, out ShopkeeperAnimator shopkeeper);
         DressCounter(Group(root.transform, "CounterTop"), counterTables);
         BuildBackWall(root.transform);
         BuildLabSide(root.transform);
@@ -139,6 +138,7 @@ public static partial class ShopRoomBuilder
         so.FindProperty("counterZone").objectReferenceValue = counterZone;
         so.FindProperty("doorZone").objectReferenceValue = doorZone;
         so.FindProperty("headPivot").objectReferenceValue = head;
+        so.FindProperty("shopkeeper").objectReferenceValue = shopkeeper;
         so.FindProperty("counterSign").objectReferenceValue = counterSign;
         so.FindProperty("doorSign").objectReferenceValue = doorSign;
         so.FindProperty("doorHinge").objectReferenceValue = doorHinge;
@@ -155,97 +155,15 @@ public static partial class ShopRoomBuilder
 
     /// <summary>The salesman stands behind the counter facing -Z (the room). Returns the head pivot the component turns.</summary>
     /// <remarks>
-    /// The body is the Guard from the Adam Character Pack (the hunter is Adam, so the two never read as the
-    /// same thing), idling on the pack's own controller. The head pivot is its Humanoid Head bone: ShopRoom
-    /// turns it in LateUpdate, on top of whatever the idle clip did that frame.
+    /// The salesman is the hand-editable prefab Assets/Prefabs/ShopSalesman.prefab (Timmy, the player's own robot, on a
+    /// small controller of his own: idle, Talk while the menu is open, Wave on arrival; see ShopRoomBuilder.Timmy.cs).
+    /// The first build generates the prefab; every build after that only places it. The head pivot is his Humanoid
+    /// Head bone: ShopRoom turns it in LateUpdate, on top of whatever the clip did that frame.
     /// </remarks>
-    private static Transform BuildSalesman(Transform root, Materials m)
+    private static Transform BuildSalesman(Transform root, out ShopkeeperAnimator shopkeeper)
     {
-        Transform salesman = Group(root, "Salesman");
-        salesman.localPosition = new Vector3(0f, 0f, 5.1f);
-        salesman.localRotation = Quaternion.Euler(0f, 180f, 0f);
-
-        // This collider is what stops the player walking through the salesman; the Guard itself has none.
-        CapsuleCollider blocker = salesman.gameObject.AddComponent<CapsuleCollider>();
-        blocker.center = new Vector3(0f, 0.9f, 0f);
-        blocker.radius = 0.3f;
-        blocker.height = 1.8f;
-
-        GameObject model = AssetDatabase.LoadAssetAtPath<GameObject>(GuardFolder + "/Guard.FBX");
-        if (model == null)
-        {
-            Debug.LogError($"ShopRoomBuilder: {GuardFolder}/Guard.FBX is missing, so the shop has no salesman body.");
-            return null;
-        }
-
-        GameObject guard = (GameObject)PrefabUtility.InstantiatePrefab(model);
-        guard.name = "Guard";
-        guard.transform.SetParent(salesman, false);
-
-        Animator animator = guard.GetComponent<Animator>();
-        if (animator == null) animator = guard.AddComponent<Animator>();
-        animator.runtimeAnimatorController = AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(GuardFolder + "/Guard_AnimationController.controller");
-        animator.applyRootMotion = false;
-        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
-
-        // Pose it now, so the room shows him idling in the Editor too instead of standing in his bind pose.
-        AnimationClip idle = LoadGuardIdle();
-        if (idle != null)
-        {
-            idle.SampleAnimation(guard, 0f);
-            guard.transform.localPosition = Vector3.zero;
-            guard.transform.localRotation = Quaternion.identity;
-        }
-
-        Transform head = animator.isHuman ? animator.GetBoneTransform(HumanBodyBones.Head) : null;
-        if (head == null)
-        {
-            Debug.LogWarning("ShopRoomBuilder: the Guard has no Humanoid Head bone, so the salesman's head will not follow the player.", guard);
-            return null;
-        }
-
-        BuildSalesmanEyes(guard, head, salesman, m);
-        return head;
-    }
-
-    /// <summary>Two small emissive beads over the Guard's own eyes, riding the head bone, so he keeps the amber stare.</summary>
-    private static void BuildSalesmanEyes(GameObject guard, Transform head, Transform salesman, Materials m)
-    {
-        Renderer eyes = null;
-        foreach (Renderer r in guard.GetComponentsInChildren<Renderer>(true))
-        {
-            if (r.name.Contains("reflection_eyes")) eyes = r;
-        }
-        if (eyes == null) return;
-
-        Bounds b = eyes.bounds;
-        Vector3 centre = b.center + salesman.forward * (Vector3.Scale(b.extents, Abs(salesman.forward)).magnitude + 0.004f);
-        float half = Vector3.Scale(b.extents, Abs(salesman.right)).magnitude * 0.55f;
-
-        foreach (float side in new[] { -1f, 1f })
-        {
-            GameObject eye = Primitive(head, PrimitiveType.Sphere, side < 0f ? "EyeL" : "EyeR", Vector3.zero, Vector3.one, m.Eyes);
-            eye.transform.position = centre + salesman.right * (half * side);
-            eye.transform.rotation = Quaternion.identity;
-            SetWorldScale(eye.transform, 0.02f);
-        }
-    }
-
-    private static Vector3 Abs(Vector3 v) => new Vector3(Mathf.Abs(v.x), Mathf.Abs(v.y), Mathf.Abs(v.z));
-
-    private static void SetWorldScale(Transform t, float size)
-    {
-        Vector3 parent = t.parent != null ? t.parent.lossyScale : Vector3.one;
-        t.localScale = new Vector3(size / parent.x, size / parent.y, size / parent.z);
-    }
-
-    private static AnimationClip LoadGuardIdle()
-    {
-        foreach (Object asset in AssetDatabase.LoadAllAssetsAtPath(GuardFolder + "/Guard_Idle.FBX"))
-        {
-            if (asset is AnimationClip clip && !clip.name.StartsWith("__")) return clip;
-        }
-        return null;
+        Transform salesman = PlaceSalesman(root);
+        return SalesmanParts(salesman, out shopkeeper);
     }
 
     private static TextMeshPro BuildSign(Transform root, string name, Vector3 localPosition, Quaternion localRotation, string text, Color color, float spacing, float fontSize)
@@ -321,10 +239,10 @@ public static partial class ShopRoomBuilder
 
     // ---------------------------------------------------------------- materials
 
-    // The salesman's eyes and the wall backdrop are the only primitives left. The old Shop_Floor/Ceiling/Counter/Door materials stay on disk, unused.
+    // The wall backdrop is the only primitive left. The old Shop_Floor/Ceiling/Counter/Door materials stay on disk, unused.
     private struct Materials
     {
-        public Material Eyes, Wall;
+        public Material Wall;
     }
 
     private static void EnsureFolder()
@@ -338,7 +256,6 @@ public static partial class ShopRoomBuilder
         Materials m = new Materials
         {
             Wall = LoadOrCreate("Shop_Wall", new Color(0.22f, 0.22f, 0.25f), null),
-            Eyes = LoadOrCreate("Shop_Eyes", new Color(1f, 0.7f, 0.3f), new Color(1f, 0.7f, 0.3f) * 4f),
         };
         AssetDatabase.SaveAssets();
         return m;
