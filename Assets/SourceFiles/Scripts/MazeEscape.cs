@@ -490,6 +490,7 @@ public class MazeEscape : MonoBehaviour
                 float path = steps[index.x, index.y] * _maze.CellSize;
                 if (path < min || path > max) continue;
                 if (_hunter != null && FlatDistance(cell, _hunter.transform.position) < hatchMinHunterDistance) continue;
+                if (HasCeilingPropAt(cell)) continue; // F107 A
 
                 _hatchCandidates.Add(cell);
             }
@@ -505,6 +506,9 @@ public class MazeEscape : MonoBehaviour
 
         return false;
     }
+
+    /// <summary>F107 A: the player is eased into the hatch looking down, so a hanging body over it is wrong.</summary>
+    private bool HasCeilingPropAt(Vector3 cellCenter) => _maze.TryWorldToCell(cellCenter, out Vector2Int index) && _maze.HasCeilingProp(index);
 
     private static float FlatDistance(Vector3 a, Vector3 b)
     {
@@ -635,7 +639,7 @@ public class MazeEscape : MonoBehaviour
 
         foreach (Vector3 cell in cells)
         {
-            if (Vector3.Distance(cell, _player.position) >= minimumDistanceFromPlayer)
+            if (Vector3.Distance(cell, _player.position) >= minimumDistanceFromPlayer && !HasCeilingPropAt(cell)) // F107 A
             {
                 candidates.Add(cell);
             }

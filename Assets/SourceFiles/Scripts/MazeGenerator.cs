@@ -247,6 +247,8 @@ public partial class MazeGenerator : MonoBehaviour
     private MazeDressing _dressing;
     /// <summary>F70: cells a set piece has reserved this run. Skipped by wall/ceiling/floor props and decals.</summary>
     private readonly HashSet<Vector2Int> _setPieceCells = new HashSet<Vector2Int>();
+    /// <summary>F107 A: cells BuildCeilingProps hung something from. Read by SpawnStars and MazeEscape so nothing sits under a hanging body.</summary>
+    private readonly HashSet<Vector2Int> _ceilingPropCells = new HashSet<Vector2Int>();
     private readonly List<ShiftablePlacement> _shiftables = new List<ShiftablePlacement>(); // F104 B9/B10: dressing worth quietly changing
 
     /// <summary>F72: every door/button/vault-loot instance built this run, kept so SetUpAtmosphere can late-bind the HUD/flashlight once they exist (same pattern as _lockers).</summary>
@@ -1452,6 +1454,7 @@ public partial class MazeGenerator : MonoBehaviour
     /// <summary>Built after the navmesh bake. Never shares a cell with a wall prop (decision 6, "keeps clutter readable") or a set piece.</summary>
     private void BuildCeilingProps(System.Random rng)
     {
+        _ceilingPropCells.Clear(); // F107 A
         if (_dressing.Props == null || _dressing.Props.Length == 0) return;
 
         for (int x = 0; x < width; x++)
@@ -1483,12 +1486,16 @@ public partial class MazeGenerator : MonoBehaviour
                 PropPiece clone = Instantiate(prop, pos, rotation, _propsGroup);
                 clone.gameObject.SetActive(true);
                 clone.name = $"Prop_{prop.name}_{x}_{z}";
+                _ceilingPropCells.Add(cell); // F107 A: after every draw, so no stream moves
                 ApplyModelVariants(clone, x, z, 0x4B22);
                 RecordShiftable(clone, cell, Vector3.zero, false);
                 foreach (HangingBodyFit fit in clone.GetComponentsInChildren<HangingBodyFit>(true)) fit.Fit(wallHeight); // F85: rope cut to this floor's ceiling
             }
         }
     }
+
+    /// <summary>F107 A: true if a ceiling prop (a hanging body, lamp, ...) hangs in this cell, so nothing meant for the cell centre should go there.</summary>
+    public bool HasCeilingProp(Vector2Int cell) => _ceilingPropCells.Contains(cell);
 
     /// <summary>Weighted pick among a theme's props of one mount kind, honouring EnabledInMaze. Null if the theme has none of that kind (or none currently enabled).</summary>
     /// <param name="variantWeight">Multiplies the weight of a piece carrying DecalVariants (the blood pack decals). 1 = unchanged.</param>
@@ -2409,6 +2416,12 @@ public partial class MazeGenerator : MonoBehaviour
                 if (chosen.Contains(candidate)) continue;
 
                 if (pass == 0 && !IsFarEnough(candidate, chosen, minSeparation)) continue;
+                // F107 A: after the shuffle and the separation test, so the +1 stream is unchanged. A bait star on such a cell falls through to the next candidate.
+                if (HasCeilingProp(candidate))
+                {
+                    terror.Log($"Star skipped ceiling-prop cell {candidate}", this);
+                    continue;
+                }
                 chosen.Add(candidate);
             }
         }
@@ -3901,6 +3914,7 @@ public partial class MazeGenerator : MonoBehaviour
             }
         }
         Shuffle(candidates, rng);
+        candidates.RemoveAll(HasCeilingProp); // F107 A: after the shuffle, so the +13 stream is unchanged; a bottle lies near the cell centre
 
         for (int i = 0; i < want && i < candidates.Count; i++)
         {
@@ -4001,7 +4015,10 @@ public partial class MazeGenerator : MonoBehaviour
             return;
         }
 
-        Vector2Int chosen = candidates[rng.Next(candidates.Count)];
+        int pick = rng.Next(candidates.Count);
+        // F107 A: the draw is made first; a pick under a hanging body walks on to the next candidate that is clear.
+        for (int step = 0; step < candidates.Count && HasCeilingProp(candidates[pick]); step++) pick = (pick + 1) % candidates.Count;
+        Vector2Int chosen = candidates[pick];
         Vector3 pos = CellCenter(chosen.x, chosen.y) + Vector3.up * 0.35f;
 
         Lantern lantern = Instantiate(interactableKit.Lantern, pos, Quaternion.identity, _mazeRoot);
