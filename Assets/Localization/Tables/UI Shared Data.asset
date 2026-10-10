@@ -690,6 +690,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331669776663487
+  - m_Id: 76507152027648
+    m_Key: ui.settings.effects_intensity
+    m_Metadata:
+      m_Items:
+      - rid: 4707331674882704014
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -1241,3 +1246,7 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Dialogue panel hint while two reply choices are on screen (20 pt, 760 px). {key} = ESC
+    - rid: 4707331674882704014
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: strength of the screen effects that grow with fear (film grain, vignette, colour fringing)'

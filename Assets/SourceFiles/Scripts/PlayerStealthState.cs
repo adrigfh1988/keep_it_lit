@@ -58,6 +58,9 @@ public class PlayerStealthState : MonoBehaviour
     /// <summary>True while hidden inside a locker.</summary>
     public bool Hidden { get; private set; }
 
+    /// <summary>F104 B3: Time.time the player last hid. Only meaningful while Hidden: how long a locker has been quiet reads from here.</summary>
+    public float HiddenSince { get; private set; }
+
     /// <summary>The locker while hidden, otherwise null.</summary>
     public IHidingSpot CurrentHidingSpot { get; private set; }
 
@@ -105,6 +108,7 @@ public class PlayerStealthState : MonoBehaviour
     /// <summary>Called by Locker on Enter/Leave. spot == null clears the hidden state.</summary>
     public void SetHidden(IHidingSpot spot)
     {
+        if (spot != null) HiddenSince = Time.time;
         Hidden = spot != null;
         CurrentHidingSpot = spot;
     }

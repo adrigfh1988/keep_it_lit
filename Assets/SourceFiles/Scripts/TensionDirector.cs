@@ -19,6 +19,12 @@ public class TensionDirector : MonoBehaviour
     [Tooltip("The counter bleeds toward this as the last stars come in")]
     [SerializeField] private Color alarmedColor = new Color(0.9f, 0.15f, 0.1f);
 
+    [Header("F104 B1 - dread threat")]
+    [Tooltip("The hunter's threat level is lifted to at least the DreadMeter times this")]
+    [SerializeField] private float dreadThreatWeight = 0.8f;
+    [Tooltip("Seconds between threat refreshes from the meter (s)")]
+    [SerializeField] private float threatRefreshSeconds = 0.5f;
+
     [Header("Star noise")]
     [Tooltip("How far the sound of a star being taken carries at zero progress (m, path distance, before the floor's hearing scale)")]
     [SerializeField] private float starNoiseRadius = 14f;
@@ -29,6 +35,8 @@ public class TensionDirector : MonoBehaviour
     private HorrorAudioDirector _audio;
     private PlayerHud _hud;
     private KeyRing _keys;
+    private DreadMeter _dread;
+    private float _nextThreatRefresh;
 
     private TextMeshProUGUI _counter;
     private int _collected;
@@ -56,6 +64,15 @@ public class TensionDirector : MonoBehaviour
         if (_keys != null) _keys.Changed += Apply;
         Apply();
     }
+
+    /// <summary>F104 B1: the DreadMeter that lifts the hunter's threat dial above plain star progress (never below it).</summary>
+    public void BindDread(DreadMeter meter)
+    {
+        _dread = meter;
+    }
+
+    /// <summary>Threat level the hunter should run at: star progress, lifted by the meter when it is active.</summary>
+    private float ThreatLevel => _dread != null && _dread.IsActive ? Mathf.Max(Progress, _dread.Smoothed * dreadThreatWeight) : Progress;
 
     /// <summary>Shop cosmetic (F35): recolours the calm end of the counter. The alarmed end is unchanged.</summary>
     public void SetCalmColor(Color color)
@@ -93,6 +110,12 @@ public class TensionDirector : MonoBehaviour
     {
         // Hidden in the shop (decision 5): the shop panel shows the wallet instead.
         if (_counter != null) _counter.gameObject.SetActive(!GameFlow.IsInSafeRoom);
+
+        if (_dread != null && _follower != null && Time.time >= _nextThreatRefresh && GameFlow.IsRunActive && !GameOutcome.IsOver)
+        {
+            _nextThreatRefresh = Time.time + threatRefreshSeconds;
+            _follower.SetThreatLevel(ThreatLevel, _hunting);
+        }
     }
 
     private float Progress => _total > 0 ? _collected / (float)_total : 0f;
@@ -157,7 +180,7 @@ public class TensionDirector : MonoBehaviour
         if (_follower != null)
         {
             _follower.SetStarCount(_total);
-            _follower.SetThreatLevel(progress, _hunting);
+            _follower.SetThreatLevel(ThreatLevel, _hunting);
         }
     }
 

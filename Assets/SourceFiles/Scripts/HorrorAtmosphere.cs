@@ -36,6 +36,23 @@ public class HorrorAtmosphere : MonoBehaviour
     [Tooltip("Tint of the vignette - black reads as darkness, not a colour cast")]
     [SerializeField] private Color vignetteColor = Color.black;
 
+    [Header("F104 B1 - dread")]
+    [Tooltip("Vignette intensity at full dread (the base vignetteIntensity at zero)")]
+    [SerializeField] private float dreadVignetteMax = 0.5f;
+    [Tooltip("Film grain intensity at full dread")]
+    [SerializeField] private float dreadGrainMax = 0.5f;
+    [Tooltip("Chromatic aberration intensity at full dread. It only starts above dreadCaThreshold and is off on mobile.")]
+    [SerializeField] private float dreadCaMax = 0.35f;
+    [Tooltip("Dread level (after the screen-effects setting) above which colour fringing starts")]
+    [SerializeField] private float dreadCaThreshold = 0.7f;
+    [Tooltip("Colour-adjustment saturation at full dread (negative drains colour)")]
+    [SerializeField] private float dreadDesaturation = -15f;
+    [Tooltip("Extra vignette added on each heartbeat, decaying over heartbeatPulseSeconds")]
+    [SerializeField] private float heartbeatPulseAmount = 0.05f;
+    [SerializeField] private float heartbeatPulseSeconds = 0.25f;
+    [Tooltip("Values are only written to the volume when they move by more than this")]
+    [SerializeField] private float writeEpsilon = 0.002f;
+
     // Base values Darken lerps away from. Captured in Awake from the serialized defaults, then
     // overwritten by ApplyProfile if a floor profile is in use - either way Darken has a real base.
     private Color _baseAmbient;
@@ -43,9 +60,86 @@ public class HorrorAtmosphere : MonoBehaviour
     private Coroutine _darkenRoutine;
     // S2: the runtime volume profile's colour adjustments, so the Brightness setting can offset postExposure live
     private readonly System.Collections.Generic.List<ColorAdjustments> _exposures = new System.Collections.Generic.List<ColorAdjustments>();
+    // F104 B1: the runtime clones' dread-driven overrides, and what was last written to them (NaN = nothing yet).
+    private readonly System.Collections.Generic.List<Vignette> _vignettes = new System.Collections.Generic.List<Vignette>();
+    private readonly System.Collections.Generic.List<FilmGrain> _grains = new System.Collections.Generic.List<FilmGrain>();
+    private readonly System.Collections.Generic.List<ChromaticAberration> _aberrations = new System.Collections.Generic.List<ChromaticAberration>();
+    private DreadMeter _dread;
+    private HorrorAudioDirector _audio;
+    private float _pulse;
+    private float _writtenVignette = float.NaN;
+    private float _writtenGrain = float.NaN;
+    private float _writtenAberration = float.NaN;
+    private float _writtenSaturation = float.NaN;
+    private float _baseSaturation;
 
-    private void OnEnable() => GameSettings.Changed += ApplyBrightness;
-    private void OnDisable() => GameSettings.Changed -= ApplyBrightness;
+    private void OnEnable()
+    {
+        GameSettings.Changed += ApplyBrightness;
+        if (_audio != null) _audio.HeartBeat += HandleHeartBeat;
+    }
+
+    private void OnDisable()
+    {
+        GameSettings.Changed -= ApplyBrightness;
+        if (_audio != null) _audio.HeartBeat -= HandleHeartBeat;
+    }
+
+    /// <summary>
+    /// F104 B1: hands over the DreadMeter that tunnels the vignette, grows film grain and colour fringing and drains colour on the
+    /// runtime profile clone, plus the director whose heartbeat pulses the vignette. Called before Start, so the grain and fringing
+    /// overrides are added with the rest in NeutraliseExposure.
+    /// </summary>
+    public void BindDread(DreadMeter meter, HorrorAudioDirector audio)
+    {
+        if (_audio != null) _audio.HeartBeat -= HandleHeartBeat;
+        _dread = meter;
+        _audio = audio;
+        if (_audio != null && isActiveAndEnabled) _audio.HeartBeat += HandleHeartBeat;
+    }
+
+    private void HandleHeartBeat() => _pulse = heartbeatPulseAmount;
+
+    private void Update()
+    {
+        if (_dread == null || _vignettes.Count == 0) return;
+
+        if (_pulse > 0f) _pulse = Mathf.MoveTowards(_pulse, 0f, Time.deltaTime * heartbeatPulseAmount / Mathf.Max(0.0001f, heartbeatPulseSeconds));
+
+        // The effects setting scales the whole dread contribution, the heartbeat pulse included. No active meter = the base values.
+        float strength = _dread.IsActive ? GameSettings.EffectsIntensity : 0f;
+        float k = _dread.Smoothed * strength;
+
+        float aberration = k > dreadCaThreshold && !MobilePerformance.IsMobileProfile
+            ? Mathf.InverseLerp(dreadCaThreshold, 1f, k) * dreadCaMax
+            : 0f;
+
+        if (Changed(ref _writtenVignette, Mathf.Lerp(vignetteIntensity, dreadVignetteMax, k) + _pulse * strength))
+        {
+            foreach (Vignette vignette in _vignettes) vignette.intensity.value = _writtenVignette;
+        }
+        if (Changed(ref _writtenGrain, Mathf.Lerp(0f, dreadGrainMax, k)))
+        {
+            foreach (FilmGrain grain in _grains) grain.intensity.value = _writtenGrain;
+        }
+        if (Changed(ref _writtenAberration, aberration))
+        {
+            foreach (ChromaticAberration fringe in _aberrations) fringe.intensity.value = _writtenAberration;
+        }
+        if (Changed(ref _writtenSaturation, _baseSaturation + Mathf.Lerp(0f, dreadDesaturation, k)))
+        {
+            foreach (ColorAdjustments adjustments in _exposures) adjustments.saturation.value = _writtenSaturation;
+        }
+    }
+
+    /// <summary>Stores `value` in `written` and returns true when it moved by more than writeEpsilon (or nothing was written yet).</summary>
+    private bool Changed(ref float written, float value)
+    {
+        if (!float.IsNaN(written) && Mathf.Abs(value - written) <= writeEpsilon) return false;
+
+        written = value;
+        return true;
+    }
 
     /// <summary>S2: Brightness is an EV offset on top of this component's postExposure, applied to the same runtime profile clone (never a second volume).</summary>
     private void ApplyBrightness()
@@ -190,6 +284,8 @@ public class HorrorAtmosphere : MonoBehaviour
                 _exposures.Add(colorAdjustments);
                 colorAdjustments.contrast.overrideState = true;
                 colorAdjustments.contrast.value = contrast;
+                colorAdjustments.saturation.overrideState = true;
+                if (_exposures.Count == 1) _baseSaturation = colorAdjustments.saturation.value;
             }
 
             // F71: Tonemapping/Vignette are not on the shipped profile at all (decision D13 - no asset
@@ -205,6 +301,23 @@ public class HorrorAtmosphere : MonoBehaviour
             vignette.smoothness.value = vignetteSmoothness;
             vignette.color.overrideState = true;
             vignette.color.value = vignetteColor;
+            _vignettes.Add(vignette);
+
+            // F104 B1: grain and fringing only exist when the dread meter drives them; Update writes their intensity.
+            if (_dread != null)
+            {
+                if (!volume.profile.TryGet(out FilmGrain grain)) grain = volume.profile.Add<FilmGrain>(true);
+                grain.type.overrideState = true;
+                grain.type.value = FilmGrainLookup.Medium1;
+                grain.intensity.overrideState = true;
+                grain.intensity.value = 0f;
+                _grains.Add(grain);
+
+                if (!volume.profile.TryGet(out ChromaticAberration fringe)) fringe = volume.profile.Add<ChromaticAberration>(true);
+                fringe.intensity.overrideState = true;
+                fringe.intensity.value = 0f;
+                _aberrations.Add(fringe);
+            }
         }
     }
 }

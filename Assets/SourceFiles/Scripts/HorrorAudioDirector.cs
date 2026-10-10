@@ -6,7 +6,7 @@ using UnityEngine;
 /// The player-facing dread cues: a heartbeat that quickens as the hunter closes, a sting when it spots
 /// you, and a low drone underneath everything.
 ///
-/// The heartbeat uses straight-line distance rather than path distance on purpose. The AI reasons about
+/// The heartbeat uses straight-line distance rather than path distance on purpose (F104 B1: with a DreadMeter bound it is combined with the meter). The AI reasons about
 /// the maze topologically because it has to walk it; the player feels space, so a heartbeat that spikes
 /// when the thing is one wall away - even if that is thirty metres of corridor - is the correct lie.
 /// </summary>
@@ -25,6 +25,16 @@ public class HorrorAudioDirector : MonoBehaviour
     [SerializeField] private float minHeartbeatVolume = 0.12f;
     [Tooltip("Above 1 holds the heartbeat quiet until it is genuinely close, then ramps hard. 1 = straight line.")]
     [SerializeField] private float proximityFalloff = 2f;
+
+    [Header("F104 B1 - dread heartbeat")]
+    [Tooltip("Time constant of the easing on the distance term, so a hunter stepping into range does not jump the heart (s)")]
+    [SerializeField] private float heartbeatDistanceLag = 3f;
+    [Tooltip("The hunter's distance term is weighted by this when a DreadMeter drives the heart")]
+    [SerializeField] private float heartbeatDistanceWeight = 0.6f;
+    [Tooltip("Cap on the meter's own contribution: the heart races from a sprint or the dark, but never as hard as a hunter on top of you")]
+    [SerializeField] private float heartbeatSelfCap = 0.75f;
+    [Tooltip("Combined closeness above which the heart beats at all. The meter's progress floor alone must never start it, or it would beat for the whole second half of a floor.")]
+    [SerializeField] private float heartbeatThreshold = 0.2f;
 
     [Header("Sting")]
     [SerializeField] private AudioClip stingClip;
@@ -76,6 +86,32 @@ public class HorrorAudioDirector : MonoBehaviour
     [Tooltip("1 for a track written as horror (The Urge to Kill, since 7 Oct 2026). The old Music_Exciting placeholder needed 0.78: at native pitch it read as a victory fanfare.")]
     [SerializeField] private float panicPitch = 1f;
 
+    [Header("F104 B5 - silence windows")]
+    [Tooltip("How long the floor music plays before it leaves (s, min/max)")]
+    [SerializeField] private Vector2 musicSeconds = new Vector2(60f, 120f);
+    [Tooltip("How long a room-tone stretch lasts before it ends or drops into dead air (s, min/max)")]
+    [SerializeField] private Vector2 roomToneSeconds = new Vector2(30f, 60f);
+    [Tooltip("How long dead air lasts (s, min/max). The maze's own wind continues through it.")]
+    [SerializeField] private Vector2 deadAirSeconds = new Vector2(10f, 20f);
+    [Tooltip("Chance a finished room-tone stretch drops on into dead air")]
+    [Range(0f, 1f)]
+    [SerializeField] private float deadAirChance = 0.3f;
+    [Tooltip("Seconds the music and the room tone take to trade places (s)")]
+    [SerializeField] private float bedCrossfadeSeconds = 4f;
+    [Tooltip("Room-tone loop volume")]
+    [SerializeField] private float roomToneVolume = 0.35f;
+
+    [Header("F104 B4 - escape hunt")]
+    [Tooltip("With the escape hunt on, the panic track waits this long after the hatch opens; the floor music carries the first seconds (s)")]
+    [SerializeField] private float panicMusicDelay = 20f;
+    [Tooltip("The panic track's gain when the hunter is right on top of the player, so its footsteps cut through")]
+    [Range(0f, 1f)]
+    [SerializeField] private float threatDuckGain = 0.4f;
+    [Tooltip("Flat distance to the hunter at which the panic track starts to duck (m)")]
+    [SerializeField] private float threatDuckRange = 15f;
+    [Tooltip("Seconds the threat duck takes to follow the hunter (s)")]
+    [SerializeField] private float threatDuckEaseSeconds = 0.3f;
+
     private Transform _player;
     private Transform _hunter;
     private AIFollower _follower;
@@ -98,6 +134,26 @@ public class HorrorAudioDirector : MonoBehaviour
     private float _intensity;
     private bool _panicking;
     private Coroutine _holdBreathRoutine;
+    // F104 B1: the meter that makes the heart race, and the eased hunter-distance term it is combined with.
+    private DreadMeter _dread;
+    private float _distanceTerm;
+    // F104 B5: what the bed wants (SetIntensity / BeginPanic), and the independent gains that scale it. ApplyBedVolume multiplies them
+    // every frame, so a breath hold, a duck, a silence window and the threat duck can overlap without undoing each other.
+    private enum BedState { Music, RoomTone, DeadAir }
+    private float _bedVolume;
+    private float _breathGain = 1f;
+    private float _duckGain = 1f;
+    private float _duckTarget = 1f;
+    private float _duckRate;
+    private float _musicGain = 1f;
+    private float _roomToneGain;
+    private float _threatDuckGain = 1f;
+    private AudioSource _roomTone;
+    private float _roomToneLevel;
+    private BedState _bedState = BedState.Music;
+    private float _bedStateEndsAt = -1f;
+    private Coroutine _panicDelayRoutine;
+    private bool _escapeBegun;
 
     /// <summary>
     /// Wired by MazeGenerator, which already knows about both actors. droneIsMusic: the bed is a composed track (the
@@ -126,6 +182,15 @@ public class HorrorAudioDirector : MonoBehaviour
         if (panic != null) panicClip = panic;
     }
 
+    /// <summary>F104 B1: raised each time a heartbeat plays. HorrorAtmosphere pulses the vignette on it.</summary>
+    public event System.Action HeartBeat;
+
+    /// <summary>F104 B1: the DreadMeter that makes the heart race. Null (or an inactive meter) leaves the heartbeat purely distance-driven, exactly as before.</summary>
+    public void BindDread(DreadMeter meter)
+    {
+        _dread = meter;
+    }
+
     /// <summary>0 = nothing collected yet, 1 = every star taken. Drives everything that swells.</summary>
     public void SetIntensity(float normalized)
     {
@@ -134,21 +199,58 @@ public class HorrorAudioDirector : MonoBehaviour
         // Once the panic track is on the drone source, leave its pitch and volume alone
         if (_drone != null && !_panicking)
         {
-            _drone.volume = Mathf.Lerp(droneVolume, droneVolumeAtPeak, _intensity);
+            _bedVolume = Mathf.Lerp(droneVolume, droneVolumeAtPeak, _intensity);
             _drone.pitch = Mathf.Lerp(dronePitch, dronePitchAtPeak, _intensity);
         }
     }
 
-    /// <summary>The hatch is open and the hunter is loose. Bring in the panic loop.</summary>
+    /// <summary>
+    /// The hatch is open and the hunter is loose. Bring in the panic loop. F104 B4: with the escape hunt on, the floor's music
+    /// (forced back in if a silence window had taken it) carries the first panicMusicDelay seconds and the track arrives after.
+    /// </summary>
     public void BeginPanic()
     {
         if (panicClip == null || _drone == null) return;
 
-        // Reuse the drone source: the panic track replaces the bed rather than piling on top of it
+        _escapeBegun = true;
+        EnterBedState(BedState.Music);
+        if (!_terror.escapeHunt || panicMusicDelay <= 0f)
+        {
+            StartPanicTrack();
+            return;
+        }
+
+        if (_panicDelayRoutine == null) _panicDelayRoutine = StartCoroutine(PanicAfterDelay());
+    }
+
+    private IEnumerator PanicAfterDelay()
+    {
+        float t = 0f;
+        while (t < panicMusicDelay)
+        {
+            // Disabling this component does not stop a running coroutine, so check every frame (see HoldBreathRoutine).
+            if (!enabled || GameOutcome.IsOver)
+            {
+                _panicDelayRoutine = null;
+                yield break;
+            }
+
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        _panicDelayRoutine = null;
+        StartPanicTrack();
+    }
+
+    /// <summary>Reuses the drone source: the panic track replaces the bed rather than piling on top of it.</summary>
+    private void StartPanicTrack()
+    {
         _panicking = true;
         _drone.clip = panicClip;
         _drone.pitch = panicPitch;
-        _drone.volume = panicVolume;
+        _bedVolume = panicVolume;
+        ApplyBedVolume();
         _drone.Play();
     }
 
@@ -159,6 +261,7 @@ public class HorrorAudioDirector : MonoBehaviour
     public void Silence()
     {
         if (_drone != null) _drone.Stop();
+        if (_roomTone != null) _roomTone.Stop();
         if (_sting != null) _sting.Stop();
         if (_oneShots != null) _oneShots.Stop();
         if (_whisper != null) _whisper.Stop();
@@ -167,6 +270,11 @@ public class HorrorAudioDirector : MonoBehaviour
         {
             StopCoroutine(_holdBreathRoutine);
             _holdBreathRoutine = null;
+        }
+        if (_panicDelayRoutine != null)
+        {
+            StopCoroutine(_panicDelayRoutine);
+            _panicDelayRoutine = null;
         }
     }
 
@@ -188,6 +296,13 @@ public class HorrorAudioDirector : MonoBehaviour
         _drone.spatialBlend = 0f;
         GameSettings.RouteMusic(_drone); // S2: the base music bed and the panic track share this source
 
+        // F104 B5: the silence windows' room tone. Ambience, not music, so it follows the Effects slider.
+        _roomTone = gameObject.AddComponent<AudioSource>();
+        _roomTone.playOnAwake = false;
+        _roomTone.loop = true;
+        _roomTone.spatialBlend = 0f;
+        GameSettings.RouteEffect(_roomTone);
+
         // There used to be a fourth source here, a synthesised "tension bed" (two detuned 55 Hz tones
         // beating against each other, swelling with star progress). Removed 4 Oct 2026: it read as a
         // buzz that got louder before the last star. Escalation is now the drone's volume/pitch and the
@@ -204,6 +319,7 @@ public class HorrorAudioDirector : MonoBehaviour
 
     private void OnEnable()
     {
+        Pickup.OnCollectedAt += HandleStarTaken; // F104 B5: taking a star brings the music back
         if (_follower != null)
         {
             _follower.ChaseStateChanged += HandleChaseStateChanged;
@@ -221,12 +337,14 @@ public class HorrorAudioDirector : MonoBehaviour
         }
 
         BuildSpottedPool();
+        PickRoomTone();
 
         if (droneClip != null)
         {
             _drone.clip = droneClip;
             _drone.pitch = dronePitch;
-            _drone.volume = droneVolume;
+            _bedVolume = droneVolume;
+            ApplyBedVolume();
             // Behind the title screen the menu has its own music: the bed waits for the run (see Update).
             if (GameFlow.IsRunActive) _drone.Play();
             else _bedWaitingForRun = true;
@@ -235,6 +353,7 @@ public class HorrorAudioDirector : MonoBehaviour
 
     private void OnDisable()
     {
+        Pickup.OnCollectedAt -= HandleStarTaken;
         if (_follower != null)
         {
             _follower.ChaseStateChanged -= HandleChaseStateChanged;
@@ -248,6 +367,11 @@ public class HorrorAudioDirector : MonoBehaviour
             _bedWaitingForRun = false;
             if (_drone != null && !_panicking) _drone.Play();
         }
+        // F104: the bed's gains (silence windows, held-breath duck, threat duck) are advanced and applied every frame.
+        TickBed();
+        TickDuck();
+        TickThreatDuck();
+        ApplyBedVolume();
 
         if (_player == null || _hunter == null) return;
 
@@ -255,13 +379,32 @@ public class HorrorAudioDirector : MonoBehaviour
         float range = Mathf.Lerp(heartbeatRange, heartbeatRangeAtPeak, _intensity);
 
         float distance = Vector3.Distance(_player.position, _hunter.position);
-        if (distance > range)
+        float closeness;
+        if (_dread != null && _dread.IsActive)
         {
-            _beatTimer = 0f;
-            return;
+            // F104 B1: a near hunter still reads near, but a sprint or the dark also make the heart race (the Psychologist's max).
+            float rawDistance = distance > range ? 0f : 1f - Mathf.Clamp01(distance / range);
+            _distanceTerm = Mathf.Lerp(_distanceTerm, rawDistance, 1f - Mathf.Exp(-Time.deltaTime / Mathf.Max(0.0001f, heartbeatDistanceLag)));
+            closeness = Mathf.Max(_distanceTerm * heartbeatDistanceWeight, Mathf.Min(_dread.Smoothed, heartbeatSelfCap));
+            if (closeness <= heartbeatThreshold)
+            {
+                _beatTimer = 0f;
+                return;
+            }
+
+            closeness = Mathf.InverseLerp(heartbeatThreshold, 1f, closeness);
+        }
+        else
+        {
+            if (distance > range)
+            {
+                _beatTimer = 0f;
+                return;
+            }
+
+            closeness = 1f - Mathf.Clamp01(distance / range);
         }
 
-        float closeness = 1f - Mathf.Clamp01(distance / range);
         float interval = Mathf.Lerp(slowestInterval, fastestInterval, closeness);
 
         _beatTimer -= Time.deltaTime;
@@ -280,6 +423,130 @@ public class HorrorAudioDirector : MonoBehaviour
         AudioClip recorded = slot.Pick();
         if (recorded != null) _oneShots.PlayOneShot(recorded, volume * slot.volume);
         else _oneShots.PlayOneShot(_heartbeat, volume);
+        HeartBeat?.Invoke();
+    }
+
+    // ---------------------------------------------------------------- F104 B5: the bed's gains and silence windows
+
+    /// <summary>
+    /// The one place the bed's volume is written: what SetIntensity / BeginPanic want, times every independent gain. With every
+    /// Tier B feature off all the gains are 1, so this reduces to the old direct writes.
+    /// </summary>
+    private void ApplyBedVolume()
+    {
+        if (_drone != null) _drone.volume = _bedVolume * _breathGain * _duckGain * _musicGain * _threatDuckGain;
+        if (_roomTone != null) _roomTone.volume = _roomToneLevel * _roomToneGain * _duckGain;
+    }
+
+    /// <summary>
+    /// F104 B11: eases the whole bed (music and room tone) to `gain` over `seconds`, e.g. 0 for a held breath and back to 1.
+    /// Independent of the silence windows and the breath hold, which scale the same volume.
+    /// </summary>
+    public void Duck(float gain, float seconds)
+    {
+        _duckTarget = Mathf.Clamp01(gain);
+        _duckRate = seconds > 0.0001f ? Mathf.Abs(_duckTarget - _duckGain) / seconds : float.MaxValue;
+    }
+
+    private void TickDuck()
+    {
+        _duckGain = Mathf.MoveTowards(_duckGain, _duckTarget, _duckRate * Time.deltaTime);
+    }
+
+    /// <summary>True while the floor's music is what the bed is playing (not a silence window), so a held breath has something to take away.</summary>
+    public bool IsBedMusic => _bedState == BedState.Music;
+
+    /// <summary>F104 B5: a room-tone loop for this floor, chosen once. No clip = no silence windows (taking the music away for nothing would just be a bug).</summary>
+    private void PickRoomTone()
+    {
+        AudioSlot slot = GameAudio.Library.mazeRoomTone;
+        AudioClip clip = slot.Pick();
+        if (clip == null || _roomTone == null) return;
+
+        _roomTone.clip = clip;
+        _roomToneLevel = roomToneVolume * slot.volume;
+    }
+
+    /// <summary>The state machine: music for a while, then room tone, sometimes dead air; only an event brings the music back.</summary>
+    private void TickBed()
+    {
+        bool windowsLive = _roomTone != null && _roomTone.clip != null && _terror.silenceWindows && !_bedWaitingForRun && !_escapeBegun
+            && GameFlow.IsRunActive && !GameOutcome.IsOver;
+        if (windowsLive)
+        {
+            // The first music stretch starts with the run, not with the scene load behind the title screen.
+            if (_bedStateEndsAt < 0f) _bedStateEndsAt = RollBedEnd(BedState.Music);
+            else if (Time.time >= _bedStateEndsAt) AdvanceBedState();
+        }
+        else if (!_terror.silenceWindows && _bedState != BedState.Music)
+        {
+            // Switched off mid-window (Inspector A/B test): bring the music straight back rather than strand it at zero.
+            EnterBedState(BedState.Music);
+        }
+
+        float step = Time.deltaTime / Mathf.Max(0.0001f, bedCrossfadeSeconds);
+        _musicGain = Mathf.MoveTowards(_musicGain, _bedState == BedState.Music ? 1f : 0f, step);
+        _roomToneGain = Mathf.MoveTowards(_roomToneGain, _bedState == BedState.RoomTone ? 1f : 0f, step);
+
+        if (_roomTone == null || _roomTone.clip == null) return;
+        if (_roomToneGain > 0f && !_roomTone.isPlaying && !GameOutcome.IsOver) _roomTone.Play();
+        else if (_roomToneGain <= 0f && _roomTone.isPlaying) _roomTone.Pause();
+    }
+
+    /// <summary>Called when the current state's timer has run out. Music -> room tone; room tone -> dead air or another stretch; dead air -> room tone.</summary>
+    private void AdvanceBedState()
+    {
+        switch (_bedState)
+        {
+            case BedState.Music:
+                EnterBedState(BedState.RoomTone);
+                break;
+            case BedState.RoomTone:
+                EnterBedState(Random.value < deadAirChance ? BedState.DeadAir : BedState.RoomTone);
+                break;
+            default:
+                EnterBedState(BedState.RoomTone);
+                break;
+        }
+    }
+
+    private void EnterBedState(BedState state)
+    {
+        bool changed = state != _bedState;
+        _bedState = state;
+        _bedStateEndsAt = RollBedEnd(state);
+        if (changed) _terror.Log("Bed: " + state, this);
+    }
+
+    /// <summary>The Time.time a stretch of `state` ends, rolled from its range.</summary>
+    private float RollBedEnd(BedState state)
+    {
+        Vector2 range = state == BedState.Music ? musicSeconds : state == BedState.RoomTone ? roomToneSeconds : deadAirSeconds;
+        return Time.time + Random.Range(range.x, range.y);
+    }
+
+    /// <summary>A chase or a star brings the music back; nothing timed ever does, so its return cannot be predicted.</summary>
+    private void ReturnMusic()
+    {
+        if (_bedState != BedState.Music) EnterBedState(BedState.Music);
+    }
+
+    private void HandleStarTaken(Vector3 at) => ReturnMusic();
+
+    /// <summary>F104 B4: while the panic track plays, the hunter's nearness ducks it so the footsteps cut through. Untouched (1) otherwise and with the flag off.</summary>
+    private void TickThreatDuck()
+    {
+        float target = 1f;
+        if (_terror.escapeHunt && _panicking && _player != null && _hunter != null)
+        {
+            Vector3 offset = _player.position - _hunter.position;
+            offset.y = 0f;
+            float closeness = 1f - Mathf.Clamp01(offset.magnitude / Mathf.Max(0.0001f, threatDuckRange));
+            target = Mathf.Lerp(1f, threatDuckGain, closeness);
+        }
+
+        if (Mathf.Approximately(_threatDuckGain, target)) return;
+        _threatDuckGain = Mathf.Lerp(_threatDuckGain, target, 1f - Mathf.Exp(-Time.deltaTime / Mathf.Max(0.0001f, threatDuckEaseSeconds)));
     }
 
     /// <summary>F103: which Tier A features run, and the [Terror] log.</summary>
@@ -322,6 +589,8 @@ public class HorrorAudioDirector : MonoBehaviour
     private void HandleChaseStateChanged(bool chasing)
     {
         if (!chasing) return;
+
+        ReturnMusic(); // F104 B5: a chase brings the music back
 
         // A real "spotted" cue plays whole, at its own pitch, no more than once per spottedCooldown -
         // the hunter can drop and regain a chase within seconds, and a stab on every flicker turns into noise.
@@ -372,6 +641,7 @@ public class HorrorAudioDirector : MonoBehaviour
     public void PlayCaptureSting()
     {
         if (_drone != null) _drone.Stop();
+        if (_roomTone != null) _roomTone.Stop();
         AudioSlot recorded = GameAudio.Library.captureSting; // F97: the recorded stinger when the slot is filled
         if (_sting != null && recorded.Has)
         {
@@ -451,7 +721,7 @@ public class HorrorAudioDirector : MonoBehaviour
             // its Update - so this loop has to check for itself, every frame, not just at the start.
             if (!enabled || GameOutcome.IsOver) yield break;
 
-            if (_drone != null) _drone.volume = 0f;
+            _breathGain = 0f;
             t += Time.deltaTime;
             yield return null;
         }
@@ -461,16 +731,15 @@ public class HorrorAudioDirector : MonoBehaviour
         {
             if (!enabled || GameOutcome.IsOver) yield break;
 
-            float k = Mathf.Clamp01(t / restoreSeconds);
-            float droneTarget = _panicking ? panicVolume : Mathf.Lerp(droneVolume, droneVolumeAtPeak, _intensity);
-            if (_drone != null) _drone.volume = Mathf.Lerp(0f, droneTarget, k);
+            // A gain on top of whatever the bed wants right now (ApplyBedVolume), so a panic transition landing mid-hold is not undone.
+            _breathGain = Mathf.Clamp01(t / restoreSeconds);
             t += Time.deltaTime;
             yield return null;
         }
 
         if (!enabled || GameOutcome.IsOver) yield break;
 
-        if (_drone != null) _drone.volume = _panicking ? panicVolume : Mathf.Lerp(droneVolume, droneVolumeAtPeak, _intensity);
+        _breathGain = 1f;
         _holdBreathRoutine = null;
     }
 

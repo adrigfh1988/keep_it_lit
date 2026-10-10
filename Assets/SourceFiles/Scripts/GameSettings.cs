@@ -11,7 +11,7 @@ using UnityEngine.Rendering.Universal;
 /// in BeforeSceneLoad. NOT campaign state: not in SaveData, not cleared by GameFlow.ReturnToMenu, untouched by a scene reload.
 ///
 /// Every setter clamps, stores, saves, applies the part that needs applying right now and raises <see cref="Changed"/>; the systems that
-/// own the rest (HorrorAtmosphere/HubRenderingLook exposure, FogScale, Flashlight shadows, FirstPersonRig FOV, LiftSetPiece shake,
+/// own the rest (HorrorAtmosphere/HubRenderingLook exposure, FogScale, Flashlight shadows, FirstPersonRig FOV, LiftSetPiece shake, HorrorAtmosphere dread effects,
 /// ThirdPersonController look) either read the value when they need it or subscribe to <see cref="Changed"/>.
 ///
 /// Audio: <see cref="BindMixer"/> (MazeGenerator.Awake, before anything plays) hands over GameMixer.mixer. Music sources call
@@ -57,6 +57,7 @@ public static class GameSettings
     private static bool _invertY;
     private static float _fov;
     private static float _cameraShake;
+    private static float _effectsIntensity;
 
     public static WindowModeKind WindowMode { get => _windowMode; set { _windowMode = value; Store("WindowMode", (int)value); ApplyDisplay(); Raise(); } }
     public static bool VSync { get => _vSync; set { _vSync = value; Store("VSync", value ? 1 : 0); ApplyFrame(); Raise(); } }
@@ -77,6 +78,8 @@ public static class GameSettings
     public static string Language { get => _language; set { _language = value ?? ""; Store("Language", _language); Raise(); } }
     private static string _language = "";
     public static float CameraShake { get => _cameraShake; set { _cameraShake = Mathf.Clamp01(value); Store("CameraShake", _cameraShake); Raise(); } }
+    /// <summary>F104 B1: strength of the screen effects that grow with the DreadMeter (film grain, vignette, colour fringing, desaturation), 0..1.</summary>
+    public static float EffectsIntensity { get => _effectsIntensity; set { _effectsIntensity = Mathf.Clamp01(value); Store("EffectsIntensity", _effectsIntensity); Raise(); } }
 
     /// <summary>The touch controls mode / look sensitivity stay stored by <see cref="TouchInput"/> (their existing prefs); these wrappers just raise Changed.</summary>
     public static TouchInput.Mode TouchControls { get => TouchInput.CurrentMode; set { TouchInput.SetMode(value); Raise(); } }
@@ -145,6 +148,7 @@ public static class GameSettings
         _invertY = Int("InvertY", 0) != 0;
         _fov = Mathf.Clamp(Float("FieldOfView", DefaultFov), MinFov, MaxFov);
         _cameraShake = Mathf.Clamp01(Float("CameraShake", 1f));
+        _effectsIntensity = Mathf.Clamp01(Float("EffectsIntensity", 1f));
     }
 
     private static int Int(string name, int fallback)
@@ -201,6 +205,7 @@ public static class GameSettings
         _brightness = 0f; Store("Brightness", 0f);
         _fov = DefaultFov; Store("FieldOfView", _fov);
         _cameraShake = 1f; Store("CameraShake", 1f);
+        _effectsIntensity = 1f; Store("EffectsIntensity", 1f);
         ApplyQuality();
         Raise();
     }

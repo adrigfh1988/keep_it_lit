@@ -288,6 +288,8 @@ public class SettingsMenu : MonoBehaviour
             v => GameSettings.FieldOfView = v, v => Mathf.RoundToInt(v).ToString());
         AddSlider(S("camera_shake"), 0f, 1f, GameSettings.CameraShake, false,
             v => GameSettings.CameraShake = v, v => Mathf.RoundToInt(v * 100f) + "%");
+        AddSlider(S("effects_intensity"), 0f, 1f, GameSettings.EffectsIntensity, false,
+            v => GameSettings.EffectsIntensity = v, v => Mathf.RoundToInt(v * 100f) + "%");
     }
 
     private void BuildAudio()

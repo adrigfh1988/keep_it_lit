@@ -6,8 +6,9 @@ using UnityEngine.AI;
 /// Makes the hunter perceptible before it is visible: heavy footsteps and a mechanical hum that carry
 /// through walls, and two points of red where its eyes are.
 ///
-/// The audio is deliberately not occluded. Hearing it through the wall it is behind is the mechanic,
-/// not a bug - it is how the player localises it with the flashlight off.
+/// The audio is deliberately not silenced by walls. Hearing it through the wall it is behind is the mechanic,
+/// not a bug - it is how the player localises it with the flashlight off. F104 B6: a wall only muffles it
+/// (a low-pass), so direction stays readable while distance blurs.
 /// </summary>
 public class AIPresence : MonoBehaviour
 {
@@ -69,6 +70,24 @@ public class AIPresence : MonoBehaviour
     [Tooltip("How far the whine carries (m)")]
     [SerializeField] private float alertMaxDistance = 30f;
 
+    [Header("F104 B6 - muffled")]
+    [Tooltip("Seconds between the line-of-sight checks from the camera to the hunter (s)")]
+    [SerializeField] private float occlusionCheckInterval = 0.2f;
+    [Tooltip("Footstep low-pass cutoff while something solid stands between the camera and the hunter (Hz). Direction stays readable, distance blurs.")]
+    [SerializeField] private float occludedLowPassHz = 900f;
+    [Tooltip("Footstep low-pass cutoff with a clear line (Hz); effectively off")]
+    [SerializeField] private float clearLowPassHz = 22000f;
+    [Tooltip("Time constant of the cutoff easing, so a corner does not click (s)")]
+    [SerializeField] private float lowPassBlendSeconds = 0.15f;
+    [Tooltip("Every Nth footstep also drags a metal scrape under it")]
+    [SerializeField] private int scrapeEveryNthStep = 2;
+    [Tooltip("Volume of the scrape layer")]
+    [SerializeField] private float scrapeVolume = 0.5f;
+    [Tooltip("Scrape volume multiplier while occluded, on top of its own low-pass")]
+    [SerializeField] private float occludedScrapeGain = 0.6f;
+    [Tooltip("Height above the hunter's feet the occlusion ray aims at (m)")]
+    [SerializeField] private float occlusionTargetHeight = 1.2f;
+
     /// <summary>The mode the built eyes currently read as.</summary>
     public enum FaceMode
     {
@@ -89,6 +108,13 @@ public class AIPresence : MonoBehaviour
     private AudioSource _footstepSource;
     private AudioSource _humSource;
     private float _distanceSinceStep;
+
+    // F104 B6: footsteps are low-passed while the camera has no clear line to the hunter.
+    private AudioLowPassFilter _footstepFilter;
+    private readonly RaycastHit[] _occlusionHits = new RaycastHit[8];
+    private float _nextOcclusionCheck;
+    private bool _occluded;
+    private int _stepCount;
 
     private Material _eyeMaterial;
     private readonly List<Transform> _eyes = new List<Transform>();
@@ -124,6 +150,8 @@ public class AIPresence : MonoBehaviour
         _follower = GetComponent<AIFollower>();
 
         _footstepSource = CreateSource("AI_Footsteps", footstepMaxDistance, false);
+        _footstepFilter = _footstepSource.gameObject.AddComponent<AudioLowPassFilter>();
+        _footstepFilter.cutoffFrequency = clearLowPassHz;
         _humSource = CreateSource("AI_Hum", humMaxDistance, true);
     }
 
@@ -148,6 +176,7 @@ public class AIPresence : MonoBehaviour
         // standing still, or with no footstep clips) still releases on schedule.
         TickHold();
         TickEyes();
+        TickMuffle();
 
         if (_agent == null || footstepClips == null || footstepClips.Length == 0) return;
 
@@ -164,8 +193,70 @@ public class AIPresence : MonoBehaviour
         if (_distanceSinceStep < strideLength) return;
 
         _distanceSinceStep = 0f;
+        PlayFootstep();
+    }
+
+    /// <summary>F104 B6: refreshes the occlusion test on its interval and eases the footstep low-pass toward its target every frame.</summary>
+    private void TickMuffle()
+    {
+        if (Time.time >= _nextOcclusionCheck)
+        {
+            _nextOcclusionCheck = Time.time + occlusionCheckInterval;
+            _occluded = _terror.muffledHunter && IsOccludedFromCamera();
+        }
+
+        float target = _occluded ? occludedLowPassHz : clearLowPassHz;
+        float blend = 1f - Mathf.Exp(-Time.deltaTime / Mathf.Max(0.0001f, lowPassBlendSeconds));
+        _footstepFilter.cutoffFrequency = Mathf.Lerp(_footstepFilter.cutoffFrequency, target, blend);
+    }
+
+    /// <summary>
+    /// F104 B6: true if anything solid other than the player or the hunter lies on the line from the camera to the
+    /// hunter's chest. Triggers are ignored. No camera or no player yet counts as clear.
+    /// </summary>
+    private bool IsOccludedFromCamera()
+    {
+        Camera cam = Camera.main;
+        Transform player = _follower != null ? _follower.Target : null;
+        if (cam == null || player == null) return false;
+
+        Vector3 from = cam.transform.position;
+        Vector3 to = transform.position + Vector3.up * occlusionTargetHeight;
+        Vector3 toTarget = to - from;
+        float distance = toTarget.magnitude;
+        int count = Physics.RaycastNonAlloc(from, toTarget / Mathf.Max(0.0001f, distance), _occlusionHits, distance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
+        for (int i = 0; i < count; i++)
+        {
+            Transform hit = _occlusionHits[i].transform;
+            if (!hit.IsChildOf(player) && !hit.IsChildOf(transform)) return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>One footstep one-shot, plus the metal scrape layer on every scrapeEveryNthStep-th step. Shared by the stride and the end-of-hold beat.</summary>
+    private void PlayFootstep()
+    {
         _footstepSource.pitch = Random.Range(minPitch, maxPitch);
         _footstepSource.PlayOneShot(footstepClips[Random.Range(0, footstepClips.Length)], footstepVolume);
+
+        _stepCount++;
+        if (_stepCount % Mathf.Max(1, scrapeEveryNthStep) == 0) PlayScrape();
+    }
+
+    /// <summary>
+    /// F104 B6: a free-standing one-shot at the hunter's feet (it must not follow the hunter, so it is not the footstep
+    /// source), carrying the footstep filter's current cutoff so it is muffled too. Skipped with the flag off or an empty slot.
+    /// </summary>
+    private void PlayScrape()
+    {
+        if (!_terror.muffledHunter) return;
+
+        AudioSource scrape = GameAudio.SpawnAt(GameAudio.Library.hunterScrape, transform.position,
+            scrapeVolume * (_occluded ? occludedScrapeGain : 1f), 1f, footstepMaxDistance);
+        if (scrape == null) return;
+
+        scrape.gameObject.AddComponent<AudioLowPassFilter>().cutoffFrequency = _footstepFilter.cutoffFrequency;
     }
 
     /// <summary>
@@ -198,8 +289,7 @@ public class AIPresence : MonoBehaviour
 
         if (_footstepSource != null && footstepClips != null && footstepClips.Length > 0)
         {
-            _footstepSource.pitch = Random.Range(minPitch, maxPitch);
-            _footstepSource.PlayOneShot(footstepClips[Random.Range(0, footstepClips.Length)], footstepVolume);
+            PlayFootstep();
         }
     }
 

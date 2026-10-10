@@ -19,7 +19,24 @@ public class MazeAmbience : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float farVolume = 0.45f;
     [SerializeField] private float farLowPassHz = 1600f;
 
+    [Header("F104 B11 - duck")]
+    [Tooltip("Below this duck gain no wind or far event is spawned at all (the held breath is silence, not quiet)")]
+    [SerializeField] private float silentBelowGain = 0.05f;
+
     private float _nextWind, _nextFar;
+    private float _duckGain = 1f;
+    private float _duckTarget = 1f;
+    private float _duckRate;
+
+    /// <summary>
+    /// F104 B11: eases the one-shots' volume to `gain` over `seconds` (0 for a held breath, then back to 1). Anything already
+    /// playing finishes at the volume it was spawned with; new ones are scaled by the gain, and none spawn while it is near zero.
+    /// </summary>
+    public void SetDuck(float gain, float seconds)
+    {
+        _duckTarget = Mathf.Clamp01(gain);
+        _duckRate = seconds > 0.0001f ? Mathf.Abs(_duckTarget - _duckGain) / seconds : float.MaxValue;
+    }
 
     private void Start()
     {
@@ -29,16 +46,17 @@ public class MazeAmbience : MonoBehaviour
 
     private void Update()
     {
+        _duckGain = Mathf.MoveTowards(_duckGain, _duckTarget, _duckRate * Time.deltaTime);
         if (!GameFlow.IsRunActive || GameOutcome.IsOver) return;
         if (Time.time >= _nextWind)
         {
             _nextWind = Time.time + Random.Range(windInterval.x, windInterval.y);
-            PlayAround(GameAudio.Library.mazeWind, windDistance, windVolume, windLowPassHz);
+            if (_duckGain >= silentBelowGain) PlayAround(GameAudio.Library.mazeWind, windDistance, windVolume * _duckGain, windLowPassHz);
         }
         if (Time.time >= _nextFar)
         {
             _nextFar = Time.time + Random.Range(farInterval.x, farInterval.y);
-            PlayAround(GameAudio.Library.mazeFar, farDistance, farVolume, farLowPassHz);
+            if (_duckGain >= silentBelowGain) PlayAround(GameAudio.Library.mazeFar, farDistance, farVolume * _duckGain, farLowPassHz);
         }
     }
 

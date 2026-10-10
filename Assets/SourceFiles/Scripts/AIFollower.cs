@@ -77,6 +77,17 @@ public class AIFollower : MonoBehaviour
     [Range(0.1f, 0.99f)]
     [SerializeField] private float rushSprintFraction = 0.8f;
 
+    [Header("F104 B2 - committed chase")]
+    [Tooltip("Seconds of unbroken sight before the chase commits: the hunter then matches a walking player (and, in the escape, nearly a sprinting one) (s)")]
+    [SerializeField] private float chaseCommitSeconds = 2f;
+    [Tooltip("Committed speed during the escape as a fraction of the player's sprint. Deliberately above the speed cap but still under 1, so a sprinting player still gets away.")]
+    [Range(0.5f, 0.99f)]
+    [SerializeField] private float escapeCommitFraction = 0.95f;
+
+    [Header("F104 B1 - backoff")]
+    [Tooltip("Hearing scale multiplier while the DreadMeter has sent the hunter away. Sight still works: a backoff is not blindness.")]
+    [SerializeField] private float backoffHearingScale = 0.5f;
+
     [Header("Wander")]
     [Tooltip("How close the follower has to get to a wander point before picking the next one")]
     [SerializeField] private float wanderStoppingDistance = 0.3f;
@@ -102,6 +113,26 @@ public class AIFollower : MonoBehaviour
     [Header("Hiding spots")]
     [Tooltip("How close a hiding spot has to be to the last known position to be checked during a search")]
     [SerializeField] private float hidingSpotSearchRadius = 6f;
+
+    [Header("F104 B3 - locker heat")]
+    [Tooltip("A heard or seen player heats every hiding spot within this radius of the event (m)")]
+    [SerializeField] private float heatRadius = 6f;
+    [Tooltip("Heat (0..1) one event adds to each spot in range")]
+    [SerializeField] private float heatPerEvent = 0.35f;
+    [Tooltip("Seconds for a full heat to cool to zero")]
+    [SerializeField] private float heatDecaySeconds = 120f;
+    [Tooltip("A spot at or above this heat is a hot spot: a search checks it even when it is farther out, and stands outside it")]
+    [Range(0f, 1f)]
+    [SerializeField] private float hotThreshold = 0.5f;
+    [Tooltip("How far from the last known position a hot spot is still added to the search (m)")]
+    [SerializeField] private float hotSpotSearchRadius = 15f;
+    [Tooltip("Extra seconds it stands in front of a hot spot (s)")]
+    [SerializeField] private float standOutsideSeconds = 4f;
+    [Tooltip("How long it looks into the locker when it peeks, door ajar and eyes lit (s)")]
+    [SerializeField] private float peekSeconds = 2.5f;
+    [Tooltip("Peek chance = the spot's heat x this, once per floor, only when the player is hidden in that very spot")]
+    [Range(0f, 1f)]
+    [SerializeField] private float peekChanceScale = 0.6f;
 
     [Header("Ambush (F45)")]
     [Range(0f, 1f)] [SerializeField] private float ambushBias = 0.75f;
@@ -222,7 +253,25 @@ public class AIFollower : MonoBehaviour
     private float _rushUntil = -1f;
     private float _rushSpeed;
     private float _nextListenTime;
+    // F104 B1: the DreadMeter sent it away until this Time.time. -1 = not backing off.
+    private float _backoffUntil = -1f;
+    // F104 B2: Time.time sight began unbroken (-1 = no sight), and the player speeds / cap cached in Start.
+    private float _sightSince = -1f;
+    private bool _commitLogged;
+    private float _playerWalkSpeed;
+    private float _playerSprintSpeed;
+    private float _speedCap;
+    private float _chaseWalkFraction = 1f;
     private TerrorSettings _terror = new TerrorSettings();
+    // F104 B3: how recently the player was heard or seen near each hiding spot (parallel to _hidingSpots),
+    // the Time.time of that reading, whether it has already peeked into a locker this floor, the throttle
+    // for sight-driven heat, and the dwell bookkeeping for a stand-outside-a-hot-spot.
+    private float[] _hidingHeat = new float[0];
+    private float[] _hidingHeatAt = new float[0];
+    private bool _peekedThisFloor;
+    private float _nextSightHeatTime;
+    private int _hotDwellSpot = -1;
+    private readonly List<Vector3> _hotSpotBuffer = new List<Vector3>();
     private bool _hasSight;
     private float _sightTimer;
     private float _lostSightTimer;
@@ -357,13 +406,13 @@ public class AIFollower : MonoBehaviour
     private float EffectivePatrolBias => Mathf.Lerp(patrolBias * 0.5f, patrolBias, _threat);
 
     /// <summary>How far a noise carries. Floor's hearing scale, further scaled 60%..100% by threat.</summary>
-    private float EffectiveHearingScale => _hearingScale * Mathf.Lerp(0.6f, 1f, _threat);
+    private float EffectiveHearingScale => _hearingScale * Mathf.Lerp(0.6f, 1f, _threat) * (IsBackingOff ? backoffHearingScale : 1f);
 
     /// <summary>How many spots a search sweep checks. Lerps 50%..100% of the floor's value.</summary>
     private int EffectiveSearchPoints => Mathf.RoundToInt(Mathf.Lerp(searchPoints * 0.5f, searchPoints, _threat));
 
     /// <summary>Chance a wander leg heads for the cell nearest the player instead of a star or random cell. 0 at zero progress.</summary>
-    private float HunchBias => Mathf.Lerp(0f, hunchBiasAtPeak, _threat);
+    private float HunchBias => IsBackingOff ? 0f : Mathf.Lerp(0f, hunchBiasAtPeak, _threat);
 
     /// <summary>Chance a wander leg becomes an ambush. Read raw: a threat lerp would make floor 1 before the first star nearly ambush-free, the opposite of the intent.</summary>
     private float EffectiveAmbushBias => ambushBias;
@@ -400,6 +449,9 @@ public class AIFollower : MonoBehaviour
         {
             _hidingSpots.AddRange(fronts);
         }
+
+        _hidingHeat = new float[_hidingSpots.Count];
+        _hidingHeatAt = new float[_hidingSpots.Count];
     }
 
     /// <summary>F45: supplies AmbushCellsFor. Called from MazeGenerator.PlaceAI, before this component's Awake.</summary>
@@ -450,6 +502,7 @@ public class AIFollower : MonoBehaviour
         loseSightTime = profile.LoseSightTime;
         patrolBias = profile.PatrolBias;
         searchBudget = profile.SearchBudget;
+        _chaseWalkFraction = profile.ChaseWalkFraction;
 
         ambushBias = profile.AmbushBias;
         ambushWaitSeconds = profile.AmbushWaitSeconds;
@@ -463,14 +516,25 @@ public class AIFollower : MonoBehaviour
     }
 
     /// <summary>
-    /// Speed while it can see the player. Capped at walking pace until the hatch opens - before then
-    /// it can always be outrun by sprinting, and the moment it starts running is meant to land as a
-    /// shock rather than as the end of a gradual ramp.
+    /// Speed while it can see the player. F104 B2: it no longer "can always be outrun by walking". Before
+    /// the hatch opens it eases up with the threat dial, and once it has held the player in sight for
+    /// chaseCommitSeconds it commits to a chase it can win: it matches a walking player (floor-scaled by
+    /// FloorProfile.ChaseWalkFraction, still under the speed cap) so only a sprint gets away; with the hatch
+    /// open a committed chase reaches escapeCommitFraction of the sprint, still under 1.
     /// </summary>
     private float ChaseSpeed()
     {
-        return _hunting ? runSpeed : Mathf.Lerp(dormantSpeed, moveSpeed, SpeedThreat);
+        if (_hunting)
+        {
+            return IsCommitted ? Mathf.Max(runSpeed, _playerSprintSpeed * escapeCommitFraction) : runSpeed;
+        }
+
+        float eased = Mathf.Lerp(dormantSpeed, moveSpeed, SpeedThreat);
+        return IsCommitted ? Mathf.Max(eased, Mathf.Min(_playerWalkSpeed * _chaseWalkFraction, _speedCap)) : eased;
     }
+
+    /// <summary>F104 B2: unbroken sight for chaseCommitSeconds (TrackSightSince logs the moment it starts, once per chase).</summary>
+    private bool IsCommitted => _terror.committedChase && _sightSince >= 0f && Time.time - _sightSince >= chaseCommitSeconds;
 
     void Awake()
     {
@@ -536,6 +600,9 @@ public class AIFollower : MonoBehaviour
         if (player != null)
         {
             float cap = player.SprintSpeed * maxSpeedFraction;
+            _playerWalkSpeed = player.MoveSpeed;
+            _playerSprintSpeed = player.SprintSpeed;
+            _speedCap = cap;
             if (runSpeed > cap || moveSpeed > cap)
             {
                 Debug.LogWarning($"AIFollower: speeds clamped to {cap:0.00} m/s (player sprint {player.SprintSpeed}).", this);
@@ -549,6 +616,7 @@ public class AIFollower : MonoBehaviour
         else
         {
             _rushSpeed = runSpeed;
+            _speedCap = runSpeed;
         }
 
         if (!_agent.isOnNavMesh)
@@ -668,9 +736,10 @@ public class AIFollower : MonoBehaviour
     /// <summary>
     /// F75: the Stalker's touch forces the hunter to "know" the player is exactly here, on top of the
     /// HearNoise it also calls - guarantees a search lands even where a HearNoise radius/path test could
-    /// technically miss. A no-op once captured, same guard as HearNoise.
+    /// technically miss. A no-op once captured, same guard as HearNoise. F104 B4: <paramref name="reactAsHeard"/>
+    /// false (the escape's pings) sends it searching without the A7 stop-and-rush beat.
     /// </summary>
-    public void ForceLastKnownPosition(Vector3 position)
+    public void ForceLastKnownPosition(Vector3 position, bool reactAsHeard = true)
     {
         if (_state == State.Captured) return;
         _lastKnownPosition = position;
@@ -678,8 +747,64 @@ public class AIFollower : MonoBehaviour
         {
             State previous = _state;
             EnterSearch();
-            ReactToNoise(previous);
+            if (reactAsHeard) ReactToNoise(previous);
         }
+    }
+
+    /// <summary>F104 B1: true while the DreadMeter's backoff runs. The hunch bias, ambushes and the relocation telegraphs (DreadDirector) stand down, and hearing is halved.</summary>
+    public bool IsBackingOff => Time.time < _backoffUntil;
+
+    /// <summary>
+    /// F104 B1: lets the player breathe. The hunter drops whatever it was doing and goes to wander far away for
+    /// <paramref name="seconds"/> - warped there if neither end is in the camera's sight, walking otherwise. Sight still works,
+    /// so it is not blindness. Refused (false) mid-chase, once captured, while hunting for the hatch or stunned. An ambush is
+    /// left properly first, or its lurking face and hum hold would leak into the rest of the floor.
+    /// </summary>
+    public bool BackOff(float seconds, Vector3 farPoint)
+    {
+        if (_agent == null || _state == State.Chase || _state == State.Captured || _hunting || Time.time < _stunnedUntil) return false;
+
+        if (_state == State.Ambush) LeaveAmbush();
+        _agent.isStopped = false;
+        _state = State.Wander;
+        _backoffUntil = Time.time + seconds;
+        CancelHeardYouBeat();
+
+        bool unseen = !IsSeenByCamera(transform.position) && !IsSeenByCamera(farPoint);
+        if (unseen && NavMesh.SamplePosition(farPoint, out NavMeshHit hit, 3f, NavMesh.AllAreas) && _agent.Warp(hit.position))
+        {
+            _wanderIndex = -1;
+            _repathTimer = 0f;
+            return true;
+        }
+
+        _wanderIndex = _wanderPoints.Count > 0 ? 0 : -1;
+        _wanderRepickCooldown = 0.25f;
+        SetDestinationNear(farPoint);
+        return true;
+    }
+
+    /// <summary>F104 B1: true if the point (at chest height) is inside the camera's view with nothing solid between, ignoring the player and this hunter.</summary>
+    private bool IsSeenByCamera(Vector3 point)
+    {
+        Camera cam = Camera.main;
+        if (cam == null) return false;
+
+        Vector3 chest = point + Vector3.up * eyeHeight * 0.75f;
+        Vector3 viewport = cam.WorldToViewportPoint(chest);
+        if (viewport.z <= 0f || viewport.x < 0f || viewport.x > 1f || viewport.y < 0f || viewport.y > 1f) return false;
+
+        Vector3 from = cam.transform.position;
+        Vector3 toChest = chest - from;
+        float distance = toChest.magnitude;
+        int count = Physics.RaycastNonAlloc(from, toChest / Mathf.Max(0.0001f, distance), _sightHits, distance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
+        for (int i = 0; i < count; i++)
+        {
+            Transform hit = _sightHits[i].transform;
+            if (!hit.IsChildOf(transform) && (target == null || !hit.IsChildOf(target))) return false;
+        }
+
+        return true;
     }
 
     /// <summary>F103: which Tier A features run, and the [Terror] log.</summary>
@@ -749,8 +874,31 @@ public class AIFollower : MonoBehaviour
         _sightTimer = sightCheckInterval;
 
         _hasSight = CanSeeTarget();
+        if (_hasSight && Time.time >= _nextSightHeatTime)
+        {
+            _nextSightHeatTime = Time.time + SightHeatInterval;
+            AddHeatNear(target.position);
+        }
+        TrackSightSince();
         UpdateTorchBeamState();
         CheckTorchBeamNoise();
+    }
+
+    /// <summary>F104 B2: starts or resets the unbroken-sight clock that IsCommitted reads, and logs the commitment once per chase.</summary>
+    private void TrackSightSince()
+    {
+        if (!_hasSight)
+        {
+            _sightSince = -1f;
+            _commitLogged = false;
+            return;
+        }
+
+        if (_sightSince < 0f) _sightSince = Time.time;
+        if (_commitLogged || !IsCommitted) return;
+
+        _commitLogged = true;
+        _terror.Log($"Chase committed at {(_hunting ? _playerSprintSpeed * escapeCommitFraction : _playerWalkSpeed * _chaseWalkFraction):0.0#} m/s", this);
     }
 
     /// <summary>
@@ -809,6 +957,7 @@ public class AIFollower : MonoBehaviour
         float hearingScale = EffectiveHearingScale * (_state == State.Ambush ? ambushHearingBoost : 1f);
         if (!CanHear(target.position, noiseRadius * hearingScale)) return;
 
+        AddHeatNear(target.position);
         _lastKnownPosition = target.position;
         // Chase and Captured are already excluded - Chase has sight of the exact same player, and its
         // own sight-driven timers own its transitions, not a background noise check.
@@ -858,6 +1007,7 @@ public class AIFollower : MonoBehaviour
 
         if (!CanHear(at, radius * EffectiveHearingScale)) return false;
 
+        AddHeatNear(at);
         _lastKnownPosition = at;
         if (_state != State.Chase)
         {
@@ -959,6 +1109,89 @@ public class AIFollower : MonoBehaviour
     {
         return _searchQueue.Count > 0 && _hidingSpots.Contains(_searchQueue[0]);
     }
+
+    // ---------------------------------------------------------------- F104 B3: locker heat
+
+    private const float SightHeatInterval = 2f;
+
+    /// <summary>F104 B3: how hot a hiding spot is now - its stored heat cooled linearly by the time since the last event.</summary>
+    private float HeatOf(int i)
+    {
+        return Mathf.Max(0f, _hidingHeat[i] - (Time.time - _hidingHeatAt[i]) / heatDecaySeconds);
+    }
+
+    /// <summary>F104 B3: the player was heard or seen at `at`, so every hiding spot within heatRadius of it gets hotter. It is where a hunter would think to look.</summary>
+    private void AddHeatNear(Vector3 at)
+    {
+        if (!_terror.sanctuaryDecay) return;
+
+        for (int i = 0; i < _hidingSpots.Count; i++)
+        {
+            if (Vector3.Distance(_hidingSpots[i], at) > heatRadius) continue;
+            _hidingHeat[i] = Mathf.Min(1f, HeatOf(i) + heatPerEvent);
+            _hidingHeatAt[i] = Time.time;
+        }
+    }
+
+    /// <summary>
+    /// F104 B3: queues the hot hiding spots within hotSpotSearchRadius of the last known position that the
+    /// near-spot pass did not already queue, nearest first, starting at queue index `insertAt`.
+    /// </summary>
+    private void InsertHotSpots(int insertAt)
+    {
+        if (!_terror.sanctuaryDecay) return;
+
+        _hotSpotBuffer.Clear();
+        for (int i = 0; i < _hidingSpots.Count; i++)
+        {
+            Vector3 spot = _hidingSpots[i];
+            if (HeatOf(i) < hotThreshold || Vector3.Distance(spot, _lastKnownPosition) > hotSpotSearchRadius) continue;
+            if (!_searchQueue.Contains(spot)) _hotSpotBuffer.Add(spot);
+        }
+
+        _hotSpotBuffer.Sort((a, b) => Vector3.Distance(a, _lastKnownPosition).CompareTo(Vector3.Distance(b, _lastKnownPosition)));
+        _searchQueue.InsertRange(insertAt, _hotSpotBuffer);
+    }
+
+    /// <summary>F104 B3: called when a search dwell begins. At a hot hiding spot it stands outside for longer; returns those extra seconds (0 elsewhere).</summary>
+    private float BeginHotDwell()
+    {
+        _hotDwellSpot = -1;
+        if (!_terror.sanctuaryDecay || _searchQueue.Count == 0) return 0f;
+
+        int spot = _hidingSpots.IndexOf(_searchQueue[0]);
+        if (spot < 0 || HeatOf(spot) < hotThreshold) return 0f;
+
+        _hotDwellSpot = spot;
+        _terror.Log("Stands outside locker", this);
+        return standOutsideSeconds;
+    }
+
+    /// <summary>
+    /// F104 B3: the stand-outside dwell has ended at hot spot `spot`. If the player is hidden in that very
+    /// locker, and the dice and the once-per-floor limit allow, it peeks: the door creaks ajar, the eyes light
+    /// and it stands there looking in. Hidden still means invisible, so this never captures - the player dies
+    /// only by bolting while it watches, under the normal sight rules. Returns true if it extended the dwell.
+    /// </summary>
+    private bool TryPeek(int spot)
+    {
+        _hotDwellSpot = -1;
+        if (_peekedThisFloor || _stealth == null || !_stealth.Hidden) return false;
+
+        IHidingSpot hiding = _stealth.CurrentHidingSpot;
+        if (hiding == null || Vector3.Distance(hiding.FrontPosition, _hidingSpots[spot]) > HideMatchRadius) return false;
+        if (Random.value >= HeatOf(spot) * peekChanceScale) return false;
+
+        _peekedThisFloor = true;
+        hiding.Peek(peekSeconds);
+        _presence?.RevealEyes(peekSeconds + PeekEyeLinger);
+        _searchDwellTimer = peekSeconds;
+        _terror.Log("Peeks into locker", this);
+        return true;
+    }
+
+    private const float HideMatchRadius = 0.5f;
+    private const float PeekEyeLinger = 0.6f;
 
     /// <summary>
     /// The raycast half of CanSeeTarget. The maze walls sit on the same layer as the player, so the
@@ -1165,6 +1398,7 @@ public class AIFollower : MonoBehaviour
     {
         _state = State.Captured;
         CancelHeardYouBeat();
+        _backoffUntil = -1f;
         _bustingHidingSpot = false;
         _agent.isStopped = true;
         _agent.velocity = Vector3.zero;
@@ -1192,6 +1426,7 @@ public class AIFollower : MonoBehaviour
         _state = State.Search;
         _searchBudgetTimer = EffectiveSearchBudget;
         _searchDwellTimer = 0f;
+        _hotDwellSpot = -1;
         // A fresh noise can land mid-dwell, and the dwell is what set isStopped. Clearing it here is
         // what stops the follower standing frozen until the search budget runs out.
         _agent.isStopped = false;
@@ -1238,6 +1473,9 @@ public class AIFollower : MonoBehaviour
             _searchQueue.Insert(1 + i, nearbyHidingSpots[i]);
         }
 
+        // F104 B3: spots the player has been heard or seen near recently are checked too, even from farther out.
+        InsertHotSpots(1 + nearbyHidingSpots.Count);
+
         SetDestinationNear(_searchQueue[0]);
     }
 
@@ -1274,6 +1512,9 @@ public class AIFollower : MonoBehaviour
             // HunterGaze sweeps the head instead, with CanSeeTarget's _scanYawOffset keeping the cone
             // itself sweeping by the same amount so the search is not weakened by the body standing still.
 
+            // F104 B3: the stand-outside at a hot locker ends in a possible peek, which keeps it standing a while longer.
+            if (_searchDwellTimer <= 0f && _hotDwellSpot >= 0 && TryPeek(_hotDwellSpot)) return;
+
             if (_searchDwellTimer <= 0f)
             {
                 _agent.isStopped = false;
@@ -1290,7 +1531,7 @@ public class AIFollower : MonoBehaviour
 
         if (ReachedDestination())
         {
-            _searchDwellTimer = searchDwellTime;
+            _searchDwellTimer = searchDwellTime + BeginHotDwell();
             return;
         }
 
@@ -1369,6 +1610,8 @@ public class AIFollower : MonoBehaviour
     /// </summary>
     private bool TryEnterAmbush()
     {
+        if (IsBackingOff) return false;
+
         int bestStarIndex = -1;
         float bestStarLength = float.MaxValue;
         Vector3 bestStarPosition = default;
@@ -1622,6 +1865,7 @@ public class AIFollower : MonoBehaviour
         _repathTimer = 0f;
         _lastKnownPosition = towards;
         CancelHeardYouBeat();
+        _backoffUntil = -1f;
         // EnterSearch already clears isStopped and sets a fresh budget/queue - do not add a second
         // isStopped write here.
         EnterSearch();
@@ -1639,6 +1883,7 @@ public class AIFollower : MonoBehaviour
         if (_agent == null || _state != State.Captured) return false;
         if (NavMesh.SamplePosition(warpTo, out NavMeshHit hit, 3f, NavMesh.AllAreas)) _agent.Warp(hit.position);
         CancelHeardYouBeat();
+        _backoffUntil = -1f;
 
         _state = State.Wander;
         _wanderIndex = -1;

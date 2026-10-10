@@ -85,6 +85,9 @@ public static class GameAudioLibraryBuilder
         R("captureSting", new[] { HE + "Hits/Hit_Drama" }, 0.9f, mono: false),
         R("hunterAlert", new[] { SB + "jm-sm_metal_squeak-050", SB + "jm-sm_metal_squeak-082", SB + "ji-e2_metal_jolt_rattle_scrape-054" }, 1f, 0.06f, 0f, 1.6f),
         R("spottedSting", new[] { SF + "Impacts & Hits/H_Screamer_Bell_Short", SF + "Impacts & Hits/H_Impact_Low_Short", HE + "Hits/Hit_Suspens", SB + "cht2_cinematic_hit_156" }, 1f, mono: false),
+        R("hunterScrape", new[] { SB + "jm-ss_metal_scrape-0026", SB + "jm-ss_metal_scrape-0067" }, 0.8f, 0.08f, 0f, 1.2f),
+        R("mazeRoomTone", new[] { SF + "Ambiences/ATMO - A3 - MASTER - LOOP", SF + "Ambiences/ATMO - A4 - MASTER - LOOP", FP + "Cavern Atmosphere - Loop" }, 1f, mono: false, stream: true),
+        R("escapeAlarm", new[] { HE + "Misc/Misc_Emergency", SB + "csfx-2_alarms_15" }, 0.7f, mono: true),
         // ---- player, UI, music
         R("torchClick", new[] { SB + "buttons_switches_048" }, 2.5f, 0.04f, 0.12f, 0.5f, mono: false),
         R("lockerDoor", new[] { SB + "oc_door-metal-02-01" }, 1.5f, 0.05f, 0.15f, 1.6f),

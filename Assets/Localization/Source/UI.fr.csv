@@ -19,6 +19,7 @@ ui.settings.fog,BROUILLARD
 ui.settings.brightness,LUMINOSITÉ
 ui.settings.fov,CHAMP DE VISION
 ui.settings.camera_shake,TREMBLEMENT DE CAMÉRA
+ui.settings.effects_intensity,EFFETS D'ÉCRAN
 ui.settings.master_volume,VOLUME GÉNÉRAL
 ui.settings.music_volume,VOLUME DE LA MUSIQUE
 ui.settings.effects_volume,VOLUME DES EFFETS

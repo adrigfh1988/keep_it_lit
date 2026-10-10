@@ -51,12 +51,48 @@ public class MazeEscape : MonoBehaviour
     [SerializeField] private float pingMaxDistance = 60f;
     [SerializeField] private float chevronRadius = 70f;
 
+    [Header("F104 B4 - escape hunt")]
+    [Tooltip("The hatch is placed this far from the player by walking path (m, min/max)")]
+    [SerializeField] private Vector2 hatchPathMetres = new Vector2(25f, 40f);
+    [Tooltip("...and at least this far (flat) from the hunter (m)")]
+    [SerializeField] private float hatchMinHunterDistance = 15f;
+    [Tooltip("Scale applied to the path window, once, when no cell fits it: min x this, max x its inverse")]
+    [SerializeField] private float hatchWindowWiden = 0.75f;
+    [Tooltip("While the escape runs and the hunter is not chasing, it is pointed at the player this often (s)")]
+    [SerializeField] private float hunterPingInterval = 15f;
+    [Tooltip("The chevron disappears for the last this-many seconds; the ping stays (s)")]
+    [SerializeField] private float chevronHideLastSeconds = 20f;
+    [Tooltip("The lamp wave travels outward from the player at this speed (m/s)")]
+    [SerializeField] private float lampWaveSpeed = 6f;
+    [Tooltip("Chance each lamp in the wave dies (not while the hatch is padlocked)")]
+    [Range(0f, 1f)]
+    [SerializeField] private float lampWaveKillFraction = 0.3f;
+    [Tooltip("Lamps this close to the hatch are left alone (m), so the way out stays lit")]
+    [SerializeField] private float lampWaveHatchClearance = 6f;
+    [Tooltip("How long each lamp in the wave goes dark before it returns or dies (s)")]
+    [SerializeField] private float lampWaveBlinkSeconds = 0.3f;
+    [Tooltip("Fade of a lamp the wave kills (s)")]
+    [SerializeField] private float lampWaveKillFade = 1.5f;
+    [Tooltip("The alarm at the hatch sounds this long, then fades (s)")]
+    [SerializeField] private float alarmSeconds = 20f;
+    [SerializeField] private float alarmVolume = 0.6f;
+    [Tooltip("How far the alarm carries (m)")]
+    [SerializeField] private float alarmMaxDistance = 35f;
+    [Tooltip("Seconds the alarm takes to fade out (s)")]
+    [SerializeField] private float alarmFadeSeconds = 2f;
+
     private MazeGenerator _maze;
     private Transform _player;
     private GameOutcome _outcome;
     private Material _emissiveSource;
     private PlayerStealthState _stealth;
     private AIFollower _hunter;
+    private TerrorSettings _terror = new TerrorSettings();
+    // F104 B4: when the next hunter ping is due, the alarm's object (so Stop can silence it), and the reused hatch-candidate list.
+    private float _nextHunterPing;
+    private bool _huntActive;
+    private GameObject _alarmObject;
+    private readonly System.Collections.Generic.List<Vector3> _hatchCandidates = new System.Collections.Generic.List<Vector3>();
 
     // F77 Key Hunt: the padlock. A KeyHunt floor's hatch/lift refuses to complete while _keys is
     // incomplete - see BindKeyRing/HandleKeysChanged/ApplyLockLook.
@@ -133,6 +169,7 @@ public class MazeEscape : MonoBehaviour
         _finished = true;
         if (_timerText != null) _timerText.gameObject.SetActive(false);
         if (_ping != null) _ping.Stop();
+        EndAlarm();
     }
 
     /// <summary>F77: the player's KeyRing (an instance component, built alongside it) and the HUD, for the padlock's subtitles. Unsubscribes any previous ring first - CLAUDE.md's every-subscriber-unsubscribes rule.</summary>
@@ -188,6 +225,8 @@ public class MazeEscape : MonoBehaviour
         _timeLeft = escapeSeconds;
         _running = true;
 
+        if (_terror.escapeHunt && !_maze.SuperEasyMode) BeginEscapeHunt();
+
         Debug.Log($"MazeEscape: {(_isLift ? "lift" : "hatch")} opened at {_hatchPosition}. {escapeSeconds:0} seconds.", this);
     }
 
@@ -213,6 +252,7 @@ public class MazeEscape : MonoBehaviour
 
         UpdatePing(dt);
         UpdateChevron(dt);
+        UpdateHunterPing();
 
         if (_timeLeft <= 0f)
         {
@@ -352,6 +392,8 @@ public class MazeEscape : MonoBehaviour
 
         Color c = _locked ? LockedColor : hatchColor;
         c.a = 0.35f + 0.65f * _chevronPulse;
+        // F104 B4: the last seconds are by ear (the ping and the alarm stay). Not while padlocked: then it points at a missing key.
+        if (_terror.escapeHunt && !_locked && _timeLeft <= chevronHideLastSeconds) c.a = 0f;
         _chevronText.color = c;
     }
 
@@ -410,6 +452,164 @@ public class MazeEscape : MonoBehaviour
         return $"{Mathf.FloorToInt(seconds / 60f)}:{Mathf.FloorToInt(seconds % 60f):00}";
     }
 
+    /// <summary>F104 B4: which Tier B features run, and the [Terror] log. escapeHunt is read when the hatch opens.</summary>
+    public void ApplyTerror(TerrorSettings terror)
+    {
+        _terror = terror ?? new TerrorSettings();
+    }
+
+    /// <summary>
+    /// F104 B4: a hatch the player can reach inside the window by walking path (not straight line) and that is not on top of the
+    /// hunter. Tries the window as configured, then once widened; false means the caller falls back to its old rule.
+    /// </summary>
+    private bool TryChooseHuntedHatchCell(out Vector3 chosen)
+    {
+        chosen = default;
+        int[,] steps = _maze.StepsFrom(_player.position);
+        if (steps == null) return false;
+
+        for (int pass = 0; pass < 2; pass++)
+        {
+            float min = pass == 0 ? hatchPathMetres.x : hatchPathMetres.x * hatchWindowWiden;
+            float max = pass == 0 ? hatchPathMetres.y : hatchPathMetres.y / hatchWindowWiden;
+
+            _hatchCandidates.Clear();
+            foreach (Vector3 cell in _maze.CellCenters)
+            {
+                if (!_maze.TryWorldToCell(cell, out Vector2Int index) || steps[index.x, index.y] < 0) continue;
+
+                float path = steps[index.x, index.y] * _maze.CellSize;
+                if (path < min || path > max) continue;
+                if (_hunter != null && FlatDistance(cell, _hunter.transform.position) < hatchMinHunterDistance) continue;
+
+                _hatchCandidates.Add(cell);
+            }
+
+            if (_hatchCandidates.Count == 0) continue;
+
+            chosen = _hatchCandidates[Random.Range(0, _hatchCandidates.Count)];
+            _maze.TryWorldToCell(chosen, out Vector2Int picked);
+            float hunterDistance = _hunter != null ? FlatDistance(chosen, _hunter.transform.position) : -1f;
+            _terror.Log($"Hatch at {steps[picked.x, picked.y]} steps ({steps[picked.x, picked.y] * _maze.CellSize:0} m), hunter {hunterDistance:0} m", this);
+            return true;
+        }
+
+        return false;
+    }
+
+    private static float FlatDistance(Vector3 a, Vector3 b)
+    {
+        a.y = b.y;
+        return Vector3.Distance(a, b);
+    }
+
+    /// <summary>F104 B4: starts the parts of the hunt that run on their own - the first ping, the lamp wave from the player and the alarm at the hatch.</summary>
+    private void BeginEscapeHunt()
+    {
+        _huntActive = true;
+        _hunter?.ForceLastKnownPosition(_player.position, reactAsHeard: false);
+        _nextHunterPing = Time.time + hunterPingInterval;
+        StartCoroutine(LampWaveRoutine());
+        StartCoroutine(AlarmRoutine());
+    }
+
+    /// <summary>Every hunterPingInterval seconds, while the hunter is not already chasing, it is pointed at the spot the player is in (no IT HEARD YOU beat).</summary>
+    private void UpdateHunterPing()
+    {
+        // Only once BeginEscapeHunt ran (not in super easy mode, and not with the flag off when the hatch opened).
+        if (!_huntActive || !_terror.escapeHunt || _hunter == null || Time.time < _nextHunterPing) return;
+
+        _nextHunterPing = Time.time + hunterPingInterval;
+        if (!_hunter.IsChasing) _hunter.ForceLastKnownPosition(_player.position, reactAsHeard: false);
+    }
+
+    private struct LampKill
+    {
+        public WallLamp Lamp;
+        public float At;
+    }
+
+    /// <summary>
+    /// A ripple of dark moving outward from the player at lampWaveSpeed: each live, powered, non-locker lamp farther than
+    /// lampWaveHatchClearance from the hatch blinks as it passes, and some die. While the hatch is padlocked nothing dies - the
+    /// player still has keys to find in those corridors.
+    /// </summary>
+    private IEnumerator LampWaveRoutine()
+    {
+        System.Collections.Generic.List<LampKill> kills = new System.Collections.Generic.List<LampKill>();
+        Vector3 origin = _player.position;
+        bool mayKill = !_locked;
+
+        foreach (WallLamp lamp in _maze.Lamps)
+        {
+            if (lamp == null || lamp.IsLockerLamp || lamp.IsDead || !lamp.IsPowered) continue;
+            if (FlatDistance(lamp.transform.position, _hatchPosition) <= lampWaveHatchClearance) continue;
+
+            float delay = FlatDistance(lamp.transform.position, origin) / Mathf.Max(0.01f, lampWaveSpeed);
+            lamp.Blink(lampWaveBlinkSeconds, delay);
+            if (mayKill && Random.value < lampWaveKillFraction) kills.Add(new LampKill { Lamp = lamp, At = delay + lampWaveBlinkSeconds });
+        }
+
+        kills.Sort((a, b) => a.At.CompareTo(b.At));
+        float t = 0f;
+        for (int i = 0; i < kills.Count; i++)
+        {
+            while (t < kills[i].At)
+            {
+                if (_finished) yield break;
+                t += Time.deltaTime;
+                yield return null;
+            }
+
+            if (kills[i].Lamp != null) kills[i].Lamp.Kill(lampWaveKillFade);
+        }
+    }
+
+    /// <summary>The alarm at the hatch: a 3D loop for alarmSeconds, then a fade. It is diegetic and doubles as wayfinding. An empty slot is silent.</summary>
+    private IEnumerator AlarmRoutine()
+    {
+        AudioSlot slot = GameAudio.Library.escapeAlarm;
+        AudioClip clip = slot.Pick();
+        if (clip == null) yield break;
+
+        _alarmObject = new GameObject("EscapeAlarm");
+        _alarmObject.transform.position = _hatchPosition;
+        AudioSource source = _alarmObject.AddComponent<AudioSource>();
+        source.clip = clip;
+        source.loop = true;
+        source.spatialBlend = 1f;
+        source.rolloffMode = AudioRolloffMode.Linear;
+        source.minDistance = 2f;
+        source.maxDistance = alarmMaxDistance;
+        float volume = alarmVolume * slot.volume;
+        source.volume = volume;
+        GameSettings.RouteEffect(source);
+        source.Play();
+
+        float t = 0f;
+        while (t < alarmSeconds && !_finished)
+        {
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        float fade = 0f;
+        while (fade < alarmFadeSeconds && !_finished)
+        {
+            fade += Time.deltaTime;
+            source.volume = Mathf.Lerp(volume, 0f, fade / Mathf.Max(0.0001f, alarmFadeSeconds));
+            yield return null;
+        }
+
+        EndAlarm();
+    }
+
+    private void EndAlarm()
+    {
+        if (_alarmObject != null) Destroy(_alarmObject);
+        _alarmObject = null;
+    }
+
     // ---------------------------------------------------------------- placement
 
     private Vector3 ChooseHatchCell()
@@ -417,6 +617,9 @@ public class MazeEscape : MonoBehaviour
         // Debug (MazeGenerator.superEasyMode): the stars are packed round the start, so the hatch opens in the start cell itself -
         // a step or two from wherever the last star was (never in a star cell, so never underfoot).
         if (_maze.SuperEasyMode) return _maze.CellCenter(0, 0);
+
+        // F104 B4: a hatch a walk of 25-40 m away that is not next to the hunter (falls through to the old rule when nothing fits).
+        if (_terror.escapeHunt && TryChooseHuntedHatchCell(out Vector3 hunted)) return hunted;
 
         var cells = _maze.CellCenters;
         var candidates = new System.Collections.Generic.List<Vector3>();

@@ -203,6 +203,8 @@ public class FloorProfile
     public float LoseSightTime;
     public float PatrolBias;
     public float SearchBudget;
+    /// <summary>F104 B2: the hunter's committed-chase speed as a fraction of the player's walk speed, before the hatch.</summary>
+    public float ChaseWalkFraction;
 
     // ---- dread
     /// <summary>Seconds between relocations (F23). Also floored at a hard 20 s minimum in DreadDirector.</summary>
@@ -347,7 +349,8 @@ public class FloorProfile
         p.HearingScale = Blend(0.4f, 1f, t);
         p.LoseSightTime = Blend(1.2f, 3f, t);
         p.PatrolBias = Blend(0.2f, 0.6f, t);
-        p.SearchBudget = Blend(6f, 12f, t);
+        p.SearchBudget = Blend(9f, 18f, t);
+        p.ChaseWalkFraction = floor <= 1 ? 0.9f : 1.1f;
 
         p.RelocateNearDistance = Blend(11f, 7f, t);
         p.PhantomInterval = Blend(45f, 18f, t);
@@ -400,7 +403,7 @@ public class FloorProfile
     public override string ToString()
     {
         return $"floor {Floor}/{FinalFloor}: {Width}x{Height}, cell {CellSize:0.0} wall {WallHeight:0.0}, {StarCount} stars, {LockerCount} lockers, " +
-               $"hunter walk {WalkSpeed:0.0} run {RunSpeed:0.0} sees {ViewDistance:0}m, escape {EscapeSeconds:0}s, {ShardCount} shards, " +
+               $"hunter walk {WalkSpeed:0.0} run {RunSpeed:0.0} commits {ChaseWalkFraction:0.0#}x walk, sees {ViewDistance:0}m, escape {EscapeSeconds:0}s, {ShardCount} shards, " +
                $"ambush {AmbushBias:0.00}, objectives {Objectives}, dead ends kept {DeadEndKeep:0.00} (bait stars {DeadEndBaitStars})";
     }
 

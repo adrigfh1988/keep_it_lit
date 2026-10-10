@@ -19,6 +19,7 @@ ui.settings.fog,NEBEL
 ui.settings.brightness,HELLIGKEIT
 ui.settings.fov,SICHTFELD
 ui.settings.camera_shake,KAMERAWACKELN
+ui.settings.effects_intensity,BILDSCHIRMEFFEKTE
 ui.settings.master_volume,GESAMTLAUTSTÄRKE
 ui.settings.music_volume,MUSIKLAUTSTÄRKE
 ui.settings.effects_volume,EFFEKTLAUTSTÄRKE

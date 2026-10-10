@@ -239,6 +239,7 @@ public class MazeGenerator : MonoBehaviour
     private MazeDressing _dressing;
     /// <summary>F70: cells a set piece has reserved this run. Skipped by wall/ceiling/floor props and decals.</summary>
     private readonly HashSet<Vector2Int> _setPieceCells = new HashSet<Vector2Int>();
+    private readonly List<ShiftablePlacement> _shiftables = new List<ShiftablePlacement>(); // F104 B9/B10: dressing worth quietly changing
 
     /// <summary>F72: every door/button/vault-loot instance built this run, kept so SetUpAtmosphere can late-bind the HUD/flashlight once they exist (same pattern as _lockers).</summary>
     private readonly List<MazeDoor> _doors = new List<MazeDoor>();
@@ -280,6 +281,9 @@ public class MazeGenerator : MonoBehaviour
     /// <summary>Every locker built for this maze.</summary>
     public IReadOnlyList<Locker> Lockers => _lockers;
 
+    /// <summary>F104 B9/B10: every set piece, and every wall or ceiling prop with look-alike models, placed this floor. Dressing only - never a gameplay object.</summary>
+    public IReadOnlyList<ShiftablePlacement> Shiftables => _shiftables;
+
     /// <summary>Every wall lamp built for this maze.</summary>
     public IReadOnlyList<WallLamp> Lamps => _lamps;
 
@@ -315,7 +319,7 @@ public class MazeGenerator : MonoBehaviour
     }
 
     /// <summary>The cell a world position falls in. False outside the maze (or before it has been generated).</summary>
-    private bool TryWorldToCell(Vector3 worldPosition, out Vector2Int cell)
+    public bool TryWorldToCell(Vector3 worldPosition, out Vector2Int cell)
     {
         cell = new Vector2Int(
             Mathf.FloorToInt((worldPosition.x - origin.x) / cellSize),
@@ -588,6 +592,18 @@ public class MazeGenerator : MonoBehaviour
     private static void ApplyModelVariants(Component clone, int x, int z, int salt)
     {
         if (clone.TryGetComponent(out ModelVariants models)) models.Apply((x * 73856093) ^ (z * 19349663) ^ salt);
+    }
+
+    /// <summary>
+    /// F104 B9/B10: remembers a placed prop or set piece so WorldShiftDirector can change it later. Set pieces are always recorded (B10 copies
+    /// them); a prop only when it has more than one look-alike model to switch between. Draws nothing from any rng.
+    /// </summary>
+    private void RecordShiftable(Component clone, Vector2Int cell, Vector3 wallDir, bool isSetPiece)
+    {
+        clone.TryGetComponent(out ModelVariants variants);
+        if (!isSetPiece && (variants == null || variants.Count < 2)) return;
+
+        _shiftables.Add(new ShiftablePlacement(clone.transform, variants, cell, wallDir, isSetPiece));
     }
 
     /// <summary>
@@ -1378,6 +1394,7 @@ public class MazeGenerator : MonoBehaviour
                 clone.gameObject.SetActive(true);
                 clone.name = $"Prop_{prop.name}_{x}_{z}";
                 ApplyModelVariants(clone, x, z, 0x3A11);
+                RecordShiftable(clone, cell, dir, false);
 
                 if (!_propWalls.TryGetValue(cell, out List<Vector3> taken))
                 {
@@ -1424,6 +1441,7 @@ public class MazeGenerator : MonoBehaviour
                 clone.gameObject.SetActive(true);
                 clone.name = $"Prop_{prop.name}_{x}_{z}";
                 ApplyModelVariants(clone, x, z, 0x4B22);
+                RecordShiftable(clone, cell, Vector3.zero, false);
                 foreach (HangingBodyFit fit in clone.GetComponentsInChildren<HangingBodyFit>(true)) fit.Fit(wallHeight); // F85: rope cut to this floor's ceiling
             }
         }
@@ -1475,6 +1493,7 @@ public class MazeGenerator : MonoBehaviour
     {
         _setPieceCells.Clear();
         _propWalls.Clear();
+        _shiftables.Clear();
         if (_dressing.SetPieces == null || _dressing.SetPieces.Length == 0 || _dressing.SetPieceCount <= 0) return;
 
         Vector2Int aiCell = FarthestCell();
@@ -1537,6 +1556,7 @@ public class MazeGenerator : MonoBehaviour
             clone.name = $"SetPiece_{piece.name}_{cell.x}_{cell.y}";
             // Look-alike models (the FallenRunner's corpses), picked by a hash of the cell - no rng draw.
             if (clone.TryGetComponent(out ModelVariants models)) models.Apply((cell.x * 73856093) ^ (cell.y * 19349663) ^ 0x5EED);
+            RecordShiftable(clone, cell, dir, true);
 
             foreach (FlickerLight flicker in clone.GetComponentsInChildren<FlickerLight>(true))
             {
@@ -2846,7 +2866,41 @@ public class MazeGenerator : MonoBehaviour
         return distance;
     }
 
-    private static Vector3 DirVector(int dir)
+    /// <summary>
+    /// F104 B4: BFS step count from the cell containing <paramref name="worldPosition"/> to every cell over the logical walls (doors
+    /// are ignored, as in ReachableCells), -1 for an unreachable cell. Null when the position is outside the maze. Indexed [x, z].
+    /// </summary>
+    public int[,] StepsFrom(Vector3 worldPosition)
+    {
+        if (!TryWorldToCell(worldPosition, out Vector2Int from)) return null;
+
+        int[,] steps = new int[width, height];
+        for (int x = 0; x < width; x++)
+        {
+            for (int z = 0; z < height; z++) steps[x, z] = -1;
+        }
+
+        steps[from.x, from.y] = 0;
+        Queue<Vector2Int> queue = new Queue<Vector2Int>();
+        queue.Enqueue(from);
+        while (queue.Count > 0)
+        {
+            Vector2Int cell = queue.Dequeue();
+            for (int dir = 0; dir < 4; dir++)
+            {
+                if (IsWallClosed(cell.x, cell.y, dir)) continue;
+                Vector2Int n = Neighbour(cell, dir);
+                if (n.x < 0 || n.x >= width || n.y < 0 || n.y >= height || steps[n.x, n.y] >= 0) continue;
+                steps[n.x, n.y] = steps[cell.x, cell.y] + 1;
+                queue.Enqueue(n);
+            }
+        }
+
+        return steps;
+    }
+
+    /// <summary>World direction of wall `dir` (0 north +Z, 1 east +X, 2 south, 3 west), the way every wall pass numbers them.</summary>
+    public static Vector3 DirVector(int dir)
     {
         switch (dir)
         {
@@ -3441,13 +3495,53 @@ public class MazeGenerator : MonoBehaviour
     {
         for (int dir = 0; dir < 4; dir++)
         {
-            if (!IsWallClosed(cell.x, cell.y, dir)) continue;
-            Vector3 dirVec = DirVector(dir);
-            if (_propWalls.TryGetValue(cell, out List<Vector3> taken) && taken.Contains(dirVec)) continue;
-            if (IsLampWall(cell, dirVec)) continue;
-            return true;
+            if (IsFreeWall(cell, dir)) return true;
         }
         return false;
+    }
+
+    /// <summary>
+    /// The free-wall test shared by every wall-mounted pass: `dir` (0 N, 1 E, 2 S, 3 W) is a closed wall of `cell` that no wall prop, button
+    /// or set piece has claimed (_propWalls) and no lamp hangs on.
+    /// </summary>
+    public bool IsFreeWall(Vector2Int cell, int dir)
+    {
+        if (!IsWallClosed(cell.x, cell.y, dir)) return false;
+
+        Vector3 dirVec = DirVector(dir);
+        if (_propWalls.TryGetValue(cell, out List<Vector3> taken) && taken.Contains(dirVec)) return false;
+        return !IsLampWall(cell, dirVec);
+    }
+
+    /// <summary>
+    /// F104 B10: copies a seen set piece onto a free wall of another cell, so a landmark appears a second time. Visual only - the colliders and
+    /// flicker lights are removed, because the NavMesh was baked without it. Refuses (false) for anything but a set piece, and for the start,
+    /// star, locker, set-piece and door cells or a wall that is not free. Draws nothing from any rng. The twin keeps the source's active
+    /// look-alike model (it is a copy), and its wall is reserved in _propWalls so nothing else lands on it.
+    /// </summary>
+    public bool TryPlaceTwin(ShiftablePlacement source, Vector2Int cell, int dir, out Transform twin)
+    {
+        twin = null;
+        if (!source.IsSetPiece || source.Root == null || dir < 0 || dir > 3) return false;
+        if (cell == Vector2Int.zero || _starCells.Contains(cell) || _lockerCells.Contains(cell) || _setPieceCells.Contains(cell) || _doorUsedCells.Contains(cell)) return false;
+        if (!IsFreeWall(cell, dir)) return false;
+
+        Vector3 dirVec = DirVector(dir);
+        float backFaceDistance = cellSize * 0.5f - wallThickness * 0.5f;
+        Vector3 pos = CellCenter(cell.x, cell.y) + dirVec * backFaceDistance;
+        twin = Instantiate(source.Root.gameObject, pos, Quaternion.LookRotation(-dirVec), _setPiecesGroup).transform;
+        twin.name = "Twin_" + source.Root.name;
+
+        foreach (Collider collider in twin.GetComponentsInChildren<Collider>(true)) Destroy(collider);
+        foreach (FlickerLight flicker in twin.GetComponentsInChildren<FlickerLight>(true)) Destroy(flicker);
+
+        if (!_propWalls.TryGetValue(cell, out List<Vector3> taken))
+        {
+            taken = new List<Vector3>();
+            _propWalls[cell] = taken;
+        }
+        taken.Add(dirVec);
+        return true;
     }
 
     /// <summary>Picks (and does not yet reserve) one of `cell`'s free walls, seeded so a same-seed retry mounts the fuse box on the same wall.</summary>
@@ -3456,11 +3550,7 @@ public class MazeGenerator : MonoBehaviour
         List<int> options = new List<int>(4);
         for (int d = 0; d < 4; d++)
         {
-            if (!IsWallClosed(cell.x, cell.y, d)) continue;
-            Vector3 dirVec = DirVector(d);
-            if (_propWalls.TryGetValue(cell, out List<Vector3> taken) && taken.Contains(dirVec)) continue;
-            if (IsLampWall(cell, dirVec)) continue;
-            options.Add(d);
+            if (IsFreeWall(cell, d)) options.Add(d);
         }
 
         if (options.Count == 0)
@@ -4429,6 +4519,8 @@ public class MazeGenerator : MonoBehaviour
         foreach (Locker locker in _lockers)
         {
             locker.Bind(player, stealth, flashlight, hud, interactor);
+            locker.ApplyTerror(terror); // F104 B3
+            locker.BindHunter(aiFollower);
         }
 
         // F72: doors/buttons/vault loot were built before the flashlight, HUD and interactor existed
@@ -4577,6 +4669,30 @@ public class MazeGenerator : MonoBehaviour
         phantoms.Configure(this, player, camera, aiFollower, director, flashlight, stealth, outcome, dread, phantomWallMat, FindStarMaterial(), FindPlayerFootsteps(), _profile);
         phantoms.ApplyTerror(terror); // F103 A2
 
+        // F104 B1: the hidden fear value. Wired after the directors it feeds exist; with the flag off the readers fall back to their old behaviour.
+        if (aiFollower != null && player != null)
+        {
+            DreadMeter dreadMeter = FindAnyObjectByType<DreadMeter>();
+            if (dreadMeter == null) dreadMeter = gameObject.AddComponent<DreadMeter>();
+            dreadMeter.Configure(aiFollower, player, stealth, stamina, flashlight, this, outcome);
+            dreadMeter.ApplyTerror(terror);
+            director.BindDread(dreadMeter);
+            atmosphere?.BindDread(dreadMeter, director);
+            phantoms.BindDread(dreadMeter);
+            tension.BindDread(dreadMeter);
+            dread.BindDread(dreadMeter);
+            dread.BindAmbience(GetComponent<MazeAmbience>());
+        }
+
+        // F104 B9/B10: displacement and lying landmarks - dressing quietly changes while unobserved.
+        if (player != null && camera != null)
+        {
+            WorldShiftDirector worldShift = FindAnyObjectByType<WorldShiftDirector>();
+            if (worldShift == null) worldShift = gameObject.AddComponent<WorldShiftDirector>();
+            worldShift.Configure(this, player, camera, aiFollower, outcome);
+            worldShift.ApplyTerror(terror);
+        }
+
         // Tier 4: the room between floors. Unlike everything else here it is authored in the scene
         // (Assets/Prefabs/ShopRoom.prefab, first generated by LIGHTS OUT > Build > Shop Room (regenerate)), so it can be inspected and edited in the
         // Editor. Only its panel is runtime UI.
@@ -4631,6 +4747,7 @@ public class MazeGenerator : MonoBehaviour
             if (escape == null) escape = gameObject.AddComponent<MazeEscape>();
 
             escape.Configure(this, player, FindStarMaterial(), outcome, aiFollower);
+            escape.ApplyTerror(terror); // F104 B4
             if (_profile != null) escape.SetEscapeSeconds(_profile.EscapeSeconds);
             // F77: the padlock - the hatch/lift refuses to complete while keys are still missing.
             escape.BindKeyRing(keyRing, hud);

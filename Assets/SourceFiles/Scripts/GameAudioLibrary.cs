@@ -121,6 +121,9 @@ public class GameAudioLibrary : ScriptableObject
     public AudioSlot mazeFar = new AudioSlot();        // distant unsettling one-shots in the maze (MazeAmbience)
     public AudioSlot hunterAlert = new AudioSlot();    // F103 A7: servo whine when a noise stops the hunter dead
     public AudioSlot spottedSting = new AudioSlot();    // F103 A9: alternatives to MazeGenerator.spottedClip; one is picked per chase
+    public AudioSlot hunterScrape = new AudioSlot();    // F104 B6: metal scrape layered under the hunter's steps
+    public AudioSlot mazeRoomTone = new AudioSlot();    // F104 B5: room-tone loops for the maze's silence windows
+    public AudioSlot escapeAlarm = new AudioSlot();     // F104 B4: the alarm that sounds at the hatch for the first seconds of the escape
 
     [Header("Player, UI, music")]
     public AudioSlot torchClick = new AudioSlot();     // 53

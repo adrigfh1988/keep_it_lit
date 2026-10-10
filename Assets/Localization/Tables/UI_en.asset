@@ -589,6 +589,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331669776663334
+  - m_Id: 76507152027648
+    m_Localized: SCREEN EFFECTS
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -19,6 +19,7 @@ ui.settings.fog,Settings row label: fog amount,FOG
 ui.settings.brightness,Settings row label: brightness offset (value shown in EV),BRIGHTNESS
 ui.settings.fov,Settings row label: camera field of view,FIELD OF VIEW
 ui.settings.camera_shake,Settings row label: camera shake strength,CAMERA SHAKE
+ui.settings.effects_intensity,"Settings row label: strength of the screen effects that grow with fear (film grain, vignette, colour fringing)",SCREEN EFFECTS
 ui.settings.master_volume,Settings row label: master volume,MASTER VOLUME
 ui.settings.music_volume,Settings row label: music volume,MUSIC VOLUME
 ui.settings.effects_volume,Settings row label: sound effects volume,EFFECTS VOLUME

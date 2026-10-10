@@ -137,6 +137,33 @@ public class DreadDirector : MonoBehaviour
     [Tooltip("Seconds between checks for the player standing in a dead end")]
     [SerializeField] private float deadEndCheckInterval = 0.5f;
 
+    [Header("F104 B11 - held breath")]
+    [Tooltip("The held breath fires once per floor at a progress rolled in this range")]
+    [SerializeField] private Vector2 heldBreathProgress = new Vector2(0.35f, 0.85f);
+    [Tooltip("How long the silence holds, min..max (s)")]
+    [SerializeField] private Vector2 heldBreathSeconds = new Vector2(15f, 25f);
+    [Tooltip("Seconds the bed and the wind take to fall away (s)")]
+    [SerializeField] private float heldBreathFadeIn = 2f;
+    [Tooltip("Seconds they take to return at the end (s)")]
+    [SerializeField] private float heldBreathFadeOut = 3f;
+    [Tooltip("Seconds they take to return when a chase or the end of the run cuts the hold short (s)")]
+    [SerializeField] private float heldBreathAbortFade = 0.5f;
+    [Tooltip("Chance that midway through the hold one lamp at the end of the corridor dies")]
+    [Range(0f, 1f)]
+    [SerializeField] private float heldBreathLampChance = 0.33f;
+    [Tooltip("The dread meter must be below this for the hold to start; a player already terrified does not need the lull")]
+    [SerializeField] private float heldBreathMaxDread = 0.5f;
+    [Tooltip("The lamp that dies is at most this far from the camera (m)")]
+    [SerializeField] private float heldBreathLampRange = 18f;
+    [Tooltip("...and within this angle of where the player is looking (degrees, flat)")]
+    [SerializeField] private float heldBreathLampAngle = 30f;
+    [Tooltip("Fade of the dying lamp (s)")]
+    [SerializeField] private float heldBreathLampFade = 1.2f;
+    [Tooltip("Seconds between checks for the held breath's conditions")]
+    [SerializeField] private float heldBreathCheckInterval = 0.5f;
+    [Tooltip("How far in front of a wall lamp the line-of-sight ray ends (m)")]
+    [SerializeField] private float lampSurfaceInset = 0.3f;
+
     // F103 A5: the jittered beats keep these minimum gaps, so the stutter, the cue and the warp stay in order and apart.
     private const float MinCueGapSeconds = 0.05f;
     private const float MinWarpGapSeconds = 0.3f;
@@ -155,6 +182,12 @@ public class DreadDirector : MonoBehaviour
     private PlayerStealthState _stealth;
     private PlayerHud _hud;
     private GameOutcome _outcome;
+    // F104 B11 / B1: the ambience that ducks with the bed, the meter that gates the hold, and the once-per-floor state.
+    private MazeAmbience _ambience;
+    private DreadMeter _meter;
+    private float _heldBreathAt;
+    private float _nextHeldBreathCheck;
+    private bool _heldBreathDone;
 
     private readonly List<TrailSample> _trail = new List<TrailSample>();
     private Vector3 _lastRawSample;
@@ -257,6 +290,8 @@ public class DreadDirector : MonoBehaviour
         {
             nearDistance = profile.RelocateNearDistance;
         }
+
+        _heldBreathAt = Random.Range(heldBreathProgress.x, heldBreathProgress.y); // F104 B11: runtime randomness, never a maze stream
     }
 
     /// <summary>F103: which Tier A features run, and the [Terror] log.</summary>
@@ -317,12 +352,123 @@ public class DreadDirector : MonoBehaviour
             }
         }
 
+        TickHeldBreath();
+
         _deadEndTimer -= Time.deltaTime;
         if (_deadEndTimer <= 0f)
         {
             _deadEndTimer = deadEndCheckInterval;
             CheckDeadEndFailure();
         }
+    }
+
+    /// <summary>F104 B11: the maze's environmental one-shots, ducked together with the bed during the held breath.</summary>
+    public void BindAmbience(MazeAmbience ambience)
+    {
+        _ambience = ambience;
+    }
+
+    /// <summary>F104 B11: the DreadMeter that keeps the held breath away from a player who is already terrified. Optional.</summary>
+    public void BindDread(DreadMeter meter)
+    {
+        _meter = meter;
+    }
+
+    // ---------------------------------------------------------------- F104 B11: held breath
+
+    /// <summary>
+    /// Once per floor, once progress passes the rolled point and the moment is calm (music playing, nothing chasing or hunting,
+    /// no telegraph, not hidden, dread low), everything goes quiet for a while - and usually nothing happens.
+    /// </summary>
+    private void TickHeldBreath()
+    {
+        if (_heldBreathDone || !_terror.heldBreath || _audio == null || Time.time < _nextHeldBreathCheck) return;
+        _nextHeldBreathCheck = Time.time + heldBreathCheckInterval;
+
+        if (Progress < _heldBreathAt || !_audio.IsBedMusic) return;
+        if (!GameFlow.IsRunActive || BailedOut() || _isTelegraphing) return;
+        if (_follower == null || _follower.IsChasing || _follower.IsHunting || _follower.IsCaptured) return;
+        if (_stealth != null && _stealth.Hidden) return;
+        if (_meter != null && _meter.IsActive && _meter.Smoothed >= heldBreathMaxDread) return;
+
+        _heldBreathDone = true;
+        StartCoroutine(HeldBreathRoutine());
+    }
+
+    private IEnumerator HeldBreathRoutine()
+    {
+        float seconds = Random.Range(heldBreathSeconds.x, heldBreathSeconds.y);
+        _terror.Log($"Held breath {seconds:0}s", this);
+        DuckBed(0f, heldBreathFadeIn);
+
+        float t = 0f;
+        bool lampRolled = false;
+        while (t < seconds)
+        {
+            if (BailedOut() || _follower == null || _follower.IsChasing)
+            {
+                DuckBed(1f, heldBreathAbortFade);
+                yield break;
+            }
+
+            if (!lampRolled && t >= seconds * 0.5f)
+            {
+                lampRolled = true;
+                if (Random.value < heldBreathLampChance) KillLampAhead();
+            }
+
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        DuckBed(1f, heldBreathFadeOut);
+    }
+
+    private void DuckBed(float gain, float seconds)
+    {
+        _audio.Duck(gain, seconds);
+        if (_ambience != null) _ambience.SetDuck(gain, seconds);
+    }
+
+    /// <summary>
+    /// Kills the nearest live, powered, non-locker lamp within range that the player is looking toward with a clear line to it and
+    /// that is not guarding a live star: a light at the end of the corridor going out in the silence.
+    /// </summary>
+    private void KillLampAhead()
+    {
+        if (_maze == null || _camera == null) return;
+
+        Vector3 camPos = _camera.transform.position;
+        Vector3 flatForward = _camera.transform.forward;
+        flatForward.y = 0f;
+        flatForward.Normalize();
+
+        IReadOnlyList<WallLamp> lamps = _maze.Lamps;
+        WallLamp best = null;
+        float bestDistance = heldBreathLampRange;
+        for (int i = 0; i < lamps.Count; i++)
+        {
+            WallLamp lamp = lamps[i];
+            if (lamp == null || lamp.IsLockerLamp || lamp.IsDead || !lamp.IsPowered) continue;
+
+            Vector3 toLamp = lamp.transform.position - camPos;
+            float distance = toLamp.magnitude;
+            if (distance >= bestDistance) continue;
+
+            Vector3 flatToLamp = toLamp;
+            flatToLamp.y = 0f;
+            if (Vector3.Angle(flatForward, flatToLamp) > heldBreathLampAngle) continue;
+            if (_maze.IsNearLiveStar(lamp.transform.position)) continue;
+            // Aim just in front of the fixture: a wall lamp sits ON a wall, whose collider would always block the ray.
+            if (IsRayBlocked(camPos, lamp.transform.position - toLamp / distance * lampSurfaceInset)) continue;
+
+            best = lamp;
+            bestDistance = distance;
+        }
+
+        if (best == null) return;
+        best.Kill(heldBreathLampFade);
+        _terror.Log("Held breath: a lamp ahead died", this);
     }
 
     // ---------------------------------------------------------------- F23: trail
@@ -563,6 +709,8 @@ public class DreadDirector : MonoBehaviour
         if (_follower.IsChasing || _follower.IsCaptured) return false;
         // F45: an ambush is a beat of its own - it should not be interrupted by a relocation telegraph.
         if (_follower.IsAmbushing) return false;
+        // F104 B1: a DreadMeter backoff must not be undone by a warp back onto the player's trail.
+        if (_follower.IsBackingOff) return false;
         if (Time.time - _lastChaseEndTime < chaseCooldown) return false;
         if (_stealth != null && _stealth.Hidden) return false;
         if (!PlayerMovedRecently()) return false;

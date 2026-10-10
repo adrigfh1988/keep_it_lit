@@ -19,6 +19,7 @@ ui.settings.fog,NIEBLA
 ui.settings.brightness,BRILLO
 ui.settings.fov,CAMPO DE VISIÓN
 ui.settings.camera_shake,SACUDIDA DE CÁMARA
+ui.settings.effects_intensity,EFECTOS DE PANTALLA
 ui.settings.master_volume,VOLUMEN GENERAL
 ui.settings.music_volume,VOLUMEN DE MÚSICA
 ui.settings.effects_volume,VOLUMEN DE EFECTOS

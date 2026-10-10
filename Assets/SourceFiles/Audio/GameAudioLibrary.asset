@@ -471,6 +471,34 @@ MonoBehaviour:
     startOffset: 0
     maxSeconds: 0
     lowPassHz: 0
+  hunterScrape:
+    clips:
+    - {fileID: 8300000, guid: 7465aaa75181ea24bbe564ba2cb77e1b, type: 3}
+    - {fileID: 8300000, guid: af1d0abe03d12d543af7966b88ae539b, type: 3}
+    volume: 0.8
+    pitchJitter: 0.08
+    startOffset: 0
+    maxSeconds: 1.2
+    lowPassHz: 0
+  mazeRoomTone:
+    clips:
+    - {fileID: 8300000, guid: ac62598bb65af3043bf4733c3670081b, type: 3}
+    - {fileID: 8300000, guid: 7a18c70ff8af3e14f828be8b98750dd0, type: 3}
+    - {fileID: 8300000, guid: 6d2e2db0b97a8c84e9b7aba22496d5fe, type: 3}
+    volume: 1
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
+  escapeAlarm:
+    clips:
+    - {fileID: 8300000, guid: f56395d38f7cabc4e96ba771068022c1, type: 3}
+    - {fileID: 8300000, guid: 74aa8ff4436443b4c8147ddc4e5ee661, type: 3}
+    volume: 0.7
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
   torchClick:
     clips:
     - {fileID: 8300000, guid: ef63163d7914a654bbc2cebda4c597ce, type: 3}

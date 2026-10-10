@@ -27,7 +27,9 @@ public class PhantomDirector : MonoBehaviour
         Footsteps,
         LampBlink,
         Whisper,
-        WrongSound
+        WrongSound,
+        Shadow,
+        Peripheral
     }
 
     [Header("Scheduling")]
@@ -41,6 +43,14 @@ public class PhantomDirector : MonoBehaviour
     [SerializeField] private float audioHunterExclusionDistance = 6f;
     [Tooltip("A skipped check is retried after interval x this fraction, rather than waiting a full interval")]
     [SerializeField] private float failRetryFraction = 0.5f;
+
+    [Header("F104 B1 - dread pacing")]
+    [Tooltip("Interval multiplier during a DreadMeter backoff: phantoms crowd in while the hunter is away")]
+    [SerializeField] private float backoffIntervalScale = 1f / 3f;
+    [Tooltip("Dread above which phantoms ease off, so a terrified player is not piled on")]
+    [SerializeField] private float crowdedDread = 0.8f;
+    [Tooltip("Interval multiplier above crowdedDread")]
+    [SerializeField] private float crowdedIntervalScale = 1.5f;
 
     [Header("Weights (relative, need not sum to anything in particular)")]
     [SerializeField] private float silhouetteWeight = 3f;
@@ -116,6 +126,40 @@ public class PhantomDirector : MonoBehaviour
     [SerializeField] private float torchClickBehindDistance = 0.6f;
     [SerializeField] private float torchClickVolume = 0.35f;
 
+    [Header("F104 B3 - phantoms in the locker")]
+    [Tooltip("Audio phantoms (footsteps, whispers, wrong sounds) may fire at a hidden player once they have been hidden this long (s). Visual ones stay blocked.")]
+    [SerializeField] private float lockerQuietSeconds = 15f;
+
+    [Header("F104 B7 - shadow phantom")]
+    [Tooltip("Weight of the shadow phantom: a figure's shadow crosses the lit wall with no one there. Zero unless the torch is lit and shadows are on.")]
+    [SerializeField] private float shadowWeight = 2f;
+    [Tooltip("The torch beam must hit a wall this far away (min..max, m) for a shadow phantom to be staged")]
+    [SerializeField] private Vector2 shadowWallDistance = new Vector2(4f, 10f);
+    [Tooltip("The body stands this fraction of the way from the torch to the wall (min..max)")]
+    [SerializeField] private Vector2 shadowStandFraction = new Vector2(0.45f, 0.6f);
+    [Tooltip("It starts this far to one side of the beam and walks across to the other (m)")]
+    [SerializeField] private float shadowWalkHalfWidth = 1f;
+    [Tooltip("Seconds the walk across takes")]
+    [SerializeField] private float shadowWalkSeconds = 1.2f;
+    [Tooltip("A wall hit with a normal steeper than this (|y|) is floor or ceiling, not a wall")]
+    [SerializeField] private float shadowWallMaxNormalY = 0.5f;
+
+    [Header("F104 B8 - peripheral figure")]
+    [Tooltip("Weight of the figure at the very edge of the view, gone when looked at")]
+    [SerializeField] private float peripheralWeight = 2f;
+    [Tooltip("A cell this far from the camera (min..max, m) may host the figure. Corridors rarely offer a visible cell this far off-axis, so keep the near end low or it will hardly ever fire.")]
+    [SerializeField] private Vector2 peripheralDistance = new Vector2(4f, 14f);
+    [Tooltip("Viewport x range of the outer edge strip on each side where it may stand (min..max, mirrored for the left)")]
+    [SerializeField] private Vector2 peripheralEdge = new Vector2(0.82f, 0.97f);
+    [Tooltip("It is removed the moment it drifts inside this viewport x range (min..max)")]
+    [SerializeField] private Vector2 peripheralVanishRange = new Vector2(0.2f, 0.8f);
+    [Tooltip("Camera turn rate toward its side that makes it vanish (deg/s)")]
+    [SerializeField] private float peripheralTurnRate = 60f;
+    [Tooltip("It never stays longer than this (s)")]
+    [SerializeField] private float peripheralLifetime = 4f;
+    [Tooltip("Height of the point on the body used for the viewport and torch tests (m)")]
+    [SerializeField] private float figureTestHeight = 1f;
+
     private MazeGenerator _maze;
     private Transform _player;
     private Camera _camera;
@@ -126,11 +170,14 @@ public class PhantomDirector : MonoBehaviour
     private GameOutcome _outcome;
     private DreadDirector _dread;
     private TerrorSettings _terror = new TerrorSettings();
+    private DreadMeter _meter; // F104 B1: paces the next phantom
     private AudioClip[] _footstepClips;
 
     private GameObject _phantomsRoot;
     private Material _silhouetteMaterial;
     private Material _eyeMaterial;
+    private PhantomBody _body; // F104 B7/B8: the shared figure, built on first use
+    private bool _bodyMissingLogged;
 
     private readonly RaycastHit[] _rayHits = new RaycastHit[16];
 
@@ -182,6 +229,7 @@ public class PhantomDirector : MonoBehaviour
         GameManager.ProgressChanged -= HandleProgress;
 
         StopAllCoroutines();
+        _body = null; // destroyed with the phantoms below; rebuilt on the next use
         if (_phantomsRoot != null)
         {
             for (int i = _phantomsRoot.transform.childCount - 1; i >= 0; i--)
@@ -216,9 +264,18 @@ public class PhantomDirector : MonoBehaviour
             : ComputeInterval(Progress) * failRetryFraction;
     }
 
+    /// <summary>F104 B1: the DreadMeter that paces the phantoms - three times faster during a backoff, 1.5x slower above 0.8 dread.</summary>
+    public void BindDread(DreadMeter meter)
+    {
+        _meter = meter;
+    }
+
     private float ComputeInterval(float progress)
     {
-        return Mathf.Lerp(phantomInterval * 1.5f, phantomInterval, progress);
+        float interval = Mathf.Lerp(phantomInterval * 1.5f, phantomInterval, progress);
+        if (_meter == null || !_meter.IsActive) return interval;
+
+        return interval * (_meter.InBackoff ? backoffIntervalScale : _meter.Value > crowdedDread ? crowdedIntervalScale : 1f);
     }
 
     private bool BailedOut()
@@ -237,6 +294,12 @@ public class PhantomDirector : MonoBehaviour
         return type == PhantomType.Footsteps || type == PhantomType.Whisper || type == PhantomType.WrongSound;
     }
 
+    /// <summary>F104 B3: a locker stops being a refuge. Once the player has been hidden for lockerQuietSeconds, sounds may reach them there; figures never do.</summary>
+    private bool HiddenAllowsAudio(PhantomType type)
+    {
+        return _terror.sanctuaryDecay && IsAudioType(type) && Time.time - _stealth.HiddenSince >= lockerQuietSeconds;
+    }
+
     private bool PassesGate(PhantomType type)
     {
         if (_maze == null || _player == null || _follower == null) return false;
@@ -245,7 +308,7 @@ public class PhantomDirector : MonoBehaviour
         // F103 A2: a sound may come from a hunter that is close; a figure may not. Otherwise every phantom proves the hunter is far away.
         float exclusion = IsAudioType(type) && _terror.contaminatedPhantoms ? audioHunterExclusionDistance : hunterExclusionDistance;
         if (_follower.FlatDistanceToTarget <= exclusion) return false;
-        if (_stealth != null && _stealth.Hidden) return false;
+        if (_stealth != null && _stealth.Hidden && !HiddenAllowsAudio(type)) return false;
         if (Time.time - _lastPhantomTime < minSpacing) return false;
         if (_dread != null && _dread.IsTelegraphing) return false;
 
@@ -272,8 +335,14 @@ public class PhantomDirector : MonoBehaviour
             case PhantomType.Whisper:
                 fired = TryWhisper();
                 break;
-            default:
+            case PhantomType.WrongSound:
                 fired = TryWrongSound();
+                break;
+            case PhantomType.Shadow:
+                fired = TrySpawnShadow();
+                break;
+            default:
+                fired = TrySpawnPeripheral();
                 break;
         }
 
@@ -285,7 +354,9 @@ public class PhantomDirector : MonoBehaviour
     {
         float silhouette = silhouetteWeight * (_flashlight != null && !_flashlight.IsOn ? silhouetteTorchOffMultiplier : 1f);
         float wrongSound = _terror.wrongSounds ? wrongSoundWeight : 0f;
-        float total = silhouette + footstepsWeight + lampBlinkWeight + whisperWeight + wrongSound;
+        float shadow = ShadowPhantomPossible() ? shadowWeight : 0f;
+        float peripheral = _terror.peripheralPhantoms ? peripheralWeight : 0f;
+        float total = silhouette + footstepsWeight + lampBlinkWeight + whisperWeight + wrongSound + shadow + peripheral;
 
         float r = Random.value * total;
         if (r < silhouette) return PhantomType.Silhouette;
@@ -295,7 +366,10 @@ public class PhantomDirector : MonoBehaviour
         if (r < lampBlinkWeight) return PhantomType.LampBlink;
         r -= lampBlinkWeight;
         if (r < whisperWeight) return PhantomType.Whisper;
-        return PhantomType.WrongSound;
+        r -= whisperWeight;
+        if (r < wrongSound) return PhantomType.WrongSound;
+        r -= wrongSound;
+        return r < shadow ? PhantomType.Shadow : PhantomType.Peripheral;
     }
 
     // ---------------------------------------------------------------- silhouette
@@ -397,16 +471,7 @@ public class PhantomDirector : MonoBehaviour
             }
 
             // Vanish the instant the torch beam actually reaches it, whatever the random lifetime says.
-            if (_flashlight != null && _flashlight.IsBeamLit)
-            {
-                Vector3 dir = position - _flashlight.BeamOrigin; // F103 A4: tested from the torch mount, not the eye
-                float distance = dir.magnitude;
-                if (distance < _flashlight.Range * silhouetteBeamRangeFraction
-                    && Vector3.Angle(_flashlight.BeamForward, dir) < _flashlight.OuterAngle * silhouetteBeamAngleFraction)
-                {
-                    break;
-                }
-            }
+            if (IsInTorchBeam(position)) break; // F103 A4: tested from the torch mount, not the eye
 
             t += Time.deltaTime;
             yield return null;
@@ -619,6 +684,7 @@ public class PhantomDirector : MonoBehaviour
 
     private readonly List<WrongSoundOption> _wrongSoundOptions = new List<WrongSoundOption>(8);
     private readonly List<Vector3> _occludedCells = new List<Vector3>(32);
+    private readonly List<Vector3> _figureCells = new List<Vector3>(32); // F104 B8
 
     /// <summary>
     /// F103 A8: "someone else is here, using the things I use" - a locker door, a can, a shutter, a bottle or a torch click from
@@ -712,6 +778,180 @@ public class PhantomDirector : MonoBehaviour
             Name = slotName, Slot = slot, Volume = wrongSoundVolume,
             Position = _occludedCells[Random.Range(0, _occludedCells.Count)] + Vector3.up
         });
+    }
+
+    // ---------------------------------------------------------------- F104 B7/B8: figure phantoms
+
+    /// <summary>
+    /// The shared figure, built on first use from the hunter's HunterBody. Null (logged once) when the hunter has none; then the
+    /// figure phantoms simply do not fire. Also null while another figure phantom is using it.
+    /// </summary>
+    private PhantomBody TryGetBody()
+    {
+        if (_body == null && _follower != null)
+        {
+            _body = PhantomBody.TryBuild(_follower, _phantomsRoot.transform);
+            if (_body == null && !_bodyMissingLogged)
+            {
+                _bodyMissingLogged = true;
+                Debug.LogWarning("PhantomDirector: the hunter has no HunterBody child, so shadow and peripheral phantoms are off.", this);
+            }
+        }
+
+        return _body != null && !_body.InUse ? _body : null;
+    }
+
+    /// <summary>True while a shadow phantom could be staged: flag on, shadows on, the beam lit (a shadow needs a light to cast it).</summary>
+    private bool ShadowPhantomPossible()
+    {
+        return _terror.shadowPhantoms && GameSettings.Shadows != GameSettings.ShadowTier.Off
+            && _flashlight != null && _flashlight.IsBeamLit;
+    }
+
+    /// <summary>
+    /// B7: a person's shadow crosses the lit wall and nobody is there. The hunter's body stands between the torch and the wall,
+    /// rendered ShadowsOnly, and walks across the beam. Wall found at 4-10 m or nothing happens (the scheduler retries).
+    /// </summary>
+    private bool TrySpawnShadow()
+    {
+        if (!ShadowPhantomPossible() || _camera == null) return false;
+
+        Vector3 origin = _flashlight.BeamOrigin;
+        Vector3 forward = _flashlight.BeamForward;
+        if (!TryFindBeamWall(origin, forward, out RaycastHit wall)) return false;
+
+        Vector3 toWall = wall.point - origin;
+        toWall.y = 0f;
+        if (toWall.sqrMagnitude < 1e-4f) return false;
+
+        PhantomBody body = TryGetBody();
+        if (body == null) return false;
+
+        float stand = Random.Range(shadowStandFraction.x, shadowStandFraction.y);
+        Vector3 center = origin + toWall * stand;
+        center.y = _player.position.y;
+        Vector3 across = Vector3.Cross(Vector3.up, toWall.normalized) * (Random.value < 0.5f ? 1f : -1f);
+        Vector3 start = center - across * shadowWalkHalfWidth;
+        Vector3 end = center + across * shadowWalkHalfWidth;
+
+        body.Show(start, across);
+        body.SetShadowMode(ShadowCastingMode.ShadowsOnly);
+        body.Walk();
+        StartCoroutine(ShadowRoutine(body, start, end));
+        _terror.Log("Shadow phantom", this);
+        return true;
+    }
+
+    /// <summary>The nearest wall (not floor or ceiling) the torch beam hits at shadowWallDistance, ignoring triggers and the player and hunter.</summary>
+    private bool TryFindBeamWall(Vector3 origin, Vector3 forward, out RaycastHit wall)
+    {
+        wall = default;
+        int count = Physics.RaycastNonAlloc(origin, forward, _rayHits, shadowWallDistance.y, ~0, QueryTriggerInteraction.Ignore);
+        float nearest = float.MaxValue;
+        for (int i = 0; i < count; i++)
+        {
+            Transform hit = _rayHits[i].transform;
+            if (IsPartOf(hit, _player) || (_follower != null && IsPartOf(hit, _follower.transform))) continue;
+            if (_rayHits[i].distance < nearest)
+            {
+                nearest = _rayHits[i].distance;
+                wall = _rayHits[i];
+            }
+        }
+
+        return nearest >= shadowWallDistance.x && nearest <= shadowWallDistance.y && Mathf.Abs(wall.normal.y) < shadowWallMaxNormalY;
+    }
+
+    private IEnumerator ShadowRoutine(PhantomBody body, Vector3 start, Vector3 end)
+    {
+        for (float t = 0f; t < shadowWalkSeconds; t += Time.deltaTime)
+        {
+            if (BailedOut() || _follower.IsChasing) break;
+
+            body.Root.transform.position = Vector3.Lerp(start, end, t / shadowWalkSeconds);
+            yield return null;
+        }
+
+        body.Hide();
+    }
+
+    /// <summary>
+    /// B8: a dark figure at the very edge of the screen, gone the moment you look. A cell 6-14 m away with a clear line to it,
+    /// standing in the outer strip of the view on either side.
+    /// </summary>
+    private bool TrySpawnPeripheral()
+    {
+        if (!_terror.peripheralPhantoms || _camera == null || _maze == null || _silhouetteMaterial == null) return false;
+
+        Vector3 camPos = _camera.transform.position;
+        IReadOnlyList<Vector3> cells = _maze.CellCenters;
+        _figureCells.Clear();
+        for (int i = 0; i < cells.Count; i++)
+        {
+            float distance = Vector3.Distance(camPos, cells[i]);
+            if (distance < peripheralDistance.x || distance > peripheralDistance.y) continue;
+
+            Vector3 viewport = _camera.WorldToViewportPoint(cells[i] + Vector3.up * figureTestHeight);
+            if (viewport.z <= 0f || !InEdgeStrip(viewport.x)) continue;
+            if (!IsRayClear(camPos, cells[i] + Vector3.up * 1.2f)) continue;
+
+            _figureCells.Add(cells[i]);
+        }
+
+        if (_figureCells.Count == 0) return false;
+
+        PhantomBody body = TryGetBody();
+        if (body == null) return false;
+
+        Vector3 position = _figureCells[Random.Range(0, _figureCells.Count)];
+        Vector3 facing = camPos - position;
+        facing.y = 0f;
+
+        body.Show(position, facing);
+        body.SetMaterial(_silhouetteMaterial);
+        body.SetShadowMode(ShadowCastingMode.On);
+        body.Freeze(AIFollower.Pose.Lurk);
+        StartCoroutine(PeripheralRoutine(body, position + Vector3.up * figureTestHeight));
+        _terror.Log("Peripheral phantom", this);
+        return true;
+    }
+
+    private bool InEdgeStrip(float viewportX)
+    {
+        return (viewportX >= peripheralEdge.x && viewportX <= peripheralEdge.y)
+            || (viewportX >= 1f - peripheralEdge.y && viewportX <= 1f - peripheralEdge.x);
+    }
+
+    /// <summary>Removes the peripheral figure the instant it would be looked at: it drifts toward the centre of the view, the camera turns toward it fast, or the beam reaches it.</summary>
+    private IEnumerator PeripheralRoutine(PhantomBody body, Vector3 testPoint)
+    {
+        float previousYaw = _camera.transform.eulerAngles.y;
+        for (float t = 0f; t < peripheralLifetime; t += Time.deltaTime)
+        {
+            if (BailedOut() || _follower.IsChasing || IsInTorchBeam(testPoint)) break;
+
+            Vector3 viewport = _camera.WorldToViewportPoint(testPoint);
+            if (viewport.z <= 0f || (viewport.x > peripheralVanishRange.x && viewport.x < peripheralVanishRange.y)) break;
+
+            float yaw = _camera.transform.eulerAngles.y;
+            float turnRate = Mathf.DeltaAngle(previousYaw, yaw) / Mathf.Max(Time.deltaTime, 1e-4f);
+            previousYaw = yaw;
+            if (turnRate * (viewport.x > 0.5f ? 1f : -1f) > peripheralTurnRate) break;
+
+            yield return null;
+        }
+
+        body.Hide();
+    }
+
+    /// <summary>True when the lit torch beam (from its mount, F103 A4) reaches `point`, by the same angle and range fractions the silhouette vanishes at.</summary>
+    private bool IsInTorchBeam(Vector3 point)
+    {
+        if (_flashlight == null || !_flashlight.IsBeamLit) return false;
+
+        Vector3 dir = point - _flashlight.BeamOrigin;
+        return dir.magnitude < _flashlight.Range * silhouetteBeamRangeFraction
+            && Vector3.Angle(_flashlight.BeamForward, dir) < _flashlight.OuterAngle * silhouetteBeamAngleFraction;
     }
 
     // ---------------------------------------------------------------- shared helpers

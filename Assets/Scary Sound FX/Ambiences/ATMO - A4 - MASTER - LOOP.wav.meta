@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: 7a18c70ff8af3e14f828be8b98750dd0
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21523
+  packageName: Scary Sound FX
+  packageVersion: 1.2
+  assetPath: Assets/Scary Sound FX/Ambiences/ATMO - A4 - MASTER - LOOP.wav
+  uploadId: 30405
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 8
+  defaultSettings:
+    serializedVersion: 2
+    loadType: 2
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 1
+    quality: 0.5
+    conversionMode: 0
+    preloadAudioData: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  loadInBackground: 1
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
