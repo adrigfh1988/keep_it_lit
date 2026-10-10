@@ -33,6 +33,13 @@ public static class ProjectSetup
     {
         new Piece
         {
+            Name = "Localization (S9: package, settings, 4 locales, string tables, Boot scene)",
+            FixMenu = "Localization > Set Up Project (and Import CSVs)",
+            Problem = () => LocalizationImporter.Problem(),
+            Build = () => LocalizationImporter.EnsureProject()
+        },
+        new Piece
+        {
             Name = "Alchemist House materials (URP)",
             FixMenu = "converted automatically by Build > Shop Room (regenerate) / Floor Themes",
             Problem = () => AlchemistMaterialUpgrade.NeedsConversion() ? "still on Built-in shaders (render magenta)" : null,

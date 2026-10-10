@@ -72,6 +72,10 @@ public static class GameSettings
     public static float MouseSensitivity { get => _mouseSensitivity; set { _mouseSensitivity = Mathf.Clamp(value, MinMouseSensitivity, MaxMouseSensitivity); Store("MouseSensitivity", _mouseSensitivity); Raise(); } }
     public static bool InvertY { get => _invertY; set { _invertY = value; Store("InvertY", value ? 1 : 0); Raise(); } }
     public static float FieldOfView { get => _fov; set { _fov = Mathf.Clamp(value, MinFov, MaxFov); Store("FieldOfView", _fov); Raise(); } }
+    /// <summary>S9: the chosen UI language code ("en", "es", "fr", "de"); empty = follow the system language. Not reset by any settings tab, not in SaveData.
+    /// Persisting only: <see cref="L10n.SetLanguage"/> is what switches the locale.</summary>
+    public static string Language { get => _language; set { _language = value ?? ""; Store("Language", _language); Raise(); } }
+    private static string _language = "";
     public static float CameraShake { get => _cameraShake; set { _cameraShake = Mathf.Clamp01(value); Store("CameraShake", _cameraShake); Raise(); } }
 
     /// <summary>The touch controls mode / look sensitivity stay stored by <see cref="TouchInput"/> (their existing prefs); these wrappers just raise Changed.</summary>
@@ -122,6 +126,7 @@ public static class GameSettings
 
     private static void Load()
     {
+        _language = Str("Language", "");
         _windowMode = (WindowModeKind)Mathf.Clamp(Int("WindowMode", 0), 0, 2);
         _resW = Mathf.Max(0, Int("ResW", 0));
         _resH = Mathf.Max(0, Int("ResH", 0));
@@ -160,6 +165,16 @@ public static class GameSettings
     private static void Store(string name, float value)
     {
         try { PlayerPrefs.SetFloat(Prefix + name, value); PlayerPrefs.Save(); } catch { /* the in-memory value still applies this session */ }
+    }
+
+    private static void Store(string name, string value)
+    {
+        try { PlayerPrefs.SetString(Prefix + name, value); PlayerPrefs.Save(); } catch { /* the in-memory value still applies this session */ }
+    }
+
+    private static string Str(string name, string fallback)
+    {
+        try { return PlayerPrefs.GetString(Prefix + name, fallback); } catch { return fallback; }
     }
 
     private static void Raise() => Changed?.Invoke();

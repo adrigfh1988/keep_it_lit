@@ -1,0 +1,370 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: UI Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: UI
+  m_TableCollectionNameGuidString: 09af46286be9e464db8cf054ca095f3b
+  m_Entries:
+  - m_Id: 1008635904
+    m_Key: ui.settings.title
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663151
+  - m_Id: 1105104896
+    m_Key: ui.settings.tab.general
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663152
+  - m_Id: 1109299200
+    m_Key: ui.settings.tab.display
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663153
+  - m_Id: 1109299201
+    m_Key: ui.settings.tab.graphics
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663154
+  - m_Id: 1109299202
+    m_Key: ui.settings.tab.audio
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663155
+  - m_Id: 1109299203
+    m_Key: ui.settings.tab.controls
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663156
+  - m_Id: 1109299204
+    m_Key: ui.settings.reset
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663157
+  - m_Id: 1109299205
+    m_Key: ui.settings.back
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663158
+  - m_Id: 1109299206
+    m_Key: ui.settings.language
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663159
+  - m_Id: 1109299207
+    m_Key: ui.settings.window_mode
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663160
+  - m_Id: 1109299208
+    m_Key: ui.settings.resolution
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663161
+  - m_Id: 1109299209
+    m_Key: ui.settings.vsync
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663162
+  - m_Id: 1109299210
+    m_Key: ui.settings.frame_cap
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663163
+  - m_Id: 1109299211
+    m_Key: ui.settings.quality
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663164
+  - m_Id: 1109299212
+    m_Key: ui.settings.shadows
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663165
+  - m_Id: 1109299213
+    m_Key: ui.settings.ambient_occlusion
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663166
+  - m_Id: 1109299214
+    m_Key: ui.settings.fog
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663167
+  - m_Id: 1109299215
+    m_Key: ui.settings.brightness
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663168
+  - m_Id: 1109299216
+    m_Key: ui.settings.fov
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663169
+  - m_Id: 1109299217
+    m_Key: ui.settings.camera_shake
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663170
+  - m_Id: 1109299218
+    m_Key: ui.settings.master_volume
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663171
+  - m_Id: 1109299219
+    m_Key: ui.settings.music_volume
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663172
+  - m_Id: 1109299220
+    m_Key: ui.settings.effects_volume
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663173
+  - m_Id: 1109299221
+    m_Key: ui.settings.look
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663174
+  - m_Id: 1109299222
+    m_Key: ui.settings.invert_y
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663175
+  - m_Id: 1109299223
+    m_Key: ui.settings.touch_controls
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663176
+  - m_Id: 1109299224
+    m_Key: ui.settings.touch_look
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663177
+  - m_Id: 1109299225
+    m_Key: ui.settings.opt.fullscreen
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663178
+  - m_Id: 1109299226
+    m_Key: ui.settings.opt.exclusive
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663179
+  - m_Id: 1109299227
+    m_Key: ui.settings.opt.windowed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663180
+  - m_Id: 1109299228
+    m_Key: ui.settings.opt.unlimited
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663181
+  - m_Id: 1109299229
+    m_Key: ui.settings.opt.off
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663182
+  - m_Id: 1109299230
+    m_Key: ui.settings.opt.on
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663183
+  - m_Id: 1109299231
+    m_Key: ui.settings.opt.auto
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663184
+  - m_Id: 1109299232
+    m_Key: ui.settings.opt.low
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663185
+  - m_Id: 1109299233
+    m_Key: ui.settings.opt.medium
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663186
+  - m_Id: 1109299234
+    m_Key: ui.settings.opt.high
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663187
+  - m_Id: 1109299235
+    m_Key: ui.settings.opt.normal
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663188
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4707331669776663150
+  references:
+    version: 2
+    RefIds:
+    - rid: 4707331669776663150
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1791625328092
+    - rid: 4707331669776663151
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Settings screen heading (76 pt, one line, 1200 px)
+    - rid: 4707331669776663152
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Settings tab caption (330 px button, 34 pt)
+    - rid: 4707331669776663153
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Settings tab caption (330 px button, 34 pt)
+    - rid: 4707331669776663154
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Settings tab caption (330 px button, 34 pt)
+    - rid: 4707331669776663155
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Settings tab caption (330 px button, 34 pt)
+    - rid: 4707331669776663156
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Settings tab caption (330 px button, 34 pt)
+    - rid: 4707331669776663157
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings button: resets the current tab (440 px button, 32 pt)'
+    - rid: 4707331669776663158
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings button: closes the panel (440 px button)'
+    - rid: 4707331669776663159
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: UI language (600 px, auto-size)'
+    - rid: 4707331669776663160
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: window mode'
+    - rid: 4707331669776663161
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: screen resolution'
+    - rid: 4707331669776663162
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: vertical sync'
+    - rid: 4707331669776663163
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: frame rate limit'
+    - rid: 4707331669776663164
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: graphics quality tier'
+    - rid: 4707331669776663165
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: shadow quality'
+    - rid: 4707331669776663166
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: ambient occlusion (SSAO)'
+    - rid: 4707331669776663167
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: fog amount'
+    - rid: 4707331669776663168
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: brightness offset (value shown in EV)'
+    - rid: 4707331669776663169
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: camera field of view'
+    - rid: 4707331669776663170
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: camera shake strength'
+    - rid: 4707331669776663171
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: master volume'
+    - rid: 4707331669776663172
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: music volume'
+    - rid: 4707331669776663173
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: sound effects volume'
+    - rid: 4707331669776663174
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: mouse and gamepad look sensitivity'
+    - rid: 4707331669776663175
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: invert vertical look'
+    - rid: 4707331669776663176
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: on-screen touch controls mode'
+    - rid: 4707331669776663177
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label: touch look sensitivity'
+    - rid: 4707331669776663178
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Window mode option (stepper, 560 px)
+    - rid: 4707331669776663179
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Window mode option: exclusive fullscreen'
+    - rid: 4707331669776663180
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Window mode option
+    - rid: 4707331669776663181
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Frame cap option: no limit'
+    - rid: 4707331669776663182
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Toggle / tier option: off'
+    - rid: 4707331669776663183
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Toggle option: on'
+    - rid: 4707331669776663184
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Touch controls option: detect automatically'
+    - rid: 4707331669776663185
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Tier option shared by quality, shadows and fog (feminine in ES/FR)
+    - rid: 4707331669776663186
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Tier option shared by quality
+    - rid: 4707331669776663187
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Tier option shared by quality and shadows
+    - rid: 4707331669776663188
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Fog tier option: default amount'

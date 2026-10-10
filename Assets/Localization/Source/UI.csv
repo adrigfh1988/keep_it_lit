@@ -1,0 +1,39 @@
+key,context,en
+ui.settings.title,"Settings screen heading (76 pt, one line, 1200 px)",SETTINGS
+ui.settings.tab.general,"Settings tab caption (330 px button, 34 pt)",GENERAL
+ui.settings.tab.display,"Settings tab caption (330 px button, 34 pt)",DISPLAY
+ui.settings.tab.graphics,"Settings tab caption (330 px button, 34 pt)",GRAPHICS
+ui.settings.tab.audio,"Settings tab caption (330 px button, 34 pt)",AUDIO
+ui.settings.tab.controls,"Settings tab caption (330 px button, 34 pt)",CONTROLS
+ui.settings.reset,"Settings button: resets the current tab (440 px button, 32 pt)",RESET TO DEFAULTS
+ui.settings.back,Settings button: closes the panel (440 px button),BACK
+ui.settings.language,"Settings row label: UI language (600 px, auto-size)",LANGUAGE
+ui.settings.window_mode,Settings row label: window mode,WINDOW MODE
+ui.settings.resolution,Settings row label: screen resolution,RESOLUTION
+ui.settings.vsync,Settings row label: vertical sync,VSYNC
+ui.settings.frame_cap,Settings row label: frame rate limit,FRAME CAP
+ui.settings.quality,Settings row label: graphics quality tier,QUALITY
+ui.settings.shadows,Settings row label: shadow quality,SHADOWS
+ui.settings.ambient_occlusion,Settings row label: ambient occlusion (SSAO),AMBIENT OCCLUSION
+ui.settings.fog,Settings row label: fog amount,FOG
+ui.settings.brightness,Settings row label: brightness offset (value shown in EV),BRIGHTNESS
+ui.settings.fov,Settings row label: camera field of view,FIELD OF VIEW
+ui.settings.camera_shake,Settings row label: camera shake strength,CAMERA SHAKE
+ui.settings.master_volume,Settings row label: master volume,MASTER VOLUME
+ui.settings.music_volume,Settings row label: music volume,MUSIC VOLUME
+ui.settings.effects_volume,Settings row label: sound effects volume,EFFECTS VOLUME
+ui.settings.look,Settings row label: mouse and gamepad look sensitivity,MOUSE / GAMEPAD LOOK
+ui.settings.invert_y,Settings row label: invert vertical look,INVERT Y
+ui.settings.touch_controls,Settings row label: on-screen touch controls mode,TOUCH CONTROLS
+ui.settings.touch_look,Settings row label: touch look sensitivity,TOUCH LOOK
+ui.settings.opt.fullscreen,"Window mode option (stepper, 560 px)",FULLSCREEN
+ui.settings.opt.exclusive,Window mode option: exclusive fullscreen,EXCLUSIVE
+ui.settings.opt.windowed,Window mode option,WINDOWED
+ui.settings.opt.unlimited,Frame cap option: no limit,UNLIMITED
+ui.settings.opt.off,Toggle / tier option: off,OFF
+ui.settings.opt.on,Toggle option: on,ON
+ui.settings.opt.auto,Touch controls option: detect automatically,AUTO
+ui.settings.opt.low,"Tier option shared by quality, shadows and fog (feminine in ES/FR)",LOW
+ui.settings.opt.medium,Tier option shared by quality,MEDIUM
+ui.settings.opt.high,Tier option shared by quality and shadows,HIGH
+ui.settings.opt.normal,Fog tier option: default amount,NORMAL

@@ -68,6 +68,9 @@ public static class WindowsBuild
             options = BuildOptions.None,
         };
 
+        // S9: the Localization string tables live in Addressables; build that content first (also on by "Build Addressables on Player Build").
+        UnityEditor.AddressableAssets.Settings.AddressableAssetSettings.BuildPlayerContent();
+
         Debug.Log($"[WindowsBuild] Building {scenes.Length} scene(s) to {outputPath} (active target before: {EditorUserBuildSettings.activeBuildTarget}).");
         DateTime start = DateTime.UtcNow;
         BuildReport report;

@@ -1,0 +1,39 @@
+key,text
+ui.settings.title,PARAMÈTRES
+ui.settings.tab.general,GÉNÉRAL
+ui.settings.tab.display,AFFICHAGE
+ui.settings.tab.graphics,GRAPHISMES
+ui.settings.tab.audio,AUDIO
+ui.settings.tab.controls,COMMANDES
+ui.settings.reset,RÉINITIALISER
+ui.settings.back,RETOUR
+ui.settings.language,LANGUE
+ui.settings.window_mode,MODE D'AFFICHAGE
+ui.settings.resolution,RÉSOLUTION
+ui.settings.vsync,SYNC. VERTICALE
+ui.settings.frame_cap,LIMITE D'IPS
+ui.settings.quality,QUALITÉ
+ui.settings.shadows,OMBRES
+ui.settings.ambient_occlusion,OCCLUSION AMBIANTE
+ui.settings.fog,BROUILLARD
+ui.settings.brightness,LUMINOSITÉ
+ui.settings.fov,CHAMP DE VISION
+ui.settings.camera_shake,TREMBLEMENT DE CAMÉRA
+ui.settings.master_volume,VOLUME GÉNÉRAL
+ui.settings.music_volume,VOLUME DE LA MUSIQUE
+ui.settings.effects_volume,VOLUME DES EFFETS
+ui.settings.look,SENSIBILITÉ SOURIS/MANETTE
+ui.settings.invert_y,INVERSER L'AXE Y
+ui.settings.touch_controls,COMMANDES TACTILES
+ui.settings.touch_look,SENSIBILITÉ TACTILE
+ui.settings.opt.fullscreen,PLEIN ÉCRAN
+ui.settings.opt.exclusive,EXCLUSIF
+ui.settings.opt.windowed,FENÊTRÉ
+ui.settings.opt.unlimited,ILLIMITÉ
+ui.settings.opt.off,DÉSACTIVÉ
+ui.settings.opt.on,ACTIVÉ
+ui.settings.opt.auto,AUTO
+ui.settings.opt.low,FAIBLE
+ui.settings.opt.medium,MOYENNE
+ui.settings.opt.high,ÉLEVÉE
+ui.settings.opt.normal,NORMAL

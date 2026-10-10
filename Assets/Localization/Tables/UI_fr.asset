@@ -1,0 +1,175 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: UI_fr
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 09af46286be9e464db8cf054ca095f3b, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1008635904
+    m_Localized: "PARAM\xC8TRES"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1105104896
+    m_Localized: "G\xC9N\xC9RAL"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299200
+    m_Localized: AFFICHAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299201
+    m_Localized: GRAPHISMES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299202
+    m_Localized: AUDIO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299203
+    m_Localized: COMMANDES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299204
+    m_Localized: "R\xC9INITIALISER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299205
+    m_Localized: RETOUR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299206
+    m_Localized: LANGUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299207
+    m_Localized: MODE D'AFFICHAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299208
+    m_Localized: "R\xC9SOLUTION"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299209
+    m_Localized: SYNC. VERTICALE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299210
+    m_Localized: LIMITE D'IPS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299211
+    m_Localized: "QUALIT\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299212
+    m_Localized: OMBRES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299213
+    m_Localized: OCCLUSION AMBIANTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299214
+    m_Localized: BROUILLARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299215
+    m_Localized: "LUMINOSIT\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299216
+    m_Localized: CHAMP DE VISION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299217
+    m_Localized: "TREMBLEMENT DE CAM\xC9RA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299218
+    m_Localized: "VOLUME G\xC9N\xC9RAL"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299219
+    m_Localized: VOLUME DE LA MUSIQUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299220
+    m_Localized: VOLUME DES EFFETS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299221
+    m_Localized: "SENSIBILIT\xC9 SOURIS/MANETTE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299222
+    m_Localized: INVERSER L'AXE Y
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299223
+    m_Localized: COMMANDES TACTILES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299224
+    m_Localized: "SENSIBILIT\xC9 TACTILE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299225
+    m_Localized: "PLEIN \xC9CRAN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299226
+    m_Localized: EXCLUSIF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299227
+    m_Localized: "FEN\xCATR\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299228
+    m_Localized: "ILLIMIT\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299229
+    m_Localized: "D\xC9SACTIV\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299230
+    m_Localized: "ACTIV\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299231
+    m_Localized: AUTO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299232
+    m_Localized: FAIBLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299233
+    m_Localized: MOYENNE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299234
+    m_Localized: "\xC9LEV\xC9E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109299235
+    m_Localized: NORMAL
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
