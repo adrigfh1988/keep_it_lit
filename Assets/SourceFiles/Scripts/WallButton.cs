@@ -54,7 +54,7 @@ public class WallButton : MonoBehaviour, IInteractable
     /// <summary>Called later by MazeGenerator.SetUpAtmosphere, once the HUD exists (same late-wiring pattern as Locker.Bind).</summary>
     public void BindHud(PlayerHud hud) => _hud = hud;
 
-    string IInteractable.Prompt => "PRESS";
+    string IInteractable.Prompt => L10n.T("hud.prompt.press");
     float IInteractable.HoldSeconds => 0f;
     bool IInteractable.CanInteract => _door != null && (!_everPressed || _door.CanBePressedAgain);
 

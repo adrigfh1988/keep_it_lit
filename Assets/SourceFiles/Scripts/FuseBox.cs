@@ -66,7 +66,7 @@ public class FuseBox : MonoBehaviour, IInteractable
         _humClip = DoorAudio.BuildClunkClip(0.6f, 220f, 0.1f);
     }
 
-    string IInteractable.Prompt => "RESTORE POWER";
+    string IInteractable.Prompt => L10n.T("hud.prompt.restore_power");
     float IInteractable.HoldSeconds => holdSeconds;
     bool IInteractable.CanInteract => !_done;
 

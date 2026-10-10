@@ -33,7 +33,7 @@ public class LoreNote : MonoBehaviour, IInteractable
         _hud = hud;
     }
 
-    string IInteractable.Prompt => _reader != null && _reader.IsOpen ? "CLOSE" : "READ";
+    string IInteractable.Prompt => L10n.T(_reader != null && _reader.IsOpen ? "hud.prompt.close" : "hud.prompt.read");
     float IInteractable.HoldSeconds => 0f;
     bool IInteractable.CanInteract => _reader != null;
 

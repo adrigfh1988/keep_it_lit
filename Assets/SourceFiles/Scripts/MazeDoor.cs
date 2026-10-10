@@ -143,7 +143,7 @@ public class MazeDoor : MonoBehaviour, IInteractable
 
     // ---------------------------------------------------------------- IInteractable
 
-    string IInteractable.Prompt => _kind == Kind.Manual ? (_open ? "CLOSE" : "OPEN") : "OPEN";
+    string IInteractable.Prompt => L10n.T(_kind == Kind.Manual && _open ? "hud.prompt.close" : "hud.prompt.open");
     float IInteractable.HoldSeconds => 0f;
 
     bool IInteractable.CanInteract

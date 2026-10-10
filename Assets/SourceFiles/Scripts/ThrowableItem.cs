@@ -55,7 +55,7 @@ public class ThrowableItem : MonoBehaviour, IInteractable
         _rb.angularVelocity = new Vector3(Random.Range(-8f, 8f), Random.Range(-8f, 8f), Random.Range(-8f, 8f));
     }
 
-    string IInteractable.Prompt => kind == Kind.Bottle ? "PICK UP BOTTLE" : "PICK UP CAN";
+    string IInteractable.Prompt => L10n.T(kind == Kind.Bottle ? "hud.prompt.pick_up_bottle" : "hud.prompt.pick_up_can");
     float IInteractable.HoldSeconds => 0f;
     bool IInteractable.CanInteract => !_isProjectile;
 

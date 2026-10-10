@@ -88,26 +88,75 @@ public class PlayerHud : MonoBehaviour
 
     // F72 decision D12: PlayerInteractor's focus prompt overrides Locker's own trigger prompt while set,
     // so the two never fight over the same line - see RefreshPrompt.
-    private string _triggerPrompt;
-    private string _focusPrompt;
+    // S9 (D15, plan section 6): a prompt is kept as PARTS - the physical key label ("E", or "USE" on touch), the translated text, an
+    // optional hold percentage - so nothing (the touch INTERACT button) ever has to parse the composed "E  HIDE  53%" line again.
+    // A prompt set by key (SetPromptKey) is translated when it is drawn, so it follows a language change without being set again.
+    private struct PromptParts
+    {
+        public string Key;
+        public string Text;
+        public string TextKey;
+        public int Percent;
+
+        public bool IsEmpty => string.IsNullOrEmpty(Text) && string.IsNullOrEmpty(TextKey);
+        public string ResolvedText => !string.IsNullOrEmpty(TextKey) ? L10n.T(TextKey) : Text;
+    }
+
+    private PromptParts _triggerPrompt;
+    private PromptParts _focusPrompt;
+    private string _promptBuiltKey, _promptBuiltText;
+    private int _promptBuiltPercent = int.MinValue;
+    private string _promptBuilt = "";
 
     /// <summary>Called by Locker on enter/exit/trigger. Null or empty hides the prompt (unless a focus prompt is showing).</summary>
     public void SetPrompt(string text)
     {
-        _triggerPrompt = text;
+        _triggerPrompt = string.IsNullOrEmpty(text) ? default : new PromptParts { Text = text, Percent = -1 };
+        RefreshPrompt();
+    }
+
+    /// <summary>S9: a trigger prompt drawn as "{keyLabel}  {L10n.T(textKey)}" and re-translated on a language change.</summary>
+    public void SetPromptKey(string keyLabel, string textKey)
+    {
+        _triggerPrompt = string.IsNullOrEmpty(textKey) ? default : new PromptParts { Key = keyLabel, TextKey = textKey, Percent = -1 };
         RefreshPrompt();
     }
 
     /// <summary>Called every frame by PlayerInteractor. Null or empty falls back to the trigger prompt.</summary>
     public void SetFocusPrompt(string text)
     {
-        _focusPrompt = text;
+        _focusPrompt = string.IsNullOrEmpty(text) ? default : new PromptParts { Text = text, Percent = -1 };
         RefreshPrompt();
     }
 
-    /// <summary>F76: the resolved prompt (focus overrides trigger, same rule RefreshPrompt uses), for
-    /// TouchControls' INTERACT button label. Null/empty when nothing is shown.</summary>
-    public string CurrentPrompt => !string.IsNullOrEmpty(_focusPrompt) ? _focusPrompt : _triggerPrompt;
+    /// <summary>S9: the focus prompt as parts - the key label, the (already translated) text and, while a hold is filling, its percentage (or -1).</summary>
+    public void SetFocusPrompt(string keyLabel, string text, int percent = -1)
+    {
+        _focusPrompt = string.IsNullOrEmpty(text) ? default : new PromptParts { Key = keyLabel, Text = text, Percent = percent };
+        RefreshPrompt();
+    }
+
+    private PromptParts ActivePrompt => !_focusPrompt.IsEmpty ? _focusPrompt : _triggerPrompt;
+
+    /// <summary>The resolved prompt as one line (focus overrides trigger, same rule RefreshPrompt uses). Null/empty when nothing is shown.</summary>
+    public string CurrentPrompt => FormatPrompt(ActivePrompt);
+
+    /// <summary>F76/S9: just the words of the resolved prompt (no key label, no percentage) for TouchControls' INTERACT button. Null/empty when nothing is shown.</summary>
+    public string CurrentPromptText => ActivePrompt.IsEmpty ? null : ActivePrompt.ResolvedText;
+
+    private string FormatPrompt(PromptParts p)
+    {
+        if (p.IsEmpty) return null;
+        string text = p.ResolvedText;
+        if (text == _promptBuiltText && p.Key == _promptBuiltKey && p.Percent == _promptBuiltPercent) return _promptBuilt;
+        string line = string.IsNullOrEmpty(p.Key) ? text : $"{p.Key}  {text}";
+        if (p.Percent >= 0) line += $"  {p.Percent}%";
+        _promptBuiltText = text;
+        _promptBuiltKey = p.Key;
+        _promptBuiltPercent = p.Percent;
+        _promptBuilt = line;
+        return line;
+    }
 
     private void RefreshPrompt()
     {
@@ -133,7 +182,7 @@ public class PlayerHud : MonoBehaviour
     {
         if (_subtitleText == null || string.IsNullOrEmpty(text)) return;
         if (_subtitleRoutine != null) StopCoroutine(_subtitleRoutine);
-        _subtitleRoutine = StartCoroutine(SubtitleRoutine(text, Mathf.Max(0.2f, seconds)));
+        _subtitleRoutine = StartCoroutine(SubtitleRoutine(text, Mathf.Max(0.2f, seconds, ReadingSeconds(text))));
     }
 
     /// <summary>F100: plays after the current line has finished (at once when none is showing). ShowSubtitle still replaces the line on screen; queued lines wait their turn behind it.</summary>
@@ -141,8 +190,11 @@ public class PlayerHud : MonoBehaviour
     {
         if (_subtitleText == null || string.IsNullOrEmpty(text)) return;
         if (_subtitleRoutine == null) ShowSubtitle(text, seconds);
-        else _subtitleQueue.Enqueue((text, seconds));
+        else _subtitleQueue.Enqueue((text, Mathf.Max(seconds, ReadingSeconds(text))));
     }
+
+    /// <summary>S9 (D14): a longer translation needs longer on screen - never less than 1.2 s plus 15 characters per second.</summary>
+    public static float ReadingSeconds(string text) => string.IsNullOrEmpty(text) ? 0f : 1.2f + text.Length / 15f;
 
     private IEnumerator SubtitleRoutine(string text, float seconds)
     {
@@ -204,7 +256,7 @@ public class PlayerHud : MonoBehaviour
         _batteryFill = CreateBar(canvas.transform, "BatteryBar", new Vector2(20f, 20f), BarSize,
             new Color(0f, 0f, 0f, 0.55f), _tint, out _batteryHolder, out _batteryGhost);
 
-        _batteryLabel = RuntimeUi.CreateText(canvas.transform, "BatteryLabel", "TORCH", 20f, _tint);
+        _batteryLabel = RuntimeUi.CreateText(canvas.transform, "BatteryLabel", L10n.T("hud.torch"), 20f, _tint);
         _batteryLabel.alignment = TextAlignmentOptions.Left;
         RectTransform labelRect = _batteryLabel.rectTransform;
         labelRect.anchorMin = new Vector2(0f, 0f);
@@ -212,6 +264,7 @@ public class PlayerHud : MonoBehaviour
         labelRect.pivot = new Vector2(0f, 0f);
         labelRect.anchoredPosition = new Vector2(20f, 34f);
         labelRect.sizeDelta = new Vector2(220f, 24f);
+        RuntimeUi.AutoFit(_batteryLabel, 0.7f); // D14
 
         _staminaFill = CreateBar(canvas.transform, "StaminaBar", new Vector2(20f, 62f), BarSize,
             new Color(0f, 0f, 0f, 0.55f), StaminaColor, out _staminaHolder, out _staminaGhost);
@@ -220,7 +273,8 @@ public class PlayerHud : MonoBehaviour
 
         // Sits under TensionDirector's star counter (top-left, 36 px in, 30 px down, 60 px tall)
         TextMeshProUGUI floorText = _floorText = RuntimeUi.CreateText(canvas.transform, "FloorLabel",
-            $"FLOOR {GameFlow.CurrentFloor}", 26f, new Color(0.62f, 0.62f, 0.66f));
+            L10n.T("hud.floor", ("floor", GameFlow.CurrentFloor)), 26f, new Color(0.62f, 0.62f, 0.66f));
+        RuntimeUi.AutoFit(floorText, 0.7f);
         floorText.alignment = TextAlignmentOptions.TopLeft;
         floorText.characterSpacing = 6f;
         RectTransform floorRect = floorText.rectTransform;
@@ -231,7 +285,7 @@ public class PlayerHud : MonoBehaviour
         floorRect.sizeDelta = new Vector2(320f, 34f);
 
         // Under the floor label, top-left. Hidden in the shop - the shop panel shows the wallet instead.
-        _shardText = RuntimeUi.CreateText(canvas.transform, "ShardCounter", "SHARDS  0", 26f, ShardColour);
+        _shardText = RuntimeUi.CreateText(canvas.transform, "ShardCounter", L10n.T("hud.shards", ("currency", PlayerWallet.CurrencyName), ("shards", 0)), 26f, ShardColour);
         _shardText.alignment = TextAlignmentOptions.TopLeft;
         _shardText.characterSpacing = 6f;
         RectTransform shardRect = _shardText.rectTransform;
@@ -241,7 +295,8 @@ public class PlayerHud : MonoBehaviour
         shardRect.anchoredPosition = new Vector2(38f, -118f);
         shardRect.sizeDelta = new Vector2(320f, 34f);
         _shardShown = PlayerWallet.Shards;
-        _shardText.text = $"SHARDS  {_shardShown}";
+        RuntimeUi.AutoFit(_shardText, 0.7f);
+        _shardText.text = ShardLabel(_shardShown);
 
         _promptText = RuntimeUi.CreateText(canvas.transform, "InteractPrompt", "", 34f, Color.white);
         RectTransform promptRect = _promptText.rectTransform;
@@ -250,39 +305,66 @@ public class PlayerHud : MonoBehaviour
         promptRect.pivot = new Vector2(0.5f, 0f);
         promptRect.anchoredPosition = new Vector2(0f, 120f);
         promptRect.sizeDelta = new Vector2(600f, 50f);
+        RuntimeUi.AutoFit(_promptText, 0.6f); // D14: longer in FR/DE
         _promptText.gameObject.SetActive(false);
 
         // Above the prompt (120) and clear of the escape timer, which is top-centre.
         _subtitleText = RuntimeUi.CreateText(canvas.transform, "DreadSubtitle", "", 30f, SubtitleColor);
         _subtitleText.fontStyle = FontStyles.Italic;
         _subtitleText.characterSpacing = 2f;
+        // S9 (D14): up to two lines, growing upwards from the same baseline (bottom-aligned in a taller box).
+        _subtitleText.alignment = TextAlignmentOptions.Bottom;
+        _subtitleText.textWrappingMode = TextWrappingModes.Normal;
         RectTransform subtitleRect = _subtitleText.rectTransform;
         subtitleRect.anchorMin = new Vector2(0.5f, 0f);
         subtitleRect.anchorMax = new Vector2(0.5f, 0f);
         subtitleRect.pivot = new Vector2(0.5f, 0f);
         subtitleRect.anchoredPosition = new Vector2(0f, 196f);
-        subtitleRect.sizeDelta = new Vector2(900f, 44f);
+        subtitleRect.sizeDelta = new Vector2(900f, 88f);
+        RuntimeUi.AutoFit(_subtitleText, 0.8f);
         _subtitleText.gameObject.SetActive(false);
 
         // Item slots, bottom-right, pivoted from the bottom-right corner.
-        _secondWindText = RuntimeUi.CreateText(canvas.transform, "SecondWindLabel", "SECOND WIND", 22f, SecondWindColor);
+        _secondWindText = RuntimeUi.CreateText(canvas.transform, "SecondWindLabel", L10n.T("hud.second_wind"), 22f, SecondWindColor);
         _secondWindText.alignment = TextAlignmentOptions.Right;
         PlaceBottomRight(_secondWindText.rectTransform, new Vector2(-20f, 104f), new Vector2(360f, 30f));
+        RuntimeUi.Bind(_secondWindText, "hud.second_wind", 0.7f);
         _secondWindText.gameObject.SetActive(false);
 
-        _slot1Text = RuntimeUi.CreateText(canvas.transform, "Slot1", "1   BATTERY  x0", 24f, _tint);
+        _slot1Text = RuntimeUi.CreateText(canvas.transform, "Slot1", "", 24f, _tint);
         _slot1Text.alignment = TextAlignmentOptions.Right;
         PlaceBottomRight(_slot1Text.rectTransform, new Vector2(-20f, 62f), new Vector2(360f, 34f));
 
-        _slot2Text = RuntimeUi.CreateText(canvas.transform, "Slot2", "2   COMPASS  x0", 24f, _tint);
+        _slot2Text = RuntimeUi.CreateText(canvas.transform, "Slot2", "", 24f, _tint);
         _slot2Text.alignment = TextAlignmentOptions.Right;
         PlaceBottomRight(_slot2Text.rectTransform, new Vector2(-20f, 20f), new Vector2(360f, 34f));
 
-        _throwText = RuntimeUi.CreateText(canvas.transform, "ThrowSlot", "G   THROW  x0", 24f, ThrowColour);
+        _throwText = RuntimeUi.CreateText(canvas.transform, "ThrowSlot", "", 24f, ThrowColour);
         _throwText.alignment = TextAlignmentOptions.Right;
         PlaceBottomRight(_throwText.rectTransform, new Vector2(-20f, 146f), new Vector2(360f, 34f));
         _throwText.gameObject.SetActive(false);
+        RuntimeUi.AutoFit(_slot1Text, 0.7f);
+        RuntimeUi.AutoFit(_slot2Text, 0.7f);
+        RuntimeUi.AutoFit(_throwText, 0.7f);
+        L10n.Changed += OnLanguageChanged;
     }
+
+    private void OnDestroy() => L10n.Changed -= OnLanguageChanged;
+
+    /// <summary>S9: drops the caches of composed labels so the next Update rewrites them in the new language.</summary>
+    private void OnLanguageChanged()
+    {
+        _floorShownValid = false;
+        _slotKey1 = _slotKey2 = _slotKeyThrow = null;
+        if (_shardText != null) _shardText.text = ShardLabel(_shardShown);
+        _promptBuiltText = null;
+    }
+
+    private bool _floorShownValid, _floorShownHub;
+    private int _floorShownFloor;
+    private string _slotKey1, _slotKey2, _slotKeyThrow;
+
+    private static string ShardLabel(int shards) => L10n.T("hud.shards", ("currency", PlayerWallet.CurrencyName), ("shards", shards));
 
     private static void PlaceBottomRight(RectTransform rect, Vector2 anchoredPosition, Vector2 size)
     {
@@ -300,8 +382,15 @@ public class PlayerHud : MonoBehaviour
         {
             _floorText.gameObject.SetActive(!GameFlow.IsInIntake);
             // F92: the hospital between mazes is not a floor.
-            string floorLabel = GameFlow.IsInHub ? "ASYLUM" : $"FLOOR {GameFlow.CurrentFloor}";
-            if (_floorText.text != floorLabel) _floorText.text = floorLabel;
+            bool hub = GameFlow.IsInHub;
+            int floor = GameFlow.CurrentFloor;
+            if (!_floorShownValid || _floorShownHub != hub || _floorShownFloor != floor)
+            {
+                _floorShownValid = true;
+                _floorShownHub = hub;
+                _floorShownFloor = floor;
+                _floorText.text = hub ? L10n.T("hud.asylum") : L10n.T("hud.floor", ("floor", floor));
+            }
         }
         UpdateBattery();
         UpdateStamina();
@@ -328,7 +417,7 @@ public class PlayerHud : MonoBehaviour
             {
                 int held = _throwController != null ? _throwController.Carried : 0;
                 _throwText.gameObject.SetActive(held > 0);
-                if (held > 0) _throwText.text = $"{TouchInput.Key("G", "TAP")}   THROW  x{held}";
+                if (held > 0) SetSlotText(_throwText, ref _slotKeyThrow, "hud.slot.throw", "G", held);
             }
             return;
         }
@@ -338,19 +427,29 @@ public class PlayerHud : MonoBehaviour
         _slot2Punch = Mathf.MoveTowards(_slot2Punch, 0f, Time.unscaledDeltaTime / 0.25f);
 
         int batteryCount = PlayerInventory.Count(ShopItem.SpareBattery);
-        _slot1Text.text = $"{TouchInput.Key("1", "TAP")}   BATTERY  x{batteryCount}";
+        SetSlotText(_slot1Text, ref _slotKey1, "hud.slot.battery", "1", batteryCount);
         ApplySlot(_slot1Text, batteryCount > 0, _slot1Punch);
 
         int compassCount = PlayerInventory.Count(ShopItem.StarCompass);
-        _slot2Text.text = $"{TouchInput.Key("2", "TAP")}   COMPASS  x{compassCount}";
+        SetSlotText(_slot2Text, ref _slotKey2, "hud.slot.compass", "2", compassCount);
         ApplySlot(_slot2Text, compassCount > 0, _slot2Punch);
 
         if (_throwText != null)
         {
             int carried = _throwController != null ? _throwController.Carried : 0;
             _throwText.gameObject.SetActive(carried > 0);
-            if (carried > 0) _throwText.text = $"{TouchInput.Key("G", "TAP")}   THROW  x{carried}";
+            if (carried > 0) SetSlotText(_throwText, ref _slotKeyThrow, "hud.slot.throw", "G", carried);
         }
+    }
+
+    /// <summary>S9: writes "{key}   NAME  x{count}" only when the key mode, count or language changed (no per-frame string garbage).</summary>
+    private static void SetSlotText(TextMeshProUGUI text, ref string cache, string key, string keyboardKey, int count)
+    {
+        string chip = TouchInput.Key(keyboardKey, L10n.T("ui.key.tap"));
+        string id = key + "|" + chip + "|" + count;
+        if (cache == id) return;
+        cache = id;
+        text.text = L10n.T(key, ("key", chip), ("count", count));
     }
 
     private void ApplySlot(TextMeshProUGUI text, bool has, float punch)
@@ -378,7 +477,7 @@ public class PlayerHud : MonoBehaviour
         if (shards != _shardShown)
         {
             _shardShown = shards;
-            _shardText.text = $"SHARDS  {_shardShown}";
+            _shardText.text = ShardLabel(_shardShown);
             _shardPunch = 1f;
         }
 
@@ -411,12 +510,12 @@ public class PlayerHud : MonoBehaviour
 
         if (_flashlight.IsDead)
         {
-            _batteryLabel.text = "TORCH DEAD";
+            _batteryLabel.text = L10n.T("hud.torch_dead");
             _batteryLabel.color = AlarmedColor;
         }
         else
         {
-            _batteryLabel.text = "TORCH";
+            _batteryLabel.text = L10n.T("hud.torch");
             bool blinking = charge <= 0.1f;
             if (blinking)
             {

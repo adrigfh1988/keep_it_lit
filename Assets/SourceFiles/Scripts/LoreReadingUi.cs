@@ -52,11 +52,23 @@ public class LoreReadingUi : MonoBehaviour, IInteractable
     {
         if (_holder == null) return;
 
+        // S9 (plan section 6): the panel size follows the MEASURED text, not a character count - a French or German note is longer than the
+        // English one it replaces. F93: the patient case files are longer than a note - a taller panel and a slightly smaller type.
+        _text.enableAutoSizing = false;
+        _text.fontSize = 28f;
         _text.text = text;
-        // F93: the patient case files are longer than a note - a taller panel and a slightly smaller type.
-        bool longText = text != null && text.Length > 200;
-        if (_panelRect != null) _panelRect.sizeDelta = longText ? new Vector2(860f, 480f) : new Vector2(760f, 300f);
+        const float smallWidth = 760f, smallHeight = 300f;
+        float needed = _text.GetPreferredValues(text ?? "", smallWidth - _text.margin.x - _text.margin.z, 0f).y + _text.margin.y + _text.margin.w;
+        bool longText = needed > smallHeight;
+        if (_panelRect != null) _panelRect.sizeDelta = longText ? new Vector2(860f, 480f) : new Vector2(smallWidth, smallHeight);
         _text.fontSize = longText ? 26f : 28f;
+        if (longText)
+        {
+            // Still too long for the tall panel (a long file in a long language): shrink to fit rather than clip.
+            _text.fontSizeMax = 26f;
+            _text.fontSizeMin = 18f;
+            _text.enableAutoSizing = true;
+        }
         _holder.SetActive(true);
         IsOpen = true;
 
@@ -90,7 +102,7 @@ public class LoreReadingUi : MonoBehaviour, IInteractable
 
     // ---------------------------------------------------------------- IInteractable (Fallback only - never Probed)
 
-    string IInteractable.Prompt => "CLOSE";
+    string IInteractable.Prompt => L10n.T("hud.prompt.close");
     float IInteractable.HoldSeconds => 0f;
     bool IInteractable.CanInteract => IsOpen;
     void IInteractable.Interact(PlayerInteractor who) => Close();

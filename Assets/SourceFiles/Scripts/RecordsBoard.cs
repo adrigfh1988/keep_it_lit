@@ -17,6 +17,7 @@ public class RecordsBoard : MonoBehaviour
     {
         AsylumHub.OnEnterHub += HandleEnter;
         LoreNote.Read += HandleRead;
+        L10n.Changed += Refresh;
         Refresh();
     }
 
@@ -24,6 +25,7 @@ public class RecordsBoard : MonoBehaviour
     {
         AsylumHub.OnEnterHub -= HandleEnter;
         LoreNote.Read -= HandleRead;
+        L10n.Changed -= Refresh;
     }
 
     private void HandleEnter(int floor) => Refresh();
@@ -37,7 +39,11 @@ public class RecordsBoard : MonoBehaviour
     public void Refresh()
     {
         _shown = HubState.FilesRead;
-        if (header != null) header.text = $"CASE FILES  {_shown} / {PatientFiles.MazeFileCount}";
+        if (header != null)
+        {
+            if (!header.enableAutoSizing) RuntimeUi.AutoFit(header, 0.6f); // D14
+            header.text = L10n.T("hud.records.header", ("n", _shown), ("total", PatientFiles.MazeFileCount));
+        }
         foreach (RecordsSlot slot in slots)
         {
             if (slot != null) slot.Refresh();

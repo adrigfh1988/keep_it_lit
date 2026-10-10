@@ -60,7 +60,7 @@ public class Lantern : MonoBehaviour, IInteractable
         _hud = hud;
     }
 
-    string IInteractable.Prompt => _carried ? "PUT DOWN LANTERN" : "PICK UP LANTERN";
+    string IInteractable.Prompt => L10n.T(_carried ? "hud.prompt.put_down_lantern" : "hud.prompt.pick_up_lantern");
     float IInteractable.HoldSeconds => 0f;
     bool IInteractable.CanInteract => true;
 

@@ -127,10 +127,10 @@ public class ThemeInteractable : MonoBehaviour, IInteractable
 
     string IInteractable.Prompt => _kind switch
     {
-        Kind.CallBell => "RING BELL",
-        Kind.SteamValve => "OPEN VALVE",
-        Kind.Candles => _candlesLit ? "" : "LIGHT CANDLES",
-        Kind.Terminal => "USE TERMINAL",
+        Kind.CallBell => L10n.T("hud.prompt.ring_bell"),
+        Kind.SteamValve => L10n.T("hud.prompt.open_valve"),
+        Kind.Candles => _candlesLit ? "" : L10n.T("hud.prompt.light_candles"),
+        Kind.Terminal => L10n.T("hud.prompt.use_terminal"),
         _ => ""
     };
 

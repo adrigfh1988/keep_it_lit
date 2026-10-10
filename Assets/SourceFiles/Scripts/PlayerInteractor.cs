@@ -79,7 +79,7 @@ public class PlayerInteractor : MonoBehaviour
             // while open) still owns E - see the Fallback doc comment.
             if (Fallback != null && Fallback.CanInteract)
             {
-                if (_hud != null) _hud.SetFocusPrompt($"E  {Fallback.Prompt}");
+                if (_hud != null) _hud.SetFocusPrompt("E", Fallback.Prompt);
                 if (pressed) Fallback.Interact(this);
             }
             else if (_hud != null)
@@ -94,7 +94,7 @@ public class PlayerInteractor : MonoBehaviour
         if (_focused.HoldSeconds <= 0f)
         {
             if (pressed && canInteract) _focused.Interact(this);
-            if (_hud != null) _hud.SetFocusPrompt(canInteract ? $"E  {_focused.Prompt}" : null);
+            if (_hud != null) _hud.SetFocusPrompt("E", canInteract ? _focused.Prompt : null);
         }
         else
         {
@@ -110,13 +110,13 @@ public class PlayerInteractor : MonoBehaviour
                 else if (_hud != null)
                 {
                     int percent = Mathf.RoundToInt(Mathf.Clamp01(_holdElapsed / _focused.HoldSeconds) * 100f);
-                    _hud.SetFocusPrompt($"E  {_focused.Prompt}  {percent}%");
+                    _hud.SetFocusPrompt("E", _focused.Prompt, percent);
                 }
             }
             else
             {
                 _holdElapsed = 0f;
-                if (_hud != null) _hud.SetFocusPrompt(canInteract ? $"E  {_focused.Prompt}" : null);
+                if (_hud != null) _hud.SetFocusPrompt("E", canInteract ? _focused.Prompt : null);
             }
         }
     }

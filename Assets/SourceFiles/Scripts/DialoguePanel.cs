@@ -181,8 +181,9 @@ public class DialoguePanel : MonoBehaviour
     {
         if (_hint == null) return;
         bool revealed = _line.maxVisibleCharacters >= _line.textInfo.characterCount && _line.textInfo.characterCount > 0;
-        if (_node != null && _node.HasChoices) _hint.text = revealed ? "ESC  LEAVE" : "";
-        else _hint.text = $"{TouchInput.Key("E", "TAP")}  {(_queue.Count == 0 ? "END" : "CONTINUE")}    ·    {TouchInput.Key("ESC", "BACK")}  LEAVE";
+        if (_node != null && _node.HasChoices) _hint.text = revealed ? L10n.T("ui.dialogue.hint_leave", ("key", "ESC")) : "";
+        else _hint.text = L10n.T(_queue.Count == 0 ? "ui.dialogue.hint_end" : "ui.dialogue.hint_next",
+            ("key", TouchInput.Key("E", L10n.T("ui.key.tap"))), ("back", TouchInput.Key("ESC", L10n.T("ui.key.back"))));
     }
 
     // ---------------------------------------------------------------- update
@@ -329,6 +330,7 @@ public class DialoguePanel : MonoBehaviour
         hr.pivot = new Vector2(1f, 0f);
         hr.anchoredPosition = new Vector2(-34f, 14f);
         hr.sizeDelta = new Vector2(760f, 30f);
+        RuntimeUi.AutoFit(_hint, 0.7f); // D14
 
         _choiceButtons = new Button[2];
         _choiceLabels = new TextMeshProUGUI[2];
@@ -341,6 +343,7 @@ public class DialoguePanel : MonoBehaviour
             _choiceLabels[i] = b.GetComponentInChildren<TextMeshProUGUI>();
             _choiceLabels[i].alignment = TextAlignmentOptions.Left;
             _choiceLabels[i].margin = new Vector4(22f, 0f, 14f, 0f);
+            RuntimeUi.AutoFit(_choiceLabels[i], 0.65f); // D14: a longer reply shrinks to the 540 x 58 button
             b.gameObject.SetActive(false);
         }
 

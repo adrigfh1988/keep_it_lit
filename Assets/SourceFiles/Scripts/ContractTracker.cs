@@ -97,6 +97,7 @@ public class ContractTracker : MonoBehaviour
         LoreNote.Read += HandleNoteRead;
         Stalker.PlayerTouched += HandleStalkerTouch;
         ThrowableItem.HunterInvestigated += HandleDistraction;
+        L10n.Changed += RefreshLine;
         _subscribed = true;
 
         BuildLine();
@@ -110,6 +111,7 @@ public class ContractTracker : MonoBehaviour
         LoreNote.Read -= HandleNoteRead;
         Stalker.PlayerTouched -= HandleStalkerTouch;
         ThrowableItem.HunterInvestigated -= HandleDistraction;
+        L10n.Changed -= RefreshLine;
     }
 
     // ---------------------------------------------------------------- events
@@ -244,9 +246,9 @@ public class ContractTracker : MonoBehaviour
 
         string name = ContractState.Def(_id).Name.TrimEnd('.');
         int reward = _state == State.Complete ? ContractState.Reward(_id, ContractState.ActiveFloor) : 0;
-        string status = _state == State.Complete ? "DONE" : _state == State.Void ? "VOID" : "FAILED";
+        string ledgerKey = _state == State.Complete ? "ui.ledger.contract_done" : _state == State.Void ? "ui.ledger.contract_void" : "ui.ledger.contract_failed";
 
-        payout.Lines.Add(new PayoutLine { Label = $"CONTRACT  {name}  {status}", Amount = reward });
+        payout.Lines.Add(new PayoutLine { Label = L10n.T(ledgerKey, ("name", name)), Amount = reward, Kind = PayoutKind.Contract });
         payout.Total += reward;
 
         ContractState.SalesmanLine = _state == State.Complete ? "A deal's a deal." : _state == State.Failed ? "Can't win them all." : null;
@@ -264,6 +266,7 @@ public class ContractTracker : MonoBehaviour
         _line = RuntimeUi.CreateText(canvas.transform, "ContractLine", "", 26f, Amber);
         _line.alignment = TextAlignmentOptions.TopLeft;
         _line.textWrappingMode = TextWrappingModes.NoWrap;
+        RuntimeUi.AutoFit(_line, 0.7f); // D14
         RectTransform rect = _line.rectTransform;
         rect.anchorMin = new Vector2(0f, 1f);
         rect.anchorMax = new Vector2(0f, 1f);
@@ -281,29 +284,29 @@ public class ContractTracker : MonoBehaviour
         Color color;
         switch (_state)
         {
-            case State.Complete: text = $"CONTRACT  -  {name}  -  DONE"; color = Green; break;
-            case State.Failed: text = $"CONTRACT  -  {name}  -  FAILED"; color = Red; break;
-            case State.Void: text = $"CONTRACT  -  {name}  -  VOID"; color = Grey; break;
-            default: text = $"CONTRACT  -  {name}{Progress()}"; color = Amber; break;
+            case State.Complete: text = L10n.T("hud.contract.done", ("name", name)); color = Green; break;
+            case State.Failed: text = L10n.T("hud.contract.failed", ("name", name)); color = Red; break;
+            case State.Void: text = L10n.T("hud.contract.void", ("name", name)); color = Grey; break;
+            default: text = Progress(name); color = Amber; break;
         }
         _line.text = text;
         _line.color = color;
     }
 
-    private string Progress()
+    private string Progress(string name)
     {
         switch (_id)
         {
-            case ContractState.DarkWalk: return $"  -  {Mathf.FloorToInt(_darkSeconds)} / {Mathf.RoundToInt(ContractState.DarkWalkSeconds)} s";
-            case ContractState.Scavenger: return $"  -  {Mathf.Min(PlayerWallet.ShardsFoundThisAttempt, _shardTarget)} / {_shardTarget}";
-            case ContractState.Reader: return $"  -  {_notesRead.Count} / {_notesPlaced}";
-            case ContractState.Distract: return $"  -  {_distractions} / {ContractState.DistractCount}";
+            case ContractState.DarkWalk: return L10n.T("hud.contract.progress_dark", ("name", name), ("n", Mathf.FloorToInt(_darkSeconds)), ("total", Mathf.RoundToInt(ContractState.DarkWalkSeconds)));
+            case ContractState.Scavenger: return L10n.T("hud.contract.progress_count", ("name", name), ("n", Mathf.Min(PlayerWallet.ShardsFoundThisAttempt, _shardTarget)), ("total", _shardTarget));
+            case ContractState.Reader: return L10n.T("hud.contract.progress_count", ("name", name), ("n", _notesRead.Count), ("total", _notesPlaced));
+            case ContractState.Distract: return L10n.T("hud.contract.progress_count", ("name", name), ("n", _distractions), ("total", ContractState.DistractCount));
             case ContractState.Quick:
             {
                 float left = Mathf.Max(0f, ContractState.QuickSeconds(GameFlow.CurrentFloor) - Elapsed);
-                return $"  -  {MazeEscape.FormatTime(left)} left";
+                return L10n.T("hud.contract.progress_time", ("name", name), ("time", MazeEscape.FormatTime(left)));
             }
-            default: return "";
+            default: return L10n.T("hud.contract.plain", ("name", name));
         }
     }
 

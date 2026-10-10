@@ -102,6 +102,37 @@ public static class RuntimeUi
         return text;
     }
 
+    /// <summary>
+    /// S9: makes <paramref name="text"/> follow the language - sets it from <paramref name="key"/> now and again on every language change
+    /// (see <see cref="LocalizedLabel"/>). Optionally shrinks to fit its box (D14, down to <paramref name="minFraction"/> of its size).
+    /// </summary>
+    public static LocalizedLabel Bind(TMP_Text text, string key, float autoFitMin = 0f, params (string name, object value)[] args)
+    {
+        if (text == null) return null;
+        LocalizedLabel label = text.GetComponent<LocalizedLabel>();
+        if (label == null) label = text.gameObject.AddComponent<LocalizedLabel>();
+        label.Set(text, key, args != null && args.Length > 0 ? args : null);
+        if (autoFitMin > 0f) AutoFit(text, autoFitMin);
+        return label;
+    }
+
+    /// <summary>S9 (D14): a button whose caption follows the language and shrinks (to ~65 %) rather than overflowing in a longer language.</summary>
+    public static Button BindButton(Button button, string key, float autoFitMin = 0.65f)
+    {
+        if (button != null) Bind(button.GetComponentInChildren<TMP_Text>(), key, autoFitMin);
+        return button;
+    }
+
+    /// <summary>S9 (D14): enables auto-size with the current size as the maximum and <paramref name="minFraction"/> of it as the minimum.</summary>
+    public static void AutoFit(TMP_Text text, float minFraction = 0.65f)
+    {
+        if (text == null) return;
+        float max = text.fontSize;
+        text.enableAutoSizing = true;
+        text.fontSizeMax = max;
+        text.fontSizeMin = Mathf.Max(8f, max * minFraction);
+    }
+
     public static void Place(RectTransform rect, Vector2 anchor, Vector2 anchoredPosition, Vector2 size)
     {
         rect.anchorMin = anchor;

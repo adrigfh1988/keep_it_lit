@@ -94,17 +94,17 @@ public class ConsumableController : MonoBehaviour
     {
         if (PlayerInventory.Count(ShopItem.SpareBattery) == 0)
         {
-            if (_hud != null) _hud.ShowSubtitle("No spare battery.", 1.8f);
+            if (_hud != null) _hud.ShowSubtitle(L10n.T("sub.consumable.no_battery"), 1.8f);
             return;
         }
         if (_stealth != null && _stealth.Hidden)
         {
-            if (_hud != null) _hud.ShowSubtitle("Not in here.", 1.8f);
+            if (_hud != null) _hud.ShowSubtitle(L10n.T("sub.consumable.not_in_here"), 1.8f);
             return;
         }
         if (_flashlight != null && _flashlight.Charge >= 0.99f)
         {
-            if (_hud != null) _hud.ShowSubtitle("The torch is full.", 1.8f);
+            if (_hud != null) _hud.ShowSubtitle(L10n.T("sub.consumable.torch_full"), 1.8f);
             return;
         }
 
@@ -113,7 +113,7 @@ public class ConsumableController : MonoBehaviour
         if (_hud != null)
         {
             _hud.PulseSlot(0);
-            _hud.ShowSubtitle("Fresh cell.", 1.8f);
+            _hud.ShowSubtitle(L10n.T("sub.consumable.fresh_cell"), 1.8f);
         }
     }
 
@@ -121,12 +121,12 @@ public class ConsumableController : MonoBehaviour
     {
         if (PlayerInventory.Count(ShopItem.StarCompass) == 0)
         {
-            if (_hud != null) _hud.ShowSubtitle("No star compass.", 1.8f);
+            if (_hud != null) _hud.ShowSubtitle(L10n.T("sub.consumable.no_compass"), 1.8f);
             return;
         }
         if (_retired || (_escape != null && _escape.HatchOpen))
         {
-            if (_hud != null) _hud.ShowSubtitle("Nothing left to point at.", 1.8f);
+            if (_hud != null) _hud.ShowSubtitle(L10n.T("sub.consumable.nothing_to_point"), 1.8f);
             return;
         }
         if (_compassRoutine != null) return; // already active

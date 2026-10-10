@@ -37,3 +37,101 @@ ui.settings.opt.low,"Tier option shared by quality, shadows and fog (feminine in
 ui.settings.opt.medium,Tier option shared by quality,MEDIUM
 ui.settings.opt.high,Tier option shared by quality and shadows,HIGH
 ui.settings.opt.normal,Fog tier option: default amount,NORMAL
+ui.common.back,"Shared BACK button caption (menus, 420 x 86 button, 40 pt, auto-size)",BACK
+ui.common.continue,"Shared CONTINUE caption (button, 420 x 86, 40 pt)",CONTINUE
+ui.menu.tagline,"Title screen tagline under the game title (38 pt, one line, 1200 px, auto-size)",Collect. Escape. Don't be seen.
+ui.menu.continue,"Title screen: resume the saved run (420 x 86 button, 40 pt)",CONTINUE
+ui.menu.start_game,"Title screen: start a new campaign (420 x 86 button, 40 pt)",START GAME
+ui.menu.controls,"Title screen: open the controls sheet (420 x 86 button, 40 pt)",CONTROLS
+ui.menu.settings,"Title screen: open the settings screen (420 x 86 button, 40 pt)",SETTINGS
+ui.menu.exit,"Title screen: quit the game (420 x 86 button, 40 pt)",EXIT
+ui.menu.start_over_heading,"Confirm panel heading when START GAME would discard a saved run (76 pt, one line, 1400 px)",START OVER?
+ui.menu.start_over_body,"Confirm panel body (40 pt, one line, 1400 px). {floor} = floor number of the saved run",Your saved run (floor {floor}) will be lost.
+ui.menu.start_over,"Confirm panel: discard the save and start (420 x 86 button, 40 pt)",START OVER
+ui.rules.heading,"Rules screen heading (76 pt, one line, 1400 px)",HOW TO PLAY
+ui.rules.item1,"Rules screen, rule 1 (36 pt, left aligned, 1100 px wide block of four rules). Keep the <b> tag",<b>1.</b>   Collect every star hidden in the maze.
+ui.rules.item2,"Rules screen, rule 2",<b>2.</b>   A hatch will open somewhere. Find it before the timer runs out.
+ui.rules.item3,"Rules screen, rule 3. Keep the red <color> and <b> tags around the word RUN","<b>3.</b>   You are not alone down here. If it sees you, <color=#DB1F17><b>run</b></color>."
+ui.rules.item4,"Rules screen, rule 4","<b>4.</b>   Shards glint in the dark. Between floors, someone will sell you things for them."
+ui.rules.start,"Rules screen: begin the run (420 x 90 button, 44 pt)",START
+ui.controls.keyboard,"Controls sheet, keyboard and mouse (34 pt, two lines, 1400 px). Key names in <b> stay as they are (WASD, SHIFT, F, E, 1, 2, ESC); MOUSE is translated","<b>WASD</b>  move   <b>SHIFT</b>  sprint   <b>MOUSE</b>  look   <b>F</b>  flashlight   <b>E</b>  hide / talk
+<b>1</b>  spare battery   <b>2</b>  star compass   <b>ESC</b>  pause"
+ui.controls.touch,"Controls sheet, touch layout (34 pt, one line, 1400 px). The button names in <b> must match the on-screen button captions (ui.touch.*)","<b>LEFT THUMB</b>  move   <b>RIGHT THUMB</b>  look   buttons: <b>TORCH</b>, <b>FOCUS</b>, <b>INTERACT</b>, <b>THROW</b>, <b>SPRINT</b>"
+ui.controls.tip,"Controls sheet and rules, tip line below the controls (30 pt, 1400 px)",Your torch has three minutes of light in it. Your legs have less. Lockers hide you — unless it saw you climb in.
+ui.pause.title,"Pause screen heading (84 pt, one line, 1200 px)",PAUSED
+ui.pause.resume,"Pause menu: resume (420 x 86 button, 40 pt)",RESUME
+ui.pause.restart,"Pause menu: restart the same maze (420 x 86 button, 40 pt)",RESTART MAZE
+ui.pause.skip_tutorial,"Pause menu in the Intake only: skip the tutorial (420 x 86 button, 40 pt)",SKIP TUTORIAL
+ui.pause.main_menu,"Pause menu: back to the title screen (420 x 86 button, 40 pt)",MAIN MENU
+ui.pause.quit,"Pause menu: quit the game (420 x 86 button, 40 pt)",QUIT
+ui.ledger.slip_heading,"Readmission slip heading above the ledger (30 pt amber, one line, 1400 px, auto-size). {admission} = admission number, {patient} = 7 or a redaction glyph (#)",READMITTED  ·  ADMISSION {admission}  ·  PATIENT {patient}
+ui.ledger.slip_subtitle,"Readmission slip subtitle, typed out (34 pt, one line, 1400 px)",THE CLERK HAS TYPED YOUR RETURN.
+ui.ledger.subtitle,"Floor-clear ledger subtitle in the legacy shop flow (34 pt, one line, 1400 px)",The hatch closed behind you. Something down here is open.
+ui.ledger.already_yours,"Ledger amount column for the informational SHARDS FOUND line (36 pt, right aligned, 300 px)",already yours
+ui.ledger.no_pay,"Ledger amount column for a contract line that paid nothing (36 pt, right aligned, 300 px)",no pay
+ui.ledger.payout,"Ledger total line (44 pt green, 900 px). {amount} = shards paid",PAYOUT  +{amount}
+ui.ledger.wallet,"Ledger wallet line (44 pt, 900 px). {currency} = the currency name (SHARDS), {shards} = wallet balance",{currency}  {shards}
+ui.ledger.shop_held,"Readmission slip order line, typed (34 pt amber, one line, 1500 px). {shards} = wallet balance, {currency} = the currency name",EFFECTS HELD AT THE SHOP  ·  {shards} {currency}
+ui.ledger.contract_done,"Ledger line for a finished contract (36 pt, left column 900 px, auto-size). {name} = contract name",CONTRACT  {name}  DONE
+ui.ledger.contract_failed,"Ledger line for a failed contract (36 pt, left column 900 px). {name} = contract name",CONTRACT  {name}  FAILED
+ui.ledger.contract_void,"Ledger line for a voided contract (36 pt, left column 900 px). {name} = contract name",CONTRACT  {name}  VOID
+ui.end.won_final,"End screen title, campaign won (96 pt bold green, one line, 1600 px)",YOU GOT OUT
+ui.end.floor_cleared,"End screen title, floor cleared in the no-shop fallback (96 pt). {floor} = floor number",FLOOR {floor} CLEARED
+ui.end.won_final_body,"End screen subtitle after the final floor (36 pt, one line, 1600 px)",The hatch closed behind you. There is nothing left below.
+ui.end.floor_cleared_body,"End screen subtitle after floors 1-4 (36 pt, one line, 1600 px)",The hatch closed behind you. It is darker down here.
+ui.end.caught,End screen title when the hunter caught you (96 pt bold red),IT FOUND YOU
+ui.end.caught_hidden,End screen subtitle: caught after being seen hiding in a locker (36 pt),It watched you hide.
+ui.end.caught_torch,End screen subtitle: caught with the torch on (36 pt),It was faster in the dark.
+ui.end.caught_silent,End screen subtitle: caught with the torch off (36 pt),You never heard it coming.
+ui.end.out_of_time,End screen title when the escape timer ran out (96 pt bold red),OUT OF TIME
+ui.end.out_of_time_body,"End screen subtitle (36 pt, one line, 1600 px). {stars} = stars collected, {metres} = distance to the hatch in metres",The hatch sealed. You were {stars} {stars:plural:star|stars} in and {metres} {metres:plural:metre|metres} away.
+ui.end.stats,"End screen stats line (32 pt, letter-spaced, one line, 1600 px, auto-size). {floor}, {collected} of {total} stars, {time} = m:ss run time, {seed}",FLOOR {floor}     STARS {collected} / {total}     TIME {time}     SEED {seed}
+ui.end.consolation,"End screen second line after a loss with a consolation payout (32 pt, one line, 1600 px). {amount} = shards paid, {currency}, {shards} = balance",CONSOLATION  +{amount}     {currency}  {shards}
+ui.end.no_consolation,End screen second line after a loss with no consolation payout (32 pt),NO CONSOLATION     {currency}  {shards}
+ui.end.final_payout,"End screen second line after the final win (32 pt). {amount} = last payout, {total} = shards earned this campaign",PAYOUT  +{amount}     CAMPAIGN TOTAL  {total}
+ui.end.next_floor,"End screen button: go to the next floor (560 x 86, 42 pt)",NEXT FLOOR
+ui.end.replay,"End screen button after a win: replay the same floor (560 x 86, 38 pt)",REPLAY THIS FLOOR
+ui.end.retry,"End screen button after a loss: same maze again (560 x 86, 38 pt)",TRY THIS MAZE AGAIN
+ui.end.new_maze,"End screen button: a new random maze (560 x 86, 38 pt)",NEW MAZE
+ui.end.main_menu,"End screen button: back to the title screen (560 x 86, 38 pt)",MAIN MENU
+ui.shop.title,"Shop panel heading (64 pt bold, one line, 1400 px)",BETWEEN FLOORS
+ui.shop.wallet,"Shop panel wallet line (38 pt, one line, 900 px). {currency} = currency name (SHARDS), {shards} = balance",{currency}  {shards}
+ui.shop.tip,"Shop panel tip under the wallet (24 pt, one line, 900 px, auto-size)",Prices rise the deeper you go.
+ui.shop.buy,"Shop card buy button default caption (160 x 46, 22 pt)",BUY
+ui.shop.buy_price,"Shop card buy button with the price (160 x 46, 22 pt, auto-size). {price} = shards",BUY  {price}
+ui.shop.held_max,"Shop card buy button when the player already holds the maximum (160 x 46, 22 pt)",HELD MAX
+ui.shop.bought,"Shop card buy button after buying a next-floor-only item (160 x 46, 22 pt)",BOUGHT
+ui.shop.held_count,"Shop card status for consumables (19 pt, 340 x 30). {count} held of {cap} maximum",HELD  x{count} / {cap}
+ui.shop.held,Shop card status for Second Wind when owned (19 pt),HELD
+ui.shop.not_held,Shop card status for Second Wind when not owned (19 pt),NOT HELD
+ui.shop.ready_for_floor,"Shop card status once a next-floor item is bought (19 pt, 340 x 30). {floor} = the floor it will apply to",READY FOR FLOOR {floor}
+ui.shop.next_floor_only,"Shop card status for an unbought next-floor-only item (19 pt, 340 x 30)",NEXT FLOOR ONLY
+ui.shop.in_use_named,"Shop card status for a cosmetic: the colour in use (19 pt, 340 x 30). {name} = colour name, already in capitals",IN USE: {name}
+ui.shop.in_use,"Cosmetic swatch button: this colour is selected (118 x 42, 17 pt, auto-size)",IN USE
+ui.shop.use,"Cosmetic swatch button: an owned colour that can be selected (118 x 42, 17 pt)",USE
+ui.shop.swatch_price,"Cosmetic swatch button for an unowned colour (118 x 42, 17 pt, auto-size). {name} = colour name, {price} = shards",{name}  {price}
+ui.contracts.title,"Contract board panel heading (64 pt bold, one line, 1400 px)",CONTRACTS
+ui.contracts.tip,"Contract board panel tip (26 pt, one line, 1500 px, auto-size)",Optional work for the next floor. One at a time. Paid on the ledger when you clear it.
+ui.contracts.take,"Contract offer card button: take the contract (260 x 62, 30 pt)",TAKE
+ui.contracts.taken,"Contract offer card button: this offer is the one taken (260 x 62, 30 pt)",TAKEN
+ui.contracts.decline,"Contract board button: leave without a contract (380 x 70, 34 pt)",DECLINE
+ui.contracts.drop,"Contract board button: give up the contract already taken (380 x 70, 34 pt)",DROP IT
+ui.contracts.reward,"Contract offer card reward line (32 pt, one line, 600 px). {amount} = shards, {currency} = currency name",REWARD  {amount}  {currency}
+ui.contracts.empty,"Contract board status when there are no offers (32 pt, one line, 1500 px)",Nothing on the board.
+ui.contracts.took,"Contract board status after taking one (32 pt, one line, 1500 px). {name} = contract name, {floor} = floor it applies to",You took: {name}  Floor {floor}.
+ui.key.tap,"Key chip on touch devices in place of a keyboard key (HUD item slots, objective card). Short: ~4 characters",TAP
+ui.key.use,Key chip on touch devices for the interact key at the contract board (HUD prompt). Short,USE
+ui.touch.interact,"Touch screen INTERACT button caption when nothing is targeted (190 x 190 round button, 26 pt, auto-size). Replaced by the target's action word while something is in reach",INTERACT
+ui.touch.torch,"Touch screen torch button caption (130 x 130, 22 pt, auto-size)",TORCH
+ui.touch.focus,"Touch screen focus-beam button caption (130 x 130, 22 pt, auto-size)",FOCUS
+ui.touch.throw,"Touch screen throw button caption (130 x 130, 20 pt, auto-size). {count} = bottles/cans carried",THROW x{count}
+ui.touch.battery,"Touch screen spare-battery button caption (120 x 100, 18 pt, auto-size). {count} = batteries held",BATTERY x{count}
+ui.touch.compass,"Touch screen star-compass button caption (120 x 100, 18 pt, auto-size). {count} = compasses held",COMPASS x{count}
+ui.touch.sprint,"Touch screen sprint toggle caption (150 x 100, 22 pt, auto-size)",SPRINT
+ui.touch.pause,"Touch screen pause button caption: a pause symbol, not a word - leave unchanged (110 x 90, 30 pt)",II
+ui.touch.rotate,"Overlay shown on a touch device held in portrait (52 pt, 900 x 220, wraps)",ROTATE YOUR DEVICE
+ui.key.back,"Key chip on touch devices in place of the ESC key in the dialogue hint (short, ~4 characters)",BACK
+ui.objective.label,"Small grey label at the top of the objective card (20 pt, letter-spaced, 300 px)",OBJECTIVE
+ui.dialogue.hint_next,"Dialogue panel hint, bottom-right (20 pt, one line, 760 px, auto-size) while the conversation continues. {key} = E on keyboard or TAP on touch, {back} = ESC or BACK on touch - do not translate the key names",{key}  CONTINUE    ·    {back}  LEAVE
+ui.dialogue.hint_end,"Dialogue panel hint on the last line of a conversation (20 pt, 760 px). {key}, {back} as in hint_next",{key}  END    ·    {back}  LEAVE
+ui.dialogue.hint_leave,"Dialogue panel hint while two reply choices are on screen (20 pt, 760 px). {key} = ESC",{key}  LEAVE

@@ -13,7 +13,7 @@ using UnityEngine;
 public class TensionDirector : MonoBehaviour
 {
     [Header("Counter")]
-    [SerializeField] private string label = "STARS";
+    // S9: the counter words come from hud.counter.* now (the old serialized "label" is gone).
     [SerializeField] private float fontSize = 38f;
     [SerializeField] private Color calmColor = new Color(0.86f, 0.86f, 0.9f);
     [Tooltip("The counter bleeds toward this as the last stars come in")]
@@ -70,6 +70,7 @@ public class TensionDirector : MonoBehaviour
         GameManager.ObjectivesChanged += Apply;
         GameManager.AllStarsCollected += HandleHatchOpen;
         Pickup.OnCollectedAt += HandleStarTaken;
+        L10n.Changed += Apply;
     }
 
     private void OnDisable()
@@ -78,6 +79,7 @@ public class TensionDirector : MonoBehaviour
         GameManager.ObjectivesChanged -= Apply;
         GameManager.AllStarsCollected -= HandleHatchOpen;
         Pickup.OnCollectedAt -= HandleStarTaken;
+        L10n.Changed -= Apply;
         if (_keys != null) _keys.Changed -= Apply;
     }
 
@@ -122,7 +124,7 @@ public class TensionDirector : MonoBehaviour
         bool heard = _follower.HearNoise(at, radius);
         if (heard && _hud != null && Progress >= 0.5f)
         {
-            _hud.ShowSubtitle("It heard that.", 2.2f);
+            _hud.ShowSubtitle(L10n.T("sub.star.heard"), 2.2f);
         }
     }
 
@@ -132,18 +134,18 @@ public class TensionDirector : MonoBehaviour
 
         if (_counter != null)
         {
-            string text = $"{label}  {_collected} / {_total}";
+            string text = L10n.T("hud.counter.stars", ("n", _collected), ("total", _total));
             // F73: Blackout floors gate the hatch on fuses too - GameManager.TokensTotal is 0 on every
             // other floor, so this leaves the text exactly as it was there.
             if (GameManager.TokensTotal > 0)
             {
-                text += $"   FUSES  {GameManager.TokensDone} / {GameManager.TokensTotal}";
+                text += "   " + L10n.T("hud.counter.fuses", ("n", GameManager.TokensDone), ("total", GameManager.TokensTotal));
             }
             // F77: KeyHunt floors append a third segment - 0 on every other floor (Total stays 0 until
             // BuildKeys/KeyRing.Configure run), leaving this exactly as it was there.
             if (_keys != null && _keys.Total > 0)
             {
-                text += $"   KEYS  {_keys.Held} / {_keys.Total}";
+                text += "   " + L10n.T("hud.counter.keys", ("n", _keys.Held), ("total", _keys.Total));
             }
             _counter.text = text;
             _counter.color = Color.Lerp(calmColor, alarmedColor, progress);
@@ -162,7 +164,7 @@ public class TensionDirector : MonoBehaviour
         Canvas canvas = RuntimeUi.ResolveCanvas();
         if (canvas == null) return;
 
-        _counter = RuntimeUi.CreateText(canvas.transform, "StarCounter", $"{label}  0 / 0", fontSize, calmColor);
+        _counter = RuntimeUi.CreateText(canvas.transform, "StarCounter", L10n.T("hud.counter.stars", ("n", 0), ("total", 0)), fontSize, calmColor);
         _counter.alignment = TextAlignmentOptions.TopLeft;
 
         RectTransform rect = _counter.rectTransform;
@@ -174,5 +176,6 @@ public class TensionDirector : MonoBehaviour
         // so a long line can never spill down onto the FLOOR label underneath.
         rect.sizeDelta = new Vector2(1100f, 60f);
         _counter.textWrappingMode = TextWrappingModes.NoWrap;
+        RuntimeUi.AutoFit(_counter, 0.65f); // D14: three segments in a longer language shrink instead of spilling
     }
 }

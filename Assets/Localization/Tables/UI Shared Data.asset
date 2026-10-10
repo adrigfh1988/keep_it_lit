@@ -205,6 +205,491 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331669776663188
+  - m_Id: 22165078315008
+    m_Key: ui.common.back
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663391
+  - m_Id: 22165078315009
+    m_Key: ui.common.continue
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663392
+  - m_Id: 22165078315010
+    m_Key: ui.menu.tagline
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663393
+  - m_Id: 22165078315011
+    m_Key: ui.menu.continue
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663394
+  - m_Id: 22165078315012
+    m_Key: ui.menu.start_game
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663395
+  - m_Id: 22165078315013
+    m_Key: ui.menu.controls
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663396
+  - m_Id: 22165078315014
+    m_Key: ui.menu.settings
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663397
+  - m_Id: 22165078315015
+    m_Key: ui.menu.exit
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663398
+  - m_Id: 22165078315016
+    m_Key: ui.menu.start_over_heading
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663399
+  - m_Id: 22165078315017
+    m_Key: ui.menu.start_over_body
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663400
+  - m_Id: 22165078315018
+    m_Key: ui.menu.start_over
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663401
+  - m_Id: 22165078315019
+    m_Key: ui.rules.heading
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663402
+  - m_Id: 22165078315020
+    m_Key: ui.rules.item1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663403
+  - m_Id: 22165078315021
+    m_Key: ui.rules.item2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663404
+  - m_Id: 22165078315022
+    m_Key: ui.rules.item3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663405
+  - m_Id: 22165078315023
+    m_Key: ui.rules.item4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663406
+  - m_Id: 22165078315024
+    m_Key: ui.rules.start
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663407
+  - m_Id: 22165078315025
+    m_Key: ui.controls.keyboard
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663408
+  - m_Id: 22165078315026
+    m_Key: ui.controls.touch
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663409
+  - m_Id: 22165078315027
+    m_Key: ui.controls.tip
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663410
+  - m_Id: 22165078315028
+    m_Key: ui.pause.title
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663411
+  - m_Id: 22165078315029
+    m_Key: ui.pause.resume
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663412
+  - m_Id: 22165078315030
+    m_Key: ui.pause.restart
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663413
+  - m_Id: 22165078315031
+    m_Key: ui.pause.skip_tutorial
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663414
+  - m_Id: 22165078315032
+    m_Key: ui.pause.main_menu
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663415
+  - m_Id: 22165078315033
+    m_Key: ui.pause.quit
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663416
+  - m_Id: 22165078315034
+    m_Key: ui.ledger.slip_heading
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663417
+  - m_Id: 22165078315035
+    m_Key: ui.ledger.slip_subtitle
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663418
+  - m_Id: 22165078315036
+    m_Key: ui.ledger.subtitle
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663419
+  - m_Id: 22165078315037
+    m_Key: ui.ledger.already_yours
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663420
+  - m_Id: 22165078315038
+    m_Key: ui.ledger.no_pay
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663421
+  - m_Id: 22165078315039
+    m_Key: ui.ledger.payout
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663422
+  - m_Id: 22165078315040
+    m_Key: ui.ledger.wallet
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663423
+  - m_Id: 22165078315041
+    m_Key: ui.ledger.shop_held
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663424
+  - m_Id: 22165078315042
+    m_Key: ui.ledger.contract_done
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663425
+  - m_Id: 22165078315043
+    m_Key: ui.ledger.contract_failed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663426
+  - m_Id: 22165078315044
+    m_Key: ui.ledger.contract_void
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663427
+  - m_Id: 22165078315045
+    m_Key: ui.end.won_final
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663428
+  - m_Id: 22165078315046
+    m_Key: ui.end.floor_cleared
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663429
+  - m_Id: 22165078315047
+    m_Key: ui.end.won_final_body
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663430
+  - m_Id: 22165078315048
+    m_Key: ui.end.floor_cleared_body
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663431
+  - m_Id: 22165078315049
+    m_Key: ui.end.caught
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663432
+  - m_Id: 22165078315050
+    m_Key: ui.end.caught_hidden
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663433
+  - m_Id: 22165078315051
+    m_Key: ui.end.caught_torch
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663434
+  - m_Id: 22165078315052
+    m_Key: ui.end.caught_silent
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663435
+  - m_Id: 22165078315053
+    m_Key: ui.end.out_of_time
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663436
+  - m_Id: 22165078315054
+    m_Key: ui.end.out_of_time_body
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663437
+  - m_Id: 22165078315055
+    m_Key: ui.end.stats
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663438
+  - m_Id: 22165078315056
+    m_Key: ui.end.consolation
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663439
+  - m_Id: 22165078315057
+    m_Key: ui.end.no_consolation
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663440
+  - m_Id: 22165078315058
+    m_Key: ui.end.final_payout
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663441
+  - m_Id: 22165078315059
+    m_Key: ui.end.next_floor
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663442
+  - m_Id: 22165078315060
+    m_Key: ui.end.replay
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663443
+  - m_Id: 22165078315061
+    m_Key: ui.end.retry
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663444
+  - m_Id: 22165078315062
+    m_Key: ui.end.new_maze
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663445
+  - m_Id: 22165078315063
+    m_Key: ui.end.main_menu
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663446
+  - m_Id: 22165078315064
+    m_Key: ui.shop.title
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663447
+  - m_Id: 22165078315065
+    m_Key: ui.shop.wallet
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663448
+  - m_Id: 22165078315066
+    m_Key: ui.shop.tip
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663449
+  - m_Id: 22165078315067
+    m_Key: ui.shop.buy
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663450
+  - m_Id: 22165078315068
+    m_Key: ui.shop.buy_price
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663451
+  - m_Id: 22165078315069
+    m_Key: ui.shop.held_max
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663452
+  - m_Id: 22165078315070
+    m_Key: ui.shop.bought
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663453
+  - m_Id: 22165078315071
+    m_Key: ui.shop.held_count
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663454
+  - m_Id: 22165078315072
+    m_Key: ui.shop.held
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663455
+  - m_Id: 22165078315073
+    m_Key: ui.shop.not_held
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663456
+  - m_Id: 22165078315074
+    m_Key: ui.shop.ready_for_floor
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663457
+  - m_Id: 22165078315075
+    m_Key: ui.shop.next_floor_only
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663458
+  - m_Id: 22165078315076
+    m_Key: ui.shop.in_use_named
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663459
+  - m_Id: 22165078315077
+    m_Key: ui.shop.in_use
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663460
+  - m_Id: 22165078315078
+    m_Key: ui.shop.use
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663461
+  - m_Id: 22165078315079
+    m_Key: ui.shop.swatch_price
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663462
+  - m_Id: 22165078315080
+    m_Key: ui.contracts.title
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663463
+  - m_Id: 22165078315081
+    m_Key: ui.contracts.tip
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663464
+  - m_Id: 22165078315082
+    m_Key: ui.contracts.take
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663465
+  - m_Id: 22165078315083
+    m_Key: ui.contracts.taken
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663466
+  - m_Id: 22165078315084
+    m_Key: ui.contracts.decline
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663467
+  - m_Id: 22165078315085
+    m_Key: ui.contracts.drop
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663468
+  - m_Id: 22165078315086
+    m_Key: ui.contracts.reward
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663469
+  - m_Id: 22165078315087
+    m_Key: ui.contracts.empty
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663470
+  - m_Id: 22165078315088
+    m_Key: ui.contracts.took
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663471
+  - m_Id: 22165078315089
+    m_Key: ui.key.tap
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663472
+  - m_Id: 22165078315090
+    m_Key: ui.key.use
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663473
+  - m_Id: 22165078315091
+    m_Key: ui.touch.interact
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663474
+  - m_Id: 22165078315092
+    m_Key: ui.touch.torch
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663475
+  - m_Id: 22165078315093
+    m_Key: ui.touch.focus
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663476
+  - m_Id: 22165078315094
+    m_Key: ui.touch.throw
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663477
+  - m_Id: 22165078315095
+    m_Key: ui.touch.battery
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663478
+  - m_Id: 22165078315096
+    m_Key: ui.touch.compass
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663479
+  - m_Id: 22165078315097
+    m_Key: ui.touch.sprint
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663480
+  - m_Id: 22165078315098
+    m_Key: ui.touch.pause
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663481
+  - m_Id: 22165078315099
+    m_Key: ui.touch.rotate
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663482
+  - m_Id: 22165078315100
+    m_Key: ui.key.back
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663483
+  - m_Id: 22165078315101
+    m_Key: ui.objective.label
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663484
+  - m_Id: 22165078315102
+    m_Key: ui.dialogue.hint_next
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663485
+  - m_Id: 22165078315103
+    m_Key: ui.dialogue.hint_end
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663486
+  - m_Id: 22165078315104
+    m_Key: ui.dialogue.hint_leave
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663487
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -368,3 +853,391 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: 'Fog tier option: default amount'
+    - rid: 4707331669776663391
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shared BACK button caption (menus, 420 x 86 button, 40 pt, auto-size)
+    - rid: 4707331669776663392
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shared CONTINUE caption (button, 420 x 86, 40 pt)
+    - rid: 4707331669776663393
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Title screen tagline under the game title (38 pt, one line, 1200 px, auto-size)
+    - rid: 4707331669776663394
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Title screen: resume the saved run (420 x 86 button, 40 pt)'
+    - rid: 4707331669776663395
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Title screen: start a new campaign (420 x 86 button, 40 pt)'
+    - rid: 4707331669776663396
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Title screen: open the controls sheet (420 x 86 button, 40 pt)'
+    - rid: 4707331669776663397
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Title screen: open the settings screen (420 x 86 button, 40 pt)'
+    - rid: 4707331669776663398
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Title screen: quit the game (420 x 86 button, 40 pt)'
+    - rid: 4707331669776663399
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Confirm panel heading when START GAME would discard a saved run (76 pt, one line, 1400 px)
+    - rid: 4707331669776663400
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Confirm panel body (40 pt, one line, 1400 px). {floor} = floor number of the saved run
+    - rid: 4707331669776663401
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Confirm panel: discard the save and start (420 x 86 button, 40 pt)'
+    - rid: 4707331669776663402
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Rules screen heading (76 pt, one line, 1400 px)
+    - rid: 4707331669776663403
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Rules screen, rule 1 (36 pt, left aligned, 1100 px wide block of four rules). Keep the <b> tag
+    - rid: 4707331669776663404
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Rules screen, rule 2
+    - rid: 4707331669776663405
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Rules screen, rule 3. Keep the red <color> and <b> tags around the word RUN
+    - rid: 4707331669776663406
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Rules screen, rule 4
+    - rid: 4707331669776663407
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Rules screen: begin the run (420 x 90 button, 44 pt)'
+    - rid: 4707331669776663408
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Controls sheet, keyboard and mouse (34 pt, two lines, 1400 px). Key names in <b> stay as they are (WASD, SHIFT, F, E, 1, 2, ESC); MOUSE is translated
+    - rid: 4707331669776663409
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Controls sheet, touch layout (34 pt, one line, 1400 px). The button names in <b> must match the on-screen button captions (ui.touch.*)
+    - rid: 4707331669776663410
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Controls sheet and rules, tip line below the controls (30 pt, 1400 px)
+    - rid: 4707331669776663411
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Pause screen heading (84 pt, one line, 1200 px)
+    - rid: 4707331669776663412
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Pause menu: resume (420 x 86 button, 40 pt)'
+    - rid: 4707331669776663413
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Pause menu: restart the same maze (420 x 86 button, 40 pt)'
+    - rid: 4707331669776663414
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Pause menu in the Intake only: skip the tutorial (420 x 86 button, 40 pt)'
+    - rid: 4707331669776663415
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Pause menu: back to the title screen (420 x 86 button, 40 pt)'
+    - rid: 4707331669776663416
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Pause menu: quit the game (420 x 86 button, 40 pt)'
+    - rid: 4707331669776663417
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Readmission slip heading above the ledger (30 pt amber, one line, 1400 px, auto-size). {admission} = admission number, {patient} = 7 or a redaction glyph (#)
+    - rid: 4707331669776663418
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Readmission slip subtitle, typed out (34 pt, one line, 1400 px)
+    - rid: 4707331669776663419
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor-clear ledger subtitle in the legacy shop flow (34 pt, one line, 1400 px)
+    - rid: 4707331669776663420
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Ledger amount column for the informational SHARDS FOUND line (36 pt, right aligned, 300 px)
+    - rid: 4707331669776663421
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Ledger amount column for a contract line that paid nothing (36 pt, right aligned, 300 px)
+    - rid: 4707331669776663422
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Ledger total line (44 pt green, 900 px). {amount} = shards paid
+    - rid: 4707331669776663423
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Ledger wallet line (44 pt, 900 px). {currency} = the currency name (SHARDS), {shards} = wallet balance
+    - rid: 4707331669776663424
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Readmission slip order line, typed (34 pt amber, one line, 1500 px). {shards} = wallet balance, {currency} = the currency name
+    - rid: 4707331669776663425
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Ledger line for a finished contract (36 pt, left column 900 px, auto-size). {name} = contract name
+    - rid: 4707331669776663426
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Ledger line for a failed contract (36 pt, left column 900 px). {name} = contract name
+    - rid: 4707331669776663427
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Ledger line for a voided contract (36 pt, left column 900 px). {name} = contract name
+    - rid: 4707331669776663428
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen title, campaign won (96 pt bold green, one line, 1600 px)
+    - rid: 4707331669776663429
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen title, floor cleared in the no-shop fallback (96 pt). {floor} = floor number
+    - rid: 4707331669776663430
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen subtitle after the final floor (36 pt, one line, 1600 px)
+    - rid: 4707331669776663431
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen subtitle after floors 1-4 (36 pt, one line, 1600 px)
+    - rid: 4707331669776663432
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen title when the hunter caught you (96 pt bold red)
+    - rid: 4707331669776663433
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'End screen subtitle: caught after being seen hiding in a locker (36 pt)'
+    - rid: 4707331669776663434
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'End screen subtitle: caught with the torch on (36 pt)'
+    - rid: 4707331669776663435
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'End screen subtitle: caught with the torch off (36 pt)'
+    - rid: 4707331669776663436
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen title when the escape timer ran out (96 pt bold red)
+    - rid: 4707331669776663437
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen subtitle (36 pt, one line, 1600 px). {stars} = stars collected, {metres} = distance to the hatch in metres
+    - rid: 4707331669776663438
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen stats line (32 pt, letter-spaced, one line, 1600 px, auto-size). {floor}, {collected} of {total} stars, {time} = m:ss run time, {seed}
+    - rid: 4707331669776663439
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen second line after a loss with a consolation payout (32 pt, one line, 1600 px). {amount} = shards paid, {currency}, {shards} = balance
+    - rid: 4707331669776663440
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen second line after a loss with no consolation payout (32 pt)
+    - rid: 4707331669776663441
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen second line after the final win (32 pt). {amount} = last payout, {total} = shards earned this campaign
+    - rid: 4707331669776663442
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'End screen button: go to the next floor (560 x 86, 42 pt)'
+    - rid: 4707331669776663443
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'End screen button after a win: replay the same floor (560 x 86, 38 pt)'
+    - rid: 4707331669776663444
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'End screen button after a loss: same maze again (560 x 86, 38 pt)'
+    - rid: 4707331669776663445
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'End screen button: a new random maze (560 x 86, 38 pt)'
+    - rid: 4707331669776663446
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'End screen button: back to the title screen (560 x 86, 38 pt)'
+    - rid: 4707331669776663447
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop panel heading (64 pt bold, one line, 1400 px)
+    - rid: 4707331669776663448
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop panel wallet line (38 pt, one line, 900 px). {currency} = currency name (SHARDS), {shards} = balance
+    - rid: 4707331669776663449
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop panel tip under the wallet (24 pt, one line, 900 px, auto-size)
+    - rid: 4707331669776663450
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card buy button default caption (160 x 46, 22 pt)
+    - rid: 4707331669776663451
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card buy button with the price (160 x 46, 22 pt, auto-size). {price} = shards
+    - rid: 4707331669776663452
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card buy button when the player already holds the maximum (160 x 46, 22 pt)
+    - rid: 4707331669776663453
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card buy button after buying a next-floor-only item (160 x 46, 22 pt)
+    - rid: 4707331669776663454
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card status for consumables (19 pt, 340 x 30). {count} held of {cap} maximum
+    - rid: 4707331669776663455
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card status for Second Wind when owned (19 pt)
+    - rid: 4707331669776663456
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card status for Second Wind when not owned (19 pt)
+    - rid: 4707331669776663457
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card status once a next-floor item is bought (19 pt, 340 x 30). {floor} = the floor it will apply to
+    - rid: 4707331669776663458
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card status for an unbought next-floor-only item (19 pt, 340 x 30)
+    - rid: 4707331669776663459
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Shop card status for a cosmetic: the colour in use (19 pt, 340 x 30). {name} = colour name, already in capitals'
+    - rid: 4707331669776663460
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Cosmetic swatch button: this colour is selected (118 x 42, 17 pt, auto-size)'
+    - rid: 4707331669776663461
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Cosmetic swatch button: an owned colour that can be selected (118 x 42, 17 pt)'
+    - rid: 4707331669776663462
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Cosmetic swatch button for an unowned colour (118 x 42, 17 pt, auto-size). {name} = colour name, {price} = shards
+    - rid: 4707331669776663463
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract board panel heading (64 pt bold, one line, 1400 px)
+    - rid: 4707331669776663464
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract board panel tip (26 pt, one line, 1500 px, auto-size)
+    - rid: 4707331669776663465
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Contract offer card button: take the contract (260 x 62, 30 pt)'
+    - rid: 4707331669776663466
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Contract offer card button: this offer is the one taken (260 x 62, 30 pt)'
+    - rid: 4707331669776663467
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Contract board button: leave without a contract (380 x 70, 34 pt)'
+    - rid: 4707331669776663468
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Contract board button: give up the contract already taken (380 x 70, 34 pt)'
+    - rid: 4707331669776663469
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract offer card reward line (32 pt, one line, 600 px). {amount} = shards, {currency} = currency name
+    - rid: 4707331669776663470
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract board status when there are no offers (32 pt, one line, 1500 px)
+    - rid: 4707331669776663471
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract board status after taking one (32 pt, one line, 1500 px). {name} = contract name, {floor} = floor it applies to
+    - rid: 4707331669776663472
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Key chip on touch devices in place of a keyboard key (HUD item slots, objective card). Short: ~4 characters'
+    - rid: 4707331669776663473
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Key chip on touch devices for the interact key at the contract board (HUD prompt). Short
+    - rid: 4707331669776663474
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Touch screen INTERACT button caption when nothing is targeted (190 x 190 round button, 26 pt, auto-size). Replaced by the target's action word while something is in reach
+    - rid: 4707331669776663475
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Touch screen torch button caption (130 x 130, 22 pt, auto-size)
+    - rid: 4707331669776663476
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Touch screen focus-beam button caption (130 x 130, 22 pt, auto-size)
+    - rid: 4707331669776663477
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Touch screen throw button caption (130 x 130, 20 pt, auto-size). {count} = bottles/cans carried
+    - rid: 4707331669776663478
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Touch screen spare-battery button caption (120 x 100, 18 pt, auto-size). {count} = batteries held
+    - rid: 4707331669776663479
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Touch screen star-compass button caption (120 x 100, 18 pt, auto-size). {count} = compasses held
+    - rid: 4707331669776663480
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Touch screen sprint toggle caption (150 x 100, 22 pt, auto-size)
+    - rid: 4707331669776663481
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Touch screen pause button caption: a pause symbol, not a word - leave unchanged (110 x 90, 30 pt)'
+    - rid: 4707331669776663482
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Overlay shown on a touch device held in portrait (52 pt, 900 x 220, wraps)
+    - rid: 4707331669776663483
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Key chip on touch devices in place of the ESC key in the dialogue hint (short, ~4 characters)
+    - rid: 4707331669776663484
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Small grey label at the top of the objective card (20 pt, letter-spaced, 300 px)
+    - rid: 4707331669776663485
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Dialogue panel hint, bottom-right (20 pt, one line, 760 px, auto-size) while the conversation continues. {key} = E on keyboard or TAP on touch, {back} = ESC or BACK on touch - do not translate the key names
+    - rid: 4707331669776663486
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Dialogue panel hint on the last line of a conversation (20 pt, 760 px). {key}, {back} as in hint_next
+    - rid: 4707331669776663487
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Dialogue panel hint while two reply choices are on screen (20 pt, 760 px). {key} = ESC

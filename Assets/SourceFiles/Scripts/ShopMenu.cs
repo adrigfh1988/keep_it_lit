@@ -122,12 +122,14 @@ public class ShopMenu : MonoBehaviour
 
         _contractPanel = RuntimeUi.CreatePanel(canvas.transform, "ContractScreen", new Color(0.02f, 0.02f, 0.03f, 0.94f));
 
-        TextMeshProUGUI title = RuntimeUi.CreateText(_contractPanel.transform, "Title", "CONTRACTS", 64f, Amber);
+        TextMeshProUGUI title = RuntimeUi.CreateText(_contractPanel.transform, "Title", L10n.T("ui.contracts.title"), 64f, Amber);
+        RuntimeUi.Bind(title, "ui.contracts.title", 0.6f);
         title.fontStyle = FontStyles.Bold;
         title.characterSpacing = 10f;
         RuntimeUi.Place(title.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -90f), new Vector2(1400f, 90f));
 
-        TextMeshProUGUI tip = RuntimeUi.CreateText(_contractPanel.transform, "Tip", "Optional work for the next floor. One at a time. Paid on the ledger when you clear it.", 26f, Grey);
+        TextMeshProUGUI tip = RuntimeUi.CreateText(_contractPanel.transform, "Tip", L10n.T("ui.contracts.tip"), 26f, Grey);
+        RuntimeUi.Bind(tip, "ui.contracts.tip", 0.65f);
         RuntimeUi.Place(tip.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -160f), new Vector2(1500f, 44f));
 
         float[] xs = { -380f, 380f };
@@ -147,20 +149,27 @@ public class ShopMenu : MonoBehaviour
             RuntimeUi.Place(_offerReward[i].rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -250f), new Vector2(600f, 44f));
 
             int slot = i;
-            Button take = RuntimeUi.CreateButton(card.transform, "TAKE", new Vector2(0f, 50f), new Vector2(260f, 62f), 30f, ButtonIdle, ButtonHover, Color.white);
+            Button take = RuntimeUi.CreateButton(card.transform, L10n.T("ui.contracts.take"), new Vector2(0f, 50f), new Vector2(260f, 62f), 30f, ButtonIdle, ButtonHover, Color.white);
             take.onClick.AddListener(() => TakeContract(slot));
             _offerButton[i] = take;
             _offerButtonLabel[i] = take.GetComponentInChildren<TextMeshProUGUI>();
+            RuntimeUi.AutoFit(_offerButtonLabel[i], 0.65f);
+            RuntimeUi.AutoFit(_offerName[i], 0.65f);
+            RuntimeUi.AutoFit(_offerText[i], 0.7f);
+            RuntimeUi.AutoFit(_offerReward[i], 0.7f);
         }
 
         _contractStatus = RuntimeUi.CreateText(_contractPanel.transform, "Status", "", 32f, Amber);
         RuntimeUi.Place(_contractStatus.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0f, -190f), new Vector2(1500f, 50f));
 
-        _declineButton = RuntimeUi.CreateButton(_contractPanel.transform, "DECLINE", new Vector2(-230f, 40f), new Vector2(380f, 70f), 34f, ButtonIdle, ButtonHover, Color.white);
+        _declineButton = RuntimeUi.CreateButton(_contractPanel.transform, L10n.T("ui.contracts.decline"), new Vector2(-230f, 40f), new Vector2(380f, 70f), 34f, ButtonIdle, ButtonHover, Color.white);
         _declineButton.onClick.AddListener(DeclineContract);
+        RuntimeUi.AutoFit(_declineButton.GetComponentInChildren<TextMeshProUGUI>(), 0.65f);
+        RuntimeUi.AutoFit(_contractStatus, 0.7f);
 
-        Button back = RuntimeUi.CreateButton(_contractPanel.transform, "BACK", new Vector2(230f, 40f), new Vector2(380f, 70f), 34f, ButtonIdle, ButtonHover, Color.white);
+        Button back = RuntimeUi.CreateButton(_contractPanel.transform, L10n.T("ui.common.back"), new Vector2(230f, 40f), new Vector2(380f, 70f), 34f, ButtonIdle, ButtonHover, Color.white);
         back.onClick.AddListener(Close);
+        RuntimeUi.BindButton(back, "ui.common.back");
     }
 
     private void RefreshContracts()
@@ -178,19 +187,19 @@ public class ShopMenu : MonoBehaviour
             ContractDef def = ContractState.Def(offers[i]);
             _offerName[i].text = def.Name;
             _offerText[i].text = def.Text;
-            _offerReward[i].text = $"REWARD  {ContractState.Reward(offers[i], rewardFloor)}  {PlayerWallet.CurrencyName}";
+            _offerReward[i].text = L10n.T("ui.contracts.reward", ("amount", ContractState.Reward(offers[i], rewardFloor)), ("currency", PlayerWallet.CurrencyName));
 
             bool taken = ContractState.ActiveId == offers[i];
-            _offerButtonLabel[i].text = taken ? "TAKEN" : "TAKE";
+            _offerButtonLabel[i].text = L10n.T(taken ? "ui.contracts.taken" : "ui.contracts.take");
             _offerButton[i].interactable = !ContractState.HasActive;
         }
 
-        if (!ContractState.HasOffers) _contractStatus.text = "Nothing on the board.";
-        else if (ContractState.HasActive) _contractStatus.text = $"You took: {ContractState.Def(ContractState.ActiveId).Name}  Floor {ContractState.ActiveFloor}.";
+        if (!ContractState.HasOffers) _contractStatus.text = L10n.T("ui.contracts.empty");
+        else if (ContractState.HasActive) _contractStatus.text = L10n.T("ui.contracts.took", ("name", ContractState.Def(ContractState.ActiveId).Name), ("floor", ContractState.ActiveFloor));
         else _contractStatus.text = "";
 
         TextMeshProUGUI declineLabel = _declineButton.GetComponentInChildren<TextMeshProUGUI>();
-        if (declineLabel != null) declineLabel.text = ContractState.HasActive ? "DROP IT" : "DECLINE";
+        if (declineLabel != null) declineLabel.text = L10n.T(ContractState.HasActive ? "ui.contracts.drop" : "ui.contracts.decline");
     }
 
     private void TakeContract(int slot)
@@ -200,7 +209,7 @@ public class ShopMenu : MonoBehaviour
 
         ContractState.Take(id, GameFlow.ShopNextFloor);
         WriteShopCheckpoint(); // like a purchase: the taken contract survives a resume
-        if (_hud != null) _hud.ShowSubtitle("Bring it back in one piece.", 3f);
+        if (_hud != null) _hud.ShowSubtitle(L10n.T("sub.shop.contract_taken"), 3f);
         Close();
     }
 
@@ -211,7 +220,7 @@ public class ShopMenu : MonoBehaviour
             ContractState.ClearActive();
             WriteShopCheckpoint();
         }
-        if (_hud != null) _hud.ShowSubtitle("Suit yourself.", 2.5f);
+        if (_hud != null) _hud.ShowSubtitle(L10n.T("sub.shop.contract_declined"), 2.5f);
         Close();
     }
 
@@ -243,15 +252,17 @@ public class ShopMenu : MonoBehaviour
 
         _panel = RuntimeUi.CreatePanel(canvas.transform, "ShopScreen", new Color(0.02f, 0.02f, 0.03f, 0.94f));
 
-        TextMeshProUGUI title = RuntimeUi.CreateText(_panel.transform, "Title", "BETWEEN FLOORS", 64f, Amber);
+        TextMeshProUGUI title = RuntimeUi.CreateText(_panel.transform, "Title", L10n.T("ui.shop.title"), 64f, Amber);
+        RuntimeUi.Bind(title, "ui.shop.title", 0.6f);
         title.fontStyle = FontStyles.Bold;
         title.characterSpacing = 10f;
         RuntimeUi.Place(title.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -70f), new Vector2(1400f, 90f));
 
-        _walletText = RuntimeUi.CreateText(_panel.transform, "Wallet", "SHARDS  0", 38f, WalletColor);
+        _walletText = RuntimeUi.CreateText(_panel.transform, "Wallet", L10n.T("ui.shop.wallet", ("currency", PlayerWallet.CurrencyName), ("shards", 0)), 38f, WalletColor);
         RuntimeUi.Place(_walletText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -140f), new Vector2(900f, 50f));
 
-        TextMeshProUGUI tip = RuntimeUi.CreateText(_panel.transform, "Tip", "Prices rise the deeper you go.", 24f, Grey);
+        TextMeshProUGUI tip = RuntimeUi.CreateText(_panel.transform, "Tip", L10n.T("ui.shop.tip"), 24f, Grey);
+        RuntimeUi.Bind(tip, "ui.shop.tip", 0.65f);
         RuntimeUi.Place(tip.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -180f), new Vector2(900f, 40f));
 
         // F75: grew from 3x3 to 4x3 (12 items). Card width dropped from 540 to 420 so four columns still
@@ -264,8 +275,9 @@ public class ShopMenu : MonoBehaviour
             BuildCard(ShopCatalogue.Items[i], new Vector2(xs[i % 4], ys[i / 4]));
         }
 
-        Button back = RuntimeUi.CreateButton(_panel.transform, "BACK", new Vector2(0f, 40f), new Vector2(420f, 70f), 34f, ButtonIdle, ButtonHover, Color.white);
+        Button back = RuntimeUi.CreateButton(_panel.transform, L10n.T("ui.common.back"), new Vector2(0f, 40f), new Vector2(420f, 70f), 34f, ButtonIdle, ButtonHover, Color.white);
         back.onClick.AddListener(Close);
+        RuntimeUi.BindButton(back, "ui.common.back");
     }
 
     private void BuildCard(ShopItemDef def, Vector2 position)
@@ -277,14 +289,17 @@ public class ShopMenu : MonoBehaviour
         nameText.fontStyle = FontStyles.Bold;
         nameText.alignment = TextAlignmentOptions.TopLeft;
         PlaceTopLeft(nameText.rectTransform, new Vector2(16f, -16f), new Vector2(340f, 34f));
+        RuntimeUi.AutoFit(nameText, 0.65f); // D14
 
         TextMeshProUGUI blurbText = RuntimeUi.CreateText(cardObj.transform, "Blurb", def.Blurb, 19f, Grey);
         blurbText.alignment = TextAlignmentOptions.TopLeft;
         PlaceTopLeft(blurbText.rectTransform, new Vector2(16f, -52f), new Vector2(388f, 60f));
+        RuntimeUi.AutoFit(blurbText, 0.7f);
 
         TextMeshProUGUI statusText = RuntimeUi.CreateText(cardObj.transform, "Status", "", 19f, Grey);
         statusText.alignment = TextAlignmentOptions.TopLeft;
         PlaceTopLeft(statusText.rectTransform, new Vector2(16f, -116f), new Vector2(340f, 30f));
+        RuntimeUi.AutoFit(statusText, 0.7f);
 
         ShopCard card = new ShopCard { Def = def, Status = statusText };
 
@@ -310,15 +325,17 @@ public class ShopMenu : MonoBehaviour
 
                 card.SwatchButtons[i] = button;
                 card.SwatchLabels[i] = button.GetComponentInChildren<TextMeshProUGUI>();
+                RuntimeUi.AutoFit(card.SwatchLabels[i], 0.6f);
             }
         }
         else
         {
-            Button buy = RuntimeUi.CreateButton(cardObj.transform, "BUY", new Vector2(130f, 18f), new Vector2(160f, 46f), 22f, ButtonIdle, ButtonHover, Color.white);
+            Button buy = RuntimeUi.CreateButton(cardObj.transform, L10n.T("ui.shop.buy"), new Vector2(130f, 18f), new Vector2(160f, 46f), 22f, ButtonIdle, ButtonHover, Color.white);
             ShopItemDef capturedDef = def;
             buy.onClick.AddListener(() => TryBuy(capturedDef));
             card.BuyButton = buy;
             card.BuyLabel = buy.GetComponentInChildren<TextMeshProUGUI>();
+            RuntimeUi.AutoFit(card.BuyLabel, 0.65f);
         }
 
         _cards.Add(card);
@@ -336,7 +353,7 @@ public class ShopMenu : MonoBehaviour
     /// <summary>Updates every card's text and interactability in place - never rebuilds them.</summary>
     private void Refresh()
     {
-        if (_walletText != null) _walletText.text = $"{PlayerWallet.CurrencyName}  {PlayerWallet.Shards}";
+        if (_walletText != null) _walletText.text = L10n.T("ui.shop.wallet", ("currency", PlayerWallet.CurrencyName), ("shards", PlayerWallet.Shards));
 
         int shopFloor = GameFlow.ShopClearedFloor;
         foreach (ShopCard card in _cards)
@@ -350,25 +367,25 @@ public class ShopMenu : MonoBehaviour
                 {
                     int count = PlayerInventory.Count(def.Id);
                     int cap = PlayerInventory.CapFor(def.Id);
-                    card.Status.text = $"HELD  x{count} / {cap}";
+                    card.Status.text = L10n.T("ui.shop.held_count", ("count", count), ("cap", cap));
                     bool canBuy = count < cap && PlayerWallet.Shards >= price;
-                    SetBuyButton(card, canBuy, count >= cap ? "HELD MAX" : $"BUY  {price}");
+                    SetBuyButton(card, canBuy, count >= cap ? L10n.T("ui.shop.held_max") : L10n.T("ui.shop.buy_price", ("price", price)));
                     break;
                 }
                 case ItemKind.SecondWind:
                 {
                     bool held = PlayerInventory.Count(def.Id) > 0;
-                    card.Status.text = held ? "HELD" : "NOT HELD";
+                    card.Status.text = L10n.T(held ? "ui.shop.held" : "ui.shop.not_held");
                     bool canBuy = !held && PlayerWallet.Shards >= price;
-                    SetBuyButton(card, canBuy, held ? "HELD MAX" : $"BUY  {price}");
+                    SetBuyButton(card, canBuy, held ? L10n.T("ui.shop.held_max") : L10n.T("ui.shop.buy_price", ("price", price)));
                     break;
                 }
                 case ItemKind.FloorModifier:
                 {
                     bool pending = PlayerInventory.HasPending(def.Id);
-                    card.Status.text = pending ? $"READY FOR FLOOR {GameFlow.ShopNextFloor}" : "NEXT FLOOR ONLY";
+                    card.Status.text = pending ? L10n.T("ui.shop.ready_for_floor", ("floor", GameFlow.ShopNextFloor)) : L10n.T("ui.shop.next_floor_only");
                     bool canBuy = !pending && PlayerWallet.Shards >= price;
-                    SetBuyButton(card, canBuy, pending ? "BOUGHT" : $"BUY  {price}");
+                    SetBuyButton(card, canBuy, pending ? L10n.T("ui.shop.bought") : L10n.T("ui.shop.buy_price", ("price", price)));
                     break;
                 }
                 case ItemKind.Cosmetic:
@@ -376,14 +393,14 @@ public class ShopMenu : MonoBehaviour
                     bool isTorch = def.Id == ShopItem.TorchColour;
                     int selected = isTorch ? PlayerInventory.TorchColourIndex : PlayerInventory.HudTintIndex;
                     (string Name, Color Colour)[] palette = isTorch ? ShopCatalogue.TorchColours : ShopCatalogue.HudTints;
-                    card.Status.text = $"IN USE: {palette[selected].Name.ToUpperInvariant()}";
+                    card.Status.text = L10n.T("ui.shop.in_use_named", ("name", palette[selected].Name.ToUpperInvariant()));
 
                     for (int i = 0; i < card.SwatchButtons.Length; i++)
                     {
                         int paletteIndex = i + 1;
                         bool owned = isTorch ? PlayerInventory.OwnsTorchColour(paletteIndex) : PlayerInventory.OwnsHudTint(paletteIndex);
                         bool isSelected = selected == paletteIndex;
-                        string label = isSelected ? "IN USE" : owned ? "USE" : $"{palette[paletteIndex].Name.ToUpperInvariant()}  {price}";
+                        string label = isSelected ? L10n.T("ui.shop.in_use") : owned ? L10n.T("ui.shop.use") : L10n.T("ui.shop.swatch_price", ("name", palette[paletteIndex].Name.ToUpperInvariant()), ("price", price));
                         card.SwatchLabels[i].text = label;
                         card.SwatchButtons[i].interactable = !isSelected && (owned || PlayerWallet.Shards >= price);
                     }

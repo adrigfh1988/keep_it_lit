@@ -102,7 +102,7 @@ public class Locker : MonoBehaviour, IHidingSpot
     {
         if (!IsPlayer(other)) return;
         _playerInTrigger = true;
-        if (!Occupied && _hud != null) _hud.SetPrompt("E  HIDE");
+        if (!Occupied && _hud != null) _hud.SetPromptKey("E", "hud.prompt.hide");
     }
 
     private void OnTriggerExit(Collider other)
@@ -146,7 +146,7 @@ public class Locker : MonoBehaviour, IHidingSpot
         _controller.BottomClamp = -pitchRange;
         _controller.TopClamp = pitchRange;
 
-        if (_hud != null) _hud.SetPrompt("E  LEAVE");
+        if (_hud != null) _hud.SetPromptKey("E", "hud.prompt.leave");
         GameAudio.PlayAt(GameAudio.Library.lockerDoor, transform.position, 0.7f); // F97: the door pulled shut (recorded clip only)
         StartBreathing();
     }
@@ -210,7 +210,11 @@ public class Locker : MonoBehaviour, IHidingSpot
         _stealth.SetHidden(null);
         Occupied = false;
 
-        if (_hud != null) _hud.SetPrompt(_playerInTrigger ? "E  HIDE" : null);
+        if (_hud != null)
+        {
+            if (_playerInTrigger) _hud.SetPromptKey("E", "hud.prompt.hide");
+            else _hud.SetPrompt(null);
+        }
     }
 
     /// <summary>

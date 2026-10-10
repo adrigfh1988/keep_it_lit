@@ -161,7 +161,7 @@ public class MazeEscape : MonoBehaviour
         if (!_locked || _keys == null || !_keys.IsComplete) return;
         _locked = false;
         ApplyLockLook();
-        _hud?.ShowSubtitle(_isLift ? "THE LIFT IS UNLOCKED" : "THE HATCH IS UNLOCKED", 2.5f);
+        _hud?.ShowSubtitle(L10n.T(_isLift ? "sub.escape.lift_unlocked" : "sub.escape.hatch_unlocked"), 2.5f);
     }
 
     private void BeginEscape()
@@ -249,7 +249,7 @@ public class MazeEscape : MonoBehaviour
         if (_lockedNudgeTimer > 0f) return;
         _lockedNudgeTimer = 2f;
 
-        _hud?.ShowSubtitle($"LOCKED · {_keys.Held} / {_keys.Total} KEYS", 1.8f);
+        _hud?.ShowSubtitle(L10n.T("hud.keys_locked", ("h", _keys.Held), ("t", _keys.Total)), 1.8f);
         if (_padlockClip == null) _padlockClip = DoorAudio.BuildClunkClip(0.18f, 160f, 0.35f);
         if (!GameAudio.PlayAt(GameAudio.Library.lockedRattle, _hatchPosition, 0.7f)) GameAudio.ClipAtPoint(_padlockClip, _hatchPosition, 0.7f); // F97
     }
@@ -267,7 +267,7 @@ public class MazeEscape : MonoBehaviour
             if (_liftText != null)
             {
                 _liftText.gameObject.SetActive(inside);
-                if (inside) _liftText.text = $"LIFT LOCKED · {_keys.Held} / {_keys.Total} KEYS";
+                if (inside) _liftText.text = L10n.T("hud.lift_locked", ("h", _keys.Held), ("t", _keys.Total));
             }
             return;
         }
@@ -293,7 +293,7 @@ public class MazeEscape : MonoBehaviour
             if (show)
             {
                 int percent = liftFillSeconds > 0f ? Mathf.RoundToInt(_liftProgress / liftFillSeconds * 100f) : 0;
-                _liftText.text = $"LIFT ARRIVING {percent}%";
+                _liftText.text = L10n.T("hud.lift_arriving", ("percent", percent));
             }
         }
 
@@ -777,6 +777,7 @@ public class MazeEscape : MonoBehaviour
         liftRect.pivot = new Vector2(0.5f, 1f);
         liftRect.anchoredPosition = new Vector2(0f, -20f);
         liftRect.sizeDelta = new Vector2(400f, 50f);
+        RuntimeUi.AutoFit(_liftText, 0.6f); // D14
         _liftText.gameObject.SetActive(false);
     }
 }

@@ -148,7 +148,11 @@ public class ShopRoom : MonoBehaviour
 
         player.GetComponent<ThirdPersonController>()?.ResetCameraRotation(yaw);
 
-        if (doorSign != null) doorSign.text = GameFlow.ShopFromHub ? "ASYLUM" : $"FLOOR {GameFlow.ShopNextFloor}";
+        if (doorSign != null)
+        {
+            if (!doorSign.enableAutoSizing) RuntimeUi.AutoFit(doorSign, 0.6f); // D14
+            doorSign.text = GameFlow.ShopFromHub ? L10n.T("hud.asylum") : L10n.T("hud.floor", ("floor", GameFlow.ShopNextFloor));
+        }
     }
 
     /// <summary>Opens the room for free movement. Called once the ledger's CONTINUE is pressed.</summary>
@@ -196,9 +200,9 @@ public class ShopRoom : MonoBehaviour
         if (_inCounter && shopkeeper != null) shopkeeper.Greet();
         if (_hud == null) return;
 
-        if (_inCounter) _hud.SetPrompt("E  TALK");
-        else if (_inBoard) _hud.SetPrompt($"{TouchInput.Key("E", "USE")}  CONTRACTS");
-        else if (_inDoor) _hud.SetPrompt("E  DESCEND");
+        if (_inCounter) _hud.SetPromptKey("E", "hud.prompt.talk");
+        else if (_inBoard) _hud.SetPromptKey(TouchInput.Key("E", L10n.T("ui.key.use")), "hud.prompt.contracts");
+        else if (_inDoor) _hud.SetPromptKey("E", "hud.prompt.descend");
         else _hud.SetPrompt(null);
     }
 

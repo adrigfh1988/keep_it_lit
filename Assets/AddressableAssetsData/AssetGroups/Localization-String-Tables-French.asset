@@ -22,6 +22,20 @@ MonoBehaviour:
     - Locale-fr
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a8e1969b2ee2ff142a294e8271e71b63
+    m_Address: Subtitles_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d749427f8d5ccbe49bad7f2c2fa3c7bf
+    m_Address: HUD_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 9fd6baff82e829d419907f9cd6e260e2, type: 2}
   m_SchemaSet:

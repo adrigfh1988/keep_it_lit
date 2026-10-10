@@ -206,7 +206,7 @@ public class GameOutcome : MonoBehaviour
         if (_flashlight != null) _flashlight.InputEnabled = true;
         IsEnding = false;
 
-        if (_hud != null) _hud.ShowSubtitle("It let go. It will not do that twice.", 3.2f);
+        if (_hud != null) _hud.ShowSubtitle(L10n.T("sub.second_wind.release"), 3.2f);
     }
 
     // ---------------------------------------------------------------- endings
@@ -362,6 +362,7 @@ public class GameOutcome : MonoBehaviour
         int cleared = GameFlow.CurrentFloor;
 
         TextMeshProUGUI title = RuntimeUi.CreateText(root, "Title", payout.Title, 84f, Green);
+        RuntimeUi.AutoFit(title, 0.6f);
         title.fontStyle = FontStyles.Bold;
         RuntimeUi.Place(title.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, slip ? -150f : -200f), new Vector2(1600f, 120f));
 
@@ -370,14 +371,16 @@ public class GameOutcome : MonoBehaviour
             // The number stays redacted until the Director's file (105) has been read. U+2587 may be missing from the font: '#' then.
             string redacted = title.font != null && title.font.HasCharacter('▇', true, true) ? "▇" : "#";
             string patient = HubState.HasTruth ? "7" : redacted;
-            TextMeshProUGUI heading = RuntimeUi.CreateText(root, "Heading", $"READMITTED  ·  ADMISSION {14 + cleared}  ·  PATIENT {patient}", 30f, Amber);
+            TextMeshProUGUI heading = RuntimeUi.CreateText(root, "Heading", L10n.T("ui.ledger.slip_heading", ("admission", 14 + cleared), ("patient", patient)), 30f, Amber);
+            RuntimeUi.AutoFit(heading, 0.7f);
             heading.characterSpacing = 4f;
             RuntimeUi.Place(heading.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -232f), new Vector2(1400f, 44f));
             _ledgerTexts.Add(heading);
         }
 
         TextMeshProUGUI subtitle = RuntimeUi.CreateText(root, "Subtitle",
-            slip ? "THE CLERK HAS TYPED YOUR RETURN." : "The hatch closed behind you. Something down here is open.", 34f, Grey);
+            slip ? L10n.T("ui.ledger.slip_subtitle") : L10n.T("ui.ledger.subtitle"), 34f, Grey);
+        RuntimeUi.AutoFit(subtitle, 0.7f);
         RuntimeUi.Place(subtitle.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, slip ? -285f : -280f), new Vector2(1400f, 50f));
         if (slip) _ledgerTexts.Add(subtitle);
 
@@ -385,14 +388,15 @@ public class GameOutcome : MonoBehaviour
         float step = slip && payout.Lines.Count > 4 ? 46f : slip ? 52f : 58f;
         foreach (PayoutLine line in payout.Lines)
         {
-            bool informational = line.Amount == 0 && line.Label.StartsWith("SHARDS FOUND");
+            bool informational = line.Amount == 0 && line.Kind == PayoutKind.ShardsFound;
             Color lineColor = informational ? new Color(Grey.r, Grey.g, Grey.b, 0.6f) : Grey;
 
             TextMeshProUGUI label = RuntimeUi.CreateText(root, "Label", line.Label, 36f, lineColor);
+            RuntimeUi.AutoFit(label, 0.7f);
             label.alignment = TextAlignmentOptions.Left;
             RuntimeUi.Place(label.rectTransform, new Vector2(0.5f, 1f), new Vector2(-100f, y), new Vector2(900f, 50f));
 
-            string amountText = informational ? "already yours" : line.Amount == 0 && line.Label.StartsWith("CONTRACT") ? "no pay" : $"+{line.Amount}";
+            string amountText = informational ? L10n.T("ui.ledger.already_yours") : line.Amount == 0 && line.Kind == PayoutKind.Contract ? L10n.T("ui.ledger.no_pay") : $"+{line.Amount}";
             TextMeshProUGUI amount = RuntimeUi.CreateText(root, "Amount", amountText, 36f, lineColor);
             amount.alignment = TextAlignmentOptions.Right;
             RuntimeUi.Place(amount.rectTransform, new Vector2(0.5f, 1f), new Vector2(420f, y), new Vector2(300f, 50f));
@@ -405,12 +409,12 @@ public class GameOutcome : MonoBehaviour
         RuntimeUi.Place(rule.GetComponent<Image>().rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, y - 6f), new Vector2(900f, 2f));
         y -= 50f;
 
-        TextMeshProUGUI payoutText = RuntimeUi.CreateText(root, "Payout", $"PAYOUT  +{payout.Total}", 44f, Green);
+        TextMeshProUGUI payoutText = RuntimeUi.CreateText(root, "Payout", L10n.T("ui.ledger.payout", ("amount", payout.Total)), 44f, Green);
         RuntimeUi.Place(payoutText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, y), new Vector2(900f, 60f));
         y -= 60f;
 
         Color shardColor = new Color(0.7f, 0.9f, 1f);
-        TextMeshProUGUI wallet = RuntimeUi.CreateText(root, "Wallet", $"{PlayerWallet.CurrencyName}  {PlayerWallet.Shards}", 44f, shardColor);
+        TextMeshProUGUI wallet = RuntimeUi.CreateText(root, "Wallet", L10n.T("ui.ledger.wallet", ("currency", PlayerWallet.CurrencyName), ("shards", PlayerWallet.Shards)), 44f, shardColor);
         RuntimeUi.Place(wallet.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, y), new Vector2(900f, 60f));
 
         if (slip)
@@ -422,10 +426,11 @@ public class GameOutcome : MonoBehaviour
             List<string> orders = new List<string>();
             string order = HubMission.OrderFor(cleared + 1);
             if (!string.IsNullOrEmpty(order)) orders.Add(order);
-            if (AsylumHub.ShopWorthAVisit(cleared)) orders.Add($"EFFECTS HELD AT THE SHOP  ·  {PlayerWallet.Shards} {PlayerWallet.CurrencyName}");
+            if (AsylumHub.ShopWorthAVisit(cleared)) orders.Add(L10n.T("ui.ledger.shop_held", ("shards", PlayerWallet.Shards), ("currency", PlayerWallet.CurrencyName)));
             foreach (string text in orders)
             {
                 TextMeshProUGUI o = RuntimeUi.CreateText(root, "Order", text, 34f, Amber);
+                RuntimeUi.AutoFit(o, 0.7f);
                 o.characterSpacing = 3f;
                 RuntimeUi.Place(o.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, y), new Vector2(1500f, 46f));
                 _ledgerTexts.Add(o);
@@ -433,9 +438,10 @@ public class GameOutcome : MonoBehaviour
             }
         }
 
-        Button continueButton = RuntimeUi.CreateButton(root, "CONTINUE", new Vector2(0f, slip ? 100f : 160f), new Vector2(560f, 86f), 42f,
+        Button continueButton = RuntimeUi.CreateButton(root, L10n.T("ui.common.continue"), new Vector2(0f, slip ? 100f : 160f), new Vector2(560f, 86f), 42f,
             new Color(0.08f, 0.32f, 0.24f, 0.95f), new Color(0.15f, 0.55f, 0.42f, 1f), Color.white);
         continueButton.onClick.AddListener(OnLedgerContinue);
+        RuntimeUi.BindButton(continueButton, "ui.common.continue");
 
         return root;
     }
@@ -770,28 +776,28 @@ public class GameOutcome : MonoBehaviour
         if (won)
         {
             bool finalFloor = GameFlow.CurrentFloor >= FloorProfile.FinalFloor;
-            title = finalFloor ? "YOU GOT OUT" : $"FLOOR {GameFlow.CurrentFloor} CLEARED";
-            subtitle = finalFloor ? "The hatch closed behind you. There is nothing left below." : "The hatch closed behind you. It is darker down here.";
+            title = finalFloor ? L10n.T("ui.end.won_final") : L10n.T("ui.end.floor_cleared", ("floor", GameFlow.CurrentFloor));
+            subtitle = finalFloor ? L10n.T("ui.end.won_final_body") : L10n.T("ui.end.floor_cleared_body");
             if (titleOverride != null) title = titleOverride;
             if (bodyOverride != null) subtitle = bodyOverride;
         }
         else if (reason == LoseReason.Caught)
         {
-            title = "IT FOUND YOU";
+            title = L10n.T("ui.end.caught");
 
             PlayerStealthState stealth = _player != null ? _player.GetComponent<PlayerStealthState>() : null;
             if (stealth != null && stealth.LastExposed)
             {
-                subtitle = "It watched you hide.";
+                subtitle = L10n.T("ui.end.caught_hidden");
             }
             else
             {
-                subtitle = torchWasOn ? "It was faster in the dark." : "You never heard it coming.";
+                subtitle = torchWasOn ? L10n.T("ui.end.caught_torch") : L10n.T("ui.end.caught_silent");
             }
         }
         else
         {
-            title = "OUT OF TIME";
+            title = L10n.T("ui.end.out_of_time");
             int metres = 0;
             if (_escape != null && _player != null)
             {
@@ -800,21 +806,24 @@ public class GameOutcome : MonoBehaviour
                 metres = Mathf.RoundToInt(toHatch.magnitude);
             }
 
-            subtitle = $"The hatch sealed. You were {_collected} stars in and {metres} metres away.";
+            subtitle = L10n.T("ui.end.out_of_time_body", ("stars", _collected), ("metres", metres));
         }
 
         TextMeshProUGUI titleText = RuntimeUi.CreateText(root, "Title", title, 96f, titleColor);
         titleText.fontStyle = FontStyles.Bold;
+        RuntimeUi.AutoFit(titleText, 0.6f);
         RuntimeUi.Place(titleText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -200f), new Vector2(1600f, 140f));
 
         bool longBody = bodyOverride != null;
         TextMeshProUGUI subText = RuntimeUi.CreateText(root, "Subtitle", subtitle, longBody ? 32f : 36f, Grey);
         if (longBody) subText.textWrappingMode = TextWrappingModes.Normal;
+        RuntimeUi.AutoFit(subText, 0.7f);
         RuntimeUi.Place(subText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, longBody ? -385f : -300f), new Vector2(longBody ? 1300f : 1600f, longBody ? 200f : 60f));
 
-        string stats = $"FLOOR {GameFlow.CurrentFloor}     STARS {_collected} / {_total}     TIME {MazeEscape.FormatTime(_runTime)}     SEED {_seed}";
+        string stats = L10n.T("ui.end.stats", ("floor", GameFlow.CurrentFloor), ("collected", _collected), ("total", _total), ("time", MazeEscape.FormatTime(_runTime)), ("seed", _seed));
         TextMeshProUGUI statsText = RuntimeUi.CreateText(root, "Stats", stats, 32f, Grey);
         statsText.characterSpacing = 4f;
+        RuntimeUi.AutoFit(statsText, 0.65f);
         RuntimeUi.Place(statsText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, longBody ? -540f : -380f), new Vector2(1600f, 50f));
 
         // Second line: what this attempt paid into the campaign wallet.
@@ -825,19 +834,20 @@ public class GameOutcome : MonoBehaviour
         {
             int amount = _consolationPayout != null ? _consolationPayout.Total : 0;
             stats2 = amount > 0
-                ? $"CONSOLATION  +{amount}     {PlayerWallet.CurrencyName}  {PlayerWallet.Shards}"
-                : $"NO CONSOLATION     {PlayerWallet.CurrencyName}  {PlayerWallet.Shards}";
+                ? L10n.T("ui.end.consolation", ("amount", amount), ("currency", PlayerWallet.CurrencyName), ("shards", PlayerWallet.Shards))
+                : L10n.T("ui.end.no_consolation", ("currency", PlayerWallet.CurrencyName), ("shards", PlayerWallet.Shards));
         }
         else if (isFinalWin)
         {
             int amount = _floorPayout != null ? _floorPayout.Total : 0;
-            stats2 = $"PAYOUT  +{amount}     CAMPAIGN TOTAL  {PlayerWallet.TotalEarned}";
+            stats2 = L10n.T("ui.end.final_payout", ("amount", amount), ("total", PlayerWallet.TotalEarned));
         }
 
         if (stats2 != null)
         {
             TextMeshProUGUI stats2Text = RuntimeUi.CreateText(root, "Stats2", stats2, 32f, shardColor);
             stats2Text.characterSpacing = 4f;
+            RuntimeUi.AutoFit(stats2Text, 0.65f);
             RuntimeUi.Place(stats2Text.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, longBody ? -590f : -430f), new Vector2(1600f, 50f));
         }
 
@@ -847,22 +857,26 @@ public class GameOutcome : MonoBehaviour
         // Winning below the final floor leads somewhere: the next, harder floor
         if (won && GameFlow.CurrentFloor < FloorProfile.FinalFloor)
         {
-            Button next = RuntimeUi.CreateButton(root, "NEXT FLOOR",
+            Button next = RuntimeUi.CreateButton(root, L10n.T("ui.end.next_floor"),
                 new Vector2(0f, 440f), size, 42f, new Color(0.08f, 0.32f, 0.24f, 0.95f), new Color(0.15f, 0.55f, 0.42f, 1f), Color.white);
             next.onClick.AddListener(GameFlow.NextFloor);
+            RuntimeUi.BindButton(next, "ui.end.next_floor");
         }
 
-        Button again = RuntimeUi.CreateButton(root, won ? "REPLAY THIS FLOOR" : "TRY THIS MAZE AGAIN",
+        Button again = RuntimeUi.CreateButton(root, L10n.T(won ? "ui.end.replay" : "ui.end.retry"),
             new Vector2(0f, 330f), size, 38f, ButtonIdle, ButtonHover, Color.white);
         again.onClick.AddListener(() => GameFlow.Restart(true, _seed));
+        RuntimeUi.BindButton(again, won ? "ui.end.replay" : "ui.end.retry");
 
-        Button fresh = RuntimeUi.CreateButton(root, "NEW MAZE",
+        Button fresh = RuntimeUi.CreateButton(root, L10n.T("ui.end.new_maze"),
             new Vector2(0f, 220f), size, 38f, ButtonIdle, ButtonHover, Color.white);
         fresh.onClick.AddListener(() => GameFlow.Restart(false, _seed));
+        RuntimeUi.BindButton(fresh, "ui.end.new_maze");
 
-        Button menu = RuntimeUi.CreateButton(root, "MAIN MENU",
+        Button menu = RuntimeUi.CreateButton(root, L10n.T("ui.end.main_menu"),
             new Vector2(0f, 110f), size, 38f, ButtonIdle, ButtonHover, Color.white);
         menu.onClick.AddListener(GameFlow.ReturnToMenu);
+        RuntimeUi.BindButton(menu, "ui.end.main_menu");
 
         PlayerLock.SetCursorFree(true);
     }

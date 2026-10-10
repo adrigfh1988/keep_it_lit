@@ -110,8 +110,8 @@ public class ObjectiveCard : MonoBehaviour
             float x = 0f;
             foreach (string key in keys ?? new string[0])
             {
-                float width = Mathf.Max(56f, 26f + key.Length * 17f);
-                BuildChip(key, x, width);
+                // S9 (plan section 6): the chip is as wide as its text measures (a translated key word such as RECHTSKLICK is longer than MOUSE).
+                float width = BuildChip(key, x);
                 x += width + 14f;
             }
         }
@@ -266,10 +266,11 @@ public class ObjectiveCard : MonoBehaviour
 
         AmberBar(card.transform);
 
-        TextMeshProUGUI label = RuntimeUi.CreateText(card.transform, "Label", "OBJECTIVE", 20f, Grey);
+        TextMeshProUGUI label = RuntimeUi.CreateText(card.transform, "Label", L10n.T("ui.objective.label"), 20f, Grey);
         label.alignment = TextAlignmentOptions.TopLeft;
         label.characterSpacing = 6f;
         PlaceTopLeft(label.rectTransform, new Vector2(30f, -14f), new Vector2(300f, 26f));
+        RuntimeUi.Bind(label, "ui.objective.label", 0.6f);
 
         _counter = RuntimeUi.CreateText(card.transform, "Counter", "", 20f, Grey);
         _counter.alignment = TextAlignmentOptions.TopRight;
@@ -374,7 +375,8 @@ public class ObjectiveCard : MonoBehaviour
         rect.localRotation = Quaternion.Euler(0f, 0f, zRotation);
     }
 
-    private void BuildChip(string key, float x, float width)
+    /// <summary>Builds one key-cap chip at x and returns its width.</summary>
+    private float BuildChip(string key, float x)
     {
         // A bordered box: an amber frame with a dark face inset by 2 px.
         GameObject frame = new GameObject("Chip_" + key, typeof(RectTransform), typeof(Image));
@@ -383,7 +385,7 @@ public class ObjectiveCard : MonoBehaviour
         Image frameImage = frame.GetComponent<Image>();
         frameImage.color = new Color(Amber.r, Amber.g, Amber.b, 0.95f);
         frameImage.raycastTarget = false;
-        PlaceTopLeft((RectTransform)frame.transform, new Vector2(x, 0f), new Vector2(width, 44f));
+        RectTransform frameRect = (RectTransform)frame.transform;
 
         GameObject face = RuntimeUi.CreatePanel(frame.transform, "Face", new Color(0.07f, 0.07f, 0.08f, 1f));
         face.GetComponent<Image>().raycastTarget = false;
@@ -396,5 +398,9 @@ public class ObjectiveCard : MonoBehaviour
         text.characterSpacing = 2f;
         text.textWrappingMode = TextWrappingModes.NoWrap;
         RuntimeUi.Stretch(text.rectTransform);
+
+        float width = Mathf.Max(56f, text.GetPreferredValues(key).x + 26f);
+        PlaceTopLeft(frameRect, new Vector2(x, 0f), new Vector2(width, 44f));
+        return width;
     }
 }

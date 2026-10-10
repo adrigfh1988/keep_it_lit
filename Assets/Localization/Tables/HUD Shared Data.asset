@@ -1,0 +1,415 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: HUD Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: HUD
+  m_TableCollectionNameGuidString: 604b93daf028d6f4db3b08ed6afbed15
+  m_Entries:
+  - m_Id: 635342848
+    m_Key: hud.contract.done
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663347
+  - m_Id: 731811840
+    m_Key: hud.contract.failed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663348
+  - m_Id: 731811841
+    m_Key: hud.contract.void
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663349
+  - m_Id: 731811842
+    m_Key: hud.contract.plain
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663350
+  - m_Id: 731811843
+    m_Key: hud.contract.progress_dark
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663351
+  - m_Id: 731811844
+    m_Key: hud.contract.progress_count
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663352
+  - m_Id: 731811845
+    m_Key: hud.contract.progress_time
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663353
+  - m_Id: 731811846
+    m_Key: hud.torch
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663354
+  - m_Id: 740200448
+    m_Key: hud.torch_dead
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663355
+  - m_Id: 740200449
+    m_Key: hud.floor
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663356
+  - m_Id: 740200450
+    m_Key: hud.asylum
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663357
+  - m_Id: 740200451
+    m_Key: hud.shards
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663358
+  - m_Id: 740200452
+    m_Key: hud.second_wind
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663359
+  - m_Id: 740200453
+    m_Key: hud.slot.battery
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663360
+  - m_Id: 740200454
+    m_Key: hud.slot.compass
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663361
+  - m_Id: 740200455
+    m_Key: hud.slot.throw
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663362
+  - m_Id: 740200456
+    m_Key: hud.prompt.hide
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663363
+  - m_Id: 740200457
+    m_Key: hud.prompt.leave
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663364
+  - m_Id: 740200458
+    m_Key: hud.prompt.talk
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663365
+  - m_Id: 740200459
+    m_Key: hud.prompt.contracts
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663366
+  - m_Id: 740200460
+    m_Key: hud.prompt.descend
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663367
+  - m_Id: 740200461
+    m_Key: hud.prompt.close
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663368
+  - m_Id: 740200462
+    m_Key: hud.counter.stars
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663369
+  - m_Id: 740200463
+    m_Key: hud.counter.fuses
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663370
+  - m_Id: 740200464
+    m_Key: hud.counter.keys
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663371
+  - m_Id: 740200465
+    m_Key: hud.keys_locked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663372
+  - m_Id: 740200466
+    m_Key: hud.lift_locked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663373
+  - m_Id: 740200467
+    m_Key: hud.lift_arriving
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663374
+  - m_Id: 740200468
+    m_Key: hud.records.header
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663375
+  - m_Id: 740200469
+    m_Key: hud.prompt.pick_up_bottle
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663376
+  - m_Id: 740200470
+    m_Key: hud.prompt.pick_up_can
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663377
+  - m_Id: 740200471
+    m_Key: hud.prompt.take_key
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663378
+  - m_Id: 740200472
+    m_Key: hud.prompt.pick_up_lantern
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663379
+  - m_Id: 740200473
+    m_Key: hud.prompt.put_down_lantern
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663380
+  - m_Id: 740200474
+    m_Key: hud.prompt.read
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663381
+  - m_Id: 740200475
+    m_Key: hud.prompt.pick_up_battery_cell
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663382
+  - m_Id: 740200476
+    m_Key: hud.prompt.restore_power
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663383
+  - m_Id: 740200477
+    m_Key: hud.prompt.open
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663384
+  - m_Id: 740200478
+    m_Key: hud.prompt.press
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663385
+  - m_Id: 740200479
+    m_Key: hud.prompt.ring_bell
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663386
+  - m_Id: 740200480
+    m_Key: hud.prompt.open_valve
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663387
+  - m_Id: 740200481
+    m_Key: hud.prompt.light_candles
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663388
+  - m_Id: 740200482
+    m_Key: hud.prompt.use_terminal
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663389
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4707331669776663332
+  references:
+    version: 2
+    RefIds:
+    - rid: 4707331669776663332
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1791630612380
+    - rid: 4707331669776663347
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract HUD line under the counter, finished (26 pt amber/green, NoWrap, 1100 px, auto-size). {name} = contract name
+    - rid: 4707331669776663348
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract HUD line, failed. {name} = contract name
+    - rid: 4707331669776663349
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract HUD line, voided (the floor cannot offer it). {name} = contract name
+    - rid: 4707331669776663350
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract HUD line, in progress with no counter. {name} = contract name
+    - rid: 4707331669776663351
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Contract HUD line, Walk in the dark: {n} of {total} seconds walked with the torch off'
+    - rid: 4707331669776663352
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Contract HUD line with a plain count: {n} of {total} (shards found, notes read, noises made)'
+    - rid: 4707331669776663353
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Contract HUD line, Don''t dawdle: {time} = m:ss left'
+    - rid: 4707331669776663354
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD torch battery label bottom-left (20 pt, one line, 220 px, auto-size)
+    - rid: 4707331669776663355
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD torch battery label when the battery is empty (20 pt, 220 px, auto-size)
+    - rid: 4707331669776663356
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD floor label top-left under the star counter (26 pt, letter-spaced, 320 px, auto-size) and the shop door sign. {floor} = floor number
+    - rid: 4707331669776663357
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD floor label while in the hospital hub; also the shop door sign when the shop is entered from the hub (26 pt, 320 px)
+    - rid: 4707331669776663358
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD shard counter top-left (26 pt, letter-spaced, 320 px, auto-size). {currency} = currency name, {shards} = balance
+    - rid: 4707331669776663359
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD label shown while a Second Wind is held (22 pt, bottom-right, 360 px)
+    - rid: 4707331669776663360
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD consumable slot, bottom-right (24 pt, 360 px, auto-size). {key} = 1 on keyboard or TAP on touch (do not translate the key), {count} = batteries held
+    - rid: 4707331669776663361
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD consumable slot, bottom-right (24 pt, 360 px). {key} = 2 or TAP, {count} = compasses held
+    - rid: 4707331669776663362
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD throwable slot, bottom-right (24 pt, 360 px). {key} = G or TAP, {count} = bottles/cans carried
+    - rid: 4707331669776663363
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Interaction prompt next to a locker: climb in. Shown as "E  <text>" (34 pt, 600 x 50, auto-size). Imperative/infinitive'
+    - rid: 4707331669776663364
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Interaction prompt inside a locker: climb out'
+    - rid: 4707331669776663365
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Interaction prompt at the shop counter: open the shop menu'
+    - rid: 4707331669776663366
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the shop contract board
+    - rid: 4707331669776663367
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Interaction prompt at the shop door: go down to the next floor'
+    - rid: 4707331669776663368
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Interaction prompt while a lore note panel is open: close it. Shown as "E  <text>"'
+    - rid: 4707331669776663369
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD counter, first segment, top-left (38 pt, one line, 1100 px for all segments, auto-size). {n} of {total} stars; the noun stays plural as a label
+    - rid: 4707331669776663370
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD counter, second segment on blackout floors. Joined to the first with three spaces. {n} of {total} fuse boxes restored
+    - rid: 4707331669776663371
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD counter, third segment on key-hunt floors. Joined with three spaces. {n} of {total} keys held
+    - rid: 4707331669776663372
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle-style reminder when stepping on a locked hatch (1.8 s, one line). {h} keys held of {t}
+    - rid: 4707331669776663373
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Text above the lift ring while the lift is locked (28 pt, 400 x 50, auto-size). {h} keys held of {t}
+    - rid: 4707331669776663374
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Text above the lift ring while it fills (28 pt, 400 x 50, auto-size). {percent} = 0-100
+    - rid: 4707331669776663375
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Records board header in the asylum office (world-space sign, auto-size). {n} of {total} maze case files found
+    - rid: 4707331669776663376
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on a bottle on the floor. Shown as "E  <text>" (34 pt, 600 x 50, auto-size)
+    - rid: 4707331669776663377
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on a can on the floor
+    - rid: 4707331669776663378
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on a brass key
+    - rid: 4707331669776663379
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on a lantern on the floor
+    - rid: 4707331669776663380
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Interaction prompt while carrying the lantern: set it down'
+    - rid: 4707331669776663381
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Interaction prompt on a lore note: open it'
+    - rid: 4707331669776663382
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on a battery cell in a vault
+    - rid: 4707331669776663383
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on a fuse box (hold E; the hold percentage is appended by the game)
+    - rid: 4707331669776663384
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on a shutter door
+    - rid: 4707331669776663385
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on a wall button
+    - rid: 4707331669776663386
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on the call bell (Ward floor)
+    - rid: 4707331669776663387
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on the steam valve (Boiler floor, hold E)
+    - rid: 4707331669776663388
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on the candles (Crypt floor)
+    - rid: 4707331669776663389
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on the terminal (Lab floor)

@@ -178,38 +178,45 @@ public class PauseMenu : MonoBehaviour
 
         _panel = RuntimeUi.CreatePanel(canvas.transform, "PauseScreen", new Color(0f, 0f, 0f, 0.75f));
 
-        TextMeshProUGUI title = RuntimeUi.CreateText(_panel.transform, "Title", "PAUSED", 84f, Color.white);
+        TextMeshProUGUI title = RuntimeUi.CreateText(_panel.transform, "Title", L10n.T("ui.pause.title"), 84f, Color.white);
+        RuntimeUi.Bind(title, "ui.pause.title", 0.6f);
         title.fontStyle = FontStyles.Bold;
         title.characterSpacing = 10f;
         RuntimeUi.Place(title.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -220f), new Vector2(1200f, 120f));
 
         Vector2 size = new Vector2(420f, 86f);
 
-        Button resume = RuntimeUi.CreateButton(_panel.transform, "RESUME",
+        Button resume = RuntimeUi.CreateButton(_panel.transform, L10n.T("ui.pause.resume"),
             new Vector2(0f, 520f), size, 40f, ButtonIdle, ButtonHover, Color.white);
+        RuntimeUi.BindButton(resume, "ui.pause.resume");
         resume.onClick.AddListener(Resume);
 
-        _restartButton = RuntimeUi.CreateButton(_panel.transform, "RESTART MAZE",
+        _restartButton = RuntimeUi.CreateButton(_panel.transform, L10n.T("ui.pause.restart"),
             new Vector2(0f, 410f), size, 40f, ButtonIdle, ButtonHover, Color.white);
+        RuntimeUi.BindButton(_restartButton, "ui.pause.restart");
         _restartButton.onClick.AddListener(() => GameFlow.Restart(true, _seed));
 
         // F86: SKIP TUTORIAL shares the RESTART slot - the two are never shown together (see Pause).
-        _skipButton = RuntimeUi.CreateButton(_panel.transform, "SKIP TUTORIAL",
+        _skipButton = RuntimeUi.CreateButton(_panel.transform, L10n.T("ui.pause.skip_tutorial"),
             new Vector2(0f, 410f), size, 40f, ButtonIdle, ButtonHover, Color.white);
+        RuntimeUi.BindButton(_skipButton, "ui.pause.skip_tutorial");
         _skipButton.onClick.AddListener(SkipTutorial);
         _skipButton.gameObject.SetActive(false);
 
         // S2: SETTINGS (the touch-controls toggle and look-sensitivity slider that used to sit here live in its CONTROLS tab now)
-        Button settings = RuntimeUi.CreateButton(_panel.transform, "SETTINGS",
+        Button settings = RuntimeUi.CreateButton(_panel.transform, L10n.T("ui.menu.settings"),
             new Vector2(0f, 300f), size, 40f, ButtonIdle, ButtonHover, Color.white);
+        RuntimeUi.BindButton(settings, "ui.menu.settings");
         settings.onClick.AddListener(SettingsMenu.Show);
 
-        Button menu = RuntimeUi.CreateButton(_panel.transform, "MAIN MENU",
+        Button menu = RuntimeUi.CreateButton(_panel.transform, L10n.T("ui.pause.main_menu"),
             new Vector2(0f, 190f), size, 40f, ButtonIdle, ButtonHover, Color.white);
+        RuntimeUi.BindButton(menu, "ui.pause.main_menu");
         menu.onClick.AddListener(GameFlow.ReturnToMenu);
 
-        Button quit = RuntimeUi.CreateButton(_panel.transform, "QUIT",
+        Button quit = RuntimeUi.CreateButton(_panel.transform, L10n.T("ui.pause.quit"),
             new Vector2(0f, 80f), size, 40f, ButtonIdle, ButtonHover, Color.white);
+        RuntimeUi.BindButton(quit, "ui.pause.quit");
         quit.onClick.AddListener(GameFlow.Quit);
         quit.gameObject.SetActive(GameFlow.CanQuit);
     }

@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour
 {
     [Header("Identity")]
     [SerializeField] private string gameTitle = "LIGHTS OUT";
-    [SerializeField] private string tagline = "Collect. Escape. Don't be seen.";
+    // S9: the tagline now comes from ui.menu.tagline (the old serialized field is gone).
 
     [Header("Cover")]
     [Tooltip("Leave empty to use the cover generated in code. Drop a painted one in here when you have it.")]
@@ -31,13 +31,14 @@ public class MainMenu : MonoBehaviour
     private GameObject _titleScreen;
     private GameObject _rulesScreen;
     private TextMeshProUGUI _controlText;
+    private TextMeshProUGUI _rulesBody;
     private Texture2D _generatedCover;
     private Sprite _generatedSprite;
     private Transform _player;
     private bool _menuOpen = true;
     // F86: the rules screen starts the run only as START GAME's fallback (no Intake built); from CONTROLS it is just a back button.
     private bool _rulesStartsGame = true;
-    private TextMeshProUGUI _rulesButtonLabel;
+    private LocalizedLabel _rulesLabel;
 
     [Header("Music")]
     [Tooltip("Volume of the title music (Discovering Rooms)")]
@@ -172,13 +173,14 @@ public class MainMenu : MonoBehaviour
     private void ShowRules(bool startsGame)
     {
         _rulesStartsGame = startsGame;
-        if (_rulesButtonLabel != null) _rulesButtonLabel.text = startsGame ? "START" : "BACK";
+        _rulesLabel?.SetKey(startsGame ? "ui.rules.start" : "ui.common.back");
 
         // F76: TouchControls' own -83 Update has not necessarily run yet this frame (this is an
         // onClick callback), and the very first tap is exactly the case that needs Active to be
         // current right now, not next frame - Poll() is idempotent per frame either way.
         TouchInput.Poll();
         if (_controlText != null) _controlText.text = ControlsText();
+        if (_rulesBody != null) _rulesBody.text = RulesText();
 
         _titleScreen.SetActive(false);
         _rulesScreen.SetActive(true);
@@ -234,19 +236,16 @@ public class MainMenu : MonoBehaviour
         Time.timeScale = 1f;
     }
 
+    private static string RulesText() =>
+        L10n.T("ui.rules.item1") + "\n\n" + L10n.T("ui.rules.item2") + "\n\n" + L10n.T("ui.rules.item3") + "\n\n" + L10n.T("ui.rules.item4");
+
     /// <summary>F76 T6: shown instead of the keyboard/mouse control line while touch is active or the
     /// platform is mobile (iPadOS Safari under-reports as desktop, so isMobilePlatform is checked too).</summary>
     private static string ControlsText()
     {
-        if (!TouchInput.Active && !Application.isMobilePlatform)
-        {
-            return "<b>WASD</b>  move   <b>SHIFT</b>  sprint   <b>MOUSE</b>  look   <b>F</b>  flashlight   <b>E</b>  hide / talk\n" +
-                   "<b>1</b>  spare battery   <b>2</b>  star compass   <b>ESC</b>  pause\n" +
-                   "<size=30>Your torch has three minutes of light in it. Your legs have less. Lockers hide you — unless it saw you climb in.</size>";
-        }
-
-        return "<b>LEFT THUMB</b>  move   <b>RIGHT THUMB</b>  look   buttons: <b>TORCH</b>, <b>FOCUS</b>, <b>INTERACT</b>, <b>THROW</b>, <b>SPRINT</b>\n" +
-               "<size=30>Your torch has three minutes of light in it. Your legs have less. Lockers hide you — unless it saw you climb in.</size>";
+        string tip = "<size=30>" + L10n.T("ui.controls.tip") + "</size>";
+        if (!TouchInput.Active && !Application.isMobilePlatform) return L10n.T("ui.controls.keyboard") + "\n" + tip;
+        return L10n.T("ui.controls.touch") + "\n" + tip;
     }
 
     // ---------------------------------------------------------------- screens
@@ -265,34 +264,40 @@ public class MainMenu : MonoBehaviour
         title.characterSpacing = 14f;
         RuntimeUi.Place(title.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -180f), new Vector2(1600f, 160f));
 
-        TextMeshProUGUI sub = RuntimeUi.CreateText(_titleScreen.transform, "Tagline", tagline, 38f, new Color(0.75f, 0.75f, 0.78f));
+        TextMeshProUGUI sub = RuntimeUi.CreateText(_titleScreen.transform, "Tagline", L10n.T("ui.menu.tagline"), 38f, new Color(0.75f, 0.75f, 0.78f));
+        RuntimeUi.Bind(sub, "ui.menu.tagline", 0.6f);
         RuntimeUi.Place(sub.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -290f), new Vector2(1200f, 60f));
 
         // F83: with a saved run a plain CONTINUE sits on top of the usual stack; without one the title screen is unchanged.
         if (SaveSystem.TryLoad(out SaveData save))
         {
-            Button continueButton = RuntimeUi.CreateButton(_titleScreen.transform, "CONTINUE",
+            Button continueButton = RuntimeUi.CreateButton(_titleScreen.transform, L10n.T("ui.menu.continue"),
                 new Vector2(0f, 520f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+        RuntimeUi.BindButton(continueButton, "ui.menu.continue");
             continueButton.onClick.AddListener(ContinueSavedRun);
             _savedFloor = save.floor;
         }
 
-        Button start = RuntimeUi.CreateButton(_titleScreen.transform, "START GAME",
+        Button start = RuntimeUi.CreateButton(_titleScreen.transform, L10n.T("ui.menu.start_game"),
             new Vector2(0f, 410f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+        RuntimeUi.BindButton(start, "ui.menu.start_game");
         start.onClick.AddListener(() => ConfirmThenStart(BeginNewCampaign));
 
         // F86: the old rules screen, kept as a reference sheet now that START GAME opens the Intake.
-        Button controls = RuntimeUi.CreateButton(_titleScreen.transform, "CONTROLS",
+        Button controls = RuntimeUi.CreateButton(_titleScreen.transform, L10n.T("ui.menu.controls"),
             new Vector2(0f, 300f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+        RuntimeUi.BindButton(controls, "ui.menu.controls");
         controls.onClick.AddListener(ShowControls);
 
         // S2: the settings screen opens over the title screen and closes back onto it.
-        Button settings = RuntimeUi.CreateButton(_titleScreen.transform, "SETTINGS",
+        Button settings = RuntimeUi.CreateButton(_titleScreen.transform, L10n.T("ui.menu.settings"),
             new Vector2(0f, 190f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+        RuntimeUi.BindButton(settings, "ui.menu.settings");
         settings.onClick.AddListener(SettingsMenu.Show);
 
-        Button exit = RuntimeUi.CreateButton(_titleScreen.transform, "EXIT",
+        Button exit = RuntimeUi.CreateButton(_titleScreen.transform, L10n.T("ui.menu.exit"),
             new Vector2(0f, 80f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+        RuntimeUi.BindButton(exit, "ui.menu.exit");
         exit.onClick.AddListener(GameFlow.Quit);
         exit.gameObject.SetActive(GameFlow.CanQuit);
     }
@@ -326,7 +331,7 @@ public class MainMenu : MonoBehaviour
         }
 
         if (_confirmPanel == null) BuildConfirmPanel();
-        _confirmText.text = $"Your saved run (floor {_savedFloor}) will be lost.";
+        _confirmText.text = L10n.T("ui.menu.start_over_body", ("floor", _savedFloor));
         _confirmAction = begin;
         _confirmPanel.SetActive(true);
         _confirmPanel.transform.SetAsLastSibling();
@@ -339,7 +344,8 @@ public class MainMenu : MonoBehaviour
     {
         _confirmPanel = RuntimeUi.CreatePanel(_titleScreen.transform, "ConfirmStartOver", new Color(0.02f, 0.02f, 0.03f, 0.97f));
 
-        TextMeshProUGUI heading = RuntimeUi.CreateText(_confirmPanel.transform, "Heading", "START OVER?", 76f, accent);
+        TextMeshProUGUI heading = RuntimeUi.CreateText(_confirmPanel.transform, "Heading", L10n.T("ui.menu.start_over_heading"), 76f, accent);
+        RuntimeUi.Bind(heading, "ui.menu.start_over_heading", 0.6f);
         heading.fontStyle = FontStyles.Bold;
         heading.characterSpacing = 8f;
         RuntimeUi.Place(heading.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -300f), new Vector2(1400f, 100f));
@@ -347,8 +353,9 @@ public class MainMenu : MonoBehaviour
         _confirmText = RuntimeUi.CreateText(_confirmPanel.transform, "Body", "", 40f, new Color(0.88f, 0.88f, 0.9f));
         RuntimeUi.Place(_confirmText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -420f), new Vector2(1400f, 80f));
 
-        Button startOver = RuntimeUi.CreateButton(_confirmPanel.transform, "START OVER",
+        Button startOver = RuntimeUi.CreateButton(_confirmPanel.transform, L10n.T("ui.menu.start_over"),
             new Vector2(0f, 400f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+        RuntimeUi.BindButton(startOver, "ui.menu.start_over");
         startOver.onClick.AddListener(() =>
         {
             SaveSystem.Delete();
@@ -358,8 +365,9 @@ public class MainMenu : MonoBehaviour
             action?.Invoke();
         });
 
-        Button back = RuntimeUi.CreateButton(_confirmPanel.transform, "BACK",
+        Button back = RuntimeUi.CreateButton(_confirmPanel.transform, L10n.T("ui.common.back"),
             new Vector2(0f, 290f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+        RuntimeUi.BindButton(back, "ui.common.back");
         back.onClick.AddListener(() => _confirmPanel.SetActive(false));
 
         _confirmPanel.SetActive(false);
@@ -383,18 +391,17 @@ public class MainMenu : MonoBehaviour
     {
         _rulesScreen = RuntimeUi.CreatePanel(canvas, "RulesScreen", new Color(0.02f, 0.02f, 0.03f, 0.97f));
 
-        TextMeshProUGUI heading = RuntimeUi.CreateText(_rulesScreen.transform, "Heading", "HOW TO PLAY", 76f, accent);
+        TextMeshProUGUI heading = RuntimeUi.CreateText(_rulesScreen.transform, "Heading", L10n.T("ui.rules.heading"), 76f, accent);
+        RuntimeUi.Bind(heading, "ui.rules.heading", 0.6f);
         heading.fontStyle = FontStyles.Bold;
         heading.characterSpacing = 10f;
         RuntimeUi.Place(heading.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -150f), new Vector2(1400f, 100f));
 
-        string rules =
-            "<b>1.</b>   Collect every star hidden in the maze.\n\n" +
-            "<b>2.</b>   A hatch will open somewhere. Find it before the timer runs out.\n\n" +
-            "<b>3.</b>   You are not alone down here. If it sees you, <color=#DB1F17><b>run</b></color>.\n\n" +
-            "<b>4.</b>   Shards glint in the dark. Between floors, someone will sell you things for them.";
+        string rules = RulesText();
 
         TextMeshProUGUI body = RuntimeUi.CreateText(_rulesScreen.transform, "Rules", rules, 36f, new Color(0.88f, 0.88f, 0.9f));
+        _rulesBody = body;
+        RuntimeUi.AutoFit(body, 0.7f);
         body.alignment = TextAlignmentOptions.Left;
         RuntimeUi.Place(body.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0f, 60f), new Vector2(1100f, 380f));
 
@@ -403,9 +410,10 @@ public class MainMenu : MonoBehaviour
         _controlText = RuntimeUi.CreateText(_rulesScreen.transform, "Controls", "", 34f, new Color(0.62f, 0.62f, 0.66f));
         RuntimeUi.Place(_controlText.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0f, -210f), new Vector2(1400f, 170f));
 
-        Button start = RuntimeUi.CreateButton(_rulesScreen.transform, "START",
+        Button start = RuntimeUi.CreateButton(_rulesScreen.transform, L10n.T("ui.rules.start"),
             new Vector2(0f, 150f), new Vector2(420f, 90f), 44f, buttonIdle, buttonHover, Color.white);
-        _rulesButtonLabel = start.GetComponentInChildren<TextMeshProUGUI>();
+        RuntimeUi.BindButton(start, "ui.rules.start");
+        _rulesLabel = start.GetComponentInChildren<LocalizedLabel>();
         start.onClick.AddListener(() =>
         {
             if (_rulesStartsGame) StartGame();

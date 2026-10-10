@@ -1,0 +1,13 @@
+key,context,en
+sub.second_wind.release,"Subtitle after a Second Wind frees you from the hunter (shown ~3 s, one line at the bottom of the screen)",It let go. It will not do that twice.
+sub.shop.contract_taken,Salesman subtitle after the player takes a contract (shown 3 s),Bring it back in one piece.
+sub.shop.contract_declined,Salesman subtitle after the player declines or drops a contract (shown 2.5 s),Suit yourself.
+sub.star.heard,Subtitle after a star is taken loudly enough for the hunter to hear (shown ~2 s),It heard that.
+sub.consumable.no_battery,Subtitle: pressed the spare-battery key with none held (1.8 s),No spare battery.
+sub.consumable.not_in_here,Subtitle: tried to use a consumable while hidden in a locker (1.8 s),Not in here.
+sub.consumable.torch_full,Subtitle: tried to use a spare battery with a full torch (1.8 s),The torch is full.
+sub.consumable.fresh_cell,Subtitle: a spare battery was used (1.8 s),Fresh cell.
+sub.consumable.no_compass,Subtitle: pressed the star-compass key with none held (1.8 s),No star compass.
+sub.consumable.nothing_to_point,Subtitle: the star compass has nothing left to point at (1.8 s),Nothing left to point at.
+sub.escape.hatch_unlocked,Subtitle when the last key is picked up on a key-hunt floor with a hatch (2.5 s),THE HATCH IS UNLOCKED
+sub.escape.lift_unlocked,Subtitle when the last key is picked up on a key-hunt floor with a lift (2.5 s),THE LIFT IS UNLOCKED

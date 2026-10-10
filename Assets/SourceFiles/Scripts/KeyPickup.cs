@@ -39,7 +39,7 @@ public class KeyPickup : MonoBehaviour, IInteractable
         _clink = DoorAudio.BuildClunkClip(0.12f, 900f, 0.2f);
     }
 
-    string IInteractable.Prompt => "TAKE KEY";
+    string IInteractable.Prompt => L10n.T("hud.prompt.take_key");
     float IInteractable.HoldSeconds => 0f;
     bool IInteractable.CanInteract => !_taken && _ring != null;
 

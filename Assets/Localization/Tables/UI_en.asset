@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 09af46286be9e464db8cf054ca095f3b, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331669776663334
   m_TableData:
   - m_Id: 1008635904
     m_Localized: SETTINGS
@@ -170,6 +171,457 @@ MonoBehaviour:
     m_Localized: NORMAL
     m_Metadata:
       m_Items: []
+  - m_Id: 22165078315008
+    m_Localized: BACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315009
+    m_Localized: CONTINUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315010
+    m_Localized: Collect. Escape. Don't be seen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315011
+    m_Localized: CONTINUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315012
+    m_Localized: START GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315013
+    m_Localized: CONTROLS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315014
+    m_Localized: SETTINGS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315015
+    m_Localized: EXIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315016
+    m_Localized: START OVER?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315017
+    m_Localized: Your saved run (floor {floor}) will be lost.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315018
+    m_Localized: START OVER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315019
+    m_Localized: HOW TO PLAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315020
+    m_Localized: <b>1.</b>   Collect every star hidden in the maze.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315021
+    m_Localized: <b>2.</b>   A hatch will open somewhere. Find it before the timer runs out.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315022
+    m_Localized: <b>3.</b>   You are not alone down here. If it sees you, <color=#DB1F17><b>run</b></color>.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315023
+    m_Localized: <b>4.</b>   Shards glint in the dark. Between floors, someone will sell you things for them.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315024
+    m_Localized: START
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315025
+    m_Localized: '<b>WASD</b>  move   <b>SHIFT</b>  sprint   <b>MOUSE</b>  look   <b>F</b>  flashlight   <b>E</b>  hide / talk
+
+      <b>1</b>  spare battery   <b>2</b>  star compass   <b>ESC</b>  pause'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315026
+    m_Localized: '<b>LEFT THUMB</b>  move   <b>RIGHT THUMB</b>  look   buttons: <b>TORCH</b>, <b>FOCUS</b>, <b>INTERACT</b>, <b>THROW</b>, <b>SPRINT</b>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315027
+    m_Localized: "Your torch has three minutes of light in it. Your legs have less. Lockers hide you \u2014 unless it saw you climb in."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315028
+    m_Localized: PAUSED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315029
+    m_Localized: RESUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315030
+    m_Localized: RESTART MAZE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315031
+    m_Localized: SKIP TUTORIAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315032
+    m_Localized: MAIN MENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315033
+    m_Localized: QUIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315034
+    m_Localized: "READMITTED  \xB7  ADMISSION {admission}  \xB7  PATIENT {patient}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315035
+    m_Localized: THE CLERK HAS TYPED YOUR RETURN.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315036
+    m_Localized: The hatch closed behind you. Something down here is open.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315037
+    m_Localized: already yours
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315038
+    m_Localized: no pay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315039
+    m_Localized: PAYOUT  +{amount}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315040
+    m_Localized: '{currency}  {shards}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315041
+    m_Localized: "EFFECTS HELD AT THE SHOP  \xB7  {shards} {currency}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315042
+    m_Localized: CONTRACT  {name}  DONE
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315043
+    m_Localized: CONTRACT  {name}  FAILED
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315044
+    m_Localized: CONTRACT  {name}  VOID
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315045
+    m_Localized: YOU GOT OUT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315046
+    m_Localized: FLOOR {floor} CLEARED
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315047
+    m_Localized: The hatch closed behind you. There is nothing left below.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315048
+    m_Localized: The hatch closed behind you. It is darker down here.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315049
+    m_Localized: IT FOUND YOU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315050
+    m_Localized: It watched you hide.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315051
+    m_Localized: It was faster in the dark.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315052
+    m_Localized: You never heard it coming.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315053
+    m_Localized: OUT OF TIME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315054
+    m_Localized: The hatch sealed. You were {stars} {stars:plural:star|stars} in and {metres} {metres:plural:metre|metres} away.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315055
+    m_Localized: FLOOR {floor}     STARS {collected} / {total}     TIME {time}     SEED {seed}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315056
+    m_Localized: CONSOLATION  +{amount}     {currency}  {shards}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315057
+    m_Localized: NO CONSOLATION     {currency}  {shards}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315058
+    m_Localized: PAYOUT  +{amount}     CAMPAIGN TOTAL  {total}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315059
+    m_Localized: NEXT FLOOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315060
+    m_Localized: REPLAY THIS FLOOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315061
+    m_Localized: TRY THIS MAZE AGAIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315062
+    m_Localized: NEW MAZE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315063
+    m_Localized: MAIN MENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315064
+    m_Localized: BETWEEN FLOORS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315065
+    m_Localized: '{currency}  {shards}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315066
+    m_Localized: Prices rise the deeper you go.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315067
+    m_Localized: BUY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315068
+    m_Localized: BUY  {price}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315069
+    m_Localized: HELD MAX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315070
+    m_Localized: BOUGHT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315071
+    m_Localized: HELD  x{count} / {cap}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315072
+    m_Localized: HELD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315073
+    m_Localized: NOT HELD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315074
+    m_Localized: READY FOR FLOOR {floor}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315075
+    m_Localized: NEXT FLOOR ONLY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315076
+    m_Localized: 'IN USE: {name}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315077
+    m_Localized: IN USE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315078
+    m_Localized: USE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315079
+    m_Localized: '{name}  {price}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315080
+    m_Localized: CONTRACTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315081
+    m_Localized: Optional work for the next floor. One at a time. Paid on the ledger when you clear it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315082
+    m_Localized: TAKE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315083
+    m_Localized: TAKEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315084
+    m_Localized: DECLINE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315085
+    m_Localized: DROP IT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315086
+    m_Localized: REWARD  {amount}  {currency}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315087
+    m_Localized: Nothing on the board.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315088
+    m_Localized: 'You took: {name}  Floor {floor}.'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315089
+    m_Localized: TAP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315090
+    m_Localized: USE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315091
+    m_Localized: INTERACT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315092
+    m_Localized: TORCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315093
+    m_Localized: FOCUS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315094
+    m_Localized: THROW x{count}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315095
+    m_Localized: BATTERY x{count}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315096
+    m_Localized: COMPASS x{count}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315097
+    m_Localized: SPRINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315098
+    m_Localized: II
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315099
+    m_Localized: ROTATE YOUR DEVICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315100
+    m_Localized: BACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315101
+    m_Localized: OBJECTIVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22165078315102
+    m_Localized: "{key}  CONTINUE    \xB7    {back}  LEAVE"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315103
+    m_Localized: "{key}  END    \xB7    {back}  LEAVE"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 22165078315104
+    m_Localized: '{key}  LEAVE'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331669776663334
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 22165078315017
+        - id: 22165078315034
+        - id: 22165078315039
+        - id: 22165078315040
+        - id: 22165078315041
+        - id: 22165078315042
+        - id: 22165078315043
+        - id: 22165078315044
+        - id: 22165078315046
+        - id: 22165078315054
+        - id: 22165078315055
+        - id: 22165078315056
+        - id: 22165078315057
+        - id: 22165078315058
+        - id: 22165078315065
+        - id: 22165078315068
+        - id: 22165078315071
+        - id: 22165078315074
+        - id: 22165078315076
+        - id: 22165078315079
+        - id: 22165078315086
+        - id: 22165078315088
+        - id: 22165078315094
+        - id: 22165078315095
+        - id: 22165078315096
+        - id: 22165078315102
+        - id: 22165078315103
+        - id: 22165078315104

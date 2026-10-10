@@ -2,11 +2,15 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>S9: what a ledger line is, so the ledger never has to read the (translated) label to decide how to draw it.</summary>
+public enum PayoutKind { Normal, ShardsFound, Contract }
+
 /// <summary>One line of a Payout ledger, e.g. "STARS  2 x 10" / "+20".</summary>
 public struct PayoutLine
 {
     public string Label;
     public int Amount;
+    public PayoutKind Kind;
 }
 
 /// <summary>A receipt shown on the ledger (floor clear) or the end screen (consolation/final win).</summary>
@@ -94,7 +98,7 @@ public static class PlayerWallet
 
         // Informational only - these shards were already deposited live as they were picked up.
         int shardsFound = ShardsFoundThisAttempt;
-        payout.Lines.Add(new PayoutLine { Label = $"SHARDS FOUND  {shardsFound} x {ShardValue}  (already yours)", Amount = 0 });
+        payout.Lines.Add(new PayoutLine { Label = $"SHARDS FOUND  {shardsFound} x {ShardValue}  (already yours)", Amount = 0, Kind = PayoutKind.ShardsFound });
 
         payout.Total = starTotal + timeBonus + clearBonus;
         return payout;

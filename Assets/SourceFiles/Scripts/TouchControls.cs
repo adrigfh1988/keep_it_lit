@@ -239,10 +239,10 @@ public class TouchControls : MonoBehaviour
 
     private void UpdateInteractVisual()
     {
-        string prompt = _hud != null ? _hud.CurrentPrompt : null;
+        string prompt = _hud != null ? _hud.CurrentPromptText : null; // S9: the words only - no key label, no hold percentage to strip
         bool hasFocus = _interactor != null && _interactor.HasFocus;
 
-        if (_interactLabel != null) _interactLabel.text = string.IsNullOrEmpty(prompt) ? "INTERACT" : StripPromptForButton(prompt);
+        if (_interactLabel != null) _interactLabel.text = string.IsNullOrEmpty(prompt) ? L10n.T("ui.touch.interact") : prompt;
         if (_interactBg != null) _interactBg.color = hasFocus ? PanelTintLit : PanelTintDim;
 
         float progress = _interactor != null ? _interactor.HoldProgress : 0f;
@@ -257,18 +257,18 @@ public class TouchControls : MonoBehaviour
     {
         int carried = _throwController != null ? _throwController.Carried : 0;
         if (_throwButtonObj != null) _throwButtonObj.SetActive(carried > 0);
-        if (carried > 0 && _throwLabel != null) _throwLabel.text = $"THROW x{carried}";
+        if (carried > 0 && _throwLabel != null) _throwLabel.text = L10n.T("ui.touch.throw", ("count", carried));
     }
 
     private void UpdateItemVisuals()
     {
         int battery = PlayerInventory.Count(ShopItem.SpareBattery);
         if (_item1Obj != null) _item1Obj.SetActive(battery > 0);
-        if (battery > 0 && _item1Label != null) _item1Label.text = $"BATTERY x{battery}";
+        if (battery > 0 && _item1Label != null) _item1Label.text = L10n.T("ui.touch.battery", ("count", battery));
 
         int compass = PlayerInventory.Count(ShopItem.StarCompass);
         if (_item2Obj != null) _item2Obj.SetActive(compass > 0);
-        if (compass > 0 && _item2Label != null) _item2Label.text = $"COMPASS x{compass}";
+        if (compass > 0 && _item2Label != null) _item2Label.text = L10n.T("ui.touch.compass", ("count", compass));
     }
 
     private void ToggleSprint()
@@ -285,23 +285,8 @@ public class TouchControls : MonoBehaviour
         if (_sprintBg != null) _sprintBg.color = _sprintToggled ? PanelTintLit : PanelTintDim;
     }
 
-    /// <summary>"E  OPEN" / "E  RESTORE POWER  53%" -> "OPEN" / "RESTORE POWER" - the radial fill
-    /// already shows hold progress, so the trailing percentage would just be noise on a small button.</summary>
-    private static string StripPromptForButton(string prompt)
-    {
-        string s = prompt.TrimStart();
-        if (s.Length > 0 && s[0] == 'E') s = s.Substring(1).TrimStart();
-
-        int percentIndex = s.IndexOf('%');
-        if (percentIndex >= 0)
-        {
-            int cut = percentIndex + 1;
-            while (cut > 0 && !char.IsWhiteSpace(s[cut - 1])) cut--;
-            while (cut > 0 && char.IsWhiteSpace(s[cut - 1])) cut--;
-            s = s.Substring(0, cut);
-        }
-        return s.Trim();
-    }
+    // S9 (plan section 6): StripPromptForButton is gone - PlayerHud keeps the prompt as parts (key label, text, percent) and the INTERACT
+    // button reads the text part (PlayerHud.CurrentPromptText), so no translated string is ever parsed.
 
     // ------------------------------------------------------------ stick / look pad callbacks
 
@@ -427,10 +412,11 @@ public class TouchControls : MonoBehaviour
     }
 
     private (GameObject holder, Image bg, TextMeshProUGUI label) CreateHoldButton(
-        Transform parent, TouchInput.TouchAction action, string label,
-        Vector2 anchor, Vector2 anchoredPosition, Vector2 size, float fontSize)
+        Transform parent, TouchInput.TouchAction action, string labelKey,
+        Vector2 anchor, Vector2 anchoredPosition, Vector2 size, float fontSize, bool bind = true)
     {
-        GameObject holder = new GameObject(label + " TouchButton");
+        string label = bind ? L10n.T(labelKey) : L10n.T(labelKey, ("count", 0));
+        GameObject holder = new GameObject(action + " TouchButton");
         holder.transform.SetParent(parent, false);
         holder.layer = parent.gameObject.layer;
 
@@ -440,6 +426,8 @@ public class TouchControls : MonoBehaviour
 
         TextMeshProUGUI text = RuntimeUi.CreateText(holder.transform, "Label", label, fontSize, Color.white);
         RuntimeUi.Stretch(text.rectTransform);
+        if (bind) RuntimeUi.Bind(text, labelKey, 0.6f);   // follows a language change (D14: shrinks to fit)
+        else RuntimeUi.AutoFit(text, 0.6f);              // the caller rewrites the text every frame it is shown
 
         HoldButtonHandler handler = holder.AddComponent<HoldButtonHandler>();
         handler.Action = action;
@@ -449,8 +437,8 @@ public class TouchControls : MonoBehaviour
 
     private void BuildInteractButton(Transform parent)
     {
-        (GameObject holder, Image bg, TextMeshProUGUI label) = CreateHoldButton(parent, TouchInput.TouchAction.Interact, "INTERACT",
-            new Vector2(1f, 0f), new Vector2(-220f, 230f), new Vector2(190f, 190f), 26f);
+        (GameObject holder, Image bg, TextMeshProUGUI label) = CreateHoldButton(parent, TouchInput.TouchAction.Interact, "ui.touch.interact",
+            new Vector2(1f, 0f), new Vector2(-220f, 230f), new Vector2(190f, 190f), 26f, false);
         _interactBg = bg;
         _interactLabel = label;
 
@@ -471,20 +459,20 @@ public class TouchControls : MonoBehaviour
 
     private void BuildTorchButton(Transform parent)
     {
-        CreateHoldButton(parent, TouchInput.TouchAction.Torch, "TORCH",
+        CreateHoldButton(parent, TouchInput.TouchAction.Torch, "ui.touch.torch",
             new Vector2(1f, 0f), new Vector2(-440f, 340f), new Vector2(130f, 130f), 22f);
     }
 
     private void BuildFocusButton(Transform parent)
     {
-        CreateHoldButton(parent, TouchInput.TouchAction.Focus, "FOCUS",
+        CreateHoldButton(parent, TouchInput.TouchAction.Focus, "ui.touch.focus",
             new Vector2(1f, 0f), new Vector2(-440f, 190f), new Vector2(130f, 130f), 22f);
     }
 
     private void BuildThrowButton(Transform parent)
     {
-        (GameObject holder, Image _, TextMeshProUGUI label) = CreateHoldButton(parent, TouchInput.TouchAction.Throw, "THROW",
-            new Vector2(1f, 0f), new Vector2(-220f, 450f), new Vector2(130f, 130f), 20f);
+        (GameObject holder, Image _, TextMeshProUGUI label) = CreateHoldButton(parent, TouchInput.TouchAction.Throw, "ui.touch.throw",
+            new Vector2(1f, 0f), new Vector2(-220f, 450f), new Vector2(130f, 130f), 20f, false);
         _throwButtonObj = holder;
         _throwLabel = label;
         _throwButtonObj.SetActive(false);
@@ -492,14 +480,14 @@ public class TouchControls : MonoBehaviour
 
     private void BuildItemButtons(Transform parent)
     {
-        (GameObject holder1, Image _, TextMeshProUGUI label1) = CreateHoldButton(parent, TouchInput.TouchAction.Item1, "BATTERY",
-            new Vector2(1f, 0f), new Vector2(-650f, 300f), new Vector2(120f, 100f), 18f);
+        (GameObject holder1, Image _, TextMeshProUGUI label1) = CreateHoldButton(parent, TouchInput.TouchAction.Item1, "ui.touch.battery",
+            new Vector2(1f, 0f), new Vector2(-650f, 300f), new Vector2(120f, 100f), 18f, false);
         _item1Obj = holder1;
         _item1Label = label1;
         _item1Obj.SetActive(false);
 
-        (GameObject holder2, Image _, TextMeshProUGUI label2) = CreateHoldButton(parent, TouchInput.TouchAction.Item2, "COMPASS",
-            new Vector2(1f, 0f), new Vector2(-650f, 190f), new Vector2(120f, 100f), 18f);
+        (GameObject holder2, Image _, TextMeshProUGUI label2) = CreateHoldButton(parent, TouchInput.TouchAction.Item2, "ui.touch.compass",
+            new Vector2(1f, 0f), new Vector2(-650f, 190f), new Vector2(120f, 100f), 18f, false);
         _item2Obj = holder2;
         _item2Label = label2;
         _item2Obj.SetActive(false);
@@ -507,7 +495,7 @@ public class TouchControls : MonoBehaviour
 
     private void BuildSprintButton(Transform parent)
     {
-        GameObject holder = new GameObject("SPRINT TouchButton");
+        GameObject holder = new GameObject("Sprint TouchButton");
         holder.transform.SetParent(parent, false);
         holder.layer = parent.gameObject.layer;
 
@@ -516,8 +504,9 @@ public class TouchControls : MonoBehaviour
         RuntimeUi.Place(bg.rectTransform, new Vector2(0f, 0f), new Vector2(190f, 380f), new Vector2(150f, 100f));
         _sprintBg = bg;
 
-        TextMeshProUGUI label = RuntimeUi.CreateText(holder.transform, "Label", "SPRINT", 22f, Color.white);
+        TextMeshProUGUI label = RuntimeUi.CreateText(holder.transform, "Label", L10n.T("ui.touch.sprint"), 22f, Color.white);
         RuntimeUi.Stretch(label.rectTransform);
+        RuntimeUi.Bind(label, "ui.touch.sprint", 0.6f);
 
         TapToggleHandler handler = holder.AddComponent<TapToggleHandler>();
         handler.OnTap = ToggleSprint;
@@ -525,7 +514,7 @@ public class TouchControls : MonoBehaviour
 
     private void BuildPauseButton(Transform parent)
     {
-        CreateHoldButton(parent, TouchInput.TouchAction.Pause, "II",
+        CreateHoldButton(parent, TouchInput.TouchAction.Pause, "ui.touch.pause",
             new Vector2(1f, 1f), new Vector2(-70f, -70f), new Vector2(110f, 90f), 30f);
     }
 
@@ -533,8 +522,9 @@ public class TouchControls : MonoBehaviour
     {
         _portraitOverlay = RuntimeUi.CreatePanel(_canvas.transform, "RotateDeviceOverlay", new Color(0.01f, 0.01f, 0.02f, 0.96f));
 
-        TextMeshProUGUI text = RuntimeUi.CreateText(_portraitOverlay.transform, "Message", "ROTATE YOUR DEVICE", 52f, Color.white);
+        TextMeshProUGUI text = RuntimeUi.CreateText(_portraitOverlay.transform, "Message", L10n.T("ui.touch.rotate"), 52f, Color.white);
         text.characterSpacing = 6f;
+        RuntimeUi.Bind(text, "ui.touch.rotate", 0.6f);
         RuntimeUi.Place(text.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(900f, 220f));
 
         _portraitOverlay.SetActive(false);

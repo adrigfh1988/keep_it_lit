@@ -28,7 +28,7 @@ public class BatteryCellPickup : MonoBehaviour, IInteractable
         _hud = hud;
     }
 
-    string IInteractable.Prompt => "PICK UP BATTERY CELL";
+    string IInteractable.Prompt => L10n.T("hud.prompt.pick_up_battery_cell");
     float IInteractable.HoldSeconds => 0f;
     bool IInteractable.CanInteract => !_taken;
 

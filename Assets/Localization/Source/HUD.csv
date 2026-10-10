@@ -1,0 +1,44 @@
+key,context,en
+hud.contract.done,"Contract HUD line under the counter, finished (26 pt amber/green, NoWrap, 1100 px, auto-size). {name} = contract name",CONTRACT  -  {name}  -  DONE
+hud.contract.failed,"Contract HUD line, failed. {name} = contract name",CONTRACT  -  {name}  -  FAILED
+hud.contract.void,"Contract HUD line, voided (the floor cannot offer it). {name} = contract name",CONTRACT  -  {name}  -  VOID
+hud.contract.plain,"Contract HUD line, in progress with no counter. {name} = contract name",CONTRACT  -  {name}
+hud.contract.progress_dark,"Contract HUD line, Walk in the dark: {n} of {total} seconds walked with the torch off",CONTRACT  -  {name}  -  {n} / {total} s
+hud.contract.progress_count,"Contract HUD line with a plain count: {n} of {total} (shards found, notes read, noises made)",CONTRACT  -  {name}  -  {n} / {total}
+hud.contract.progress_time,"Contract HUD line, Don't dawdle: {time} = m:ss left",CONTRACT  -  {name}  -  {time} left
+hud.torch,"HUD torch battery label bottom-left (20 pt, one line, 220 px, auto-size)",TORCH
+hud.torch_dead,"HUD torch battery label when the battery is empty (20 pt, 220 px, auto-size)",TORCH DEAD
+hud.floor,"HUD floor label top-left under the star counter (26 pt, letter-spaced, 320 px, auto-size) and the shop door sign. {floor} = floor number",FLOOR {floor}
+hud.asylum,"HUD floor label while in the hospital hub; also the shop door sign when the shop is entered from the hub (26 pt, 320 px)",ASYLUM
+hud.shards,"HUD shard counter top-left (26 pt, letter-spaced, 320 px, auto-size). {currency} = currency name, {shards} = balance",{currency}  {shards}
+hud.second_wind,"HUD label shown while a Second Wind is held (22 pt, bottom-right, 360 px)",SECOND WIND
+hud.slot.battery,"HUD consumable slot, bottom-right (24 pt, 360 px, auto-size). {key} = 1 on keyboard or TAP on touch (do not translate the key), {count} = batteries held",{key}   BATTERY  x{count}
+hud.slot.compass,"HUD consumable slot, bottom-right (24 pt, 360 px). {key} = 2 or TAP, {count} = compasses held",{key}   COMPASS  x{count}
+hud.slot.throw,"HUD throwable slot, bottom-right (24 pt, 360 px). {key} = G or TAP, {count} = bottles/cans carried",{key}   THROW  x{count}
+hud.prompt.hide,"Interaction prompt next to a locker: climb in. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Imperative/infinitive",HIDE
+hud.prompt.leave,Interaction prompt inside a locker: climb out,LEAVE
+hud.prompt.talk,Interaction prompt at the shop counter: open the shop menu,TALK
+hud.prompt.contracts,Interaction prompt at the shop contract board,CONTRACTS
+hud.prompt.descend,Interaction prompt at the shop door: go down to the next floor,DESCEND
+hud.prompt.close,"Interaction prompt while a lore note panel is open: close it. Shown as ""E  <text>""",CLOSE
+hud.counter.stars,"HUD counter, first segment, top-left (38 pt, one line, 1100 px for all segments, auto-size). {n} of {total} stars; the noun stays plural as a label",STARS  {n} / {total}
+hud.counter.fuses,"HUD counter, second segment on blackout floors. Joined to the first with three spaces. {n} of {total} fuse boxes restored",FUSES  {n} / {total}
+hud.counter.keys,"HUD counter, third segment on key-hunt floors. Joined with three spaces. {n} of {total} keys held",KEYS  {n} / {total}
+hud.keys_locked,"Subtitle-style reminder when stepping on a locked hatch (1.8 s, one line). {h} keys held of {t}",LOCKED · {h} / {t} KEYS
+hud.lift_locked,"Text above the lift ring while the lift is locked (28 pt, 400 x 50, auto-size). {h} keys held of {t}",LIFT LOCKED · {h} / {t} KEYS
+hud.lift_arriving,"Text above the lift ring while it fills (28 pt, 400 x 50, auto-size). {percent} = 0-100",LIFT ARRIVING {percent}%
+hud.records.header,"Records board header in the asylum office (world-space sign, auto-size). {n} of {total} maze case files found",CASE FILES  {n} / {total}
+hud.prompt.pick_up_bottle,"Interaction prompt on a bottle on the floor. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",PICK UP BOTTLE
+hud.prompt.pick_up_can,Interaction prompt on a can on the floor,PICK UP CAN
+hud.prompt.take_key,Interaction prompt on a brass key,TAKE KEY
+hud.prompt.pick_up_lantern,Interaction prompt on a lantern on the floor,PICK UP LANTERN
+hud.prompt.put_down_lantern,Interaction prompt while carrying the lantern: set it down,PUT DOWN LANTERN
+hud.prompt.read,Interaction prompt on a lore note: open it,READ
+hud.prompt.pick_up_battery_cell,Interaction prompt on a battery cell in a vault,PICK UP BATTERY CELL
+hud.prompt.restore_power,Interaction prompt on a fuse box (hold E; the hold percentage is appended by the game),RESTORE POWER
+hud.prompt.open,Interaction prompt on a shutter door,OPEN
+hud.prompt.press,Interaction prompt on a wall button,PRESS
+hud.prompt.ring_bell,Interaction prompt on the call bell (Ward floor),RING BELL
+hud.prompt.open_valve,"Interaction prompt on the steam valve (Boiler floor, hold E)",OPEN VALVE
+hud.prompt.light_candles,Interaction prompt on the candles (Crypt floor),LIGHT CANDLES
+hud.prompt.use_terminal,Interaction prompt on the terminal (Lab floor),USE TERMINAL

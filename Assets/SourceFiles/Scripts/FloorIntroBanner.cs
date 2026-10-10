@@ -41,19 +41,23 @@ public class FloorIntroBanner : MonoBehaviour
         _title = RuntimeUi.CreateText(_holder.transform, "Title", "", 38f, Color.white);
         _title.characterSpacing = 4f;
         RuntimeUi.Place(_title.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, 0f), new Vector2(900f, 44f));
+        RuntimeUi.AutoFit(_title, 0.65f); // D14: longer in FR/DE
 
         _objective = RuntimeUi.CreateText(_holder.transform, "Objective", "", 24f, new Color(0.85f, 0.85f, 0.82f));
         // F77: widened from 900 to 1100 - a rolled floor's line is now up to three segments ("FIND n
         // STARS" plus 2 of RESTORE n FUSES / FIND n KEYS FOR THE HATCH / SECURITY LOCKDOWN).
         RuntimeUi.Place(_objective.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -46f), new Vector2(1100f, 32f));
+        RuntimeUi.AutoFit(_objective, 0.65f); // D14: longer in FR/DE
 
         _rule = RuntimeUi.CreateText(_holder.transform, "Rule", "", 22f, new Color(0.95f, 0.7f, 0.3f));
         _rule.fontStyle = FontStyles.Italic;
         RuntimeUi.Place(_rule.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -80f), new Vector2(900f, 30f));
+        RuntimeUi.AutoFit(_rule, 0.65f); // D14: longer in FR/DE
 
         _temperament = RuntimeUi.CreateText(_holder.transform, "Temperament", "", 20f, new Color(0.7f, 0.72f, 0.78f));
         _temperament.fontStyle = FontStyles.Italic;
         RuntimeUi.Place(_temperament.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -110f), new Vector2(900f, 28f));
+        RuntimeUi.AutoFit(_temperament, 0.65f); // D14: longer in FR/DE
     }
 
     public void Show(string title, string objective, string rule, string temperament)

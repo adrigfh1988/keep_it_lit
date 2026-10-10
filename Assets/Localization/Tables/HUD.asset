@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
+  m_Name: HUD
+  m_EditorClassIdentifier: Unity.Localization.Editor::UnityEditor.Localization.StringTableCollection
+  m_SharedTableData: {fileID: 11400000, guid: 604b93daf028d6f4db3b08ed6afbed15, type: 2}
+  m_Tables:
+  - {fileID: 11400000, guid: 7a78e94730cd42449854f5f0d39b2935, type: 2}
+  - {fileID: 11400000, guid: c20eb3e65afdccd4380637d66a2cebfc, type: 2}
+  - {fileID: 11400000, guid: d749427f8d5ccbe49bad7f2c2fa3c7bf, type: 2}
+  - {fileID: 11400000, guid: f911a56cab02d79459b13c961faa7f20, type: 2}
+  m_Extensions: []
+  m_Group: String Table
+  references:
+    version: 2
+    RefIds: []
