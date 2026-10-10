@@ -73,6 +73,7 @@ public class DreadDirector : MonoBehaviour
     [SerializeField] private float farBand = 13f;
     [Tooltip("Relocation distance at or above this (and below farBand) reads as the mid band")]
     [SerializeField] private float midBand = 9f;
+    // S9: the C# defaults below are the English fallbacks; the lines players see come from the Subtitles table (sub.dread.*) via Loc().
     [SerializeField] private string lineFar = "Something moved behind you.";
     [SerializeField] private string lineMid = "It's getting closer.";
     [SerializeField] private string lineNear = "It's right behind you.";
@@ -96,6 +97,8 @@ public class DreadDirector : MonoBehaviour
     [SerializeField] private float darkenSeconds = 2f;
     [SerializeField] private float eyeEmissionAtSecondDeath = 6f;
     [SerializeField] private float breathSeconds = 1.6f;
+
+    private static string Loc(string key, string fallback) => L10n.Has(key) ? L10n.T(key) : fallback;
 
     private MazeGenerator _maze;
     private Transform _player;
@@ -509,7 +512,7 @@ public class DreadDirector : MonoBehaviour
             // One relocation per star: disarm until the next pickup
             _armedUntil = -1f;
 
-            string line = distance >= farBand ? lineFar : distance >= midBand ? lineMid : lineNear;
+            string line = distance >= farBand ? Loc("sub.dread.far", lineFar) : distance >= midBand ? Loc("sub.dread.mid", lineMid) : Loc("sub.dread.near", lineNear);
             if (_hud != null) _hud.ShowSubtitle(line, subtitleSeconds);
         }
 
@@ -544,7 +547,7 @@ public class DreadDirector : MonoBehaviour
         if (ambushing || s_ambushSubtitleShown || _follower == null || !_follower.LastAmbushEndedOnPickup) return;
 
         s_ambushSubtitleShown = true;
-        if (_hud != null) _hud.ShowSubtitle(lineAmbushed, subtitleSeconds);
+        if (_hud != null) _hud.ShowSubtitle(Loc("sub.dread.ambushed", lineAmbushed), subtitleSeconds);
     }
 
     // ---------------------------------------------------------------- F27: reacting to the count
@@ -561,7 +564,7 @@ public class DreadDirector : MonoBehaviour
             _firstDeathsFired = true;
             KillLampWave();
             if (_atmosphere != null) _atmosphere.Darken(firstDarkenFraction, darkenSeconds);
-            if (_hud != null) _hud.ShowSubtitle(lineLightsDying, subtitleSeconds);
+            if (_hud != null) _hud.ShowSubtitle(Loc("sub.dread.lights_dying", lineLightsDying), subtitleSeconds);
         }
 
         if (!_secondDeathsFired && progress >= secondDeathProgress)
@@ -618,7 +621,7 @@ public class DreadDirector : MonoBehaviour
 
         if (_audio != null) _audio.HoldBreath(breathSeconds);
         if (_presence != null) _presence.Hold(breathSeconds);
-        if (_hud != null) _hud.ShowSubtitle(lineItKnows, subtitleSeconds);
+        if (_hud != null) _hud.ShowSubtitle(Loc("sub.dread.it_knows", lineItKnows), subtitleSeconds);
     }
 
     /// <summary>

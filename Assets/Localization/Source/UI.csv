@@ -118,7 +118,7 @@ ui.contracts.decline,"Contract board button: leave without a contract (380 x 70,
 ui.contracts.drop,"Contract board button: give up the contract already taken (380 x 70, 34 pt)",DROP IT
 ui.contracts.reward,"Contract offer card reward line (32 pt, one line, 600 px). {amount} = shards, {currency} = currency name",REWARD  {amount}  {currency}
 ui.contracts.empty,"Contract board status when there are no offers (32 pt, one line, 1500 px)",Nothing on the board.
-ui.contracts.took,"Contract board status after taking one (32 pt, one line, 1500 px). {name} = contract name, {floor} = floor it applies to",You took: {name}  Floor {floor}.
+ui.contracts.took,"Contract board status after taking one (32 pt, one line, 1500 px). {name} = contract name, {floor} = floor it applies to",You took: {name}.  Floor {floor}.
 ui.key.tap,"Key chip on touch devices in place of a keyboard key (HUD item slots, objective card). Short: ~4 characters",TAP
 ui.key.use,Key chip on touch devices for the interact key at the contract board (HUD prompt). Short,USE
 ui.touch.interact,"Touch screen INTERACT button caption when nothing is targeted (190 x 190 round button, 26 pt, auto-size). Replaced by the target's action word while something is in reach",INTERACT

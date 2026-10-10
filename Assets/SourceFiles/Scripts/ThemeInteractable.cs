@@ -185,7 +185,7 @@ public class ThemeInteractable : MonoBehaviour, IInteractable
         _cooldownUntil = Time.time + 50f;
         _terminalActive = true;
         _terminalUntil = Time.time + 6f;
-        _hud?.ShowSubtitle("CAM 3: MOVEMENT", 3f);
+        _hud?.ShowSubtitle(L10n.T("sub.theme.terminal"), 3f);
         GameAudio.PlayAt(GameAudio.Library.terminalBeep, transform.position, 0.7f); // F97 (recorded clip only)
     }
 

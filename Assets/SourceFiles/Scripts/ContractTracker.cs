@@ -72,7 +72,7 @@ public class ContractTracker : MonoBehaviour
         {
             _shardsPlaced = FindObjectsByType<ShardPickup>(FindObjectsInactive.Exclude).Length;
             _shardTarget = Mathf.Max(1, Mathf.CeilToInt(_shardsPlaced * ContractState.ScavengerFraction));
-            if (_shardsPlaced == 0) voidLine = "Nothing glitters down here - the contract's off.";
+            if (_shardsPlaced == 0) voidLine = L10n.T("sub.contract.void_shards");
         }
         else if (_id == ContractState.Reader)
         {
@@ -80,7 +80,7 @@ public class ContractTracker : MonoBehaviour
             {
                 if (note.GetComponentInParent<IntakeRoom>() == null && note.NoteId < PatientFiles.FirstId) _notesPlaced++; // F93: the patient files (ids 100+) are not part of "Read it all"
             }
-            if (_notesPlaced == 0) voidLine = "No notes down here - the contract's off.";
+            if (_notesPlaced == 0) voidLine = L10n.T("sub.contract.void_notes");
         }
 
         if (voidLine != null)
@@ -205,7 +205,7 @@ public class ContractTracker : MonoBehaviour
     {
         if (_state != State.InProgress) return;
         _state = State.Failed;
-        _hud?.ShowSubtitle($"CONTRACT FAILED  -  {ContractState.Def(_id).Name}", 3f);
+        _hud?.ShowSubtitle(L10n.T("sub.contract.failed", ("name", ContractState.Def(_id).Name)), 3f);
         RefreshLine();
     }
 
@@ -213,7 +213,7 @@ public class ContractTracker : MonoBehaviour
     {
         if (_state != State.InProgress) return;
         _state = State.Complete;
-        _hud?.ShowSubtitle($"CONTRACT DONE  -  {ContractState.Def(_id).Name}", 3f);
+        _hud?.ShowSubtitle(L10n.T("sub.contract.done", ("name", ContractState.Def(_id).Name)), 3f);
         RefreshLine();
     }
 
@@ -244,14 +244,14 @@ public class ContractTracker : MonoBehaviour
             }
         }
 
-        string name = ContractState.Def(_id).Name.TrimEnd('.');
+        string name = ContractState.Def(_id).Name;
         int reward = _state == State.Complete ? ContractState.Reward(_id, ContractState.ActiveFloor) : 0;
         string ledgerKey = _state == State.Complete ? "ui.ledger.contract_done" : _state == State.Void ? "ui.ledger.contract_void" : "ui.ledger.contract_failed";
 
         payout.Lines.Add(new PayoutLine { Label = L10n.T(ledgerKey, ("name", name)), Amount = reward, Kind = PayoutKind.Contract });
         payout.Total += reward;
 
-        ContractState.SalesmanLine = _state == State.Complete ? "A deal's a deal." : _state == State.Failed ? "Can't win them all." : null;
+        ContractState.SalesmanLine = _state == State.Complete ? "sub.shop.deal_done" : _state == State.Failed ? "sub.shop.deal_failed" : null; // a Subtitles key, resolved when the shop shows it
         ContractState.ClearActive();
         RefreshLine();
     }
@@ -279,7 +279,7 @@ public class ContractTracker : MonoBehaviour
     {
         if (_line == null || _id < 0) return;
 
-        string name = ContractState.Def(_id).Name.TrimEnd('.');
+        string name = ContractState.Def(_id).Name;
         string text;
         Color color;
         switch (_state)

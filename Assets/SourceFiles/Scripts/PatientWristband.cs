@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class PatientWristband : MonoBehaviour, IInteractable
 {
-    public const string Line = "The wristband is cold. Drawer five is open.";
+    public static string Line => L10n.T("lore.wristband.line");
 
     string IInteractable.Prompt => L10n.T("hub.wristband.prompt");
     float IInteractable.HoldSeconds => 0f;

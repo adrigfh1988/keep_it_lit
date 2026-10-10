@@ -31,10 +31,16 @@ public sealed class ShopItemDef
 {
     public ShopItem Id;
     public ItemKind Kind;
-    public string Name;
-    public string Blurb;
+    /// <summary>S9: key stem in the Shop table (shop.item.&lt;Slug&gt;.name / .blurb).</summary>
+    public string Slug;
     public int BasePrice;
     public int Cap;
+
+    /// <summary>The translated item name (Title Case in English).</summary>
+    public string Name => L10n.T("shop.item." + Slug + ".name");
+
+    /// <summary>The translated description. {key} is the physical key that uses a consumable (1 / 2).</summary>
+    public string Blurb => L10n.T("shop.item." + Slug + ".blurb", ("key", Id == ShopItem.SpareBattery ? "1" : "2"));
 }
 
 /// <summary>
@@ -48,32 +54,32 @@ public static class ShopCatalogue
 
     public static readonly ShopItemDef[] Items =
     {
-        new ShopItemDef { Id = ShopItem.SpareBattery, Kind = ItemKind.Consumable, Name = "Spare Battery",
-            Blurb = "A fresh cell. Refills the torch and switches it on. Press 1.", BasePrice = 30, Cap = 3 },
-        new ShopItemDef { Id = ShopItem.StarCompass, Kind = ItemKind.Consumable, Name = "Star Compass",
-            Blurb = "Points at the nearest star for five seconds. Press 2.", BasePrice = 25, Cap = 3 },
-        new ShopItemDef { Id = ShopItem.SecondWind, Kind = ItemKind.SecondWind, Name = "Second Wind",
-            Blurb = "When it catches you, it lets go. Once.", BasePrice = 120, Cap = 1 },
-        new ShopItemDef { Id = ShopItem.LongFuse, Kind = ItemKind.FloorModifier, Name = "Long Fuse",
-            Blurb = "Ten more seconds on the hatch timer, next floor.", BasePrice = 35, Cap = 1 },
-        new ShopItemDef { Id = ShopItem.QuietShoes, Kind = ItemKind.FloorModifier, Name = "Quiet Shoes",
-            Blurb = "Your footsteps carry a third less, next floor.", BasePrice = 40, Cap = 1 },
-        new ShopItemDef { Id = ShopItem.ExtraLamps, Kind = ItemKind.FloorModifier, Name = "Extra Lamps",
-            Blurb = "More lamps lit on the next floor.", BasePrice = 35, Cap = 1 },
-        new ShopItemDef { Id = ShopItem.StaminaTonic, Kind = ItemKind.FloorModifier, Name = "Stamina Tonic",
-            Blurb = "Four more seconds of sprint, next floor.", BasePrice = 30, Cap = 1 },
-        new ShopItemDef { Id = ShopItem.TorchColour, Kind = ItemKind.Cosmetic, Name = "Torch Colour",
-            Blurb = "Cold. Ember. Violet.", BasePrice = 50, Cap = 0 },
-        new ShopItemDef { Id = ShopItem.HudTint, Kind = ItemKind.Cosmetic, Name = "HUD Tint",
-            Blurb = "Phosphor. Amber. Ice.", BasePrice = 25, Cap = 0 },
+        new ShopItemDef { Id = ShopItem.SpareBattery, Kind = ItemKind.Consumable, Slug = "spare_battery",
+            BasePrice = 30, Cap = 3 },
+        new ShopItemDef { Id = ShopItem.StarCompass, Kind = ItemKind.Consumable, Slug = "star_compass",
+            BasePrice = 25, Cap = 3 },
+        new ShopItemDef { Id = ShopItem.SecondWind, Kind = ItemKind.SecondWind, Slug = "second_wind",
+            BasePrice = 120, Cap = 1 },
+        new ShopItemDef { Id = ShopItem.LongFuse, Kind = ItemKind.FloorModifier, Slug = "long_fuse",
+            BasePrice = 35, Cap = 1 },
+        new ShopItemDef { Id = ShopItem.QuietShoes, Kind = ItemKind.FloorModifier, Slug = "quiet_shoes",
+            BasePrice = 40, Cap = 1 },
+        new ShopItemDef { Id = ShopItem.ExtraLamps, Kind = ItemKind.FloorModifier, Slug = "extra_lamps",
+            BasePrice = 35, Cap = 1 },
+        new ShopItemDef { Id = ShopItem.StaminaTonic, Kind = ItemKind.FloorModifier, Slug = "stamina_tonic",
+            BasePrice = 30, Cap = 1 },
+        new ShopItemDef { Id = ShopItem.TorchColour, Kind = ItemKind.Cosmetic, Slug = "torch_colour",
+            BasePrice = 50, Cap = 0 },
+        new ShopItemDef { Id = ShopItem.HudTint, Kind = ItemKind.Cosmetic, Slug = "hud_tint",
+            BasePrice = 25, Cap = 0 },
 
         // F75 shop depth.
-        new ShopItemDef { Id = ShopItem.BottlePack, Kind = ItemKind.FloorModifier, Name = "Bottle Pack",
-            Blurb = "Start the next floor already carrying three bottles.", BasePrice = 40, Cap = 1 },
-        new ShopItemDef { Id = ShopItem.FocusLens, Kind = ItemKind.FloorModifier, Name = "Focus Lens",
-            Blurb = "The focused beam reaches further, next floor, for no extra battery cost.", BasePrice = 35, Cap = 1 },
-        new ShopItemDef { Id = ShopItem.FuseMap, Kind = ItemKind.FloorModifier, Name = "Fuse Map",
-            Blurb = "Fuses, buttons, vaults and keys glow faintly. The compass points at them too.", BasePrice = 25, Cap = 1 },
+        new ShopItemDef { Id = ShopItem.BottlePack, Kind = ItemKind.FloorModifier, Slug = "bottle_pack",
+            BasePrice = 40, Cap = 1 },
+        new ShopItemDef { Id = ShopItem.FocusLens, Kind = ItemKind.FloorModifier, Slug = "focus_lens",
+            BasePrice = 35, Cap = 1 },
+        new ShopItemDef { Id = ShopItem.FuseMap, Kind = ItemKind.FloorModifier, Slug = "fuse_map",
+            BasePrice = 25, Cap = 1 },
     };
 
     public static ShopItemDef Get(ShopItem id)
@@ -123,6 +129,9 @@ public static class ShopCatalogue
         }
         return best;
     }
+
+    /// <summary>S9: the translated palette entry name (ALL CAPS in the table). The tuple Name below stays the English id.</summary>
+    public static string PaletteName(bool torch, int index) => L10n.T((torch ? "shop.palette.torch." : "shop.palette.hud.") + index);
 
     // Index 0 is the default look and is never for sale - GrantTorchColour/GrantHudTint start owning it.
     public static readonly (string Name, Color Colour)[] TorchColours =

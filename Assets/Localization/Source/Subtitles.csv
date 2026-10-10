@@ -11,3 +11,34 @@ sub.consumable.no_compass,Subtitle: pressed the star-compass key with none held 
 sub.consumable.nothing_to_point,Subtitle: the star compass has nothing left to point at (1.8 s),Nothing left to point at.
 sub.escape.hatch_unlocked,Subtitle when the last key is picked up on a key-hunt floor with a hatch (2.5 s),THE HATCH IS UNLOCKED
 sub.escape.lift_unlocked,Subtitle when the last key is picked up on a key-hunt floor with a lift (2.5 s),THE LIFT IS UNLOCKED
+sub.pickup.battery_cell,"Subtitle after picking up a battery cell in the maze (shown 2 s, one line at the bottom of the screen)",BATTERY CELL
+sub.pickup.second_wind,Subtitle after a vault battery cell also grants a Second Wind (shown 3 s). Second Wind = the shop item that frees you once when the hunter catches you,+ SECOND WIND
+sub.pickup.key,"Subtitle after picking up a key on a key-hunt floor (shown 2 s). {held} = keys held, {total} = keys on the floor",KEY {held} / {total}
+sub.lore.bonus,"Subtitle the first time a note or file is read this campaign (shown 2.5 s). {amount} = shards awarded, {currency} = currency name (SHARDS)",+{amount} {currency}
+sub.lantern.lure,"Subtitle when an unattended lantern lures the hunter (shown 3 s, only when the player is far away). ""Something"" = the hunter, never named",Something is drawn to the light.
+sub.button.shutter,Subtitle after pressing a wall button whose shutter is out of sight (shown 3 s),"Somewhere, a shutter rolls up."
+sub.theme.terminal,"Subtitle when the Laboratory terminal is used and shows the hunter's position (shown 3 s). CAM 3 = a security camera name, keep it short",CAM 3: MOVEMENT
+sub.stalker.screamed,"Subtitle when the robot stalker (Stan) touches you and screams, when he has no speech voice (shown 2.5 s). ""IT"" = Stan",IT SCREAMED.
+sub.contract.failed,Subtitle when the active contract is failed mid-floor (shown 3 s). {name} = contract name (no final period; the sentence adds one),CONTRACT FAILED  -  {name}.
+sub.contract.done,Subtitle when the active contract is completed mid-floor (shown 3 s). {name} = contract name (no final period; the sentence adds one),CONTRACT DONE  -  {name}.
+sub.contract.void_shards,"Subtitle at the start of a floor that has no shards when the ""Take what glitters"" contract was taken (shown on run start)",Nothing glitters down here - the contract's off.
+sub.contract.void_notes,"Subtitle at the start of a floor that has no notes when the ""Read it all"" contract was taken (shown on run start)",No notes down here - the contract's off.
+sub.shop.deal_done,Salesman line the next time the shop opens after a contract was completed (shown 3 s),A deal's a deal.
+sub.shop.deal_failed,Salesman line the next time the shop opens after a contract was failed (shown 3 s),Can't win them all.
+sub.shop.greeting.1,Salesman greeting when the shop opens after floor 1 (shown 3 s). Shards = the currency,Shards for the dark. What'll it be?
+sub.shop.greeting.2,Salesman greeting when the shop opens after floor 2 (shown 3 s),Back again.
+sub.shop.greeting.3,Salesman greeting when the shop opens after floor 3 (shown 3 s),It's getting louder up there.
+sub.shop.greeting.4,Salesman greeting when the shop opens after floor 4 (shown 3 s),Last stop before the bottom.
+sub.dread.far,"Subtitle when the hunter relocated far away from the player (shown 2.6 s). ""Something"" = the hunter, never named",Something moved behind you.
+sub.dread.mid,"Subtitle when the hunter relocated at a middle distance (shown 2.6 s). ""It"" = the hunter",It's getting closer.
+sub.dread.near,"Subtitle when the hunter relocated very close (shown 2.6 s). ""It"" = the hunter",It's right behind you.
+sub.dread.lights_dying,Subtitle when the first lamps die as the maze empties of stars (shown 2.6 s),The lights are dying.
+sub.dread.it_knows,"Subtitle when the last star is taken (shown 2.6 s). ""It"" = the hunter",It knows.
+sub.dread.ambushed,"Subtitle, once per campaign, the first time an ambush ends because the star it guarded was taken (shown 2.6 s). ""It"" = the hunter",It was waiting.
+sub.banner.floor,"Floor intro banner title when the floor has no named look (96 pt, one line). {floor} = floor number",FLOOR {floor}
+sub.banner.floor_theme,"Floor intro banner title (96 pt, one line, 1400 px, auto-size). {floor} = floor number, {theme} = the look's name in capitals (shop.theme.*)",FLOOR {floor} — {theme}
+sub.banner.find_stars,Floor intro banner objective part (always 2 or more stars; parts are joined with a middle dot). {n} = stars to find,FIND {n} STARS
+sub.banner.restore_fuses,Floor intro banner objective part on a blackout floor. {n} = fuse boxes to restore (3),RESTORE {n} FUSES
+sub.banner.find_keys,Floor intro banner objective part on a key-hunt floor. {n} = keys to find (2 or 3); the hatch is the floor exit,FIND {n} KEYS FOR THE HATCH
+sub.banner.lockdown,Floor intro banner objective part on a floor with a timed security door,SECURITY LOCKDOWN
+sub.banner.rule,"Floor intro banner rule line (one line, auto-size). {name} = the rule name (shop.rule.*.name), {description} = its sentence (shop.rule.*.desc)",{name} — {description}

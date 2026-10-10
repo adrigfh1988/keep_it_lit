@@ -1,0 +1,359 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Shop_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: fefa1c381967b3c46b9600b8d091da42, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 4707331672703763065
+  m_TableData:
+  - m_Id: 295604224
+    m_Localized: SHARDS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296000
+    m_Localized: Spare Battery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296001
+    m_Localized: A fresh cell. Refills the torch and switches it on. Press {key}.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763065
+  - m_Id: 375296002
+    m_Localized: Star Compass
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296003
+    m_Localized: Points at the nearest star for five seconds. Press {key}.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763065
+  - m_Id: 375296004
+    m_Localized: Second Wind
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296005
+    m_Localized: When it catches you, it lets go. Once.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296006
+    m_Localized: Long Fuse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296007
+    m_Localized: Ten more seconds on the hatch timer, next floor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296008
+    m_Localized: Quiet Shoes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296009
+    m_Localized: Your footsteps carry a third less, next floor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296010
+    m_Localized: Extra Lamps
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296011
+    m_Localized: More lamps lit on the next floor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296012
+    m_Localized: Stamina Tonic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296013
+    m_Localized: Four more seconds of sprint, next floor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296014
+    m_Localized: Torch Colour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296015
+    m_Localized: Cold. Ember. Violet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296016
+    m_Localized: HUD Tint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296017
+    m_Localized: Phosphor. Amber. Ice.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296018
+    m_Localized: Bottle Pack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296019
+    m_Localized: Start the next floor already carrying three bottles.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296020
+    m_Localized: Focus Lens
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296021
+    m_Localized: The focused beam reaches further, next floor, for no extra battery cost.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296022
+    m_Localized: Fuse Map
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296023
+    m_Localized: Fuses, buttons, vaults and keys glow faintly. The compass points at them too.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296024
+    m_Localized: WARM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296025
+    m_Localized: COLD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296026
+    m_Localized: EMBER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296027
+    m_Localized: VIOLET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296028
+    m_Localized: BONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296029
+    m_Localized: PHOSPHOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296030
+    m_Localized: AMBER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296031
+    m_Localized: ICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296032
+    m_Localized: THE WARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296033
+    m_Localized: BOILER DECK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296034
+    m_Localized: THE CRYPT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296035
+    m_Localized: THE LAB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296036
+    m_Localized: THE HOLLOW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296037
+    m_Localized: DYING GRID
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296038
+    m_Localized: A lamp loses power every minute.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296039
+    m_Localized: KEEN EARS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296040
+    m_Localized: It hears farther here. Shards are worth more.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296041
+    m_Localized: HEAVY FOG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296042
+    m_Localized: You see less; so does it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296043
+    m_Localized: WEAK BATTERY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296044
+    m_Localized: You start half-charged, but it stores faster off.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296045
+    m_Localized: RESTLESS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296046
+    m_Localized: It moves and appears more often.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296047
+    m_Localized: GLASS FLOORS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296048
+    m_Localized: More broken glass and puddles underfoot.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296049
+    m_Localized: RICH VEINS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296050
+    m_Localized: More shards, but it walks a little faster.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296051
+    m_Localized: It hunts by sound here.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296052
+    m_Localized: It is fast here, but forgets quickly.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296053
+    m_Localized: '{name}.'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763065
+  - m_Id: 375296054
+    m_Localized: Never hide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296055
+    m_Localized: Finish the floor without entering a locker.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296056
+    m_Localized: Not a scratch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296057
+    m_Localized: Never get caught - and never let Stan touch you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296058
+    m_Localized: Walk in the dark
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296059
+    m_Localized: Spend 60 seconds walking with your torch off.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296060
+    m_Localized: Take what glitters
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296061
+    m_Localized: Collect at least 60% of the shards on the floor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296062
+    m_Localized: Read it all
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296063
+    m_Localized: Read every note on the floor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296064
+    m_Localized: Don't dawdle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296065
+    m_Localized: Clear the floor before the clock runs out.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296066
+    m_Localized: Make some noise
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296067
+    m_Localized: Make the hunter come and investigate a thrown bottle or can, twice.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296068
+    m_Localized: Light feet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296069
+    m_Localized: Never sprint.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296070
+    m_Localized: FLOOR {floor} CLEARED
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763065
+  - m_Id: 375296071
+    m_Localized: STARS  {stars} x {value}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763065
+  - m_Id: 375296072
+    m_Localized: TIME LEFT  {time}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763065
+  - m_Id: 375296073
+    m_Localized: FLOOR {floor} CLEARED
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763065
+  - m_Id: 375296074
+    m_Localized: SHARDS FOUND  {n} x {value}  (already yours)
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763065
+  - m_Id: 375296075
+    m_Localized: CONSOLATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 375296076
+    m_Localized: CONSOLATION  {percent}% of {stars} {stars:plural:star|stars}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763065
+  references:
+    version: 2
+    RefIds:
+    - rid: 4707331672703763065
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 375296001
+        - id: 375296003
+        - id: 375296053
+        - id: 375296070
+        - id: 375296071
+        - id: 375296072
+        - id: 375296073
+        - id: 375296074
+        - id: 375296076

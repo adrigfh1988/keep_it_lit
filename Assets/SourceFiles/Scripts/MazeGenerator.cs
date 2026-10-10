@@ -3567,7 +3567,7 @@ public class MazeGenerator : MonoBehaviour
             LoreNote note = Instantiate(interactableKit.LoreNote, pos, Quaternion.LookRotation(-dirVec, Vector3.up), _mazeRoot);
             note.gameObject.SetActive(true);
             note.name = $"LoreNote_{noteId}";
-            note.Configure(noteId, LoreNoteText(noteId));
+            note.Configure(noteId, LoreNoteText(noteId), LoreNoteKey(noteId));
             _loreNotes.Add(note);
         }
     }
@@ -3620,27 +3620,17 @@ public class MazeGenerator : MonoBehaviour
         LoreNote file = Instantiate(interactableKit.PatientFile, pos, Quaternion.LookRotation(-dirVec, Vector3.up), _mazeRoot);
         file.gameObject.SetActive(true);
         file.name = $"PatientFile_{fileId}";
-        file.Configure(fileId, PatientFiles.Text(fileId));
+        file.Configure(fileId, PatientFiles.Text(fileId), "lore.file." + fileId + ".text");
         _loreNotes.Add(file);
         Debug.Log($"MazeGenerator: patient file {fileId} placed in cell {cell} (wall {dir}).", this);
     }
-    /// <summary>The 10 lore texts, verbatim from plannings/darkness-and-interactivity-spec.md F74 item 4.</summary>
+    /// <summary>S9: the 10 lore texts live in the Lore table (lore.note.0..9, verbatim from plannings/darkness-and-interactivity-spec.md F74 item 4).</summary>
+    private static string LoreNoteKey(int id) => id >= 0 && id <= 9 ? "lore.note." + id : null;
+
     private static string LoreNoteText(int id)
     {
-        switch (id)
-        {
-            case 0: return "Night shift rota. Rule 1: the lights stay on. Rule 2: if the lights go out, do not run. Running is how it finds you. — Supervisor Okafor";
-            case 1: return "Patient 7 keeps drawing stars on the walls. Says they are \"the way down\". We paint over them. By morning they are back, and they glow.";
-            case 2: return "Maintenance log: pressure nominal. Fuse 3 tripped again. Someone keeps pressing the lockdown buttons at 3 a.m. Nobody is on shift at 3 a.m.";
-            case 3: return "To whoever finds this: the shutters were never meant to keep you in. They were built to slow it down. It hates doors. Close them behind you.";
-            case 4: return "The chapel candles are the only lights they could not cut. Light one. It does not help much. It helps enough.";
-            case 5: return "Burial register, final page: \"Subject A — released to lower levels.\" There is no grave. There was never a grave.";
-            case 6: return "Service unit trial 14: the old robots freeze under direct observation. Engineering calls it a bug. I watched one move every time my torch flickered. It is not a bug.";
-            case 7: return "We never switched the service units off. We turned off the lights in their bay and stopped looking. That was enough, for a while.";
-            case 8: return "If you are reading this, you got further than we did. The way out at the bottom is real. It opens once. Take the stars with you.";
-            case 9: return "Last entry. It is not hunting you. It is following. Every floor you clear, it comes one floor down. Do not stop.";
-            default: return "";
-        }
+        string key = LoreNoteKey(id);
+        return key != null ? L10n.T(key) : "";
     }
 
     /// <summary>Ward -> bell, Boiler -> valve, Crypt -> candles x2, Lab -> terminal. Never on the primitive fallback (no theme to key off - see decision D11's graceful-degradation rule).</summary>
@@ -4450,8 +4440,14 @@ public class MazeGenerator : MonoBehaviour
     private string FloorTitleText()
     {
         int floor = GameFlow.CurrentFloor;
-        if (_theme != null) return $"FLOOR {floor} — {_theme.DisplayName.ToUpperInvariant()}";
-        return $"FLOOR {floor}";
+        if (_theme != null)
+        {
+            // S9: the look's name is a Shop-table key by the profile's theme number (D10); the scene's serialized name is the English fallback.
+            string themeKey = _profile != null ? "shop.theme." + _profile.ThemeIndex : null;
+            string themeName = themeKey != null && L10n.Has(themeKey) ? L10n.T(themeKey) : _theme.DisplayName.ToUpperInvariant();
+            return L10n.T("sub.banner.floor_theme", ("floor", floor), ("theme", themeName));
+        }
+        return L10n.T("sub.banner.floor", ("floor", floor));
     }
 
     /// <summary>F74/F77 FloorIntroBanner objective line, from FloorProfile.Objectives (a flag set since F77).</summary>
@@ -4459,10 +4455,10 @@ public class MazeGenerator : MonoBehaviour
     {
         if (_profile == null) return "";
 
-        List<string> parts = new List<string> { $"FIND {_profile.StarCount} STARS" };
-        if (_profile.Has(FloorProfile.Objective.Blackout)) parts.Add($"RESTORE {_profile.FuseCount} FUSES");
-        if (_profile.Has(FloorProfile.Objective.KeyHunt)) parts.Add($"FIND {_profile.KeyCount} KEYS FOR THE HATCH");
-        if (_profile.Has(FloorProfile.Objective.Lockdown)) parts.Add("SECURITY LOCKDOWN");
+        List<string> parts = new List<string> { L10n.T("sub.banner.find_stars", ("n", _profile.StarCount)) };
+        if (_profile.Has(FloorProfile.Objective.Blackout)) parts.Add(L10n.T("sub.banner.restore_fuses", ("n", _profile.FuseCount)));
+        if (_profile.Has(FloorProfile.Objective.KeyHunt)) parts.Add(L10n.T("sub.banner.find_keys", ("n", _profile.KeyCount)));
+        if (_profile.Has(FloorProfile.Objective.Lockdown)) parts.Add(L10n.T("sub.banner.lockdown"));
         return string.Join(" · ", parts);
     }
 
@@ -4470,7 +4466,7 @@ public class MazeGenerator : MonoBehaviour
     private static string RuleLineText()
     {
         if (RunRules.Current == RunRules.Rule.None) return "";
-        return $"{RunRules.Name} — {RunRules.Description}";
+        return L10n.T("sub.banner.rule", ("name", RunRules.Name), ("description", RunRules.Description));
     }
 
     // ---------------------------------------------------------------- helpers

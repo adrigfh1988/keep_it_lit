@@ -974,7 +974,7 @@ public class Stalker : MonoBehaviour
         _torch?.Drain(0.25f);
         // F82: the touch line replaces the subtitle (the shriek stays); the bubble finishes after he vanishes.
         if (_voice != null) _voice.Say(StalkerPhraseBook.Category.Touch);
-        else _hud?.ShowSubtitle("IT SCREAMED.", 2.5f);
+        else _hud?.ShowSubtitle(L10n.T("sub.stalker.screamed"), 2.5f);
 
         HideAndRespawn();
     }

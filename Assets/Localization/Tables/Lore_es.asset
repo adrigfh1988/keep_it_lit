@@ -1,0 +1,207 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Lore_es
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: es
+  m_SharedData: {fileID: 11400000, guid: bbe146643d6caf2478fe4f018f1c5ef5, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 303992832
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878912
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878913
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878914
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878915
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878916
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878917
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878918
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878919
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878920
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878921
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878922
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878923
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878924
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878925
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878926
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878927
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878928
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878929
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878930
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878931
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878932
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878933
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878934
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878935
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878936
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878937
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878938
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878939
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878940
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878941
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878942
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878943
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073216
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073217
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073218
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073219
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073220
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073221
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073222
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073223
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073224
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073225
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073226
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073227
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073228
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

@@ -551,9 +551,6 @@ public class GameOutcome : MonoBehaviour
     /// <summary>The two ways out of the Director's office (F93).</summary>
     public enum FinaleEnding { Discharged, LightsOut }
 
-    public const string DischargedText = "The main doors open on the night. The cold is real. Behind you, a light comes on in the Intake ward. Someone is making up a bed. You know who it is for.";
-    public const string LightsOutText = "You pull the switch. Every lamp in Karlheinz dies at once, and for the first time nothing moves in the dark. No footsteps. No knocking. No counting. Patient 7 is discharged. This time, nobody makes up the bed.";
-
     /// <summary>
     /// F93 (E10): floor 5 was cleared and the asylum can host the finale. Everything Win() does up to the end screen - the payout is read and
     /// banked now (time left included), the hunt silenced - but the run stays "ending" (pause, dread and a second ending are held off) and
@@ -608,7 +605,8 @@ public class GameOutcome : MonoBehaviour
         PlayerLock.Freeze(_player, true);
         if (_flashlight != null) _flashlight.InputEnabled = false;
         bool a = ending == FinaleEnding.Discharged;
-        ShowEndScreen(true, LoseReason.Caught, false, a ? "DISCHARGED" : "LIGHTS OUT", a ? DischargedText : LightsOutText);
+        string endKey = a ? "lore.ending.discharged" : "lore.ending.lights_out"; // S9: the two ending texts live in the Lore table
+        ShowEndScreen(true, LoseReason.Caught, false, L10n.T(endKey + ".title"), L10n.T(endKey + ".body"));
     }
 
     public void Win()

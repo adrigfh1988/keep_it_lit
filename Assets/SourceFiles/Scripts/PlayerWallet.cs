@@ -32,7 +32,8 @@ public sealed class Payout
 /// </summary>
 public static class PlayerWallet
 {
-    public const string CurrencyName = "SHARDS";
+    /// <summary>S9: the translated currency name (ALL CAPS plural noun), passed as {currency} into every line that names the money.</summary>
+    public static string CurrencyName => L10n.T("shop.currency");
     public const int StarValue = 10;
     public const int ShardValue = 5;
     public const float TimeBonusPerSecond = 0.5f;
@@ -85,20 +86,20 @@ public static class PlayerWallet
 
     public static Payout ComputeFloorClear(int floor, int stars, float secondsLeft)
     {
-        Payout payout = new Payout { Title = $"FLOOR {floor} CLEARED" };
+        Payout payout = new Payout { Title = L10n.T("shop.payout.title_floor", ("floor", floor)) };
 
         int starTotal = stars * StarValue;
-        payout.Lines.Add(new PayoutLine { Label = $"STARS  {stars} x {StarValue}", Amount = starTotal });
+        payout.Lines.Add(new PayoutLine { Label = L10n.T("shop.payout.stars", ("stars", stars), ("value", StarValue)), Amount = starTotal });
 
         int timeBonus = Mathf.Min(TimeBonusCap, Mathf.RoundToInt(Mathf.Max(0f, secondsLeft) * TimeBonusPerSecond));
-        payout.Lines.Add(new PayoutLine { Label = $"TIME LEFT  {MazeEscape.FormatTime(secondsLeft)}", Amount = timeBonus });
+        payout.Lines.Add(new PayoutLine { Label = L10n.T("shop.payout.time_left", ("time", MazeEscape.FormatTime(secondsLeft))), Amount = timeBonus });
 
         int clearBonus = FloorBonus(floor);
-        payout.Lines.Add(new PayoutLine { Label = $"FLOOR {floor} CLEARED", Amount = clearBonus });
+        payout.Lines.Add(new PayoutLine { Label = L10n.T("shop.payout.floor_cleared", ("floor", floor)), Amount = clearBonus });
 
         // Informational only - these shards were already deposited live as they were picked up.
         int shardsFound = ShardsFoundThisAttempt;
-        payout.Lines.Add(new PayoutLine { Label = $"SHARDS FOUND  {shardsFound} x {ShardValue}  (already yours)", Amount = 0, Kind = PayoutKind.ShardsFound });
+        payout.Lines.Add(new PayoutLine { Label = L10n.T("shop.payout.shards_found", ("n", shardsFound), ("value", ShardValue)), Amount = 0, Kind = PayoutKind.ShardsFound });
 
         payout.Total = starTotal + timeBonus + clearBonus;
         return payout;
@@ -116,11 +117,11 @@ public static class PlayerWallet
 
         Payout payout = new Payout
         {
-            Title = "CONSOLATION",
+            Title = L10n.T("shop.payout.consolation_title"),
             Total = allowed,
             ConsolationFloor = f
         };
-        payout.Lines.Add(new PayoutLine { Label = $"CONSOLATION  35% of {stars} stars", Amount = allowed });
+        payout.Lines.Add(new PayoutLine { Label = L10n.T("shop.payout.consolation", ("percent", Mathf.RoundToInt(ConsolationFraction * 100f)), ("stars", stars)), Amount = allowed });
         return payout;
     }
 

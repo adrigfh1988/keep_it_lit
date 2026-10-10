@@ -3,9 +3,13 @@ using UnityEngine;
 /// <summary>F87: one optional side job the salesman can offer for the next floor.</summary>
 public struct ContractDef
 {
-    public string Name;
-    public string Text;
+    /// <summary>S9: the key stem in the Shop table (shop.contract.&lt;Slug&gt;.name / .text).</summary>
+    public string Slug;
     public int BaseReward;
+
+    /// <summary>The translated contract name. Carries no final period (plan section 6); a sentence that shows it adds one.</summary>
+    public string Name => L10n.T("shop.contract." + Slug + ".name");
+    public string Text => L10n.T("shop.contract." + Slug + ".text");
 }
 
 /// <summary>
@@ -30,14 +34,14 @@ public static class ContractState
 
     private static readonly ContractDef[] Defs =
     {
-        new ContractDef { Name = "Never hide.",           Text = "Finish the floor without entering a locker.",                          BaseReward = 40 },
-        new ContractDef { Name = "Not a scratch.",        Text = "Never get caught - and never let Stan touch you.",                    BaseReward = 50 },
-        new ContractDef { Name = "Walk in the dark.",     Text = "Spend 60 seconds walking with your torch off.",                       BaseReward = 35 },
-        new ContractDef { Name = "Take what glitters.",   Text = "Collect at least 60% of the shards on the floor.",                    BaseReward = 30 },
-        new ContractDef { Name = "Read it all.",          Text = "Read every note on the floor.",                                       BaseReward = 25 },
-        new ContractDef { Name = "Don't dawdle.",         Text = "Clear the floor before the clock runs out.",                          BaseReward = 45 },
-        new ContractDef { Name = "Make some noise.",      Text = "Make the hunter come and investigate a thrown bottle or can, twice.",  BaseReward = 40 },
-        new ContractDef { Name = "Light feet.",           Text = "Never sprint.",                                                       BaseReward = 35 },
+        new ContractDef { Slug = "never_hide", BaseReward = 40 },
+        new ContractDef { Slug = "not_a_scratch", BaseReward = 50 },
+        new ContractDef { Slug = "walk_in_dark", BaseReward = 35 },
+        new ContractDef { Slug = "take_what_glitters", BaseReward = 30 },
+        new ContractDef { Slug = "read_it_all", BaseReward = 25 },
+        new ContractDef { Slug = "dont_dawdle", BaseReward = 45 },
+        new ContractDef { Slug = "make_noise", BaseReward = 40 },
+        new ContractDef { Slug = "light_feet", BaseReward = 35 },
     };
 
     public static int Count => Defs.Length;
@@ -52,7 +56,7 @@ public static class ContractState
     public static int OfferA { get; private set; } = -1;
     public static int OfferB { get; private set; } = -1;
 
-    /// <summary>A line for the salesman to say next time the shop opens (paid / failed), consumed once. Transient: not saved.</summary>
+    /// <summary>The Subtitles KEY (S9) of a line for the salesman to say next time the shop opens (paid / failed), consumed once. Transient: not saved.</summary>
     public static string SalesmanLine;
 
     public static bool HasOffers => OfferA >= 0 && OfferB >= 0;

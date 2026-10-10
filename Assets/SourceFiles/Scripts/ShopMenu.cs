@@ -23,6 +23,8 @@ public class ShopMenu : MonoBehaviour
     {
         public ShopItemDef Def;
         public TextMeshProUGUI Status;
+        public TextMeshProUGUI NameText;
+        public TextMeshProUGUI BlurbText;
         public Button BuyButton;
         public TextMeshProUGUI BuyLabel;
         public Button[] SwatchButtons;
@@ -185,7 +187,7 @@ public class ShopMenu : MonoBehaviour
             if (!has) continue;
 
             ContractDef def = ContractState.Def(offers[i]);
-            _offerName[i].text = def.Name;
+            _offerName[i].text = L10n.T("shop.contract.title", ("name", def.Name));
             _offerText[i].text = def.Text;
             _offerReward[i].text = L10n.T("ui.contracts.reward", ("amount", ContractState.Reward(offers[i], rewardFloor)), ("currency", PlayerWallet.CurrencyName));
 
@@ -301,7 +303,7 @@ public class ShopMenu : MonoBehaviour
         PlaceTopLeft(statusText.rectTransform, new Vector2(16f, -116f), new Vector2(340f, 30f));
         RuntimeUi.AutoFit(statusText, 0.7f);
 
-        ShopCard card = new ShopCard { Def = def, Status = statusText };
+        ShopCard card = new ShopCard { Def = def, Status = statusText, NameText = nameText, BlurbText = blurbText };
 
         if (def.Kind == ItemKind.Cosmetic)
         {
@@ -315,7 +317,7 @@ public class ShopMenu : MonoBehaviour
                 // Palette index 0 is the default look and is never for sale - swatches map to indices 1..3.
                 int paletteIndex = i + 1;
                 Color swatch = palette[paletteIndex].Colour;
-                Button button = RuntimeUi.CreateButton(cardObj.transform, palette[paletteIndex].Name.ToUpperInvariant(),
+                Button button = RuntimeUi.CreateButton(cardObj.transform, ShopCatalogue.PaletteName(def.Id == ShopItem.TorchColour, paletteIndex),
                     new Vector2(xs[i], 18f), new Vector2(118f, 42f), 17f,
                     new Color(swatch.r, swatch.g, swatch.b, 0.35f), new Color(swatch.r, swatch.g, swatch.b, 0.6f), Color.white);
 
@@ -360,6 +362,9 @@ public class ShopMenu : MonoBehaviour
         {
             ShopItemDef def = card.Def;
             int price = ShopCatalogue.PriceFor(def, shopFloor);
+            // S9: the name and blurb follow the language (the panel is built once, this runs on every refresh).
+            if (card.NameText != null) card.NameText.text = def.Name;
+            if (card.BlurbText != null) card.BlurbText.text = def.Blurb;
 
             switch (def.Kind)
             {
@@ -393,14 +398,14 @@ public class ShopMenu : MonoBehaviour
                     bool isTorch = def.Id == ShopItem.TorchColour;
                     int selected = isTorch ? PlayerInventory.TorchColourIndex : PlayerInventory.HudTintIndex;
                     (string Name, Color Colour)[] palette = isTorch ? ShopCatalogue.TorchColours : ShopCatalogue.HudTints;
-                    card.Status.text = L10n.T("ui.shop.in_use_named", ("name", palette[selected].Name.ToUpperInvariant()));
+                    card.Status.text = L10n.T("ui.shop.in_use_named", ("name", ShopCatalogue.PaletteName(isTorch, selected)));
 
                     for (int i = 0; i < card.SwatchButtons.Length; i++)
                     {
                         int paletteIndex = i + 1;
                         bool owned = isTorch ? PlayerInventory.OwnsTorchColour(paletteIndex) : PlayerInventory.OwnsHudTint(paletteIndex);
                         bool isSelected = selected == paletteIndex;
-                        string label = isSelected ? L10n.T("ui.shop.in_use") : owned ? L10n.T("ui.shop.use") : L10n.T("ui.shop.swatch_price", ("name", palette[paletteIndex].Name.ToUpperInvariant()), ("price", price));
+                        string label = isSelected ? L10n.T("ui.shop.in_use") : owned ? L10n.T("ui.shop.use") : L10n.T("ui.shop.swatch_price", ("name", ShopCatalogue.PaletteName(isTorch, paletteIndex)), ("price", price));
                         card.SwatchLabels[i].text = label;
                         card.SwatchButtons[i].interactable = !isSelected && (owned || PlayerWallet.Shards >= price);
                     }

@@ -1,0 +1,227 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Lore_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: bbe146643d6caf2478fe4f018f1c5ef5, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 4707331672703763100
+  m_TableData:
+  - m_Id: 303992832
+    m_Localized: "Night shift rota. Rule 1: the lights stay on. Rule 2: if the lights go out, do not run. Running is how it finds you. \u2014 Supervisor Okafor"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878912
+    m_Localized: Patient 7 keeps drawing stars on the walls. Says they are "the way down". We paint over them. By morning they are back, and they glow.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878913
+    m_Localized: 'Maintenance log: pressure nominal. Fuse 3 tripped again. Someone keeps pressing the lockdown buttons at 3 a.m. Nobody is on shift at 3 a.m.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878914
+    m_Localized: 'To whoever finds this: the shutters were never meant to keep you in. They were built to slow it down. It hates doors. Close them behind you.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878915
+    m_Localized: The chapel candles are the only lights they could not cut. Light one. It does not help much. It helps enough.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878916
+    m_Localized: "Burial register, final page: \"Subject A \u2014 released to lower levels.\" There is no grave. There was never a grave."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878917
+    m_Localized: 'Service unit trial 14: the old robots freeze under direct observation. Engineering calls it a bug. I watched one move every time my torch flickered. It is not a bug.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878918
+    m_Localized: We never switched the service units off. We turned off the lights in their bay and stopped looking. That was enough, for a while.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878919
+    m_Localized: If you are reading this, you got further than we did. The way out at the bottom is real. It opens once. Take the stars with you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878920
+    m_Localized: Last entry. It is not hunting you. It is following. Every floor you clear, it comes one floor down. Do not stop.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878921
+    m_Localized: 'TO WHOEVER WAKES NEXT
+
+
+      They keep the lights low down here, and something walks the halls between the beds. Five stars lie in the dark. Gather them and the hatch will open. It always opens. It never stays open long.
+
+
+      - a night nurse, Ward 1'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878922
+    m_Localized: "CASE FILE \xB7 PATIENT 3 \xB7 HILDE BRANDT\n\nAdmitted for counting. Counts the doors on Ward A, aloud, all night. Insists there is always one more door than yesterday.\n\nStaff note: she is right. Maintenance cannot explain the new door on Ward A. Keep her away from it."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878923
+    m_Localized: "CASE FILE \xB7 PATIENT 11 \xB7 TOMAS REINER\n\nFormer stoker. Hears footsteps in the pipes and answers them. Two knocks: all clear. Three knocks: hide.\n\nStaff note: since the Boiler Room was sealed, the pipes knock back. Nobody on staff knocks three times."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878924
+    m_Localized: "CASE FILE \xB7 PATIENT 5 \xB7 ELIAS VOGT\n\nSleepwalker. Found every morning at the morgue doors, eyes open, holding his own wristband. Says drawer five \"has his name on\".\n\nStaff note: drawer five does have his name on. Nobody wrote it. Transfer to Surgery approved."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878925
+    m_Localized: "CASE FILE \xB7 SUBJECT A\n\nProcedure 1: removal of fear. Successful. The subject no longer sleeps, no longer speaks, no longer stops.\n\nReleased to the lower levels to keep them quiet. Staff note: the lower levels are quiet now. Everyone down there is very, very quiet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878926
+    m_Localized: "DIRECTOR KARLHEINZ \xB7 PRIVATE\n\nThe service units keep the lights. Subject A keeps the dark. The stars show the patients the way down, and the way down brings them back to Intake. A closed system.\n\nIt needs one more patient to close. The file is on my desk."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878927
+    m_Localized: "CASE FILE \xB7 PATIENT 7\n\nAdmitted: fourteen times. Draws stars on the walls. Reaches the bottom every time, holding the stars, and walks back in through Intake asking where the beds are.\n\nTreatment: none effective.\n\nDirector's note: there is a switch behind this desk. It turns everything off. The units, the dark, the subject, the Asylum. I never had the courage. Patient 7 might."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878928
+    m_Localized: "P3 \xB7 HILDE BRANDT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878929
+    m_Localized: "P11 \xB7 TOMAS REINER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878930
+    m_Localized: "P5 \xB7 ELIAS VOGT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878931
+    m_Localized: SUBJECT A
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878932
+    m_Localized: "DIRECTOR \xB7 PRIVATE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878933
+    m_Localized: PATIENT 7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878934
+    m_Localized: The wristband is cold. Drawer five is open.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878935
+    m_Localized: DISCHARGED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878936
+    m_Localized: The main doors open on the night. The cold is real. Behind you, a light comes on in the Intake ward. Someone is making up a bed. You know who it is for.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878937
+    m_Localized: LIGHTS OUT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878938
+    m_Localized: You pull the switch. Every lamp in Karlheinz dies at once, and for the first time nothing moves in the dark. No footsteps. No knocking. No counting. Patient 7 is discharged. This time, nobody makes up the bed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878939
+    m_Localized: ADMITTED AGAIN. ASKED WHERE THE BEDS ARE. SLEPT BEHIND THE STATUE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878940
+    m_Localized: 'ADMITTED AGAIN. ASKED WHERE THE BEDS ARE. SLEPT BEHIND THE STATUE.
+
+      IT IS YOUR HANDWRITING.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878941
+    m_Localized: "EVACUATION ORDER \xB7 NIGHT OF THE 14TH \xB7 WARD A FIRST. DO NOT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878942
+    m_Localized: SOMEONE HAS BEEN COUNTING THE DOORS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387878943
+    m_Localized: 'ADMISSIONS: {list}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763100
+  - m_Id: 392073216
+    m_Localized: 'ADMISSIONS: {list}, AND {n} MORE'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763100
+  - m_Id: 392073217
+    m_Localized: PATIENT {mark}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763100
+  - m_Id: 392073218
+    m_Localized: "ROTA \xB7 OKAFOR \xB7 LIGHTS STAY ON."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073219
+    m_Localized: "ROTA \xB7 OKAFOR \xB7 LIGHTS STAY ON.\nCOUNT AT SIX. COUNT AT SIX."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073220
+    m_Localized: ROOM 4. EMPTY. THE LAMP IS WARM.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073221
+    m_Localized: 'BAY LIGHTS: OFF. DO NOT LOOK IN.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073222
+    m_Localized: TWO DENTS IN THE PIPE. THE STEEL IS STILL WARM.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073223
+    m_Localized: THREE DENTS IN THE PIPE. THE STEEL IS STILL WARM.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073224
+    m_Localized: RELEASED TO LOWER LEVELS. SUBJECT A. DO NOT FOLLOW.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073225
+    m_Localized: THEY BARRICADED THE DOOR. FROM THE INSIDE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073226
+    m_Localized: THE TABLE HAS BEEN SHOVED. FROM THE OTHER SIDE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073227
+    m_Localized: A CHALK HOUSE WITH MORE WINDOWS THAN THE REAL ONE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073228
+    m_Localized: A CHALK HOUSE, SMEARED OUT BY A HAND.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4707331672703763100
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 387878943
+        - id: 392073216
+        - id: 392073217

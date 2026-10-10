@@ -22,6 +22,13 @@ MonoBehaviour:
     - Locale-de
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 12b6edecb2cf2d54b9d50b2f3ae23070
+    m_Address: Intake_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1cbd495c55872974dafd0674cc04aa94
     m_Address: UI_de
     m_ReadOnly: 1
@@ -36,8 +43,29 @@ MonoBehaviour:
     - Locale-de
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 423417deca9fbca4e9566f54f8a076d5
+    m_Address: Lore_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5915e448beceead40b2619894ae256f5
     m_Address: Hub_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c9edc64d508d1a42b2b3c0cc27a031d
+    m_Address: Shop_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d334e80dc7bf50f4bbab875a4f8554f0
+    m_Address: World_de
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de

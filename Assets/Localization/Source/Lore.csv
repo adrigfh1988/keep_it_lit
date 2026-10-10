@@ -1,0 +1,79 @@
+key,context,en
+lore.note.0,"Maze lore note, floor 1+ (reading panel; a diegetic document: a found shift rota, keep the style and line breaks; the signature after the dash is part of the text)","Night shift rota. Rule 1: the lights stay on. Rule 2: if the lights go out, do not run. Running is how it finds you. — Supervisor Okafor"
+lore.note.1,Maze lore note (reading panel; diegetic document: a staff observation. Patient 7 is the player's own character; the quoted phrase is Patient 7's words. Keep the quotation marks),"Patient 7 keeps drawing stars on the walls. Says they are ""the way down"". We paint over them. By morning they are back, and they glow."
+lore.note.2,Maze lore note (reading panel; diegetic document: a maintenance log entry),Maintenance log: pressure nominal. Fuse 3 tripped again. Someone keeps pressing the lockdown buttons at 3 a.m. Nobody is on shift at 3 a.m.
+lore.note.3,"Maze lore note (reading panel; diegetic document: a handwritten warning to whoever finds it. ""it"" = the hunter, never named)",To whoever finds this: the shutters were never meant to keep you in. They were built to slow it down. It hates doors. Close them behind you.
+lore.note.4,Maze lore note (reading panel; diegetic document: a handwritten warning about the chapel candles),The chapel candles are the only lights they could not cut. Light one. It does not help much. It helps enough.
+lore.note.5,Maze lore note (reading panel; diegetic document: the last page of a burial register. Subject A is a character name; keep the quotation marks),"Burial register, final page: ""Subject A — released to lower levels."" There is no grave. There was never a grave."
+lore.note.6,"Maze lore note (reading panel; diegetic document: an engineer's trial report on the old service robots, which freeze when watched. ""it"" = a robot)",Service unit trial 14: the old robots freeze under direct observation. Engineering calls it a bug. I watched one move every time my torch flickered. It is not a bug.
+lore.note.7,Maze lore note (reading panel; diegetic document: a staff confession about the service robots),"We never switched the service units off. We turned off the lights in their bay and stopped looking. That was enough, for a while."
+lore.note.8,Maze lore note (reading panel; diegetic document: a message to the next patient),"If you are reading this, you got further than we did. The way out at the bottom is real. It opens once. Take the stars with you."
+lore.note.9,"Maze lore note (reading panel; diegetic document: the last entry in a diary. ""It"" = the hunter, never named)","Last entry. It is not hunting you. It is following. Every floor you clear, it comes one floor down. Do not stop."
+lore.note.intake,"The note on the shelf in the Intake tutorial room (reading panel; diegetic document: a night nurse's note to the next patient; keep the blank lines, the heading in capitals and the signature line)","TO WHOEVER WAKES NEXT
+
+They keep the lights low down here, and something walks the halls between the beds. Five stars lie in the dark. Gather them and the hatch will open. It always opens. It never stays open long.
+
+- a night nurse, Ward 1"
+lore.file.100.text,"Case file 1 of 6, found in the floor 1 maze and shown on the records board (reading panel; diegetic document: a psychiatric case file; keep the heading in capitals, the blank lines and the names)","CASE FILE · PATIENT 3 · HILDE BRANDT
+
+Admitted for counting. Counts the doors on Ward A, aloud, all night. Insists there is always one more door than yesterday.
+
+Staff note: she is right. Maintenance cannot explain the new door on Ward A. Keep her away from it."
+lore.file.101.text,"Case file 2 of 6, floor 2 maze (reading panel; diegetic document: a psychiatric case file; keep the heading in capitals, the blank lines and the names)","CASE FILE · PATIENT 11 · TOMAS REINER
+
+Former stoker. Hears footsteps in the pipes and answers them. Two knocks: all clear. Three knocks: hide.
+
+Staff note: since the Boiler Room was sealed, the pipes knock back. Nobody on staff knocks three times."
+lore.file.102.text,"Case file 3 of 6, floor 3 maze (reading panel; diegetic document: a psychiatric case file; keep the heading in capitals, the blank lines, the names and the quotation marks)","CASE FILE · PATIENT 5 · ELIAS VOGT
+
+Sleepwalker. Found every morning at the morgue doors, eyes open, holding his own wristband. Says drawer five ""has his name on"".
+
+Staff note: drawer five does have his name on. Nobody wrote it. Transfer to Surgery approved."
+lore.file.103.text,"Case file 4 of 6, floor 4 maze (reading panel; diegetic document: a psychiatric case file about the creature called Subject A; keep the heading, the blank lines)","CASE FILE · SUBJECT A
+
+Procedure 1: removal of fear. Successful. The subject no longer sleeps, no longer speaks, no longer stops.
+
+Released to the lower levels to keep them quiet. Staff note: the lower levels are quiet now. Everyone down there is very, very quiet."
+lore.file.104.text,"Case file 5 of 6, floor 5 maze (reading panel; diegetic document: the asylum Director's private note; keep the heading in capitals and the blank lines)","DIRECTOR KARLHEINZ · PRIVATE
+
+The service units keep the lights. Subject A keeps the dark. The stars show the patients the way down, and the way down brings them back to Intake. A closed system.
+
+It needs one more patient to close. The file is on my desk."
+lore.file.105.text,"The Director's own file, read only in the finale, in the desk drawer (reading panel; diegetic document; Patient 7 is the player's character; keep the heading, the blank lines and the names)","CASE FILE · PATIENT 7
+
+Admitted: fourteen times. Draws stars on the walls. Reaches the bottom every time, holding the stars, and walks back in through Intake asking where the beds are.
+
+Treatment: none effective.
+
+Director's note: there is a switch behind this desk. It turns everything off. The units, the dark, the subject, the Asylum. I never had the courage. Patient 7 might."
+lore.file.100.label,"Records board folder label for case file 1 (hub prompt ""READ FILE · {label}"", ~30 characters max). P3 = Patient 3; names are not translated",P3 · HILDE BRANDT
+lore.file.101.label,"Records board folder label for case file 2 (hub prompt, ~30 characters max). P11 = Patient 11; names are not translated",P11 · TOMAS REINER
+lore.file.102.label,"Records board folder label for case file 3 (hub prompt, ~30 characters max). P5 = Patient 5; names are not translated",P5 · ELIAS VOGT
+lore.file.103.label,"Records board folder label for case file 4 (hub prompt, ~30 characters max)",SUBJECT A
+lore.file.104.label,"Records board folder label for case file 5 (hub prompt, ~30 characters max)",DIRECTOR · PRIVATE
+lore.file.105.label,"Records board folder label for the Director's file (finale only, hub prompt, ~30 characters max)",PATIENT 7
+lore.wristband.line,Subtitle when the player examines Elias's wristband on the morgue table (shown 5 s),The wristband is cold. Drawer five is open.
+lore.ending.discharged.title,"End screen title of ending A, leaving through the main doors (one line, large). Discharged = formally released from hospital",DISCHARGED
+lore.ending.discharged.body,"End screen body of ending A (wraps over ~6 lines, 1400 px). The Intake ward is where new patients are admitted","The main doors open on the night. The cold is real. Behind you, a light comes on in the Intake ward. Someone is making up a bed. You know who it is for."
+lore.ending.lights_out.title,"End screen title of ending B, pulling the master switch. This is the game's title phrase LIGHTS OUT used as a phrase: translators may keep it in English as the brand",LIGHTS OUT
+lore.ending.lights_out.body,"End screen body of ending B (wraps over ~6 lines, 1400 px). Karlheinz = the asylum. Patient 7 = the player's character","You pull the switch. Every lamp in Karlheinz dies at once, and for the first time nothing moves in the dark. No footsteps. No knocking. No counting. Patient 7 is discharged. This time, nobody makes up the bed."
+lore.vignette.bay_card,"Readable card in the hub's statue bay, examined with E (reading panel, ALL CAPS, two short lines max)",ADMITTED AGAIN. ASKED WHERE THE BEDS ARE. SLEPT BEHIND THE STATUE.
+lore.vignette.bay_card_truth,"The same card once the Director's file was read: a second line is added (reading panel, ALL CAPS)","ADMITTED AGAIN. ASKED WHERE THE BEDS ARE. SLEPT BEHIND THE STATUE.
+IT IS YOUR HANDWRITING."
+lore.vignette.evac,"Hub vignette subtitle: an evacuation order pinned up. Ends mid-word on purpose (shown 4.5 s, ALL CAPS, one line, max 100 characters; 120 in other languages)",EVACUATION ORDER · NIGHT OF THE 14TH · WARD A FIRST. DO NOT
+lore.vignette.tally,"Hub vignette subtitle: tally marks on a wall (shown 4.5 s, ALL CAPS, one line, max 100 characters)",SOMEONE HAS BEEN COUNTING THE DOORS.
+lore.vignette.admissions,"Hub vignette subtitle: the admissions ledger on the reception desk, up to 5 entries (shown 4.5 s, ALL CAPS, max 100 characters). {list} = entries joined by commas, see lore.vignette.admissions.entry",ADMISSIONS: {list}
+lore.vignette.admissions_more,"Hub vignette subtitle: the admissions ledger when it has more than 5 entries (ALL CAPS, max 100 characters). {list} = 5 entries joined by commas, {n} = how many more entries there are","ADMISSIONS: {list}, AND {n} MORE"
+lore.vignette.admissions.entry,One ledger entry inside the admissions list (ALL CAPS). {mark} = the patient number: # (redacted) or 7 once the Director's file was read,PATIENT {mark}
+lore.vignette.rota,"Hub vignette subtitle: the night-shift rota (ALL CAPS, max 100 characters). Okafor is a character name",ROTA · OKAFOR · LIGHTS STAY ON.
+lore.vignette.rota_late,"The same rota from floor 3 on: a second line in another hand (ALL CAPS, two lines, max 100 characters each)","ROTA · OKAFOR · LIGHTS STAY ON.
+COUNT AT SIX. COUNT AT SIX."
+lore.vignette.room4,"Hub vignette subtitle: door of room 4 (ALL CAPS, max 100 characters)",ROOM 4. EMPTY. THE LAMP IS WARM.
+lore.vignette.stanbay,"Hub vignette subtitle: the robot stalker's storage bay (ALL CAPS, max 100 characters)",BAY LIGHTS: OFF. DO NOT LOOK IN.
+lore.vignette.pipe_early,"Hub vignette subtitle: dents in a heating pipe, floors 1-3 (ALL CAPS, max 100 characters). The dents are knocks: two knocks = all clear",TWO DENTS IN THE PIPE. THE STEEL IS STILL WARM.
+lore.vignette.pipe_late,"Hub vignette subtitle: dents in a heating pipe, floor 4 on (ALL CAPS, max 100 characters). Three knocks = hide",THREE DENTS IN THE PIPE. THE STEEL IS STILL WARM.
+lore.vignette.lower,"Hub vignette subtitle: a tag on a door to the lower levels (ALL CAPS, max 100 characters). Subject A is a character name",RELEASED TO LOWER LEVELS. SUBJECT A. DO NOT FOLLOW.
+lore.vignette.barricade_early,"Hub vignette subtitle: a barricaded door, floors 1-3 (ALL CAPS, max 100 characters)",THEY BARRICADED THE DOOR. FROM THE INSIDE.
+lore.vignette.barricade_late,"Hub vignette subtitle: the same barricade from floor 4 on (ALL CAPS, max 100 characters)",THE TABLE HAS BEEN SHOVED. FROM THE OTHER SIDE.
+lore.vignette.chalkhouse_early,"Hub vignette subtitle: a child's chalk drawing of a house, floors 1-3 (ALL CAPS, max 100 characters)",A CHALK HOUSE WITH MORE WINDOWS THAN THE REAL ONE.
+lore.vignette.chalkhouse_late,"Hub vignette subtitle: the same chalk drawing from floor 4 on (ALL CAPS, max 100 characters)","A CHALK HOUSE, SMEARED OUT BY A HAND."

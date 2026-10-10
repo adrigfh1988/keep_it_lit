@@ -1,0 +1,442 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Lore Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Lore
+  m_TableCollectionNameGuidString: bbe146643d6caf2478fe4f018f1c5ef5
+  m_Entries:
+  - m_Id: 303992832
+    m_Key: lore.note.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763019
+  - m_Id: 387878912
+    m_Key: lore.note.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763020
+  - m_Id: 387878913
+    m_Key: lore.note.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763021
+  - m_Id: 387878914
+    m_Key: lore.note.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763022
+  - m_Id: 387878915
+    m_Key: lore.note.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763023
+  - m_Id: 387878916
+    m_Key: lore.note.5
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763024
+  - m_Id: 387878917
+    m_Key: lore.note.6
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763025
+  - m_Id: 387878918
+    m_Key: lore.note.7
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763026
+  - m_Id: 387878919
+    m_Key: lore.note.8
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763027
+  - m_Id: 387878920
+    m_Key: lore.note.9
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763028
+  - m_Id: 387878921
+    m_Key: lore.note.intake
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763029
+  - m_Id: 387878922
+    m_Key: lore.file.100.text
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763030
+  - m_Id: 387878923
+    m_Key: lore.file.101.text
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763031
+  - m_Id: 387878924
+    m_Key: lore.file.102.text
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763032
+  - m_Id: 387878925
+    m_Key: lore.file.103.text
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763033
+  - m_Id: 387878926
+    m_Key: lore.file.104.text
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763034
+  - m_Id: 387878927
+    m_Key: lore.file.105.text
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763035
+  - m_Id: 387878928
+    m_Key: lore.file.100.label
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763036
+  - m_Id: 387878929
+    m_Key: lore.file.101.label
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763037
+  - m_Id: 387878930
+    m_Key: lore.file.102.label
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763038
+  - m_Id: 387878931
+    m_Key: lore.file.103.label
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763039
+  - m_Id: 387878932
+    m_Key: lore.file.104.label
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763040
+  - m_Id: 387878933
+    m_Key: lore.file.105.label
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763041
+  - m_Id: 387878934
+    m_Key: lore.wristband.line
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763042
+  - m_Id: 387878935
+    m_Key: lore.ending.discharged.title
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763043
+  - m_Id: 387878936
+    m_Key: lore.ending.discharged.body
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763044
+  - m_Id: 387878937
+    m_Key: lore.ending.lights_out.title
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763045
+  - m_Id: 387878938
+    m_Key: lore.ending.lights_out.body
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763046
+  - m_Id: 387878939
+    m_Key: lore.vignette.bay_card
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763047
+  - m_Id: 387878940
+    m_Key: lore.vignette.bay_card_truth
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763048
+  - m_Id: 387878941
+    m_Key: lore.vignette.evac
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763049
+  - m_Id: 387878942
+    m_Key: lore.vignette.tally
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763050
+  - m_Id: 387878943
+    m_Key: lore.vignette.admissions
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763051
+  - m_Id: 392073216
+    m_Key: lore.vignette.admissions_more
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763052
+  - m_Id: 392073217
+    m_Key: lore.vignette.admissions.entry
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763053
+  - m_Id: 392073218
+    m_Key: lore.vignette.rota
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763054
+  - m_Id: 392073219
+    m_Key: lore.vignette.rota_late
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763055
+  - m_Id: 392073220
+    m_Key: lore.vignette.room4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763056
+  - m_Id: 392073221
+    m_Key: lore.vignette.stanbay
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763057
+  - m_Id: 392073222
+    m_Key: lore.vignette.pipe_early
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763058
+  - m_Id: 392073223
+    m_Key: lore.vignette.pipe_late
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763059
+  - m_Id: 392073224
+    m_Key: lore.vignette.lower
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763060
+  - m_Id: 392073225
+    m_Key: lore.vignette.barricade_early
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763061
+  - m_Id: 392073226
+    m_Key: lore.vignette.barricade_late
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763062
+  - m_Id: 392073227
+    m_Key: lore.vignette.chalkhouse_early
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763063
+  - m_Id: 392073228
+    m_Key: lore.vignette.chalkhouse_late
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763064
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4707331672703762922
+  references:
+    version: 2
+    RefIds:
+    - rid: 4707331672703762922
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1791632518045
+    - rid: 4707331672703763019
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Maze lore note, floor 1+ (reading panel; a diegetic document: a found shift rota, keep the style and line breaks; the signature after the dash is part of the text)'
+    - rid: 4707331672703763020
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Maze lore note (reading panel; diegetic document: a staff observation. Patient 7 is the player''s own character; the quoted phrase is Patient 7''s words. Keep the quotation marks)'
+    - rid: 4707331672703763021
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Maze lore note (reading panel; diegetic document: a maintenance log entry)'
+    - rid: 4707331672703763022
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Maze lore note (reading panel; diegetic document: a handwritten warning to whoever finds it. "it" = the hunter, never named)'
+    - rid: 4707331672703763023
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Maze lore note (reading panel; diegetic document: a handwritten warning about the chapel candles)'
+    - rid: 4707331672703763024
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Maze lore note (reading panel; diegetic document: the last page of a burial register. Subject A is a character name; keep the quotation marks)'
+    - rid: 4707331672703763025
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Maze lore note (reading panel; diegetic document: an engineer''s trial report on the old service robots, which freeze when watched. "it" = a robot)'
+    - rid: 4707331672703763026
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Maze lore note (reading panel; diegetic document: a staff confession about the service robots)'
+    - rid: 4707331672703763027
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Maze lore note (reading panel; diegetic document: a message to the next patient)'
+    - rid: 4707331672703763028
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Maze lore note (reading panel; diegetic document: the last entry in a diary. "It" = the hunter, never named)'
+    - rid: 4707331672703763029
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The note on the shelf in the Intake tutorial room (reading panel; diegetic document: a night nurse''s note to the next patient; keep the blank lines, the heading in capitals and the signature line)'
+    - rid: 4707331672703763030
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Case file 1 of 6, found in the floor 1 maze and shown on the records board (reading panel; diegetic document: a psychiatric case file; keep the heading in capitals, the blank lines and the names)'
+    - rid: 4707331672703763031
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Case file 2 of 6, floor 2 maze (reading panel; diegetic document: a psychiatric case file; keep the heading in capitals, the blank lines and the names)'
+    - rid: 4707331672703763032
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Case file 3 of 6, floor 3 maze (reading panel; diegetic document: a psychiatric case file; keep the heading in capitals, the blank lines, the names and the quotation marks)'
+    - rid: 4707331672703763033
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Case file 4 of 6, floor 4 maze (reading panel; diegetic document: a psychiatric case file about the creature called Subject A; keep the heading, the blank lines)'
+    - rid: 4707331672703763034
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Case file 5 of 6, floor 5 maze (reading panel; diegetic document: the asylum Director''s private note; keep the heading in capitals and the blank lines)'
+    - rid: 4707331672703763035
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: The Director's own file, read only in the finale, in the desk drawer (reading panel; diegetic document; Patient 7 is the player's character; keep the heading, the blank lines and the names)
+    - rid: 4707331672703763036
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: "Records board folder label for case file 1 (hub prompt \"READ FILE \xB7 {label}\", ~30 characters max). P3 = Patient 3; names are not translated"
+    - rid: 4707331672703763037
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Records board folder label for case file 2 (hub prompt, ~30 characters max). P11 = Patient 11; names are not translated
+    - rid: 4707331672703763038
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Records board folder label for case file 3 (hub prompt, ~30 characters max). P5 = Patient 5; names are not translated
+    - rid: 4707331672703763039
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Records board folder label for case file 4 (hub prompt, ~30 characters max)
+    - rid: 4707331672703763040
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Records board folder label for case file 5 (hub prompt, ~30 characters max)
+    - rid: 4707331672703763041
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Records board folder label for the Director's file (finale only, hub prompt, ~30 characters max)
+    - rid: 4707331672703763042
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle when the player examines Elias's wristband on the morgue table (shown 5 s)
+    - rid: 4707331672703763043
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen title of ending A, leaving through the main doors (one line, large). Discharged = formally released from hospital
+    - rid: 4707331672703763044
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen body of ending A (wraps over ~6 lines, 1400 px). The Intake ward is where new patients are admitted
+    - rid: 4707331672703763045
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'End screen title of ending B, pulling the master switch. This is the game''s title phrase LIGHTS OUT used as a phrase: translators may keep it in English as the brand'
+    - rid: 4707331672703763046
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen body of ending B (wraps over ~6 lines, 1400 px). Karlheinz = the asylum. Patient 7 = the player's character
+    - rid: 4707331672703763047
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Readable card in the hub's statue bay, examined with E (reading panel, ALL CAPS, two short lines max)
+    - rid: 4707331672703763048
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The same card once the Director''s file was read: a second line is added (reading panel, ALL CAPS)'
+    - rid: 4707331672703763049
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hub vignette subtitle: an evacuation order pinned up. Ends mid-word on purpose (shown 4.5 s, ALL CAPS, one line, max 100 characters; 120 in other languages)'
+    - rid: 4707331672703763050
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hub vignette subtitle: tally marks on a wall (shown 4.5 s, ALL CAPS, one line, max 100 characters)'
+    - rid: 4707331672703763051
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hub vignette subtitle: the admissions ledger on the reception desk, up to 5 entries (shown 4.5 s, ALL CAPS, max 100 characters). {list} = entries joined by commas, see lore.vignette.admissions.entry'
+    - rid: 4707331672703763052
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hub vignette subtitle: the admissions ledger when it has more than 5 entries (ALL CAPS, max 100 characters). {list} = 5 entries joined by commas, {n} = how many more entries there are'
+    - rid: 4707331672703763053
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'One ledger entry inside the admissions list (ALL CAPS). {mark} = the patient number: # (redacted) or 7 once the Director''s file was read'
+    - rid: 4707331672703763054
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hub vignette subtitle: the night-shift rota (ALL CAPS, max 100 characters). Okafor is a character name'
+    - rid: 4707331672703763055
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The same rota from floor 3 on: a second line in another hand (ALL CAPS, two lines, max 100 characters each)'
+    - rid: 4707331672703763056
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hub vignette subtitle: door of room 4 (ALL CAPS, max 100 characters)'
+    - rid: 4707331672703763057
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hub vignette subtitle: the robot stalker''s storage bay (ALL CAPS, max 100 characters)'
+    - rid: 4707331672703763058
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hub vignette subtitle: dents in a heating pipe, floors 1-3 (ALL CAPS, max 100 characters). The dents are knocks: two knocks = all clear'
+    - rid: 4707331672703763059
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hub vignette subtitle: dents in a heating pipe, floor 4 on (ALL CAPS, max 100 characters). Three knocks = hide'
+    - rid: 4707331672703763060
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hub vignette subtitle: a tag on a door to the lower levels (ALL CAPS, max 100 characters). Subject A is a character name'
+    - rid: 4707331672703763061
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hub vignette subtitle: a barricaded door, floors 1-3 (ALL CAPS, max 100 characters)'
+    - rid: 4707331672703763062
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hub vignette subtitle: the same barricade from floor 4 on (ALL CAPS, max 100 characters)'
+    - rid: 4707331672703763063
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hub vignette subtitle: a child''s chalk drawing of a house, floors 1-3 (ALL CAPS, max 100 characters)'
+    - rid: 4707331672703763064
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hub vignette subtitle: the same chalk drawing from floor 4 on (ALL CAPS, max 100 characters)'

@@ -30,6 +30,16 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4a4bec294d45f9340a3e380de17ee432
+    m_Address: Assets/Localization/Tables/World Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5016db808c22b3a4aa58d1dcfcccca4a
+    m_Address: Assets/Localization/Tables/Intake Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 604b93daf028d6f4db3b08ed6afbed15
     m_Address: Assets/Localization/Tables/HUD Shared Data.asset
     m_ReadOnly: 1
@@ -40,8 +50,18 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bbe146643d6caf2478fe4f018f1c5ef5
+    m_Address: Assets/Localization/Tables/Lore Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f29e2f696e371764886a57603cbe4d01
     m_Address: Assets/Localization/Tables/Hub Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fefa1c381967b3c46b9600b8d091da42
+    m_Address: Assets/Localization/Tables/Shop Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

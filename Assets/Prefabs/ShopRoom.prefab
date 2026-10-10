@@ -30331,6 +30331,7 @@ GameObject:
   - component: {fileID: 3525573068594234798}
   - component: {fileID: 2930142138823987366}
   - component: {fileID: 8387534336714910237}
+  - component: {fileID: 6831463730167518335}
   m_Layer: 0
   m_Name: ContractSign
   m_TagString: Untagged
@@ -30501,6 +30502,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 2930142138823987366}
   m_maskType: 0
+--- !u!114 &6831463730167518335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5870108761159729004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e789d0ccb4053e4e91f7be44e76cd08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  key: world.shop.contracts
 --- !u!1 &5875889238329263444
 GameObject:
   m_ObjectHideFlags: 0
@@ -38853,6 +38867,7 @@ GameObject:
   - component: {fileID: 3138902589434049211}
   - component: {fileID: 9181235133176878363}
   - component: {fileID: 5763161635812306775}
+  - component: {fileID: 8740076154444292856}
   m_Layer: 0
   m_Name: ShopSign
   m_TagString: Untagged
@@ -39023,6 +39038,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 9181235133176878363}
   m_maskType: 0
+--- !u!114 &8740076154444292856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7204630287422034768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e789d0ccb4053e4e91f7be44e76cd08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  key: world.shop.shards_accepted
 --- !u!1 &7209458696696725924
 GameObject:
   m_ObjectHideFlags: 0

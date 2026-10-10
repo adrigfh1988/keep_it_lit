@@ -1,0 +1,79 @@
+key,context,en
+shop.currency,"Name of the shards currency; passed as {currency} into the HUD shard counter, shop wallet, ledger and end screens. Plural noun in ALL CAPS",SHARDS
+shop.item.spare_battery.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Spare Battery
+shop.item.spare_battery.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). {key} = the physical key that uses the item (1)",A fresh cell. Refills the torch and switches it on. Press {key}.
+shop.item.star_compass.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Star Compass
+shop.item.star_compass.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). {key} = the physical key that uses the item (2)",Points at the nearest star for five seconds. Press {key}.
+shop.item.second_wind.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Second Wind
+shop.item.second_wind.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). ""It"" = the hunter, never named","When it catches you, it lets go. Once."
+shop.item.long_fuse.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Long Fuse
+shop.item.long_fuse.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). The hatch timer is the escape countdown","Ten more seconds on the hatch timer, next floor."
+shop.item.quiet_shoes.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Quiet Shoes
+shop.item.quiet_shoes.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)","Your footsteps carry a third less, next floor."
+shop.item.extra_lamps.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Extra Lamps
+shop.item.extra_lamps.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)",More lamps lit on the next floor.
+shop.item.stamina_tonic.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Stamina Tonic
+shop.item.stamina_tonic.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)","Four more seconds of sprint, next floor."
+shop.item.torch_colour.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size). The colour of the torch beam",Torch Colour
+shop.item.torch_colour.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). Lists the three colours sold (see shop.palette.torch.1-3) in the same order",Cold. Ember. Violet.
+shop.item.hud_tint.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size). The colour of the HUD text",HUD Tint
+shop.item.hud_tint.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). Lists the three tints sold (see shop.palette.hud.1-3) in the same order",Phosphor. Amber. Ice.
+shop.item.bottle_pack.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Bottle Pack
+shop.item.bottle_pack.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)",Start the next floor already carrying three bottles.
+shop.item.focus_lens.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size). The torch's focused beam",Focus Lens
+shop.item.focus_lens.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)","The focused beam reaches further, next floor, for no extra battery cost."
+shop.item.fuse_map.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Fuse Map
+shop.item.fuse_map.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). Fuse boxes, wall buttons, vault doors and keys","Fuses, buttons, vaults and keys glow faintly. The compass points at them too."
+shop.palette.torch.0,"Torch colour name, the default look (not for sale; shown as ""in use""). ALL CAPS, one word",WARM
+shop.palette.torch.1,"Torch colour name on a shop swatch button (118 x 42 px, 17 pt, auto-size). ALL CAPS, one word",COLD
+shop.palette.torch.2,"Torch colour name on a shop swatch button (118 x 42 px, 17 pt, auto-size). ALL CAPS, one word",EMBER
+shop.palette.torch.3,"Torch colour name on a shop swatch button (118 x 42 px, 17 pt, auto-size). ALL CAPS, one word",VIOLET
+shop.palette.hud.0,"HUD tint name, the default look (not for sale; shown as ""in use""). ALL CAPS, one word",BONE
+shop.palette.hud.1,"HUD tint name on a shop swatch button (118 x 42 px, 17 pt, auto-size). ALL CAPS, one word",PHOSPHOR
+shop.palette.hud.2,"HUD tint name on a shop swatch button (118 x 42 px, 17 pt, auto-size). ALL CAPS, one word",AMBER
+shop.palette.hud.3,"HUD tint name on a shop swatch button (118 x 42 px, 17 pt, auto-size). ALL CAPS, one word",ICE
+shop.theme.1,"Name of floor 1's look, in the floor intro banner after ""FLOOR n —"" (ALL CAPS, one line, 1400 px)",THE WARD
+shop.theme.2,"Name of floor 2's look, in the floor intro banner after ""FLOOR n —"" (ALL CAPS, one line, 1400 px)",BOILER DECK
+shop.theme.3,"Name of floor 3's look (and floor 5, which reuses it), in the floor intro banner after ""FLOOR n —"" (ALL CAPS, one line, 1400 px)",THE CRYPT
+shop.theme.4,"Name of floor 4's look, in the floor intro banner after ""FLOOR n —"" (ALL CAPS, one line, 1400 px)",THE LAB
+shop.theme.5,"Name of the Hollow look (currently unused), floor intro banner (ALL CAPS)",THE HOLLOW
+shop.rule.dying_grid.name,"Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)",DYING GRID
+shop.rule.dying_grid.desc,"Floor rule description in the floor intro banner, after the dash (one short sentence)",A lamp loses power every minute.
+shop.rule.keen_ears.name,"Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)",KEEN EARS
+shop.rule.keen_ears.desc,"Floor rule description in the floor intro banner, after the dash. ""It"" = the hunter, never named",It hears farther here. Shards are worth more.
+shop.rule.heavy_fog.name,"Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)",HEAVY FOG
+shop.rule.heavy_fog.desc,"Floor rule description in the floor intro banner, after the dash. ""it"" = the hunter",You see less; so does it.
+shop.rule.weak_battery.name,"Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)",WEAK BATTERY
+shop.rule.weak_battery.desc,"Floor rule description in the floor intro banner, after the dash","You start half-charged, but it stores faster off."
+shop.rule.restless.name,"Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)",RESTLESS
+shop.rule.restless.desc,"Floor rule description in the floor intro banner, after the dash. ""It"" = the hunter",It moves and appears more often.
+shop.rule.glass_floors.name,"Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)",GLASS FLOORS
+shop.rule.glass_floors.desc,"Floor rule description in the floor intro banner, after the dash",More broken glass and puddles underfoot.
+shop.rule.rich_veins.name,"Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)",RICH VEINS
+shop.rule.rich_veins.desc,"Floor rule description in the floor intro banner, after the dash. ""it"" = the hunter","More shards, but it walks a little faster."
+shop.temperament.listens,"Floor 3 temperament line in the floor intro banner. ""It"" = the hunter, never named",It hunts by sound here.
+shop.temperament.sprints,"Floor 4 temperament line in the floor intro banner. ""It"" = the hunter, never named","It is fast here, but forgets quickly."
+shop.contract.title,"Contract offer card title (40 pt, one line). {name} = the contract name from shop.contract.*.name, which carries no final period; this sentence adds one. A translation may drop the period",{name}.
+shop.contract.never_hide.name,"Contract name (card title, HUD line, ledger line, subtitles). Short imperative, no final period",Never hide
+shop.contract.never_hide.text,"Contract description on the offer card (28 pt, up to 3 lines). Locker = hiding place",Finish the floor without entering a locker.
+shop.contract.not_a_scratch.name,"Contract name (card title, HUD line, ledger line, subtitles). Short, no final period",Not a scratch
+shop.contract.not_a_scratch.text,"Contract description on the offer card (28 pt, up to 3 lines). Stan = the robot stalker, keep his name",Never get caught - and never let Stan touch you.
+shop.contract.walk_in_dark.name,"Contract name (card title, HUD line, ledger line, subtitles). Short imperative, no final period",Walk in the dark
+shop.contract.walk_in_dark.text,"Contract description on the offer card (28 pt, up to 3 lines). Keep the number 60 as is",Spend 60 seconds walking with your torch off.
+shop.contract.take_what_glitters.name,"Contract name (card title, HUD line, ledger line, subtitles). Idiom, a play on ""all that glitters"", no final period",Take what glitters
+shop.contract.take_what_glitters.text,"Contract description on the offer card (28 pt, up to 3 lines). Shards = the currency (see shop.currency)",Collect at least 60% of the shards on the floor.
+shop.contract.read_it_all.name,"Contract name (card title, HUD line, ledger line, subtitles). Short imperative, no final period",Read it all
+shop.contract.read_it_all.text,"Contract description on the offer card (28 pt, up to 3 lines)",Read every note on the floor.
+shop.contract.dont_dawdle.name,"Contract name (card title, HUD line, ledger line, subtitles). Short imperative, no final period",Don't dawdle
+shop.contract.dont_dawdle.text,"Contract description on the offer card (28 pt, up to 3 lines). The clock = the floor's time limit",Clear the floor before the clock runs out.
+shop.contract.make_noise.name,"Contract name (card title, HUD line, ledger line, subtitles). Short imperative, no final period",Make some noise
+shop.contract.make_noise.text,"Contract description on the offer card (28 pt, up to 3 lines). ""the hunter"" = the creature that chases the player","Make the hunter come and investigate a thrown bottle or can, twice."
+shop.contract.light_feet.name,"Contract name (card title, HUD line, ledger line, subtitles). Short, no final period",Light feet
+shop.contract.light_feet.text,"Contract description on the offer card (28 pt, up to 3 lines)",Never sprint.
+shop.payout.title_floor,"Ledger heading after clearing a floor (84 pt green, one line, 1600 px). {floor} = floor number",FLOOR {floor} CLEARED
+shop.payout.stars,"Ledger line label (36 pt, left column 900 px). {stars} = stars collected, {value} = shards per star",STARS  {stars} x {value}
+shop.payout.time_left,"Ledger line label (36 pt, left column 900 px). {time} = m:ss left on the hatch timer",TIME LEFT  {time}
+shop.payout.floor_cleared,"Ledger line label for the floor-clear bonus (36 pt, left column 900 px). {floor} = floor number",FLOOR {floor} CLEARED
+shop.payout.shards_found,"Ledger line label, informational (36 pt, left column 900 px, auto-size). {n} = shards found on the floor, {value} = shards each; the amount column says ""already yours""",SHARDS FOUND  {n} x {value}  (already yours)
+shop.payout.consolation_title,"End screen heading for a consolation payout after dying (84 pt, one line)",CONSOLATION
+shop.payout.consolation,"Ledger line label for the consolation payout (36 pt, left column 900 px). {percent} = 35, {stars} = stars collected (plural: 1 star / 2 stars)",CONSOLATION  {percent}% of {stars} {stars:plural:star|stars}

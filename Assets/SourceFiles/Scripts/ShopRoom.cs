@@ -164,7 +164,7 @@ public class ShopRoom : MonoBehaviour
         _inBoard = false;
         if (_hum != null) _hum.Play();
         // F87: after a contract was paid or failed the salesman says so instead of the usual greeting.
-        if (_hud != null) _hud.ShowSubtitle(ContractState.TakeSalesmanLine() ?? GreetingFor(GameFlow.ShopClearedFloor), 3f);
+        if (_hud != null) _hud.ShowSubtitle(GreetingText(), 3f);
         if (shopkeeper != null) shopkeeper.Greet();
     }
 
@@ -484,14 +484,21 @@ public class ShopRoom : MonoBehaviour
         GameFlow.NextFloor();
     }
 
-    private static string GreetingFor(int floor)
+    /// <summary>S9: the contract result line (a Subtitles key) if one is waiting, else the floor's greeting.</summary>
+    private static string GreetingText()
+    {
+        string key = ContractState.TakeSalesmanLine();
+        return L10n.T(string.IsNullOrEmpty(key) ? GreetingKeyFor(GameFlow.ShopClearedFloor) : key);
+    }
+
+    private static string GreetingKeyFor(int floor)
     {
         switch (floor)
         {
-            case 1: return "Shards for the dark. What'll it be?";
-            case 2: return "Back again.";
-            case 3: return "It's getting louder up there.";
-            default: return "Last stop before the bottom.";
+            case 1: return "sub.shop.greeting.1";
+            case 2: return "sub.shop.greeting.2";
+            case 3: return "sub.shop.greeting.3";
+            default: return "sub.shop.greeting.4";
         }
     }
 

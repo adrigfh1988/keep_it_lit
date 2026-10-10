@@ -121,6 +121,9 @@ public static class L10n
         if (target != null && target != LocalizationSettings.SelectedLocale) LocalizationSettings.SelectedLocale = target;
     }
 
+    /// <summary>Drops the cached plain lookups (LocalizationImporter calls it after regenerating the tables).</summary>
+    public static void ClearCache() => Cache.Clear();
+
     public static string T(string key)
     {
         if (key != null && Cache.TryGetValue(key, out string cached)) return cached;

@@ -485,7 +485,8 @@ public static partial class AsylumHubBuilder
             label.alignment = TextAlignmentOptions.Center;
             label.color = new Color(0.85f, 0.8f, 0.7f);
             label.rectTransform.sizeDelta = new Vector2(pitch * 0.95f, 0.3f);
-            label.text = PatientFiles.Label(PatientFiles.FirstId + i).Replace(" · ", "\n");
+            // S9: builders always write English (the localized sign refreshes it at runtime)
+            label.text = (L10n.TIn("en", "lore.file." + (PatientFiles.FirstId + i) + ".label") ?? PatientFiles.Label(PatientFiles.FirstId + i)).Replace(" · ", "\n");
             board.slots[i] = rs;
         }
         return $"RecordsBoard on the OfficeA wall at {point}, facing {normal}, {width:F1} m wide";

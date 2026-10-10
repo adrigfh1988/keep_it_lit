@@ -16,14 +16,17 @@ public class LoreNote : MonoBehaviour, IInteractable
     /// <summary>The id this note was configured with (F93: ContractTracker ignores the patient files, ids 100 and up).</summary>
     public int NoteId => _noteId;
     private string _text;
+    // S9: when set, the text is looked up when the note is read, so it follows a language change; _text is the fallback.
+    private string _textKey;
     private LoreReadingUi _reader;
     private PlayerHud _hud;
 
     /// <summary>Called right after Instantiate by MazeGenerator.BuildLoreNotes.</summary>
-    public void Configure(int noteId, string text)
+    public void Configure(int noteId, string text, string textKey = null)
     {
         _noteId = noteId;
         _text = text;
+        _textKey = textKey;
     }
 
     /// <summary>Called later by MazeGenerator.SetUpAtmosphere, once the reader/HUD exist - same late-wiring pattern as WallButton.BindHud.</summary>
@@ -47,13 +50,13 @@ public class LoreNote : MonoBehaviour, IInteractable
             return;
         }
 
-        _reader.Show(_text, who);
+        _reader.Show(!string.IsNullOrEmpty(_textKey) && L10n.Has(_textKey) ? L10n.T(_textKey) : _text, who);
         GameAudio.PlayAt(GameAudio.Library.paper, transform.position, 0.6f); // F97 (recorded clip only)
         Read?.Invoke(_noteId);
         if (LoreArchive.MarkRead(_noteId))
         {
             PlayerWallet.AwardBonus(3);
-            _hud?.ShowSubtitle("+3 SHARDS", 2.5f);
+            _hud?.ShowSubtitle(L10n.T("sub.lore.bonus", ("amount", 3), ("currency", PlayerWallet.CurrencyName)), 2.5f);
         }
     }
 

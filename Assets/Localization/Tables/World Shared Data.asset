@@ -1,0 +1,172 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: World Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: World
+  m_TableCollectionNameGuidString: 4a4bec294d45f9340a3e380de17ee432
+  m_Entries:
+  - m_Id: 232689664
+    m_Key: world.hub.admissions
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763003
+  - m_Id: 316575744
+    m_Key: world.hub.slot.100
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763004
+  - m_Id: 316575745
+    m_Key: world.hub.slot.101
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763005
+  - m_Id: 316575746
+    m_Key: world.hub.slot.102
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763006
+  - m_Id: 316575747
+    m_Key: world.hub.slot.103
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763007
+  - m_Id: 316575748
+    m_Key: world.hub.slot.104
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763008
+  - m_Id: 316575749
+    m_Key: world.hub.wristband
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763009
+  - m_Id: 316575750
+    m_Key: world.hub.lower_level
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763010
+  - m_Id: 316575751
+    m_Key: world.hub.service_unit
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763011
+  - m_Id: 316575752
+    m_Key: world.intake.holding
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763012
+  - m_Id: 316575753
+    m_Key: world.intake.no_entry
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763013
+  - m_Id: 316575754
+    m_Key: world.intake.ward
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763014
+  - m_Id: 316575755
+    m_Key: world.intake.keep_quiet
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763015
+  - m_Id: 316575756
+    m_Key: world.intake.stay_in_bed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763016
+  - m_Id: 316575757
+    m_Key: world.shop.contracts
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763017
+  - m_Id: 316575758
+    m_Key: world.shop.shards_accepted
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763018
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4707331672703762924
+  references:
+    version: 2
+    RefIds:
+    - rid: 4707331672703762924
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1791632518250
+    - rid: 4707331672703763003
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: World sign above the asylum's reception desk (3D text on the wall, two lines, ALL CAPS, ~16 characters per line). Karlheinz = the asylum's name, keep it
+    - rid: 4707331672703763004
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: World sign on the records board slot for case file 1 (small label on a wall folder, two lines, ~16 characters per line, ALL CAPS). P3 = Patient 3; the name is not translated
+    - rid: 4707331672703763005
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: World sign on the records board slot for case file 2 (small label, two lines, ~16 characters per line, ALL CAPS). P11 = Patient 11
+    - rid: 4707331672703763006
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: World sign on the records board slot for case file 3 (small label, two lines, ~16 characters per line, ALL CAPS). P5 = Patient 5
+    - rid: 4707331672703763007
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: World sign on the records board slot for case file 4 (small label, one line, ~16 characters, ALL CAPS)
+    - rid: 4707331672703763008
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: World sign on the records board slot for case file 5 (small label, two lines, ~16 characters per line, ALL CAPS)
+    - rid: 4707331672703763009
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: World sign on the patient card beside Elias's wristband on the morgue table (two lines, ALL CAPS, ~14 characters per line). Names are not translated
+    - rid: 4707331672703763010
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: World sign stencilled on a door to the lower levels (two lines, ALL CAPS, ~14 characters per line). Subject A is a character name
+    - rid: 4707331672703763011
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: World sign stencilled on a service robot's bay (one line, ALL CAPS, ~14 characters). Service units are the old maintenance robots
+    - rid: 4707331672703763012
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: World sign above the door of the holding room in the Intake tutorial ward (one line, ALL CAPS, ~10 characters)
+    - rid: 4707331672703763013
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: World sign on a door in the Intake ward that cannot be opened (one line, ALL CAPS, ~10 characters)
+    - rid: 4707331672703763014
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: World sign in the Intake ward naming the ward (one line, ALL CAPS, ~20 characters). Keep the middle dot and the number
+    - rid: 4707331672703763015
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Warning stencil on the wall of the Intake corridor (two lines, ALL CAPS, ~20 characters per line). "IT" = the hunter, never named
+    - rid: 4707331672703763016
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: World sign at the foot of the Intake bed, visible only in the focused torch beam (one line, ALL CAPS, ~16 characters)
+    - rid: 4707331672703763017
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: World sign above the contract board in the shop (one line, ALL CAPS, ~10 characters)
+    - rid: 4707331672703763018
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: World sign on the shop counter (one line, ALL CAPS, ~18 characters). Shards = the currency (see shop.currency)

@@ -49,7 +49,7 @@ public class KeyPickup : MonoBehaviour, IInteractable
         _taken = true;
 
         _ring.Collect(this);
-        _hud?.ShowSubtitle($"KEY {_ring.Held} / {_ring.Total}", 2f);
+        _hud?.ShowSubtitle(L10n.T("sub.pickup.key", ("held", _ring.Held), ("total", _ring.Total)), 2f);
         _hunter?.HearNoise(transform.position, noiseRadius);
         if (!GameAudio.PlayAt(GameAudio.Library.keyJingle, transform.position, 0.6f) && _clink != null) GameAudio.ClipAtPoint(_clink, transform.position, 0.6f); // F97
 

@@ -40,6 +40,13 @@ public static class ProjectSetup
         },
         new Piece
         {
+            Name = "Localized world signs (S9: LocalizedText on the static signs of the hub, Intake and shop prefabs)",
+            FixMenu = "Localization > Localize World Signs (adds components to the prefab assets only)",
+            Problem = LocalizationSignsBuilder.Problem,
+            Build = () => LocalizationSignsBuilder.BuildSilently()
+        },
+        new Piece
+        {
             Name = "Alchemist House materials (URP)",
             FixMenu = "converted automatically by Build > Shop Room (regenerate) / Floor Themes",
             Problem = () => AlchemistMaterialUpgrade.NeedsConversion() ? "still on Built-in shaders (render magenta)" : null,

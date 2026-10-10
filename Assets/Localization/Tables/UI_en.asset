@@ -515,7 +515,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315088
-    m_Localized: 'You took: {name}  Floor {floor}.'
+    m_Localized: 'You took: {name}.  Floor {floor}.'
     m_Metadata:
       m_Items:
       - rid: 4707331669776663334

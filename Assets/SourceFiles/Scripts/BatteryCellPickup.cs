@@ -42,11 +42,11 @@ public class BatteryCellPickup : MonoBehaviour, IInteractable
         if (_grantsSecondWind && PlayerInventory.Count(ShopItem.SecondWind) == 0)
         {
             PlayerInventory.Grant(ShopItem.SecondWind);
-            _hud?.ShowSubtitle("+ SECOND WIND", 3f);
+            _hud?.ShowSubtitle(L10n.T("sub.pickup.second_wind"), 3f);
         }
         else
         {
-            _hud?.ShowSubtitle("BATTERY CELL", 2f);
+            _hud?.ShowSubtitle(L10n.T("sub.pickup.battery_cell"), 2f);
         }
 
         Destroy(gameObject);

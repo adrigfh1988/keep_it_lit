@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: b4c6f04b4f756474980167f6a0846058, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331672703763132
   m_TableData:
   - m_Id: 341741568
     m_Localized: It let go. It will not do that twice.
@@ -66,6 +67,155 @@ MonoBehaviour:
     m_Localized: THE LIFT IS UNLOCKED
     m_Metadata:
       m_Items: []
+  - m_Id: 7992965500928
+    m_Localized: BATTERY CELL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387008
+    m_Localized: + SECOND WIND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387009
+    m_Localized: KEY {held} / {total}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763132
+  - m_Id: 7993049387010
+    m_Localized: +{amount} {currency}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763132
+  - m_Id: 7993049387011
+    m_Localized: Something is drawn to the light.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387012
+    m_Localized: Somewhere, a shutter rolls up.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387013
+    m_Localized: 'CAM 3: MOVEMENT'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387014
+    m_Localized: IT SCREAMED.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387015
+    m_Localized: CONTRACT FAILED  -  {name}.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763132
+  - m_Id: 7993049387016
+    m_Localized: CONTRACT DONE  -  {name}.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763132
+  - m_Id: 7993049387017
+    m_Localized: Nothing glitters down here - the contract's off.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387018
+    m_Localized: No notes down here - the contract's off.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387019
+    m_Localized: A deal's a deal.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387020
+    m_Localized: Can't win them all.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387021
+    m_Localized: Shards for the dark. What'll it be?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387022
+    m_Localized: Back again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387023
+    m_Localized: It's getting louder up there.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387024
+    m_Localized: Last stop before the bottom.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387025
+    m_Localized: Something moved behind you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387026
+    m_Localized: It's getting closer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387027
+    m_Localized: It's right behind you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387028
+    m_Localized: The lights are dying.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387029
+    m_Localized: It knows.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387030
+    m_Localized: It was waiting.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387031
+    m_Localized: FLOOR {floor}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763132
+  - m_Id: 7993049387032
+    m_Localized: "FLOOR {floor} \u2014 {theme}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763132
+  - m_Id: 7993049387033
+    m_Localized: FIND {n} STARS
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763132
+  - m_Id: 7993049387034
+    m_Localized: RESTORE {n} FUSES
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763132
+  - m_Id: 7993049387035
+    m_Localized: FIND {n} KEYS FOR THE HATCH
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763132
+  - m_Id: 7993049387036
+    m_Localized: SECURITY LOCKDOWN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7993049387037
+    m_Localized: "{name} \u2014 {description}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763132
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331672703763132
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 7993049387009
+        - id: 7993049387010
+        - id: 7993049387015
+        - id: 7993049387016
+        - id: 7993049387031
+        - id: 7993049387032
+        - id: 7993049387033
+        - id: 7993049387034
+        - id: 7993049387035
+        - id: 7993049387037

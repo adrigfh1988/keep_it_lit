@@ -1,0 +1,35 @@
+key,context,en
+intake.goal.look,"Tutorial objective card, step 1 of 9 (42 pt bold, one line, auto-size down to 26 pt, ~1000 px). ALL CAPS, imperative",LOOK AROUND
+intake.goal.move,"Tutorial objective card, step 2 of 9: walk to the glowing marker on the floor (42 pt, one line, auto-size)",WALK TO THE MARKER
+intake.goal.torch,"Tutorial objective card, step 3 of 9: press the torch key (42 pt, one line, auto-size)",TURN ON YOUR TORCH
+intake.goal.focus,"Tutorial objective card, step 4 of 9: hold the right mouse button to focus the beam on a far sign (42 pt, one line, auto-size)",HOLD THE BEAM ON THE SIGN
+intake.goal.battery,"Tutorial objective card, step 5 of 9 (42 pt, one line, auto-size). A battery cell recharges the torch",TAKE THE BATTERY CELL
+intake.goal.read,"Tutorial objective card, step 6 of 9: read the note on the shelf (42 pt, one line, auto-size)",READ THE NOTE
+intake.goal.read_close,"Tutorial objective card, step 6 of 9, once the note is open (42 pt, one line, auto-size)",CLOSE THE NOTE
+intake.goal.throw_pick,"Tutorial objective card, step 7 of 9, before the bottle is in hand (42 pt, one line, auto-size)",PICK UP THE BOTTLE
+intake.goal.throw,"Tutorial objective card, step 7 of 9, bottle in hand: throw it at the bell on the far wall (42 pt, one line, auto-size)",THROW IT AT THE BELL
+intake.goal.hide_go,"Tutorial objective card, step 8 of 9, before entering the holding room (42 pt, one line, auto-size)",GO THROUGH THE SHUTTER
+intake.goal.hide,"Tutorial objective card, step 8 of 9: hide in the locker (42 pt, one line, auto-size)",HIDE IN THE LOCKER
+intake.goal.hide_still,"Tutorial objective card, step 8 of 9, while hidden and something passes (42 pt, one line, auto-size)",STAY STILL
+intake.goal.hide_leave,"Tutorial objective card, step 8 of 9, once the danger has passed (42 pt, one line, auto-size). IT = the creature, never named",IT IS GONE. LEAVE THE LOCKER
+intake.goal.star,"Tutorial objective card, step 9 of 9: pick up the star (42 pt, one line, auto-size)",TAKE THE STAR
+intake.goal.hatch,"Tutorial objective card, step 9 of 9, after the star: walk onto the hatch in the floor (42 pt, one line, auto-size)",STEP ONTO THE HATCH
+intake.key.mouse,"Key chip on the objective card: look around with the mouse (keyboard-and-mouse players). ALL CAPS, short, ~7 characters",MOUSE
+intake.key.rmb,"Key chip on the objective card: the right mouse button, hold to focus the torch beam. ALL CAPS, short, ~6 characters",RMB
+intake.key.right_thumb,"Key chip on the objective card for touch screens: look around with the right thumb. ALL CAPS, short, ~12 characters",RIGHT THUMB
+intake.key.left_thumb,"Key chip on the objective card for touch screens: move with the left thumb. ALL CAPS, short, ~12 characters",LEFT THUMB
+intake.key.torch,"Key chip on the objective card for touch screens: the on-screen torch button. Must match ui.touch.torch. ALL CAPS, short",TORCH
+intake.key.focus,"Key chip on the objective card for touch screens: the on-screen focus-beam button. Must match ui.touch.focus. ALL CAPS, short",FOCUS
+intake.key.throw,"Key chip on the objective card for touch screens: the on-screen throw button. ALL CAPS, short",THROW
+intake.sub.wake,Tutorial subtitle when the Intake begins for the first time (shown 4 s). The player wakes up in a hospital bed,You wake. The bed is cold. Nobody is here.
+intake.sub.welcome_back,Tutorial subtitle when the Intake begins again after the tutorial was completed once (shown 4 s),Welcome back. You know the way - or skip it from the pause menu.
+intake.sub.get_up,Tutorial subtitle as the player stands up from the bed (shown 2 s),Get up.
+intake.sub.focus_hint,Tutorial subtitle at the focus step (shown 5 s),The focused beam is narrower and reaches further. Hold it on the sign.
+intake.sub.battery_hint,Tutorial subtitle at the battery step (shown 4 s),Your torch is fading. A battery cell tops it up.
+intake.sub.recharge,Tutorial subtitle after taking the battery cell (shown 5 s),"Switched off, the torch slowly recharges - but never all the way."
+intake.sub.lamp_sparks,Tutorial subtitle when the room lamp dies (shown 3 s),The lamp sparks. The room goes dark.
+intake.sub.bell_rings,Tutorial subtitle when the thrown bottle hits the bell (shown 3 s),"The bell rings. Somewhere, a shutter rises."
+intake.sub.another_bottle,Tutorial subtitle when a missed bottle is replaced on the table (shown 2.5 s),Another bottle on the table.
+intake.sub.footsteps,"Tutorial subtitle when the silhouette starts walking past the hiding place (shown 3.5 s). Something = a creature, never named",Footsteps. Something heavy is being dragged.
+intake.sub.hatch_again,"Tutorial subtitle after taking the star, for a player who has done the tutorial before (shown 6 s)",Stars open the hatch. Down you go.
+intake.sub.hatch_first,"Tutorial subtitle after taking the star, the first time (shown 6 s). A spoken line in quotes: the voice of the asylum. ""Something"" = the hunter, never named","""Stars open the hatch. The hatch is the way down. Something down there is hunting."""

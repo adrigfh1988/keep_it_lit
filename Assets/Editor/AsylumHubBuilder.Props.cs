@@ -70,7 +70,7 @@ public static partial class AsylumHubBuilder
         List<string> problems = new List<string>();
         List<PropsPiece> missing = PropsMissing(hub);
         if (missing.Count > 0) problems.Add("missing: " + string.Join(", ", missing.Select(p => p.name)));
-        if (HubVignetteText.LongestLine() > 100) problems.Add("a vignette line is over 100 characters");
+        if (HubVignetteText.LongestLine("en") > 100) problems.Add("a vignette line is over 100 characters");
         if (!HubVignetteText.AllCaps()) problems.Add("a vignette line is not ALL CAPS");
         return problems.Count == 0 ? null : string.Join("; ", problems);
     }
@@ -270,8 +270,14 @@ public static partial class AsylumHubBuilder
         }
         sb.AppendLine($"  pursuer patrol / echo / chase points on the NavMesh ({checkedPoints} checked): {(off.Count == 0 ? "OK" : "OFF: " + string.Join(", ", off))}");
 
-        int line = HubVignetteText.LongestLine();
-        sb.AppendLine($"  vignette lines: longest {line} characters (limit 100), all caps: {(line <= 100 && HubVignetteText.AllCaps() ? "OK" : "BROKEN")}");
+        // S9 (plan D16): English blocks at 100 and must be ALL CAPS; ES / FR / DE are measured against 120 and only reported.
+        int line = HubVignetteText.LongestLine("en");
+        sb.AppendLine($"  vignette lines: longest EN {line} characters (limit 100), all caps (EN source): {(line <= 100 && HubVignetteText.AllCaps() ? "OK" : "BROKEN")}");
+        foreach (string code in new[] { "es", "fr", "de" })
+        {
+            int longest = HubVignetteText.LongestLine(code);
+            if (longest > 0) sb.AppendLine($"    vignette {code}: longest line {longest} characters (limit 120, report only){(longest > 120 ? " - OVER" : "")}");
+        }
 
         // a hung or standing F101 prop must not intrude on the walk lanes (the lane test is the same one placement used, margin 0.3 m)
         int intruders = 0;

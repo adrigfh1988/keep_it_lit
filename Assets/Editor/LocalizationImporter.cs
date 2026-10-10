@@ -214,6 +214,7 @@ public static class LocalizationImporter
     {
         EnsureSettings();
         int changes = Sync(true, out string detail);
+        if (changes > 0) L10n.ClearCache(); // editor lookups must not keep serving the text from before the import
         return changes == 0 ? "Tables already match the CSVs." + detail : $"{changes} change(s) applied." + detail;
     }
 

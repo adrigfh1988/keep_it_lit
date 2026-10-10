@@ -72,7 +72,7 @@ public class WallButton : MonoBehaviour, IInteractable
             Vector3 origin = transform.position + Vector3.up * 1.2f;
             bool blocked = Physics.Linecast(origin, _doorLookPoint, out RaycastHit hitInfo, ~0, QueryTriggerInteraction.Ignore)
                         && hitInfo.collider.GetComponentInParent<MazeDoor>() != _door;
-            if (blocked) _hud.ShowSubtitle("Somewhere, a shutter rolls up.", 3f);
+            if (blocked) _hud.ShowSubtitle(L10n.T("sub.button.shutter"), 3f);
         }
     }
 

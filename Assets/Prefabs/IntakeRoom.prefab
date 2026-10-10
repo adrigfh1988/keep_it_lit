@@ -5977,6 +5977,7 @@ GameObject:
   - component: {fileID: 2473299640214752424}
   - component: {fileID: 9097784717562374699}
   - component: {fileID: 2938872388525870624}
+  - component: {fileID: 2710010256090771767}
   m_Layer: 0
   m_Name: HoldingSign
   m_TagString: Untagged
@@ -6147,6 +6148,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 9097784717562374699}
   m_maskType: 0
+--- !u!114 &2710010256090771767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2272611665612657985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e789d0ccb4053e4e91f7be44e76cd08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  key: world.intake.holding
 --- !u!1 &2290357226051858328
 GameObject:
   m_ObjectHideFlags: 0
@@ -9020,6 +9034,7 @@ GameObject:
   - component: {fileID: 1677879141814891063}
   - component: {fileID: 5807538222577209090}
   - component: {fileID: 3967738011070236717}
+  - component: {fileID: 5577499680232943911}
   m_Layer: 0
   m_Name: NoEntrySign
   m_TagString: Untagged
@@ -9190,6 +9205,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5807538222577209090}
   m_maskType: 0
+--- !u!114 &5577499680232943911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2805505333054150648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e789d0ccb4053e4e91f7be44e76cd08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  key: world.intake.no_entry
 --- !u!1 &2838033644430309108
 GameObject:
   m_ObjectHideFlags: 0
@@ -16178,6 +16206,10 @@ MonoBehaviour:
   humVolume: 0.16
   silhouetteSpeed: 1
   holdDistance: 3.5
+  musicVolume: 0.15
+  urgentVolume: 0.45
+  urgentFadeSeconds: 0.6
+  reliefFadeSeconds: 3
 --- !u!114 &8869933125200289229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21526,6 +21558,7 @@ GameObject:
   - component: {fileID: 8301166514583352130}
   - component: {fileID: 4086035902231263589}
   - component: {fileID: 8500197907599845545}
+  - component: {fileID: 3956431721279183879}
   m_Layer: 0
   m_Name: WardSign
   m_TagString: Untagged
@@ -21696,6 +21729,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 4086035902231263589}
   m_maskType: 0
+--- !u!114 &3956431721279183879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6397766510414551475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e789d0ccb4053e4e91f7be44e76cd08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  key: world.intake.ward
 --- !u!1 &6398324321175043643
 GameObject:
   m_ObjectHideFlags: 0
@@ -24835,6 +24881,7 @@ GameObject:
   - component: {fileID: 219049552014325937}
   - component: {fileID: 8411214005904500072}
   - component: {fileID: 3864590472445705914}
+  - component: {fileID: 9079594021553553213}
   m_Layer: 0
   m_Name: FocusSign
   m_TagString: Untagged
@@ -25007,6 +25054,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 8411214005904500072}
   m_maskType: 0
+--- !u!114 &9079594021553553213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7693775185283047991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e789d0ccb4053e4e91f7be44e76cd08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  key: world.intake.keep_quiet
 --- !u!1 &7729204388108233656
 GameObject:
   m_ObjectHideFlags: 0
@@ -32738,6 +32798,7 @@ GameObject:
   - component: {fileID: 4939248759378819475}
   - component: {fileID: 5630767629656812046}
   - component: {fileID: 7133753448994791333}
+  - component: {fileID: 8524720591361277787}
   m_Layer: 0
   m_Name: StayInBedSign
   m_TagString: Untagged
@@ -32908,6 +32969,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5630767629656812046}
   m_maskType: 0
+--- !u!114 &8524720591361277787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8965638582912314397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e789d0ccb4053e4e91f7be44e76cd08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  key: world.intake.stay_in_bed
 --- !u!1 &8992043464978450213
 GameObject:
   m_ObjectHideFlags: 0

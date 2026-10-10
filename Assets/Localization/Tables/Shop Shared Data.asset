@@ -1,0 +1,730 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Shop Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Shop
+  m_TableCollectionNameGuidString: fefa1c381967b3c46b9600b8d091da42
+  m_Entries:
+  - m_Id: 295604224
+    m_Key: shop.currency
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762925
+  - m_Id: 375296000
+    m_Key: shop.item.spare_battery.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762926
+  - m_Id: 375296001
+    m_Key: shop.item.spare_battery.blurb
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762927
+  - m_Id: 375296002
+    m_Key: shop.item.star_compass.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762928
+  - m_Id: 375296003
+    m_Key: shop.item.star_compass.blurb
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762929
+  - m_Id: 375296004
+    m_Key: shop.item.second_wind.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762930
+  - m_Id: 375296005
+    m_Key: shop.item.second_wind.blurb
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762931
+  - m_Id: 375296006
+    m_Key: shop.item.long_fuse.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762932
+  - m_Id: 375296007
+    m_Key: shop.item.long_fuse.blurb
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762933
+  - m_Id: 375296008
+    m_Key: shop.item.quiet_shoes.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762934
+  - m_Id: 375296009
+    m_Key: shop.item.quiet_shoes.blurb
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762935
+  - m_Id: 375296010
+    m_Key: shop.item.extra_lamps.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762936
+  - m_Id: 375296011
+    m_Key: shop.item.extra_lamps.blurb
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762937
+  - m_Id: 375296012
+    m_Key: shop.item.stamina_tonic.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762938
+  - m_Id: 375296013
+    m_Key: shop.item.stamina_tonic.blurb
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762939
+  - m_Id: 375296014
+    m_Key: shop.item.torch_colour.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762940
+  - m_Id: 375296015
+    m_Key: shop.item.torch_colour.blurb
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762941
+  - m_Id: 375296016
+    m_Key: shop.item.hud_tint.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762942
+  - m_Id: 375296017
+    m_Key: shop.item.hud_tint.blurb
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762943
+  - m_Id: 375296018
+    m_Key: shop.item.bottle_pack.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762944
+  - m_Id: 375296019
+    m_Key: shop.item.bottle_pack.blurb
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762945
+  - m_Id: 375296020
+    m_Key: shop.item.focus_lens.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762946
+  - m_Id: 375296021
+    m_Key: shop.item.focus_lens.blurb
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762947
+  - m_Id: 375296022
+    m_Key: shop.item.fuse_map.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762948
+  - m_Id: 375296023
+    m_Key: shop.item.fuse_map.blurb
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762949
+  - m_Id: 375296024
+    m_Key: shop.palette.torch.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762950
+  - m_Id: 375296025
+    m_Key: shop.palette.torch.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762951
+  - m_Id: 375296026
+    m_Key: shop.palette.torch.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762952
+  - m_Id: 375296027
+    m_Key: shop.palette.torch.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762953
+  - m_Id: 375296028
+    m_Key: shop.palette.hud.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762954
+  - m_Id: 375296029
+    m_Key: shop.palette.hud.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762955
+  - m_Id: 375296030
+    m_Key: shop.palette.hud.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762956
+  - m_Id: 375296031
+    m_Key: shop.palette.hud.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762957
+  - m_Id: 375296032
+    m_Key: shop.theme.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762958
+  - m_Id: 375296033
+    m_Key: shop.theme.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762959
+  - m_Id: 375296034
+    m_Key: shop.theme.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762960
+  - m_Id: 375296035
+    m_Key: shop.theme.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762961
+  - m_Id: 375296036
+    m_Key: shop.theme.5
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762962
+  - m_Id: 375296037
+    m_Key: shop.rule.dying_grid.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762963
+  - m_Id: 375296038
+    m_Key: shop.rule.dying_grid.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762964
+  - m_Id: 375296039
+    m_Key: shop.rule.keen_ears.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762965
+  - m_Id: 375296040
+    m_Key: shop.rule.keen_ears.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762966
+  - m_Id: 375296041
+    m_Key: shop.rule.heavy_fog.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762967
+  - m_Id: 375296042
+    m_Key: shop.rule.heavy_fog.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762968
+  - m_Id: 375296043
+    m_Key: shop.rule.weak_battery.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762969
+  - m_Id: 375296044
+    m_Key: shop.rule.weak_battery.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762970
+  - m_Id: 375296045
+    m_Key: shop.rule.restless.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762971
+  - m_Id: 375296046
+    m_Key: shop.rule.restless.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762972
+  - m_Id: 375296047
+    m_Key: shop.rule.glass_floors.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762973
+  - m_Id: 375296048
+    m_Key: shop.rule.glass_floors.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762974
+  - m_Id: 375296049
+    m_Key: shop.rule.rich_veins.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762975
+  - m_Id: 375296050
+    m_Key: shop.rule.rich_veins.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762976
+  - m_Id: 375296051
+    m_Key: shop.temperament.listens
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762977
+  - m_Id: 375296052
+    m_Key: shop.temperament.sprints
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762978
+  - m_Id: 375296053
+    m_Key: shop.contract.title
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762979
+  - m_Id: 375296054
+    m_Key: shop.contract.never_hide.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762980
+  - m_Id: 375296055
+    m_Key: shop.contract.never_hide.text
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762981
+  - m_Id: 375296056
+    m_Key: shop.contract.not_a_scratch.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762982
+  - m_Id: 375296057
+    m_Key: shop.contract.not_a_scratch.text
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762983
+  - m_Id: 375296058
+    m_Key: shop.contract.walk_in_dark.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762984
+  - m_Id: 375296059
+    m_Key: shop.contract.walk_in_dark.text
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762985
+  - m_Id: 375296060
+    m_Key: shop.contract.take_what_glitters.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762986
+  - m_Id: 375296061
+    m_Key: shop.contract.take_what_glitters.text
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762987
+  - m_Id: 375296062
+    m_Key: shop.contract.read_it_all.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762988
+  - m_Id: 375296063
+    m_Key: shop.contract.read_it_all.text
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762989
+  - m_Id: 375296064
+    m_Key: shop.contract.dont_dawdle.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762990
+  - m_Id: 375296065
+    m_Key: shop.contract.dont_dawdle.text
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762991
+  - m_Id: 375296066
+    m_Key: shop.contract.make_noise.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762992
+  - m_Id: 375296067
+    m_Key: shop.contract.make_noise.text
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762993
+  - m_Id: 375296068
+    m_Key: shop.contract.light_feet.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762994
+  - m_Id: 375296069
+    m_Key: shop.contract.light_feet.text
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762995
+  - m_Id: 375296070
+    m_Key: shop.payout.title_floor
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762996
+  - m_Id: 375296071
+    m_Key: shop.payout.stars
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762997
+  - m_Id: 375296072
+    m_Key: shop.payout.time_left
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762998
+  - m_Id: 375296073
+    m_Key: shop.payout.floor_cleared
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762999
+  - m_Id: 375296074
+    m_Key: shop.payout.shards_found
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763000
+  - m_Id: 375296075
+    m_Key: shop.payout.consolation_title
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763001
+  - m_Id: 375296076
+    m_Key: shop.payout.consolation
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763002
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4707331672703762923
+  references:
+    version: 2
+    RefIds:
+    - rid: 4707331672703762923
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1791632518139
+    - rid: 4707331672703762925
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name of the shards currency; passed as {currency} into the HUD shard counter, shop wallet, ledger and end screens. Plural noun in ALL CAPS
+    - rid: 4707331672703762926
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card item name (26 pt bold, one line, 340 px, auto-size)
+    - rid: 4707331672703762927
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). {key} = the physical key that uses the item (1)
+    - rid: 4707331672703762928
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card item name (26 pt bold, one line, 340 px, auto-size)
+    - rid: 4707331672703762929
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). {key} = the physical key that uses the item (2)
+    - rid: 4707331672703762930
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card item name (26 pt bold, one line, 340 px, auto-size)
+    - rid: 4707331672703762931
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). "It" = the hunter, never named
+    - rid: 4707331672703762932
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card item name (26 pt bold, one line, 340 px, auto-size)
+    - rid: 4707331672703762933
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). The hatch timer is the escape countdown
+    - rid: 4707331672703762934
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card item name (26 pt bold, one line, 340 px, auto-size)
+    - rid: 4707331672703762935
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)
+    - rid: 4707331672703762936
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card item name (26 pt bold, one line, 340 px, auto-size)
+    - rid: 4707331672703762937
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)
+    - rid: 4707331672703762938
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card item name (26 pt bold, one line, 340 px, auto-size)
+    - rid: 4707331672703762939
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)
+    - rid: 4707331672703762940
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card item name (26 pt bold, one line, 340 px, auto-size). The colour of the torch beam
+    - rid: 4707331672703762941
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). Lists the three colours sold (see shop.palette.torch.1-3) in the same order
+    - rid: 4707331672703762942
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card item name (26 pt bold, one line, 340 px, auto-size). The colour of the HUD text
+    - rid: 4707331672703762943
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). Lists the three tints sold (see shop.palette.hud.1-3) in the same order
+    - rid: 4707331672703762944
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card item name (26 pt bold, one line, 340 px, auto-size)
+    - rid: 4707331672703762945
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)
+    - rid: 4707331672703762946
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card item name (26 pt bold, one line, 340 px, auto-size). The torch's focused beam
+    - rid: 4707331672703762947
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)
+    - rid: 4707331672703762948
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card item name (26 pt bold, one line, 340 px, auto-size)
+    - rid: 4707331672703762949
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). Fuse boxes, wall buttons, vault doors and keys
+    - rid: 4707331672703762950
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Torch colour name, the default look (not for sale; shown as "in use"). ALL CAPS, one word
+    - rid: 4707331672703762951
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Torch colour name on a shop swatch button (118 x 42 px, 17 pt, auto-size). ALL CAPS, one word
+    - rid: 4707331672703762952
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Torch colour name on a shop swatch button (118 x 42 px, 17 pt, auto-size). ALL CAPS, one word
+    - rid: 4707331672703762953
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Torch colour name on a shop swatch button (118 x 42 px, 17 pt, auto-size). ALL CAPS, one word
+    - rid: 4707331672703762954
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD tint name, the default look (not for sale; shown as "in use"). ALL CAPS, one word
+    - rid: 4707331672703762955
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD tint name on a shop swatch button (118 x 42 px, 17 pt, auto-size). ALL CAPS, one word
+    - rid: 4707331672703762956
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD tint name on a shop swatch button (118 x 42 px, 17 pt, auto-size). ALL CAPS, one word
+    - rid: 4707331672703762957
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD tint name on a shop swatch button (118 x 42 px, 17 pt, auto-size). ALL CAPS, one word
+    - rid: 4707331672703762958
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: "Name of floor 1's look, in the floor intro banner after \"FLOOR n \u2014\" (ALL CAPS, one line, 1400 px)"
+    - rid: 4707331672703762959
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: "Name of floor 2's look, in the floor intro banner after \"FLOOR n \u2014\" (ALL CAPS, one line, 1400 px)"
+    - rid: 4707331672703762960
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: "Name of floor 3's look (and floor 5, which reuses it), in the floor intro banner after \"FLOOR n \u2014\" (ALL CAPS, one line, 1400 px)"
+    - rid: 4707331672703762961
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: "Name of floor 4's look, in the floor intro banner after \"FLOOR n \u2014\" (ALL CAPS, one line, 1400 px)"
+    - rid: 4707331672703762962
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name of the Hollow look (currently unused), floor intro banner (ALL CAPS)
+    - rid: 4707331672703762963
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)
+    - rid: 4707331672703762964
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor rule description in the floor intro banner, after the dash (one short sentence)
+    - rid: 4707331672703762965
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)
+    - rid: 4707331672703762966
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor rule description in the floor intro banner, after the dash. "It" = the hunter, never named
+    - rid: 4707331672703762967
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)
+    - rid: 4707331672703762968
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor rule description in the floor intro banner, after the dash. "it" = the hunter
+    - rid: 4707331672703762969
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)
+    - rid: 4707331672703762970
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor rule description in the floor intro banner, after the dash
+    - rid: 4707331672703762971
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)
+    - rid: 4707331672703762972
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor rule description in the floor intro banner, after the dash. "It" = the hunter
+    - rid: 4707331672703762973
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)
+    - rid: 4707331672703762974
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor rule description in the floor intro banner, after the dash
+    - rid: 4707331672703762975
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor rule name in the floor intro banner, before the dash (ALL CAPS, short)
+    - rid: 4707331672703762976
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor rule description in the floor intro banner, after the dash. "it" = the hunter
+    - rid: 4707331672703762977
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor 3 temperament line in the floor intro banner. "It" = the hunter, never named
+    - rid: 4707331672703762978
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor 4 temperament line in the floor intro banner. "It" = the hunter, never named
+    - rid: 4707331672703762979
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract offer card title (40 pt, one line). {name} = the contract name from shop.contract.*.name, which carries no final period; this sentence adds one. A translation may drop the period
+    - rid: 4707331672703762980
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract name (card title, HUD line, ledger line, subtitles). Short imperative, no final period
+    - rid: 4707331672703762981
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract description on the offer card (28 pt, up to 3 lines). Locker = hiding place
+    - rid: 4707331672703762982
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract name (card title, HUD line, ledger line, subtitles). Short, no final period
+    - rid: 4707331672703762983
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract description on the offer card (28 pt, up to 3 lines). Stan = the robot stalker, keep his name
+    - rid: 4707331672703762984
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract name (card title, HUD line, ledger line, subtitles). Short imperative, no final period
+    - rid: 4707331672703762985
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract description on the offer card (28 pt, up to 3 lines). Keep the number 60 as is
+    - rid: 4707331672703762986
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract name (card title, HUD line, ledger line, subtitles). Idiom, a play on "all that glitters", no final period
+    - rid: 4707331672703762987
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract description on the offer card (28 pt, up to 3 lines). Shards = the currency (see shop.currency)
+    - rid: 4707331672703762988
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract name (card title, HUD line, ledger line, subtitles). Short imperative, no final period
+    - rid: 4707331672703762989
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract description on the offer card (28 pt, up to 3 lines)
+    - rid: 4707331672703762990
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract name (card title, HUD line, ledger line, subtitles). Short imperative, no final period
+    - rid: 4707331672703762991
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract description on the offer card (28 pt, up to 3 lines). The clock = the floor's time limit
+    - rid: 4707331672703762992
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract name (card title, HUD line, ledger line, subtitles). Short imperative, no final period
+    - rid: 4707331672703762993
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract description on the offer card (28 pt, up to 3 lines). "the hunter" = the creature that chases the player
+    - rid: 4707331672703762994
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract name (card title, HUD line, ledger line, subtitles). Short, no final period
+    - rid: 4707331672703762995
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract description on the offer card (28 pt, up to 3 lines)
+    - rid: 4707331672703762996
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Ledger heading after clearing a floor (84 pt green, one line, 1600 px). {floor} = floor number
+    - rid: 4707331672703762997
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Ledger line label (36 pt, left column 900 px). {stars} = stars collected, {value} = shards per star
+    - rid: 4707331672703762998
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Ledger line label (36 pt, left column 900 px). {time} = m:ss left on the hatch timer
+    - rid: 4707331672703762999
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Ledger line label for the floor-clear bonus (36 pt, left column 900 px). {floor} = floor number
+    - rid: 4707331672703763000
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Ledger line label, informational (36 pt, left column 900 px, auto-size). {n} = shards found on the floor, {value} = shards each; the amount column says "already yours"
+    - rid: 4707331672703763001
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen heading for a consolation payout after dying (84 pt, one line)
+    - rid: 4707331672703763002
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Ledger line label for the consolation payout (36 pt, left column 900 px). {percent} = 35, {stars} = stars collected (plural: 1 star / 2 stars)'

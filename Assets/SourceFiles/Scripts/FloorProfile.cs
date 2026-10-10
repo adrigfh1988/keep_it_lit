@@ -239,7 +239,10 @@ public class FloorProfile
 
     // ---- hunter temperament (F74, B3.2)
     /// <summary>One line for the floor intro banner, e.g. "It hunts by sound here." Empty on a floor with no temperament twist.</summary>
-    public string TemperamentText = "";
+    public string TemperamentKey = "";
+
+    /// <summary>S9: the translated line (empty when the floor has no temperament twist). The key is a Shop-table key.</summary>
+    public string TemperamentText => string.IsNullOrEmpty(TemperamentKey) ? "" : L10n.T(TemperamentKey);
 
     // ---- the Stalker (F75, decision D7)
     /// <summary>True on floors 4 and 5 - MazeGenerator.BuildStalker gates on this.</summary>
@@ -357,17 +360,17 @@ public class FloorProfile
         {
             p.ViewDistance *= 0.6f;
             p.HearingScale *= 1.5f;
-            p.TemperamentText = "It hunts by sound here.";
+            p.TemperamentKey = "shop.temperament.listens";
         }
         else if (floor == 4)
         {
             p.RunSpeed *= 1.15f;
             p.LoseSightTime *= 0.6f;
-            p.TemperamentText = "It is fast here, but forgets quickly.";
+            p.TemperamentKey = "shop.temperament.sprints";
         }
         else
         {
-            p.TemperamentText = "";
+            p.TemperamentKey = "";
         }
 
         // F75, decision D7: the Stalker appears on the last two floors only - by then the hunter alone

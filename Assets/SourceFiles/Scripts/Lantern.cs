@@ -148,7 +148,7 @@ public class Lantern : MonoBehaviour, IInteractable
 
         _lured = true;
         _hunter.HearNoise(transform.position, LureNoiseRadius);
-        if (distance > LureSubtitleDistance) _hud?.ShowSubtitle("Something is drawn to the light.", 3f);
+        if (distance > LureSubtitleDistance) _hud?.ShowSubtitle(L10n.T("sub.lantern.lure"), 3f);
     }
 
     private void OnDestroy()

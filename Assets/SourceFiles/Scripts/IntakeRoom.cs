@@ -127,10 +127,8 @@ public class IntakeRoom : MonoBehaviour
     private float _pauseLeft = -1f;
     private float _stepDistance;
 
-    private static readonly string[] StepNames =
-    {
-        "LOOK AROUND", "MOVE", "TORCH", "FOCUS", "BATTERY", "READ", "THROW", "HIDE", "STARS AND THE HATCH"
-    };
+    /// <summary>The nine tutorial steps (look, move, torch, focus, battery, read, throw, hide, star + hatch); the card counter reads n / 9.</summary>
+    private const int StepCount = 9;
 
     /// <summary>The torch only works once the tutorial has handed it over (step 3). PauseMenu.Resume reads it.</summary>
     public bool TorchAllowed { get; private set; }
@@ -182,7 +180,7 @@ public class IntakeRoom : MonoBehaviour
         _hum.pitch = 0.8f;
         _hum.clip = _humClip;
 
-        if (note != null) note.Configure(-1, NoteText);
+        if (note != null) note.Configure(-1, L10n.T("lore.note.intake"), "lore.note.intake"); // S9: the text is looked up when read (Lore table)
         if (silhouette != null) silhouette.gameObject.SetActive(false);
         if (star != null) star.gameObject.SetActive(true);
     }
@@ -194,12 +192,6 @@ public class IntakeRoom : MonoBehaviour
         if (_dragClip != null) Destroy(_dragClip);
     }
 
-    private const string NoteText =
-        "TO WHOEVER WAKES NEXT\n\n" +
-        "They keep the lights low down here, and something walks the halls between the beds. " +
-        "Five stars lie in the dark. Gather them and the hatch will open. " +
-        "It always opens. It never stays open long.\n\n" +
-        "- a night nurse, Ward 1";
 
     // ---------------------------------------------------------------- entry / exit
 
@@ -332,14 +324,14 @@ public class IntakeRoom : MonoBehaviour
     {
         bool again = GameFlow.TutorialDone;
         yield return Fade(1f, 0f, 1.6f);
-        if (_hud != null) _hud.ShowSubtitle(again ? "Welcome back. You know the way - or skip it from the pause menu." : "You wake. The bed is cold. Nobody is here.", 4f);
+        if (_hud != null) _hud.ShowSubtitle(L10n.T(again ? "intake.sub.welcome_back" : "intake.sub.wake"), 4f);
 
         Transform moveMarker = transform.Find("MoveMarker");
 
         // 1. Wake up: lying down, looking around, then up.
         Vector3 lastForward = _camera != null ? _camera.transform.forward : Vector3.forward;
         float turned = 0f;
-        yield return Step(0, () => "LOOK AROUND", () => K(TouchInput.Key("MOUSE", "RIGHT THUMB")), () =>
+        yield return Step(0, () => L10n.T("intake.goal.look"), () => K(TouchInput.Key(L10n.T("intake.key.mouse"), L10n.T("intake.key.right_thumb"))), () =>
         {
             if (_camera == null) return true;
             Vector3 f = _camera.transform.forward;
@@ -350,19 +342,19 @@ public class IntakeRoom : MonoBehaviour
         yield return StandUp();
 
         // 2. Move.
-        yield return Step(1, () => "WALK TO THE MARKER", () => K(TouchInput.Key("WASD", "LEFT THUMB")), () => InZone(moveZone),
+        yield return Step(1, () => L10n.T("intake.goal.move"), () => K(TouchInput.Key(MoveKeysLabel(), L10n.T("intake.key.left_thumb"))), () => InZone(moveZone),
             marker: () => Mk(moveMarker, 0.9f));
 
         // 3. Torch: the lamp dies, the torch is handed over.
         TorchAllowed = true;
         if (_flashlight != null) _flashlight.InputEnabled = true;
         StartCoroutine(SparkOutLamp());
-        yield return Step(2, () => "TURN ON YOUR TORCH", () => K(TouchInput.Key("F", "TORCH")), () => _flashlight == null || _flashlight.IsOn);
+        yield return Step(2, () => L10n.T("intake.goal.torch"), () => K(TouchInput.Key("F", L10n.T("intake.key.torch"))), () => _flashlight == null || _flashlight.IsOn);
 
         // 4. Focus: the far sign is only legible in the focused beam.
         float seen = 0f;
         if (focusSign != null) SetSignAlpha(0.07f);
-        yield return Step(3, () => "HOLD THE BEAM ON THE SIGN", () => K(TouchInput.Key("RMB", "FOCUS")), () =>
+        yield return Step(3, () => L10n.T("intake.goal.focus"), () => K(TouchInput.Key(L10n.T("intake.key.rmb"), L10n.T("intake.key.focus"))), () =>
         {
             if (focusSign == null || _flashlight == null || _camera == null) return true;
             Vector3 to = focusSign.transform.position - _camera.transform.position;
@@ -372,19 +364,19 @@ public class IntakeRoom : MonoBehaviour
             SetSignAlpha(Mathf.Lerp(0.07f, 1f, Mathf.Clamp01(seen / 1.2f)));
             return seen >= 1.2f;
         }, marker: () => Mk(focusSign != null ? focusSign.transform : null),
-        onStart: () => { if (_hud != null) _hud.ShowSubtitle("The focused beam is narrower and reaches further. Hold it on the sign.", 5f); });
+        onStart: () => { if (_hud != null) _hud.ShowSubtitle(L10n.T("intake.sub.focus_hint"), 5f); });
         SetSignAlpha(1f);
 
         // 5. Battery.
         if (_flashlight != null) _flashlight.Drain(Mathf.Max(0f, _flashlight.Charge - 0.3f));
-        yield return Step(4, () => "TAKE THE BATTERY CELL", () => K(TouchInput.Key("E", "USE")), () => battery == null,
+        yield return Step(4, () => L10n.T("intake.goal.battery"), () => K(UseKey()), () => battery == null,
             marker: () => Mk(battery != null ? battery.transform : null, 0.35f, true),
-            onStart: () => { if (_hud != null) _hud.ShowSubtitle("Your torch is fading. A battery cell tops it up.", 4f); });
-        if (_hud != null) _hud.ShowSubtitle("Switched off, the torch slowly recharges - but never all the way.", 5f);
+            onStart: () => { if (_hud != null) _hud.ShowSubtitle(L10n.T("intake.sub.battery_hint"), 4f); });
+        if (_hud != null) _hud.ShowSubtitle(L10n.T("intake.sub.recharge"), 5f);
 
         // 6. Read.
         bool noteOpened = false;
-        yield return Step(5, () => _reader != null && _reader.IsOpen ? "CLOSE THE NOTE" : "READ THE NOTE", () => K(TouchInput.Key("E", "USE")), () =>
+        yield return Step(5, () => L10n.T(_reader != null && _reader.IsOpen ? "intake.goal.read_close" : "intake.goal.read"), () => K(UseKey()), () =>
         {
             if (_reader != null && _reader.IsOpen) noteOpened = true;
             return noteOpened && (_reader == null || !_reader.IsOpen);
@@ -392,8 +384,8 @@ public class IntakeRoom : MonoBehaviour
 
         // 7. Throw.
         float missingFor = 0f;
-        yield return Step(6, () => _throw != null && _throw.Carried > 0 ? "THROW IT AT THE BELL" : "PICK UP THE BOTTLE",
-            () => _throw != null && _throw.Carried > 0 ? K(TouchInput.Key("G", "THROW")) : K(TouchInput.Key("E", "USE")), () =>
+        yield return Step(6, () => L10n.T(_throw != null && _throw.Carried > 0 ? "intake.goal.throw" : "intake.goal.throw_pick"),
+            () => _throw != null && _throw.Carried > 0 ? K(TouchInput.Key("G", L10n.T("intake.key.throw"))) : K(UseKey()), () =>
         {
             if (bell == null) return true;
             // Missed, or the glass broke on the wall: put another bottle on the table.
@@ -421,7 +413,7 @@ public class IntakeRoom : MonoBehaviour
         // 9. Stars and the hatch.
         bool starTaken = false;
         SetHatchLook(true);
-        yield return Step(8, () => starTaken ? "STEP ONTO THE HATCH" : "TAKE THE STAR", () => K(), () =>
+        yield return Step(8, () => L10n.T(starTaken ? "intake.goal.hatch" : "intake.goal.star"), () => K(), () =>
         {
             if (!starTaken)
             {
@@ -434,9 +426,7 @@ public class IntakeRoom : MonoBehaviour
                     if (!GameAudio.PlayAt(GameAudio.Library.hatchOpen, hatchZone.transform.position, 0.8f)) GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.3f, 70f, 0.6f), hatchZone.transform.position, 0.8f); // F97
                     if (_hud != null)
                     {
-                        _hud.ShowSubtitle(again
-                            ? "Stars open the hatch. Down you go."
-                            : "\"Stars open the hatch. The hatch is the way down. Something down there is hunting.\"", 6f);
+                        _hud.ShowSubtitle(L10n.T(again ? "intake.sub.hatch_again" : "intake.sub.hatch_first"), 6f);
                     }
                 }
                 return false;
@@ -456,6 +446,59 @@ public class IntakeRoom : MonoBehaviour
     // ---------------------------------------------------------------- goals: card + arrow
 
     private static string[] K(params string[] keys) => keys;
+
+    // S9: the current step's live goal / chips, so a language change can refresh the card without animating it.
+    private Func<string> _stepGoal;
+    private Func<string[]> _stepKeys;
+
+    private void OnEnable() => L10n.Changed += OnLanguageChanged;
+    private void OnDisable() => L10n.Changed -= OnLanguageChanged;
+
+    private void OnLanguageChanged()
+    {
+        // Live() rewrites only what changed (the goal text, rebuilt chips) and leaves a tick or a fade alone; the counter is language-free.
+        if (_card != null && _stepGoal != null && _stepKeys != null) _card.Live(_stepGoal(), _stepKeys());
+    }
+
+    /// <summary>The interact chip: the E key, or the on-screen USE button on touch.</summary>
+    private static string UseKey() => TouchInput.Key("E", L10n.T("ui.key.use"));
+
+    private string _moveKeys;
+
+    /// <summary>
+    /// D15: the movement chip shows the move binding's own display string, so an AZERTY keyboard reads ZQSD. Up, left, down, right of the
+    /// Move action's keyboard composite, each through the layout-aware display name; WASD if anything is missing.
+    /// </summary>
+    private string MoveKeysLabel()
+    {
+        if (_moveKeys != null) return _moveKeys;
+        string label = "WASD";
+        try
+        {
+            var input = _player != null ? _player.GetComponentInChildren<UnityEngine.InputSystem.PlayerInput>() : null;
+            UnityEngine.InputSystem.InputAction move = input != null && input.actions != null ? input.actions.FindAction("Move") : null;
+            if (move != null)
+            {
+                string[] parts = new string[4];
+                for (int i = 0; i < move.bindings.Count; i++)
+                {
+                    var b = move.bindings[i];
+                    if (!b.isPartOfComposite || b.path == null || !b.path.StartsWith("<Keyboard>")) continue;
+                    int slot = b.name == "up" ? 0 : b.name == "left" ? 1 : b.name == "down" ? 2 : b.name == "right" ? 3 : -1;
+                    if (slot < 0 || parts[slot] != null) continue;
+                    parts[slot] = UnityEngine.InputSystem.InputActionRebindingExtensions.GetBindingDisplayString(move, i);
+                }
+                if (parts[0] != null && parts[1] != null && parts[2] != null && parts[3] != null)
+                {
+                    string joined = string.Concat(parts).ToUpperInvariant();
+                    if (joined.Length == 4) label = joined;
+                }
+            }
+        }
+        catch (Exception) { /* keep WASD */ }
+        _moveKeys = label;
+        return label;
+    }
 
     private struct Marker
     {
@@ -488,7 +531,9 @@ public class IntakeRoom : MonoBehaviour
     private IEnumerator Step(int index, Func<string> goal, Func<string[]> keys, Func<bool> done, Func<Marker> marker = null, Action onStart = null)
     {
         onStart?.Invoke();
-        if (_card != null) _card.Set($"{index + 1} / {StepNames.Length}", goal(), keys());
+        _stepGoal = goal;
+        _stepKeys = keys;
+        if (_card != null) _card.Set($"{index + 1} / {StepCount}", goal(), keys());
         if (_card != null) yield return _card.Fade(0f, 1f, 0.3f);
 
         while (true)
@@ -548,7 +593,7 @@ public class IntakeRoom : MonoBehaviour
 
     private IEnumerator StandUp()
     {
-        if (_hud != null) _hud.ShowSubtitle("Get up.", 2f);
+        if (_hud != null) _hud.ShowSubtitle(L10n.T("intake.sub.get_up"), 2f);
         Vector3 from = _player.position;
         Vector3 to = standPoint.position;
         float startHeight = _camera != null ? _camera.transform.localPosition.y : 0f;
@@ -605,7 +650,7 @@ public class IntakeRoom : MonoBehaviour
             _buzz = null;
             if (mainLamp != null) mainLamp.intensity = _mainBase;
         }
-        if (_hud != null) _hud.ShowSubtitle("The lamp sparks. The room goes dark.", 3f);
+        if (_hud != null) _hud.ShowSubtitle(L10n.T("intake.sub.lamp_sparks"), 3f);
         Vector3 sparkAt = mainLamp != null ? mainLamp.transform.position : transform.position;
         if (!GameAudio.PlayAt(GameAudio.Library.bulbPop, sparkAt, 0.9f)) GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.18f, 1600f, 0.5f), sparkAt, 0.7f); // F97
         float start = mainLamp != null ? (_mainBase > 0f ? _mainBase : mainLamp.intensity) : 0f;
@@ -627,7 +672,7 @@ public class IntakeRoom : MonoBehaviour
     private IEnumerator OpenShutter()
     {
         if (!GameAudio.PlayAt(GameAudio.Library.shutterRoll, shutter.position, 0.9f)) GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.5f, 90f, 0.7f), shutter.position, 0.9f); // F97
-        if (_hud != null) _hud.ShowSubtitle("The bell rings. Somewhere, a shutter rises.", 3f);
+        if (_hud != null) _hud.ShowSubtitle(L10n.T("intake.sub.bell_rings"), 3f);
         Vector3 start = shutter.position;
         Vector3 end = start + Vector3.up * 2.7f;
         Collider blocker = shutter.GetComponentInChildren<Collider>();
@@ -647,7 +692,7 @@ public class IntakeRoom : MonoBehaviour
         if (_bottleTemplate == null) return;
         bottle = Instantiate(_bottleTemplate, _bottlePosition, _bottleRotation, transform);
         bottle.gameObject.SetActive(true);
-        if (_hud != null) _hud.ShowSubtitle("Another bottle on the table.", 2.5f);
+        if (_hud != null) _hud.ShowSubtitle(L10n.T("intake.sub.another_bottle"), 2.5f);
     }
 
     // ---------------------------------------------------------------- the hide step
@@ -662,20 +707,20 @@ public class IntakeRoom : MonoBehaviour
 
     private string HideGoal()
     {
-        if (!InZone(roomBZone) && !_silhouetteActive) return "GO THROUGH THE SHUTTER";
+        if (!InZone(roomBZone) && !_silhouetteActive) return L10n.T("intake.goal.hide_go");
         bool occupied = locker != null && locker.Occupied;
-        if (_silhouettePassed) return occupied ? "IT IS GONE. LEAVE THE LOCKER" : "";
-        if (occupied) return "STAY STILL";
-        return "HIDE IN THE LOCKER";
+        if (_silhouettePassed) return occupied ? L10n.T("intake.goal.hide_leave") : "";
+        if (occupied) return L10n.T("intake.goal.hide_still");
+        return L10n.T("intake.goal.hide");
     }
 
     private string[] HideKeys()
     {
         bool occupied = locker != null && locker.Occupied;
         if (!InZone(roomBZone) && !_silhouetteActive) return K();
-        if (_silhouettePassed) return occupied ? K(TouchInput.Key("E", "USE")) : K();
+        if (_silhouettePassed) return occupied ? K(UseKey()) : K();
         if (occupied) return K();
-        return K(TouchInput.Key("E", "USE"));
+        return K(UseKey());
     }
 
     /// <summary>
@@ -696,7 +741,7 @@ public class IntakeRoom : MonoBehaviour
             silhouette.rotation = Quaternion.LookRotation(Flat(route[1].position - route[0].position));
             EnsureSilhouetteAudio();
             _stepDistance = 0f;
-            if (_hud != null) _hud.ShowSubtitle("Footsteps. Something heavy is being dragged.", 3.5f);
+            if (_hud != null) _hud.ShowSubtitle(L10n.T("intake.sub.footsteps"), 3.5f);
             SetMusic(0f, urgentVolume, urgentFadeSeconds); // the escape track: hide, now
         }
 

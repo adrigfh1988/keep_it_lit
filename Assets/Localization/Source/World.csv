@@ -1,0 +1,25 @@
+key,context,en
+world.hub.admissions,"World sign above the asylum's reception desk (3D text on the wall, two lines, ALL CAPS, ~16 characters per line). Karlheinz = the asylum's name, keep it","KARLHEINZ ASYLUM
+ADMISSIONS"
+world.hub.slot.100,"World sign on the records board slot for case file 1 (small label on a wall folder, two lines, ~16 characters per line, ALL CAPS). P3 = Patient 3; the name is not translated","P3
+HILDE BRANDT"
+world.hub.slot.101,"World sign on the records board slot for case file 2 (small label, two lines, ~16 characters per line, ALL CAPS). P11 = Patient 11","P11
+TOMAS REINER"
+world.hub.slot.102,"World sign on the records board slot for case file 3 (small label, two lines, ~16 characters per line, ALL CAPS). P5 = Patient 5","P5
+ELIAS VOGT"
+world.hub.slot.103,"World sign on the records board slot for case file 4 (small label, one line, ~16 characters, ALL CAPS)",SUBJECT A
+world.hub.slot.104,"World sign on the records board slot for case file 5 (small label, two lines, ~16 characters per line, ALL CAPS)","DIRECTOR
+PRIVATE"
+world.hub.wristband,"World sign on the patient card beside Elias's wristband on the morgue table (two lines, ALL CAPS, ~14 characters per line). Names are not translated","ELIAS VOGT
+PATIENT 5"
+world.hub.lower_level,"World sign stencilled on a door to the lower levels (two lines, ALL CAPS, ~14 characters per line). Subject A is a character name","SUBJECT A
+LOWER LEVEL"
+world.hub.service_unit,"World sign stencilled on a service robot's bay (one line, ALL CAPS, ~14 characters). Service units are the old maintenance robots",SERVICE UNIT
+world.intake.holding,"World sign above the door of the holding room in the Intake tutorial ward (one line, ALL CAPS, ~10 characters)",HOLDING
+world.intake.no_entry,"World sign on a door in the Intake ward that cannot be opened (one line, ALL CAPS, ~10 characters)",NO ENTRY
+world.intake.ward,"World sign in the Intake ward naming the ward (one line, ALL CAPS, ~20 characters). Keep the middle dot and the number",INTAKE  ·  WARD 1
+world.intake.keep_quiet,"Warning stencil on the wall of the Intake corridor (two lines, ALL CAPS, ~20 characters per line). ""IT"" = the hunter, never named","KEEP QUIET.
+IT HEARS EVERYTHING."
+world.intake.stay_in_bed,"World sign at the foot of the Intake bed, visible only in the focused torch beam (one line, ALL CAPS, ~16 characters)",STAY IN YOUR BED
+world.shop.contracts,"World sign above the contract board in the shop (one line, ALL CAPS, ~10 characters)",CONTRACTS
+world.shop.shards_accepted,"World sign on the shop counter (one line, ALL CAPS, ~18 characters). Shards = the currency (see shop.currency)",SHARDS ACCEPTED

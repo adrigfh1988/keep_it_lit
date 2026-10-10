@@ -75,6 +75,161 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331669776663346
+  - m_Id: 7992965500928
+    m_Key: sub.pickup.battery_cell
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763101
+  - m_Id: 7993049387008
+    m_Key: sub.pickup.second_wind
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763102
+  - m_Id: 7993049387009
+    m_Key: sub.pickup.key
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763103
+  - m_Id: 7993049387010
+    m_Key: sub.lore.bonus
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763104
+  - m_Id: 7993049387011
+    m_Key: sub.lantern.lure
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763105
+  - m_Id: 7993049387012
+    m_Key: sub.button.shutter
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763106
+  - m_Id: 7993049387013
+    m_Key: sub.theme.terminal
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763107
+  - m_Id: 7993049387014
+    m_Key: sub.stalker.screamed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763108
+  - m_Id: 7993049387015
+    m_Key: sub.contract.failed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763109
+  - m_Id: 7993049387016
+    m_Key: sub.contract.done
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763110
+  - m_Id: 7993049387017
+    m_Key: sub.contract.void_shards
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763111
+  - m_Id: 7993049387018
+    m_Key: sub.contract.void_notes
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763112
+  - m_Id: 7993049387019
+    m_Key: sub.shop.deal_done
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763113
+  - m_Id: 7993049387020
+    m_Key: sub.shop.deal_failed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763114
+  - m_Id: 7993049387021
+    m_Key: sub.shop.greeting.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763115
+  - m_Id: 7993049387022
+    m_Key: sub.shop.greeting.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763116
+  - m_Id: 7993049387023
+    m_Key: sub.shop.greeting.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763117
+  - m_Id: 7993049387024
+    m_Key: sub.shop.greeting.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763118
+  - m_Id: 7993049387025
+    m_Key: sub.dread.far
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763119
+  - m_Id: 7993049387026
+    m_Key: sub.dread.mid
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763120
+  - m_Id: 7993049387027
+    m_Key: sub.dread.near
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763121
+  - m_Id: 7993049387028
+    m_Key: sub.dread.lights_dying
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763122
+  - m_Id: 7993049387029
+    m_Key: sub.dread.it_knows
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763123
+  - m_Id: 7993049387030
+    m_Key: sub.dread.ambushed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763124
+  - m_Id: 7993049387031
+    m_Key: sub.banner.floor
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763125
+  - m_Id: 7993049387032
+    m_Key: sub.banner.floor_theme
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763126
+  - m_Id: 7993049387033
+    m_Key: sub.banner.find_stars
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763127
+  - m_Id: 7993049387034
+    m_Key: sub.banner.restore_fuses
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763128
+  - m_Id: 7993049387035
+    m_Key: sub.banner.find_keys
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763129
+  - m_Id: 7993049387036
+    m_Key: sub.banner.lockdown
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763130
+  - m_Id: 7993049387037
+    m_Key: sub.banner.rule
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763131
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -134,3 +289,127 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Subtitle when the last key is picked up on a key-hunt floor with a lift (2.5 s)
+    - rid: 4707331672703763101
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle after picking up a battery cell in the maze (shown 2 s, one line at the bottom of the screen)
+    - rid: 4707331672703763102
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle after a vault battery cell also grants a Second Wind (shown 3 s). Second Wind = the shop item that frees you once when the hunter catches you
+    - rid: 4707331672703763103
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle after picking up a key on a key-hunt floor (shown 2 s). {held} = keys held, {total} = keys on the floor
+    - rid: 4707331672703763104
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle the first time a note or file is read this campaign (shown 2.5 s). {amount} = shards awarded, {currency} = currency name (SHARDS)
+    - rid: 4707331672703763105
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle when an unattended lantern lures the hunter (shown 3 s, only when the player is far away). "Something" = the hunter, never named
+    - rid: 4707331672703763106
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle after pressing a wall button whose shutter is out of sight (shown 3 s)
+    - rid: 4707331672703763107
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle when the Laboratory terminal is used and shows the hunter's position (shown 3 s). CAM 3 = a security camera name, keep it short
+    - rid: 4707331672703763108
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle when the robot stalker (Stan) touches you and screams, when he has no speech voice (shown 2.5 s). "IT" = Stan
+    - rid: 4707331672703763109
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle when the active contract is failed mid-floor (shown 3 s). {name} = contract name (no final period; the sentence adds one)
+    - rid: 4707331672703763110
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle when the active contract is completed mid-floor (shown 3 s). {name} = contract name (no final period; the sentence adds one)
+    - rid: 4707331672703763111
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle at the start of a floor that has no shards when the "Take what glitters" contract was taken (shown on run start)
+    - rid: 4707331672703763112
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle at the start of a floor that has no notes when the "Read it all" contract was taken (shown on run start)
+    - rid: 4707331672703763113
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Salesman line the next time the shop opens after a contract was completed (shown 3 s)
+    - rid: 4707331672703763114
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Salesman line the next time the shop opens after a contract was failed (shown 3 s)
+    - rid: 4707331672703763115
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Salesman greeting when the shop opens after floor 1 (shown 3 s). Shards = the currency
+    - rid: 4707331672703763116
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Salesman greeting when the shop opens after floor 2 (shown 3 s)
+    - rid: 4707331672703763117
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Salesman greeting when the shop opens after floor 3 (shown 3 s)
+    - rid: 4707331672703763118
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Salesman greeting when the shop opens after floor 4 (shown 3 s)
+    - rid: 4707331672703763119
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle when the hunter relocated far away from the player (shown 2.6 s). "Something" = the hunter, never named
+    - rid: 4707331672703763120
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle when the hunter relocated at a middle distance (shown 2.6 s). "It" = the hunter
+    - rid: 4707331672703763121
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle when the hunter relocated very close (shown 2.6 s). "It" = the hunter
+    - rid: 4707331672703763122
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle when the first lamps die as the maze empties of stars (shown 2.6 s)
+    - rid: 4707331672703763123
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle when the last star is taken (shown 2.6 s). "It" = the hunter
+    - rid: 4707331672703763124
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle, once per campaign, the first time an ambush ends because the star it guarded was taken (shown 2.6 s). "It" = the hunter
+    - rid: 4707331672703763125
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor intro banner title when the floor has no named look (96 pt, one line). {floor} = floor number
+    - rid: 4707331672703763126
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor intro banner title (96 pt, one line, 1400 px, auto-size). {floor} = floor number, {theme} = the look's name in capitals (shop.theme.*)
+    - rid: 4707331672703763127
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor intro banner objective part (always 2 or more stars; parts are joined with a middle dot). {n} = stars to find
+    - rid: 4707331672703763128
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor intro banner objective part on a blackout floor. {n} = fuse boxes to restore (3)
+    - rid: 4707331672703763129
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor intro banner objective part on a key-hunt floor. {n} = keys to find (2 or 3); the hatch is the floor exit
+    - rid: 4707331672703763130
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor intro banner objective part on a floor with a timed security door
+    - rid: 4707331672703763131
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor intro banner rule line (one line, auto-size). {name} = the rule name (shop.rule.*.name), {description} = its sentence (shop.rule.*.desc)

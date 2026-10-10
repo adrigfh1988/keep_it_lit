@@ -26,8 +26,24 @@ public static class RunRules
     };
 
     public static Rule Current { get; private set; } = Rule.None;
-    public static string Name { get; private set; } = "";
-    public static string Description { get; private set; } = "";
+    /// <summary>S9: the rule's name and sentence are looked up when read (a language change follows); empty when no rule is active.</summary>
+    public static string Name => Current == Rule.None ? "" : L10n.T("shop.rule." + Slug(Current) + ".name");
+    public static string Description => Current == Rule.None ? "" : L10n.T("shop.rule." + Slug(Current) + ".desc");
+
+    private static string Slug(Rule rule)
+    {
+        switch (rule)
+        {
+            case Rule.DyingGrid: return "dying_grid";
+            case Rule.KeenEars: return "keen_ears";
+            case Rule.HeavyFog: return "heavy_fog";
+            case Rule.WeakBattery: return "weak_battery";
+            case Rule.Restless: return "restless";
+            case Rule.GlassFloors: return "glass_floors";
+            case Rule.RichVeins: return "rich_veins";
+            default: return "none";
+        }
+    }
 
     /// <summary>GlassFloors: multiplies BuildNoisySurfaces' spawn count. 1 on every other rule/floor.</summary>
     public static float NoisyPatchMultiplier { get; private set; } = 1f;
@@ -52,8 +68,6 @@ public static class RunRules
         if (floor < 2)
         {
             Current = Rule.None;
-            Name = "";
-            Description = "";
             return;
         }
 
@@ -64,36 +78,22 @@ public static class RunRules
         switch (Current)
         {
             case Rule.DyingGrid:
-                Name = "DYING GRID";
-                Description = "A lamp loses power every minute.";
                 break;
             case Rule.KeenEars:
-                Name = "KEEN EARS";
-                Description = "It hears farther here. Shards are worth more.";
                 ShardPayoutMultiplier = 1.5f;
                 break;
             case Rule.HeavyFog:
-                Name = "HEAVY FOG";
-                Description = "You see less; so does it.";
                 break;
             case Rule.WeakBattery:
-                Name = "WEAK BATTERY";
-                Description = "You start half-charged, but it stores faster off.";
                 BatteryStartFraction = 0.55f;
                 BatteryRechargeMultiplier = 1.5f;
                 break;
             case Rule.Restless:
-                Name = "RESTLESS";
-                Description = "It moves and appears more often.";
                 break;
             case Rule.GlassFloors:
-                Name = "GLASS FLOORS";
-                Description = "More broken glass and puddles underfoot.";
                 NoisyPatchMultiplier = 2f;
                 break;
             case Rule.RichVeins:
-                Name = "RICH VEINS";
-                Description = "More shards, but it walks a little faster.";
                 break;
         }
     }
@@ -140,8 +140,6 @@ public static class RunRules
     public static void ResetCampaign()
     {
         Current = Rule.None;
-        Name = "";
-        Description = "";
         NoisyPatchMultiplier = 1f;
         ShardPayoutMultiplier = 1f;
         BatteryStartFraction = 1f;
