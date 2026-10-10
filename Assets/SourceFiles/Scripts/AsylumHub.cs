@@ -79,6 +79,9 @@ public class AsylumHub : MonoBehaviour
     /// <summary>True during the arrival and the walk-in (the player is held by a scripted move): PauseMenu does not open.</summary>
     public bool IsTransitioning { get; private set; }
 
+    /// <summary>The hub's black overlay is up (a door walk, a catch, a scripted fade): HUD cards built after it would draw on top of it.</summary>
+    public bool BlackoutVisible => _blackoutRoot != null && _blackoutRoot.activeInHierarchy && _blackout != null && _blackout.color.a > 0.01f;
+
     /// <summary>Raised right before the hub switches off for a maze (a wing door was used). Story pieces reset on it. Subscribers unsubscribe in OnDestroy.</summary>
     public static event Action OnLeaveHub;
 
@@ -170,6 +173,7 @@ public class AsylumHub : MonoBehaviour
     {
         _shop = shop;
         _mazeSeed = mazeSeed;
+        if (GetComponent<HubObjectiveCard>() == null) gameObject.AddComponent<HubObjectiveCard>(); // the hub's objective card (built lazily)
         _reader = reader;
         _player = player;
         _camera = camera;

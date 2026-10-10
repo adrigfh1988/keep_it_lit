@@ -1,5 +1,4 @@
 using System;
-using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -10,7 +9,7 @@ using UnityEngine;
 ///
 /// State lifetime: plain instance fields, deliberately NOT reset in OnDisable / on AsylumHub.OnLeaveHub (unlike HubSetPiece): the hub
 /// content switches off and on around a shop round trip and the mission must still be where it was. A scene reload (next floor, CONTINUE,
-/// Retry) creates fresh components, which is the reset - nothing is saved. Items, the door line, the HUD line and the goal glow are all
+/// Retry) creates fresh components, which is the reset - nothing is saved. Items, the door line and the goal glow are all
 /// re-applied from the stage on every OnEnterHub. MazeGenerator.superEasyMode does not skip missions (it only makes the mazes trivial);
 /// use <see cref="DebugComplete"/> to skip one in a test. Never active in the finale.
 /// </summary>
@@ -47,9 +46,7 @@ public class HubMission : MonoBehaviour
     public Stage Current { get; private set; } = Stage.Offered;
     public int Collected { get; private set; }
 
-    private static readonly Color HudColour = new Color(0.95f, 0.78f, 0.45f);
 
-    private TextMeshProUGUI _hud;
     private bool _wasHere;
     private float _pulse;
 
@@ -70,14 +67,12 @@ public class HubMission : MonoBehaviour
     {
         AsylumHub.OnEnterHub -= HandleEnter;
         // Not a reset: the stage stays. Only what is drawn goes.
-        if (_hud != null) _hud.gameObject.SetActive(false);
         if (goalLight != null && IsOurLight()) goalLight.enabled = false;
         _wasHere = false;
     }
 
     private void OnDestroy()
     {
-        if (_hud != null) Destroy(_hud.gameObject);
         if (s_lightOwner == this) s_lightOwner = null;
     }
 
@@ -110,7 +105,7 @@ public class HubMission : MonoBehaviour
 
     // ---------------------------------------------------------------- state -> world
 
-    /// <summary>Re-applies the stage: the door line, the items, the glow and the HUD line. Idempotent.</summary>
+    /// <summary>Re-applies the stage: the door line, the items and the glow (HubObjectiveCard reads the stage for the HUD). Idempotent.</summary>
     public void Apply()
     {
         bool here = IsHere;
@@ -161,42 +156,20 @@ public class HubMission : MonoBehaviour
             }
         }
 
-        RefreshHud(here);
     }
 
     /// <summary>The person is in the hospital on this floor (derived from HubState, so it does not depend on whether the NPC has refreshed itself yet).</summary>
     private static bool Stands(HubNpc npc) => npc != null && npc.body != null && HubNpc.PresentOn(npc.who, HubState.Floor, HubState.IsFinale);
 
-    private void RefreshHud(bool here)
-    {
-        if (!here || Current == Stage.Done)
-        {
-            if (_hud != null) _hud.gameObject.SetActive(false);
-            return;
-        }
-        if (_hud == null)
-        {
-            Canvas canvas = RuntimeUi.ResolveCanvas();
-            if (canvas == null) return;
-            _hud = RuntimeUi.CreateText(canvas.transform, $"MissionLine_F{floor}", "", 24f, HudColour);
-            _hud.alignment = TextAlignmentOptions.TopLeft;
-            _hud.characterSpacing = 3f;
-            _hud.textWrappingMode = TextWrappingModes.Normal;
-            RectTransform r = _hud.rectTransform;
-            r.anchorMin = r.anchorMax = new Vector2(0f, 1f);
-            r.pivot = new Vector2(0f, 1f);
-            r.anchoredPosition = new Vector2(38f, -164f);
-            r.sizeDelta = new Vector2(760f, 80f);
-        }
-        string text = Fill(CurrentObjective());
-        string progress = Fill(Current == Stage.Active ? progressActive : Current == Stage.Fetched ? progressFetched : "");
-        _hud.text = string.IsNullOrEmpty(progress) ? $"OBJECTIVE  ·  {text}" : $"OBJECTIVE  ·  {text}\n<size=85%><color=#C9B48A>{progress}</color></size>";
-        _hud.gameObject.SetActive(true);
-    }
-
     private string Fill(string s) => string.IsNullOrEmpty(s) ? "" : s.Replace("{n}", Collected.ToString()).Replace("{total}", items.Length.ToString());
 
-    /// <summary>The objective for the current stage (HUD line text, also what the hub's repeating hint says).</summary>
+    /// <summary>The current stage's objective with {n} / {total} filled in ("" once Done).</summary>
+    public string CurrentObjectiveText => Fill(CurrentObjective());
+
+    /// <summary>The current stage's second line (AMPOULES 1 / 3, CARRYING · JOSEF'S TRAY) filled in; "" when the stage has none.</summary>
+    public string CurrentProgressText => Fill(Current == Stage.Active ? progressActive : Current == Stage.Fetched ? progressFetched : "");
+
+    /// <summary>The objective for the current stage, unfilled (HubObjectiveCard and the hub's repeating hint show it filled).</summary>
     public string CurrentObjective()
     {
         switch (Current)

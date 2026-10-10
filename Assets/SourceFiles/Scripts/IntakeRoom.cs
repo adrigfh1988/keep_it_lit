@@ -21,8 +21,6 @@ using UnityEngine.UI;
 public class IntakeRoom : MonoBehaviour
 {
     private static readonly Color Green = new Color(0.25f, 1f, 0.7f);
-    private static readonly Color Grey = new Color(0.75f, 0.75f, 0.78f);
-    private static readonly Color Amber = new Color(1f, 0.72f, 0.42f);
     private static readonly Color Red = new Color(0.9f, 0.15f, 0.1f);
 
     /// <summary>The Intake in this scene while it is running (set by Begin, cleared on leaving / destroy). PauseMenu reads it.</summary>
@@ -102,6 +100,7 @@ public class IntakeRoom : MonoBehaviour
     private float _cameraBaseLocalY;
 
     private GameObject _uiRoot;
+    private ObjectiveCard _card;
     private Image _blackout;
     private Coroutine _run;
 
@@ -278,7 +277,7 @@ public class IntakeRoom : MonoBehaviour
         if (_reader != null) _reader.Close();
         if (locker != null && locker.Occupied) locker.ForceLeave();
         if (_hud != null) { _hud.SetPrompt(null); _hud.SetFocusPrompt(null); }
-        if (_cardGroup != null) _cardGroup.alpha = 0f;
+        if (_card != null) _card.HideNow();
         ApplyMarker(default);
         if (_stepSource != null) _stepSource.Stop();
         if (_dragSource != null) _dragSource.Stop();
@@ -489,20 +488,20 @@ public class IntakeRoom : MonoBehaviour
     private IEnumerator Step(int index, Func<string> goal, Func<string[]> keys, Func<bool> done, Func<Marker> marker = null, Action onStart = null)
     {
         onStart?.Invoke();
-        CardSet(index, goal(), keys());
-        yield return CardFade(0f, 1f, 0.3f);
+        if (_card != null) _card.Set($"{index + 1} / {StepNames.Length}", goal(), keys());
+        if (_card != null) yield return _card.Fade(0f, 1f, 0.3f);
 
         while (true)
         {
-            CardLive(goal(), keys());
+            if (_card != null) _card.Live(goal(), keys());
             ApplyMarker(marker != null ? marker() : default);
             if (Time.timeScale > 0f && done()) break;
             yield return null;
         }
 
         ApplyMarker(default);
-        yield return CardTick();
-        yield return CardFade(1f, 0f, 0.25f);
+        if (_card != null) yield return _card.Tick();
+        if (_card != null) yield return _card.Fade(1f, 0f, 0.25f);
         yield return new WaitForSeconds(0.1f);
     }
 
@@ -1020,202 +1019,10 @@ public class IntakeRoom : MonoBehaviour
         _uiRoot.layer = canvas.gameObject.layer;
         RuntimeUi.Stretch((RectTransform)_uiRoot.transform);
 
-        BuildCard();
+        _card = ObjectiveCard.Create(_uiRoot.transform, "ObjectiveCardRoot", false, false);
 
         // Black cover, topmost.
         _blackout = RuntimeUi.CreatePanel(_uiRoot.transform, "IntakeBlackout", Color.black).GetComponent<Image>();
         _blackout.raycastTarget = false;
-    }
-
-    // ---- the objective card: dark translucent card top-centre, amber bar on its left edge, small grey OBJECTIVE label and
-    // step counter, the goal in caps, the keys as bordered key-cap chips, a tick drawn from two bars on completion.
-
-    private const float CardWidth = 780f;
-    private const float CardHeight = 176f;
-    private const float CardTop = 36f;
-
-    private RectTransform _card;
-    private CanvasGroup _cardGroup;
-    private TextMeshProUGUI _cardGoalText;
-    private TextMeshProUGUI _cardCounter;
-    private RectTransform _chipRow;
-    private GameObject _tick;
-    private string _cardGoal = "";
-    private string _cardKeys = "";
-
-    private static void PlaceTopLeft(RectTransform rect, Vector2 offset, Vector2 size)
-    {
-        rect.anchorMin = new Vector2(0f, 1f);
-        rect.anchorMax = new Vector2(0f, 1f);
-        rect.pivot = new Vector2(0f, 1f);
-        rect.anchoredPosition = offset;
-        rect.sizeDelta = size;
-    }
-
-    private void BuildCard()
-    {
-        GameObject card = RuntimeUi.CreatePanel(_uiRoot.transform, "ObjectiveCard", new Color(0.02f, 0.02f, 0.03f, 0.6f));
-        card.GetComponent<Image>().raycastTarget = false;
-        _card = card.GetComponent<RectTransform>();
-        _card.anchorMin = _card.anchorMax = new Vector2(0.5f, 1f);
-        _card.pivot = new Vector2(0.5f, 1f);
-        _card.sizeDelta = new Vector2(CardWidth, CardHeight);
-        _card.anchoredPosition = new Vector2(0f, -CardTop);
-        _cardGroup = card.AddComponent<CanvasGroup>();
-        _cardGroup.alpha = 0f;
-        _cardGroup.blocksRaycasts = false;
-        _cardGroup.interactable = false;
-
-        // The thin amber bar on the left edge.
-        GameObject bar = RuntimeUi.CreatePanel(card.transform, "AmberBar", Amber);
-        bar.GetComponent<Image>().raycastTarget = false;
-        RectTransform barRect = bar.GetComponent<RectTransform>();
-        barRect.anchorMin = new Vector2(0f, 0f);
-        barRect.anchorMax = new Vector2(0f, 1f);
-        barRect.pivot = new Vector2(0f, 0.5f);
-        barRect.sizeDelta = new Vector2(6f, 0f);
-        barRect.anchoredPosition = Vector2.zero;
-
-        TextMeshProUGUI label = RuntimeUi.CreateText(card.transform, "Label", "OBJECTIVE", 20f, Grey);
-        label.alignment = TextAlignmentOptions.TopLeft;
-        label.characterSpacing = 6f;
-        PlaceTopLeft(label.rectTransform, new Vector2(30f, -14f), new Vector2(300f, 26f));
-
-        _cardCounter = RuntimeUi.CreateText(card.transform, "Counter", "", 20f, Grey);
-        _cardCounter.alignment = TextAlignmentOptions.TopRight;
-        _cardCounter.characterSpacing = 4f;
-        PlaceTopLeft(_cardCounter.rectTransform, new Vector2(CardWidth - 30f - 160f, -14f), new Vector2(160f, 26f));
-
-        _cardGoalText = RuntimeUi.CreateText(card.transform, "Goal", "", 42f, Color.white);
-        _cardGoalText.alignment = TextAlignmentOptions.TopLeft;
-        _cardGoalText.fontStyle = FontStyles.Bold;
-        _cardGoalText.characterSpacing = 3f;
-        _cardGoalText.textWrappingMode = TextWrappingModes.NoWrap;
-        // Long goals shrink rather than run under the tick.
-        _cardGoalText.enableAutoSizing = true;
-        _cardGoalText.fontSizeMin = 26f;
-        _cardGoalText.fontSizeMax = 42f;
-        PlaceTopLeft(_cardGoalText.rectTransform, new Vector2(30f, -46f), new Vector2(CardWidth - 130f, 56f));
-
-        GameObject row = new GameObject("Chips", typeof(RectTransform));
-        row.transform.SetParent(card.transform, false);
-        row.layer = card.layer;
-        _chipRow = (RectTransform)row.transform;
-        PlaceTopLeft(_chipRow, new Vector2(30f, -112f), new Vector2(CardWidth - 60f, 46f));
-
-        // The tick: two bars forming a check mark, at the right of the goal.
-        _tick = new GameObject("Tick", typeof(RectTransform));
-        _tick.transform.SetParent(card.transform, false);
-        _tick.layer = card.layer;
-        RectTransform tickRect = (RectTransform)_tick.transform;
-        tickRect.anchorMin = tickRect.anchorMax = new Vector2(1f, 0.5f);
-        tickRect.pivot = new Vector2(0.5f, 0.5f);
-        tickRect.anchoredPosition = new Vector2(-60f, -4f);
-        tickRect.sizeDelta = new Vector2(60f, 60f);
-        MakeTickBar(_tick.transform, new Vector2(-12f, -6f), new Vector2(8f, 22f), 45f);
-        MakeTickBar(_tick.transform, new Vector2(7f, 2f), new Vector2(8f, 44f), -45f);
-        _tick.SetActive(false);
-    }
-
-    private static void MakeTickBar(Transform parent, Vector2 position, Vector2 size, float zRotation)
-    {
-        GameObject bar = new GameObject("Bar", typeof(RectTransform), typeof(Image));
-        bar.transform.SetParent(parent, false);
-        bar.layer = parent.gameObject.layer;
-        Image image = bar.GetComponent<Image>();
-        image.color = Green;
-        image.raycastTarget = false;
-        RectTransform rect = (RectTransform)bar.transform;
-        rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
-        rect.pivot = new Vector2(0.5f, 0.5f);
-        rect.anchoredPosition = position;
-        rect.sizeDelta = size;
-        rect.localRotation = Quaternion.Euler(0f, 0f, zRotation);
-    }
-
-    /// <summary>A new goal: text, counter and chips set instantly (the card is invisible between goals).</summary>
-    private void CardSet(int index, string goal, string[] keys)
-    {
-        if (_card == null) return;
-        _cardCounter.text = $"{index + 1} / {StepNames.Length}";
-        _tick.SetActive(false);
-        _cardGoal = null;
-        _cardKeys = null;
-        CardLive(goal, keys);
-    }
-
-    /// <summary>The goal or its keys can change mid-step (pick up the bottle, then throw it; touch mode switching on): only rebuild on a change.</summary>
-    private void CardLive(string goal, string[] keys)
-    {
-        if (_card == null) return;
-        if (goal != _cardGoal)
-        {
-            _cardGoal = goal;
-            _cardGoalText.text = goal;
-        }
-
-        string joined = string.Join("|", keys ?? new string[0]);
-        if (joined == _cardKeys) return;
-        _cardKeys = joined;
-
-        for (int i = _chipRow.childCount - 1; i >= 0; i--) Destroy(_chipRow.GetChild(i).gameObject);
-        float x = 0f;
-        foreach (string key in keys ?? new string[0])
-        {
-            float width = Mathf.Max(56f, 26f + key.Length * 17f);
-            BuildChip(key, x, width);
-            x += width + 14f;
-        }
-    }
-
-    private void BuildChip(string key, float x, float width)
-    {
-        // A bordered box: an amber frame with a dark face inset by 2 px.
-        GameObject frame = new GameObject("Chip_" + key, typeof(RectTransform), typeof(Image));
-        frame.transform.SetParent(_chipRow, false);
-        frame.layer = _chipRow.gameObject.layer;
-        Image frameImage = frame.GetComponent<Image>();
-        frameImage.color = new Color(Amber.r, Amber.g, Amber.b, 0.95f);
-        frameImage.raycastTarget = false;
-        PlaceTopLeft((RectTransform)frame.transform, new Vector2(x, 0f), new Vector2(width, 44f));
-
-        GameObject face = RuntimeUi.CreatePanel(frame.transform, "Face", new Color(0.07f, 0.07f, 0.08f, 1f));
-        face.GetComponent<Image>().raycastTarget = false;
-        RectTransform faceRect = face.GetComponent<RectTransform>();
-        faceRect.offsetMin = new Vector2(2f, 2f);
-        faceRect.offsetMax = new Vector2(-2f, -2f);
-
-        TextMeshProUGUI text = RuntimeUi.CreateText(face.transform, "Key", key, 24f, Color.white);
-        text.fontStyle = FontStyles.Bold;
-        text.characterSpacing = 2f;
-        text.textWrappingMode = TextWrappingModes.NoWrap;
-        RuntimeUi.Stretch(text.rectTransform);
-    }
-
-    /// <summary>Fades the card (and slides it 20 px down into place on the way in).</summary>
-    private IEnumerator CardFade(float from, float to, float seconds)
-    {
-        if (_cardGroup == null) yield break;
-        float t = 0f;
-        while (t < seconds)
-        {
-            t += Time.unscaledDeltaTime;
-            SetCardAlpha(Mathf.Lerp(from, to, Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t / seconds))));
-            yield return null;
-        }
-        SetCardAlpha(to);
-    }
-
-    private void SetCardAlpha(float alpha)
-    {
-        _cardGroup.alpha = alpha;
-        _card.anchoredPosition = new Vector2(0f, -CardTop + 20f * (1f - alpha));
-    }
-
-    /// <summary>Goal done: the tick shows for about 0.4 s.</summary>
-    private IEnumerator CardTick()
-    {
-        if (_tick != null) _tick.SetActive(true);
-        yield return new WaitForSecondsRealtime(0.4f);
     }
 }
