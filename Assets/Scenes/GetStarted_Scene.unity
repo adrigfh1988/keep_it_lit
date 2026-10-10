@@ -49912,7 +49912,7 @@ MonoBehaviour:
   aiFollower: {fileID: 461847994690786}
   disablePlayerJump: 1
   useFloorProfile: 1
-  debugFloor: 3
+  debugFloor: 1
   lockerCount: 10
   lockerWidth: 0.9
   lockerDepth: 0.6
@@ -49923,9 +49923,9 @@ MonoBehaviour:
   debugStartInHub: 0
   debugStartInFinale: 0
   debugFinaleAllFiles: 0
-  debugStartInMaze: 1
+  debugStartInMaze: 0
   creatureSpeechBubbles: 0
-  superEasyMode: 1
+  superEasyMode: 0
   debugForceTouchControls: 0
   wallLamps: 1
   cellsPerLamp: 5
