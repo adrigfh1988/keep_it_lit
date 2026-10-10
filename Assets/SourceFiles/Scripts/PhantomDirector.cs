@@ -160,6 +160,22 @@ public class PhantomDirector : MonoBehaviour
     [Tooltip("Height of the point on the body used for the viewport and torch tests (m)")]
     [SerializeField] private float figureTestHeight = 1f;
 
+    [Header("F105 C8 - your double")]
+    [Tooltip("The first floor on which a silhouette phantom may be the player's own robot instead")]
+    [SerializeField, Min(1)] private int doubleFromFloor = 3;
+    [Tooltip("Chance that a silhouette phantom is the double")]
+    [Range(0f, 1f)]
+    [SerializeField] private float doubleChance = 0.3f;
+    [Tooltip("On the Stalker floors no double stands while Stan is this close to it or to the player (m): at close range it must never be mistaken for him")]
+    [SerializeField] private float doubleStalkerExclusion = 15f;
+    [Tooltip("How long the double stands, min..max (s); the torch beam reaching it ends it sooner")]
+    [SerializeField] private Vector2 doubleLifetime = new Vector2(3f, 5f);
+    [Tooltip("The spot light at its head that lights it, and the player, from where it stands")]
+    [SerializeField] private float doubleSpotRange = 8f;
+    [SerializeField] private float doubleSpotIntensity = 3f;
+    [SerializeField] private float doubleSpotAngle = 40f;
+    [SerializeField] private Color doubleSpotColor = new Color(1f, 0.93f, 0.8f);
+
     private MazeGenerator _maze;
     private Transform _player;
     private Camera _camera;
@@ -178,6 +194,8 @@ public class PhantomDirector : MonoBehaviour
     private Material _eyeMaterial;
     private PhantomBody _body; // F104 B7/B8: the shared figure, built on first use
     private bool _bodyMissingLogged;
+    private PhantomBody _doubleBody; // F105 C8: the player's own robot, built on first use
+    private bool _doubleMissingLogged;
 
     private readonly RaycastHit[] _rayHits = new RaycastHit[16];
 
@@ -230,6 +248,7 @@ public class PhantomDirector : MonoBehaviour
 
         StopAllCoroutines();
         _body = null; // destroyed with the phantoms below; rebuilt on the next use
+        _doubleBody = null;
         if (_phantomsRoot != null)
         {
             for (int i = _phantomsRoot.transform.childCount - 1; i >= 0; i--)
@@ -304,6 +323,7 @@ public class PhantomDirector : MonoBehaviour
     {
         if (_maze == null || _player == null || _follower == null) return false;
         if (BailedOut()) return false;
+        if (_maze.Loop != null && _maze.Loop.IsInside) return false; // F106: the looping corridor has its own horrors (the Visitor); no phantom fires inside it
         if (_follower.IsChasing) return false;
         // F103 A2: a sound may come from a hunter that is close; a figure may not. Otherwise every phantom proves the hunter is far away.
         float exclusion = IsAudioType(type) && _terror.contaminatedPhantoms ? audioHunterExclusionDistance : hunterExclusionDistance;
@@ -406,6 +426,8 @@ public class PhantomDirector : MonoBehaviour
 
     private void SpawnSilhouette(Vector3 position)
     {
+        if (TrySpawnDouble(position)) return;
+
         GameObject root = new GameObject("Phantom_Silhouette");
         root.transform.SetParent(_phantomsRoot.transform, false);
         root.transform.position = position;
@@ -507,6 +529,80 @@ public class PhantomDirector : MonoBehaviour
 
         nearest.Kill(silhouetteLampFadeSeconds);
         _terror.Log("Silhouette killed a lamp", this);
+    }
+
+    // ---------------------------------------------------------------- F105 C8: your double
+
+    /// <summary>
+    /// F105 C8: from doubleFromFloor on, a silhouette is sometimes the player's own robot instead - frozen in its idle pose, facing them,
+    /// lit by a small spot at its head, and gone the moment the beam reaches it. False (the plain silhouette goes ahead) when the
+    /// flag is off, the roll fails, Stan is close on a Stalker floor, or the figure cannot be built.
+    /// </summary>
+    private bool TrySpawnDouble(Vector3 position)
+    {
+        if (!_terror.doubles || GameFlow.CurrentFloor < doubleFromFloor || _camera == null || Random.value >= doubleChance) return false;
+        if (StalkerNear(position)) return false;
+
+        PhantomBody body = TryGetDoubleBody();
+        if (body == null) return false;
+
+        Vector3 camPos = _camera.transform.position;
+        Vector3 facing = camPos - position;
+        facing.y = 0f;
+
+        body.Show(position, facing);
+        body.Freeze(AIFollower.Pose.Idle);
+        body.AimSpot(camPos);
+        StartCoroutine(DoubleRoutine(body, position + Vector3.up * figureTestHeight));
+        _terror.Log("Double phantom", this);
+        return true;
+    }
+
+    /// <summary>True while the floor's Stalker is out and within doubleStalkerExclusion of the spot or of the player.</summary>
+    private bool StalkerNear(Vector3 position)
+    {
+        Stalker stalker = _maze != null ? _maze.Stalker : null;
+        if (stalker == null || !stalker.gameObject.activeInHierarchy || stalker.IsHiddenAfterTouch) return false;
+
+        Vector3 stan = stalker.transform.position;
+        return FlatDistance(stan, position) < doubleStalkerExclusion || FlatDistance(stan, _player.position) < doubleStalkerExclusion;
+    }
+
+    private static float FlatDistance(Vector3 a, Vector3 b)
+    {
+        a.y = b.y;
+        return Vector3.Distance(a, b);
+    }
+
+    /// <summary>The double's figure, built on first use from the Stalker template with its head spot. Null (logged once) when the kit has no template, and while the double is already standing.</summary>
+    private PhantomBody TryGetDoubleBody()
+    {
+        if (_doubleBody == null && _maze != null)
+        {
+            _doubleBody = PhantomBody.TryBuild(_maze.StalkerTemplate, _phantomsRoot.transform);
+            _doubleBody?.AddHeadSpot(doubleSpotRange, doubleSpotIntensity, doubleSpotAngle, doubleSpotColor);
+            if (_doubleBody == null && !_doubleMissingLogged)
+            {
+                _doubleMissingLogged = true;
+                Debug.LogWarning("PhantomDirector: the InteractableKit has no Stalker template, so the double phantom is off.", this);
+            }
+        }
+
+        return _doubleBody != null && !_doubleBody.InUse ? _doubleBody : null;
+    }
+
+    /// <summary>The double stands for its lifetime, and goes the instant the torch beam reaches it, a chase starts, or the run ends.</summary>
+    private IEnumerator DoubleRoutine(PhantomBody body, Vector3 testPoint)
+    {
+        float lifetime = Random.Range(doubleLifetime.x, doubleLifetime.y);
+        for (float t = 0f; t < lifetime; t += Time.deltaTime)
+        {
+            if (BailedOut() || _follower.IsChasing || IsInTorchBeam(testPoint)) break;
+
+            yield return null;
+        }
+
+        body.Hide();
     }
 
     // ---------------------------------------------------------------- footsteps behind you
@@ -985,7 +1081,8 @@ public class PhantomDirector : MonoBehaviour
         return false;
     }
 
-    private static Material BuildSilhouetteMaterial(Material source)
+    /// <summary>A copy of `source` in near-black with no emission: the shape of a figure and nothing of its colour. F106: the loop corridor's Visitor wears it too, so it is internal.</summary>
+    internal static Material BuildSilhouetteMaterial(Material source)
     {
         if (source == null) return null;
 

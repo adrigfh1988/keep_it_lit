@@ -136,3 +136,4 @@ ui.objective.label,ZIEL
 ui.dialogue.hint_next,{key}  WEITER    ·    {back}  VERLASSEN
 ui.dialogue.hint_end,{key}  ENDE    ·    {back}  VERLASSEN
 ui.dialogue.hint_leave,{key}  VERLASSEN
+ui.pause.map,KARTE

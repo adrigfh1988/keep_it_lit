@@ -104,6 +104,8 @@ public class PlayerHud : MonoBehaviour
 
     private PromptParts _triggerPrompt;
     private PromptParts _focusPrompt;
+    private PromptParts _hintPrompt; // F106: a prompt that shows by itself for a few seconds, below any interaction prompt
+    private Coroutine _hintRoutine;
     private string _promptBuiltKey, _promptBuiltText;
     private int _promptBuiltPercent = int.MinValue;
     private string _promptBuilt = "";
@@ -136,13 +138,35 @@ public class PlayerHud : MonoBehaviour
         RefreshPrompt();
     }
 
-    private PromptParts ActivePrompt => !_focusPrompt.IsEmpty ? _focusPrompt : _triggerPrompt;
+    // The prompt of something you can act on; the F106 hint only fills the line when there is none (and is never the INTERACT button's text).
+    private PromptParts InteractionPrompt => !_focusPrompt.IsEmpty ? _focusPrompt : _triggerPrompt;
+    private PromptParts ActivePrompt => !InteractionPrompt.IsEmpty ? InteractionPrompt : _hintPrompt;
+
+    /// <summary>
+    /// F106: "{keyLabel}  {L10n.T(textKey)}" for `seconds`, whenever nothing else holds the prompt line (an interactable's prompt wins and the hint
+    /// reappears behind it). A second call replaces the first. Hidden on touch, like every prompt: the on-screen buttons say it.
+    /// </summary>
+    public void ShowHintPrompt(string keyLabel, string textKey, float seconds)
+    {
+        if (_hintRoutine != null) StopCoroutine(_hintRoutine);
+        _hintPrompt = new PromptParts { Key = keyLabel, TextKey = textKey, Percent = -1 };
+        RefreshPrompt();
+        _hintRoutine = StartCoroutine(ClearHintAfter(seconds));
+    }
+
+    private IEnumerator ClearHintAfter(float seconds)
+    {
+        yield return new WaitForSecondsRealtime(seconds);
+        _hintPrompt = default;
+        _hintRoutine = null;
+        RefreshPrompt();
+    }
 
     /// <summary>The resolved prompt as one line (focus overrides trigger, same rule RefreshPrompt uses). Null/empty when nothing is shown.</summary>
     public string CurrentPrompt => FormatPrompt(ActivePrompt);
 
     /// <summary>F76/S9: just the words of the resolved prompt (no key label, no percentage) for TouchControls' INTERACT button. Null/empty when nothing is shown.</summary>
-    public string CurrentPromptText => ActivePrompt.IsEmpty ? null : ActivePrompt.ResolvedText;
+    public string CurrentPromptText => InteractionPrompt.IsEmpty ? null : InteractionPrompt.ResolvedText;
 
     private string FormatPrompt(PromptParts p)
     {

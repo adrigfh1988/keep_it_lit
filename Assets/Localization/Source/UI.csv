@@ -136,3 +136,4 @@ ui.objective.label,"Small grey label at the top of the objective card (20 pt, le
 ui.dialogue.hint_next,"Dialogue panel hint, bottom-right (20 pt, one line, 760 px, auto-size) while the conversation continues. {key} = E on keyboard or TAP on touch, {back} = ESC or BACK on touch - do not translate the key names",{key}  CONTINUE    ·    {back}  LEAVE
 ui.dialogue.hint_end,"Dialogue panel hint on the last line of a conversation (20 pt, 760 px). {key}, {back} as in hint_next",{key}  END    ·    {back}  LEAVE
 ui.dialogue.hint_leave,"Dialogue panel hint while two reply choices are on screen (20 pt, 760 px). {key} = ESC",{key}  LEAVE
+ui.pause.map,"Pause menu: close the menu and open the floor map (420 x 86 button, 40 pt). Only shown once the map is unlocked. Noun",MAP

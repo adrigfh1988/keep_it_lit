@@ -189,6 +189,39 @@ MonoBehaviour:
     m_Localized: "TE HA O\xCDDO."
     m_Metadata:
       m_Items: []
+  - m_Id: 82051891892224
+    m_Localized: ENCUENTRA {n} LLAVES PARA EL ASCENSOR
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763196
+  - m_Id: 82051979972608
+    m_Localized: RECUERDA LOS CASILLEROS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82051979972609
+    m_Localized: CONOCE LAS BOTELLAS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82051979972610
+    m_Localized: HA APRENDIDO LA OSCURIDAD.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82051979972611
+    m_Localized: TE OYE CORRER.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 113530231492608
+    m_Localized: "SI ALGO EST\xC1 MAL, VUELVE. SI NO, SIGUE ANDANDO."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 113530315378688
+    m_Localized: RECUERDAS EL LABERINTO.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 113530315378689
+    m_Localized: TE DEJA IR. UNA VEZ.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -207,3 +240,4 @@ MonoBehaviour:
         - id: 7993049387034
         - id: 7993049387035
         - id: 7993049387037
+        - id: 82051891892224

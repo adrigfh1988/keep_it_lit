@@ -189,6 +189,39 @@ MonoBehaviour:
     m_Localized: "\xC7A VOUS A ENTENDU."
     m_Metadata:
       m_Items: []
+  - m_Id: 82051891892224
+    m_Localized: "TROUVER {n} CL\xC9S POUR L'ASCENSEUR"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763194
+  - m_Id: 82051979972608
+    m_Localized: "\xC7A SE SOUVIENT DES CASIERS."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82051979972609
+    m_Localized: "\xC7A CONNA\xCET LES BOUTEILLES."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82051979972610
+    m_Localized: "\xC7A A APPRIS L'OBSCURIT\xC9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82051979972611
+    m_Localized: "\xC7A VOUS ENTEND COURIR."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 113530231492608
+    m_Localized: SI QUELQUE CHOSE CLOCHE, REVENEZ SUR VOS PAS. SINON, CONTINUEZ.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 113530315378688
+    m_Localized: VOUS VOUS SOUVENEZ DU LABYRINTHE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 113530315378689
+    m_Localized: "\xC7A VOUS LAISSE PARTIR. UNE FOIS."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -207,3 +240,4 @@ MonoBehaviour:
         - id: 7993049387034
         - id: 7993049387035
         - id: 7993049387037
+        - id: 82051891892224

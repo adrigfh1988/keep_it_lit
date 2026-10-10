@@ -136,3 +136,4 @@ ui.objective.label,OBJECTIF
 ui.dialogue.hint_next,{key}  CONTINUER    ·    {back}  QUITTER
 ui.dialogue.hint_end,{key}  TERMINER    ·    {back}  QUITTER
 ui.dialogue.hint_leave,{key}  QUITTER
+ui.pause.map,CARTE

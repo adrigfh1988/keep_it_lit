@@ -164,10 +164,24 @@ public class DreadDirector : MonoBehaviour
     [Tooltip("How far in front of a wall lamp the line-of-sight ray ends (m)")]
     [SerializeField] private float lampSurfaceInset = 0.3f;
 
+    [Header("F105 C5 - lure star")]
+    [Tooltip("The hunter is put this far back along the player's trail when the lure star is taken (m)")]
+    [SerializeField] private float lureRelocateDistance = 9f;
+    [Tooltip("Lamps within this of the lure star blink when it is taken (m)")]
+    [SerializeField] private float lureLampRadius = 8f;
+    [Tooltip("Chance that a lamp in that ring dies instead of only blinking")]
+    [Range(0f, 1f)]
+    [SerializeField] private float lureLampDeathChance = 0.5f;
+    [SerializeField] private float lureBlinkSeconds = 0.6f;
+    [Tooltip("A hunter lying in wait for the lure within this of it (m) goes straight to a chase instead of a search")]
+    [SerializeField] private float lureAmbushRadius = 6f;
+
     // F103 A5: the jittered beats keep these minimum gaps, so the stutter, the cue and the warp stay in order and apart.
     private const float MinCueGapSeconds = 0.05f;
     private const float MinWarpGapSeconds = 0.3f;
     private const float HumHoldTailSeconds = 0.3f;
+    // F45: an ambush that ended on a pickup this recently is the one this pickup ended (TensionDirector's HearNoise runs before this handler).
+    private const float AmbushJustEndedSeconds = 0.5f;
 
     private static string Loc(string key, string fallback) => L10n.Has(key) ? L10n.T(key) : fallback;
 
@@ -962,17 +976,73 @@ public class DreadDirector : MonoBehaviour
             }
         }
 
+        // F105 C5: the lure answers at once instead of arming a relocation - and before the ambush test below, since
+        // a lure taken under an ambush is exactly the case that turns into a chase.
+        if (_terror.lureStars && _maze != null && _maze.IsLure(at))
+        {
+            HandleLureTaken(at);
+            return;
+        }
+
         // F45: the hunter is already stepping out toward this exact pickup (TensionDirector's own
         // Pickup.OnCollectedAt subscription - added earlier, so it runs first - just called HearNoise,
         // which ends a matching ambush synchronously and stamps LastAmbushEndTime). Warping it elsewhere
         // would waste that beat, so this pickup arms no relocation.
-        if (_follower != null && Time.time - _follower.LastAmbushEndTime < 0.5f) return;
+        if (_follower != null && Time.time - _follower.LastAmbushEndTime < AmbushJustEndedSeconds) return;
 
         // Arm one relocation (23.2 rule 6). The rules (progress, not chasing, not hidden, not hunting, a
         // valid spot) are still checked every tick inside the window; if they never pass, the window
         // simply closes and this star produced no relocation.
         _armedUntil = Time.time + armedWindowSeconds;
         _checkTimer = 0f;
+    }
+
+    // ---------------------------------------------------------------- F105 C5: the lure star
+
+    /// <summary>
+    /// F105 C5: the lure star was taken. A hunter lying in wait for it goes straight to a chase (sight is still needed to capture);
+    /// otherwise it is put back along the player's trail, as an honest phantom would. Either way the lamps around the star blink
+    /// and some die. Nothing is announced: the trap is in the blood under the star and the dark that follows.
+    /// </summary>
+    private void HandleLureTaken(Vector3 at)
+    {
+        bool chasing = TryLureChase(at);
+        bool relocated = !chasing && TryRelocateOnTrail(lureRelocateDistance);
+        int dead = KillLampsAroundLure(at);
+        _terror.Log($"Lure star taken (chase: {chasing}, relocated: {relocated}, lamps killed: {dead})", this);
+    }
+
+    private bool TryLureChase(Vector3 at)
+    {
+        if (_follower == null || _player == null || BailedOut()) return false;
+
+        bool lyingInWait = _follower.IsAmbushing
+            || (_follower.LastAmbushEndedOnPickup && Time.time - _follower.LastAmbushEndTime < AmbushJustEndedSeconds);
+        return lyingInWait && FlatDistance(_follower.transform.position, at) <= lureAmbushRadius && _follower.StartLureChase(_player.position);
+    }
+
+    /// <summary>Blinks every live lamp within lureLampRadius of the star and kills about half of the non-locker ones that no other live star depends on. Returns how many died.</summary>
+    private int KillLampsAroundLure(Vector3 at)
+    {
+        if (_maze == null) return 0;
+
+        IReadOnlyList<WallLamp> lamps = _maze.Lamps;
+        float radiusSqr = lureLampRadius * lureLampRadius;
+        int dead = 0;
+        for (int i = 0; i < lamps.Count; i++)
+        {
+            WallLamp lamp = lamps[i];
+            if (lamp == null || lamp.IsDead || !lamp.IsPowered) continue;
+            if ((lamp.transform.position - at).sqrMagnitude > radiusSqr) continue;
+
+            lamp.Blink(lureBlinkSeconds);
+            if (lamp.IsLockerLamp || Random.value >= lureLampDeathChance || _maze.IsNearLiveStar(lamp.transform.position, _maze.LureStar)) continue;
+
+            lamp.Kill(deathFadeSeconds);
+            dead++;
+        }
+
+        return dead;
     }
 
     private void HandleAllStarsCollected()

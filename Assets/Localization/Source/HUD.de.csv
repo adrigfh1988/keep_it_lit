@@ -42,3 +42,4 @@ hud.prompt.ring_bell,GLOCKE LÄUTEN
 hud.prompt.open_valve,VENTIL ÖFFNEN
 hud.prompt.light_candles,KERZEN ANZÜNDEN
 hud.prompt.use_terminal,TERMINAL BENUTZEN
+hud.prompt.map,KARTE

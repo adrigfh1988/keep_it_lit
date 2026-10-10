@@ -210,6 +210,10 @@ MonoBehaviour:
     m_Localized: USE TERMINAL
     m_Metadata:
       m_Items: []
+  - m_Id: 113530869026816
+    m_Localized: MAP
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -77,3 +77,4 @@ shop.payout.floor_cleared,PLANTA {floor} SUPERADA
 shop.payout.shards_found,FRAGMENTOS ENCONTRADOS  {n} x {value}  (ya son tuyos)
 shop.payout.consolation_title,CONSOLACIÓN
 shop.payout.consolation,CONSOLACIÓN  {percent}% de {stars} {stars:plural:estrella|estrellas}
+shop.temperament.final,No dejará que te vayas.

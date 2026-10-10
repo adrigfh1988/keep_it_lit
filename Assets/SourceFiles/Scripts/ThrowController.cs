@@ -106,5 +106,9 @@ public class ThrowController : MonoBehaviour
         ThrowableItem projectile = Instantiate(template, origin, Quaternion.identity, _mazeRoot);
         projectile.gameObject.SetActive(true);
         projectile.Launch(origin, velocity, _hunter, _glassPatchTemplate, _mazeRoot);
+        Thrown?.Invoke();
     }
+
+    /// <summary>F105 C6: raised each time an item is thrown (HabitTracker counts them). Instance event, so a scene reload drops its subscribers with it.</summary>
+    public event System.Action Thrown;
 }

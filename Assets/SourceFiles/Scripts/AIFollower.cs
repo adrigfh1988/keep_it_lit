@@ -134,6 +134,42 @@ public class AIFollower : MonoBehaviour
     [Range(0f, 1f)]
     [SerializeField] private float peekChanceScale = 0.6f;
 
+    [Header("F105 C6 - where it was noisy")]
+    [Tooltip("Seconds for a full cell heat to cool to zero")]
+    [SerializeField] private float cellHeatDecaySeconds = 180f;
+    [Tooltip("Heat added to the cell the player was heard in")]
+    [SerializeField] private float cellHeatHeard = 0.4f;
+    [Tooltip("Heat added to each of its four neighbours when the player is heard")]
+    [SerializeField] private float cellHeatHeardNeighbour = 0.2f;
+    [Tooltip("Heat added to the cell the player was seen in (at most every SightHeatInterval)")]
+    [SerializeField] private float cellHeatSeen = 0.3f;
+    [Tooltip("Chance of a wander leg heading for the warmest wander point, at full threat (scaled down by the threat dial)")]
+    [Range(0f, 1f)]
+    [SerializeField] private float heatWanderBias = 0.35f;
+    [Tooltip("A wander point's score is its cell heat minus its distance divided by this (m); the warmest score wins")]
+    [SerializeField] private float heatDistanceFalloff = 50f;
+    [Tooltip("A cell colder than this is not worth a detour")]
+    [SerializeField] private float minWanderHeat = 0.05f;
+
+    [Header("F105 C6 - learned habits (per level, 0..3)")]
+    [Tooltip("Lockers: added to the peek chance scale per level")]
+    [SerializeField] private float lockerPeekChancePerLevel = 0.2f;
+    [Tooltip("Lockers: extra seconds standing outside a hot locker per level")]
+    [SerializeField] private float lockerStandOutsidePerLevel = 2f;
+    [Tooltip("Lockers: extra metres on the radius within which a search checks hiding spots, per level")]
+    [SerializeField] private float lockerSearchRadiusPerLevel = 2f;
+    [Tooltip("Lockers: from this level it may peek twice a floor instead of once")]
+    [SerializeField] private int lockerSecondPeekLevel = 2;
+    [Tooltip("Throws: from level 1, a throw heard within this many seconds of the last heard one is ignored")]
+    [SerializeField] private float throwIgnoreWindow = 20f;
+    [Tooltip("Throws: chance an investigated throw searches the player's position instead of the impact, at levels 2 and 3")]
+    [SerializeField] private float throwSeesThroughLevel2 = 0.3f;
+    [SerializeField] private float throwSeesThroughLevel3 = 0.5f;
+    [Tooltip("Dark: view distance is multiplied by 1 + this x level while the player's torch is off")]
+    [SerializeField] private float darkViewPerLevel = 0.15f;
+    [Tooltip("Sprint: the noise radius is multiplied by 1 + this x level while the player sprints")]
+    [SerializeField] private float sprintNoisePerLevel = 0.15f;
+
     [Header("Ambush (F45)")]
     [Range(0f, 1f)] [SerializeField] private float ambushBias = 0.75f;
     [SerializeField] private float ambushWaitSeconds = 90f;
@@ -268,8 +304,13 @@ public class AIFollower : MonoBehaviour
     // for sight-driven heat, and the dwell bookkeeping for a stand-outside-a-hot-spot.
     private float[] _hidingHeat = new float[0];
     private float[] _hidingHeatAt = new float[0];
-    private bool _peekedThisFloor;
+    private int _peeksThisFloor;
     private float _nextSightHeatTime;
+    // F105 C6: where on this floor it heard or saw the player (layer 1), the player's controller for the sprint habit,
+    // and when the last throw it acted on was heard (layer 2, Throws).
+    private readonly HunterHeatMap _cellHeat = new HunterHeatMap();
+    private ThirdPersonController _playerController;
+    private float _lastThrowHeardTime = -999f;
     private int _hotDwellSpot = -1;
     private readonly List<Vector3> _hotSpotBuffer = new List<Vector3>();
     private bool _hasSight;
@@ -458,6 +499,7 @@ public class AIFollower : MonoBehaviour
     public void SetAmbushProvider(MazeGenerator maze)
     {
         _maze = maze;
+        if (maze != null) _cellHeat.Configure(maze.GridWidth, maze.GridHeight, cellHeatDecaySeconds); // F105 C6
     }
 
     /// <summary>F73: called once by MazeGenerator.SetUpAtmosphere, after the torch exists. May be null.</summary>
@@ -597,6 +639,7 @@ public class AIFollower : MonoBehaviour
 
         // It must never be able to out-sprint the player, whatever the Inspector or a saved scene says.
         ThirdPersonController player = target != null ? target.GetComponent<ThirdPersonController>() : null;
+        _playerController = player;
         if (player != null)
         {
             float cap = player.SprintSpeed * maxSpeedFraction;
@@ -751,6 +794,27 @@ public class AIFollower : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// F105 C5: the lure star was taken under this hunter's ambush - it goes straight to a chase on the player's position instead of a
+    /// search. Sight is still what captures, and a chase without it times out into a search as any other (UpdateStateMachine's
+    /// lost-sight timer). Leaves an ambush properly, and raises ChaseStateChanged itself since the state machine only sees the change
+    /// next tick. False (nothing done) when already chasing or captured, or outside a run.
+    /// </summary>
+    public bool StartLureChase(Vector3 playerPosition)
+    {
+        if (_agent == null || !_agent.isOnNavMesh || _state == State.Captured || _state == State.Chase || GameFlow.IsInIntake || GameFlow.IsInHub) return false;
+
+        if (_state == State.Ambush) LeaveAmbush();
+        CancelHeardYouBeat();
+        _lastKnownPosition = playerPosition;
+        _lostSightTimer = EffectiveLoseSightTime;
+        _listenUntil = -1f;
+        _agent.isStopped = false;
+        _state = State.Chase;
+        ChaseStateChanged?.Invoke(true);
+        return true;
+    }
+
     /// <summary>F104 B1: true while the DreadMeter's backoff runs. The hunch bias, ambushes and the relocation telegraphs (DreadDirector) stand down, and hearing is halved.</summary>
     public bool IsBackingOff => Time.time < _backoffUntil;
 
@@ -811,6 +875,77 @@ public class AIFollower : MonoBehaviour
     public void ApplyTerror(TerrorSettings terror)
     {
         _terror = terror ?? new TerrorSettings();
+    }
+
+    // ---------------------------------------------------------------- F105 C6: what it has learned
+
+    /// <summary>F105 C6: how well it has learned a habit this campaign (0 with the learningHunter flag off).</summary>
+    private int Learned(HunterMemory.Habit habit) => _terror.learningHunter ? HunterMemory.Level(habit) : 0;
+
+    private float PeekChanceScale => peekChanceScale + lockerPeekChancePerLevel * Learned(HunterMemory.Habit.Lockers);
+    private float StandOutsideSeconds => standOutsideSeconds + lockerStandOutsidePerLevel * Learned(HunterMemory.Habit.Lockers);
+    private float HidingSpotSearchRadius => hidingSpotSearchRadius + lockerSearchRadiusPerLevel * Learned(HunterMemory.Habit.Lockers);
+    private int MaxPeeksPerFloor => Learned(HunterMemory.Habit.Lockers) >= lockerSecondPeekLevel ? 2 : 1;
+
+    /// <summary>F105 C6 layer 1: the player was heard (center + neighbours) or seen (center only) at `at`.</summary>
+    private void AddCellHeat(Vector3 at, float center, float neighbour)
+    {
+        if (!_terror.learningHunter || _maze == null || !_maze.TryWorldToCell(at, out Vector2Int cell)) return;
+
+        _cellHeat.AddWithNeighbours(cell.x, cell.y, center, neighbour, Time.time);
+    }
+
+    /// <summary>
+    /// F105 C6 layer 1: the wander point whose cell is warmest (heat minus distance / heatDistanceFalloff), or -1 if none is
+    /// warm enough to be worth a detour. The point it is standing at is skipped.
+    /// </summary>
+    private int WarmestWanderPoint()
+    {
+        if (_maze == null) return -1;
+
+        int best = -1;
+        float bestScore = float.MinValue;
+        for (int i = 0; i < _wanderPoints.Count; i++)
+        {
+            if (i == _wanderIndex || !_maze.TryWorldToCell(_wanderPoints[i], out Vector2Int cell)) continue;
+
+            float heat = _cellHeat.HeatAt(cell.x, cell.y, Time.time);
+            if (heat < minWanderHeat) continue;
+
+            float score = heat - FlatDirection(_wanderPoints[i] - transform.position).magnitude / heatDistanceFalloff;
+            if (score <= bestScore) continue;
+            bestScore = score;
+            best = i;
+        }
+
+        return best;
+    }
+
+    /// <summary>
+    /// F105 C6 layer 2 (Throws): a thrown item landed at `impact`. It goes through HearNoise like any one-off sound, but a hunter
+    /// that has learned the bottles (level 1+) ignores a throw heard within throwIgnoreWindow of the last one it acted on, and at
+    /// levels 2-3 an investigated throw sometimes searches the player's own position instead. Returns true if it was heard.
+    /// </summary>
+    public bool HearThrow(Vector3 impact, float radius)
+    {
+        int level = Learned(HunterMemory.Habit.Throws);
+        if (level >= 1 && Time.time - _lastThrowHeardTime < throwIgnoreWindow)
+        {
+            _terror.Log($"Hunter ignores a second throw (level {level})", this);
+            return false;
+        }
+
+        if (!HearNoise(impact, radius)) return false;
+
+        _lastThrowHeardTime = Time.time;
+        float seesThrough = level >= 3 ? throwSeesThroughLevel3 : level == 2 ? throwSeesThroughLevel2 : 0f;
+        if (target != null && Random.value < seesThrough)
+        {
+            // HearNoise already entered the search at the impact; re-aim it at the player. No second "heard you" beat.
+            ForceLastKnownPosition(target.position, false);
+            _terror.Log($"Hunter sees through the throw (level {level}) and searches the player", this);
+        }
+        return true;
     }
 
     /// <summary>
@@ -878,6 +1013,7 @@ public class AIFollower : MonoBehaviour
         {
             _nextSightHeatTime = Time.time + SightHeatInterval;
             AddHeatNear(target.position);
+            AddCellHeat(target.position, cellHeatSeen, 0f);
         }
         TrackSightSince();
         UpdateTorchBeamState();
@@ -954,10 +1090,13 @@ public class AIFollower : MonoBehaviour
         // further still - the whole point of an ambush is that a sprint gives you away.
         float noiseRadius = _stealth.NoiseRadius;
         if (noiseRadius <= 0.01f) return;
+        // F105 C6: a hunter that has learned the player's sprint hears a run from farther off.
+        if (_playerController != null && _playerController.IsSprinting) noiseRadius *= 1f + sprintNoisePerLevel * Learned(HunterMemory.Habit.Sprint);
         float hearingScale = EffectiveHearingScale * (_state == State.Ambush ? ambushHearingBoost : 1f);
         if (!CanHear(target.position, noiseRadius * hearingScale)) return;
 
         AddHeatNear(target.position);
+        AddCellHeat(target.position, cellHeatHeard, cellHeatHeardNeighbour);
         _lastKnownPosition = target.position;
         // Chase and Captured are already excluded - Chase has sight of the exact same player, and its
         // own sight-driven timers own its transitions, not a background noise check.
@@ -1008,6 +1147,7 @@ public class AIFollower : MonoBehaviour
         if (!CanHear(at, radius * EffectiveHearingScale)) return false;
 
         AddHeatNear(at);
+        AddCellHeat(at, cellHeatHeard, cellHeatHeardNeighbour);
         _lastKnownPosition = at;
         if (_state != State.Chase)
         {
@@ -1055,6 +1195,8 @@ public class AIFollower : MonoBehaviour
         // A player with their flashlight off is much harder to pick out. Light affects how far, not
         // where - the cone and the line of sight below are unchanged.
         float view = viewDistance * (_stealth != null ? _stealth.VisibilityMultiplier : 1f);
+        // F105 C6: a hunter that has learned the dark sees farther when the torch is off.
+        if (_stealth != null && !_stealth.FlashlightOn) view *= 1f + darkViewPerLevel * Learned(HunterMemory.Habit.Dark);
 
         Vector3 flat = FlatDirection(chest - eye);
         if (flat.sqrMagnitude > view * view)
@@ -1164,7 +1306,7 @@ public class AIFollower : MonoBehaviour
 
         _hotDwellSpot = spot;
         _terror.Log("Stands outside locker", this);
-        return standOutsideSeconds;
+        return StandOutsideSeconds;
     }
 
     /// <summary>
@@ -1176,13 +1318,13 @@ public class AIFollower : MonoBehaviour
     private bool TryPeek(int spot)
     {
         _hotDwellSpot = -1;
-        if (_peekedThisFloor || _stealth == null || !_stealth.Hidden) return false;
+        if (_peeksThisFloor >= MaxPeeksPerFloor || _stealth == null || !_stealth.Hidden) return false;
 
         IHidingSpot hiding = _stealth.CurrentHidingSpot;
         if (hiding == null || Vector3.Distance(hiding.FrontPosition, _hidingSpots[spot]) > HideMatchRadius) return false;
-        if (Random.value >= HeatOf(spot) * peekChanceScale) return false;
+        if (Random.value >= HeatOf(spot) * PeekChanceScale) return false;
 
-        _peekedThisFloor = true;
+        _peeksThisFloor++;
         hiding.Peek(peekSeconds);
         _presence?.RevealEyes(peekSeconds + PeekEyeLinger);
         _searchDwellTimer = peekSeconds;
@@ -1461,7 +1603,7 @@ public class AIFollower : MonoBehaviour
         List<Vector3> nearbyHidingSpots = new List<Vector3>();
         foreach (Vector3 spot in _hidingSpots)
         {
-            if (Vector3.Distance(spot, _lastKnownPosition) <= hidingSpotSearchRadius)
+            if (Vector3.Distance(spot, _lastKnownPosition) <= HidingSpotSearchRadius)
             {
                 nearbyHidingSpots.Add(spot);
             }
@@ -1579,6 +1721,14 @@ public class AIFollower : MonoBehaviour
         if (next < 0 && _patrolTargets != null && Random.value < EffectivePatrolBias)
         {
             next = NearestCellToLivePatrolTarget();
+        }
+
+        // F105 C6 layer 1: after the hunch and the patrol, before the random pick - a share of legs revisit where the
+        // player was noisy. Not while it is backing off (B1), and scaled by the threat dial.
+        if (next < 0 && _terror.learningHunter && !IsBackingOff && Random.value < heatWanderBias * SpeedThreat)
+        {
+            next = WarmestWanderPoint();
+            if (next >= 0) _terror.Log("Hunter heads for where you were noisy", this);
         }
 
         if (next < 0)

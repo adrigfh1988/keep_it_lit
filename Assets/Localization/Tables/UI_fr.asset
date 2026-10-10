@@ -591,6 +591,10 @@ MonoBehaviour:
     m_Localized: "EFFETS D'\xC9CRAN"
     m_Metadata:
       m_Items: []
+  - m_Id: 135694968066048
+    m_Localized: CARTE
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

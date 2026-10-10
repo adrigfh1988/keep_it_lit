@@ -36,6 +36,13 @@ public class SaveData
 
     // F87 ContractState. Ids are stored +1 so a save written before F87 (fields missing, read as 0) means "none".
     public int contractActivePlus1, contractFloor, contractOfferAPlus1, contractOfferBPlus1;
+
+    // F105 C6 HunterMemory: a level (0..3) per habit, and the lessons not yet announced as a bitmask of (1 << Habit).
+    // Missing in a save from before F105 (read as 0 = a hunter that has learned nothing), so SaveSystem.Version was not bumped.
+    public int hunterLockers, hunterThrows, hunterDark, hunterSprint, hunterPendingMask;
+
+    // F105 C4 LoopCorridor.UsedThisCampaign: the looping corridor has already appeared on a cleared floor. Missing in an older save (false = it may still appear), so no Version bump.
+    public bool loopCorridorUsed;
 }
 
 /// <summary>
@@ -153,6 +160,8 @@ public static class SaveSystem
             LoreArchive.CaptureTo(d);
             DreadDirector.CaptureTo(d);
             ContractState.CaptureTo(d);
+            HunterMemory.CaptureTo(d);
+            LoopCorridor.CaptureTo(d);
 
             Store.Write(JsonUtility.ToJson(d));
         }
@@ -187,6 +196,8 @@ public static class SaveSystem
         LoreArchive.RestoreFrom(d);
         DreadDirector.RestoreFrom(d);
         ContractState.RestoreFrom(d);
+        HunterMemory.RestoreFrom(d);
+        LoopCorridor.RestoreFrom(d);
 
         GameFlow.CurrentFloor = d.floor;
         CopyRolledObjectives(d);

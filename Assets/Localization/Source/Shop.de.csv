@@ -77,3 +77,4 @@ shop.payout.floor_cleared,ETAGE {floor} GESCHAFFT
 shop.payout.shards_found,SPLITTER GEFUNDEN  {n} x {value}  (schon deins)
 shop.payout.consolation_title,TROSTPREIS
 shop.payout.consolation,TROSTPREIS  {percent}% von {stars} {stars:plural:Stern|Sternen}
+shop.temperament.final,Es lässt dich nicht gehen.

@@ -39,3 +39,11 @@ sub.banner.restore_fuses,RÉTABLIR {n} FUSIBLES
 sub.banner.find_keys,TROUVER {n} CLÉS POUR LA TRAPPE
 sub.banner.lockdown,CONFINEMENT DE SÉCURITÉ
 sub.banner.rule,{name} — {description}
+sub.banner.find_keys_lift,TROUVER {n} CLÉS POUR L'ASCENSEUR
+sub.hunter.learned_lockers,ÇA SE SOUVIENT DES CASIERS.
+sub.hunter.learned_throws,ÇA CONNAÎT LES BOUTEILLES.
+sub.hunter.learned_dark,ÇA A APPRIS L'OBSCURITÉ.
+sub.hunter.learned_sprint,ÇA VOUS ENTEND COURIR.
+sub.loop.rule,"SI QUELQUE CHOSE CLOCHE, REVENEZ SUR VOS PAS. SINON, CONTINUEZ."
+sub.loop.reward,VOUS VOUS SOUVENEZ DU LABYRINTHE.
+sub.loop.second_wind,ÇA VOUS LAISSE PARTIR. UNE FOIS.

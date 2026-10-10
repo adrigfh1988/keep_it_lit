@@ -26,6 +26,9 @@ public class WallLamp : MonoBehaviour
     private Renderer _renderer;
     private MaterialPropertyBlock _block;
     private Color _emissionBaseColor;
+    private Color _lightBaseColor;
+    private Color _tintColor;
+    private bool _tinted;
     private float _base;
     private bool _faulty;
     private float _phase;
@@ -73,6 +76,7 @@ public class WallLamp : MonoBehaviour
     public void Configure(Light light, Renderer fixtureRenderer, float baseIntensity, bool faulty, int phase, bool isLockerLamp)
     {
         _light = light;
+        _lightBaseColor = light != null ? light.color : Color.white;
         _renderer = fixtureRenderer;
         _base = baseIntensity;
         _faulty = faulty;
@@ -132,6 +136,29 @@ public class WallLamp : MonoBehaviour
         _dying = true;
         _killFadeSeconds = Mathf.Max(0.1f, fadeSeconds);
         _killTimer = 0f;
+    }
+
+    /// <summary>F106: dyes the lamp - its light and its glass - until <see cref="ClearTint"/>. The brightness and the flicker are the lamp's own.</summary>
+    public void SetTint(Color tint)
+    {
+        _tinted = true;
+        _tintColor = tint;
+        if (_light != null) _light.color = tint;
+    }
+
+    /// <summary>F106: puts the light back to the colour it was configured with.</summary>
+    public void ClearTint()
+    {
+        if (!_tinted) return;
+
+        _tinted = false;
+        if (_light != null) _light.color = _lightBaseColor;
+    }
+
+    /// <summary>The glass's emission at full brightness: the material's own, or the tint at the same strength.</summary>
+    private Color EmissionColor()
+    {
+        return _tinted ? _tintColor * _emissionBaseColor.maxColorComponent : _emissionBaseColor;
     }
 
     /// <summary>
@@ -277,7 +304,7 @@ public class WallLamp : MonoBehaviour
             // A property block rather than an instance material: every lamp shares one Material, so
             // writing to it directly would flicker every other lamp in lockstep.
             _renderer.GetPropertyBlock(_block ??= new MaterialPropertyBlock());
-            _block.SetColor("_EmissionColor", _emissionBaseColor * k);
+            _block.SetColor("_EmissionColor", EmissionColor() * k);
             _renderer.SetPropertyBlock(_block);
         }
     }

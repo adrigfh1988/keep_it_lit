@@ -17,6 +17,8 @@ public class ChaseSetPiece : HubSetPiece
     [Tooltip("Trigger box (world AABB used) over the Surgery.")]
     [SerializeField] private BoxCollider endZone;
     [SerializeField] private float riseSeconds = 3.2f;
+    [Tooltip("How long the IT IS AWAKE. RUN TO THE SURGERY. line stays up when the chase starts (s).")]
+    [SerializeField] private float runLineSeconds = 3f;
 
     private enum State { Armed, Chasing, Done }
     private State _state;
@@ -94,6 +96,9 @@ public class ChaseSetPiece : HubSetPiece
         pursuer.StartRise(riseSeconds, Rearm);
         if (Hub != null && Hub.Ambience != null) Hub.Ambience.SetUrgentOverride(GameAudio.Library.chaseMusic.First()); // F97: the recorded chase loop (empty slot = the usual escape track)
         SetUrgency(1f);
+        // World text: where the chase ends. Without it players ran to the floor-4 mission giver (Dr. Weiss, 6 m short of the end zone),
+        // who refuses to talk while the pursuer is after them, and the chase seemed endless (10 Oct 2026).
+        Hub.SubtitleLine(L10n.T("hub.chase.run"), runLineSeconds);
     }
 
     private void End()

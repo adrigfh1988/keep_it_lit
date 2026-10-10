@@ -13,7 +13,7 @@ using UnityEngine.AI;
 /// GameManager counts the Pickup objects, RespawnPlayer records the spawn position.
 /// </summary>
 [DefaultExecutionOrder(-100)]
-public class MazeGenerator : MonoBehaviour
+public partial class MazeGenerator : MonoBehaviour
 {
     [Header("Maze")]
     [Tooltip("Number of cells along X")]
@@ -180,6 +180,10 @@ public class MazeGenerator : MonoBehaviour
     [Tooltip("One switch per Tier A terror feature, plus the [Terror] Console log. Spec: plannings/maze-terror-spec.md")]
     [SerializeField] private TerrorSettings terror = new TerrorSettings();
 
+    [Header("F105 C9 - narrow beam")]
+    [Tooltip("The floor's fog density is multiplied by this while TerrorSettings.narrowBeam is on, so a narrower beam also sees a little less far")]
+    [SerializeField, Min(1f)] private float narrowBeamFogScale = 1.15f;
+
     [Header("Door buttons")]
     [Tooltip("A door's button goes on a wall the player can see from in front of the door: a cell in a straight open line from it, at most this many cells away (10 Oct 2026 - a button out of sight turned a Lockdown floor into a hunt for a switch). Only when no such wall is free does it go anywhere farther.")]
     [SerializeField, Min(1)] private int buttonSightCells = 4;
@@ -308,6 +312,12 @@ public class MazeGenerator : MonoBehaviour
     /// <summary>The seed this maze was actually built from, whether it came from the Inspector, a retry or the clock.</summary>
     public int UsedSeed { get; private set; }
 
+    /// <summary>Cells along X (F105: the hunter's heat map is sized from it).</summary>
+    public int GridWidth => width;
+
+    /// <summary>Cells along Z (F105: the hunter's heat map is sized from it).</summary>
+    public int GridHeight => height;
+
     /// <summary>World size of one cell (F71: DreadDirector uses this to keep a kill-wave away from a star).</summary>
     public float CellSize => cellSize;
     /// <summary>Debug: everything to collect is packed next to the start (see the Inspector tooltip). MazeEscape reads it to open the hatch next to the player.</summary>
@@ -352,11 +362,17 @@ public class MazeGenerator : MonoBehaviour
     /// </summary>
     public bool IsNearLiveStar(Vector3 position)
     {
+        return IsNearLiveStar(position, null);
+    }
+
+    /// <summary>F105 C5: as <see cref="IsNearLiveStar(Vector3)"/>, ignoring `except` - the lure star is still alive while its own pickup event runs, and must not shield the lamps around it.</summary>
+    public bool IsNearLiveStar(Vector3 position, Transform except)
+    {
         float threshold = cellSize * 1.5f; // adjacent cell centres are one cellSize apart
         for (int i = 0; i < _stars.Count; i++)
         {
             Transform star = _stars[i];
-            if (star != null && Vector3.Distance(position, star.position) <= threshold) return true;
+            if (star != null && star != except && Vector3.Distance(position, star.position) <= threshold) return true;
         }
 
         return false;
@@ -364,6 +380,9 @@ public class MazeGenerator : MonoBehaviour
 
     /// <summary>F103 A6: this floor's Stalker (floors 4-5), or null. DreadDirector refuses a scripted torch failure while it is close.</summary>
     public Stalker Stalker => _stalker;
+
+    /// <summary>F105 C8: the InteractableKit's Stalker template (the player's own robot body, in the Stalker's dark skin), or null. PhantomDirector builds the double's figure from its visuals.</summary>
+    public Stalker StalkerTemplate => interactableKit != null ? interactableKit.Stalker : null;
 
     /// <summary>F45: cell centres two steps from star `starIndex`, around a corner from it - never a straight line to it. Empty for an out-of-range index or a star that sits in a dead end.</summary>
     public IReadOnlyList<Vector3> AmbushCellsFor(int starIndex)
@@ -450,6 +469,8 @@ public class MazeGenerator : MonoBehaviour
         // props run, so BuildWallProps/BuildCeilingProps skip them. +8 is a new offset, never read by
         // anything that existed before this feature.
         BuildSetPieces(new System.Random(usedSeed + 8));
+        BuildSqueeze(); // F105 C3: after the set pieces' reset of _setPieceCells, which it adds its cells to; before the bake, so the inserts carve it
+        ReserveLoopEntrance(); // F105 C4: after BuildSetPieces for the same reason
 
         // +4 is the RNG offset props own (+0 carve, +1 stars, +2 lamps, +3 lockers, +5 shards). One
         // instance is threaded through both prop passes below so the stream stays continuous across the
@@ -466,6 +487,7 @@ public class MazeGenerator : MonoBehaviour
         BuildCeiling();
         BuildCeilingProps(propRng);
         BuildWallLamps();
+        BuildLoopCorridor(); // F105 C4: post-bake and outside the volume, so the hunter's NavMesh never reaches it
 
         // F70, post-bake: flat, collider-less dressing - safe to add after the navmesh has already
         // been carved from the bodies built above.
@@ -476,6 +498,7 @@ public class MazeGenerator : MonoBehaviour
 
         DisableExistingPickups();
         SpawnStars(usedSeed);
+        ChooseLureStar(); // F105 C5: no rng draw, so nothing after it moves
 
         // F72, post-bake: doors/buttons/vaults, after the stars exist (security placement tests that
         // blocking a passage actually cuts a star off) and before the shards (a vault's forced shards
@@ -645,6 +668,8 @@ public class MazeGenerator : MonoBehaviour
         // fields it touches and why that is enough (AIFollower.ApplyDifficulty and SpawnShards both read
         // the mutated profile later in this same Awake).
         RunRules.ApplyToProfile(_profile);
+        // F105 C9: runs before SetUpAtmosphere, so the flag is read here directly rather than through ApplyTerror.
+        if (terror.narrowBeam) _profile.FogDensity *= narrowBeamFogScale;
 
         width = _profile.Width;
         height = _profile.Height;
@@ -764,6 +789,12 @@ public class MazeGenerator : MonoBehaviour
         if (removeDeadEnds) RemoveDeadEnds(rng, new System.Random(usedSeed + 20));
 
         ComputeDistances();
+
+        // F105 C2/C3: topology and geometry choices that must be final before any placement pass. +21 rooms/gallery, +22 squeeze;
+        // both draw nothing (and the maze stays what it was) with their flag off, on floor 1 and on a floor without a theme.
+        BuildRoomsAndGallery(usedSeed);
+        ChooseSqueeze(usedSeed);
+        ChooseLoop(usedSeed); // F105 C4 (+23): the loop's entrance on the maze edge, picked once rooms, gallery and squeeze are final
     }
 
     private int WallCount(int x, int z)
@@ -1072,6 +1103,7 @@ public class MazeGenerator : MonoBehaviour
                 if (x == 0 && z == 0) continue;
                 if (x == aiCell.x && z == aiCell.y) continue;
                 if (_baitDeadEnds.Contains(new Vector2Int(x, z))) continue; // F103 A10: a bait dead end never hosts a locker, its mouth does
+                if (IsLayoutReserved(new Vector2Int(x, z))) continue; // F105 C3 (squeeze), C4 (loop entrance)
 
                 bool northSouth = _wallN[x, z] && _wallS[x, z] && !_wallE[x, z] && !_wallW[x, z];
                 bool eastWest = _wallE[x, z] && _wallW[x, z] && !_wallN[x, z] && !_wallS[x, z];
@@ -1302,15 +1334,20 @@ public class MazeGenerator : MonoBehaviour
         {
             for (int vz = 0; vz <= height; vz++)
             {
-                if (!VertexNeedsPillar(vx, vz)) continue;
-
-                Vector3 position = new Vector3(origin.x + vx * cellSize, FloorTop, origin.z + vz * cellSize);
-                GameObject pillar = Instantiate(_theme.Pillar, position, Quaternion.identity, _pillarsGroup);
-                pillar.SetActive(true);
-                pillar.name = $"Pillar_{vx}_{vz}";
-                pillar.transform.localScale = new Vector3(1f, wallHeight / 4f, 1f);
+                if (VertexNeedsPillar(vx, vz)) SpawnPillar(vx, vz);
             }
         }
+
+        BuildRoomPillars(); // F105 C2
+    }
+
+    private void SpawnPillar(int vx, int vz, Transform parent = null)
+    {
+        Vector3 position = new Vector3(origin.x + vx * cellSize, FloorTop, origin.z + vz * cellSize);
+        GameObject pillar = Instantiate(_theme.Pillar, position, Quaternion.identity, parent != null ? parent : _pillarsGroup);
+        pillar.SetActive(true);
+        pillar.name = $"Pillar_{vx}_{vz}";
+        pillar.transform.localScale = new Vector3(1f, wallHeight / 4f, 1f);
     }
 
     private bool VertexNeedsPillar(int vx, int vz)
@@ -1543,6 +1580,7 @@ public class MazeGenerator : MonoBehaviour
         foreach (Vector2Int cell in candidates)
         {
             if (chosenCells.Count >= _dressing.SetPieceCount) break;
+            if (IsLayoutReserved(cell)) continue; // F105 C3, C4: checked here, not when the candidates are listed, so the +8 shuffle is unchanged
             if (!ChebyshevFarEnough(cell, chosenCells, 3)) continue;
 
             walls.Clear();
@@ -1826,7 +1864,7 @@ public class MazeGenerator : MonoBehaviour
                 int nx = Mathf.Min(fogChunkCells, width - cx), nz = Mathf.Min(fogChunkCells, height - cz);
                 Vector3 size = new Vector3(nx * cellSize, 0f, nz * cellSize);
                 Vector3 centre = new Vector3(origin.x + (cx + nx * 0.5f) * cellSize, FloorTop, origin.z + (cz + nz * 0.5f) * cellSize);
-                int alive = Mathf.Max(2, Mathf.RoundToInt(size.x * size.z * density));
+                int alive = Mathf.Max(2, Mathf.RoundToInt(size.x * size.z * density * FogScaleForChunk(cx, cz, nx, nz))); // F105 C2: thinner over the gallery
 
                 ParticleSystem fog = Instantiate(template, centre, Quaternion.identity, group);
                 fog.name = $"Fog_{cx}_{cz}";
@@ -1886,8 +1924,11 @@ public class MazeGenerator : MonoBehaviour
         Material sharedMaterial = _theme == null ? BuildLampMaterial() : null;
         foreach (Vector2Int cell in cells)
         {
+            if (IsLayoutReserved(cell)) continue; // F105 C3: the inserts hide the walls, the low ceiling the rest; C4: the entrance wall is open
             BuildWallLamp(cell, lockerCellSet.Contains(cell), sharedMaterial, rng);
         }
+
+        BuildGalleryLamp(sharedMaterial, rng); // F105 C2: after every other lamp, so the +2 stream's earlier draws are untouched
     }
 
     private Material BuildLampMaterial()
@@ -1925,14 +1966,39 @@ public class MazeGenerator : MonoBehaviour
         return options[rng.Next(options.Count)];
     }
 
-    private void BuildWallLamp(Vector2Int cell, bool isLockerCell, Material material, System.Random rng)
+    /// <param name="forcedWall">F105 C2: the wall to mount on (a unit direction from the cell centre); zero lets the +2 stream pick one.</param>
+    /// <summary>
+    /// A clone of the theme's lamp, wired and configured. The artist owns the fixture's look; the profile still owns brightness/range
+    /// (stealth exposure depends on them) and colour comes from the theme, not the Inspector default. The caller registers it in whatever
+    /// list it belongs to (F105 C4's corridor lamps are in none of the maze's).
+    /// </summary>
+    private WallLamp CreateThemedLamp(string lampName, Vector3 position, Quaternion rotation, Transform parent, bool faulty, int phase, bool isLockerCell)
+    {
+        WallLamp lamp = Instantiate(_theme.Lamp, position, rotation, parent);
+        lamp.gameObject.SetActive(true);
+        lamp.name = lampName;
+
+        Light light = lamp.LightOrChild;
+        if (light != null)
+        {
+            light.color = _theme.LampColor;
+            light.range = lampRange;
+            light.intensity = lampIntensity;
+            light.shadows = LightShadows.None;
+        }
+
+        lamp.Configure(lampIntensity, faulty, phase, isLockerCell);
+        return lamp;
+    }
+
+    private void BuildWallLamp(Vector2Int cell, bool isLockerCell, Material material, System.Random rng, Vector3 forcedWall = default)
     {
         int x = cell.x;
         int z = cell.y;
         Vector3 cellCenter = CellCenter(x, z);
         float backFaceDistance = cellSize * 0.5f - wallThickness * 0.5f;
 
-        Vector3 wallDirection = ResolveLampWallDirection(cell, isLockerCell, rng);
+        Vector3 wallDirection = forcedWall != Vector3.zero ? forcedWall : ResolveLampWallDirection(cell, isLockerCell, rng);
         if (wallDirection == Vector3.zero) return;
 
         Vector3 position = cellCenter + wallDirection * (backFaceDistance - 0.08f) + Vector3.up * lampHeight;
@@ -1940,23 +2006,8 @@ public class MazeGenerator : MonoBehaviour
 
         if (_theme != null && _theme.Lamp != null)
         {
-            WallLamp themedLamp = Instantiate(_theme.Lamp, position, rotation, _lampsGroup);
-            themedLamp.gameObject.SetActive(true);
-            themedLamp.name = $"WallLamp_{x}_{z}";
-
-            // The artist owns the fixture's look; the profile still owns brightness/range (stealth
-            // exposure depends on them) and colour comes from the theme, not the Inspector default.
-            Light themedLight = themedLamp.LightOrChild;
-            if (themedLight != null)
-            {
-                themedLight.color = _theme.LampColor;
-                themedLight.range = lampRange;
-                themedLight.intensity = lampIntensity;
-                themedLight.shadows = LightShadows.None;
-            }
-
             bool themedFaulty = rng.NextDouble() < _theme.FaultyLampChance;
-            themedLamp.Configure(lampIntensity, themedFaulty, rng.Next(1000), isLockerCell);
+            WallLamp themedLamp = CreateThemedLamp($"WallLamp_{x}_{z}", position, rotation, _lampsGroup, themedFaulty, rng.Next(1000), isLockerCell);
             _lamps.Add(themedLamp);
             _lampCells.Add(cell);
             return;
@@ -2076,7 +2127,7 @@ public class MazeGenerator : MonoBehaviour
             {
                 // Walls are shared, so only the west and south sides are built per cell; the outer
                 // east and north sides are added once on the last column / row.
-                if (_wallW[x, z])
+                if (_wallW[x, z] && !IsLoopOpening(x, z, 3))
                 {
                     SpawnThemedWall(
                         $"Wall_W_{x}_{z}",
@@ -2084,7 +2135,7 @@ public class MazeGenerator : MonoBehaviour
                         Quaternion.Euler(0f, 90f, 0f));
                 }
 
-                if (_wallS[x, z])
+                if (_wallS[x, z] && !IsLoopOpening(x, z, 2))
                 {
                     SpawnThemedWall(
                         $"Wall_S_{x}_{z}",
@@ -2092,7 +2143,7 @@ public class MazeGenerator : MonoBehaviour
                         Quaternion.identity);
                 }
 
-                if (x == width - 1 && _wallE[x, z])
+                if (x == width - 1 && _wallE[x, z] && !IsLoopOpening(x, z, 1))
                 {
                     SpawnThemedWall(
                         $"Wall_E_{x}_{z}",
@@ -2100,7 +2151,7 @@ public class MazeGenerator : MonoBehaviour
                         Quaternion.Euler(0f, 90f, 0f));
                 }
 
-                if (z == height - 1 && _wallN[x, z])
+                if (z == height - 1 && _wallN[x, z] && !IsLoopOpening(x, z, 0))
                 {
                     SpawnThemedWall(
                         $"Wall_N_{x}_{z}",
@@ -2113,10 +2164,17 @@ public class MazeGenerator : MonoBehaviour
 
     private void SpawnThemedWall(string wallName, Vector3 floorCenter, Quaternion rotation)
     {
-        WallPiece wall = Instantiate(_theme.Wall, floorCenter, rotation, _wallsGroup);
+        SpawnThemedWall(wallName, floorCenter, rotation, cellSize + wallThickness, wallHeight, wallThickness);
+    }
+
+    /// <summary>A themed wall piece stretched to the given world size (F105 C3 uses it for the squeeze's inserts, C4 for the corridor, under its own `parent`).</summary>
+    private WallPiece SpawnThemedWall(string wallName, Vector3 floorCenter, Quaternion rotation, float length, float height, float thickness, Transform parent = null)
+    {
+        WallPiece wall = Instantiate(_theme.Wall, floorCenter, rotation, parent != null ? parent : _wallsGroup);
         wall.gameObject.SetActive(true);
         wall.name = wallName;
-        wall.transform.localScale = wall.ScaleFor(cellSize + wallThickness, wallHeight, wallThickness);
+        wall.transform.localScale = wall.ScaleFor(length, height, thickness);
+        return wall;
     }
 
     private void BuildPrimitiveGeometry()
@@ -2198,7 +2256,7 @@ public class MazeGenerator : MonoBehaviour
             {
                 for (int z = 0; z < height; z++)
                 {
-                    Vector3 position = CellCenter(x, z) + Vector3.up * wallHeight;
+                    Vector3 position = CellCenter(x, z) + Vector3.up * CeilingHeightAt(x, z); // F105 C3: lower over the squeeze
                     GameObject tile = Instantiate(_theme.CeilingTile, position, Quaternion.identity, _ceilingGroup);
                     tile.SetActive(true);
                     tile.name = $"Ceiling_{x}_{z}";
@@ -2247,7 +2305,8 @@ public class MazeGenerator : MonoBehaviour
 
     // ---------------------------------------------------------------- navmesh
 
-    private void BuildRuntimeNavMesh()
+    /// <summary>The surface the maze bakes (F105 C3 reads its agent radius before the bake, to size the squeeze). Null when the scene has none.</summary>
+    private NavMeshSurface ResolveNavMeshSurface()
     {
         if (navMeshSurface == null)
         {
@@ -2258,7 +2317,12 @@ public class MazeGenerator : MonoBehaviour
             }
         }
 
-        if (navMeshSurface == null)
+        return navMeshSurface;
+    }
+
+    private void BuildRuntimeNavMesh()
+    {
+        if (ResolveNavMeshSurface() == null)
         {
             Debug.LogWarning("MazeGenerator: no NavMeshSurface in the scene, the AI will not move.", this);
             return;
@@ -2316,6 +2380,7 @@ public class MazeGenerator : MonoBehaviour
                 if (x == 0 && z == 0) continue;
                 if (x == aiCell.x && z == aiCell.y) continue;
                 if (_lockerCells.Contains(new Vector2Int(x, z))) continue;
+                if (IsLayoutReserved(new Vector2Int(x, z))) continue; // F105 C3: nothing is ever worth the squeeze; C4: nor the loop entrance
 
                 // On a bigger grid, two steps from the start is still in plain sight of it
                 if (_distance[x, z] >= Mathf.Max(2, width / 2)) preferred.Add(new Vector2Int(x, z));
@@ -2776,6 +2841,9 @@ public class MazeGenerator : MonoBehaviour
         // door/button/vault already used - see the field doc comment.
         _doorUsedCells.Clear();
         HashSet<Vector2Int> usedCells = _doorUsedCells;
+        usedCells.UnionWith(_squeezeCells); // F105 C3: no shutter, button or vault in the squeeze
+        if (_loopActive) usedCells.Add(_loopEntrance); // F105 C4: nor at the loop entrance
+
         List<Passage> placedDoorPassages = new List<Passage>();
 
         List<(MazeDoor door, Vector2Int startCell)> securityDoors =
@@ -3208,7 +3276,7 @@ public class MazeGenerator : MonoBehaviour
     }
 
     /// <summary>Cells reachable from `from` through open passages without ever entering `avoid`.</summary>
-    private HashSet<Vector2Int> ReachableCellsAvoiding(Vector2Int from, Vector2Int avoid)
+    private HashSet<Vector2Int> ReachableCellsAvoiding(Vector2Int from, Vector2Int avoid, Vector2Int? alsoAvoid = null)
     {
         HashSet<Vector2Int> visited = new HashSet<Vector2Int> { from };
         Queue<Vector2Int> queue = new Queue<Vector2Int>();
@@ -3221,7 +3289,7 @@ public class MazeGenerator : MonoBehaviour
             {
                 if (IsWallClosed(cell.x, cell.y, dir)) continue;
                 Vector2Int n = Neighbour(cell, dir);
-                if (n == avoid || n.x < 0 || n.x >= width || n.y < 0 || n.y >= height) continue;
+                if (n == avoid || n == alsoAvoid || n.x < 0 || n.x >= width || n.y < 0 || n.y >= height) continue;
                 if (!visited.Add(n)) continue;
                 queue.Enqueue(n);
             }
@@ -4561,6 +4629,9 @@ public class MazeGenerator : MonoBehaviour
         // itself in WallLamp.Configure, so it no longer needs this maze's lamp list handed to it.
         if (_profile != null && stamina != null) stamina.SetSprintSeconds(_profile.SprintSeconds);
 
+        // F105 C3: the squeeze was built before the bake; it needs the player's controller, stamina and torch to slow, tire and dim them.
+        BindSqueeze(player, player != null ? player.GetComponent<ThirdPersonController>() : null, stamina, flashlight);
+
         // F72: the one interaction system every door/button/vault pickup goes through. Built here
         // (rather than FirstPersonRig) because it needs the camera, the HUD and the stealth state, all
         // of which exist by this point in SetUpAtmosphere.
@@ -4678,11 +4749,16 @@ public class MazeGenerator : MonoBehaviour
         }
         // 10 Oct 2026: wind gusts and far-off sounds through the maze (Scary Sound FX pack, GameAudioLibrary.mazeWind / mazeFar).
         if (GetComponent<MazeAmbience>() == null) gameObject.AddComponent<MazeAmbience>();
+        // F106: the floor map the loop puzzle rewards (instance state, so a reload locks it again); configured once the pause menu exists, below.
+        FloorMapUi floorMap = FindAnyObjectByType<FloorMapUi>();
+        if (floorMap == null) floorMap = gameObject.AddComponent<FloorMapUi>();
+        BindLoop(player, player != null ? player.GetComponent<ThirdPersonController>() : null, camera, flashlight, director, GetComponent<MazeAmbience>(), outcome, hud, floorMap); // F105 C4, F106
 
         // F75: the second creature (floors 4-5 only, FloorProfile.HasStalker). Built earlier in Awake
         // (BuildStalker, +16), before the player/camera/flashlight/hunter/HUD/outcome existed -
         // late-bound here, same pattern as the lantern/lore notes above.
         _stalker?.Configure(this, player, flashlight, camera != null ? camera.transform : null, stealth, aiFollower, hud, outcome);
+        _stalker?.ApplyTerror(terror); // F105 C7
         if (_stalker != null && _stalker.TryGetComponent(out StalkerVoice stanVoice)) stanVoice.ShowBubbles = creatureSpeechBubbles;
 
         // F75 shop depth: Focus Lens widens the focused beam and drops its drain penalty for this
@@ -4800,7 +4876,12 @@ public class MazeGenerator : MonoBehaviour
 
             escape.Configure(this, player, FindStarMaterial(), outcome, aiFollower);
             escape.ApplyTerror(terror); // F104 B4
-            if (_profile != null) escape.SetEscapeSeconds(_profile.EscapeSeconds);
+            if (_profile != null)
+            {
+                escape.SetEscapeSeconds(_profile.EscapeSeconds);
+                escape.SetLiftFillSeconds(_profile.LiftFillSeconds); // F105 F5
+                escape.SetForceLift(_profile.ForceLift);
+            }
             // F77: the padlock - the hatch/lift refuses to complete while keys are still missing.
             escape.BindKeyRing(keyRing, hud);
         }
@@ -4825,13 +4906,20 @@ public class MazeGenerator : MonoBehaviour
         PauseMenu pause = FindAnyObjectByType<PauseMenu>();
         if (pause == null) pause = gameObject.AddComponent<PauseMenu>();
 
-        pause.Configure(player, flashlight, menu, outcome, UsedSeed, shopMenu);
+        pause.Configure(player, flashlight, menu, outcome, UsedSeed, shopMenu, floorMap);
+        floorMap.Configure(this, hud, outcome, pause);
 
         // F87: checks the contract taken in the shop for this floor (an instance component, like KeyRing: a reload recreates it).
         ContractTracker contracts = player != null ? player.GetComponent<ContractTracker>() : null;
         if (contracts == null && player != null) contracts = player.gameObject.AddComponent<ContractTracker>();
         if (contracts != null) contracts.Configure(player, stealth, flashlight, aiFollower, hud, menu);
         outcome.BindContracts(contracts);
+
+        // F105 C6: counts the player's habits and, at floor clear, teaches the hunter (an instance component like ContractTracker).
+        HabitTracker habits = player != null ? player.GetComponent<HabitTracker>() : null;
+        if (habits == null && player != null) habits = player.gameObject.AddComponent<HabitTracker>();
+        if (habits != null) habits.Configure(stealth, flashlight, stamina, throwController, hud, terror);
+        outcome.BindHabits(habits);
 
         ConsumableController items = FindAnyObjectByType<ConsumableController>();
         if (items == null) items = gameObject.AddComponent<ConsumableController>();
@@ -4897,7 +4985,7 @@ public class MazeGenerator : MonoBehaviour
 
         List<string> parts = new List<string> { L10n.T("sub.banner.find_stars", ("n", _profile.StarCount)) };
         if (_profile.Has(FloorProfile.Objective.Blackout)) parts.Add(L10n.T("sub.banner.restore_fuses", ("n", _profile.FuseCount)));
-        if (_profile.Has(FloorProfile.Objective.KeyHunt)) parts.Add(L10n.T("sub.banner.find_keys", ("n", _profile.KeyCount)));
+        if (_profile.Has(FloorProfile.Objective.KeyHunt)) parts.Add(L10n.T(_profile.ForceLift ? "sub.banner.find_keys_lift" : "sub.banner.find_keys", ("n", _profile.KeyCount)));
         if (_profile.Has(FloorProfile.Objective.Lockdown)) parts.Add(L10n.T("sub.banner.lockdown"));
         return string.Join(" · ", parts);
     }
@@ -4985,49 +5073,31 @@ public class MazeGenerator : MonoBehaviour
     /// </summary>
     public string DebugMap()
     {
-        if (_wallN == null) return "MazeGenerator.DebugMap: no maze yet - it is built when Play starts.";
+        MazeMapData data = BuildMapData();
+        if (data == null) return "MazeGenerator.DebugMap: no maze yet - it is built when Play starts.";
 
-        // Doors: an id per door (1-9, then A-Z), looked up from either side of its passage.
+        // Doors: their labels are on the snapshot; looked up from either side of the passage.
         Dictionary<(Vector2Int, int), char> doorGlyphs = new Dictionary<(Vector2Int, int), char>();
-        Dictionary<MazeDoor, char> doorIds = new Dictionary<MazeDoor, char>();
-        for (int i = 0; i < _doors.Count; i++)
+        foreach (MazeMapData.DoorInfo door in data.Doors)
         {
-            MazeDoor door = _doors[i];
-            if (door == null || !_doorPassages.TryGetValue(door, out Passage p)) continue;
-
-            char id = i < 9 ? (char)('1' + i) : (char)('A' + i - 9);
-            doorIds[door] = id;
-            doorGlyphs[(p.CellA, p.Dir)] = id;
-            doorGlyphs[(p.CellB, (p.Dir + 2) % 4)] = id;
+            doorGlyphs[(door.CellA, door.Dir)] = door.Id;
+            doorGlyphs[(door.CellB, (door.Dir + 2) % 4)] = door.Id;
         }
 
         // Cell marks, most important first; a cell shows at most three characters (the legend lists everything).
         string[,] marks = new string[width, height];
-        void Mark(Vector3 world, string token)
+        if (data.HasPlayer) marks[data.PlayerCell.x, data.PlayerCell.y] += "@";
+        if (aiFollower != null && TryWorldToCell(aiFollower.transform.position, out Vector2Int hunterCell)) marks[hunterCell.x, hunterCell.y] += "H";
+        foreach (Vector2Int star in data.Stars) marks[star.x, star.y] += "*";
+        foreach (MazeMapData.KeyInfo key in data.Keys)
         {
-            if (TryWorldToCell(world, out Vector2Int c)) marks[c.x, c.y] += token;
+            if (!key.Taken) marks[key.Cell.x, key.Cell.y] += "k";
         }
-
-        Transform player = FindPlayer();
-        if (player != null) Mark(player.position, "@");
-        if (aiFollower != null) Mark(aiFollower.transform.position, "H");
-        for (int i = 0; i < _stars.Count; i++)
-        {
-            if (_stars[i] != null) Mark(_stars[i].position, "*");
-        }
-        foreach (KeyPickup key in _keys)
-        {
-            if (key != null && !key.IsTaken) Mark(key.transform.position, "k");
-        }
-        foreach (WallButton button in _buttons)
-        {
-            if (button == null) continue;
-            char id = button.Door != null && doorIds.TryGetValue(button.Door, out char d) ? d : '?';
-            Mark(button.transform.position, "b" + id);
-        }
-        MazeEscape escape = FindAnyObjectByType<MazeEscape>();
-        if (escape != null && escape.HatchOpen) Mark(escape.HatchPosition, "E");
+        foreach (MazeMapData.ButtonInfo button in data.Buttons) marks[button.Cell.x, button.Cell.y] += "b" + button.DoorId;
+        if (data.HatchOpen) marks[data.HatchCell.x, data.HatchCell.y] += "E";
         marks[0, 0] += "S";
+        AddLayoutMarks(marks); // F105 C2/C3: r / g / q, only on a cell with no other mark
+        AddLoopMark(marks); // F105 C4: L
 
         System.Text.StringBuilder sb = new System.Text.StringBuilder();
         sb.Append($"Maze seed {UsedSeed}, floor {GameFlow.CurrentFloor}, {width}x{height}, north up, start S = (0,0) bottom-left.\n");
@@ -5052,7 +5122,9 @@ public class MazeGenerator : MonoBehaviour
         AppendDebugBorder(sb, 0, 2, doorGlyphs);
 
         sb.Append("\n* star   k key   bN button for door N   S start   @ you   H hunter   E hatch/lift   digit/letter on a wall = door\n");
-        AppendDebugLegend(sb, doorIds);
+        AppendDebugLegend(sb, data);
+        AppendLayoutLegend(sb);
+        AppendLoopLegend(sb);
         return sb.ToString();
     }
 
@@ -5076,40 +5148,119 @@ public class MazeGenerator : MonoBehaviour
         return IsWallClosed(x, z, dir) ? closed : ' ';
     }
 
-    /// <summary>Doors (kind, cells, state, the button that opens them), then the stars, keys and buttons with their cells.</summary>
-    private void AppendDebugLegend(System.Text.StringBuilder sb, Dictionary<MazeDoor, char> doorIds)
+    /// <summary>Doors (kind, cells, state, the button that opens them), then the stars and keys with their cells.</summary>
+    private void AppendDebugLegend(System.Text.StringBuilder sb, MazeMapData data)
     {
-        foreach (KeyValuePair<MazeDoor, char> entry in doorIds)
+        foreach (MazeMapData.DoorInfo door in data.Doors)
         {
-            MazeDoor door = entry.Key;
-            Passage p = _doorPassages[door];
-            sb.Append($"door {entry.Value}: {door.DoorKind} between {p.CellA} and {p.CellB}, {(door.IsOpen ? "open" : "closed")}{(door.IsUnlocked ? "" : ", locked")}{(door.IsVaultDoor ? ", vault" : "")}");
-            foreach (WallButton button in _buttons)
+            sb.Append($"door {door.Id}: {door.Kind} between {door.CellA} and {door.CellB}, {(door.Open ? "open" : "closed")}{(door.Unlocked ? "" : ", locked")}{(door.Vault ? ", vault" : "")}");
+            foreach (MazeMapData.ButtonInfo button in data.Buttons)
             {
-                if (button != null && button.Door == door && TryWorldToCell(button.transform.position, out Vector2Int bc)) sb.Append($", button at {bc}");
+                if (button.DoorId == door.Id) sb.Append($", button at {button.Cell}");
             }
-            if (door.LinkedDoor != null && doorIds.TryGetValue(door.LinkedDoor, out char linked)) sb.Append($", also opens door {linked}");
+            if (door.LinkedId != '\0') sb.Append($", also opens door {door.LinkedId}");
             sb.Append('\n');
         }
 
-        int taken = 0;
         sb.Append("stars left:");
-        for (int i = 0; i < _stars.Count; i++)
-        {
-            if (_stars[i] == null) { taken++; continue; }
-            if (TryWorldToCell(_stars[i].position, out Vector2Int sc)) sb.Append(' ').Append(sc);
-        }
-        sb.Append($"   (taken {taken} of {_stars.Count})\n");
+        foreach (Vector2Int star in data.Stars) sb.Append(' ').Append(star);
+        sb.Append($"   (taken {data.StarsTotal - data.Stars.Count} of {data.StarsTotal})\n");
 
-        if (_keys.Count > 0)
+        if (data.Keys.Count > 0)
         {
             sb.Append("keys:");
-            foreach (KeyPickup key in _keys)
-            {
-                if (key != null && TryWorldToCell(key.transform.position, out Vector2Int kc)) sb.Append(' ').Append(kc).Append(key.IsTaken ? " taken" : "");
-            }
+            foreach (MazeMapData.KeyInfo key in data.Keys) sb.Append(' ').Append(key.Cell).Append(key.Taken ? " taken" : "");
             sb.Append('\n');
         }
+    }
+
+    // ---------------------------------------------------------------- map data (F106)
+
+    private Transform _mapPlayer;
+    private Transform _mapCamera;
+    private MazeEscape _mapEscape;
+
+    /// <summary>
+    /// F106: the floor as one snapshot for DebugMap's text and FloorMapUi's picture - the walls, the doors with their state, the live stars,
+    /// the keys, the buttons, the open hatch or lift, and the player's cell and heading (the hunter is not in it). Pass the previous snapshot
+    /// as `into` to refill it in place instead of allocating a new one. Null before the maze exists (Play starts it).
+    /// </summary>
+    public MazeMapData BuildMapData(MazeMapData into = null)
+    {
+        if (_wallN == null) return null;
+
+        MazeMapData data = into ?? new MazeMapData();
+        data.Begin(width, height, UsedSeed, GameFlow.CurrentFloor, _wallN, _wallE, _wallS, _wallW);
+
+        for (int i = 0; i < _doors.Count; i++)
+        {
+            MazeDoor door = _doors[i];
+            if (door == null || !_doorPassages.TryGetValue(door, out Passage p)) continue;
+
+            int linked = door.LinkedDoor != null ? _doors.IndexOf(door.LinkedDoor) : -1;
+            data.Doors.Add(new MazeMapData.DoorInfo
+            {
+                Id = DoorLabel(i),
+                CellA = p.CellA,
+                CellB = p.CellB,
+                Dir = p.Dir,
+                Kind = door.DoorKind,
+                Open = door.IsOpen,
+                Unlocked = door.IsUnlocked,
+                Vault = door.IsVaultDoor,
+                LinkedId = linked >= 0 ? DoorLabel(linked) : '\0'
+            });
+        }
+
+        foreach (WallButton button in _buttons)
+        {
+            if (button == null || !TryWorldToCell(button.transform.position, out Vector2Int cell)) continue;
+
+            int doorIndex = button.Door != null ? _doors.IndexOf(button.Door) : -1;
+            data.Buttons.Add(new MazeMapData.ButtonInfo { Cell = cell, DoorId = doorIndex >= 0 ? DoorLabel(doorIndex) : '?' });
+        }
+
+        data.StarsTotal = _stars.Count;
+        foreach (Transform star in _stars)
+        {
+            if (star != null && TryWorldToCell(star.position, out Vector2Int cell)) data.Stars.Add(cell);
+        }
+
+        foreach (KeyPickup key in _keys)
+        {
+            if (key != null && TryWorldToCell(key.transform.position, out Vector2Int cell)) data.Keys.Add(new MazeMapData.KeyInfo { Cell = cell, Taken = key.IsTaken });
+        }
+
+        if (_mapEscape == null) _mapEscape = FindAnyObjectByType<MazeEscape>();
+        if (_mapEscape != null && _mapEscape.HatchOpen && TryWorldToCell(_mapEscape.HatchPosition, out Vector2Int hatch))
+        {
+            data.HatchOpen = true;
+            data.HatchCell = hatch;
+        }
+
+        if (_mapPlayer == null)
+        {
+            _mapPlayer = FindPlayer();
+            FirstPersonRig rig = _mapPlayer != null ? _mapPlayer.GetComponent<FirstPersonRig>() : null;
+            _mapCamera = rig != null && rig.PlayerCamera != null ? rig.PlayerCamera.transform : _mapPlayer;
+        }
+
+        if (_mapPlayer != null && TryWorldToCell(_mapPlayer.position, out Vector2Int playerCell))
+        {
+            data.HasPlayer = true;
+            data.PlayerCell = playerCell;
+            data.PlayerPosition = new Vector2((_mapPlayer.position.x - origin.x) / cellSize, (_mapPlayer.position.z - origin.z) / cellSize);
+            Vector3 forward = _mapCamera.forward;
+            data.PlayerYaw = Mathf.Atan2(forward.x, forward.z) * Mathf.Rad2Deg;
+        }
+
+        return data;
+    }
+
+    /// <summary>The label of the `index`-th door on the maps: 1-9, then A-Z.</summary>
+    private static char DoorLabel(int index)
+    {
+        return index < 9 ? (char)('1' + index) : (char)('A' + index - 9);
     }
 
     /// <summary>Right-click the component in Play: logs DebugMap and copies it to the clipboard (paste into anything monospace).</summary>

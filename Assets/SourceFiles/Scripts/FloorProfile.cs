@@ -89,7 +89,7 @@ public class FloorProfile
     // each floor's mix of "how many things gate progress" is hand-picked. Floor 1's one manual door
     // teaches the mechanic before anything is locked behind it.
     private static readonly int[] ManualDoorsTable = { 1, 2, 2, 3, 3 };
-    private static readonly int[] SecurityDoorsTable = { 0, 2, 1, 3, 1 };
+    private static readonly int[] SecurityDoorsTable = { 0, 2, 1, 3, 3 }; // F105: the final floor has as many security doors as floor 4
     private static readonly int[] VaultsTable = { 0, 1, 1, 1, 1 };
 
     /// <summary>
@@ -109,6 +109,12 @@ public class FloorProfile
     /// <summary>First floor that rolls mechanics; floor 1 stays stars-only as the teaching floor.</summary>
     public const int FirstRolledFloor = 2;
 
+    /// <summary>
+    /// F105 F5: the final floor always plays keys + a timed lockdown on top of its stars (and always ends in the lift,
+    /// see <see cref="ForceLift"/>), so it is the hardest floor; it is not rolled. Floor 4's roll never lands on this pair.
+    /// </summary>
+    public const Objective FinalFloorObjectives = Objective.KeyHunt | Objective.Lockdown;
+
     private static int TableFor(int[] table, int floor, int fallback)
     {
         int index = floor - 1;
@@ -125,6 +131,13 @@ public class FloorProfile
     private static Objective RollObjectives(int floor, int usedSeed)
     {
         if (floor < FirstRolledFloor) return Objective.None;
+
+        // F105 F5: the final floor is fixed, not rolled; keep RolledObjectives consistent for the next lookup.
+        if (floor == FinalFloor)
+        {
+            if (floor < GameFlow.RolledObjectives.Length) GameFlow.RolledObjectives[floor] = (int)FinalFloorObjectives;
+            return FinalFloorObjectives;
+        }
 
         Objective[] singles = { Objective.Lockdown, Objective.Blackout, Objective.KeyHunt };
         List<Objective> pairs = new List<Objective>();
@@ -153,10 +166,14 @@ public class FloorProfile
         int[] rolled = GameFlow.RolledObjectives;
         int previous = floor - 1 >= 1 && floor - 1 < rolled.Length ? rolled[floor - 1] : 0;
 
+        // F105 F5: the floor before the final one never rolls the final floor's own pair, so the two never play the same.
+        bool beforeFinal = floor == FinalFloor - 1;
+
         Objective chosen = pairs[0];
         for (int i = 0; i < pairs.Count; i++)
         {
             if ((int)pairs[i] == previous) continue;
+            if (beforeFinal && pairs[i] == FinalFloorObjectives) continue;
             chosen = pairs[i];
             break;
         }
@@ -231,6 +248,12 @@ public class FloorProfile
     public int FuseCount;
     /// <summary>KeyHunt only; 0 on every other floor.</summary>
     public int KeyCount;
+
+    // ---- the escape (F105 F5)
+    /// <summary>F105 F5: the final floor always ends in the lift, never a hatch (MazeEscape still rolls +17 for the other floors).</summary>
+    public bool ForceLift;
+    /// <summary>F105 F5: seconds standing in the lift ring to complete the escape - 8 everywhere, 12 on the final floor.</summary>
+    public float LiftFillSeconds = 8f;
 
     /// <summary>Chance a wander leg becomes an ambush. Read raw - see AIFollower.EffectiveAmbushBias.</summary>
     public float AmbushBias;
@@ -319,6 +342,7 @@ public class FloorProfile
             p.KeyCount = floor <= 3 ? 2 : 3;
             p.StarCount -= 1;
         }
+        // F105 F5: the final floor therefore plays 5 - 1 (KeyHunt) = 4 stars, 3 keys, and Lockdown's timed door.
         p.StarCount = Mathf.Max(2, p.StarCount);
         // F71 darkness pass: lamps are sparser, dimmer and shorter-range than the old tuning, so floor 1
         // has real pockets of dark between lamp pools (the torch is optional there) and floor 5 is
@@ -381,10 +405,24 @@ public class FloorProfile
             p.LoseSightTime *= 0.6f;
             p.TemperamentKey = "shop.temperament.sprints";
         }
+        else if (floor == FinalFloor)
+        {
+            // F105 F5: "it will not let you leave" - a final-floor hunter hunts, it doesn't wait.
+            // RunSpeed 3.4 x 1.2 = 4.08, still under the chase sprint cap.
+            p.RunSpeed *= 1.2f;
+            p.HearingScale *= 1.25f;
+            p.LoseSightTime *= 1.3f;
+            p.AmbushBias = Mathf.Max(0f, p.AmbushBias - 0.15f);
+            p.TemperamentKey = "shop.temperament.final";
+        }
         else
         {
             p.TemperamentKey = "";
         }
+
+        // F105 F5: the final floor always ends in the lift, and the lift takes longer to fill.
+        p.ForceLift = floor == FinalFloor;
+        p.LiftFillSeconds = p.ForceLift ? 12f : 8f;
 
         // F75, decision D7: the Stalker appears on the last two floors only - by then the hunter alone
         // has had time to establish what "the one thing chasing you" feels like.

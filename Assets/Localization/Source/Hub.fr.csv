@@ -163,4 +163,5 @@ hub.lift.stopped,L'ASCENSEUR S'EST ARRÊTÉ
 hub.lift.doors_stuck,LES PORTES SONT COINCÉES · MAINTENEZ {key} POUR LES FORCER
 hub.flood.knocks,QUELQUE CHOSE FRAPPE TROIS COUPS.
 hub.chase.stops,ÇA S'ARRÊTE À LA PORTE
+hub.chase.run,"ÇA S'EST RÉVEILLÉ. VITE, À LA CHIRURGIE."
 hub.stars.first,QUELQU'UN A DESSINÉ DES ÉTOILES SUR LE MUR. ELLES BRILLENT ENCORE.

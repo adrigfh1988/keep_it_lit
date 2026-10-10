@@ -37,6 +37,9 @@ public class PlayerStamina : MonoBehaviour
     /// <summary>External lock, e.g. F74's carried lantern. ORed with Exhausted below - set once on pickup/put-down, not fought over every frame.</summary>
     public bool SprintBlocked { get; set; }
 
+    /// <summary>F105 C3: the squeeze's own sprint lock, kept apart from SprintBlocked so the lantern and the squeeze never overwrite each other. ORed with it below.</summary>
+    public bool SqueezeBlocked { get; set; }
+
     private void Awake()
     {
         _controller = GetComponent<ThirdPersonController>();
@@ -73,6 +76,6 @@ public class PlayerStamina : MonoBehaviour
             Exhausted = false;
         }
 
-        _controller.SprintLocked = Exhausted || SprintBlocked;
+        _controller.SprintLocked = Exhausted || SprintBlocked || SqueezeBlocked;
     }
 }

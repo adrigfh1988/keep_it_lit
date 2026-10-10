@@ -128,6 +128,7 @@ public class MazeEscape : MonoBehaviour
     // countdown as a Hatch, but completed by standing inside a ring for liftFillSeconds instead of
     // walking onto a trigger.
     private bool _isLift;
+    private bool _forceLift;
     private float _liftProgress;
     private bool _liftCalled;
     private TextMeshProUGUI _liftText;
@@ -151,6 +152,12 @@ public class MazeEscape : MonoBehaviour
     /// <summary>Called by MazeGenerator once the maze and the actors exist.</summary>
     /// <summary>Per-floor countdown. Read when the hatch opens, so it can be set any time before that.</summary>
     public void SetEscapeSeconds(float seconds) { escapeSeconds = Mathf.Max(10f, seconds); }
+
+    /// <summary>F105 F5: the profile's lift fill time (12 s on the final floor). Read while the lift fills, so any time before that.</summary>
+    public void SetLiftFillSeconds(float seconds) { liftFillSeconds = Mathf.Max(1f, seconds); }
+
+    /// <summary>F105 F5: the final floor always ends in the lift, never a hatch. Read when the escape opens.</summary>
+    public void SetForceLift(bool force) { _forceLift = force; }
 
     public void Configure(MazeGenerator maze, Transform player, Material emissiveSource, GameOutcome outcome, AIFollower hunter)
     {
@@ -209,8 +216,10 @@ public class MazeEscape : MonoBehaviour
         HatchOpen = true;
 
         // F73 (+17): floors 1-2 always a Hatch; floors 3-5 a 50% seeded Lift, tied to UsedSeed alone
-        // (not the floor) so a same-seed retry always gets the same variant.
-        _isLift = GameFlow.CurrentFloor >= 3 && new System.Random(_maze.UsedSeed + 17).NextDouble() < 0.5;
+        // (not the floor) so a same-seed retry always gets the same variant. F105 F5: the final floor is
+        // always a Lift; the roll is still drawn so the stream is unchanged.
+        bool rolledLift = GameFlow.CurrentFloor >= 3 && new System.Random(_maze.UsedSeed + 17).NextDouble() < 0.5;
+        _isLift = _forceLift || rolledLift;
 
         if (_isLift) BuildLift(_hatchPosition);
         else BuildHatch(_hatchPosition);

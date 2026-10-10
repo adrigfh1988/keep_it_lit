@@ -42,3 +42,4 @@ hud.prompt.ring_bell,Interaction prompt on the call bell (Ward floor),RING BELL
 hud.prompt.open_valve,"Interaction prompt on the steam valve (Boiler floor, hold E)",OPEN VALVE
 hud.prompt.light_candles,Interaction prompt on the candles (Crypt floor),LIGHT CANDLES
 hud.prompt.use_terminal,Interaction prompt on the terminal (Lab floor),USE TERMINAL
+hud.prompt.map,"Hint on the prompt line (not tied to a door) the first time the floor map can be opened: ""M  MAP"" (34 pt, 600 x 50, auto-size, shown 4 s). Noun",MAP

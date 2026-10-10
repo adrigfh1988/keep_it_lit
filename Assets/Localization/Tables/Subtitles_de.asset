@@ -189,6 +189,39 @@ MonoBehaviour:
     m_Localized: "ES HAT DICH GEH\xD6RT."
     m_Metadata:
       m_Items: []
+  - m_Id: 82051891892224
+    m_Localized: "FINDE {n} SCHL\xDCSSEL F\xDCR DEN AUFZUG"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763191
+  - m_Id: 82051979972608
+    m_Localized: ES ERINNERT SICH AN DIE SPINDE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82051979972609
+    m_Localized: ES KENNT DIE FLASCHEN.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82051979972610
+    m_Localized: ES HAT DIE DUNKELHEIT GELERNT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82051979972611
+    m_Localized: "ES H\xD6RT DICH RENNEN."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 113530231492608
+    m_Localized: WENN ETWAS NICHT STIMMT, KEHR UM. WENN NICHT, GEH WEITER.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 113530315378688
+    m_Localized: DU ERINNERST DICH AN DAS LABYRINTH.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 113530315378689
+    m_Localized: "ES L\xC4SST DICH GEHEN. EINMAL."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -207,3 +240,4 @@ MonoBehaviour:
         - id: 7993049387034
         - id: 7993049387035
         - id: 7993049387037
+        - id: 82051891892224

@@ -117,6 +117,8 @@ public static class GameFlow
         LoreArchive.ResetCampaign();
         RunRules.ResetCampaign();
         ContractState.ResetCampaign();
+        HunterMemory.ResetCampaign(); // F105 C6
+        LoopCorridor.ResetCampaign(); // F105 C4
         System.Array.Clear(RolledObjectives, 0, RolledObjectives.Length);
         Reload();
     }

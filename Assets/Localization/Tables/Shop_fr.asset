@@ -340,6 +340,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763211
+  - m_Id: 74059196829696
+    m_Localized: "\xC7a ne vous laissera pas partir."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

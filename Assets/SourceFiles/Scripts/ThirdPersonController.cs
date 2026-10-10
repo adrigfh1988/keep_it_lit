@@ -501,6 +501,20 @@ public bool IsRespawning { get; set; } = false;
             _cinemachineTargetPitch = Mathf.LerpAngle(_cinemachineTargetPitch, targetPitch, turnFraction);
         }
 
+        /// <summary>
+        /// F105 C4: turns the view by `degrees` about the vertical, keeping the pitch, and applies it to the camera target at once - so the
+        /// frame it is called in already moves along the new heading, instead of one frame the old way until CameraRotation runs in LateUpdate.
+        /// </summary>
+        public void AddYaw(float degrees)
+        {
+            _cinemachineTargetYaw += degrees;
+            CinemachineCameraTarget.transform.rotation = Quaternion.Euler(
+                _cinemachineTargetPitch + CameraAngleOverride,
+                _cinemachineTargetYaw,
+                0.0f
+            );
+        }
+
         /// <summary>Restrict mouse look to a cone around centerYaw, e.g. looking out through a locker slit.</summary>
         public void SetYawClamp(float centerYaw, float range)
         {

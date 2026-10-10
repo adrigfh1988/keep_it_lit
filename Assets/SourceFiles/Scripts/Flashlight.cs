@@ -73,6 +73,18 @@ public class Flashlight : MonoBehaviour
     [Tooltip("The tail of a scripted failure, in which the beam sputters back before it steadies (seconds)")]
     [SerializeField] private float blackoutStutterSeconds = 0.4f;
 
+    [Header("F105 C9 - narrow beam")]
+    [Tooltip("Wide beam width while TerrorSettings.narrowBeam is on (the Beam - wide values above apply when it is off)")]
+    [SerializeField] private float narrowOuterAngle = 45f;
+    [Tooltip("Wide beam bright-core width while narrowBeam is on")]
+    [SerializeField] private float narrowInnerAngle = 14f;
+    [Tooltip("Wide beam intensity while narrowBeam is on")]
+    [SerializeField] private float narrowIntensity = 7f;
+
+    private float _baseWideOuterAngle;
+    private float _baseWideInnerAngle;
+    private float _baseWideIntensity;
+
     private Light _light;
     private Transform _beam;
     private TorchSway _sway;
@@ -82,6 +94,7 @@ public class Flashlight : MonoBehaviour
     private float _blackoutRemaining;
     private float _offSeconds;
     private float _rangeMultiplier = 1f;
+    private float _rangeScale = 1f; // F105 C3: scales the whole blended range, wide and focused alike
     private float _rechargeMultiplier = 1f;
     /// <summary>F75 Focus Lens shop item: overrides focusedDrainMultiplier when &gt;= 0; -1 means "use the serialized default".</summary>
     private float _focusedDrainMultiplierOverride = -1f;
@@ -112,7 +125,7 @@ public class Flashlight : MonoBehaviour
 
     // The multiplier only scales the focused end of the blend, so the Focus Lens shop item (F75) makes
     // focusing reach further without changing the wide, default beam at all.
-    private float CurrentRange => Mathf.Lerp(wideRange, focusedRange * _rangeMultiplier, FocusBlend);
+    private float CurrentRange => Mathf.Lerp(wideRange, focusedRange * _rangeMultiplier, FocusBlend) * _rangeScale;
 
     /// <summary>F103 A4: world position of the beam, which sits off the eye axis. Beam tests ("is X lit by the torch") must use this, not the camera.</summary>
     public Vector3 BeamOrigin => _beam.position;
@@ -186,6 +199,12 @@ public class Flashlight : MonoBehaviour
         _rangeMultiplier = Mathf.Max(0.01f, multiplier);
     }
 
+    /// <summary>F105 C3: scales the beam's whole range, wide and focused, while the player is somewhere that cuts the view (the squeeze, 0.7). 1 restores it. Unlike SetRangeMultiplier this is a live state, not a loadout.</summary>
+    public void SetRangeScale(float scale)
+    {
+        _rangeScale = Mathf.Max(0.01f, scale);
+    }
+
     /// <summary>Focus Lens shop hook (F75): overrides how much faster the battery drains while focused - the Lens sets this to 1 (no penalty at all) instead of the default 1.5x. Pass a negative value to go back to the serialized default.</summary>
     public void SetFocusedDrainMultiplier(float multiplier)
     {
@@ -247,7 +266,16 @@ public class Flashlight : MonoBehaviour
     {
         _terror = terror ?? new TerrorSettings();
         if (_sway != null) _sway.enabled = _terror.torchSway;
+
+        // F105 C9: the wide beam narrows and dims; the originals are stored in Awake so switching the flag off restores them.
+        // The hub shares this torch, so it is narrower there too.
+        wideOuterAngle = _terror.narrowBeam ? narrowOuterAngle : _baseWideOuterAngle;
+        wideInnerAngle = _terror.narrowBeam ? narrowInnerAngle : _baseWideInnerAngle;
+        wideIntensity = _terror.narrowBeam ? narrowIntensity : _baseWideIntensity;
     }
+
+    /// <summary>F105 C7: width of the bright core of the current (blended) cone. Inside half of it a light is a full hit; between that and <see cref="OuterAngle"/> is the penumbra.</summary>
+    public float InnerAngle => CurrentInnerAngle;
 
     private void OnEnable() => GameSettings.Changed += ApplyShadowSetting;
     private void OnDisable() => GameSettings.Changed -= ApplyShadowSetting;
@@ -274,6 +302,9 @@ public class Flashlight : MonoBehaviour
     private void Awake()
     {
         SecondsLeft = batterySeconds;
+        _baseWideOuterAngle = wideOuterAngle;
+        _baseWideInnerAngle = wideInnerAngle;
+        _baseWideIntensity = wideIntensity;
 
         // F103 A4: the light lives on its own child, offset from the eye and aimed at the crosshair, so its
         // shadows no longer hide directly behind what casts them. The offset stays even when sway is off.

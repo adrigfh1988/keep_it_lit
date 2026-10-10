@@ -39,3 +39,11 @@ sub.banner.restore_fuses,SCHALTE {n} SICHERUNGEN EIN
 sub.banner.find_keys,FINDE {n} SCHLÜSSEL FÜR DIE LUKE
 sub.banner.lockdown,SICHERHEITSSPERRE
 sub.banner.rule,{name} — {description}
+sub.banner.find_keys_lift,FINDE {n} SCHLÜSSEL FÜR DEN AUFZUG
+sub.hunter.learned_lockers,ES ERINNERT SICH AN DIE SPINDE.
+sub.hunter.learned_throws,ES KENNT DIE FLASCHEN.
+sub.hunter.learned_dark,ES HAT DIE DUNKELHEIT GELERNT.
+sub.hunter.learned_sprint,ES HÖRT DICH RENNEN.
+sub.loop.rule,"WENN ETWAS NICHT STIMMT, KEHR UM. WENN NICHT, GEH WEITER."
+sub.loop.reward,DU ERINNERST DICH AN DAS LABYRINTH.
+sub.loop.second_wind,ES LÄSST DICH GEHEN. EINMAL.

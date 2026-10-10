@@ -58,6 +58,24 @@ public class TerrorSettings
     [Tooltip("B10 (run 2): a seen set piece appears a second time elsewhere")]
     public bool lyingLandmarks = true;
 
+    [Header("Tier C (F105)")]
+    [Tooltip("C6: the hunter learns the player's habits - where it was noisy within a floor, and across the campaign what it overuses (lockers, throws, the dark, sprinting)")]
+    public bool learningHunter = true;
+    [Tooltip("C9: the default torch beam is narrower and dimmer and the fog a bit thicker; the focused beam is unchanged")]
+    public bool narrowBeam = true;
+    [Tooltip("C7: Stan takes slow steps in the edge of the beam while the player turns fast")]
+    public bool penumbraLies = true;
+    [Tooltip("C5 (run 2): one star per floor is a lure")]
+    public bool lureStars = true;
+    [Tooltip("C8 (run 2): a phantom is sometimes the player's own robot")]
+    public bool doubles = true;
+    [Tooltip("C2 (run 2): a pillared room per floor, a long gallery from floor 3")]
+    public bool roomsAndGalleries = true;
+    [Tooltip("C3 (run 2): a tight passage that slows the player")]
+    public bool squeezes = true;
+    [Tooltip("C4 (run 3): a corridor outside the maze that loops")]
+    public bool loopCorridor = true;
+
     /// <summary>Console line tagged [Terror], only while logEvents is on.</summary>
     public void Log(string message, Object context = null)
     {

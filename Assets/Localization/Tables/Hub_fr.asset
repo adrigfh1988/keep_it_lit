@@ -695,6 +695,10 @@ MonoBehaviour:
     m_Localized: "QUELQU'UN A DESSIN\xC9 DES \xC9TOILES SUR LE MUR. ELLES BRILLENT ENCORE."
     m_Metadata:
       m_Items: []
+  - m_Id: 104178347053056
+    m_Localized: "\xC7A S'EST R\xC9VEILL\xC9. VITE, \xC0 LA CHIRURGIE."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -19,11 +19,13 @@ public class PauseMenu : MonoBehaviour
     private MainMenu _menu;
     private GameOutcome _outcome;
     private ShopMenu _shopMenu;
+    private FloorMapUi _map;
     private int _seed;
 
     private GameObject _panel;
     private Button _restartButton;
     private Button _skipButton;
+    private Button _mapButton;
     private bool _paused;
     /// <summary>Last frame the cursor was locked and a pause was allowed. See the lock-loss check in Update.</summary>
     private bool _wasLockedAndPausable;
@@ -31,8 +33,8 @@ public class PauseMenu : MonoBehaviour
     /// <summary>True while the pause panel is up.</summary>
     public bool IsPaused => _paused;
 
-    /// <summary>Flashlight, menu and shopMenu may be null: no first-person rig, no title screen, or no shop.</summary>
-    public void Configure(Transform player, Flashlight flashlight, MainMenu menu, GameOutcome outcome, int seed, ShopMenu shopMenu)
+    /// <summary>Flashlight, menu, shopMenu and map may be null: no first-person rig, no title screen, no shop, or no floor map (F106).</summary>
+    public void Configure(Transform player, Flashlight flashlight, MainMenu menu, GameOutcome outcome, int seed, ShopMenu shopMenu, FloorMapUi map = null)
     {
         _player = player;
         _flashlight = flashlight;
@@ -40,6 +42,7 @@ public class PauseMenu : MonoBehaviour
         _outcome = outcome;
         _seed = seed;
         _shopMenu = shopMenu;
+        _map = map;
     }
 
     private void Update()
@@ -113,6 +116,8 @@ public class PauseMenu : MonoBehaviour
         if (_shopMenu != null && (_shopMenu.IsOpen || _shopMenu.ClosedThisFrame)) return false;
         // F98: same for the hospital's dialogue panel - Esc closes the conversation first.
         if (DialoguePanel.BlocksPause) return false;
+        // F106: the same for the floor map - Esc closes it first.
+        if (_map != null && (_map.IsOpen || _map.ClosedThisFrame)) return false;
         return true;
     }
 
@@ -131,6 +136,8 @@ public class PauseMenu : MonoBehaviour
         if (_restartButton != null) _restartButton.gameObject.SetActive(!GameFlow.IsInShop && !GameFlow.IsInIntake && !GameFlow.IsInHub); // F92: no replaying a floor from the hospital either
         // F86: only the Intake offers a way out of itself.
         if (_skipButton != null) _skipButton.gameObject.SetActive(GameFlow.IsInIntake);
+        // F106: the map button is for touch players (no M key) and anyone who forgot it; only once the loop corridor has handed the map over.
+        if (_mapButton != null) _mapButton.gameObject.SetActive(_map != null && _map.Available);
         _panel.SetActive(true);
         _panel.transform.SetAsLastSibling();
 
@@ -163,6 +170,13 @@ public class PauseMenu : MonoBehaviour
         if (room != null) room.Skip();
     }
 
+    /// <summary>F106: the MAP button - back to the game, then the floor map over it.</summary>
+    private void OpenMap()
+    {
+        Resume();
+        if (_map != null) _map.Open();
+    }
+
     private void OnDestroy()
     {
         if (!_paused) return;
@@ -190,6 +204,13 @@ public class PauseMenu : MonoBehaviour
             new Vector2(0f, 520f), size, 40f, ButtonIdle, ButtonHover, Color.white);
         RuntimeUi.BindButton(resume, "ui.pause.resume");
         resume.onClick.AddListener(Resume);
+
+        // F106: MAP closes the pause menu and opens the floor map (which never pauses time). Hidden until the map is unlocked (see Pause).
+        _mapButton = RuntimeUi.CreateButton(_panel.transform, L10n.T("ui.pause.map"),
+            new Vector2(0f, 630f), size, 40f, ButtonIdle, ButtonHover, Color.white);
+        RuntimeUi.BindButton(_mapButton, "ui.pause.map");
+        _mapButton.onClick.AddListener(OpenMap);
+        _mapButton.gameObject.SetActive(false);
 
         _restartButton = RuntimeUi.CreateButton(_panel.transform, L10n.T("ui.pause.restart"),
             new Vector2(0f, 410f), size, 40f, ButtonIdle, ButtonHover, Color.white);

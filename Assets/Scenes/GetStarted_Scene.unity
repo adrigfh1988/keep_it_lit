@@ -49869,6 +49869,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1afb62f2cead40678b5a18f19638040f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomFromFloor: 2
+  largeRoomGrid: 10
+  galleryFromFloor: 3
+  galleryMinCells: 5
+  galleryFogScale: 0.5
+  squeezeFromFloor: 2
+  squeezeGap: 0.88
+  squeezePlayerMargin: 0.2
+  squeezeWindowSlack: 0.04
+  squeezeCeiling: 2.2
+  squeezeSpeedScale: 0.6
+  squeezeTorchScale: 0.7
+  squeezeBreathVolume: 0.35
+  loopFromFloor: 3
+  loopChance: 0.6
+  loopMinStartDistance: 4
+  loopTriggerCells: 2
+  loopDuckGain: 0.3
+  loopDuckSeconds: 1.5
+  loopBuzzVolume: 0.3
+  loopBuzzDistance: 9
+  loopFigureDelay: 0.8
+  loopFigureVanishDistance: 1.5
+  loopFigureTestHeight: 1.2
+  loopFigureBeamRange: 1
+  loopFigureBeamAngle: 0.6
+  loopFlickerGap: {x: 0.8, y: 2.5}
+  loopSealHideDistance: 14
+  loopTargetCount: 6
+  loopAnomalyChance: 0.5
+  loopMinAnomalies: 3
+  loopReturnCells: 1
+  loopTurnBackStartCells: 0.5
+  loopTurnBackSeconds: 0.35
+  loopRuleSeconds: 4
+  loopChimeVolume: 0.35
+  loopThudVolume: 0.8
+  loopRedLampColor: {r: 1, g: 0.08, b: 0.05, a: 1}
+  loopCounterCells: 1.5
+  loopCounterHeight: 1.5
+  loopCounterFontSize: 6
+  loopFootstepsBehind: 3
+  loopFootstepsSeconds: 4
+  loopFootstepsStride: 1.4
+  loopFootstepsPitch: {x: 0.55, y: 0.7}
+  loopFootstepsVolume: 0.7
+  visitorStartDistance: 14
+  visitorCreepSpeed: 0.3
+  visitorMistakeStep: 4
+  visitorReliefStep: 1
+  visitorCatchDistance: 1.2
+  visitorChestHeight: 1.2
+  visitorHeadHeight: 1.7
+  visitorViewMargin: 0.05
+  visitorStepRange: 6
+  visitorStepStride: 1.5
+  visitorStepVolume: 0.35
+  visitorStepPitch: 0.6
+  lureFromFloor: 3
+  lureMatchRadius: 0.6
   width: 11
   height: 11
   cellSize: 4.5
@@ -49944,6 +50004,40 @@ MonoBehaviour:
   gameMixer: {fileID: 24100000, guid: f0e4c16d855783247b1d498d7d5f2424, type: 2}
   logAudioResolution: 0
   debugObjectives: 0
+  terror:
+    contaminatedPhantoms: 1
+    rationedEyes: 1
+    torchSway: 1
+    unpredictableTelegraphs: 1
+    torchFailures: 1
+    hunterListens: 1
+    wrongSounds: 1
+    varyingSpottedSting: 1
+    baitDeadEnds: 1
+    logEvents: 1
+    committedChase: 1
+    muffledHunter: 1
+    dreadMeter: 1
+    heldBreath: 1
+    silenceWindows: 1
+    escapeHunt: 1
+    sanctuaryDecay: 1
+    shadowPhantoms: 1
+    peripheralPhantoms: 1
+    displacement: 1
+    lyingLandmarks: 1
+    learningHunter: 1
+    narrowBeam: 1
+    penumbraLies: 1
+    lureStars: 1
+    doubles: 1
+    roomsAndGalleries: 1
+    squeezes: 1
+    loopCorridor: 1
+  narrowBeamFogScale: 1.15
+  buttonSightCells: 4
+  maxDeadEndDepth: 2
+  deadEndStartClearance: 3
 --- !u!1 &1901180370
 GameObject:
   m_ObjectHideFlags: 0
@@ -57046,6 +57140,13 @@ MonoBehaviour:
   dormantSpeed: 0.7
   hunchBiasAtPeak: 0.35
   hearingInterval: 0.3
+  listenPauseSeconds: 1.2
+  listenCooldown: 12
+  rushSeconds: 3
+  rushSprintFraction: 0.8
+  chaseCommitSeconds: 2
+  escapeCommitFraction: 0.95
+  backoffHearingScale: 0.5
   wanderStoppingDistance: 0.3
   patrolBias: 0.6
   searchRadius: 7.5
@@ -57054,6 +57155,30 @@ MonoBehaviour:
   searchBudget: 12
   maxSpeedFraction: 0.86
   hidingSpotSearchRadius: 6
+  heatRadius: 6
+  heatPerEvent: 0.35
+  heatDecaySeconds: 120
+  hotThreshold: 0.5
+  hotSpotSearchRadius: 15
+  standOutsideSeconds: 4
+  peekSeconds: 2.5
+  peekChanceScale: 0.6
+  cellHeatDecaySeconds: 180
+  cellHeatHeard: 0.4
+  cellHeatHeardNeighbour: 0.2
+  cellHeatSeen: 0.3
+  heatWanderBias: 0.35
+  heatDistanceFalloff: 50
+  minWanderHeat: 0.05
+  lockerPeekChancePerLevel: 0.2
+  lockerStandOutsidePerLevel: 2
+  lockerSearchRadiusPerLevel: 2
+  lockerSecondPeekLevel: 2
+  throwIgnoreWindow: 20
+  throwSeesThroughLevel2: 0.3
+  throwSeesThroughLevel3: 0.5
+  darkViewPerLevel: 0.15
+  sprintNoisePerLevel: 0.15
   ambushBias: 0.75
   ambushWaitSeconds: 90
   ambushHearingBoost: 1.5
@@ -64887,6 +65012,9 @@ MonoBehaviour:
   litTwitchIntervalMin: 3
   litTwitchIntervalMax: 6
   litTwitchAngle: 12
+  penumbraSpeedFraction: 0.3
+  penumbraTurnRate: 40
+  yawRateSmoothing: 12
   phraseBook: {fileID: 11400000, guid: 89194b9c21015634ca40ad98c1ca7a31, type: 2}
 --- !u!4 &6127146942038034433
 Transform:

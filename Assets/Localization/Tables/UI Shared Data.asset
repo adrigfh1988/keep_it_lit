@@ -695,6 +695,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331674882704014
+  - m_Id: 135694968066048
+    m_Key: ui.pause.map
+    m_Metadata:
+      m_Items:
+      - rid: 4707331677479764494
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -1250,3 +1255,7 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: 'Settings row label: strength of the screen effects that grow with fear (film grain, vignette, colour fringing)'
+    - rid: 4707331677479764494
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Pause menu: close the menu and open the floor map (420 x 86 button, 40 pt). Only shown once the map is unlocked. Noun'

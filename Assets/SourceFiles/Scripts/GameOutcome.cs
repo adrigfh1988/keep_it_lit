@@ -44,6 +44,9 @@ public class GameOutcome : MonoBehaviour
     private MazeEscape _escape;
     private Flashlight _flashlight;
     private int _seed;
+    // F106: where CaptureSequence eases the camera when something other than the hunter caught the player (the loop corridor's Visitor).
+    private Vector3 _captureLookAt;
+    private bool _hasCaptureLookAt;
 
     // F32/F37: the room between floors. May all stay null (escapeSequence off, or BindShop never called).
     private ShopRoom _shop;
@@ -51,6 +54,7 @@ public class GameOutcome : MonoBehaviour
     private PlayerHud _hud;
     private PlayerStealthState _stealth;
     private ContractTracker _contracts;
+    private HabitTracker _habits;
     private bool _showingLedger;
     private bool _continuePressed;
 
@@ -95,6 +99,9 @@ public class GameOutcome : MonoBehaviour
     /// <summary>F87: the floor's contract checker. May stay null; every use is guarded.</summary>
     public void BindContracts(ContractTracker contracts) => _contracts = contracts;
 
+    /// <summary>F105 C6: the tracker FloorCleared asks to teach the hunter what this floor's play showed it.</summary>
+    public void BindHabits(HabitTracker habits) => _habits = habits;
+
     private void Awake()
     {
         IsOver = false;
@@ -138,14 +145,50 @@ public class GameOutcome : MonoBehaviour
         if (PlayerInventory.Count(ShopItem.SecondWind) > 0 && _follower != null && _maze != null)
         {
             PlayerInventory.TryConsume(ShopItem.SecondWind);
-            StartCoroutine(SecondWindSequence());
+            StartCoroutine(SecondWindSequence(ReleaseHunter, "sub.second_wind.release"));
             return;
         }
 
         Lose(LoseReason.Caught);
     }
 
-    private IEnumerator SecondWindSequence()
+    /// <summary>
+    /// F106: the loop corridor's Visitor has the player. The same two outcomes as the hunter's catch, through the same single-shot guards: with a
+    /// Second Wind it is consumed and the player is let go under a blackout (`onSecondWind` runs at full black and moves them out; the hunter is
+    /// not touched); otherwise it is a real death, the camera easing onto `lookAt` (the Visitor's head) instead of the hunter's eyes.
+    /// </summary>
+    public void CaughtByLoopVisitor(Vector3 lookAt, System.Action onSecondWind)
+    {
+        if (IsOver || IsEnding) return;
+
+        if (PlayerInventory.TryConsume(ShopItem.SecondWind))
+        {
+            StartCoroutine(SecondWindSequence(onSecondWind, "sub.loop.second_wind"));
+            return;
+        }
+
+        _captureLookAt = lookAt;
+        _hasCaptureLookAt = true;
+        Lose(LoseReason.Caught);
+    }
+
+    /// <summary>The hunter's half of a Second Wind: warped to the far side of the maze and stunned. If it busted a locker, the player is still standing inside it with movement locked.</summary>
+    private void ReleaseHunter()
+    {
+        _follower.Release(_maze.FarthestCellCenterFrom(_player.position), secondWindStunSeconds);
+
+        // Locker.Leave() clears MovementLocked directly, so re-assert the freeze straight after -
+        // the sequence is not done with the player yet.
+        foreach (Locker locker in _maze.Lockers)
+        {
+            if (locker != null && locker.Occupied) locker.ForceLeave();
+        }
+
+        PlayerLock.Freeze(_player, true);
+    }
+
+    /// <summary>`letGo` runs at full black (the hunter's warp, or the loop's throw-out); `releaseLineKey` is the subtitle when the screen comes back.</summary>
+    private IEnumerator SecondWindSequence(System.Action letGo, string releaseLineKey)
     {
         IsEnding = true; // pause, dread, phantoms, and Lose() all wait
         if (_escape != null) _escape.Frozen = true; // not Stop(): Stop is permanent
@@ -167,21 +210,7 @@ public class GameOutcome : MonoBehaviour
 
         yield return new WaitForSeconds(0.7f);
 
-        // Let go: warp the hunter to the far side of the maze and stun it.
-        Vector3 far = _maze.FarthestCellCenterFrom(_player.position);
-        _follower.Release(far, secondWindStunSeconds);
-
-        // If it busted a locker, the player is still standing inside it with movement locked.
-        // Locker.Leave() clears MovementLocked directly, so re-assert the freeze straight after -
-        // the sequence is not done with the player yet.
-        if (_maze != null)
-        {
-            foreach (Locker locker in _maze.Lockers)
-            {
-                if (locker != null && locker.Occupied) locker.ForceLeave();
-            }
-            PlayerLock.Freeze(_player, true);
-        }
+        letGo?.Invoke();
 
         if (_stealth != null) _stealth.LastExposed = false;
         if (_audio != null) _audio.ResumeBed();
@@ -206,7 +235,7 @@ public class GameOutcome : MonoBehaviour
         if (_flashlight != null) _flashlight.InputEnabled = true;
         IsEnding = false;
 
-        if (_hud != null) _hud.ShowSubtitle(L10n.T("sub.second_wind.release"), 3.2f);
+        if (_hud != null) _hud.ShowSubtitle(L10n.T(releaseLineKey), 3.2f);
     }
 
     // ---------------------------------------------------------------- endings
@@ -215,6 +244,10 @@ public class GameOutcome : MonoBehaviour
     public void FloorCleared()
     {
         if (IsOver || IsEnding) return;
+
+        // F105 C6: the floor was cleared, so what the player leaned on this floor is learned (before the shop checkpoint / the finale).
+        if (_habits != null) _habits.CommitLearning();
+        LoopCorridor.CommitFloor(); // F105 C4: a loop on this floor counts as the campaign's one
 
         if (GameFlow.CurrentFloor >= FloorProfile.FinalFloor || _shop == null)
         {
@@ -679,11 +712,11 @@ public class GameOutcome : MonoBehaviour
         {
             elapsed += Time.deltaTime;
 
-            // Ease onto the hunter's eyes; lands in about half a second
-            if (controller != null && _follower != null)
+            // Ease onto the hunter's eyes (or, for the loop's Visitor, its head); lands in about half a second
+            if (controller != null && (_hasCaptureLookAt || _follower != null))
             {
-                Vector3 eyes = _follower.transform.position + Vector3.up * _follower.EyeHeight;
-                controller.LookAt(eyes, 1f - Mathf.Pow(0.001f, Time.deltaTime));
+                Vector3 target = _hasCaptureLookAt ? _captureLookAt : _follower.transform.position + Vector3.up * _follower.EyeHeight;
+                controller.LookAt(target, 1f - Mathf.Pow(0.001f, Time.deltaTime));
             }
 
             while (flicker < FlickerTimes.Length && elapsed >= FlickerTimes[flicker])

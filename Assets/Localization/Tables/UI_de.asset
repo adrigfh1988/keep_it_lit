@@ -593,6 +593,10 @@ MonoBehaviour:
     m_Localized: BILDSCHIRMEFFEKTE
     m_Metadata:
       m_Items: []
+  - m_Id: 135694968066048
+    m_Localized: KARTE
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

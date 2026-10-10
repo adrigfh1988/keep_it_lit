@@ -77,3 +77,4 @@ shop.payout.floor_cleared,"Ledger line label for the floor-clear bonus (36 pt, l
 shop.payout.shards_found,"Ledger line label, informational (36 pt, left column 900 px, auto-size). {n} = shards found on the floor, {value} = shards each; the amount column says ""already yours""",SHARDS FOUND  {n} x {value}  (already yours)
 shop.payout.consolation_title,"End screen heading for a consolation payout after dying (84 pt, one line)",CONSOLATION
 shop.payout.consolation,"Ledger line label for the consolation payout (36 pt, left column 900 px). {percent} = 35, {stars} = stars collected (plural: 1 star / 2 stars)",CONSOLATION  {percent}% of {stars} {stars:plural:star|stars}
+shop.temperament.final,"Floor 5 temperament line in the floor intro banner. ""It"" = the hunter, never named",It will not let you leave.

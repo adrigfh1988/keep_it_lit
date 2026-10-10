@@ -122,6 +122,14 @@ public class Stalker : MonoBehaviour
     [SerializeField] private float litTwitchIntervalMax = 6f;
     [SerializeField] private float litTwitchAngle = 12f;
 
+    [Header("F105 C7 - the penumbra lies")]
+    [Tooltip("In the soft edge of the beam (outside the bright core) Stan still steps, at this fraction of his normal speed, but only while the player is turning fast.")]
+    [SerializeField, Range(0f, 1f)] private float penumbraSpeedFraction = 0.3f;
+    [Tooltip("The camera's yaw rate (deg/s) above which the penumbra stops holding him")]
+    [SerializeField] private float penumbraTurnRate = 40f;
+    [Tooltip("How quickly the measured yaw rate follows the camera (1/s); higher = twitchier")]
+    [SerializeField] private float yawRateSmoothing = 12f;
+
     [Header("Voice (F82)")]
     [Tooltip("Stan's lines (Assets/SourceFiles/Data/StanPhrases.asset). Assigned by LIGHTS OUT > Build > Phrase Books; empty = built-in defaults.")]
     [SerializeField] private StalkerPhraseBook phraseBook;
@@ -164,6 +172,17 @@ public class Stalker : MonoBehaviour
     // when the builder AddComponents this onto the template).
     private NavMeshPath _path;
     private readonly RaycastHit[] _hits = new RaycastHit[16];
+
+    /// <summary>F105 C7: how much of the beam is on him. Core freezes him absolutely; Penumbra is the soft edge.</summary>
+    private enum LitState { Dark, Penumbra, Core }
+
+    private TerrorSettings _terror = new TerrorSettings();
+    private float _cameraYaw;
+    private float _cameraYawRate;
+    private bool _wasPenumbra;
+    private bool _penumbraMoving;
+    private float _nextPenumbraLogAt;
+    private const float PenumbraLogInterval = 5f;
 
     private bool _configured;
     private bool _wasLit;
@@ -366,12 +385,23 @@ public class Stalker : MonoBehaviour
 
         if (!_agent.isOnNavMesh) return;
 
-        bool lit = IsLit();
-        ApplyLitState(lit);
+        UpdateCameraYawRate();
+        LitState state = ComputeLitState();
+        // F105 C7: in the penumbra he moves, slowly, while the player turns fast; flag off = the penumbra is lit, as before.
+        bool penumbraWasMoving = _penumbraMoving;
+        _penumbraMoving = state == LitState.Penumbra && _terror.penumbraLies && _cameraYawRate > penumbraTurnRate;
+        if (_penumbraMoving && !penumbraWasMoving && Time.time >= _nextPenumbraLogAt)
+        {
+            _nextPenumbraLogAt = Time.time + PenumbraLogInterval; // the turn rate flaps around its threshold; one line per episode, not per flap
+            _terror.Log("Stan steps in the penumbra", this);
+        }
+        bool lit = state == LitState.Core || (state == LitState.Penumbra && !_penumbraMoving);
+        ApplyLitState(lit, state);
 
         if (!lit)
         {
             UpdateMode();
+            if (_penumbraMoving && _mode != Mode.Lunge) _agent.speed *= penumbraSpeedFraction;
             ComputeHeading();
             CheckTouch();
         }
@@ -408,29 +438,51 @@ public class Stalker : MonoBehaviour
 
     // ---------------------------------------------------------------- lit test
 
-    /// <summary>Lit if a registered LightPool source reaches the chest strongly enough, or the torch is
-    /// on, in range, inside the (blended) beam cone plus a few degrees of slack, and unobstructed.</summary>
-    private bool IsLit()
+    /// <summary>F105 C7: smoothed yaw rate of the view (deg/s), the measure of "the player is turning fast". Called once a frame.</summary>
+    private void UpdateCameraYawRate()
     {
-        Vector3 chest = transform.position + Vector3.up * ChestHeight;
-        if (LightPool.ExposureAt(chest) > ExposureThreshold) return true;
+        if (_torchCamera == null) return;
 
-        if (_torch == null || !_torch.IsBeamLit) return false;
-
-        Vector3 head = transform.position + Vector3.up * HeadHeight;
-        float halfAngle = _torch.OuterAngle * 0.5f + TorchAngleSlack;
-        float range = _torch.Range;
-
-        return TestBeamPoint(chest, halfAngle, range) || TestBeamPoint(head, halfAngle, range);
+        float dt = Time.deltaTime;
+        float yaw = _torchCamera.eulerAngles.y;
+        if (dt > 0f)
+        {
+            float instant = Mathf.Abs(Mathf.DeltaAngle(_cameraYaw, yaw)) / dt;
+            _cameraYawRate = Mathf.Lerp(_cameraYawRate, instant, 1f - Mathf.Exp(-yawRateSmoothing * dt));
+        }
+        _cameraYaw = yaw;
     }
 
-    private bool TestBeamPoint(Vector3 point, float halfAngle, float range)
+    /// <summary>Core if a registered LightPool source reaches the chest strongly enough, or the torch is on, in range,
+    /// inside the bright core of its cone plus a few degrees of slack, and unobstructed. Penumbra if it is only inside the
+    /// outer cone (same slack).</summary>
+    private LitState ComputeLitState()
+    {
+        Vector3 chest = transform.position + Vector3.up * ChestHeight;
+        if (LightPool.ExposureAt(chest) > ExposureThreshold) return LitState.Core;
+
+        if (_torch == null || !_torch.IsBeamLit) return LitState.Dark;
+
+        Vector3 head = transform.position + Vector3.up * HeadHeight;
+        float coreHalf = _torch.InnerAngle * 0.5f + TorchAngleSlack;
+        float outerHalf = _torch.OuterAngle * 0.5f + TorchAngleSlack;
+        float range = _torch.Range;
+
+        LitState atChest = TestBeamPoint(chest, coreHalf, outerHalf, range);
+        if (atChest == LitState.Core) return LitState.Core;
+        LitState atHead = TestBeamPoint(head, coreHalf, outerHalf, range);
+        return atHead > atChest ? atHead : atChest;
+    }
+
+    private LitState TestBeamPoint(Vector3 point, float coreHalf, float outerHalf, float range)
     {
         Vector3 toPoint = point - _torch.BeamOrigin;
         float distance = toPoint.magnitude;
-        if (distance < 0.0001f || distance > range) return false;
-        if (Vector3.Angle(_torch.BeamForward, toPoint) >= halfAngle) return false;
-        return HasClearLine(_torch.BeamOrigin, point);
+        if (distance < 0.0001f || distance > range) return LitState.Dark;
+
+        float angle = Vector3.Angle(_torch.BeamForward, toPoint);
+        if (angle >= outerHalf || !HasClearLine(_torch.BeamOrigin, point)) return LitState.Dark;
+        return angle < coreHalf ? LitState.Core : LitState.Penumbra;
     }
 
     /// <summary>Camera -&gt; point, ignoring the stalker's own colliders/triggers (and triggers globally
@@ -471,16 +523,20 @@ public class Stalker : MonoBehaviour
 
     /// <summary>Edge bookkeeping and the agent freeze. The Animator's speed is no longer written here -
     /// StepAnimation owns it, so a lit Stan holds its mid-stride pose.</summary>
-    private void ApplyLitState(bool lit)
+    private void ApplyLitState(bool lit, LitState state)
     {
         if (lit && !_wasLit)
         {
             // "a single tick when it freezes within 8 m" - the moment it goes from moving to lit-frozen.
-            float d = _player != null ? Vector3.Distance(transform.position, _player.position) : float.MaxValue;
-            if (d <= SingleTickRange) PlayCue(GameAudio.Library.stanTick, _tickClip, 0.6f);
+            // F105 C7: not when he merely stopped again at the beam's edge (the hold/step flapping with the turn rate would spam it).
+            if (!_wasPenumbra)
+            {
+                float d = _player != null ? Vector3.Distance(transform.position, _player.position) : float.MaxValue;
+                if (d <= SingleTickRange) PlayCue(GameAudio.Library.stanTick, _tickClip, 0.6f);
 
-            // F82: only remarks on it if he can see you - "too bright" at your back would be nonsense.
-            if (_voice != null && _voice.CanSeePlayer) _voice.Say(StalkerPhraseBook.Category.Lit);
+                // F82: only remarks on it if he can see you - "too bright" at your back would be nonsense.
+                if (_voice != null && _voice.CanSeePlayer) _voice.Say(StalkerPhraseBook.Category.Lit);
+            }
 
             _litSince = Time.time;
             _nextLitTwitchAt = Time.time + Random.Range(litTwitchIntervalMin, litTwitchIntervalMax);
@@ -499,8 +555,9 @@ public class Stalker : MonoBehaviour
             _agent.isStopped = false;
 
             // lit -> unlit: the light left it. If it was held long enough, close enough and the player is
-            // not hiding, it lunges.
+            // not hiding, it lunges. F105 C7: only when it is truly dark again - walking out of the penumbra into a turn is not "the light left".
             if (_wasLit
+                && state == LitState.Dark
                 && Time.time - _litSince >= lungeMinLitSeconds
                 && Time.time >= _nextLungeAllowedAt
                 && FlatDistanceToPlayer() <= lungeTriggerRange
@@ -510,6 +567,13 @@ public class Stalker : MonoBehaviour
             }
         }
         _wasLit = lit;
+        _wasPenumbra = state == LitState.Penumbra;
+    }
+
+    /// <summary>F105: which Tier C features run (penumbraLies), and the [Terror] log.</summary>
+    public void ApplyTerror(TerrorSettings terror)
+    {
+        _terror = terror ?? new TerrorSettings();
     }
 
     // ---------------------------------------------------------------- movement
@@ -1021,6 +1085,7 @@ public class Stalker : MonoBehaviour
 
         SetRenderersVisible(true);
         _wasLit = false;
+        _wasPenumbra = false;
         _repathTimer = 0f;
         _hasWanderTarget = false;
         _mode = Mode.Roam;

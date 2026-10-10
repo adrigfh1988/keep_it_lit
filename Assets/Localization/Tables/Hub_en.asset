@@ -695,6 +695,10 @@ MonoBehaviour:
     m_Localized: SOMEONE HAS DRAWN STARS ON THE WALL. THEY STILL GLOW.
     m_Metadata:
       m_Items: []
+  - m_Id: 104178347053056
+    m_Localized: IT IS AWAKE. RUN TO THE SURGERY.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

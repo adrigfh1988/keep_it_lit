@@ -8,14 +8,15 @@ using UnityEngine.Rendering;
 /// has exactly the hunter's silhouette and gait. Built once by PhantomDirector, lazily, and pooled: the director
 /// shows it, poses it, then hides it again. Plain helper (not a MonoBehaviour), so it lives beside its only user.
 ///
-/// It is gameplay-inert: no scripts, colliders, rigidbodies, audio or lights, and the eyes and the chest stencil
-/// are removed - a phantom must not be mistaken for the real thing. The cloned Animator never fires events (the
+/// It is gameplay-inert: no scripts, colliders, rigidbodies or audio, and the eyes and the chest stencil
+/// are removed - a phantom must not be mistaken for the real thing. The one light a body may carry is the double's head spot (F105 C8). The cloned Animator never fires events (the
 /// Starter clips would log "no receiver") and always animates, since a ShadowsOnly renderer may not count as visible.
 /// </summary>
 public class PhantomBody
 {
     /// <summary>The hunter's visible body child, the same name HunterBodyBuilder.BodyChildName gives it (an editor const, so repeated here).</summary>
     private const string BodyChildName = "HunterBody";
+    private const string HeadBoneName = "Head";
 
     private static readonly string[] StrippedChildNames = { "LeftEye_Glow", "RightEye_Glow", "ChestStencil" };
     private static readonly int AnimSpeed = Animator.StringToHash("Speed");
@@ -27,9 +28,13 @@ public class PhantomBody
     private readonly Material[][] _originalMaterials;
     private readonly Animator _animator;
     private readonly int[] _paramHashes;
+    private Light _headSpot; // F105 C8: only the double's body has one
 
     /// <summary>The wrapper that is positioned and turned; the cloned body sits inside it at the hunter's own local offset.</summary>
     public GameObject Root { get; }
+
+    /// <summary>F106: the body's first material, the source for a silhouette copy (see PhantomDirector.BuildSilhouetteMaterial). Null for a body with no renderer.</summary>
+    public Material FirstMaterial => _originalMaterials.Length > 0 && _originalMaterials[0].Length > 0 ? _originalMaterials[0][0] : null;
 
     /// <summary>True while a phantom is using the body, so the other figure phantom does not borrow it mid-use.</summary>
     public bool InUse { get; private set; }
@@ -51,7 +56,20 @@ public class PhantomBody
     /// <summary>Clones and strips the hunter's HunterBody under `parent`. Returns null when the hunter has no such child.</summary>
     public static PhantomBody TryBuild(AIFollower follower, Transform parent)
     {
-        Transform source = follower != null ? follower.transform.Find(BodyChildName) : null;
+        return TryBuild(follower != null ? follower.transform.Find(BodyChildName) : null, parent);
+    }
+
+    /// <summary>
+    /// F105 C8: clones and strips the Stalker template's body (the player's own robot, in the template's dark skin) under `parent` -
+    /// the double's figure. Returns null when there is no template. Its glow eyes go with the rest (Strip), so the double has none.
+    /// </summary>
+    public static PhantomBody TryBuild(Stalker template, Transform parent)
+    {
+        return TryBuild(template != null ? template.transform : null, parent);
+    }
+
+    private static PhantomBody TryBuild(Transform source, Transform parent)
+    {
         if (source == null) return null;
 
         GameObject root = new GameObject("Phantom_Body");
@@ -65,6 +83,7 @@ public class PhantomBody
         clone.transform.localRotation = source.localRotation;
         clone.transform.localScale = source.localScale;
         Strip(clone);
+        clone.SetActive(true); // a template sits inactive in its gallery; the root above is inactive too, so nothing wakes before Show
 
         Animator animator = clone.GetComponentInChildren<Animator>(true);
         if (animator != null)
@@ -124,6 +143,47 @@ public class PhantomBody
         if (HasParam(AnimPose)) _animator.SetInteger(AnimPose, (int)pose);
         _animator.Update(0.5f);
         _animator.enabled = false;
+    }
+
+    /// <summary>
+    /// F105 C8: a small spot light on the head bone, switched on and off with the body (Strip removed every light the clone had, so this
+    /// is the only one). Aim it with <see cref="AimSpot"/> once the body is shown. Idempotent: a second call keeps the first light.
+    /// </summary>
+    public void AddHeadSpot(float range, float intensity, float spotAngle, Color color)
+    {
+        if (_headSpot != null) return;
+
+        Transform head = _animator != null && _animator.isHuman ? _animator.GetBoneTransform(HumanBodyBones.Head) : null;
+        if (head == null) head = FindByName(Root.transform, HeadBoneName);
+
+        GameObject holder = new GameObject("Double_Spot");
+        holder.transform.SetParent(head != null ? head : Root.transform, false);
+        _headSpot = holder.AddComponent<Light>();
+        _headSpot.type = LightType.Spot;
+        _headSpot.range = range;
+        _headSpot.intensity = intensity;
+        _headSpot.spotAngle = spotAngle;
+        _headSpot.color = color;
+        _headSpot.shadows = LightShadows.None;
+    }
+
+    /// <summary>F105 C8: points the head spot at a world position (the player). The body is frozen, so the aim holds until it is hidden.</summary>
+    public void AimSpot(Vector3 worldPoint)
+    {
+        if (_headSpot == null) return;
+
+        Vector3 direction = worldPoint - _headSpot.transform.position;
+        if (direction.sqrMagnitude > 1e-4f) _headSpot.transform.rotation = Quaternion.LookRotation(direction);
+    }
+
+    private static Transform FindByName(Transform root, string childName)
+    {
+        foreach (Transform child in root.GetComponentsInChildren<Transform>(true))
+        {
+            if (child.name == childName) return child;
+        }
+
+        return null;
     }
 
     /// <summary>Every renderer casts the given shadow mode (ShadowsOnly for the shadow phantom, On for the visible figure).</summary>

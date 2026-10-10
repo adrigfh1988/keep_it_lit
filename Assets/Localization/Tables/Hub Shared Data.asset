@@ -830,6 +830,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703762811
+  - m_Id: 104178347053056
+    m_Key: hub.chase.run
+    m_Metadata:
+      m_Items:
+      - rid: 4707331677479764380
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -1493,3 +1498,7 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Subtitle (4.5 s, queued) the first time the player walks up to a chalk star on the wall (floor 2)
+    - rid: 4707331677479764380
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (3 s) when the floor-4 chase starts: the pursuer rises at the basement stairs and the player must run to the Surgery wing door upstairs, where it stops (see hub.chase.stops). ALL CAPS. "IT" = the pursuer'

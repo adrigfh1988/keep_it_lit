@@ -230,6 +230,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331669776663389
+  - m_Id: 113530869026816
+    m_Key: hud.prompt.map
+    m_Metadata:
+      m_Items:
+      - rid: 4707331677479764493
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -413,3 +418,7 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Interaction prompt on the terminal (Lab floor)
+    - rid: 4707331677479764493
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hint on the prompt line (not tied to a door) the first time the floor map can be opened: "M  MAP" (34 pt, 600 x 50, auto-size, shown 4 s). Noun'

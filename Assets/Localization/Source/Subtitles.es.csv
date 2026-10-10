@@ -39,3 +39,11 @@ sub.banner.restore_fuses,REPARA {n} FUSIBLES
 sub.banner.find_keys,ENCUENTRA {n} LLAVES PARA LA TRAMPILLA
 sub.banner.lockdown,CIERRE DE SEGURIDAD
 sub.banner.rule,{name} — {description}
+sub.banner.find_keys_lift,ENCUENTRA {n} LLAVES PARA EL ASCENSOR
+sub.hunter.learned_lockers,RECUERDA LOS CASILLEROS.
+sub.hunter.learned_throws,CONOCE LAS BOTELLAS.
+sub.hunter.learned_dark,HA APRENDIDO LA OSCURIDAD.
+sub.hunter.learned_sprint,TE OYE CORRER.
+sub.loop.rule,"SI ALGO ESTÁ MAL, VUELVE. SI NO, SIGUE ANDANDO."
+sub.loop.reward,RECUERDAS EL LABERINTO.
+sub.loop.second_wind,TE DEJA IR. UNA VEZ.

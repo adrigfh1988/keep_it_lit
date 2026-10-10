@@ -163,4 +163,5 @@ hub.lift.stopped,Subtitle (2.2 s) when the lift jams half-way down,THE LIFT STOP
 hub.lift.doors_stuck,Subtitle (4 s) at the bottom of the lift. {key} = E on keyboard or USE on touch (do not translate the key),THE DOORS ARE STUCK · HOLD {key} TO FORCE THEM
 hub.flood.knocks,Subtitle (3.5 s) in the basement hall on floor 3: Tomas knocks in the pipes. Sentence in capitals with a final full stop,SOMETHING KNOCKS THREE TIMES.
 hub.chase.stops,Subtitle (2.6 s) when the floor-4 chase ends at the surgery door,IT STOPS AT THE DOOR
+hub.chase.run,"Subtitle (3 s) when the floor-4 chase starts: the pursuer rises at the basement stairs and the player must run to the Surgery wing door upstairs, where it stops (see hub.chase.stops). ALL CAPS. ""IT"" = the pursuer",IT IS AWAKE. RUN TO THE SURGERY.
 hub.stars.first,"Subtitle (4.5 s, queued) the first time the player walks up to a chalk star on the wall (floor 2)",SOMEONE HAS DRAWN STARS ON THE WALL. THEY STILL GLOW.

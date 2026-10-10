@@ -98,7 +98,7 @@ public class ThrowableItem : MonoBehaviour, IInteractable
     private void Impact(Vector3 point)
     {
         bool wasChasing = _hunter != null && _hunter.IsChasing;
-        bool heard = _hunter != null && _hunter.HearNoise(point, 18f);
+        bool heard = _hunter != null && _hunter.HearThrow(point, 18f); // F105 C6: wraps HearNoise with what the hunter has learned about throws
         if (heard && !wasChasing) HunterInvestigated?.Invoke();
 
         if (kind == Kind.Bottle)

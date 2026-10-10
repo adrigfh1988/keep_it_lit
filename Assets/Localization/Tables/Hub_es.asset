@@ -695,6 +695,10 @@ MonoBehaviour:
     m_Localized: "ALGUIEN HA DIBUJADO ESTRELLAS EN LA PARED. TODAV\xCDA BRILLAN."
     m_Metadata:
       m_Items: []
+  - m_Id: 104178347053056
+    m_Localized: "EST\xC1 DESPIERTO. CORRE A CIRUG\xCDA."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

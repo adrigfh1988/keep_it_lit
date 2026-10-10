@@ -405,6 +405,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763002
+  - m_Id: 74059196829696
+    m_Key: shop.temperament.final
+    m_Metadata:
+      m_Items:
+      - rid: 4707331677479764077
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -728,3 +733,7 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: 'Ledger line label for the consolation payout (36 pt, left column 900 px). {percent} = 35, {stars} = stars collected (plural: 1 star / 2 stars)'
+    - rid: 4707331677479764077
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor 5 temperament line in the floor intro banner. "It" = the hunter, never named
