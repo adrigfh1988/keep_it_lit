@@ -11,8 +11,8 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// The lit room between floors: a counter, a salesman whose head follows the player, and a door to the
 /// next floor. Unlike everything else in this project the room is AUTHORED in the scene, so it can be
-/// selected, moved and restyled in the Editor. Generate it once with the menu item
-/// LIGHTS OUT > Build > Shop Room (Assets/Editor/ShopRoomBuilder.cs); this component only drives it.
+/// selected, moved and restyled in the Editor: it is the hand-editable prefab Assets/Prefabs/ShopRoom.prefab (first
+/// drafted by LIGHTS OUT > Build > Shop Room (regenerate), Assets/Editor/ShopRoomBuilder.cs); this component only drives it.
 ///
 /// It is not a run and not an ending: see GameFlow.IsInShop. MazeGenerator finds it, hands it the
 /// player/HUD/menu through Configure, and GameOutcome.FloorCleared teleports the player onto the

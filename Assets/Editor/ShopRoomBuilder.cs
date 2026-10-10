@@ -5,15 +5,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// LIGHTS OUT > Build > Shop Room. Generates the room between floors as ordinary scene objects, once, so
-/// it can be inspected and edited in Unity like anything else. Nothing here runs in a build; at Play
-/// time the ShopRoom component just drives what this made.
+/// LIGHTS OUT > Build > Shop Room (regenerate). Generates the first draft of the room between floors and saves it as
+/// the hand-editable prefab Assets/Prefabs/ShopRoom.prefab (ShopRoomBuilder.Prefab.cs); from then on the prefab is
+/// the source of truth, BuildSilently only places it, and the menu item is a confirmed reset. Nothing here runs in a
+/// build; at Play time the ShopRoom component just drives what this made.
 ///
 /// The room is an alchemist's shop dressed from the Assets/BK_AlchemistHouse pack (its materials are
 /// converted to URP by AlchemistMaterialUpgrade). The shell, lights, door, counter and salesman live in
 /// this file; the placement helpers and the furniture passes are in ShopRoomBuilder.Dressing.cs.
 ///
-/// Rebuilding replaces the existing room (after asking). Spec: plannings/shop-room-alchemist-plan.md.
+/// Spec: plannings/shop-room-alchemist-plan.md.
 /// </summary>
 public static partial class ShopRoomBuilder
 {
@@ -33,7 +34,11 @@ public static partial class ShopRoomBuilder
     private static readonly Color HatchGreen = new Color(0.25f, 1f, 0.7f);
     private static readonly Color Amber = new Color(1f, 0.72f, 0.42f);
 
-    [MenuItem("LIGHTS OUT/Build/Shop Room", priority = 104)]
+    /// <summary>
+    /// Generates the room from scratch and saves it over the prefab - a reset, not the way to change the room. To change
+    /// it, open Assets/Prefabs/ShopRoom.prefab and edit it by hand.
+    /// </summary>
+    [MenuItem("LIGHTS OUT/Build/Shop Room (regenerate)", priority = 104)]
     public static void Build()
     {
         Scene scene = SceneManager.GetActiveScene();
@@ -43,15 +48,14 @@ public static partial class ShopRoomBuilder
             return;
         }
 
-        ShopRoom existing = Object.FindAnyObjectByType<ShopRoom>(FindObjectsInactive.Include);
-        if (existing != null)
+        bool hasPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath) != null;
+        if ((hasPrefab || Object.FindAnyObjectByType<ShopRoom>(FindObjectsInactive.Include) != null) &&
+            !EditorUtility.DisplayDialog("Regenerate Shop Room",
+                $"This throws away the current shop and regenerates it from code, overwriting {PrefabPath}.\n\n" +
+                "Every change you made to it by hand will be lost. To change the shop, edit the prefab instead.",
+                "Regenerate", "Cancel"))
         {
-            if (!EditorUtility.DisplayDialog("Build Shop Room",
-                    "A ShopRoom already exists in this scene. Replace it? Any changes you made to it will be lost.",
-                    "Replace", "Cancel"))
-            {
-                return;
-            }
+            return;
         }
 
         if (AlchemistMaterialUpgrade.NeedsConversion())
@@ -65,10 +69,13 @@ public static partial class ShopRoomBuilder
             }
         }
 
-        BuildSilently();
+        Generate();
     }
 
-    /// <summary>No dialogs: replaces any existing room and converts the pack materials if needed. Used for scripted rebuilds.</summary>
+    /// <summary>
+    /// No dialogs, never overwrites hand work: when the prefab exists and the room is missing, it places the prefab;
+    /// it only generates from code when there is no prefab yet. Used by ProjectSetup and for scripted rebuilds.
+    /// </summary>
     public static void BuildSilently()
     {
         Scene scene = SceneManager.GetActiveScene();
@@ -78,6 +85,23 @@ public static partial class ShopRoomBuilder
             return;
         }
 
+        if (AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath) != null)
+        {
+            if (Object.FindAnyObjectByType<ShopRoom>(FindObjectsInactive.Include) == null)
+            {
+                InstantiatePrefab();
+                EditorSceneManager.MarkSceneDirty(scene);
+            }
+            return;
+        }
+
+        Generate();
+    }
+
+    /// <summary>Generates the room from code (replacing any existing one, converting the pack materials if needed) and saves it as the prefab.</summary>
+    private static void Generate()
+    {
+        Scene scene = SceneManager.GetActiveScene();
         ShopRoom existing = Object.FindAnyObjectByType<ShopRoom>(FindObjectsInactive.Include);
         if (existing != null) Undo.DestroyObjectImmediate(existing.gameObject);
 
@@ -88,6 +112,9 @@ public static partial class ShopRoomBuilder
         if (AlchemistMaterialUpgrade.NeedsConversion()) AlchemistMaterialUpgrade.Convert();
 
         BuildCore(scene);
+
+        ShopRoom built = Object.FindAnyObjectByType<ShopRoom>(FindObjectsInactive.Include);
+        if (built != null) SaveAsPrefab(built.gameObject);
     }
 
     private static void BuildCore(Scene scene)

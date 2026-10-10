@@ -4,7 +4,7 @@ using UnityEngine;
 /// Timmy, the robot behind the shop counter. He idles on the Starter Assets idle, waves when the player
 /// arrives or walks up to the counter, and talks (the Mixamo Talking clip) while the shop or contract menu
 /// is open. ShopRoom calls <see cref="Greet"/> and <see cref="SetTalking"/>; everything else is the
-/// controller made by LIGHTS OUT &gt; Build &gt; Shop Room (states Idle / Talk / Wave, crossfaded by name;
+/// controller made by the shop builder (ShopRoomBuilder.Timmy.cs; states Idle / Talk / Wave, crossfaded by name;
 /// Wave returns to Idle on its own). Without a Wave state a greeting is a short burst of talking instead.
 /// </summary>
 public class ShopkeeperAnimator : MonoBehaviour

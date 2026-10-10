@@ -34,7 +34,7 @@ public static class ProjectSetup
         new Piece
         {
             Name = "Alchemist House materials (URP)",
-            FixMenu = "converted automatically by Build > Shop Room / Floor Themes",
+            FixMenu = "converted automatically by Build > Shop Room (regenerate) / Floor Themes",
             Problem = () => AlchemistMaterialUpgrade.NeedsConversion() ? "still on Built-in shaders (render magenta)" : null,
             Build = () => AlchemistMaterialUpgrade.Convert()
         },
@@ -131,18 +131,9 @@ public static class ProjectSetup
         new Piece
         {
             Name = "Shop room",
-            FixMenu = "Build > Shop Room",
-            Problem = () =>
-            {
-                ShopRoom shop = Object.FindAnyObjectByType<ShopRoom>(FindObjectsInactive.Include);
-                if (shop == null) return "missing (floors 1-4 fall back to a plain win)";
-                SerializedProperty head = new SerializedObject(shop).FindProperty("headPivot");
-                return head != null && head.objectReferenceValue == null ? "the salesman has no headPivot" : null;
-            },
-            Build = () =>
-            {
-                if (Object.FindAnyObjectByType<ShopRoom>(FindObjectsInactive.Include) == null) ShopRoomBuilder.BuildSilently();
-            }
+            FixMenu = "Build Missing Pieces (places Assets/Prefabs/ShopRoom.prefab, or saves the scene room as it; Build > Shop Room (regenerate) is a reset)",
+            Problem = ShopRoomBuilder.RoomProblem,
+            Build = ShopRoomBuilder.Repair
         },
         new Piece
         {
@@ -163,14 +154,14 @@ public static class ProjectSetup
         new Piece
         {
             Name = "Shop contract board (F87)",
-            FixMenu = "Build Missing Pieces (adds the board to the existing shop; a full Build > Shop Room builds it too)",
+            FixMenu = "Build Missing Pieces (adds the board to the existing shop; a full Build > Shop Room (regenerate) builds it too)",
             Problem = ShopRoomBuilder.ContractBoardProblem,
             Build = () => ShopRoomBuilder.AddContractBoard()
         },
         new Piece
         {
             Name = "Shop salesman (Timmy)",
-            FixMenu = "Build Missing Pieces (swaps the Guard for Timmy in the existing shop; a full Build > Shop Room builds him too)",
+            FixMenu = "Build Missing Pieces (swaps the Guard for Timmy in the existing shop; a full Build > Shop Room (regenerate) builds him too)",
             Problem = ShopRoomBuilder.TimmySalesmanProblem,
             Build = () => ShopRoomBuilder.SwapSalesmanToTimmy()
         },

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// F87: the contract board on the shop's south wall, left of the door. A full Build > Shop Room builds it with the room;
+/// F87: the contract board on the shop's south wall, left of the door. A full Build > Shop Room (regenerate) builds it with the room;
 /// <see cref="AddContractBoard"/> adds it to an existing ShopRoom without rebuilding anything (the ProjectSetup piece
 /// "Shop contract board" runs it from Build Missing Pieces). Idempotent: a room that already has one is left alone.
 /// </summary>
