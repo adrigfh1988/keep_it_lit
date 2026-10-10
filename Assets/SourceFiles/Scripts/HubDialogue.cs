@@ -7,6 +7,13 @@ using UnityEngine;
 /// "who.situation" (agnes.offer, bruno.later3, ...); HubMission picks the key from the mission stage and the floor. Texts may use
 /// {n} (things found so far) and {total}. A line stays under 100 characters and a conversation under 8 lines - the panel is not a book.
 /// No state here: the file is pure data.
+///
+/// S9 (plan 2e): the STRUCTURE (who speaks, choices, sound cues, which conversation) stays in C#; the words live in Assets/Localization/Source/
+/// Dialogue.csv. Every node gets a stable key from its place in the table - a line is dlg.&lt;conversation&gt;.&lt;index&gt; (dlg.bruno.offer.2),
+/// a choice label dlg.&lt;conversation&gt;.&lt;index&gt;.choice.&lt;c&gt;, a reply line dlg.&lt;conversation&gt;.&lt;index&gt;.choice.&lt;c&gt;.reply.&lt;k&gt; - assigned once when
+/// the table is built (never renumber the table without renumbering the CSV). The English text written in this file is the source the CSV
+/// was generated from (HubDialogue.Entries) and the fallback while a key is missing. A speaker is an ID ("agnes"), its display name is
+/// hub.npc.&lt;id&gt;; the panel's colour comes from the id (it used to compare the display name).
 /// </summary>
 public static class HubDialogue
 {
@@ -15,7 +22,11 @@ public static class HubDialogue
     {
         public readonly string label;
         public readonly Node[] reply;
+        /// <summary>The Dialogue table key of the label (dlg.conversation.index.choice.c), assigned when the table is built.</summary>
+        public string Key { get; internal set; }
         public Choice(string label, params Node[] reply) { this.label = label; this.reply = reply; }
+        /// <summary>The label in the selected language (the English literal while the key is missing).</summary>
+        public string Label => !string.IsNullOrEmpty(Key) && L10n.Has(Key) ? L10n.T(Key) : label;
     }
 
     public sealed class Node
@@ -25,9 +36,26 @@ public static class HubDialogue
         public readonly Choice[] choices;
         /// <summary>Sound cue played as the line starts: "whisper" (GameAudio whisper slot, low) or null.</summary>
         public readonly string fx;
+        /// <summary>The Dialogue table key of the line (dlg.conversation.index), assigned when the table is built.</summary>
+        public string Key { get; internal set; }
         public Node(string speaker, string text, string fx = null, Choice[] choices = null) { this.speaker = speaker; this.text = text; this.fx = fx; this.choices = choices; }
         public bool HasChoices => choices != null && choices.Length > 0;
+
+        /// <summary>The line in the selected language with {n} / {total} as Smart arguments (the English literal, tokens replaced, while the key is missing).</summary>
+        public string Resolve(int n = 0, int total = 0)
+        {
+            if (!string.IsNullOrEmpty(Key) && L10n.Has(Key)) return L10n.T(Key, ("n", n), ("total", total));
+            return text.Replace("{n}", n.ToString()).Replace("{total}", total.ToString());
+        }
     }
+
+    /// <summary>The speaker ids (Node.speaker). The display name is hub.npc.&lt;id&gt; (HubNpc.NameKey), the colour <see cref="ColourOf"/>.</summary>
+    public const string AgnesId = "agnes";
+    public const string BrunoId = "bruno";
+    public const string JosefId = "josef";
+    public const string MartaId = "marta";
+    public const string WeissId = "weiss";
+    public const string ClerkId = "clerk";
 
     public const string Agnes = "SISTER AGNES";
     public const string Bruno = "BRUNO";
@@ -36,26 +64,44 @@ public static class HubDialogue
     public const string Weiss = "DR. WEISS";
     public const string Clerk = "THE CLERK";
 
-    public static Color ColourOf(string speaker)
+    /// <summary>The speaker's display name in the selected language (hub.npc.id); the English constant while the key is missing.</summary>
+    public static string SpeakerName(string speakerId)
     {
-        switch (speaker)
+        string key = "hub.npc." + speakerId;
+        if (L10n.Has(key)) return L10n.T(key);
+        switch (speakerId)
         {
-            case Agnes: return new Color(0.95f, 0.88f, 0.72f);
-            case Bruno: return new Color(0.62f, 0.72f, 0.82f);
-            case Josef: return new Color(0.9f, 0.7f, 0.38f);
-            case Marta: return new Color(0.92f, 0.7f, 0.76f);
-            case Weiss: return new Color(0.5f, 0.82f, 0.8f);
-            case Clerk: return new Color(0.66f, 0.7f, 0.62f);
+            case AgnesId: return Agnes;
+            case BrunoId: return Bruno;
+            case JosefId: return Josef;
+            case MartaId: return Marta;
+            case WeissId: return Weiss;
+            case ClerkId: return Clerk;
+            default: return speakerId ?? "";
+        }
+    }
+
+    /// <summary>Panel accent colour by speaker ID (S9: it used to compare the English display name, which a translation would break).</summary>
+    public static Color ColourOf(string speakerId)
+    {
+        switch (speakerId)
+        {
+            case AgnesId: return new Color(0.95f, 0.88f, 0.72f);
+            case BrunoId: return new Color(0.62f, 0.72f, 0.82f);
+            case JosefId: return new Color(0.9f, 0.7f, 0.38f);
+            case MartaId: return new Color(0.92f, 0.7f, 0.76f);
+            case WeissId: return new Color(0.5f, 0.82f, 0.8f);
+            case ClerkId: return new Color(0.66f, 0.7f, 0.62f);
             default: return new Color(0.85f, 0.85f, 0.85f);
         }
     }
 
-    private static Node A(string t, string fx = null) => new Node(Agnes, t, fx);
-    private static Node B(string t, string fx = null) => new Node(Bruno, t, fx);
-    private static Node J(string t, string fx = null) => new Node(Josef, t, fx);
-    private static Node M(string t, string fx = null) => new Node(Marta, t, fx);
-    private static Node W(string t, string fx = null) => new Node(Weiss, t, fx);
-    private static Node C(string t, string fx = null) => new Node(Clerk, t, fx);
+    private static Node A(string t, string fx = null) => new Node(AgnesId, t, fx);
+    private static Node B(string t, string fx = null) => new Node(BrunoId, t, fx);
+    private static Node J(string t, string fx = null) => new Node(JosefId, t, fx);
+    private static Node M(string t, string fx = null) => new Node(MartaId, t, fx);
+    private static Node W(string t, string fx = null) => new Node(WeissId, t, fx);
+    private static Node C(string t, string fx = null) => new Node(ClerkId, t, fx);
 
     private static readonly Dictionary<string, Node[]> Table = new Dictionary<string, Node[]>
     {
@@ -111,7 +157,7 @@ public static class HubDialogue
         {
             B("Boiler room, aye. I've got the key. It's on me somewhere."),
             B("I'm not going down there myself. Not for money. Not for anything."),
-            new Node(Bruno, "Do me a turn first. Josef's supper. Tray's on the pass. He bites when he's hungry.", null, new[]
+            new Node(BrunoId, "Do me a turn first. Josef's supper. Tray's on the pass. He bites when he's hungry.", null, new[]
             {
                 new Choice("He bites?", B("Figure of speech. Mostly.")),
                 new Choice("Why don't you take it?", B("He knows things. About me. About everyone. I'd sooner not be looked at.")),
@@ -279,7 +325,28 @@ public static class HubDialogue
         } },
     };
 
-    /// <summary>The conversation for `key`, or null when there is none.</summary>
+    static HubDialogue()
+    {
+        foreach (KeyValuePair<string, Node[]> pair in Table) AssignKeys("dlg." + pair.Key, pair.Value);
+    }
+
+    // dlg.<conversation>.<index>, .choice.<c> for a label, .choice.<c>.reply.<k> for the lines that follow it.
+    private static void AssignKeys(string prefix, Node[] nodes)
+    {
+        for (int i = 0; i < nodes.Length; i++)
+        {
+            string key = prefix + "." + i;
+            nodes[i].Key = key;
+            if (!nodes[i].HasChoices) continue;
+            for (int c = 0; c < nodes[i].choices.Length; c++)
+            {
+                nodes[i].choices[c].Key = key + ".choice." + c;
+                if (nodes[i].choices[c].reply != null) AssignKeys(key + ".choice." + c + ".reply", nodes[i].choices[c].reply);
+            }
+        }
+    }
+
+    /// <summary>The conversation for key, or null when there is none.</summary>
     public static Node[] Get(string key)
     {
         return key != null && Table.TryGetValue(key, out Node[] nodes) ? nodes : null;
@@ -287,22 +354,42 @@ public static class HubDialogue
 
     public static bool Has(string key) => key != null && Table.ContainsKey(key);
 
-    /// <summary>Longest line in the table, for the editor audit (the panel is built for about 100 characters).</summary>
-    public static int LongestLine()
+    /// <summary>Every (table key, English text, speaker id, conversation id) in the table, in order - what Dialogue.csv was generated from, and what the
+    /// editor completeness check walks. A choice label has speaker "" (it is the player's).</summary>
+    public static IEnumerable<(string key, string text, string speaker, string conversation)> Entries()
     {
-        int longest = 0;
-        foreach (Node[] nodes in Table.Values) longest = Mathf.Max(longest, Longest(nodes));
-        return longest;
+        foreach (KeyValuePair<string, Node[]> pair in Table)
+        {
+            foreach (var e in EntriesOf(pair.Key, pair.Value)) yield return e;
+        }
     }
 
-    private static int Longest(Node[] nodes)
+    private static IEnumerable<(string key, string text, string speaker, string conversation)> EntriesOf(string conversation, Node[] nodes)
     {
-        int longest = 0;
-        if (nodes == null) return 0;
         foreach (Node n in nodes)
         {
-            longest = Mathf.Max(longest, n.text.Length);
-            if (n.HasChoices) foreach (Choice c in n.choices) longest = Mathf.Max(longest, Longest(c.reply));
+            yield return (n.Key, n.text, n.speaker, conversation);
+            if (!n.HasChoices) continue;
+            foreach (Choice c in n.choices)
+            {
+                yield return (c.Key, c.label, "", conversation);
+                if (c.reply != null) foreach (var e in EntriesOf(conversation, c.reply)) yield return e;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Longest line in the table, for the editor audit (the panel is built for about 100 characters). localeCode null = the English source
+    /// text written in this file; "en"/"es"/"fr"/"de" = the raw text of that language's Dialogue table entries (plan D16: 100 in English,
+    /// 120 elsewhere, reported not blocking); a key that language has not translated yet is skipped.
+    /// </summary>
+    public static int LongestLine(string localeCode = null)
+    {
+        int longest = 0;
+        foreach (var e in Entries())
+        {
+            string text = localeCode == null ? e.text : L10n.TIn(localeCode, e.key) ?? (localeCode == "en" ? e.text : null);
+            if (text != null) longest = Mathf.Max(longest, text.Length);
         }
         return longest;
     }

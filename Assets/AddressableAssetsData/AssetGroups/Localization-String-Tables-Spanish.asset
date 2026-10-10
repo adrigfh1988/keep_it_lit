@@ -22,8 +22,29 @@ MonoBehaviour:
     - Locale-es
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 990b224f51db65949b830cbfd4c5c6b2
+    m_Address: Dialogue_es
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-es
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b89fd103ed2875649a3d0c1d59c7b394
+    m_Address: Voices_es
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-es
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c20eb3e65afdccd4380637d66a2cebfc
     m_Address: HUD_es
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-es
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d25a6aa51d389bf43a43d8f0ea21d2de
+    m_Address: Hub_es
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-es

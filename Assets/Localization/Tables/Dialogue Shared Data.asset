@@ -1,0 +1,919 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Dialogue Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Dialogue
+  m_TableCollectionNameGuidString: 172e1df55f88b8f408f2e07c6708d5d7
+  m_Entries:
+  - m_Id: 698257408
+    m_Key: dlg.agnes.offer.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762444
+  - m_Id: 794726400
+    m_Key: dlg.agnes.offer.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762445
+  - m_Id: 794726401
+    m_Key: dlg.agnes.offer.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762446
+  - m_Id: 794726402
+    m_Key: dlg.agnes.offer.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762447
+  - m_Id: 794726403
+    m_Key: dlg.agnes.offer.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762448
+  - m_Id: 794726404
+    m_Key: dlg.agnes.remind.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762449
+  - m_Id: 794726405
+    m_Key: dlg.agnes.remind.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762450
+  - m_Id: 794726406
+    m_Key: dlg.agnes.return.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762451
+  - m_Id: 794726407
+    m_Key: dlg.agnes.return.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762452
+  - m_Id: 794726408
+    m_Key: dlg.agnes.return.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762453
+  - m_Id: 794726409
+    m_Key: dlg.agnes.return.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762454
+  - m_Id: 794726410
+    m_Key: dlg.agnes.after.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762455
+  - m_Id: 794726411
+    m_Key: dlg.agnes.after.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762456
+  - m_Id: 794726412
+    m_Key: dlg.agnes.later2.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762457
+  - m_Id: 794726413
+    m_Key: dlg.agnes.later2.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762458
+  - m_Id: 794726414
+    m_Key: dlg.agnes.later3.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762459
+  - m_Id: 794726415
+    m_Key: dlg.agnes.later3.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762460
+  - m_Id: 794726416
+    m_Key: dlg.agnes.later4.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762461
+  - m_Id: 794726417
+    m_Key: dlg.agnes.later4.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762462
+  - m_Id: 794726418
+    m_Key: dlg.bruno.pre.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762463
+  - m_Id: 794726419
+    m_Key: dlg.bruno.pre.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762464
+  - m_Id: 794726420
+    m_Key: dlg.bruno.offer.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762465
+  - m_Id: 794726421
+    m_Key: dlg.bruno.offer.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762466
+  - m_Id: 794726422
+    m_Key: dlg.bruno.offer.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762467
+  - m_Id: 794726423
+    m_Key: dlg.bruno.offer.2.choice.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762468
+  - m_Id: 794726424
+    m_Key: dlg.bruno.offer.2.choice.0.reply.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762469
+  - m_Id: 794726425
+    m_Key: dlg.bruno.offer.2.choice.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762470
+  - m_Id: 794726426
+    m_Key: dlg.bruno.offer.2.choice.1.reply.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762471
+  - m_Id: 794726427
+    m_Key: dlg.bruno.offer.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762472
+  - m_Id: 794726428
+    m_Key: dlg.bruno.remind.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762473
+  - m_Id: 794726429
+    m_Key: dlg.bruno.carry.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762474
+  - m_Id: 794726430
+    m_Key: dlg.bruno.after.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762475
+  - m_Id: 794726431
+    m_Key: dlg.bruno.after.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762476
+  - m_Id: 794726432
+    m_Key: dlg.bruno.after.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762477
+  - m_Id: 794726433
+    m_Key: dlg.bruno.later3.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762478
+  - m_Id: 794726434
+    m_Key: dlg.bruno.later3.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762479
+  - m_Id: 794726435
+    m_Key: dlg.bruno.later4.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762480
+  - m_Id: 794726436
+    m_Key: dlg.bruno.later4.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762481
+  - m_Id: 794726437
+    m_Key: dlg.josef.pre.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762482
+  - m_Id: 794726438
+    m_Key: dlg.josef.pre.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762483
+  - m_Id: 794726439
+    m_Key: dlg.josef.hello.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762484
+  - m_Id: 794726440
+    m_Key: dlg.josef.hello.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762485
+  - m_Id: 794726441
+    m_Key: dlg.josef.remind.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762486
+  - m_Id: 794726442
+    m_Key: dlg.josef.deliver.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762487
+  - m_Id: 794726443
+    m_Key: dlg.josef.deliver.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762488
+  - m_Id: 794726444
+    m_Key: dlg.josef.deliver.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762489
+  - m_Id: 794726445
+    m_Key: dlg.josef.deliver.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762490
+  - m_Id: 794726446
+    m_Key: dlg.josef.deliver.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762491
+  - m_Id: 794726447
+    m_Key: dlg.josef.deliver.5
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762492
+  - m_Id: 794726448
+    m_Key: dlg.josef.deliver.6
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762493
+  - m_Id: 794726449
+    m_Key: dlg.josef.after.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762494
+  - m_Id: 794726450
+    m_Key: dlg.josef.after.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762495
+  - m_Id: 794726451
+    m_Key: dlg.josef.later3.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762496
+  - m_Id: 794726452
+    m_Key: dlg.josef.later3.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762497
+  - m_Id: 794726453
+    m_Key: dlg.josef.later4.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762498
+  - m_Id: 794726454
+    m_Key: dlg.josef.later4.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762499
+  - m_Id: 794726455
+    m_Key: dlg.marta.pre.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762500
+  - m_Id: 794726456
+    m_Key: dlg.marta.pre.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762501
+  - m_Id: 794726457
+    m_Key: dlg.marta.offer.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762502
+  - m_Id: 794726458
+    m_Key: dlg.marta.offer.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762503
+  - m_Id: 794726459
+    m_Key: dlg.marta.offer.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762504
+  - m_Id: 794726460
+    m_Key: dlg.marta.offer.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762505
+  - m_Id: 794726461
+    m_Key: dlg.marta.offer.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762506
+  - m_Id: 794726462
+    m_Key: dlg.marta.remind.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762507
+  - m_Id: 794726463
+    m_Key: dlg.marta.return.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762508
+  - m_Id: 794726464
+    m_Key: dlg.marta.return.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762509
+  - m_Id: 794726465
+    m_Key: dlg.marta.return.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762510
+  - m_Id: 794726466
+    m_Key: dlg.marta.return.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762511
+  - m_Id: 794726467
+    m_Key: dlg.marta.after.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762512
+  - m_Id: 794726468
+    m_Key: dlg.marta.after.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762513
+  - m_Id: 794726469
+    m_Key: dlg.marta.later4.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762514
+  - m_Id: 794726470
+    m_Key: dlg.marta.later4.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762515
+  - m_Id: 794726471
+    m_Key: dlg.weiss.pre.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762516
+  - m_Id: 794726472
+    m_Key: dlg.weiss.pre.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762517
+  - m_Id: 794726473
+    m_Key: dlg.weiss.offer.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762518
+  - m_Id: 794726474
+    m_Key: dlg.weiss.offer.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762519
+  - m_Id: 794726475
+    m_Key: dlg.weiss.offer.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762520
+  - m_Id: 794726476
+    m_Key: dlg.weiss.offer.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762521
+  - m_Id: 794726477
+    m_Key: dlg.weiss.offer.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762522
+  - m_Id: 794726478
+    m_Key: dlg.weiss.remind.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762523
+  - m_Id: 794726479
+    m_Key: dlg.weiss.remind.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762524
+  - m_Id: 794726480
+    m_Key: dlg.weiss.return.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762525
+  - m_Id: 794726481
+    m_Key: dlg.weiss.return.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762526
+  - m_Id: 794726482
+    m_Key: dlg.weiss.return.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762527
+  - m_Id: 794726483
+    m_Key: dlg.weiss.return.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762528
+  - m_Id: 794726484
+    m_Key: dlg.weiss.return.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762529
+  - m_Id: 794726485
+    m_Key: dlg.weiss.after.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762530
+  - m_Id: 794726486
+    m_Key: dlg.weiss.after.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762531
+  - m_Id: 794726487
+    m_Key: dlg.clerk.a.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762532
+  - m_Id: 794726488
+    m_Key: dlg.clerk.a.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762533
+  - m_Id: 794726489
+    m_Key: dlg.clerk.a.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762534
+  - m_Id: 794726490
+    m_Key: dlg.clerk.a.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762535
+  - m_Id: 794726491
+    m_Key: dlg.clerk.b.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762536
+  - m_Id: 794726492
+    m_Key: dlg.clerk.b.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762537
+  - m_Id: 794726493
+    m_Key: dlg.clerk.b.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762538
+  - m_Id: 794726494
+    m_Key: dlg.clerk.c.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762539
+  - m_Id: 794726495
+    m_Key: dlg.clerk.c.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762540
+  - m_Id: 794726496
+    m_Key: dlg.clerk.finale.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762541
+  - m_Id: 794726497
+    m_Key: dlg.clerk.finale.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762542
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4707331672703762440
+  references:
+    version: 2
+    RefIds:
+    - rid: 4707331672703762440
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1791631610289
+    - rid: 4707331672703762444
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Sister Agnes, agnes.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762445
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Sister Agnes, agnes.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762446
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Sister Agnes, agnes.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762447
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Sister Agnes, agnes.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762448
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Sister Agnes, agnes.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762449
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Sister Agnes, agnes.remind (job taken but not finished: a reminder), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762450
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Sister Agnes, agnes.remind (job taken but not finished: a reminder), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762451
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Sister Agnes, agnes.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762452
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Sister Agnes, agnes.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762453
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Sister Agnes, agnes.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762454
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Sister Agnes, agnes.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762455
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Sister Agnes, agnes.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762456
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Sister Agnes, agnes.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762457
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Sister Agnes, agnes.later2 (revisit on floor 2), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762458
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Sister Agnes, agnes.later2 (revisit on floor 2), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762459
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Sister Agnes, agnes.later3 (revisit on floor 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762460
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Sister Agnes, agnes.later3 (revisit on floor 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762461
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Sister Agnes, agnes.later4 (revisit on floor 4), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762462
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Sister Agnes, agnes.later4 (revisit on floor 4), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762463
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Bruno, bruno.pre (talked to before their floor), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762464
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Bruno, bruno.pre (talked to before their floor), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762465
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Bruno, bruno.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762466
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Bruno, bruno.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762467
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Bruno, bruno.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762468
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Bruno conversation (first talk of the floor: offers the job): the player''s reply option on a button (540 x 58, 26 pt, auto-size; the key 1 / 2 is added by the game). Short, first person'
+    - rid: 4707331672703762469
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Bruno, bruno.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762470
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Bruno conversation (first talk of the floor: offers the job): the player''s reply option on a button (540 x 58, 26 pt, auto-size; the key 1 / 2 is added by the game). Short, first person'
+    - rid: 4707331672703762471
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Bruno, bruno.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762472
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Bruno, bruno.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762473
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Bruno, bruno.remind (job taken but not finished: a reminder), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762474
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Bruno, bruno.carry (the item is in hand: sends you on to the recipient), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762475
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Bruno, bruno.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762476
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Bruno, bruno.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762477
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Bruno, bruno.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762478
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Bruno, bruno.later3 (revisit on floor 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762479
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Bruno, bruno.later3 (revisit on floor 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762480
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Bruno, bruno.later4 (revisit on floor 4), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762481
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Bruno, bruno.later4 (revisit on floor 4), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762482
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Josef, josef.pre (talked to before their floor), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762483
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Josef, josef.pre (talked to before their floor), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762484
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Josef, josef.hello (before the job is taken), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762485
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Josef, josef.hello (before the job is taken), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762486
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Josef, josef.remind (job taken but not finished: a reminder), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762487
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Josef, josef.deliver (you deliver the item: the recipient hands over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762488
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Josef, josef.deliver (you deliver the item: the recipient hands over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762489
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Josef, josef.deliver (you deliver the item: the recipient hands over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762490
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Josef, josef.deliver (you deliver the item: the recipient hands over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762491
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Josef, josef.deliver (you deliver the item: the recipient hands over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762492
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Josef, josef.deliver (you deliver the item: the recipient hands over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762493
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Josef, josef.deliver (you deliver the item: the recipient hands over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762494
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Josef, josef.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762495
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Josef, josef.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762496
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Josef, josef.later3 (revisit on floor 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762497
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Josef, josef.later3 (revisit on floor 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762498
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Josef, josef.later4 (revisit on floor 4), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762499
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Josef, josef.later4 (revisit on floor 4), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762500
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Marta, marta.pre (talked to before their floor), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762501
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Marta, marta.pre (talked to before their floor), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762502
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Marta, marta.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762503
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Marta, marta.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762504
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Marta, marta.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762505
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Marta, marta.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762506
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Marta, marta.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762507
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Marta, marta.remind (job taken but not finished: a reminder), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762508
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Marta, marta.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762509
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Marta, marta.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762510
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Marta, marta.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762511
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Marta, marta.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762512
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Marta, marta.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762513
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Marta, marta.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762514
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Marta, marta.later4 (revisit on floor 4), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762515
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Marta, marta.later4 (revisit on floor 4), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762516
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Dr. Weiss, weiss.pre (talked to before their floor), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762517
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Dr. Weiss, weiss.pre (talked to before their floor), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762518
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Dr. Weiss, weiss.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762519
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Dr. Weiss, weiss.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762520
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Dr. Weiss, weiss.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762521
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Dr. Weiss, weiss.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762522
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Dr. Weiss, weiss.offer (first talk of the floor: offers the job), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762523
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Dr. Weiss, weiss.remind (job taken but not finished: a reminder), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages). {n} = items found so far, {total} = items in the mission'
+    - rid: 4707331672703762524
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Dr. Weiss, weiss.remind (job taken but not finished: a reminder), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762525
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Dr. Weiss, weiss.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762526
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Dr. Weiss, weiss.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762527
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Dr. Weiss, weiss.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762528
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Dr. Weiss, weiss.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762529
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Dr. Weiss, weiss.return (you bring the item back: they hand over the wing key), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)'
+    - rid: 4707331672703762530
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Dr. Weiss, weiss.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762531
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Dr. Weiss, weiss.after (the job is done (or the wing is behind you)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762532
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: The Clerk, clerk.a (ambient conversation 1 of 3 (the clerk cycles them)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762533
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: The Clerk, clerk.a (ambient conversation 1 of 3 (the clerk cycles them)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762534
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: The Clerk, clerk.a (ambient conversation 1 of 3 (the clerk cycles them)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762535
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: The Clerk, clerk.a (ambient conversation 1 of 3 (the clerk cycles them)), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762536
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: The Clerk, clerk.b (ambient conversation 2 of 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762537
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: The Clerk, clerk.b (ambient conversation 2 of 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762538
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: The Clerk, clerk.b (ambient conversation 2 of 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762539
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: The Clerk, clerk.c (ambient conversation 3 of 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762540
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: The Clerk, clerk.c (ambient conversation 3 of 3), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762541
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: The Clerk, clerk.finale (finale), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)
+    - rid: 4707331672703762542
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: The Clerk, clerk.finale (finale), shown in the dialogue panel (34 pt, 2 lines max, auto-size, typed at 45 characters a second). Under 100 characters (120 in other languages)

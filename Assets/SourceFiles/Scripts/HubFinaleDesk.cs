@@ -10,7 +10,7 @@ public class HubFinaleDesk : MonoBehaviour, IInteractable
 
     public void Bind(HubFinale owner) { _owner = owner; }
 
-    string IInteractable.Prompt => HubState.FilesRead >= PatientFiles.MazeFileCount ? "OPEN THE DRAWER" : "THE DRAWER";
+    string IInteractable.Prompt => L10n.T(HubState.FilesRead >= PatientFiles.MazeFileCount ? "hub.desk.open" : "hub.desk.closed");
     float IInteractable.HoldSeconds => 0f;
     bool IInteractable.CanInteract => HubState.IsFinale && _owner != null && !_owner.Finished;
 
@@ -22,7 +22,7 @@ public class HubFinaleDesk : MonoBehaviour, IInteractable
         if (read < PatientFiles.MazeFileCount)
         {
             if (!GameAudio.PlayAt(GameAudio.Library.lockedRattle, transform.position, 0.7f)) GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.18f, 160f, 0.35f), transform.position, 0.7f); // F97
-            hub.SubtitleLine($"THE DRAWER IS LOCKED · CASE FILES {read} / {PatientFiles.MazeFileCount}", 3f);
+            hub.SubtitleLine(L10n.T("hub.desk.locked", ("n", read), ("total", PatientFiles.MazeFileCount)), 3f);
             return;
         }
 

@@ -10,7 +10,7 @@ public class MasterSwitch : MonoBehaviour, IInteractable
 
     public void Bind(HubFinale owner) { _owner = owner; }
 
-    string IInteractable.Prompt => "PULL THE MASTER SWITCH · LIGHTS OUT";
+    string IInteractable.Prompt => L10n.T("hub.switch.prompt");
     float IInteractable.HoldSeconds => 3f;
     bool IInteractable.CanInteract => HubState.IsFinale && _owner != null && !_owner.Finished && HubState.HasTruth;
 

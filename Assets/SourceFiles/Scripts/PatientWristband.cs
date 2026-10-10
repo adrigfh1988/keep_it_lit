@@ -8,7 +8,7 @@ public class PatientWristband : MonoBehaviour, IInteractable
 {
     public const string Line = "The wristband is cold. Drawer five is open.";
 
-    string IInteractable.Prompt => "READ WRISTBAND · ELIAS VOGT · PATIENT 5";
+    string IInteractable.Prompt => L10n.T("hub.wristband.prompt");
     float IInteractable.HoldSeconds => 0f;
     bool IInteractable.CanInteract => true;
 

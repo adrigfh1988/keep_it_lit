@@ -37,9 +37,61 @@ public class WingDoor : MonoBehaviour, IInteractable
     private static readonly Color ClearedColor = new Color(0.55f, 0.85f, 0.6f);
     private static readonly Color SealedColor = new Color(0.85f, 0.2f, 0.15f);
 
-    /// <summary>F93: a story piece (key run, chase) locks the open door by setting the line E answers with; null/empty = usable. Cleared when the hub is left.</summary>
-    [System.NonSerialized] public string lockedLine;
-    public bool StoryLocked => !string.IsNullOrEmpty(lockedLine);
+    // S9 (plan section 6): a story piece (a mission, the key run) locks the open door by OWNING the lock - the door no longer compares line
+    // texts, so a translated line cannot break "who may unlock". The line is a string KEY resolved when E answers; the serialized English
+    // text is the fallback while a key is missing. Cleared by its owner when the hub is left.
+    [System.NonSerialized] public object lockOwner;
+    [System.NonSerialized] private string _lockKey;
+    [System.NonSerialized] private string _lockFallback;
+    public bool StoryLocked => lockOwner != null;
+
+    /// <summary>F93/S9: owner locks the open door. E answers with L10n.T(lineKey) (or fallbackText while the key is missing).</summary>
+    public void Lock(object owner, string lineKey, string fallbackText)
+    {
+        lockOwner = owner;
+        _lockKey = lineKey;
+        _lockFallback = fallbackText;
+    }
+
+    /// <summary>Unlocks the door - only when owner is the one that locked it (never clobbers another piece's lock).</summary>
+    public void Unlock(object owner)
+    {
+        if (lockOwner == null || !ReferenceEquals(lockOwner, owner)) return;
+        lockOwner = null;
+        _lockKey = null;
+        _lockFallback = null;
+    }
+
+    /// <summary>The line E answers with while the door is story-locked (translated at the moment it is shown).</summary>
+    public string LockedLine => !string.IsNullOrEmpty(_lockKey) && L10n.Has(_lockKey) ? L10n.T(_lockKey) : (_lockFallback ?? "");
+
+    // ---------------------------------------------------------------- S9 (D10, D12): translated names and per-wing sentences
+
+    private string Key(string leaf) => $"hub.wing.{floor}.{leaf}";
+    private string Line(string leaf, string fallback, params (string name, object value)[] args) =>
+        L10n.Has(Key(leaf)) ? L10n.T(Key(leaf), args) : fallback;
+
+    /// <summary>Plaque title, translated by stable id (hub.wing.n.name); the serialized field is the fallback.</summary>
+    public string WingName => Line("name", wingName);
+    public string RoomName => Line("room", roomName);
+    public string LevelName => Line("level", levelName);
+
+    /// <summary>"GO TO THE WARD A DOOR · GROUND FLOOR" (floor 5: the office). A whole sentence per wing (D12: an article glued to a name).</summary>
+    public string GoToLine => Line("go_to_door", floor == 5 ? $"GO TO THE {roomName} · {levelName}" : $"GO TO THE {wingName} DOOR · {levelName}");
+
+    /// <summary>Arrival line: "FLOOR 1 · THE WARD A DOOR IS OPEN / LOCKED · GROUND FLOOR".</summary>
+    public string ArrivalLine(bool locked) => locked
+        ? Line("door_locked", $"FLOOR {floor} · THE {wingName} DOOR IS LOCKED · {levelName}", ("floor", floor))
+        : Line("door_open", $"FLOOR {floor} · THE {wingName} DOOR IS OPEN · {levelName}", ("floor", floor));
+
+    /// <summary>"THE WARD A DOOR IS UNLOCKED · GROUND FLOOR" (a mission has handed over the key).</summary>
+    public string UnlockedLine => Line("door_unlocked", $"THE {wingName} DOOR IS UNLOCKED · {levelName}");
+
+    /// <summary>The hint loop's plain location line: "WARD A · DAY ROOM · GROUND FLOOR".</summary>
+    public string HintLine => L10n.Has("hub.wing.hint") ? L10n.T("hub.wing.hint", ("wing", WingName), ("room", RoomName), ("level", LevelName)) : $"{wingName} · {roomName} · {levelName}";
+
+    /// <summary>The readmission slip's first order for the maze of this wing's floor ("REPORT TO BRUNO · KITCHEN"); fallback is built from the mission data.</summary>
+    public string OrderLine(string fallback) => Line("order", fallback);
 
     private float _nudgeTimer;
     private AudioClip _padlockClip;
@@ -64,9 +116,9 @@ public class WingDoor : MonoBehaviour, IInteractable
         {
             switch (State)
             {
-                case DoorState.Open: return StoryLocked ? $"{wingName} · LOCKED" : $"ENTER {wingName}";
-                case DoorState.Cleared: return $"{wingName} · CLEARED";
-                default: return $"{wingName} · SEALED";
+                case DoorState.Open: return StoryLocked ? Line("locked", $"{wingName} · LOCKED") : Line("enter", $"ENTER {wingName}");
+                case DoorState.Cleared: return Line("cleared", $"{wingName} · CLEARED");
+                default: return Line("sealed", $"{wingName} · SEALED");
             }
         }
     }
@@ -88,14 +140,14 @@ public class WingDoor : MonoBehaviour, IInteractable
                     _nudgeTimer = 2f;
                     if (_padlockClip == null) _padlockClip = DoorAudio.BuildClunkClip(0.18f, 160f, 0.35f);
                     if (!GameAudio.PlayAt(GameAudio.Library.lockedRattle, transform.position, 0.7f)) GameAudio.ClipAtPoint(_padlockClip, transform.position, 0.7f); // F97
-                    hud?.ShowSubtitle(lockedLine, 2.6f);
+                    hud?.ShowSubtitle(LockedLine, 2.6f);
                     break;
                 }
                 if (AsylumHub.Active != null) AsylumHub.Active.EnterWing(this);
                 break;
 
             case DoorState.Cleared:
-                hud?.ShowSubtitle($"{wingName} · ALREADY CLEARED", 1.8f);
+                hud?.ShowSubtitle(Line("already_cleared", $"{wingName} · ALREADY CLEARED"), 1.8f);
                 break;
 
             default:
@@ -103,14 +155,20 @@ public class WingDoor : MonoBehaviour, IInteractable
                 _nudgeTimer = 2f;
                 if (_padlockClip == null) _padlockClip = DoorAudio.BuildClunkClip(0.18f, 160f, 0.35f);
                 if (!GameAudio.PlayAt(GameAudio.Library.lockedRattle, transform.position, 0.7f)) GameAudio.ClipAtPoint(_padlockClip, transform.position, 0.7f); // F97
-                hud?.ShowSubtitle($"SEALED · YOU NEED THE {PreviousWingName()} KEY", 2.2f);
+                hud?.ShowSubtitle(Line("sealed_need_key", $"SEALED · YOU NEED THE {PreviousWingName()} KEY"), 2.2f);
                 break;
         }
     }
 
     // ---------------------------------------------------------------- state
 
-    private void OnEnable() => Refresh();
+    private void OnEnable()
+    {
+        L10n.Changed += Refresh;
+        Refresh();
+    }
+
+    private void OnDisable() => L10n.Changed -= Refresh;
 
     private void Update()
     {
@@ -138,8 +196,11 @@ public class WingDoor : MonoBehaviour, IInteractable
 
         if (plaque != null)
         {
-            string status = locked ? "LOCKED" : state == DoorState.Open ? "OPEN" : state == DoorState.Cleared ? "CLEARED" : "SEALED";
-            plaque.text = $"{wingName}\n<size=60%>{roomName}  ·  {status}</size>";
+            string statusKey = locked ? "locked" : state == DoorState.Open ? "open" : state == DoorState.Cleared ? "cleared" : "sealed";
+            string status = L10n.Has("hub.wing.status." + statusKey) ? L10n.T("hub.wing.status." + statusKey) : statusKey.ToUpperInvariant();
+            plaque.text = L10n.Has("hub.wing.plaque")
+                ? L10n.T("hub.wing.plaque", ("wing", WingName), ("room", RoomName), ("status", status))
+                : $"{wingName}\n<size=60%>{roomName}  ·  {status}</size>";
             plaque.color = color;
         }
 

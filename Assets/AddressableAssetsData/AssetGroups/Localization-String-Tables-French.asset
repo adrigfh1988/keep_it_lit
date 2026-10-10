@@ -15,8 +15,22 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-French
   m_GUID: 000050c1e24e9f5459fde5bc24f8f9bb
   m_SerializeEntries:
+  - m_GUID: 3ca70d7a4593b7c4c9e7257d263074f8
+    m_Address: Dialogue_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 67a496de67772504bbb171ff950cd482
     m_Address: UI_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 92aaa055ab0fbeb4a843ec1ad28ee8d9
+    m_Address: Hub_fr
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-fr
@@ -31,6 +45,13 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d749427f8d5ccbe49bad7f2c2fa3c7bf
     m_Address: HUD_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: faae5e32b5581cc45ae84ad14580ec36
+    m_Address: Voices_fr
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-fr

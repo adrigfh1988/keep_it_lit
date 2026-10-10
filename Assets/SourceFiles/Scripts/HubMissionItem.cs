@@ -16,7 +16,22 @@ public class HubMissionItem : MonoBehaviour, IInteractable
 
     public bool Taken { get; private set; }
 
-    public string TakenLine => takenLine;
+    /// <summary>The line said on pickup, with {n} / {total} still in it (HubMission fills them). S9 (D10): hub.mission.f.item.i.taken, else the serialized text.</summary>
+    public string TakenLine
+    {
+        get
+        {
+            string k = Key("taken");
+            return k != null && L10n.Has(k) ? L10n.T(k, ("n", mission != null ? mission.Collected : 0), ("total", mission != null && mission.items != null ? mission.items.Length : 0)) : takenLine;
+        }
+    }
+
+    // hub.mission.<floor>.item.<index in the mission's items>.<leaf>
+    private string Key(string leaf)
+    {
+        int index = mission != null ? mission.IndexOf(this) : -1;
+        return index < 0 ? null : $"hub.mission.{mission.floor}.item.{index}.{leaf}";
+    }
 
     public void Bind(HubMission owner) { mission = owner; }
 
@@ -34,5 +49,12 @@ public class HubMissionItem : MonoBehaviour, IInteractable
         mission.Take(this);
     }
 
-    string IInteractable.Prompt => prompt;
+    string IInteractable.Prompt
+    {
+        get
+        {
+            string k = Key("prompt");
+            return k != null && L10n.Has(k) ? L10n.T(k) : prompt;
+        }
+    }
 }

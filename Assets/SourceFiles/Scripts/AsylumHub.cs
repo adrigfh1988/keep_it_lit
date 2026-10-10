@@ -355,7 +355,7 @@ public class AsylumHub : MonoBehaviour
 
         if (HubState.IsFinale)
         {
-            if (_hud != null) _hud.ShowSubtitle("THE DIRECTOR'S OFFICE", 4f);
+            if (_hud != null) _hud.ShowSubtitle(L10n.T("hub.finale.office"), 4f);
             yield break;
         }
         WingDoor next = wingDoors[Mathf.Clamp(floor, 1, wingDoors.Length) - 1];
@@ -367,8 +367,8 @@ public class AsylumHub : MonoBehaviour
             if (!_shopLineShown && !_shopVisited && ShopWorthAVisit(floor - 1) && shopDoor != null)
             {
                 _shopLineShown = true;
-                string where = string.IsNullOrEmpty(shopDoor.roomName) ? "" : " · " + shopDoor.roomName;
-                _hud.QueueSubtitle("THE SHOP IS OPEN" + where, 4f);
+                string room = shopDoor.RoomName;
+                _hud.QueueSubtitle(string.IsNullOrEmpty(room) ? L10n.T("hub.shopdoor.open_line") : L10n.T("hub.shopdoor.open_line_room", ("room", room)), 4f);
             }
         }
         if (_hint != null) StopCoroutine(_hint);
@@ -387,9 +387,9 @@ public class AsylumHub : MonoBehaviour
             HubMission mission = floor <= 4 ? HubMission.ForFloor(floor) : null;
             string order = mission != null && mission.Current != HubMission.Stage.Offered ? HubMission.HintFor(floor) : HubMission.OrderFor(floor);
             if (!string.IsNullOrEmpty(order)) return order;
-            return $"FLOOR {floor} · THE {door.wingName} DOOR IS LOCKED · {door.levelName}";
+            return door.ArrivalLine(true);
         }
-        return $"FLOOR {floor} · THE {door.wingName} DOOR IS OPEN · {door.levelName}";
+        return door.ArrivalLine(false);
     }
 
     // F100: the hint loop's cap survives a shop round trip (the loop restarts, the count does not); a scene reload resets it.
@@ -413,7 +413,7 @@ public class AsylumHub : MonoBehaviour
             _hintRepeats++;
             // F98: while a floor's mission is running the repeating hint is the objective, not the door.
             string objective = floor <= 4 ? HubMission.HintFor(floor) : null;
-            _hud.ShowSubtitle(objective != null ? objective : $"{door.wingName} · {door.roomName} · {door.levelName}", 4f);
+            _hud.ShowSubtitle(objective != null ? objective : door.HintLine, 4f);
         }
     }
 
@@ -563,7 +563,7 @@ public class AsylumHub : MonoBehaviour
         if (door == null || Leaving || IsTransitioning || !CanVisitShop || !door.IsOpen) return;
         if (PursuerAfterPlayer())
         {
-            if (_hud != null) _hud.ShowSubtitle("NOT NOW", 1.6f);
+            if (_hud != null) _hud.ShowSubtitle(L10n.T("hub.not_now"), 1.6f);
             return;
         }
         StartCoroutine(ShopWalkInRoutine(door));
@@ -717,7 +717,7 @@ public class AsylumHub : MonoBehaviour
     /// A creature caught the player in the hub (never GameOutcome - the hub has no run to lose): black, a sting, the player wakes at the
     /// door they came through, `reset` puts the creature back, a line. False when something else is already moving the player.
     /// </summary>
-    public bool BeginCatch(System.Action reset, string line = "You wake at the door.")
+    public bool BeginCatch(System.Action reset, string line = null)
     {
         if (IsTransitioning || Leaving || !ContentActive || GameFlow.IsRunActive) return false;
         StartCoroutine(CatchRoutine(reset, line));
@@ -746,6 +746,7 @@ public class AsylumHub : MonoBehaviour
         if (_controller != null) _controller.MovementLocked = false;
         PlayerLock.Freeze(_player, false);
         PlayerLock.SetCursorFree(false);
+        if (line == null) line = L10n.T("hub.catch.wake"); // S9: the default line is translated when it is shown
         if (_hud != null && !string.IsNullOrEmpty(line)) _hud.ShowSubtitle(line, 3.2f);
         yield return Fade(1f, 0f, 0.9f);
         if (_blackoutRoot != null) _blackoutRoot.SetActive(false);

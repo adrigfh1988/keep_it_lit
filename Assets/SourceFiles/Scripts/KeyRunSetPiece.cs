@@ -7,9 +7,15 @@ using UnityEngine;
 /// </summary>
 public class KeyRunSetPiece : HubSetPiece
 {
-    public const string LockedLine = "LOCKED · THE DIRECTOR'S KEY IS IN RECORDS";
-    /// <summary>F100: the readmission slip's order and the arrival line while the Director's door is locked.</summary>
-    public const string OrderLine = "KEY NOT ISSUED · RECORDS ROOM";
+    // S9 (D12): the display lines are string KEYS now (one per wing, floor 5 here); the English is the table text, these are only the
+    // fallback while a key is missing. LockedLineKey is what WingDoor.Lock stores and resolves when E answers.
+    public const string LockedLineKey = "hub.wing.5.locked_line";
+    public const string OrderLineKey = "hub.wing.5.order";
+    private const string LockedLineFallback = "LOCKED · THE DIRECTOR'S KEY IS IN RECORDS";
+    private const string OrderLineFallback = "KEY NOT ISSUED · RECORDS ROOM";
+
+    /// <summary>F100: the readmission slip's order and the arrival line while the Director's door is locked (translated now).</summary>
+    public static string OrderText => L10n.Has(OrderLineKey) ? L10n.T(OrderLineKey) : OrderLineFallback;
 
     [SerializeField] private HubStalker pursuer;
     [Tooltip("Waypoints of the patrol loop (AsylumHub/Life/PatrolRoute/*).")]
@@ -34,7 +40,7 @@ public class KeyRunSetPiece : HubSetPiece
         KeyHeld = false;
         key.gameObject.SetActive(true);
         key.Bind(this);
-        SetDoorLock(LockedLine);
+        SetDoorLock(true);
 
         int start = startIndex;
         if (start < 0)
@@ -48,12 +54,12 @@ public class KeyRunSetPiece : HubSetPiece
         }
         pursuer.ResetCatches();
         if (pursuer.Place(route[start].position)) pursuer.StartPatrol(route, (start + 1) % route.Length);
-        else SetDoorLock(null); // never strand the player behind a lock with nothing to patrol it
+        else SetDoorLock(false); // never strand the player behind a lock with nothing to patrol it
     }
 
     protected override void OnEnd()
     {
-        SetDoorLock(null);
+        SetDoorLock(false);
         if (key != null) key.gameObject.SetActive(false);
         if (pursuer != null)
         {
@@ -66,15 +72,17 @@ public class KeyRunSetPiece : HubSetPiece
     public void TakeKey()
     {
         KeyHeld = true;
-        SetDoorLock(null);
+        SetDoorLock(false);
         if (key != null) key.gameObject.SetActive(false);
-        if (Hub != null) Hub.SubtitleLine("THE DIRECTOR'S KEY · THE DOOR IS UNLOCKED", 3f);
+        if (Hub != null) Hub.SubtitleLine(L10n.T("hub.keyrun.taken"), 3f);
     }
 
-    private void SetDoorLock(string line)
+    /// <summary>S9: this piece owns the Director's door lock (WingDoor.Lock / Unlock by owner - no text compare).</summary>
+    private void SetDoorLock(bool locked)
     {
         AsylumHub hub = Hub;
         if (hub == null || hub.wingDoors == null || hub.wingDoors.Length < floor || hub.wingDoors[floor - 1] == null) return;
-        hub.wingDoors[floor - 1].lockedLine = line;
+        if (locked) hub.wingDoors[floor - 1].Lock(this, LockedLineKey, LockedLineFallback);
+        else hub.wingDoors[floor - 1].Unlock(this);
     }
 }

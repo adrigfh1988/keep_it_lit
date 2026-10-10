@@ -26,7 +26,7 @@ public class RecordsSlot : MonoBehaviour, IInteractable
 
     private static LoreReadingUi Reader => AsylumHub.Active != null ? AsylumHub.Active.Reader : null;
 
-    string IInteractable.Prompt => Reader != null && Reader.IsOpen ? "CLOSE" : "READ FILE · " + PatientFiles.Label(FileId);
+    string IInteractable.Prompt => Reader != null && Reader.IsOpen ? L10n.T("hud.prompt.close") : L10n.T("hub.records.read_file", ("label", PatientFiles.Label(FileId)));
     float IInteractable.HoldSeconds => 0f;
     bool IInteractable.CanInteract => Unlocked && Reader != null;
 

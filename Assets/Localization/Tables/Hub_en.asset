@@ -1,0 +1,729 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Hub_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: f29e2f696e371764886a57603cbe4d01, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 4707331672703762543
+  m_TableData:
+  - m_Id: 308187136
+    m_Localized: "{wing}\n<size=60%>{room}  \xB7  {status}</size>"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073216
+    m_Localized: OPEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073217
+    m_Localized: LOCKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073218
+    m_Localized: CLEARED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073219
+    m_Localized: SEALED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073220
+    m_Localized: "{wing} \xB7 {room} \xB7 {level}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073221
+    m_Localized: WARD A
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073222
+    m_Localized: DAY ROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073223
+    m_Localized: GROUND FLOOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073224
+    m_Localized: ENTER WARD A
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073225
+    m_Localized: "WARD A \xB7 LOCKED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073226
+    m_Localized: "WARD A \xB7 CLEARED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073227
+    m_Localized: "WARD A \xB7 SEALED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073228
+    m_Localized: "WARD A \xB7 ALREADY CLEARED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073229
+    m_Localized: "GO TO THE WARD A DOOR \xB7 GROUND FLOOR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073230
+    m_Localized: "FLOOR {floor} \xB7 THE WARD A DOOR IS OPEN \xB7 GROUND FLOOR"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073231
+    m_Localized: "FLOOR {floor} \xB7 THE WARD A DOOR IS LOCKED \xB7 GROUND FLOOR"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073232
+    m_Localized: "THE WARD A DOOR IS UNLOCKED \xB7 GROUND FLOOR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073233
+    m_Localized: "REPORT TO SISTER AGNES \xB7 NURSE STATION"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073234
+    m_Localized: BOILER ROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073235
+    m_Localized: MACHINE ROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073236
+    m_Localized: BASEMENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073237
+    m_Localized: ENTER BOILER ROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073238
+    m_Localized: "BOILER ROOM \xB7 LOCKED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073239
+    m_Localized: "BOILER ROOM \xB7 CLEARED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073240
+    m_Localized: "BOILER ROOM \xB7 SEALED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073241
+    m_Localized: "BOILER ROOM \xB7 ALREADY CLEARED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073242
+    m_Localized: "SEALED \xB7 YOU NEED THE WARD A KEY"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073243
+    m_Localized: "GO TO THE BOILER ROOM DOOR \xB7 BASEMENT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073244
+    m_Localized: "FLOOR {floor} \xB7 THE BOILER ROOM DOOR IS OPEN \xB7 BASEMENT"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073245
+    m_Localized: "FLOOR {floor} \xB7 THE BOILER ROOM DOOR IS LOCKED \xB7 BASEMENT"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073246
+    m_Localized: "THE BOILER ROOM DOOR IS UNLOCKED \xB7 BASEMENT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073247
+    m_Localized: "REPORT TO BRUNO \xB7 KITCHEN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073248
+    m_Localized: MORGUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073249
+    m_Localized: COLD STORAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073250
+    m_Localized: BASEMENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073251
+    m_Localized: ENTER MORGUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073252
+    m_Localized: "MORGUE \xB7 LOCKED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073253
+    m_Localized: "MORGUE \xB7 CLEARED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073254
+    m_Localized: "MORGUE \xB7 SEALED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073255
+    m_Localized: "MORGUE \xB7 ALREADY CLEARED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073256
+    m_Localized: "SEALED \xB7 YOU NEED THE BOILER ROOM KEY"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073257
+    m_Localized: "GO TO THE MORGUE DOOR \xB7 BASEMENT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073258
+    m_Localized: "FLOOR {floor} \xB7 THE MORGUE DOOR IS OPEN \xB7 BASEMENT"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073259
+    m_Localized: "FLOOR {floor} \xB7 THE MORGUE DOOR IS LOCKED \xB7 BASEMENT"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073260
+    m_Localized: "THE MORGUE DOOR IS UNLOCKED \xB7 BASEMENT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073261
+    m_Localized: "REPORT TO MARTA \xB7 CLASSROOM"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073262
+    m_Localized: SURGERY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073263
+    m_Localized: OPERATING THEATRE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073264
+    m_Localized: UPPER FLOOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073265
+    m_Localized: ENTER SURGERY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073266
+    m_Localized: "SURGERY \xB7 LOCKED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073267
+    m_Localized: "SURGERY \xB7 CLEARED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073268
+    m_Localized: "SURGERY \xB7 SEALED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073269
+    m_Localized: "SURGERY \xB7 ALREADY CLEARED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073270
+    m_Localized: "SEALED \xB7 YOU NEED THE MORGUE KEY"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073271
+    m_Localized: "GO TO THE SURGERY DOOR \xB7 UPPER FLOOR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073272
+    m_Localized: "FLOOR {floor} \xB7 THE SURGERY DOOR IS OPEN \xB7 UPPER FLOOR"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073273
+    m_Localized: "FLOOR {floor} \xB7 THE SURGERY DOOR IS LOCKED \xB7 UPPER FLOOR"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073274
+    m_Localized: "THE SURGERY DOOR IS UNLOCKED \xB7 UPPER FLOOR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073275
+    m_Localized: "REPORT TO DR. WEISS \xB7 EXAM ROOM"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073276
+    m_Localized: DIRECTOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073277
+    m_Localized: DIRECTOR'S OFFICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073278
+    m_Localized: UPPER FLOOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073279
+    m_Localized: ENTER DIRECTOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073280
+    m_Localized: "DIRECTOR \xB7 LOCKED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073281
+    m_Localized: "DIRECTOR \xB7 CLEARED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073282
+    m_Localized: "DIRECTOR \xB7 SEALED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073283
+    m_Localized: "DIRECTOR \xB7 ALREADY CLEARED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073284
+    m_Localized: "SEALED \xB7 YOU NEED THE SURGERY KEY"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073285
+    m_Localized: "GO TO THE DIRECTOR'S OFFICE \xB7 UPPER FLOOR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073286
+    m_Localized: "FLOOR {floor} \xB7 THE DIRECTOR DOOR IS OPEN \xB7 UPPER FLOOR"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073287
+    m_Localized: "FLOOR {floor} \xB7 THE DIRECTOR DOOR IS LOCKED \xB7 UPPER FLOOR"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073288
+    m_Localized: "THE DIRECTOR DOOR IS UNLOCKED \xB7 UPPER FLOOR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073289
+    m_Localized: "KEY NOT ISSUED \xB7 RECORDS ROOM"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073290
+    m_Localized: "LOCKED \xB7 THE DIRECTOR'S KEY IS IN RECORDS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073291
+    m_Localized: "LOCKED \xB7 SISTER AGNES HAS THE KEY \xB7 NURSE STATION"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073292
+    m_Localized: THE WARD A KEY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073293
+    m_Localized: "TALK TO SISTER AGNES \xB7 NURSE STATION"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073294
+    m_Localized: NURSE STATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073295
+    m_Localized: "FIND AGNES'S KEY RING \xB7 THE KITCHEN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073296
+    m_Localized: BRING THE KEY RING BACK TO SISTER AGNES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073297
+    m_Localized: TAKE THE KEY RING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073298
+    m_Localized: "KEY RING \xB7 TAKEN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073299
+    m_Localized: "LOCKED \xB7 BRUNO HAS THE KEY \xB7 KITCHEN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073300
+    m_Localized: THE BOILER ROOM KEY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073301
+    m_Localized: "TALK TO BRUNO \xB7 KITCHEN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073302
+    m_Localized: KITCHEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073303
+    m_Localized: TAKE JOSEF'S SUPPER TRAY FROM THE KITCHEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073304
+    m_Localized: "TAKE THE TRAY UP TO JOSEF \xB7 BEDROOM"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073305
+    m_Localized: "CARRYING \xB7 JOSEF'S TRAY"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073306
+    m_Localized: TAKE JOSEF'S TRAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073307
+    m_Localized: "CARRYING \xB7 JOSEF'S TRAY"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073308
+    m_Localized: "LOCKED \xB7 MARTA HAS THE KEY \xB7 CLASSROOM"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073309
+    m_Localized: THE MORGUE KEY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073310
+    m_Localized: "TALK TO MARTA \xB7 CLASSROOM"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073311
+    m_Localized: CLASSROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073312
+    m_Localized: "FIND MARTA'S MUSIC BOX \xB7 THE BASEMENT HALL"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073313
+    m_Localized: BRING THE MUSIC BOX BACK TO MARTA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073314
+    m_Localized: TAKE THE MUSIC BOX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073315
+    m_Localized: "MUSIC BOX \xB7 TAKEN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073316
+    m_Localized: "LOCKED \xB7 DR. WEISS HAS THE KEY \xB7 EXAM ROOM"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073317
+    m_Localized: THE SURGERY KEY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073318
+    m_Localized: "TALK TO DR. WEISS \xB7 EXAM ROOM"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073319
+    m_Localized: EXAM ROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073320
+    m_Localized: "FIND THE THREE AMPOULES \xB7 UPPER FLOOR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073321
+    m_Localized: BRING THE AMPOULES TO DR. WEISS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073322
+    m_Localized: AMPOULES  {n} / {total}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073323
+    m_Localized: AMPOULES  {n} / {total}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073324
+    m_Localized: TAKE THE AMPOULE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073325
+    m_Localized: AMPOULE {n} / {total}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073326
+    m_Localized: TAKE THE AMPOULE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073327
+    m_Localized: AMPOULE {n} / {total}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073328
+    m_Localized: TAKE THE AMPOULE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073329
+    m_Localized: AMPOULE {n} / {total}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073330
+    m_Localized: "{key} \xB7 THE DOOR IS UNLOCKED"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073331
+    m_Localized: SISTER AGNES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073332
+    m_Localized: BRUNO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073333
+    m_Localized: JOSEF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073334
+    m_Localized: MARTA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073335
+    m_Localized: DR. WEISS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073336
+    m_Localized: THE CLERK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073337
+    m_Localized: TALK TO {name}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073338
+    m_Localized: NOT NOW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073339
+    m_Localized: You wake at the door.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073340
+    m_Localized: THE DIRECTOR'S OFFICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073341
+    m_Localized: THE GROUND FLOOR HALL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073342
+    m_Localized: ENTER SHOP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073343
+    m_Localized: "SHOP \xB7 CLOSED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073344
+    m_Localized: "CLOSED \xB7 COME BACK WITH SHARDS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073345
+    m_Localized: "SHOP\n<size=60%>THE SALESMAN  \xB7  {status}</size>"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073346
+    m_Localized: OPEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073347
+    m_Localized: CLOSED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073348
+    m_Localized: THE SHOP IS OPEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073349
+    m_Localized: "THE SHOP IS OPEN \xB7 {room}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073350
+    m_Localized: EXAMINE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073351
+    m_Localized: EXAMINE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073352
+    m_Localized: EXAMINE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073353
+    m_Localized: READ THE LEDGER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073354
+    m_Localized: LISTEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073355
+    m_Localized: "READ FILE \xB7 {label}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073356
+    m_Localized: "READ WRISTBAND \xB7 ELIAS VOGT \xB7 PATIENT 5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073357
+    m_Localized: LEAVE THE ASYLUM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073358
+    m_Localized: TAKE THE DIRECTOR'S KEY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073359
+    m_Localized: "PULL THE MASTER SWITCH \xB7 LIGHTS OUT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073360
+    m_Localized: OPEN THE DRAWER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073361
+    m_Localized: THE DRAWER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073362
+    m_Localized: "THE DRAWER IS LOCKED \xB7 CASE FILES {n} / {total}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073363
+    m_Localized: "THE DIRECTOR'S KEY \xB7 THE DOOR IS UNLOCKED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073364
+    m_Localized: "FIND THE DIRECTOR'S KEY \xB7 RECORDS ROOM"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073365
+    m_Localized: "THE STAIRS TO THE BASEMENT ARE CHAINED \xB7 TAKE THE LIFT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073366
+    m_Localized: CALL THE LIFT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073367
+    m_Localized: THE LIFT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073368
+    m_Localized: THE GATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073369
+    m_Localized: FORCE THE DOORS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073370
+    m_Localized: "THE GATE IS CHAINED \xB7 TAKE THE LIFT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073371
+    m_Localized: THE LIFT DOES NOT MOVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073372
+    m_Localized: "THE LIFT WILL NOT COME \xB7 THE BOILER ROOM IS STILL LOCKED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073373
+    m_Localized: THE LIFT STOPPED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073374
+    m_Localized: "THE DOORS ARE STUCK \xB7 HOLD {key} TO FORCE THEM"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 392073375
+    m_Localized: SOMETHING KNOCKS THREE TIMES.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073376
+    m_Localized: IT STOPS AT THE DOOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 392073377
+    m_Localized: SOMEONE HAS DRAWN STARS ON THE WALL. THEY STILL GLOW.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4707331672703762543
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 308187136
+        - id: 392073220
+        - id: 392073230
+        - id: 392073231
+        - id: 392073244
+        - id: 392073245
+        - id: 392073258
+        - id: 392073259
+        - id: 392073272
+        - id: 392073273
+        - id: 392073286
+        - id: 392073287
+        - id: 392073322
+        - id: 392073323
+        - id: 392073325
+        - id: 392073327
+        - id: 392073329
+        - id: 392073330
+        - id: 392073337
+        - id: 392073345
+        - id: 392073349
+        - id: 392073355
+        - id: 392073362
+        - id: 392073374

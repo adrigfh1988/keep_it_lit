@@ -76,10 +76,26 @@ public class DialoguePanel : MonoBehaviour
         if (_root != null) Destroy(_root);
     }
 
+    private void OnEnable()
+    {
+        L10n.Changed += Relabel;
+    }
+
     private void OnDisable()
     {
+        L10n.Changed -= Relabel;
         // The hub content switched off (a wing door, the shop door): the conversation is over, nothing is called.
         if (_open) Close(false);
+    }
+
+    // S9: a language change while a conversation is open re-reads the line, the speaker's name and the choices (the typing progress stays).
+    private void Relabel()
+    {
+        if (!_open || _node == null || _line == null) return;
+        int visible = _line.maxVisibleCharacters;
+        ShowNode(false);
+        _line.maxVisibleCharacters = visible;
+        UpdateHint();
     }
 
     // ---------------------------------------------------------------- open / close
@@ -146,11 +162,18 @@ public class DialoguePanel : MonoBehaviour
         if (_queue.Count == 0) { Close(true); return; }
         _node = _queue.Dequeue();
         _typed = 0f;
-        string text = _node.text.Replace("{n}", _count.ToString()).Replace("{total}", _total.ToString());
-        _line.text = text;
-        _line.maxVisibleCharacters = 0;
+        ShowNode(true);
+        UpdateHint();
+        if (_node.fx == "whisper") GameAudio.Play2D(GameAudio.Library.whisperEcho, 0.3f);
+    }
+
+    /// <summary>Writes the current node: the translated line ({n} / {total} are Smart arguments), the speaker (colour by id), the choice buttons.</summary>
+    private void ShowNode(bool restartTyping)
+    {
+        _line.text = _node.Resolve(_count, _total);
+        if (restartTyping) _line.maxVisibleCharacters = 0;
         _line.ForceMeshUpdate();
-        _name.text = _node.speaker;
+        _name.text = HubDialogue.SpeakerName(_node.speaker);
         _name.color = HubDialogue.ColourOf(_node.speaker);
         _accent.color = new Color(_name.color.r, _name.color.g, _name.color.b, 0.55f);
 
@@ -159,10 +182,8 @@ public class DialoguePanel : MonoBehaviour
         {
             bool show = choices && i < _node.choices.Length;
             _choiceButtons[i].gameObject.SetActive(show);
-            if (show) _choiceLabels[i].text = $"{TouchInput.Key((i + 1).ToString(), (i + 1).ToString())}   {_node.choices[i].label}";
+            if (show) _choiceLabels[i].text = $"{TouchInput.Key((i + 1).ToString(), (i + 1).ToString())}   {_node.choices[i].Label}";
         }
-        UpdateHint();
-        if (_node.fx == "whisper") GameAudio.Play2D(GameAudio.Library.whisperEcho, 0.3f);
     }
 
     private void Choose(int index)
@@ -215,7 +236,7 @@ public class DialoguePanel : MonoBehaviour
         if (_node != null)
         {
             _typed += charactersPerSecond * Time.deltaTime;
-            int visible = Mathf.Min(_line.textInfo.characterCount > 0 ? _line.textInfo.characterCount : _node.text.Length, Mathf.FloorToInt(_typed));
+            int visible = Mathf.Min(_line.textInfo.characterCount > 0 ? _line.textInfo.characterCount : _line.text.Length, Mathf.FloorToInt(_typed));
             if (_line.maxVisibleCharacters != visible)
             {
                 _line.maxVisibleCharacters = visible;
@@ -317,6 +338,7 @@ public class DialoguePanel : MonoBehaviour
         _line.alignment = TextAlignmentOptions.TopLeft;
         _line.textWrappingMode = TextWrappingModes.Normal;
         _line.overflowMode = TextOverflowModes.Overflow;
+        RuntimeUi.AutoFit(_line, 0.7f); // D14: a longer translation shrinks to the panel rather than run under the choices
         RectTransform lr = _line.rectTransform;
         lr.anchorMin = new Vector2(0f, 0f);
         lr.anchorMax = new Vector2(1f, 1f);

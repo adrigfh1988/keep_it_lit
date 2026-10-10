@@ -1,0 +1,166 @@
+key,context,en
+hub.wing.plaque,"World-space sign over each asylum wing door (auto-size not applied: keep it short). Two lines: {wing} big, then {room} and {status} at 60 % size separated by a middle dot. Keep the <size=60%> tag and the line break","{wing}
+<size=60%>{room}  ·  {status}</size>"
+hub.wing.status.open,"Status word on a wing door plaque (second line, 60 % size): the wing can be entered now",OPEN
+hub.wing.status.locked,Status word on a wing door plaque: the wing is open but a story piece (a mission or the key run) has it locked until a person hands over the key,LOCKED
+hub.wing.status.cleared,Status word on a wing door plaque: this floor has been cleared already,CLEARED
+hub.wing.status.sealed,Status word on a wing door plaque: the floor is not reachable yet,SEALED
+hub.wing.hint,Hub hint subtitle that repeats now and then when no mission objective is active (4 s). {wing} {room} {level} are the names of the next wing,{wing} · {room} · {level}
+hub.wing.1.name,"Wing 1 name on its door plaque, and inside the sentences below when glued by code (ALL CAPS, short). Glossary term",WARD A
+hub.wing.1.room,"Wing 1 room name, plaque second line (ALL CAPS)",DAY ROOM
+hub.wing.1.level,"Wing 1 storey name (GROUND FLOOR / BASEMENT / UPPER FLOOR), used in the arrival, hint and objective lines",GROUND FLOOR
+hub.wing.1.enter,"Interaction prompt at the open door of wing 1. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Imperative or infinitive",ENTER WARD A
+hub.wing.1.locked,Interaction prompt at the door of wing 1 while a mission or the key run has it locked,WARD A · LOCKED
+hub.wing.1.cleared,Interaction prompt at the door of wing 1 once its floor is cleared,WARD A · CLEARED
+hub.wing.1.sealed,Interaction prompt at the door of wing 1 before its floor can be reached,WARD A · SEALED
+hub.wing.1.already_cleared,Subtitle (1.8 s) when E is pressed at the cleared door of wing 1,WARD A · ALREADY CLEARED
+hub.wing.1.go_to_door,"Objective card goal (big card 42 pt one line, 650 px, auto-size; compact card wraps) when the player only has to walk to the door of wing 1",GO TO THE WARD A DOOR · GROUND FLOOR
+hub.wing.1.door_open,Arrival subtitle (5 s) when the door of wing 1 is usable. {floor} = floor number. One whole sentence: it names the door with an article,FLOOR {floor} · THE WARD A DOOR IS OPEN · GROUND FLOOR
+hub.wing.1.door_locked,Arrival subtitle (5 s) when the door of wing 1 is locked and no order applies. {floor} = floor number,FLOOR {floor} · THE WARD A DOOR IS LOCKED · GROUND FLOOR
+hub.wing.1.door_unlocked,"Subtitle (3.2 s) when a person hands over the key to wing 1 (floor 5: not used, see hub.keyrun.taken)",THE WARD A DOOR IS UNLOCKED · GROUND FLOOR
+hub.wing.1.order,"Readmission slip order line and arrival subtitle for floor 1: who to report to and where (ALL CAPS, one line, 34 pt typed). Giver: Sister Agnes. Write the whole sentence (article, title)",REPORT TO SISTER AGNES · NURSE STATION
+hub.wing.2.name,"Wing 2 name on its door plaque, and inside the sentences below when glued by code (ALL CAPS, short). Glossary term",BOILER ROOM
+hub.wing.2.room,"Wing 2 room name, plaque second line (ALL CAPS)",MACHINE ROOM
+hub.wing.2.level,"Wing 2 storey name (GROUND FLOOR / BASEMENT / UPPER FLOOR), used in the arrival, hint and objective lines",BASEMENT
+hub.wing.2.enter,"Interaction prompt at the open door of wing 2. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Imperative or infinitive",ENTER BOILER ROOM
+hub.wing.2.locked,Interaction prompt at the door of wing 2 while a mission or the key run has it locked,BOILER ROOM · LOCKED
+hub.wing.2.cleared,Interaction prompt at the door of wing 2 once its floor is cleared,BOILER ROOM · CLEARED
+hub.wing.2.sealed,Interaction prompt at the door of wing 2 before its floor can be reached,BOILER ROOM · SEALED
+hub.wing.2.already_cleared,Subtitle (1.8 s) when E is pressed at the cleared door of wing 2,BOILER ROOM · ALREADY CLEARED
+hub.wing.2.sealed_need_key,Subtitle (2.2 s) when E is pressed at the sealed door of wing 2. The key named is the previous wing's (WARD A): write the whole sentence with its article,SEALED · YOU NEED THE WARD A KEY
+hub.wing.2.go_to_door,"Objective card goal (big card 42 pt one line, 650 px, auto-size; compact card wraps) when the player only has to walk to the door of wing 2",GO TO THE BOILER ROOM DOOR · BASEMENT
+hub.wing.2.door_open,Arrival subtitle (5 s) when the door of wing 2 is usable. {floor} = floor number. One whole sentence: it names the door with an article,FLOOR {floor} · THE BOILER ROOM DOOR IS OPEN · BASEMENT
+hub.wing.2.door_locked,Arrival subtitle (5 s) when the door of wing 2 is locked and no order applies. {floor} = floor number,FLOOR {floor} · THE BOILER ROOM DOOR IS LOCKED · BASEMENT
+hub.wing.2.door_unlocked,"Subtitle (3.2 s) when a person hands over the key to wing 2 (floor 5: not used, see hub.keyrun.taken)",THE BOILER ROOM DOOR IS UNLOCKED · BASEMENT
+hub.wing.2.order,"Readmission slip order line and arrival subtitle for floor 2: who to report to and where (ALL CAPS, one line, 34 pt typed). Giver: Bruno. Write the whole sentence (article, title)",REPORT TO BRUNO · KITCHEN
+hub.wing.3.name,"Wing 3 name on its door plaque, and inside the sentences below when glued by code (ALL CAPS, short). Glossary term",MORGUE
+hub.wing.3.room,"Wing 3 room name, plaque second line (ALL CAPS)",COLD STORAGE
+hub.wing.3.level,"Wing 3 storey name (GROUND FLOOR / BASEMENT / UPPER FLOOR), used in the arrival, hint and objective lines",BASEMENT
+hub.wing.3.enter,"Interaction prompt at the open door of wing 3. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Imperative or infinitive",ENTER MORGUE
+hub.wing.3.locked,Interaction prompt at the door of wing 3 while a mission or the key run has it locked,MORGUE · LOCKED
+hub.wing.3.cleared,Interaction prompt at the door of wing 3 once its floor is cleared,MORGUE · CLEARED
+hub.wing.3.sealed,Interaction prompt at the door of wing 3 before its floor can be reached,MORGUE · SEALED
+hub.wing.3.already_cleared,Subtitle (1.8 s) when E is pressed at the cleared door of wing 3,MORGUE · ALREADY CLEARED
+hub.wing.3.sealed_need_key,Subtitle (2.2 s) when E is pressed at the sealed door of wing 3. The key named is the previous wing's (BOILER ROOM): write the whole sentence with its article,SEALED · YOU NEED THE BOILER ROOM KEY
+hub.wing.3.go_to_door,"Objective card goal (big card 42 pt one line, 650 px, auto-size; compact card wraps) when the player only has to walk to the door of wing 3",GO TO THE MORGUE DOOR · BASEMENT
+hub.wing.3.door_open,Arrival subtitle (5 s) when the door of wing 3 is usable. {floor} = floor number. One whole sentence: it names the door with an article,FLOOR {floor} · THE MORGUE DOOR IS OPEN · BASEMENT
+hub.wing.3.door_locked,Arrival subtitle (5 s) when the door of wing 3 is locked and no order applies. {floor} = floor number,FLOOR {floor} · THE MORGUE DOOR IS LOCKED · BASEMENT
+hub.wing.3.door_unlocked,"Subtitle (3.2 s) when a person hands over the key to wing 3 (floor 5: not used, see hub.keyrun.taken)",THE MORGUE DOOR IS UNLOCKED · BASEMENT
+hub.wing.3.order,"Readmission slip order line and arrival subtitle for floor 3: who to report to and where (ALL CAPS, one line, 34 pt typed). Giver: Marta. Write the whole sentence (article, title)",REPORT TO MARTA · CLASSROOM
+hub.wing.4.name,"Wing 4 name on its door plaque, and inside the sentences below when glued by code (ALL CAPS, short). Glossary term",SURGERY
+hub.wing.4.room,"Wing 4 room name, plaque second line (ALL CAPS)",OPERATING THEATRE
+hub.wing.4.level,"Wing 4 storey name (GROUND FLOOR / BASEMENT / UPPER FLOOR), used in the arrival, hint and objective lines",UPPER FLOOR
+hub.wing.4.enter,"Interaction prompt at the open door of wing 4. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Imperative or infinitive",ENTER SURGERY
+hub.wing.4.locked,Interaction prompt at the door of wing 4 while a mission or the key run has it locked,SURGERY · LOCKED
+hub.wing.4.cleared,Interaction prompt at the door of wing 4 once its floor is cleared,SURGERY · CLEARED
+hub.wing.4.sealed,Interaction prompt at the door of wing 4 before its floor can be reached,SURGERY · SEALED
+hub.wing.4.already_cleared,Subtitle (1.8 s) when E is pressed at the cleared door of wing 4,SURGERY · ALREADY CLEARED
+hub.wing.4.sealed_need_key,Subtitle (2.2 s) when E is pressed at the sealed door of wing 4. The key named is the previous wing's (MORGUE): write the whole sentence with its article,SEALED · YOU NEED THE MORGUE KEY
+hub.wing.4.go_to_door,"Objective card goal (big card 42 pt one line, 650 px, auto-size; compact card wraps) when the player only has to walk to the door of wing 4",GO TO THE SURGERY DOOR · UPPER FLOOR
+hub.wing.4.door_open,Arrival subtitle (5 s) when the door of wing 4 is usable. {floor} = floor number. One whole sentence: it names the door with an article,FLOOR {floor} · THE SURGERY DOOR IS OPEN · UPPER FLOOR
+hub.wing.4.door_locked,Arrival subtitle (5 s) when the door of wing 4 is locked and no order applies. {floor} = floor number,FLOOR {floor} · THE SURGERY DOOR IS LOCKED · UPPER FLOOR
+hub.wing.4.door_unlocked,"Subtitle (3.2 s) when a person hands over the key to wing 4 (floor 5: not used, see hub.keyrun.taken)",THE SURGERY DOOR IS UNLOCKED · UPPER FLOOR
+hub.wing.4.order,"Readmission slip order line and arrival subtitle for floor 4: who to report to and where (ALL CAPS, one line, 34 pt typed). Giver: Dr. Weiss. Write the whole sentence (article, title)",REPORT TO DR. WEISS · EXAM ROOM
+hub.wing.5.name,"Wing 5 name on its door plaque, and inside the sentences below when glued by code (ALL CAPS, short). Glossary term",DIRECTOR
+hub.wing.5.room,"Wing 5 room name, plaque second line (ALL CAPS)",DIRECTOR'S OFFICE
+hub.wing.5.level,"Wing 5 storey name (GROUND FLOOR / BASEMENT / UPPER FLOOR), used in the arrival, hint and objective lines",UPPER FLOOR
+hub.wing.5.enter,"Interaction prompt at the open door of wing 5. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Imperative or infinitive",ENTER DIRECTOR
+hub.wing.5.locked,Interaction prompt at the door of wing 5 while a mission or the key run has it locked,DIRECTOR · LOCKED
+hub.wing.5.cleared,Interaction prompt at the door of wing 5 once its floor is cleared,DIRECTOR · CLEARED
+hub.wing.5.sealed,Interaction prompt at the door of wing 5 before its floor can be reached,DIRECTOR · SEALED
+hub.wing.5.already_cleared,Subtitle (1.8 s) when E is pressed at the cleared door of wing 5,DIRECTOR · ALREADY CLEARED
+hub.wing.5.sealed_need_key,Subtitle (2.2 s) when E is pressed at the sealed door of wing 5. The key named is the previous wing's (SURGERY): write the whole sentence with its article,SEALED · YOU NEED THE SURGERY KEY
+hub.wing.5.go_to_door,"Objective card goal (big card 42 pt one line, 650 px, auto-size; compact card wraps) when the player only has to walk to the door of wing 5",GO TO THE DIRECTOR'S OFFICE · UPPER FLOOR
+hub.wing.5.door_open,Arrival subtitle (5 s) when the door of wing 5 is usable. {floor} = floor number. One whole sentence: it names the door with an article,FLOOR {floor} · THE DIRECTOR DOOR IS OPEN · UPPER FLOOR
+hub.wing.5.door_locked,Arrival subtitle (5 s) when the door of wing 5 is locked and no order applies. {floor} = floor number,FLOOR {floor} · THE DIRECTOR DOOR IS LOCKED · UPPER FLOOR
+hub.wing.5.door_unlocked,"Subtitle (3.2 s) when a person hands over the key to wing 5 (floor 5: not used, see hub.keyrun.taken)",THE DIRECTOR DOOR IS UNLOCKED · UPPER FLOOR
+hub.wing.5.order,"Readmission slip order line and arrival subtitle for floor 5: who to report to and where (ALL CAPS, one line, 34 pt typed). Giver: nobody (the Director's key is on the records board). Write the whole sentence (article, title)",KEY NOT ISSUED · RECORDS ROOM
+hub.wing.5.locked_line,Subtitle (2.6 s) when E is pressed at the Director's door while the key run has it locked,LOCKED · THE DIRECTOR'S KEY IS IN RECORDS
+hub.mission.1.locked_line,"Floor 1 mission ""THE WARD KEYS"": subtitle (2.6 s) when E is pressed at the still-locked wing door. Names who has the key and where",LOCKED · SISTER AGNES HAS THE KEY · NURSE STATION
+hub.mission.1.key_name,Floor 1 mission: name of the key handed over (only used in a fallback sentence),THE WARD A KEY
+hub.mission.1.objective_offered,"Floor 1 mission ""THE WARD KEYS"": objective while nobody has been talked to yet (objective card goal, hub hint subtitle 4 s)",TALK TO SISTER AGNES · NURSE STATION
+hub.mission.1.where,"Floor 1 mission: where the giver is (a short noun phrase, ALL CAPS). Used on the readmission slip and by the arrival line",NURSE STATION
+hub.mission.1.objective_active,"Floor 1 mission: objective once the job is taken (objective card goal, also said as a subtitle for 3.2 s when the job is accepted)",FIND AGNES'S KEY RING · THE KITCHEN
+hub.mission.1.objective_fetched,Floor 1 mission: objective once the item is in hand,BRING THE KEY RING BACK TO SISTER AGNES
+hub.mission.1.item.0.prompt,"Floor 1 mission item 1: interaction prompt. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",TAKE THE KEY RING
+hub.mission.1.item.0.taken,Floor 1 mission item 1: subtitle on pickup (2.4 s),KEY RING · TAKEN
+hub.mission.2.locked_line,"Floor 2 mission ""THE TRAY"": subtitle (2.6 s) when E is pressed at the still-locked wing door. Names who has the key and where",LOCKED · BRUNO HAS THE KEY · KITCHEN
+hub.mission.2.key_name,Floor 2 mission: name of the key handed over (only used in a fallback sentence),THE BOILER ROOM KEY
+hub.mission.2.objective_offered,"Floor 2 mission ""THE TRAY"": objective while nobody has been talked to yet (objective card goal, hub hint subtitle 4 s)",TALK TO BRUNO · KITCHEN
+hub.mission.2.where,"Floor 2 mission: where the giver is (a short noun phrase, ALL CAPS). Used on the readmission slip and by the arrival line",KITCHEN
+hub.mission.2.objective_active,"Floor 2 mission: objective once the job is taken (objective card goal, also said as a subtitle for 3.2 s when the job is accepted)",TAKE JOSEF'S SUPPER TRAY FROM THE KITCHEN
+hub.mission.2.objective_fetched,Floor 2 mission: objective once the item is in hand,TAKE THE TRAY UP TO JOSEF · BEDROOM
+hub.mission.2.progress_fetched,Floor 2 mission: second line of the objective card once everything is in hand,CARRYING · JOSEF'S TRAY
+hub.mission.2.item.0.prompt,"Floor 2 mission item 1: interaction prompt. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",TAKE JOSEF'S TRAY
+hub.mission.2.item.0.taken,Floor 2 mission item 1: subtitle on pickup (2.4 s),CARRYING · JOSEF'S TRAY
+hub.mission.3.locked_line,"Floor 3 mission ""THE MUSIC BOX"": subtitle (2.6 s) when E is pressed at the still-locked wing door. Names who has the key and where",LOCKED · MARTA HAS THE KEY · CLASSROOM
+hub.mission.3.key_name,Floor 3 mission: name of the key handed over (only used in a fallback sentence),THE MORGUE KEY
+hub.mission.3.objective_offered,"Floor 3 mission ""THE MUSIC BOX"": objective while nobody has been talked to yet (objective card goal, hub hint subtitle 4 s)",TALK TO MARTA · CLASSROOM
+hub.mission.3.where,"Floor 3 mission: where the giver is (a short noun phrase, ALL CAPS). Used on the readmission slip and by the arrival line",CLASSROOM
+hub.mission.3.objective_active,"Floor 3 mission: objective once the job is taken (objective card goal, also said as a subtitle for 3.2 s when the job is accepted)",FIND MARTA'S MUSIC BOX · THE BASEMENT HALL
+hub.mission.3.objective_fetched,Floor 3 mission: objective once the item is in hand,BRING THE MUSIC BOX BACK TO MARTA
+hub.mission.3.item.0.prompt,"Floor 3 mission item 1: interaction prompt. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",TAKE THE MUSIC BOX
+hub.mission.3.item.0.taken,Floor 3 mission item 1: subtitle on pickup (2.4 s),MUSIC BOX · TAKEN
+hub.mission.4.locked_line,"Floor 4 mission ""ROUNDS"": subtitle (2.6 s) when E is pressed at the still-locked wing door. Names who has the key and where",LOCKED · DR. WEISS HAS THE KEY · EXAM ROOM
+hub.mission.4.key_name,Floor 4 mission: name of the key handed over (only used in a fallback sentence),THE SURGERY KEY
+hub.mission.4.objective_offered,"Floor 4 mission ""ROUNDS"": objective while nobody has been talked to yet (objective card goal, hub hint subtitle 4 s)",TALK TO DR. WEISS · EXAM ROOM
+hub.mission.4.where,"Floor 4 mission: where the giver is (a short noun phrase, ALL CAPS). Used on the readmission slip and by the arrival line",EXAM ROOM
+hub.mission.4.objective_active,"Floor 4 mission: objective once the job is taken (objective card goal, also said as a subtitle for 3.2 s when the job is accepted)",FIND THE THREE AMPOULES · UPPER FLOOR
+hub.mission.4.objective_fetched,Floor 4 mission: objective once the item is in hand,BRING THE AMPOULES TO DR. WEISS
+hub.mission.4.progress_active,Floor 4 mission: second line of the objective card while collecting. {n} found of {total},AMPOULES  {n} / {total}
+hub.mission.4.progress_fetched,Floor 4 mission: second line of the objective card once everything is in hand. {n} / {total} as above,AMPOULES  {n} / {total}
+hub.mission.4.item.0.prompt,"Floor 4 mission item 1: interaction prompt. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",TAKE THE AMPOULE
+hub.mission.4.item.0.taken,"Floor 4 mission item 1: subtitle on pickup (2.4 s). {n} = items taken so far, {total} = items in the mission",AMPOULE {n} / {total}
+hub.mission.4.item.1.prompt,"Floor 4 mission item 2: interaction prompt. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",TAKE THE AMPOULE
+hub.mission.4.item.1.taken,"Floor 4 mission item 2: subtitle on pickup (2.4 s). {n} = items taken so far, {total} = items in the mission",AMPOULE {n} / {total}
+hub.mission.4.item.2.prompt,"Floor 4 mission item 3: interaction prompt. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",TAKE THE AMPOULE
+hub.mission.4.item.2.taken,"Floor 4 mission item 3: subtitle on pickup (2.4 s). {n} = items taken so far, {total} = items in the mission",AMPOULE {n} / {total}
+hub.mission.door_unlocked,Fallback subtitle (3.2 s) when a key is handed over and the wing door cannot be found. {key} = the key name,{key} · THE DOOR IS UNLOCKED
+hub.npc.agnes,"Speaker name of the nurse in the gatehouse (dialogue panel name 26 pt, interaction prompt, readmission slip). Title translated, name kept",SISTER AGNES
+hub.npc.bruno,Speaker name: the cook in the kitchen. Name kept,BRUNO
+hub.npc.josef,Speaker name: the patient in the bedroom. Name kept,JOSEF
+hub.npc.marta,Speaker name: the child in the classroom. Name kept,MARTA
+hub.npc.weiss,Speaker name: the doctor in the exam room. Name kept,DR. WEISS
+hub.npc.clerk,Speaker name: the clerk typing at the records desk,THE CLERK
+hub.npc.talk_to,"Interaction prompt on a person in the asylum. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). {name} = the speaker name above (already capitalised, with its title)",TALK TO {name}
+hub.not_now,Subtitle (1.6 s) when a person or the shop door refuses because something is hunting the player,NOT NOW
+hub.catch.wake,Subtitle (3.2 s) after the hub pursuer catches the player: they wake at the door they came in by. Sentence case,You wake at the door.
+hub.finale.office,Subtitle (4 s) on arriving at the Director's office in the finale,THE DIRECTOR'S OFFICE
+hub.shopdoor.room,"Where the SHOP door is, after ""THE SHOP IS OPEN · "". A noun phrase with its article, ALL CAPS",THE GROUND FLOOR HALL
+hub.shopdoor.enter,"Interaction prompt at the open SHOP door. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",ENTER SHOP
+hub.shopdoor.closed,Interaction prompt at the SHOP door while it is closed (before a floor has been cleared),SHOP · CLOSED
+hub.shopdoor.closed_line,Subtitle (2.2 s) when E is pressed at the closed SHOP door,CLOSED · COME BACK WITH SHARDS
+hub.shopdoor.plaque,"World-space sign over the SHOP door. Two lines: SHOP big, then the salesman and {status} at 60 % size. Keep the <size=60%> tag and the line break","SHOP
+<size=60%>THE SALESMAN  ·  {status}</size>"
+hub.shopdoor.status_open,Status word on the SHOP door plaque (second line),OPEN
+hub.shopdoor.status_closed,Status word on the SHOP door plaque (second line),CLOSED
+hub.shopdoor.open_line,"Arrival subtitle (4 s, queued behind the first line): the SHOP door is worth a visit (used when the door has no room name)",THE SHOP IS OPEN
+hub.shopdoor.open_line_room,"Arrival subtitle (4 s, queued): the SHOP door is worth a visit. {room} = hub.shopdoor.room",THE SHOP IS OPEN · {room}
+hub.examine.tally.prompt,"Interaction prompt on the tally marks on the wall (examine, subtitle follows). Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Readable cards use hud.prompt.read / hud.prompt.close instead",EXAMINE
+hub.examine.barricade.prompt,"Interaction prompt on the barricade. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Readable cards use hud.prompt.read / hud.prompt.close instead",EXAMINE
+hub.examine.room4.prompt,"Interaction prompt on the door of Room 4. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Readable cards use hud.prompt.read / hud.prompt.close instead",EXAMINE
+hub.examine.admissions.prompt,"Interaction prompt on the admissions ledger. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Readable cards use hud.prompt.read / hud.prompt.close instead",READ THE LEDGER
+hub.examine.pipe.prompt,"Interaction prompt on the pipe Tomas knocks on. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Readable cards use hud.prompt.read / hud.prompt.close instead",LISTEN
+hub.records.read_file,"Interaction prompt on a folder on the records board in the asylum office. Shown as ""E  <text>"". {label} = the case file label from the file itself (a patient name and number)",READ FILE · {label}
+hub.wristband.prompt,Interaction prompt on Elias's wristband on the morgue table (floor 4 on),READ WRISTBAND · ELIAS VOGT · PATIENT 5
+hub.exit.prompt,Interaction prompt at the asylum main doors in the finale (ending A),LEAVE THE ASYLUM
+hub.key.prompt,Interaction prompt on the Director's key on the records board (floor 5),TAKE THE DIRECTOR'S KEY
+hub.switch.prompt,Interaction prompt (hold E 3 s) on the master switch in the finale (ending B). LIGHTS OUT is the game title: keep it,PULL THE MASTER SWITCH · LIGHTS OUT
+hub.desk.open,Interaction prompt on the Director's desk drawer when all five case files were read,OPEN THE DRAWER
+hub.desk.closed,Interaction prompt on the Director's desk drawer while the case files are incomplete,THE DRAWER
+hub.desk.locked,Subtitle (3 s) when E is pressed at the locked drawer. {n} of {total} case files read,THE DRAWER IS LOCKED · CASE FILES {n} / {total}
+hub.keyrun.taken,Subtitle (3 s) after taking the Director's key on floor 5,THE DIRECTOR'S KEY · THE DOOR IS UNLOCKED
+hub.card.find_key,"Objective card goal (floor 5, step 1 of 2): fetch the Director's key (42 pt one line, 650 px, auto-size)",FIND THE DIRECTOR'S KEY · RECORDS ROOM
+hub.lift.chained,"Floor 2: second line of the objective card, subtitle after the wing is unlocked (4 s) and on a return from the shop. The stairs down are chained shut",THE STAIRS TO THE BASEMENT ARE CHAINED · TAKE THE LIFT
+hub.lift.call,"Interaction prompt at the lift call button on floor 2. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",CALL THE LIFT
+hub.lift.lift,Interaction prompt at the lift call button on other floors / the finale (it does not work),THE LIFT
+hub.lift.gate,Interaction prompt on the chained gate across the basement stairs,THE GATE
+hub.lift.force,Interaction prompt (hold E 1.5 s) on the stuck basement lift doors,FORCE THE DOORS
+hub.lift.gate_chained,Subtitle (2.6 s) when E is pressed at the chained gate,THE GATE IS CHAINED · TAKE THE LIFT
+hub.lift.does_not_move,Subtitle (2.2 s) when the lift is called on floor 1 or in the finale,THE LIFT DOES NOT MOVE
+hub.lift.will_not_come,Subtitle (3 s) when the lift is called on floor 2 before the Boiler Room key is in hand. Names the Boiler Room (wing 2) with its article,THE LIFT WILL NOT COME · THE BOILER ROOM IS STILL LOCKED
+hub.lift.stopped,Subtitle (2.2 s) when the lift jams half-way down,THE LIFT STOPPED
+hub.lift.doors_stuck,Subtitle (4 s) at the bottom of the lift. {key} = E on keyboard or USE on touch (do not translate the key),THE DOORS ARE STUCK · HOLD {key} TO FORCE THEM
+hub.flood.knocks,Subtitle (3.5 s) in the basement hall on floor 3: Tomas knocks in the pipes. Sentence in capitals with a final full stop,SOMETHING KNOCKS THREE TIMES.
+hub.chase.stops,Subtitle (2.6 s) when the floor-4 chase ends at the surgery door,IT STOPS AT THE DOOR
+hub.stars.first,"Subtitle (4.5 s, queued) the first time the player walks up to a chalk star on the wall (floor 2)",SOMEONE HAS DRAWN STARS ON THE WALL. THEY STILL GLOW.

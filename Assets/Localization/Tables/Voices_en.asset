@@ -1,0 +1,453 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Voices_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 142449efb3c77344abb64fc4d747b015, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 4707331672703762443
+  m_TableData:
+  - m_Id: 295604224
+    m_Localized: don't blink.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490304
+    m_Localized: there's my little light.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490305
+    m_Localized: run.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490306
+    m_Localized: you're mine.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490307
+    m_Localized: too slow.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490308
+    m_Localized: i smell your battery.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490309
+    m_Localized: hello, thief.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490310
+    m_Localized: run faster.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490311
+    m_Localized: your legs are tired.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490312
+    m_Localized: i don't get tired.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490313
+    m_Localized: "closer\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490314
+    m_Localized: the stars won't save you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490315
+    m_Localized: keep running. i like it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490316
+    m_Localized: you can't hide forever.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490317
+    m_Localized: i'll find you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490318
+    m_Localized: i know this maze better.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490319
+    m_Localized: hiding? good.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490320
+    m_Localized: "where are you\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490321
+    m_Localized: come out.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490322
+    m_Localized: i can hear your heart.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490323
+    m_Localized: "little light, little light\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490324
+    m_Localized: the dark is mine.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490325
+    m_Localized: floor {floor}. you won't leave it.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762443
+  - m_Id: 379490326
+    m_Localized: SURPRISE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490327
+    m_Localized: WAITED SO LONG.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490328
+    m_Localized: THIS WAY? GOOD.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490329
+    m_Localized: HELLO.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490330
+    m_Localized: is someone in there?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490331
+    m_Localized: i smell you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490332
+    m_Localized: open up.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490333
+    m_Localized: "one of these\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490334
+    m_Localized: warm metal.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490335
+    m_Localized: doors don't stop me.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490336
+    m_Localized: let me in.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490337
+    m_Localized: knock knock.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490338
+    m_Localized: no more doors.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490339
+    m_Localized: GOTCHA.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490340
+    m_Localized: MINE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490341
+    m_Localized: LIGHTS OUT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490342
+    m_Localized: FOUND YOU.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490343
+    m_Localized: there you are.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490344
+    m_Localized: i see you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490345
+    m_Localized: found you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490346
+    m_Localized: hello again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490347
+    m_Localized: peekaboo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490348
+    m_Localized: don't run. please run.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490349
+    m_Localized: you look tired.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490350
+    m_Localized: i was waiting.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490351
+    m_Localized: too bright.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490352
+    m_Localized: you can't keep it on forever.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490353
+    m_Localized: click. click.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490354
+    m_Localized: blink.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490355
+    m_Localized: i'll wait.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490356
+    m_Localized: your battery is dying.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490357
+    m_Localized: statue game?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490358
+    m_Localized: don't look away.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490359
+    m_Localized: stay still.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490360
+    m_Localized: "one\u2026 two\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490361
+    m_Localized: shhh.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490362
+    m_Localized: let me look at you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490363
+    m_Localized: closer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490364
+    m_Localized: don't move.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490365
+    m_Localized: BOO.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490366
+    m_Localized: TAG!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490367
+    m_Localized: "GOT YOU\u2014"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490368
+    m_Localized: MINE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490369
+    m_Localized: NOW.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490370
+    m_Localized: tag. you're it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490371
+    m_Localized: warm.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490372
+    m_Localized: he heard that.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490373
+    m_Localized: i told him where you are.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490374
+    m_Localized: your light tastes good.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490375
+    m_Localized: where did you go?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490376
+    m_Localized: hide and seek, then.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490377
+    m_Localized: i can hear you breathing.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490378
+    m_Localized: you'll come back.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490379
+    m_Localized: "ready or not\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490380
+    m_Localized: knock knock.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490381
+    m_Localized: i know which one.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490382
+    m_Localized: it's cramped in there, isn't it?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490383
+    m_Localized: come out, come out.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490384
+    m_Localized: i can wait all night.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490385
+    m_Localized: do you like the maze?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490386
+    m_Localized: he's closer than me.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490387
+    m_Localized: floor {floor}. not many left.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762443
+  - m_Id: 379490388
+    m_Localized: your heart is loud.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490389
+    m_Localized: the stars aren't for you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490390
+    m_Localized: keep walking.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490391
+    m_Localized: Forty-one doors. Yesterday, forty.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490392
+    m_Localized: Don't open the new one.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490393
+    m_Localized: Count with me. One...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490394
+    m_Localized: You read my file. So you count too.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490395
+    m_Localized: Forty-four. They keep coming.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490396
+    m_Localized: One more door. Yours.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490397
+    m_Localized: Two knocks. All clear.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490398
+    m_Localized: Listen. Hear them walking?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490399
+    m_Localized: The pipes are warm tonight.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490400
+    m_Localized: They wrote that I answer the pipes. The pipes answer me.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490401
+    m_Localized: Three. Three knocks. Hide.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490402
+    m_Localized: It stopped knocking. Why did it stop?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490403
+    m_Localized: The drawers are cold. Mine is number five.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490404
+    m_Localized: I walk at night. I don't remember where.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490405
+    m_Localized: You've seen drawer five. Did it have my name on?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490406
+    m_Localized: They're moving me to Surgery tomorrow.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 379490407
+    m_Localized: Thank you for coming down.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4707331672703762443
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 379490325
+        - id: 379490387

@@ -153,6 +153,35 @@ public static class L10n
         return list.ToArray();
     }
 
+    /// <summary>Like <see cref="Pool(string)"/> with named Smart arguments (a pool line may contain {floor}).</summary>
+    public static string[] Pool(string prefix, params (string name, object value)[] args)
+    {
+        var list = new List<string>();
+        for (int i = 0; ; i++)
+        {
+            string k = prefix + "." + i;
+            if (!Has(k)) break;
+            list.Add(T(k, args));
+        }
+        return list.ToArray();
+    }
+
+    /// <summary>The RAW (unformatted) entry text of <paramref name="key"/> in the locale <paramref name="code"/> only - null when that locale has no
+    /// translation. For editor audits that measure every language's text (plan D16); never for display.</summary>
+    public static string TIn(string code, string key)
+    {
+        if (string.IsNullOrEmpty(key) || !Ensure()) return null;
+        string table = TableFor(key);
+        Locale locale = LocalizationSettings.AvailableLocales.GetLocale(code);
+        if (table == null || locale == null) return null;
+        try
+        {
+            StringTableEntry e = LocalizationSettings.StringDatabase.GetTableEntry(table, key, locale, FallbackBehavior.DontUseFallback).Entry;
+            return e != null && !string.IsNullOrEmpty(e.Value) ? e.Value : null;
+        }
+        catch { return null; }
+    }
+
     private static string TableFor(string key)
     {
         int dot = key.IndexOf('.');

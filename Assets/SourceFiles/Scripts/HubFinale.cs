@@ -95,7 +95,7 @@ public class HubFinale : MonoBehaviour
         // The wing beacons are story pieces of the maze run; the finale has none.
         foreach (Light b in exempt) b.enabled = false;
         // Anything that would re-light them (flickers added by HubDecay) is stood down by HubDecay itself in the finale.
-        if (hub.Hud != null) hub.Hud.ShowSubtitle("THE DIRECTOR'S OFFICE", 4f);
+        if (hub.Hud != null) hub.Hud.ShowSubtitle(L10n.T("hub.finale.office"), 4f);
     }
 
     private static Light Nearest(List<Light> all, Vector3 p, HashSet<Light> exclude, float max)

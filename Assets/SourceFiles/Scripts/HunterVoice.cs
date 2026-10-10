@@ -119,6 +119,7 @@ public class HunterVoice : CreatureVoice
     protected override float[] BlipFrequencies => new[] { 260f, 330f, 410f };
     protected override Vector2 BlipPitchRange => new Vector2(0.7f, 0.95f);
     protected override string[] LinesFor(int category) => _book != null ? _book.Get((HunterPhraseBook.Category)category) : null;
+    protected override string PoolPrefix(int category) => "voice.hunter." + ((HunterPhraseBook.Category)category).ToString().ToLowerInvariant();
 
     protected override Vector3 BubbleAnchor() =>
         _hunter != null ? _hunter.transform.position + Vector3.up * (_hunter.EyeHeight + bubbleAboveHead) : transform.position;

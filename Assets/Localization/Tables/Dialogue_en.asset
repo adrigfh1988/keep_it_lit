@@ -1,0 +1,427 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Dialogue_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 172e1df55f88b8f408f2e07c6708d5d7, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 4707331672703762812
+  m_TableData:
+  - m_Id: 698257408
+    m_Localized: There you are. Late again, and no coat. It's February, dear.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726400
+    m_Localized: Ward A is locked, and the keys are on my ring, and my ring is in the kitchen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726401
+    m_Localized: I left it on its hook when the lights went. I don't go where the lights go.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726402
+    m_Localized: Be a love. West end, past the dining hall. A big brass ring. You'll hear it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726403
+    m_Localized: And mind the floor. They haven't mopped since the... well. Since.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726404
+    m_Localized: The kitchen, dear. West end. A brass ring on a hook.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726405
+    m_Localized: I'd fetch it myself, but you know how I am about the dark.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726406
+    m_Localized: That's the one. Heavier than I remember.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726407
+    m_Localized: Ward A is the long door on the east side. Day room first, then the wing.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726408
+    m_Localized: Matron says there will be fewer of you each night. I tell her, nonsense. Nonsense, Matron.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726409
+    m_Localized: Take the key. Bring it back before the morning count.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726410
+    m_Localized: The morning count is at six. You'll be back by six?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726411
+    m_Localized: It's always six. It's been six for such a long time.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726412
+    m_Localized: Back so soon? Did you wipe your feet?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726413
+    m_Localized: Mind the lift. It sticks. It sticks on purpose, I think.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726414
+    m_Localized: I counted the beds twice tonight. One of them keeps being one more.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726415
+    m_Localized: Don't tell Matron. She's very tired.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726416
+    m_Localized: Don't mention the lamps to Dr. Weiss. He takes it so personally.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726417
+    m_Localized: Oh, and if you hear someone calling my name, it isn't me. I'm right here.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726418
+    m_Localized: Salt on the sill. That's what my mother said. Nobody listens.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726419
+    m_Localized: Don't whistle down here. Just don't.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726420
+    m_Localized: Boiler room, aye. I've got the key. It's on me somewhere.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726421
+    m_Localized: I'm not going down there myself. Not for money. Not for anything.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726422
+    m_Localized: Do me a turn first. Josef's supper. Tray's on the pass. He bites when he's hungry.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726423
+    m_Localized: He bites?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726424
+    m_Localized: Figure of speech. Mostly.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726425
+    m_Localized: Why don't you take it?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726426
+    m_Localized: He knows things. About me. About everyone. I'd sooner not be looked at.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726427
+    m_Localized: Bedroom, top of the stairs. Take the tray up, then come and see me.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726428
+    m_Localized: Tray's on the pass, by the stove. Don't let it go cold. He minds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726429
+    m_Localized: Go on, then. Don't spill it. Don't look at him too long.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726430
+    m_Localized: He gave you the key? Huh.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726431
+    m_Localized: Then I never had it. Funny. I could've sworn it was on my belt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726432
+    m_Localized: Boiler room's down in the basement. Lift's the only way. Don't ask me what it's like.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726433
+    m_Localized: Heard the pipes again. Three knocks, then two. I put my hands over my ears.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726434
+    m_Localized: Don't tell Tomas I said so.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726435
+    m_Localized: The salt's gone off the sill. All of it. Who takes salt?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726436
+    m_Localized: I'm staying in the kitchen. The kitchen has a door.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726437
+    m_Localized: You walk like the new one. They always walk like they were told where the stairs are.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726438
+    m_Localized: Sit. No, don't sit. That's Elias's bed, and he's particular.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726439
+    m_Localized: No tray. Then you're not here for me.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726440
+    m_Localized: Come back with supper. Boiled something, grey, late. I'll know it by the smell.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726441
+    m_Localized: The tray, boy. The kitchen. Bruno knows where the food is. Bruno always knows.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726442
+    m_Localized: Cold. Of course it's cold. Thank you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726443
+    m_Localized: Nobody's brought me anything since the doctor stopped coming. The one who stopped being a doctor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726444
+    m_Localized: You'll want the Boiler room. Bruno says he has the key.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726445
+    m_Localized: Bruno lies. Poor man, he believes every word of it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726446
+    m_Localized: Under the pillow. My pillow, you impertinent thing. There.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726447
+    m_Localized: Brass, with a tag. I took it off his belt last October. The October.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726448
+    m_Localized: Mind the lift. It will stop for you. They always do.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726449
+    m_Localized: Go on. I'll finish my supper. Cold is how I like it now.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726450
+    m_Localized: You'll be back. They all come back. It's only a question of how many of you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726451
+    m_Localized: Elias is up. Standing with his face to the wall, since the lights went.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726452
+    m_Localized: Don't speak to him. He thinks it's rude to be answered.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726453
+    m_Localized: They took Elias down this morning. Drawer five. He'd have wanted a window.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726454
+    m_Localized: Someone should have told him the drawers have no windows. I'd have done it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726455
+    m_Localized: Do you want to see my drawing? It's the house. It has more windows than the real one.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726456
+    m_Localized: Shh. The chalk is sleeping.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726457
+    m_Localized: I had a music box. It was blue on the inside, like water.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726458
+    m_Localized: I took it down to the long cold hall to show the pipes. They liked it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726459
+    m_Localized: Then the lights went away one at a time, and I came upstairs. I forgot it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726460
+    m_Localized: Will you fetch it? I'm not allowed down there. The pipes get jealous.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726461
+    m_Localized: It's on the floor, I think. By the wall. Tell it I'm not cross.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726462
+    m_Localized: The long cold hall. By the wall. Tell it I'm not cross.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726463
+    m_Localized: You found it! It's still warm. It's always warm.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726464
+    m_Localized: Here. This is for you. I took it from the cold man's coat. He didn't mind.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726465
+    m_Localized: It opens the Morgue. Don't be scared of the Morgue. Everyone is very quiet there.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726466
+    m_Localized: Thank you. Now you can go and be quiet with them.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726467
+    m_Localized: It's singing in the other room. Can you hear it?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726468
+    m_Localized: No? Oh. Good. Don't wind it. It winds itself.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726469
+    m_Localized: I can't hear it any more. I think it went very far away.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726470
+    m_Localized: Don't go and look. Please. It was only a box.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726471
+    m_Localized: Sorry! Sorry. Rounds. I'm late for rounds. Are you on my list?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726472
+    m_Localized: No. No, you're not on my list. Good. That's good.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726473
+    m_Localized: Thank God. Hands. I need hands. Are you steady? You look steady.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726474
+    m_Localized: Room 4. The injection. Three ampoules, clear glass, blue cap. I counted them. I count every shift.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726475
+    m_Localized: I put them down somewhere on this floor. The surgery side, the offices. I don't know.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726476
+    m_Localized: They roll. They're small. They'll be wherever the light isn't.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726477
+    m_Localized: Bring all three. I won't give him a short dose. I won't.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726478
+    m_Localized: '{n} of three. Blue caps, clear glass. Room 4 is waiting.'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762812
+  - m_Id: 794726479
+    m_Localized: He's been waiting such a long time.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726480
+    m_Localized: Three. All three. You're a marvel. I could kiss you. I won't. Protocol.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726481
+    m_Localized: The Surgery key. Here. Take it, take it, I'll need both hands.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726482
+    m_Localized: Room 4. Room four...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726483
+    m_Localized: ...it's been empty for years, hasn't it?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726484
+    m_Localized: Who was I giving these to?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726485
+    m_Localized: Rounds. I should do my rounds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726486
+    m_Localized: There's always a light on in Room 4. Isn't there? Isn't there always?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726487
+    m_Localized: Name?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726488
+    m_Localized: No. Don't tell me. I have it here somewhere.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726489
+    m_Localized: The file's with the Director. The file is always with the Director.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726490
+    m_Localized: Name?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726491
+    m_Localized: Page forty-one. Page forty-one. Page forty-two.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726492
+    m_Localized: I have typed this one before.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726493
+    m_Localized: Don't read over my shoulder. It isn't finished.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726494
+    m_Localized: You're in here, you know. Page seventeen. Under 'Present'.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726495
+    m_Localized: It's very good of you to come. It saves me looking.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726496
+    m_Localized: It's finished.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 794726497
+    m_Localized: It was always going to be finished. I only had to type it out.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4707331672703762812
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 794726478

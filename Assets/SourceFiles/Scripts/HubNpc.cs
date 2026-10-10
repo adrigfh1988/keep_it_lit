@@ -61,7 +61,18 @@ public class HubNpc : MonoBehaviour, IInteractable
     public bool IsPresent => _present && body != null && body.gameObject.activeInHierarchy;
     public bool IgnoresGaze => !playerFacesMe;
     public Vector3 HeadPosition => _head != null ? _head.position : (body != null ? body.position + Vector3.up * (lying ? 0.9f : 1.5f) : transform.position);
-    public string Name => string.IsNullOrEmpty(displayName) ? who.ToString().ToUpperInvariant() : displayName;
+    // S9 (D10): the speaker's name by stable id (hub.npc.<who>, lower-case enum name); the serialized displayName, then the enum, are fallbacks.
+    public string Name
+    {
+        get
+        {
+            string key = NameKey(who);
+            if (L10n.Has(key)) return L10n.T(key);
+            return string.IsNullOrEmpty(displayName) ? who.ToString().ToUpperInvariant() : displayName;
+        }
+    }
+
+    public static string NameKey(Who who) => "hub.npc." + who.ToString().ToLowerInvariant();
 
     /// <summary>The floors this person is in the hospital: the staff and patients of floors 1-4; the Clerk always.</summary>
     public static bool PresentOn(Who who, int floor, bool finale)
@@ -246,7 +257,7 @@ public class HubNpc : MonoBehaviour, IInteractable
 
     // ---------------------------------------------------------------- IInteractable
 
-    string IInteractable.Prompt => $"TALK TO {Name}";
+    string IInteractable.Prompt => L10n.T("hub.npc.talk_to", ("name", Name));
     float IInteractable.HoldSeconds => 0f;
     bool IInteractable.CanInteract => IsPresent && !DialoguePanel.IsOpen && DialoguePanel.Current != null;
     void IInteractable.OnFocus(bool focused) { }
@@ -258,7 +269,7 @@ public class HubNpc : MonoBehaviour, IInteractable
         if (panel == null || hub == null || hub.IsTransitioning || hub.Leaving) return;
         if (hub.PursuerAfterPlayer())
         {
-            hub.SubtitleLine("NOT NOW", 1.6f);
+            hub.SubtitleLine(L10n.T("hub.not_now"), 1.6f);
             return;
         }
         if (!HubMission.TryConversation(this, out HubDialogue.Node[] nodes, out System.Action done, out int count, out int total)) return;

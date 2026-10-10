@@ -106,6 +106,7 @@ public class StalkerVoice : CreatureVoice
     protected override int CategoryCount => 8;
     protected override float BubbleRange => sightRange;
     protected override string[] LinesFor(int category) => _book != null ? _book.Get((StalkerPhraseBook.Category)category) : null;
+    protected override string PoolPrefix(int category) => "voice.stan." + ((StalkerPhraseBook.Category)category).ToString().ToLowerInvariant();
 
     protected override Vector3 BubbleAnchor() =>
         _owner != null ? _owner.HeadWorldPosition + Vector3.up * BubbleAboveHead : transform.position;

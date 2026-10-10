@@ -17,7 +17,7 @@ public class HubExitDoor : MonoBehaviour, IInteractable
 
     public void Bind(HubFinale owner) { _owner = owner; }
 
-    string IInteractable.Prompt => "LEAVE THE ASYLUM";
+    string IInteractable.Prompt => L10n.T("hub.exit.prompt");
     float IInteractable.HoldSeconds => 0f;
     bool IInteractable.CanInteract => HubState.IsFinale && _owner != null && !_owner.Finished;
 

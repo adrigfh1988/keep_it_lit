@@ -83,7 +83,7 @@ public class FloodSetPiece : HubSetPiece
                 _knocked = true;
                 HubPatient tomas = hub.life != null ? hub.life.Find("Patients/Tomas")?.GetComponent<HubPatient>() : null;
                 if (tomas != null) tomas.KnockNow(3);
-                hub.SubtitleLine("SOMETHING KNOCKS THREE TIMES.", 3.5f);
+                hub.SubtitleLine(L10n.T("hub.flood.knocks"), 3.5f);
             }
         }
 

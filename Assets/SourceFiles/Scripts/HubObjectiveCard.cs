@@ -22,7 +22,8 @@ public class HubObjectiveCard : MonoBehaviour
         public int Floor, Step, Total;
         public string Goal, Sub;
 
-        public bool SameGoal(Objective o) => Has && o.Has && Floor == o.Floor && Step == o.Step && Goal == o.Goal;
+        // S9: a step is identified by (floor, step), not by its text - the text changes with the language and must not restart the animation.
+        public bool SameGoal(Objective o) => Has && o.Has && Floor == o.Floor && Step == o.Step;
     }
 
     private ObjectiveCard _card;
@@ -40,12 +41,24 @@ public class HubObjectiveCard : MonoBehaviour
     private void OnEnable()
     {
         AsylumHub.OnEnterHub += HandleEnter;
+        L10n.Changed += HandleLanguage;
     }
 
     private void OnDisable()
     {
         AsylumHub.OnEnterHub -= HandleEnter;
+        L10n.Changed -= HandleLanguage;
         Hide();
+    }
+
+    // S9 (plan section 5): a language change re-Sets the card that is showing (no animation) - the goal / second line are re-read through L10n
+    // every frame by Compute, so the next Update only has to notice the text differs; HandleLanguage just guarantees it happens at once.
+    private void HandleLanguage()
+    {
+        if (!_visible || _card == null) return;
+        AsylumHub hub = AsylumHub.Active;
+        Objective now = CanShow(hub) ? Compute(hub) : default;
+        if (now.Has && now.SameGoal(_shown)) { _card.Live(now.Goal, null, now.Sub); _shown = now; }
     }
 
     private void OnDestroy()
@@ -93,7 +106,7 @@ public class HubObjectiveCard : MonoBehaviour
             return;
         }
 
-        if (now.Sub != _shown.Sub)
+        if (now.Sub != _shown.Sub || now.Goal != _shown.Goal)
         {
             _card.Live(now.Goal, null, now.Sub);
             _shown = now;
@@ -164,7 +177,7 @@ public class HubObjectiveCard : MonoBehaviour
             AsylumHub hub = AsylumHub.Active;
             Objective now = CanShow(hub) ? Compute(hub) : default;
             if (!now.SameGoal(_shown)) yield break; // Update takes over from the big card
-            if (now.Sub != _shown.Sub) { _card.Live(now.Goal, null, now.Sub); _shown = now; }
+            if (now.Sub != _shown.Sub || now.Goal != _shown.Goal) { _card.Live(now.Goal, null, now.Sub); _shown = now; }
             yield return null;
         }
         yield return _card.Collapse(0.45f);
@@ -195,8 +208,8 @@ public class HubObjectiveCard : MonoBehaviour
             }
         }
 
-        string doorGoal = floor == 5 ? $"GO TO THE {door.roomName} · {door.levelName}" : $"GO TO THE {door.wingName} DOOR · {door.levelName}";
-        string doorSub = floor == 2 ? LiftSetPiece.ChainedLine : "";
+        string doorGoal = door.GoToLine; // D12: one whole sentence per wing
+        string doorSub = floor == 2 ? LiftSetPiece.ChainedText : "";
 
         if (_mission != null)
         {
@@ -210,7 +223,7 @@ public class HubObjectiveCard : MonoBehaviour
         }
         if (_keyRun != null && _keyRun.Running)
         {
-            return _keyRun.KeyHeld ? Make(floor, 2, 2, doorGoal, "") : Make(floor, 1, 2, "FIND THE DIRECTOR'S KEY · RECORDS ROOM", "");
+            return _keyRun.KeyHeld ? Make(floor, 2, 2, doorGoal, "") : Make(floor, 1, 2, L10n.T("hub.card.find_key"), "");
         }
         // No mission or key run on this floor (an incomplete hub): just the door, once it can be used.
         return door.StoryLocked ? default : Make(floor, 1, 1, doorGoal, doorSub);

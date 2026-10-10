@@ -60,6 +60,10 @@ public abstract class CreatureVoice : MonoBehaviour
 
     protected abstract int CategoryCount { get; }
     protected abstract string[] LinesFor(int category);
+    /// <summary>S9 (plan 2e): the Voices-table key prefix of a category's pool (voice.hunter.spotted -> voice.hunter.spotted.0, .1 ...), or null when the
+    /// category has no table pool. When the pool exists it REPLACES the lines from LinesFor (the phrase book asset / C# defaults are the English
+    /// fallback); a category the asset left empty still says nothing.</summary>
+    protected virtual string PoolPrefix(int category) => null;
     protected abstract int PriorityOf(int category);
     protected abstract float CooldownOf(int category);
     protected abstract bool IsShout(int category);
@@ -101,10 +105,18 @@ public abstract class CreatureVoice : MonoBehaviour
         _lastDrawn = new int[count];
         for (int i = 0; i < count; i++) _lastDrawn[i] = -1;
         _voiceReady = true;
+        L10n.Changed += ClearBags; // the pools of the new language have other lengths and orders
+    }
+
+    private void ClearBags()
+    {
+        if (_bags == null) return;
+        for (int i = 0; i < _bags.Length; i++) _bags[i]?.Clear();
     }
 
     protected virtual void OnDestroy()
     {
+        L10n.Changed -= ClearBags;
         if (_bubble != null) Destroy(_bubble.gameObject);
     }
 
@@ -179,9 +191,17 @@ public abstract class CreatureVoice : MonoBehaviour
 
         if (!EnsureBubble()) return false;
 
+        // S9: the selected language's pool, when the table has one ({floor} is a Smart argument there).
+        string prefix = PoolPrefix(category);
+        if (prefix != null)
+        {
+            string[] pool = L10n.Pool(prefix, ("floor", GameFlow.CurrentFloor));
+            if (pool.Length > 0) lines = pool;
+        }
+
         string line = Draw(category, lines);
         if (string.IsNullOrEmpty(line)) return false;
-        line = line.Replace("{floor}", GameFlow.CurrentFloor.ToString());
+        line = line.Replace("{floor}", GameFlow.CurrentFloor.ToString()); // the English fallback lines still carry the token
 
         bool shout = IsShout(category);
         _currentShout = shout;

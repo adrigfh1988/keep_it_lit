@@ -1,0 +1,1495 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Hub Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Hub
+  m_TableCollectionNameGuidString: f29e2f696e371764886a57603cbe4d01
+  m_Entries:
+  - m_Id: 308187136
+    m_Key: hub.wing.plaque
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762649
+  - m_Id: 392073216
+    m_Key: hub.wing.status.open
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762650
+  - m_Id: 392073217
+    m_Key: hub.wing.status.locked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762651
+  - m_Id: 392073218
+    m_Key: hub.wing.status.cleared
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762652
+  - m_Id: 392073219
+    m_Key: hub.wing.status.sealed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762653
+  - m_Id: 392073220
+    m_Key: hub.wing.hint
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762654
+  - m_Id: 392073221
+    m_Key: hub.wing.1.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762655
+  - m_Id: 392073222
+    m_Key: hub.wing.1.room
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762656
+  - m_Id: 392073223
+    m_Key: hub.wing.1.level
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762657
+  - m_Id: 392073224
+    m_Key: hub.wing.1.enter
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762658
+  - m_Id: 392073225
+    m_Key: hub.wing.1.locked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762659
+  - m_Id: 392073226
+    m_Key: hub.wing.1.cleared
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762660
+  - m_Id: 392073227
+    m_Key: hub.wing.1.sealed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762661
+  - m_Id: 392073228
+    m_Key: hub.wing.1.already_cleared
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762662
+  - m_Id: 392073229
+    m_Key: hub.wing.1.go_to_door
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762663
+  - m_Id: 392073230
+    m_Key: hub.wing.1.door_open
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762664
+  - m_Id: 392073231
+    m_Key: hub.wing.1.door_locked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762665
+  - m_Id: 392073232
+    m_Key: hub.wing.1.door_unlocked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762666
+  - m_Id: 392073233
+    m_Key: hub.wing.1.order
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762667
+  - m_Id: 392073234
+    m_Key: hub.wing.2.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762668
+  - m_Id: 392073235
+    m_Key: hub.wing.2.room
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762669
+  - m_Id: 392073236
+    m_Key: hub.wing.2.level
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762670
+  - m_Id: 392073237
+    m_Key: hub.wing.2.enter
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762671
+  - m_Id: 392073238
+    m_Key: hub.wing.2.locked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762672
+  - m_Id: 392073239
+    m_Key: hub.wing.2.cleared
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762673
+  - m_Id: 392073240
+    m_Key: hub.wing.2.sealed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762674
+  - m_Id: 392073241
+    m_Key: hub.wing.2.already_cleared
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762675
+  - m_Id: 392073242
+    m_Key: hub.wing.2.sealed_need_key
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762676
+  - m_Id: 392073243
+    m_Key: hub.wing.2.go_to_door
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762677
+  - m_Id: 392073244
+    m_Key: hub.wing.2.door_open
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762678
+  - m_Id: 392073245
+    m_Key: hub.wing.2.door_locked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762679
+  - m_Id: 392073246
+    m_Key: hub.wing.2.door_unlocked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762680
+  - m_Id: 392073247
+    m_Key: hub.wing.2.order
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762681
+  - m_Id: 392073248
+    m_Key: hub.wing.3.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762682
+  - m_Id: 392073249
+    m_Key: hub.wing.3.room
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762683
+  - m_Id: 392073250
+    m_Key: hub.wing.3.level
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762684
+  - m_Id: 392073251
+    m_Key: hub.wing.3.enter
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762685
+  - m_Id: 392073252
+    m_Key: hub.wing.3.locked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762686
+  - m_Id: 392073253
+    m_Key: hub.wing.3.cleared
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762687
+  - m_Id: 392073254
+    m_Key: hub.wing.3.sealed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762688
+  - m_Id: 392073255
+    m_Key: hub.wing.3.already_cleared
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762689
+  - m_Id: 392073256
+    m_Key: hub.wing.3.sealed_need_key
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762690
+  - m_Id: 392073257
+    m_Key: hub.wing.3.go_to_door
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762691
+  - m_Id: 392073258
+    m_Key: hub.wing.3.door_open
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762692
+  - m_Id: 392073259
+    m_Key: hub.wing.3.door_locked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762693
+  - m_Id: 392073260
+    m_Key: hub.wing.3.door_unlocked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762694
+  - m_Id: 392073261
+    m_Key: hub.wing.3.order
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762695
+  - m_Id: 392073262
+    m_Key: hub.wing.4.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762696
+  - m_Id: 392073263
+    m_Key: hub.wing.4.room
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762697
+  - m_Id: 392073264
+    m_Key: hub.wing.4.level
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762698
+  - m_Id: 392073265
+    m_Key: hub.wing.4.enter
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762699
+  - m_Id: 392073266
+    m_Key: hub.wing.4.locked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762700
+  - m_Id: 392073267
+    m_Key: hub.wing.4.cleared
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762701
+  - m_Id: 392073268
+    m_Key: hub.wing.4.sealed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762702
+  - m_Id: 392073269
+    m_Key: hub.wing.4.already_cleared
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762703
+  - m_Id: 392073270
+    m_Key: hub.wing.4.sealed_need_key
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762704
+  - m_Id: 392073271
+    m_Key: hub.wing.4.go_to_door
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762705
+  - m_Id: 392073272
+    m_Key: hub.wing.4.door_open
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762706
+  - m_Id: 392073273
+    m_Key: hub.wing.4.door_locked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762707
+  - m_Id: 392073274
+    m_Key: hub.wing.4.door_unlocked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762708
+  - m_Id: 392073275
+    m_Key: hub.wing.4.order
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762709
+  - m_Id: 392073276
+    m_Key: hub.wing.5.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762710
+  - m_Id: 392073277
+    m_Key: hub.wing.5.room
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762711
+  - m_Id: 392073278
+    m_Key: hub.wing.5.level
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762712
+  - m_Id: 392073279
+    m_Key: hub.wing.5.enter
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762713
+  - m_Id: 392073280
+    m_Key: hub.wing.5.locked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762714
+  - m_Id: 392073281
+    m_Key: hub.wing.5.cleared
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762715
+  - m_Id: 392073282
+    m_Key: hub.wing.5.sealed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762716
+  - m_Id: 392073283
+    m_Key: hub.wing.5.already_cleared
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762717
+  - m_Id: 392073284
+    m_Key: hub.wing.5.sealed_need_key
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762718
+  - m_Id: 392073285
+    m_Key: hub.wing.5.go_to_door
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762719
+  - m_Id: 392073286
+    m_Key: hub.wing.5.door_open
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762720
+  - m_Id: 392073287
+    m_Key: hub.wing.5.door_locked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762721
+  - m_Id: 392073288
+    m_Key: hub.wing.5.door_unlocked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762722
+  - m_Id: 392073289
+    m_Key: hub.wing.5.order
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762723
+  - m_Id: 392073290
+    m_Key: hub.wing.5.locked_line
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762724
+  - m_Id: 392073291
+    m_Key: hub.mission.1.locked_line
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762725
+  - m_Id: 392073292
+    m_Key: hub.mission.1.key_name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762726
+  - m_Id: 392073293
+    m_Key: hub.mission.1.objective_offered
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762727
+  - m_Id: 392073294
+    m_Key: hub.mission.1.where
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762728
+  - m_Id: 392073295
+    m_Key: hub.mission.1.objective_active
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762729
+  - m_Id: 392073296
+    m_Key: hub.mission.1.objective_fetched
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762730
+  - m_Id: 392073297
+    m_Key: hub.mission.1.item.0.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762731
+  - m_Id: 392073298
+    m_Key: hub.mission.1.item.0.taken
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762732
+  - m_Id: 392073299
+    m_Key: hub.mission.2.locked_line
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762733
+  - m_Id: 392073300
+    m_Key: hub.mission.2.key_name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762734
+  - m_Id: 392073301
+    m_Key: hub.mission.2.objective_offered
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762735
+  - m_Id: 392073302
+    m_Key: hub.mission.2.where
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762736
+  - m_Id: 392073303
+    m_Key: hub.mission.2.objective_active
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762737
+  - m_Id: 392073304
+    m_Key: hub.mission.2.objective_fetched
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762738
+  - m_Id: 392073305
+    m_Key: hub.mission.2.progress_fetched
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762739
+  - m_Id: 392073306
+    m_Key: hub.mission.2.item.0.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762740
+  - m_Id: 392073307
+    m_Key: hub.mission.2.item.0.taken
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762741
+  - m_Id: 392073308
+    m_Key: hub.mission.3.locked_line
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762742
+  - m_Id: 392073309
+    m_Key: hub.mission.3.key_name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762743
+  - m_Id: 392073310
+    m_Key: hub.mission.3.objective_offered
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762744
+  - m_Id: 392073311
+    m_Key: hub.mission.3.where
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762745
+  - m_Id: 392073312
+    m_Key: hub.mission.3.objective_active
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762746
+  - m_Id: 392073313
+    m_Key: hub.mission.3.objective_fetched
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762747
+  - m_Id: 392073314
+    m_Key: hub.mission.3.item.0.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762748
+  - m_Id: 392073315
+    m_Key: hub.mission.3.item.0.taken
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762749
+  - m_Id: 392073316
+    m_Key: hub.mission.4.locked_line
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762750
+  - m_Id: 392073317
+    m_Key: hub.mission.4.key_name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762751
+  - m_Id: 392073318
+    m_Key: hub.mission.4.objective_offered
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762752
+  - m_Id: 392073319
+    m_Key: hub.mission.4.where
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762753
+  - m_Id: 392073320
+    m_Key: hub.mission.4.objective_active
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762754
+  - m_Id: 392073321
+    m_Key: hub.mission.4.objective_fetched
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762755
+  - m_Id: 392073322
+    m_Key: hub.mission.4.progress_active
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762756
+  - m_Id: 392073323
+    m_Key: hub.mission.4.progress_fetched
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762757
+  - m_Id: 392073324
+    m_Key: hub.mission.4.item.0.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762758
+  - m_Id: 392073325
+    m_Key: hub.mission.4.item.0.taken
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762759
+  - m_Id: 392073326
+    m_Key: hub.mission.4.item.1.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762760
+  - m_Id: 392073327
+    m_Key: hub.mission.4.item.1.taken
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762761
+  - m_Id: 392073328
+    m_Key: hub.mission.4.item.2.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762762
+  - m_Id: 392073329
+    m_Key: hub.mission.4.item.2.taken
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762763
+  - m_Id: 392073330
+    m_Key: hub.mission.door_unlocked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762764
+  - m_Id: 392073331
+    m_Key: hub.npc.agnes
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762765
+  - m_Id: 392073332
+    m_Key: hub.npc.bruno
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762766
+  - m_Id: 392073333
+    m_Key: hub.npc.josef
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762767
+  - m_Id: 392073334
+    m_Key: hub.npc.marta
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762768
+  - m_Id: 392073335
+    m_Key: hub.npc.weiss
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762769
+  - m_Id: 392073336
+    m_Key: hub.npc.clerk
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762770
+  - m_Id: 392073337
+    m_Key: hub.npc.talk_to
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762771
+  - m_Id: 392073338
+    m_Key: hub.not_now
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762772
+  - m_Id: 392073339
+    m_Key: hub.catch.wake
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762773
+  - m_Id: 392073340
+    m_Key: hub.finale.office
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762774
+  - m_Id: 392073341
+    m_Key: hub.shopdoor.room
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762775
+  - m_Id: 392073342
+    m_Key: hub.shopdoor.enter
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762776
+  - m_Id: 392073343
+    m_Key: hub.shopdoor.closed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762777
+  - m_Id: 392073344
+    m_Key: hub.shopdoor.closed_line
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762778
+  - m_Id: 392073345
+    m_Key: hub.shopdoor.plaque
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762779
+  - m_Id: 392073346
+    m_Key: hub.shopdoor.status_open
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762780
+  - m_Id: 392073347
+    m_Key: hub.shopdoor.status_closed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762781
+  - m_Id: 392073348
+    m_Key: hub.shopdoor.open_line
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762782
+  - m_Id: 392073349
+    m_Key: hub.shopdoor.open_line_room
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762783
+  - m_Id: 392073350
+    m_Key: hub.examine.tally.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762784
+  - m_Id: 392073351
+    m_Key: hub.examine.barricade.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762785
+  - m_Id: 392073352
+    m_Key: hub.examine.room4.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762786
+  - m_Id: 392073353
+    m_Key: hub.examine.admissions.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762787
+  - m_Id: 392073354
+    m_Key: hub.examine.pipe.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762788
+  - m_Id: 392073355
+    m_Key: hub.records.read_file
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762789
+  - m_Id: 392073356
+    m_Key: hub.wristband.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762790
+  - m_Id: 392073357
+    m_Key: hub.exit.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762791
+  - m_Id: 392073358
+    m_Key: hub.key.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762792
+  - m_Id: 392073359
+    m_Key: hub.switch.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762793
+  - m_Id: 392073360
+    m_Key: hub.desk.open
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762794
+  - m_Id: 392073361
+    m_Key: hub.desk.closed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762795
+  - m_Id: 392073362
+    m_Key: hub.desk.locked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762796
+  - m_Id: 392073363
+    m_Key: hub.keyrun.taken
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762797
+  - m_Id: 392073364
+    m_Key: hub.card.find_key
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762798
+  - m_Id: 392073365
+    m_Key: hub.lift.chained
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762799
+  - m_Id: 392073366
+    m_Key: hub.lift.call
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762800
+  - m_Id: 392073367
+    m_Key: hub.lift.lift
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762801
+  - m_Id: 392073368
+    m_Key: hub.lift.gate
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762802
+  - m_Id: 392073369
+    m_Key: hub.lift.force
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762803
+  - m_Id: 392073370
+    m_Key: hub.lift.gate_chained
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762804
+  - m_Id: 392073371
+    m_Key: hub.lift.does_not_move
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762805
+  - m_Id: 392073372
+    m_Key: hub.lift.will_not_come
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762806
+  - m_Id: 392073373
+    m_Key: hub.lift.stopped
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762807
+  - m_Id: 392073374
+    m_Key: hub.lift.doors_stuck
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762808
+  - m_Id: 392073375
+    m_Key: hub.flood.knocks
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762809
+  - m_Id: 392073376
+    m_Key: hub.chase.stops
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762810
+  - m_Id: 392073377
+    m_Key: hub.stars.first
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762811
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4707331672703762441
+  references:
+    version: 2
+    RefIds:
+    - rid: 4707331672703762441
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1791631610481
+    - rid: 4707331672703762649
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'World-space sign over each asylum wing door (auto-size not applied: keep it short). Two lines: {wing} big, then {room} and {status} at 60 % size separated by a middle dot. Keep the <size=60%> tag and the line break'
+    - rid: 4707331672703762650
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Status word on a wing door plaque (second line, 60 % size): the wing can be entered now'
+    - rid: 4707331672703762651
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Status word on a wing door plaque: the wing is open but a story piece (a mission or the key run) has it locked until a person hands over the key'
+    - rid: 4707331672703762652
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Status word on a wing door plaque: this floor has been cleared already'
+    - rid: 4707331672703762653
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Status word on a wing door plaque: the floor is not reachable yet'
+    - rid: 4707331672703762654
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Hub hint subtitle that repeats now and then when no mission objective is active (4 s). {wing} {room} {level} are the names of the next wing
+    - rid: 4707331672703762655
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Wing 1 name on its door plaque, and inside the sentences below when glued by code (ALL CAPS, short). Glossary term
+    - rid: 4707331672703762656
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Wing 1 room name, plaque second line (ALL CAPS)
+    - rid: 4707331672703762657
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Wing 1 storey name (GROUND FLOOR / BASEMENT / UPPER FLOOR), used in the arrival, hint and objective lines
+    - rid: 4707331672703762658
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the open door of wing 1. Shown as "E  <text>" (34 pt, 600 x 50, auto-size). Imperative or infinitive
+    - rid: 4707331672703762659
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the door of wing 1 while a mission or the key run has it locked
+    - rid: 4707331672703762660
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the door of wing 1 once its floor is cleared
+    - rid: 4707331672703762661
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the door of wing 1 before its floor can be reached
+    - rid: 4707331672703762662
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (1.8 s) when E is pressed at the cleared door of wing 1
+    - rid: 4707331672703762663
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Objective card goal (big card 42 pt one line, 650 px, auto-size; compact card wraps) when the player only has to walk to the door of wing 1
+    - rid: 4707331672703762664
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Arrival subtitle (5 s) when the door of wing 1 is usable. {floor} = floor number. One whole sentence: it names the door with an article'
+    - rid: 4707331672703762665
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Arrival subtitle (5 s) when the door of wing 1 is locked and no order applies. {floor} = floor number
+    - rid: 4707331672703762666
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (3.2 s) when a person hands over the key to wing 1 (floor 5: not used, see hub.keyrun.taken)'
+    - rid: 4707331672703762667
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Readmission slip order line and arrival subtitle for floor 1: who to report to and where (ALL CAPS, one line, 34 pt typed). Giver: Sister Agnes. Write the whole sentence (article, title)'
+    - rid: 4707331672703762668
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Wing 2 name on its door plaque, and inside the sentences below when glued by code (ALL CAPS, short). Glossary term
+    - rid: 4707331672703762669
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Wing 2 room name, plaque second line (ALL CAPS)
+    - rid: 4707331672703762670
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Wing 2 storey name (GROUND FLOOR / BASEMENT / UPPER FLOOR), used in the arrival, hint and objective lines
+    - rid: 4707331672703762671
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the open door of wing 2. Shown as "E  <text>" (34 pt, 600 x 50, auto-size). Imperative or infinitive
+    - rid: 4707331672703762672
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the door of wing 2 while a mission or the key run has it locked
+    - rid: 4707331672703762673
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the door of wing 2 once its floor is cleared
+    - rid: 4707331672703762674
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the door of wing 2 before its floor can be reached
+    - rid: 4707331672703762675
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (1.8 s) when E is pressed at the cleared door of wing 2
+    - rid: 4707331672703762676
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (2.2 s) when E is pressed at the sealed door of wing 2. The key named is the previous wing''s (WARD A): write the whole sentence with its article'
+    - rid: 4707331672703762677
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Objective card goal (big card 42 pt one line, 650 px, auto-size; compact card wraps) when the player only has to walk to the door of wing 2
+    - rid: 4707331672703762678
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Arrival subtitle (5 s) when the door of wing 2 is usable. {floor} = floor number. One whole sentence: it names the door with an article'
+    - rid: 4707331672703762679
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Arrival subtitle (5 s) when the door of wing 2 is locked and no order applies. {floor} = floor number
+    - rid: 4707331672703762680
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (3.2 s) when a person hands over the key to wing 2 (floor 5: not used, see hub.keyrun.taken)'
+    - rid: 4707331672703762681
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Readmission slip order line and arrival subtitle for floor 2: who to report to and where (ALL CAPS, one line, 34 pt typed). Giver: Bruno. Write the whole sentence (article, title)'
+    - rid: 4707331672703762682
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Wing 3 name on its door plaque, and inside the sentences below when glued by code (ALL CAPS, short). Glossary term
+    - rid: 4707331672703762683
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Wing 3 room name, plaque second line (ALL CAPS)
+    - rid: 4707331672703762684
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Wing 3 storey name (GROUND FLOOR / BASEMENT / UPPER FLOOR), used in the arrival, hint and objective lines
+    - rid: 4707331672703762685
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the open door of wing 3. Shown as "E  <text>" (34 pt, 600 x 50, auto-size). Imperative or infinitive
+    - rid: 4707331672703762686
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the door of wing 3 while a mission or the key run has it locked
+    - rid: 4707331672703762687
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the door of wing 3 once its floor is cleared
+    - rid: 4707331672703762688
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the door of wing 3 before its floor can be reached
+    - rid: 4707331672703762689
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (1.8 s) when E is pressed at the cleared door of wing 3
+    - rid: 4707331672703762690
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (2.2 s) when E is pressed at the sealed door of wing 3. The key named is the previous wing''s (BOILER ROOM): write the whole sentence with its article'
+    - rid: 4707331672703762691
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Objective card goal (big card 42 pt one line, 650 px, auto-size; compact card wraps) when the player only has to walk to the door of wing 3
+    - rid: 4707331672703762692
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Arrival subtitle (5 s) when the door of wing 3 is usable. {floor} = floor number. One whole sentence: it names the door with an article'
+    - rid: 4707331672703762693
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Arrival subtitle (5 s) when the door of wing 3 is locked and no order applies. {floor} = floor number
+    - rid: 4707331672703762694
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (3.2 s) when a person hands over the key to wing 3 (floor 5: not used, see hub.keyrun.taken)'
+    - rid: 4707331672703762695
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Readmission slip order line and arrival subtitle for floor 3: who to report to and where (ALL CAPS, one line, 34 pt typed). Giver: Marta. Write the whole sentence (article, title)'
+    - rid: 4707331672703762696
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Wing 4 name on its door plaque, and inside the sentences below when glued by code (ALL CAPS, short). Glossary term
+    - rid: 4707331672703762697
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Wing 4 room name, plaque second line (ALL CAPS)
+    - rid: 4707331672703762698
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Wing 4 storey name (GROUND FLOOR / BASEMENT / UPPER FLOOR), used in the arrival, hint and objective lines
+    - rid: 4707331672703762699
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the open door of wing 4. Shown as "E  <text>" (34 pt, 600 x 50, auto-size). Imperative or infinitive
+    - rid: 4707331672703762700
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the door of wing 4 while a mission or the key run has it locked
+    - rid: 4707331672703762701
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the door of wing 4 once its floor is cleared
+    - rid: 4707331672703762702
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the door of wing 4 before its floor can be reached
+    - rid: 4707331672703762703
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (1.8 s) when E is pressed at the cleared door of wing 4
+    - rid: 4707331672703762704
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (2.2 s) when E is pressed at the sealed door of wing 4. The key named is the previous wing''s (MORGUE): write the whole sentence with its article'
+    - rid: 4707331672703762705
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Objective card goal (big card 42 pt one line, 650 px, auto-size; compact card wraps) when the player only has to walk to the door of wing 4
+    - rid: 4707331672703762706
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Arrival subtitle (5 s) when the door of wing 4 is usable. {floor} = floor number. One whole sentence: it names the door with an article'
+    - rid: 4707331672703762707
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Arrival subtitle (5 s) when the door of wing 4 is locked and no order applies. {floor} = floor number
+    - rid: 4707331672703762708
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (3.2 s) when a person hands over the key to wing 4 (floor 5: not used, see hub.keyrun.taken)'
+    - rid: 4707331672703762709
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Readmission slip order line and arrival subtitle for floor 4: who to report to and where (ALL CAPS, one line, 34 pt typed). Giver: Dr. Weiss. Write the whole sentence (article, title)'
+    - rid: 4707331672703762710
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Wing 5 name on its door plaque, and inside the sentences below when glued by code (ALL CAPS, short). Glossary term
+    - rid: 4707331672703762711
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Wing 5 room name, plaque second line (ALL CAPS)
+    - rid: 4707331672703762712
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Wing 5 storey name (GROUND FLOOR / BASEMENT / UPPER FLOOR), used in the arrival, hint and objective lines
+    - rid: 4707331672703762713
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the open door of wing 5. Shown as "E  <text>" (34 pt, 600 x 50, auto-size). Imperative or infinitive
+    - rid: 4707331672703762714
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the door of wing 5 while a mission or the key run has it locked
+    - rid: 4707331672703762715
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the door of wing 5 once its floor is cleared
+    - rid: 4707331672703762716
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the door of wing 5 before its floor can be reached
+    - rid: 4707331672703762717
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (1.8 s) when E is pressed at the cleared door of wing 5
+    - rid: 4707331672703762718
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (2.2 s) when E is pressed at the sealed door of wing 5. The key named is the previous wing''s (SURGERY): write the whole sentence with its article'
+    - rid: 4707331672703762719
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Objective card goal (big card 42 pt one line, 650 px, auto-size; compact card wraps) when the player only has to walk to the door of wing 5
+    - rid: 4707331672703762720
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Arrival subtitle (5 s) when the door of wing 5 is usable. {floor} = floor number. One whole sentence: it names the door with an article'
+    - rid: 4707331672703762721
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Arrival subtitle (5 s) when the door of wing 5 is locked and no order applies. {floor} = floor number
+    - rid: 4707331672703762722
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (3.2 s) when a person hands over the key to wing 5 (floor 5: not used, see hub.keyrun.taken)'
+    - rid: 4707331672703762723
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Readmission slip order line and arrival subtitle for floor 5: who to report to and where (ALL CAPS, one line, 34 pt typed). Giver: nobody (the Director''s key is on the records board). Write the whole sentence (article, title)'
+    - rid: 4707331672703762724
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (2.6 s) when E is pressed at the Director's door while the key run has it locked
+    - rid: 4707331672703762725
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 1 mission "THE WARD KEYS": subtitle (2.6 s) when E is pressed at the still-locked wing door. Names who has the key and where'
+    - rid: 4707331672703762726
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 1 mission: name of the key handed over (only used in a fallback sentence)'
+    - rid: 4707331672703762727
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 1 mission "THE WARD KEYS": objective while nobody has been talked to yet (objective card goal, hub hint subtitle 4 s)'
+    - rid: 4707331672703762728
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 1 mission: where the giver is (a short noun phrase, ALL CAPS). Used on the readmission slip and by the arrival line'
+    - rid: 4707331672703762729
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 1 mission: objective once the job is taken (objective card goal, also said as a subtitle for 3.2 s when the job is accepted)'
+    - rid: 4707331672703762730
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 1 mission: objective once the item is in hand'
+    - rid: 4707331672703762731
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 1 mission item 1: interaction prompt. Shown as "E  <text>" (34 pt, 600 x 50, auto-size)'
+    - rid: 4707331672703762732
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 1 mission item 1: subtitle on pickup (2.4 s)'
+    - rid: 4707331672703762733
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 2 mission "THE TRAY": subtitle (2.6 s) when E is pressed at the still-locked wing door. Names who has the key and where'
+    - rid: 4707331672703762734
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 2 mission: name of the key handed over (only used in a fallback sentence)'
+    - rid: 4707331672703762735
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 2 mission "THE TRAY": objective while nobody has been talked to yet (objective card goal, hub hint subtitle 4 s)'
+    - rid: 4707331672703762736
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 2 mission: where the giver is (a short noun phrase, ALL CAPS). Used on the readmission slip and by the arrival line'
+    - rid: 4707331672703762737
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 2 mission: objective once the job is taken (objective card goal, also said as a subtitle for 3.2 s when the job is accepted)'
+    - rid: 4707331672703762738
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 2 mission: objective once the item is in hand'
+    - rid: 4707331672703762739
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 2 mission: second line of the objective card once everything is in hand'
+    - rid: 4707331672703762740
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 2 mission item 1: interaction prompt. Shown as "E  <text>" (34 pt, 600 x 50, auto-size)'
+    - rid: 4707331672703762741
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 2 mission item 1: subtitle on pickup (2.4 s)'
+    - rid: 4707331672703762742
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 3 mission "THE MUSIC BOX": subtitle (2.6 s) when E is pressed at the still-locked wing door. Names who has the key and where'
+    - rid: 4707331672703762743
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 3 mission: name of the key handed over (only used in a fallback sentence)'
+    - rid: 4707331672703762744
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 3 mission "THE MUSIC BOX": objective while nobody has been talked to yet (objective card goal, hub hint subtitle 4 s)'
+    - rid: 4707331672703762745
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 3 mission: where the giver is (a short noun phrase, ALL CAPS). Used on the readmission slip and by the arrival line'
+    - rid: 4707331672703762746
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 3 mission: objective once the job is taken (objective card goal, also said as a subtitle for 3.2 s when the job is accepted)'
+    - rid: 4707331672703762747
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 3 mission: objective once the item is in hand'
+    - rid: 4707331672703762748
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 3 mission item 1: interaction prompt. Shown as "E  <text>" (34 pt, 600 x 50, auto-size)'
+    - rid: 4707331672703762749
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 3 mission item 1: subtitle on pickup (2.4 s)'
+    - rid: 4707331672703762750
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 4 mission "ROUNDS": subtitle (2.6 s) when E is pressed at the still-locked wing door. Names who has the key and where'
+    - rid: 4707331672703762751
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 4 mission: name of the key handed over (only used in a fallback sentence)'
+    - rid: 4707331672703762752
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 4 mission "ROUNDS": objective while nobody has been talked to yet (objective card goal, hub hint subtitle 4 s)'
+    - rid: 4707331672703762753
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 4 mission: where the giver is (a short noun phrase, ALL CAPS). Used on the readmission slip and by the arrival line'
+    - rid: 4707331672703762754
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 4 mission: objective once the job is taken (objective card goal, also said as a subtitle for 3.2 s when the job is accepted)'
+    - rid: 4707331672703762755
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 4 mission: objective once the item is in hand'
+    - rid: 4707331672703762756
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 4 mission: second line of the objective card while collecting. {n} found of {total}'
+    - rid: 4707331672703762757
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 4 mission: second line of the objective card once everything is in hand. {n} / {total} as above'
+    - rid: 4707331672703762758
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 4 mission item 1: interaction prompt. Shown as "E  <text>" (34 pt, 600 x 50, auto-size)'
+    - rid: 4707331672703762759
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 4 mission item 1: subtitle on pickup (2.4 s). {n} = items taken so far, {total} = items in the mission'
+    - rid: 4707331672703762760
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 4 mission item 2: interaction prompt. Shown as "E  <text>" (34 pt, 600 x 50, auto-size)'
+    - rid: 4707331672703762761
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 4 mission item 2: subtitle on pickup (2.4 s). {n} = items taken so far, {total} = items in the mission'
+    - rid: 4707331672703762762
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 4 mission item 3: interaction prompt. Shown as "E  <text>" (34 pt, 600 x 50, auto-size)'
+    - rid: 4707331672703762763
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 4 mission item 3: subtitle on pickup (2.4 s). {n} = items taken so far, {total} = items in the mission'
+    - rid: 4707331672703762764
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Fallback subtitle (3.2 s) when a key is handed over and the wing door cannot be found. {key} = the key name
+    - rid: 4707331672703762765
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Speaker name of the nurse in the gatehouse (dialogue panel name 26 pt, interaction prompt, readmission slip). Title translated, name kept
+    - rid: 4707331672703762766
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Speaker name: the cook in the kitchen. Name kept'
+    - rid: 4707331672703762767
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Speaker name: the patient in the bedroom. Name kept'
+    - rid: 4707331672703762768
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Speaker name: the child in the classroom. Name kept'
+    - rid: 4707331672703762769
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Speaker name: the doctor in the exam room. Name kept'
+    - rid: 4707331672703762770
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Speaker name: the clerk typing at the records desk'
+    - rid: 4707331672703762771
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on a person in the asylum. Shown as "E  <text>" (34 pt, 600 x 50, auto-size). {name} = the speaker name above (already capitalised, with its title)
+    - rid: 4707331672703762772
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (1.6 s) when a person or the shop door refuses because something is hunting the player
+    - rid: 4707331672703762773
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (3.2 s) after the hub pursuer catches the player: they wake at the door they came in by. Sentence case'
+    - rid: 4707331672703762774
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (4 s) on arriving at the Director's office in the finale
+    - rid: 4707331672703762775
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: "Where the SHOP door is, after \"THE SHOP IS OPEN \xB7 \". A noun phrase with its article, ALL CAPS"
+    - rid: 4707331672703762776
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the open SHOP door. Shown as "E  <text>" (34 pt, 600 x 50, auto-size)
+    - rid: 4707331672703762777
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the SHOP door while it is closed (before a floor has been cleared)
+    - rid: 4707331672703762778
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (2.2 s) when E is pressed at the closed SHOP door
+    - rid: 4707331672703762779
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'World-space sign over the SHOP door. Two lines: SHOP big, then the salesman and {status} at 60 % size. Keep the <size=60%> tag and the line break'
+    - rid: 4707331672703762780
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Status word on the SHOP door plaque (second line)
+    - rid: 4707331672703762781
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Status word on the SHOP door plaque (second line)
+    - rid: 4707331672703762782
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Arrival subtitle (4 s, queued behind the first line): the SHOP door is worth a visit (used when the door has no room name)'
+    - rid: 4707331672703762783
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Arrival subtitle (4 s, queued): the SHOP door is worth a visit. {room} = hub.shopdoor.room'
+    - rid: 4707331672703762784
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on the tally marks on the wall (examine, subtitle follows). Shown as "E  <text>" (34 pt, 600 x 50, auto-size). Readable cards use hud.prompt.read / hud.prompt.close instead
+    - rid: 4707331672703762785
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on the barricade. Shown as "E  <text>" (34 pt, 600 x 50, auto-size). Readable cards use hud.prompt.read / hud.prompt.close instead
+    - rid: 4707331672703762786
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on the door of Room 4. Shown as "E  <text>" (34 pt, 600 x 50, auto-size). Readable cards use hud.prompt.read / hud.prompt.close instead
+    - rid: 4707331672703762787
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on the admissions ledger. Shown as "E  <text>" (34 pt, 600 x 50, auto-size). Readable cards use hud.prompt.read / hud.prompt.close instead
+    - rid: 4707331672703762788
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on the pipe Tomas knocks on. Shown as "E  <text>" (34 pt, 600 x 50, auto-size). Readable cards use hud.prompt.read / hud.prompt.close instead
+    - rid: 4707331672703762789
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on a folder on the records board in the asylum office. Shown as "E  <text>". {label} = the case file label from the file itself (a patient name and number)
+    - rid: 4707331672703762790
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on Elias's wristband on the morgue table (floor 4 on)
+    - rid: 4707331672703762791
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the asylum main doors in the finale (ending A)
+    - rid: 4707331672703762792
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on the Director's key on the records board (floor 5)
+    - rid: 4707331672703762793
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Interaction prompt (hold E 3 s) on the master switch in the finale (ending B). LIGHTS OUT is the game title: keep it'
+    - rid: 4707331672703762794
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on the Director's desk drawer when all five case files were read
+    - rid: 4707331672703762795
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on the Director's desk drawer while the case files are incomplete
+    - rid: 4707331672703762796
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (3 s) when E is pressed at the locked drawer. {n} of {total} case files read
+    - rid: 4707331672703762797
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (3 s) after taking the Director's key on floor 5
+    - rid: 4707331672703762798
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Objective card goal (floor 5, step 1 of 2): fetch the Director''s key (42 pt one line, 650 px, auto-size)'
+    - rid: 4707331672703762799
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Floor 2: second line of the objective card, subtitle after the wing is unlocked (4 s) and on a return from the shop. The stairs down are chained shut'
+    - rid: 4707331672703762800
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the lift call button on floor 2. Shown as "E  <text>" (34 pt, 600 x 50, auto-size)
+    - rid: 4707331672703762801
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at the lift call button on other floors / the finale (it does not work)
+    - rid: 4707331672703762802
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on the chained gate across the basement stairs
+    - rid: 4707331672703762803
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt (hold E 1.5 s) on the stuck basement lift doors
+    - rid: 4707331672703762804
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (2.6 s) when E is pressed at the chained gate
+    - rid: 4707331672703762805
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (2.2 s) when the lift is called on floor 1 or in the finale
+    - rid: 4707331672703762806
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (3 s) when the lift is called on floor 2 before the Boiler Room key is in hand. Names the Boiler Room (wing 2) with its article
+    - rid: 4707331672703762807
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (2.2 s) when the lift jams half-way down
+    - rid: 4707331672703762808
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (4 s) at the bottom of the lift. {key} = E on keyboard or USE on touch (do not translate the key)
+    - rid: 4707331672703762809
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (3.5 s) in the basement hall on floor 3: Tomas knocks in the pipes. Sentence in capitals with a final full stop'
+    - rid: 4707331672703762810
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (2.6 s) when the floor-4 chase ends at the surgery door
+    - rid: 4707331672703762811
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (4.5 s, queued) the first time the player walks up to a chalk star on the wall (floor 2)

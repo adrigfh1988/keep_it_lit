@@ -12,7 +12,7 @@ public class HubKey : MonoBehaviour, IInteractable
 
     public void Bind(KeyRunSetPiece owner) { _owner = owner; }
 
-    string IInteractable.Prompt => "TAKE THE DIRECTOR'S KEY";
+    string IInteractable.Prompt => L10n.T("hub.key.prompt");
     float IInteractable.HoldSeconds => 0f;
     bool IInteractable.CanInteract => _owner != null && _owner.Running && !_owner.KeyHeld;
 

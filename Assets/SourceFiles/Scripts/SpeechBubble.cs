@@ -47,7 +47,8 @@ public class SpeechBubble : MonoBehaviour
     [SerializeField] private float tailLength = 24f;
 
     private const string GlitchGlyphs = "#%&@?!";
-    private const string PausePunctuation = ".,?!…";
+    // S9: the beat after a sentence mark also covers the Spanish inverted marks and the French guillemets (a pause on the opening mark is short and reads as a breath).
+    private const string PausePunctuation = ".,?!…»"; // pauses AFTER the character: never on an opening ¿ ¡ «
 
     /// <summary>F82: the bubble's colours - fill and outline are baked into the generated sprites, text/shout tint the TMP text.</summary>
     public struct Palette
@@ -344,7 +345,8 @@ public class SpeechBubble : MonoBehaviour
                 break;
             case Phase.Holding:
                 _phaseTime += dt;
-                if (_phaseTime >= holdBaseSeconds + holdPerCharSeconds * _full.Length)
+                // S9 (D14): a longer translation is held long enough to read - never less than 1.2 s plus 15 characters per second.
+                if (_phaseTime >= Mathf.Max(holdBaseSeconds + holdPerCharSeconds * _full.Length, PlayerHud.ReadingSeconds(_full)))
                 {
                     _phase = Phase.Fading;
                     _phaseTime = 0f;

@@ -39,8 +39,11 @@ public class HubExamine : MonoBehaviour, IInteractable
     {
         get
         {
-            if (readable && Hub != null && Hub.Reader != null && Hub.Reader.IsOpen) return "CLOSE";
-            return readable ? "READ" : prompt;
+            if (readable && Hub != null && Hub.Reader != null && Hub.Reader.IsOpen) return L10n.T("hud.prompt.close");
+            if (readable) return L10n.T("hud.prompt.read");
+            // S9 (D10): translated by the vignette key (hub.examine.<key>.prompt); the serialized prompt is the fallback.
+            string k = "hub.examine." + key + ".prompt";
+            return L10n.Has(k) ? L10n.T(k) : prompt;
         }
     }
 

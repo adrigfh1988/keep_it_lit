@@ -15,6 +15,13 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-German
   m_GUID: 1eb3c375f054ce24c8563bb1289387fa
   m_SerializeEntries:
+  - m_GUID: 11b01ccfbb0da2b469e822f546c1218d
+    m_Address: Voices_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1cbd495c55872974dafd0674cc04aa94
     m_Address: UI_de
     m_ReadOnly: 1
@@ -24,6 +31,20 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 367527f80d0c8344abe3435002210cc1
     m_Address: Subtitles_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5915e448beceead40b2619894ae256f5
+    m_Address: Hub_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e75ef3d2f05d5ae4d9d607291c437166
+    m_Address: Dialogue_de
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de

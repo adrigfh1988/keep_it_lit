@@ -1,0 +1,973 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Voices Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Voices
+  m_TableCollectionNameGuidString: 142449efb3c77344abb64fc4d747b015
+  m_Entries:
+  - m_Id: 295604224
+    m_Key: voice.hunter.spotted.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762544
+  - m_Id: 379490304
+    m_Key: voice.hunter.spotted.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762545
+  - m_Id: 379490305
+    m_Key: voice.hunter.spotted.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762546
+  - m_Id: 379490306
+    m_Key: voice.hunter.spotted.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762547
+  - m_Id: 379490307
+    m_Key: voice.hunter.spotted.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762548
+  - m_Id: 379490308
+    m_Key: voice.hunter.spotted.5
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762549
+  - m_Id: 379490309
+    m_Key: voice.hunter.spotted.6
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762550
+  - m_Id: 379490310
+    m_Key: voice.hunter.chasing.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762551
+  - m_Id: 379490311
+    m_Key: voice.hunter.chasing.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762552
+  - m_Id: 379490312
+    m_Key: voice.hunter.chasing.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762553
+  - m_Id: 379490313
+    m_Key: voice.hunter.chasing.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762554
+  - m_Id: 379490314
+    m_Key: voice.hunter.chasing.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762555
+  - m_Id: 379490315
+    m_Key: voice.hunter.chasing.5
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762556
+  - m_Id: 379490316
+    m_Key: voice.hunter.lost.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762557
+  - m_Id: 379490317
+    m_Key: voice.hunter.lost.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762558
+  - m_Id: 379490318
+    m_Key: voice.hunter.lost.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762559
+  - m_Id: 379490319
+    m_Key: voice.hunter.lost.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762560
+  - m_Id: 379490320
+    m_Key: voice.hunter.searching.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762561
+  - m_Id: 379490321
+    m_Key: voice.hunter.searching.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762562
+  - m_Id: 379490322
+    m_Key: voice.hunter.searching.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762563
+  - m_Id: 379490323
+    m_Key: voice.hunter.searching.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762564
+  - m_Id: 379490324
+    m_Key: voice.hunter.searching.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762565
+  - m_Id: 379490325
+    m_Key: voice.hunter.searching.5
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762566
+  - m_Id: 379490326
+    m_Key: voice.hunter.ambush.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762567
+  - m_Id: 379490327
+    m_Key: voice.hunter.ambush.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762568
+  - m_Id: 379490328
+    m_Key: voice.hunter.ambush.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762569
+  - m_Id: 379490329
+    m_Key: voice.hunter.ambush.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762570
+  - m_Id: 379490330
+    m_Key: voice.hunter.locker.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762571
+  - m_Id: 379490331
+    m_Key: voice.hunter.locker.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762572
+  - m_Id: 379490332
+    m_Key: voice.hunter.locker.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762573
+  - m_Id: 379490333
+    m_Key: voice.hunter.locker.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762574
+  - m_Id: 379490334
+    m_Key: voice.hunter.locker.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762575
+  - m_Id: 379490335
+    m_Key: voice.hunter.door.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762576
+  - m_Id: 379490336
+    m_Key: voice.hunter.door.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762577
+  - m_Id: 379490337
+    m_Key: voice.hunter.door.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762578
+  - m_Id: 379490338
+    m_Key: voice.hunter.door.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762579
+  - m_Id: 379490339
+    m_Key: voice.hunter.caught.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762580
+  - m_Id: 379490340
+    m_Key: voice.hunter.caught.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762581
+  - m_Id: 379490341
+    m_Key: voice.hunter.caught.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762582
+  - m_Id: 379490342
+    m_Key: voice.hunter.caught.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762583
+  - m_Id: 379490343
+    m_Key: voice.stan.spotted.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762584
+  - m_Id: 379490344
+    m_Key: voice.stan.spotted.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762585
+  - m_Id: 379490345
+    m_Key: voice.stan.spotted.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762586
+  - m_Id: 379490346
+    m_Key: voice.stan.spotted.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762587
+  - m_Id: 379490347
+    m_Key: voice.stan.spotted.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762588
+  - m_Id: 379490348
+    m_Key: voice.stan.spotted.5
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762589
+  - m_Id: 379490349
+    m_Key: voice.stan.spotted.6
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762590
+  - m_Id: 379490350
+    m_Key: voice.stan.spotted.7
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762591
+  - m_Id: 379490351
+    m_Key: voice.stan.lit.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762592
+  - m_Id: 379490352
+    m_Key: voice.stan.lit.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762593
+  - m_Id: 379490353
+    m_Key: voice.stan.lit.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762594
+  - m_Id: 379490354
+    m_Key: voice.stan.lit.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762595
+  - m_Id: 379490355
+    m_Key: voice.stan.lit.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762596
+  - m_Id: 379490356
+    m_Key: voice.stan.lit.5
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762597
+  - m_Id: 379490357
+    m_Key: voice.stan.lit.6
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762598
+  - m_Id: 379490358
+    m_Key: voice.stan.lit.7
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762599
+  - m_Id: 379490359
+    m_Key: voice.stan.staring.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762600
+  - m_Id: 379490360
+    m_Key: voice.stan.staring.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762601
+  - m_Id: 379490361
+    m_Key: voice.stan.staring.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762602
+  - m_Id: 379490362
+    m_Key: voice.stan.staring.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762603
+  - m_Id: 379490363
+    m_Key: voice.stan.staring.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762604
+  - m_Id: 379490364
+    m_Key: voice.stan.staring.5
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762605
+  - m_Id: 379490365
+    m_Key: voice.stan.lunge.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762606
+  - m_Id: 379490366
+    m_Key: voice.stan.lunge.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762607
+  - m_Id: 379490367
+    m_Key: voice.stan.lunge.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762608
+  - m_Id: 379490368
+    m_Key: voice.stan.lunge.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762609
+  - m_Id: 379490369
+    m_Key: voice.stan.lunge.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762610
+  - m_Id: 379490370
+    m_Key: voice.stan.touch.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762611
+  - m_Id: 379490371
+    m_Key: voice.stan.touch.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762612
+  - m_Id: 379490372
+    m_Key: voice.stan.touch.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762613
+  - m_Id: 379490373
+    m_Key: voice.stan.touch.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762614
+  - m_Id: 379490374
+    m_Key: voice.stan.touch.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762615
+  - m_Id: 379490375
+    m_Key: voice.stan.lost.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762616
+  - m_Id: 379490376
+    m_Key: voice.stan.lost.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762617
+  - m_Id: 379490377
+    m_Key: voice.stan.lost.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762618
+  - m_Id: 379490378
+    m_Key: voice.stan.lost.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762619
+  - m_Id: 379490379
+    m_Key: voice.stan.lost.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762620
+  - m_Id: 379490380
+    m_Key: voice.stan.locker.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762621
+  - m_Id: 379490381
+    m_Key: voice.stan.locker.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762622
+  - m_Id: 379490382
+    m_Key: voice.stan.locker.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762623
+  - m_Id: 379490383
+    m_Key: voice.stan.locker.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762624
+  - m_Id: 379490384
+    m_Key: voice.stan.locker.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762625
+  - m_Id: 379490385
+    m_Key: voice.stan.idle.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762626
+  - m_Id: 379490386
+    m_Key: voice.stan.idle.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762627
+  - m_Id: 379490387
+    m_Key: voice.stan.idle.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762628
+  - m_Id: 379490388
+    m_Key: voice.stan.idle.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762629
+  - m_Id: 379490389
+    m_Key: voice.stan.idle.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762630
+  - m_Id: 379490390
+    m_Key: voice.stan.idle.5
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762631
+  - m_Id: 379490391
+    m_Key: voice.patient.hilde.default.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762632
+  - m_Id: 379490392
+    m_Key: voice.patient.hilde.default.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762633
+  - m_Id: 379490393
+    m_Key: voice.patient.hilde.default.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762634
+  - m_Id: 379490394
+    m_Key: voice.patient.hilde.fileread.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762635
+  - m_Id: 379490395
+    m_Key: voice.patient.hilde.late.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762636
+  - m_Id: 379490396
+    m_Key: voice.patient.hilde.finale.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762637
+  - m_Id: 379490397
+    m_Key: voice.patient.tomas.default.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762638
+  - m_Id: 379490398
+    m_Key: voice.patient.tomas.default.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762639
+  - m_Id: 379490399
+    m_Key: voice.patient.tomas.default.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762640
+  - m_Id: 379490400
+    m_Key: voice.patient.tomas.fileread.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762641
+  - m_Id: 379490401
+    m_Key: voice.patient.tomas.late.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762642
+  - m_Id: 379490402
+    m_Key: voice.patient.tomas.finale.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762643
+  - m_Id: 379490403
+    m_Key: voice.patient.elias.default.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762644
+  - m_Id: 379490404
+    m_Key: voice.patient.elias.default.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762645
+  - m_Id: 379490405
+    m_Key: voice.patient.elias.fileread.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762646
+  - m_Id: 379490406
+    m_Key: voice.patient.elias.late.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762647
+  - m_Id: 379490407
+    m_Key: voice.patient.elias.finale.0
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762648
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4707331672703762442
+  references:
+    version: 2
+    RefIds:
+    - rid: 4707331672703762442
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1791631610576
+    - rid: 4707331672703762544
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category spotted: it sees you after a while without seeing you. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762545
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category spotted: it sees you after a while without seeing you. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762546
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category spotted: it sees you after a while without seeing you. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762547
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category spotted: it sees you after a while without seeing you. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762548
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category spotted: it sees you after a while without seeing you. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762549
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category spotted: it sees you after a while without seeing you. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762550
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category spotted: it sees you after a while without seeing you. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762551
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category chasing: a long chase with you in sight. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762552
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category chasing: a long chase with you in sight. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762553
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category chasing: a long chase with you in sight. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762554
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category chasing: a long chase with you in sight. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762555
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category chasing: a long chase with you in sight. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762556
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category chasing: a long chase with you in sight. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762557
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category lost: it lost you mid-chase and starts searching. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762558
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category lost: it lost you mid-chase and starts searching. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762559
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category lost: it lost you mid-chase and starts searching. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762560
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category lost: it lost you mid-chase and starts searching. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762561
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category searching: muttered while searching nearby. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762562
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category searching: muttered while searching nearby. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762563
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category searching: muttered while searching nearby. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762564
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category searching: muttered while searching nearby. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762565
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category searching: muttered while searching nearby. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762566
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category searching: muttered while searching nearby. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762567
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category ambush: SHOUTED, all caps: it springs out of an ambush. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762568
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category ambush: SHOUTED, all caps: it springs out of an ambush. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762569
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category ambush: SHOUTED, all caps: it springs out of an ambush. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762570
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category ambush: SHOUTED, all caps: it springs out of an ambush. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762571
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category locker: you are hiding in a locker and it is close. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762572
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category locker: you are hiding in a locker and it is close. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762573
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category locker: you are hiding in a locker and it is close. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762574
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category locker: you are hiding in a locker and it is close. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762575
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category locker: you are hiding in a locker and it is close. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762576
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category door: it just bashed a shutter door open. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762577
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category door: it just bashed a shutter door open. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762578
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category door: it just bashed a shutter door open. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762579
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category door: it just bashed a shutter door open. Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762580
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category caught: SHOUTED, all caps: it caught you (plays into the capture blackout). Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762581
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category caught: SHOUTED, all caps: it caught you (plays into the capture blackout). Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762582
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category caught: SHOUTED, all caps: it caught you (plays into the capture blackout). Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762583
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The hunter (never named; ''it''), speech bubble, category caught: SHOUTED, all caps: it caught you (plays into the capture blackout). Lower-case unless noted, one short line, 2nd person taunt (tu in French). {floor} = current floor number'
+    - rid: 4707331672703762584
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category spotted: sight acquired after a while without it. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762585
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category spotted: sight acquired after a while without it. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762586
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category spotted: sight acquired after a while without it. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762587
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category spotted: sight acquired after a while without it. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762588
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category spotted: sight acquired after a while without it. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762589
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category spotted: sight acquired after a while without it. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762590
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category spotted: sight acquired after a while without it. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762591
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category spotted: sight acquired after a while without it. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762592
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category lit: the torch just froze him while he can see you. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762593
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category lit: the torch just froze him while he can see you. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762594
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category lit: the torch just froze him while he can see you. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762595
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category lit: the torch just froze him while he can see you. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762596
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category lit: the torch just froze him while he can see you. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762597
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category lit: the torch just froze him while he can see you. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762598
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category lit: the torch just froze him while he can see you. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762599
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category lit: the torch just froze him while he can see you. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762600
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category staring: he stops dead and stares. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762601
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category staring: he stops dead and stares. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762602
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category staring: he stops dead and stares. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762603
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category staring: he stops dead and stares. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762604
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category staring: he stops dead and stares. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762605
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category staring: he stops dead and stares. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762606
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category lunge: SHOUTED, all caps: he rushes you. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762607
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category lunge: SHOUTED, all caps: he rushes you. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762608
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category lunge: SHOUTED, all caps: he rushes you. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762609
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category lunge: SHOUTED, all caps: he rushes you. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762610
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category lunge: SHOUTED, all caps: he rushes you. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762611
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category touch: SHOUTED: he touches you, just before he vanishes. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762612
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category touch: SHOUTED: he touches you, just before he vanishes. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762613
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category touch: SHOUTED: he touches you, just before he vanishes. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762614
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category touch: SHOUTED: he touches you, just before he vanishes. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762615
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category touch: SHOUTED: he touches you, just before he vanishes. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762616
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category lost: he loses sight of you after watching. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762617
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category lost: he loses sight of you after watching. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762618
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category lost: he loses sight of you after watching. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762619
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category lost: he loses sight of you after watching. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762620
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category lost: he loses sight of you after watching. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762621
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category locker: you are hiding in a locker and he is close. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762622
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category locker: you are hiding in a locker and he is close. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762623
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category locker: you are hiding in a locker and he is close. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762624
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category locker: you are hiding in a locker and he is close. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762625
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category locker: you are hiding in a locker and he is close. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762626
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category idle: he has been watching you for a long time. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762627
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category idle: he has been watching you for a long time. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762628
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category idle: he has been watching you for a long time. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762629
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category idle: he has been watching you for a long time. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762630
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category idle: he has been watching you for a long time. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762631
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Stan (the broken toy, playful and childlike), speech bubble, category idle: he has been watching you for a long time. Short, lower-case unless noted. {floor} = current floor number'
+    - rid: 4707331672703762632
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient hilde speech bubble (said on approach, any floor). A short line, normal sentence case, under 60 characters
+    - rid: 4707331672703762633
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient hilde speech bubble (said on approach, any floor). A short line, normal sentence case, under 60 characters
+    - rid: 4707331672703762634
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient hilde speech bubble (said on approach, any floor). A short line, normal sentence case, under 60 characters
+    - rid: 4707331672703762635
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient hilde speech bubble (once, after the player read this patient's case file). A short line, normal sentence case, under 60 characters
+    - rid: 4707331672703762636
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient hilde speech bubble (later floors, 50 % of the approaches). A short line, normal sentence case, under 60 characters
+    - rid: 4707331672703762637
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient hilde speech bubble (in the finale). A short line, normal sentence case, under 60 characters
+    - rid: 4707331672703762638
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient tomas speech bubble (said on approach, any floor). A short line, normal sentence case, under 60 characters
+    - rid: 4707331672703762639
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient tomas speech bubble (said on approach, any floor). A short line, normal sentence case, under 60 characters
+    - rid: 4707331672703762640
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient tomas speech bubble (said on approach, any floor). A short line, normal sentence case, under 60 characters
+    - rid: 4707331672703762641
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient tomas speech bubble (once, after the player read this patient's case file). A short line, normal sentence case, under 60 characters
+    - rid: 4707331672703762642
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient tomas speech bubble (later floors, 50 % of the approaches). A short line, normal sentence case, under 60 characters
+    - rid: 4707331672703762643
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient tomas speech bubble (in the finale). A short line, normal sentence case, under 60 characters
+    - rid: 4707331672703762644
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient elias speech bubble (said on approach, any floor). A short line, normal sentence case, under 60 characters
+    - rid: 4707331672703762645
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient elias speech bubble (said on approach, any floor). A short line, normal sentence case, under 60 characters
+    - rid: 4707331672703762646
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient elias speech bubble (once, after the player read this patient's case file). A short line, normal sentence case, under 60 characters
+    - rid: 4707331672703762647
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient elias speech bubble (later floors, 50 % of the approaches). A short line, normal sentence case, under 60 characters
+    - rid: 4707331672703762648
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient elias speech bubble (in the finale). A short line, normal sentence case, under 60 characters

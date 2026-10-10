@@ -114,8 +114,9 @@ public class HubMission : MonoBehaviour
         WingDoor door = Door;
         if (door != null)
         {
-            if (here && Current != Stage.Done) door.lockedLine = lockedLine;
-            else if (door.lockedLine == lockedLine) door.lockedLine = null; // never clobber another piece's line (the floor-5 key run)
+            // S9: the door is locked BY this mission (an owner, not a text compare) with the line as a key resolved when it is shown.
+            if (here && Current != Stage.Done) door.Lock(this, Key("locked_line"), lockedLine);
+            else door.Unlock(this); // only releases a lock this mission owns (never the floor-5 key run's)
         }
 
         HubMissionItem target = null;
@@ -163,20 +164,35 @@ public class HubMission : MonoBehaviour
 
     private string Fill(string s) => string.IsNullOrEmpty(s) ? "" : s.Replace("{n}", Collected.ToString()).Replace("{total}", items.Length.ToString());
 
-    /// <summary>The current stage's objective with {n} / {total} filled in ("" once Done).</summary>
-    public string CurrentObjectiveText => Fill(CurrentObjective());
+    // S9 (D10): every serialized text is read through hub.mission.<floor>.<field> (lower snake case); the field is the fallback while a key
+    // is missing. {n} / {total} are Smart arguments, so a translation may place or inflect them freely.
+    private string Key(string leaf) => $"hub.mission.{floor}.{leaf}";
+
+    private string Text(string leaf, string fallback)
+    {
+        string key = Key(leaf);
+        return L10n.Has(key) ? L10n.T(key, ("n", Collected), ("total", items != null ? items.Length : 0)) : Fill(fallback);
+    }
+
+    public int IndexOf(HubMissionItem item) => items == null ? -1 : System.Array.IndexOf(items, item);
+
+    /// <summary>Name of the key a person hands over, translated ("THE WARD A KEY").</summary>
+    public string KeyName => Text("key_name", keyName);
+
+    /// <summary>The current stage's objective with {n} / {total} filled in ("" once Done), in the selected language.</summary>
+    public string CurrentObjectiveText => CurrentObjective();
 
     /// <summary>The current stage's second line (AMPOULES 1 / 3, CARRYING · JOSEF'S TRAY) filled in; "" when the stage has none.</summary>
-    public string CurrentProgressText => Fill(Current == Stage.Active ? progressActive : Current == Stage.Fetched ? progressFetched : "");
+    public string CurrentProgressText => Current == Stage.Active ? Text("progress_active", progressActive) : Current == Stage.Fetched ? Text("progress_fetched", progressFetched) : "";
 
-    /// <summary>The objective for the current stage, unfilled (HubObjectiveCard and the hub's repeating hint show it filled).</summary>
+    /// <summary>The objective for the current stage, translated and filled in (HubObjectiveCard and the hub's repeating hint show it).</summary>
     public string CurrentObjective()
     {
         switch (Current)
         {
-            case Stage.Offered: return objectiveOffered;
-            case Stage.Active: return objectiveActive;
-            case Stage.Fetched: return objectiveFetched;
+            case Stage.Offered: return Text("objective_offered", objectiveOffered);
+            case Stage.Active: return Text("objective_active", objectiveActive);
+            case Stage.Fetched: return Text("objective_fetched", objectiveFetched);
             default: return "";
         }
     }
@@ -186,20 +202,12 @@ public class HubMission : MonoBehaviour
     {
         HubMission m = ForFloor(floor);
         if (m == null || !m.IsHere || m.Current == Stage.Done) return null;
-        string text = m.Fill(m.CurrentObjective());
+        string text = m.CurrentObjective();
         return string.IsNullOrEmpty(text) ? null : text;
     }
 
-    /// <summary>F100: where the giver is (the explicit field, else the word after the '·' in the offered objective).</summary>
-    public string Where
-    {
-        get
-        {
-            if (!string.IsNullOrEmpty(where)) return where;
-            int dot = objectiveOffered != null ? objectiveOffered.LastIndexOf('·') : -1;
-            return dot >= 0 ? objectiveOffered.Substring(dot + 1).Trim() : "";
-        }
-    }
+    /// <summary>F100/S9: where the giver is - the where field / its key only (the old fallback that parsed the word after the '·' in the offered objective is gone: it cannot work in another language).</summary>
+    public string Where => Text("where", where);
 
     /// <summary>
     /// F100: the readmission slip's first order for the maze of `floor`: REPORT TO {GIVER} · {WHERE} (floors 1-4, from the mission's own data),
@@ -207,11 +215,14 @@ public class HubMission : MonoBehaviour
     /// </summary>
     public static string OrderFor(int floor)
     {
-        if (floor == 5) return KeyRunSetPiece.OrderLine;
+        if (floor == 5) return KeyRunSetPiece.OrderText;
         HubMission m = ForFloor(floor);
         if (m == null || m.giver == null) return null;
         string where = m.Where;
-        return string.IsNullOrEmpty(where) ? $"REPORT TO {m.giver.Name}" : $"REPORT TO {m.giver.Name} · {where}";
+        // D12: the whole sentence is one key per wing (hub.wing.n.order) - the translation owns the article and the case of the giver's title.
+        string fallback = string.IsNullOrEmpty(where) ? $"REPORT TO {m.giver.Name}" : $"REPORT TO {m.giver.Name} · {where}";
+        WingDoor door = m.Door;
+        return door != null ? door.OrderLine(fallback) : fallback;
     }
 
     // ---------------------------------------------------------------- items
@@ -226,7 +237,7 @@ public class HubMission : MonoBehaviour
         PlaySound(item != null ? item.transform.position : transform.position, floor == 1);
         bool all = Collected >= items.Length;
         if (all) Current = Stage.Fetched;
-        string line = item != null ? Fill(item.TakenLine) : "";
+        string line = item != null ? Fill(item.TakenLine) : ""; // already Smart-formatted by the item when a key exists
         Apply();
         if (Hub != null && !string.IsNullOrEmpty(line)) Hub.SubtitleLine(line, 2.4f);
     }
@@ -245,7 +256,7 @@ public class HubMission : MonoBehaviour
         if (Current != Stage.Offered) return;
         Current = Stage.Active;
         Apply();
-        string text = Fill(objectiveActive);
+        string text = Text("objective_active", objectiveActive);
         if (Hub != null && !string.IsNullOrEmpty(text)) Hub.SubtitleLine(text, 3.2f);
     }
 
@@ -261,8 +272,8 @@ public class HubMission : MonoBehaviour
         {
             // F100: say which door, and where (not just "the door"). Floor 2's lift line (the stairs are chained) follows, queued behind it.
             WingDoor door = Door;
-            Hub.SubtitleLine(door != null ? $"THE {door.wingName} DOOR IS UNLOCKED · {door.levelName}" : $"{keyName} · THE DOOR IS UNLOCKED", 3.2f);
-            if (floor == 2) Hub.QueueSubtitleLine(LiftSetPiece.ChainedLine, 4f);
+            Hub.SubtitleLine(door != null ? door.UnlockedLine : L10n.T("hub.mission.door_unlocked", ("key", KeyName)), 3.2f);
+            if (floor == 2) Hub.QueueSubtitleLine(LiftSetPiece.ChainedText, 4f);
         }
     }
 
@@ -362,6 +373,6 @@ public class HubMission : MonoBehaviour
         HubMission m = ForFloor(floor);
         if (m == null) return $"no mission on floor {floor}";
         WingDoor door = m.Door;
-        return $"floor {floor} '{m.title}': {m.Current}, items {m.Collected}/{m.items.Length}, door line '{(door != null ? door.lockedLine : "?")}'";
+        return $"floor {floor} '{m.title}': {m.Current}, items {m.Collected}/{m.items.Length}, door line '{(door != null ? (door.StoryLocked ? door.LockedLine : "") : "?")}'";
     }
 }

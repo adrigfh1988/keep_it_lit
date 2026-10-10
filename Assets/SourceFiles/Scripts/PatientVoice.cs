@@ -60,6 +60,9 @@ public class PatientVoice : CreatureVoice
     protected override bool GlitchFor(int category) => false;
     protected override bool CanSpeak(int category) => _patient != null && _patient.IsPresent;
     protected override string[] LinesFor(int category) => Lines(_patient.patient, (Set)category);
+    // S9: voice.patient.<who>.<set>.<i> (who = hilde / tomas / elias, set = default / fileread / late / finale); Lines() is the English fallback.
+    protected override string PoolPrefix(int category) => PoolKey(_patient.patient, (Set)category);
+    public static string PoolKey(HubState.Patient patient, Set set) => "voice.patient." + patient.ToString().ToLowerInvariant() + "." + set.ToString().ToLowerInvariant();
     protected override Vector3 BubbleAnchor() => _patient != null ? _patient.HeadPosition + Vector3.up * 0.3f : transform.position;
 
     protected override void Tick(float deltaTime)

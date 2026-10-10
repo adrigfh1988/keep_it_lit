@@ -205,8 +205,16 @@ public static partial class AsylumHubBuilder
             if (Reachable(c, lowest, out float m)) sb.AppendLine($"  path item {item.transform.parent.name}/{item.name}: {m:F0} m OK");
             else { sb.AppendLine($"  path item {item.transform.parent.name}/{item.name}: no walkable spot within reach"); ok = false; }
         }
-        sb.AppendLine($"  npcs + items reachable ({checkedCount} checked), longest dialogue line {HubDialogue.LongestLine()} characters (limit 100): {(ok && HubDialogue.LongestLine() <= 100 ? "OK" : "BROKEN")}");
-        return ok && HubDialogue.LongestLine() <= 100;
+        // S9 (plan D16): the longest line is measured per language from the Dialogue table - English blocks at 100 as before, ES / FR / DE are
+        // reported against 120 (German runs long) without failing the audit.
+        int longestEn = HubDialogue.LongestLine("en");
+        sb.AppendLine($"  npcs + items reachable ({checkedCount} checked), longest dialogue line EN {longestEn} characters (limit 100): {(ok && longestEn <= 100 ? "OK" : "BROKEN")}");
+        foreach (string code in new[] { "es", "fr", "de" })
+        {
+            int longest = HubDialogue.LongestLine(code);
+            if (longest > 0) sb.AppendLine($"    dialogue {code}: longest line {longest} characters (limit 120, report only){(longest > 120 ? " - OVER" : "")}");
+        }
+        return ok && longestEn <= 100;
     }
 
     private static bool PathLine(WalkGrid grid, List<(string, Vector3)> nodes, int[] ids, int from, int to, StringBuilder sb)

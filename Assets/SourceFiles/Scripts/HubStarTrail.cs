@@ -131,7 +131,7 @@ public class HubStarTrail : MonoBehaviour
                 if ((pool[i].transform.position - p).sqrMagnitude < 4.5f * 4.5f)
                 {
                     _noted = true;
-                    hub.Hud.QueueSubtitle("SOMEONE HAS DRAWN STARS ON THE WALL. THEY STILL GLOW.", 4.5f);
+                    hub.Hud.QueueSubtitle(L10n.T("hub.stars.first"), 4.5f);
                     break;
                 }
             }

@@ -15,7 +15,11 @@ using UnityEngine;
 public class LiftSetPiece : HubSetPiece
 {
     /// <summary>The floor-2 reminder that the stairs are out (said once the Boiler Room key is in hand, and again on a return from the shop).</summary>
-    public const string ChainedLine = "THE STAIRS TO THE BASEMENT ARE CHAINED · TAKE THE LIFT";
+    public const string ChainedLineKey = "hub.lift.chained";
+    private const string ChainedLineFallback = "THE STAIRS TO THE BASEMENT ARE CHAINED · TAKE THE LIFT";
+
+    /// <summary>S9: the translated reminder (the old const string was display text; callers read this now).</summary>
+    public static string ChainedText => L10n.Has(ChainedLineKey) ? L10n.T(ChainedLineKey) : ChainedLineFallback;
 
     [Header("Parts")]
     [SerializeField] private Transform car;
@@ -77,9 +81,9 @@ public class LiftSetPiece : HubSetPiece
     {
         switch (role)
         {
-            case LiftPoint.Role.Call: return HubState.Floor == 2 && !HubState.IsFinale ? "CALL THE LIFT" : "THE LIFT";
-            case LiftPoint.Role.Gate: return "THE GATE";
-            default: return "FORCE THE DOORS";
+            case LiftPoint.Role.Call: return L10n.T(HubState.Floor == 2 && !HubState.IsFinale ? "hub.lift.call" : "hub.lift.lift");
+            case LiftPoint.Role.Gate: return L10n.T("hub.lift.gate");
+            default: return L10n.T("hub.lift.force");
         }
     }
 
@@ -101,18 +105,18 @@ public class LiftSetPiece : HubSetPiece
         switch (role)
         {
             case LiftPoint.Role.Gate:
-                hub.SubtitleLine("THE GATE IS CHAINED · TAKE THE LIFT", 2.6f);
+                hub.SubtitleLine(L10n.T("hub.lift.gate_chained"), 2.6f);
                 break;
 
             case LiftPoint.Role.Call:
                 if (_riding || _arrived) return;
-                if (HubState.IsFinale || HubState.Floor < 2) { hub.SubtitleLine("THE LIFT DOES NOT MOVE", 2.2f); return; }
+                if (HubState.IsFinale || HubState.Floor < 2) { hub.SubtitleLine(L10n.T("hub.lift.does_not_move"), 2.2f); return; }
                 // Floor 2: the ride is one way (the stairs are chained), and everything the floor's mission needs is upstairs - riding
                 // down before the wing key is in hand would strand the player at a locked door. The lift waits for the key.
                 HubMission mission = HubState.Floor == 2 ? HubMission.ForFloor(2) : null;
                 if (mission != null && mission.Current != HubMission.Stage.Done)
                 {
-                    hub.SubtitleLine("THE LIFT WILL NOT COME · THE BOILER ROOM IS STILL LOCKED", 3f);
+                    hub.SubtitleLine(L10n.T("hub.lift.will_not_come"), 3f);
                     return;
                 }
                 _routine = StartCoroutine(Ride(HubState.Floor == 2));
@@ -156,7 +160,7 @@ public class LiftSetPiece : HubSetPiece
     protected override void OnBegin()
     {
         if (!IsComplete) Debug.LogError("LiftSetPiece: a part of the lift set is missing (the car, a shaft door, the gate or a call point). Run LIGHTS OUT > Build Missing Pieces. Floor 2 will use the stairs.", this);
-        else if (Hub != null && Hub.MissionDone(2)) Hub.QueueSubtitleLine(ChainedLine, 4f); // F100: before the key the arrival line is the order; HubMission.Complete says it once the wing is unlocked
+        else if (Hub != null && Hub.MissionDone(2)) Hub.QueueSubtitleLine(ChainedText, 4f); // F100: before the key the arrival line is the order; HubMission.Complete says it once the wing is unlocked
     }
 
     protected override void OnEnd() { ResetState(); }
@@ -377,7 +381,7 @@ public class LiftSetPiece : HubSetPiece
         if (hub.Torch != null) hub.Torch.Stutter(0.9f);
         KillCarLights();
         if (redLight != null) { redLight.enabled = true; redLight.intensity = 1.8f; }
-        hub.SubtitleLine("THE LIFT STOPPED", 2.2f);
+        hub.SubtitleLine(L10n.T("hub.lift.stopped"), 2.2f);
         SetPanicMusic(true, 1f); // the escape track, in under a second, until they are out
 
         // 4. three heavy footsteps cross the roof
@@ -414,7 +418,7 @@ public class LiftSetPiece : HubSetPiece
         if (redLight != null) redLight.intensity = 1.8f;
 
         // 6. the doors are stuck: force them (hold E)
-        hub.SubtitleLine("THE DOORS ARE STUCK · HOLD E TO FORCE THEM", 4f);
+        hub.SubtitleLine(L10n.T("hub.lift.doors_stuck", ("key", TouchInput.Key("E", L10n.T("ui.key.use")))), 4f);
         _arrived = true;
         _pryReady = true;
         LockPlayer(false); // look and turn freely; the only way on is the doors

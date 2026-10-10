@@ -42,7 +42,10 @@ public class ShopDoor : MonoBehaviour, IInteractable
 
     // ---------------------------------------------------------------- IInteractable
 
-    public string Prompt => IsOpen ? "ENTER SHOP" : "SHOP · CLOSED";
+    public string Prompt => L10n.T(IsOpen ? "hub.shopdoor.enter" : "hub.shopdoor.closed");
+
+    /// <summary>S9 (D10): where the door is, translated by stable id (hub.shopdoor.room); the serialized roomName is the fallback.</summary>
+    public string RoomName => L10n.Has("hub.shopdoor.room") ? L10n.T("hub.shopdoor.room") : roomName;
 
     // Always focusable: a closed door still answers E.
     public bool CanInteract => true;
@@ -62,12 +65,18 @@ public class ShopDoor : MonoBehaviour, IInteractable
         if (_padlockClip == null) _padlockClip = DoorAudio.BuildClunkClip(0.18f, 160f, 0.35f);
         if (!GameAudio.PlayAt(GameAudio.Library.lockedRattle, transform.position, 0.7f)) GameAudio.ClipAtPoint(_padlockClip, transform.position, 0.7f); // F97
         PlayerHud hud = Object.FindAnyObjectByType<PlayerHud>();
-        if (hud != null) hud.ShowSubtitle("CLOSED · COME BACK WITH SHARDS", 2.2f);
+        if (hud != null) hud.ShowSubtitle(L10n.T("hub.shopdoor.closed_line"), 2.2f);
     }
 
     // ---------------------------------------------------------------- state
 
-    private void OnEnable() => Refresh();
+    private void OnEnable()
+    {
+        L10n.Changed += Refresh;
+        Refresh();
+    }
+
+    private void OnDisable() => L10n.Changed -= Refresh;
 
     private void Update()
     {
@@ -88,7 +97,7 @@ public class ShopDoor : MonoBehaviour, IInteractable
 
         if (plaque != null)
         {
-            plaque.text = $"SHOP\n<size=60%>THE SALESMAN  ·  {(open ? "OPEN" : "CLOSED")}</size>";
+            plaque.text = L10n.T("hub.shopdoor.plaque", ("status", L10n.T(open ? "hub.shopdoor.status_open" : "hub.shopdoor.status_closed")));
             plaque.color = color;
         }
 
