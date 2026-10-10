@@ -1,0 +1,100 @@
+key,text
+dlg.agnes.offer.0,"Ahí estás. Tarde otra vez, y sin abrigo. Estamos en febrero, cielo."
+dlg.agnes.offer.1,"El Pabellón A está cerrado, y las llaves están en mi llavero, y mi llavero está en la cocina."
+dlg.agnes.offer.2,Lo dejé en su gancho cuando se fue la luz. Yo no voy adonde se va la luz.
+dlg.agnes.offer.3,"Hazme el favor. Al fondo, al oeste, pasado el comedor. Un llavero grande de latón. Lo oirás."
+dlg.agnes.offer.4,Y cuidado con el suelo. No lo han fregado desde el... bueno. Desde.
+dlg.agnes.remind.0,"La cocina, cielo. Al fondo, al oeste. Un llavero de latón en un gancho."
+dlg.agnes.remind.1,"Iría yo misma, pero ya sabes cómo me pongo con la oscuridad."
+dlg.agnes.return.0,Ese es. Pesa más de lo que recordaba.
+dlg.agnes.return.1,"El Pabellón A es la puerta larga del lado este. Primero la sala de día, luego el pabellón."
+dlg.agnes.return.2,"La enfermera jefe dice que cada noche quedará menos de ti. Yo le digo: tonterías. Tonterías, jefa."
+dlg.agnes.return.3,Toma la llave. Devuélvela antes del recuento de la mañana.
+dlg.agnes.after.0,El recuento de la mañana es a las seis. ¿Estarás de vuelta a las seis?
+dlg.agnes.after.1,Siempre son las seis. Llevan siendo las seis muchísimo tiempo.
+dlg.agnes.later2.0,¿Ya de vuelta? ¿Te limpiaste los pies?
+dlg.agnes.later2.1,"Cuidado con el ascensor. Se atasca. Se atasca a propósito, creo."
+dlg.agnes.later3.0,Esta noche conté las camas dos veces. Una de ellas siempre sale de más.
+dlg.agnes.later3.1,No se lo digas a la enfermera jefe. Está muy cansada.
+dlg.agnes.later4.0,No le menciones las lámparas al Dr. Weiss. Se lo toma muy a pecho.
+dlg.agnes.later4.1,"Ah, y si oyes a alguien llamarme por mi nombre, no soy yo. Estoy aquí mismo."
+dlg.bruno.pre.0,Sal en el alféizar. Eso decía mi madre. Nadie hace caso.
+dlg.bruno.pre.1,No silbes aquí abajo. Ni se te ocurra.
+dlg.bruno.offer.0,"La sala de calderas, sí. Tengo la llave. La llevo encima, en algún sitio."
+dlg.bruno.offer.1,Yo no bajo ahí. Ni por dinero. Ni por nada.
+dlg.bruno.offer.2,Antes hazme un favor. La cena de Josef. La bandeja está en el pase. Muerde cuando tiene hambre.
+dlg.bruno.offer.2.choice.0,¿Muerde?
+dlg.bruno.offer.2.choice.0.reply.0,Es una forma de hablar. Casi siempre.
+dlg.bruno.offer.2.choice.1,¿Por qué no se la llevas tú?
+dlg.bruno.offer.2.choice.1.reply.0,Sabe cosas. De mí. De todos. Prefiero que no me miren.
+dlg.bruno.offer.3,"El dormitorio, arriba de la escalera. Sube la bandeja y luego ven a verme."
+dlg.bruno.remind.0,"La bandeja está en el pase, junto a los fogones. Que no se enfríe. Le molesta."
+dlg.bruno.carry.0,"Venga, ve. No la derrames. No lo mires demasiado tiempo."
+dlg.bruno.after.0,¿Te dio la llave? Vaya.
+dlg.bruno.after.1,Entonces nunca la tuve. Qué raro. Habría jurado que la llevaba en el cinturón.
+dlg.bruno.after.2,"La sala de calderas está abajo, en el sótano. Solo se llega en ascensor. No me preguntes cómo es."
+dlg.bruno.later3.0,"Volví a oír las tuberías. Tres golpes, luego dos. Me tapé los oídos con las manos."
+dlg.bruno.later3.1,No le digas a Tomas que te lo dije.
+dlg.bruno.later4.0,La sal ya no está en el alféizar. Ni un grano. ¿Quién se lleva la sal?
+dlg.bruno.later4.1,Yo me quedo en la cocina. La cocina tiene puerta.
+dlg.josef.pre.0,Caminas como los nuevos. Siempre caminan como si les hubieran dicho dónde está la escalera.
+dlg.josef.pre.1,"Siéntate. No, no te sientes. Esa es la cama de Elias, y es muy suyo."
+dlg.josef.hello.0,Sin bandeja. Entonces no vienes por mí.
+dlg.josef.hello.1,"Vuelve con la cena. Algo hervido, gris, tarde. Lo reconoceré por el olor."
+dlg.josef.remind.0,"La bandeja, muchacho. La cocina. Bruno sabe dónde está la comida. Bruno siempre lo sabe."
+dlg.josef.deliver.0,Fría. Claro que está fría. Gracias.
+dlg.josef.deliver.1,Nadie me ha traído nada desde que el médico dejó de venir. El que dejó de ser médico.
+dlg.josef.deliver.2,Querrás la sala de calderas. Bruno dice que tiene la llave.
+dlg.josef.deliver.3,"Bruno miente. Pobre hombre, se cree cada palabra."
+dlg.josef.deliver.4,"Debajo de la almohada. Mi almohada, criatura impertinente. Toma."
+dlg.josef.deliver.5,"De latón, con una etiqueta. Se la quité del cinturón el octubre pasado. Aquel octubre."
+dlg.josef.deliver.6,Cuidado con el ascensor. Se parará por ti. Siempre lo hacen.
+dlg.josef.after.0,"Anda, ve. Terminaré mi cena. Ahora me gusta fría."
+dlg.josef.after.1,Volverás. Todos vuelven. Solo es cuestión de cuántos de ti.
+dlg.josef.later3.0,"Elias se ha levantado. Está de pie, con la cara contra la pared, desde que se fue la luz."
+dlg.josef.later3.1,No le hables. Cree que es de mala educación que le contesten.
+dlg.josef.later4.0,Esta mañana bajaron a Elias. Cajón cinco. Habría querido una ventana.
+dlg.josef.later4.1,Alguien debió decirle que los cajones no tienen ventanas. Lo habría hecho yo.
+dlg.marta.pre.0,¿Quieres ver mi dibujo? Es la casa. Tiene más ventanas que la de verdad.
+dlg.marta.pre.1,Shh. La tiza está durmiendo.
+dlg.marta.offer.0,"Tenía una caja de música. Era azul por dentro, como el agua."
+dlg.marta.offer.1,La bajé al pasillo largo y frío para enseñársela a las tuberías. Les gustó.
+dlg.marta.offer.2,"Luego las luces se fueron yendo una a una, y subí. Se me olvidó."
+dlg.marta.offer.3,¿Me la traes? No me dejan bajar. Las tuberías se ponen celosas.
+dlg.marta.offer.4,"Está en el suelo, creo. Junto a la pared. Dile que no estoy enfadada."
+dlg.marta.remind.0,El pasillo largo y frío. Junto a la pared. Dile que no estoy enfadada.
+dlg.marta.return.0,¡La encontraste! Todavía está calentita. Siempre está calentita.
+dlg.marta.return.1,Toma. Esto es para ti. Se lo quité del abrigo al hombre frío. No le importó.
+dlg.marta.return.2,Abre la Morgue. No tengas miedo de la Morgue. Allí todos están muy callados.
+dlg.marta.return.3,Gracias. Ahora puedes ir a guardar silencio con ellos.
+dlg.marta.after.0,Está cantando en la otra habitación. ¿La oyes?
+dlg.marta.after.1,¿No? Ah. Bien. No le des cuerda. Se da cuerda sola.
+dlg.marta.later4.0,Ya no la oigo. Creo que se fue muy lejos.
+dlg.marta.later4.1,No vayas a mirar. Por favor. Solo era una caja.
+dlg.weiss.pre.0,¡Perdón! Perdón. La ronda. Llego tarde a la ronda. ¿Estás en mi lista?
+dlg.weiss.pre.1,"No. No, no estás en mi lista. Bien. Eso está bien."
+dlg.weiss.offer.0,Gracias a Dios. Manos. Necesito manos. ¿Tienes buen pulso? Pareces tener buen pulso.
+dlg.weiss.offer.1,"Habitación 4. La inyección. Tres ampollas, cristal transparente, tapón azul. Las conté. Cuento en cada turno."
+dlg.weiss.offer.2,"Las dejé en algún sitio de esta planta. El lado de cirugía, los despachos. No lo sé."
+dlg.weiss.offer.3,Ruedan. Son pequeñas. Estarán donde no llegue la luz.
+dlg.weiss.offer.4,Trae las tres. No pienso darle una dosis incompleta. No pienso.
+dlg.weiss.remind.0,"{n} de tres. Tapones azules, cristal transparente. La Habitación 4 espera."
+dlg.weiss.remind.1,Lleva tanto tiempo esperando.
+dlg.weiss.return.0,Tres. Las tres. Eres una maravilla. Podría besarte. No lo haré. Protocolo.
+dlg.weiss.return.1,"La llave de Cirugía. Toma. Tómala, tómala, necesitaré las dos manos."
+dlg.weiss.return.2,Habitación 4. Habitación cuatro...
+dlg.weiss.return.3,"...lleva años vacía, ¿verdad?"
+dlg.weiss.return.4,¿A quién se las iba a dar?
+dlg.weiss.after.0,La ronda. Debería hacer la ronda.
+dlg.weiss.after.1,Siempre hay una luz encendida en la Habitación 4. ¿No? ¿No la hay siempre?
+dlg.clerk.a.0,¿Nombre?
+dlg.clerk.a.1,"No. No me lo digas. Lo tengo aquí, en alguna parte."
+dlg.clerk.a.2,El expediente lo tiene el Director. El expediente siempre lo tiene el Director.
+dlg.clerk.a.3,¿Nombre?
+dlg.clerk.b.0,Página cuarenta y uno. Página cuarenta y uno. Página cuarenta y dos.
+dlg.clerk.b.1,Esto ya lo pasé a máquina antes.
+dlg.clerk.b.2,No leas por encima de mi hombro. No está terminado.
+dlg.clerk.c.0,"Estás aquí dentro, ¿sabes? Página diecisiete. En 'Presentes'."
+dlg.clerk.c.1,Es todo un detalle que vengas. Me ahorra buscarte.
+dlg.clerk.finale.0,Está terminado.
+dlg.clerk.finale.1,Siempre iba a estar terminado. Solo tenía que pasarlo a máquina.

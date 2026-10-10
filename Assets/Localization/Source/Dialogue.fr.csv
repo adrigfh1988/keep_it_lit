@@ -1,0 +1,100 @@
+key,text
+dlg.agnes.offer.0,"Vous voilà. Encore en retard, et sans manteau. Nous sommes en février, mon enfant."
+dlg.agnes.offer.1,"Le Pavillon A est fermé, les clés sont sur mon trousseau, et mon trousseau est à la cuisine."
+dlg.agnes.offer.2,Je l'ai laissé à son crochet quand les lumières sont parties. Je ne vais pas où vont les lumières.
+dlg.agnes.offer.3,"Soyez un ange. Côté ouest, après le réfectoire. Un gros anneau de laiton. Vous l'entendrez."
+dlg.agnes.offer.4,Et attention au sol. Ils n'ont pas passé la serpillière depuis le... enfin. Depuis.
+dlg.agnes.remind.0,"La cuisine, mon enfant. Côté ouest. Un anneau de laiton sur un crochet."
+dlg.agnes.remind.1,"J'irais bien le chercher moi-même, mais vous savez comment je suis avec le noir."
+dlg.agnes.return.0,C'est bien lui. Plus lourd que dans mon souvenir.
+dlg.agnes.return.1,"Le Pavillon A, c'est la longue porte côté est. La salle commune d'abord, puis l'aile."
+dlg.agnes.return.2,"La surveillante dit que vous serez moins nombreux chaque nuit. Je lui dis: sottises. Sottises, Surveillante."
+dlg.agnes.return.3,Prenez la clé. Rapportez-la avant l'appel du matin.
+dlg.agnes.after.0,L'appel du matin est à six heures. Vous serez là à six heures?
+dlg.agnes.after.1,Il est toujours six heures. Il est six heures depuis si longtemps.
+dlg.agnes.later2.0,Déjà de retour? Vous vous êtes essuyé les pieds?
+dlg.agnes.later2.1,"Attention à l'ascenseur. Il se bloque. Il se bloque exprès, je crois."
+dlg.agnes.later3.0,J'ai compté les lits deux fois ce soir. Il y en a toujours un de trop.
+dlg.agnes.later3.1,N'en dites rien à la surveillante. Elle est très fatiguée.
+dlg.agnes.later4.0,Ne parlez pas des lampes au Dr. Weiss. Il le prend tellement à cœur.
+dlg.agnes.later4.1,"Oh, et si vous entendez quelqu'un m'appeler, ce n'est pas moi. Je suis juste ici."
+dlg.bruno.pre.0,Du sel sur le rebord. C'est ce que disait ma mère. Personne n'écoute.
+dlg.bruno.pre.1,Ne sifflez pas ici. Surtout pas.
+dlg.bruno.offer.0,"La chaufferie, ouais. J'ai la clé. Elle est sur moi, quelque part."
+dlg.bruno.offer.1,Je ne descends pas là-dedans moi-même. Pas pour de l'argent. Pour rien au monde.
+dlg.bruno.offer.2,Rendez-moi d'abord un service. Le souper de Josef. Le plateau est sur le passe. Il mord quand il a faim.
+dlg.bruno.offer.2.choice.0,Il mord?
+dlg.bruno.offer.2.choice.0.reply.0,Façon de parler. En général.
+dlg.bruno.offer.2.choice.1,Pourquoi pas vous?
+dlg.bruno.offer.2.choice.1.reply.0,Il sait des choses. Sur moi. Sur tout le monde. J'aime mieux qu'on ne me regarde pas.
+dlg.bruno.offer.3,"Le dortoir, en haut de l'escalier. Montez-lui le plateau, puis revenez me voir."
+dlg.bruno.remind.0,"Le plateau est sur le passe, près du fourneau. Qu'il ne refroidisse pas. Il y tient."
+dlg.bruno.carry.0,"Allez-y, alors. Ne renversez rien. Ne le regardez pas trop longtemps."
+dlg.bruno.after.0,Il vous a donné la clé? Tiens.
+dlg.bruno.after.1,Alors je ne l'ai jamais eue. Drôle. J'aurais juré qu'elle était à ma ceinture.
+dlg.bruno.after.2,"La chaufferie est au sous-sol. L'ascenseur est le seul chemin. Ne me demandez pas comment c'est, en bas."
+dlg.bruno.later3.0,"J'ai encore entendu les tuyaux. Trois coups, puis deux. Je me suis bouché les oreilles."
+dlg.bruno.later3.1,Ne dites pas à Tomas que j'ai dit ça.
+dlg.bruno.later4.0,Le sel a disparu du rebord. Tout. Qui vole du sel?
+dlg.bruno.later4.1,Je reste dans la cuisine. La cuisine a une porte.
+dlg.josef.pre.0,Vous marchez comme le nouveau. Ils marchent tous comme si on leur avait dit où était l'escalier.
+dlg.josef.pre.1,"Asseyez-vous. Non, ne vous asseyez pas. C'est le lit d'Elias, et il est pointilleux."
+dlg.josef.hello.0,Pas de plateau. Alors vous n'êtes pas là pour moi.
+dlg.josef.hello.1,"Revenez avec le souper. Quelque chose de bouilli, gris, en retard. Je le reconnaîtrai à l'odeur."
+dlg.josef.remind.0,"Le plateau, mon garçon. La cuisine. Bruno sait où est la nourriture. Bruno sait toujours."
+dlg.josef.deliver.0,Froid. Évidemment qu'il est froid. Merci.
+dlg.josef.deliver.1,Personne ne m'a rien apporté depuis que le docteur a cessé de venir. Celui qui a cessé d'être docteur.
+dlg.josef.deliver.2,Vous voudrez la chaufferie. Bruno dit qu'il a la clé.
+dlg.josef.deliver.3,"Bruno ment. Pauvre homme, il croit chaque mot qu'il dit."
+dlg.josef.deliver.4,"Sous l'oreiller. Mon oreiller, quelle impertinence. Voilà."
+dlg.josef.deliver.5,"En laiton, avec une étiquette. Je l'ai prise à sa ceinture en octobre dernier. Ce fameux octobre."
+dlg.josef.deliver.6,Attention à l'ascenseur. Il s'arrêtera pour vous. Ils le font toujours.
+dlg.josef.after.0,"Allez. Je vais finir mon souper. Froid, c'est comme ça que je l'aime maintenant."
+dlg.josef.after.1,"Vous reviendrez. Ils reviennent tous. La seule question, c'est combien d'entre vous."
+dlg.josef.later3.0,"Elias est debout. Le visage contre le mur, depuis que les lumières sont parties."
+dlg.josef.later3.1,Ne lui parlez pas. Il trouve impoli qu'on lui réponde.
+dlg.josef.later4.0,Ils ont descendu Elias ce matin. Tiroir cinq. Il aurait voulu une fenêtre.
+dlg.josef.later4.1,"Quelqu'un aurait dû lui dire que les tiroirs n'ont pas de fenêtres. Je l'aurais fait, moi."
+dlg.marta.pre.0,Vous voulez voir mon dessin? C'est la maison. Elle a plus de fenêtres que la vraie.
+dlg.marta.pre.1,Chut. La craie dort.
+dlg.marta.offer.0,"J'avais une boîte à musique. Elle était bleue à l'intérieur, comme de l'eau."
+dlg.marta.offer.1,Je l'ai descendue dans le long couloir froid pour la montrer aux tuyaux. Ils l'ont aimée.
+dlg.marta.offer.2,"Puis les lumières sont parties une par une, et je suis remontée. Je l'ai oubliée."
+dlg.marta.offer.3,Vous pouvez aller la chercher? J'ai pas le droit d'aller en bas. Les tuyaux deviennent jaloux.
+dlg.marta.offer.4,"Elle est par terre, je crois. Près du mur. Dites-lui que je suis pas fâchée."
+dlg.marta.remind.0,Le long couloir froid. Près du mur. Dites-lui que je suis pas fâchée.
+dlg.marta.return.0,Vous l'avez trouvée! Elle est encore chaude. Elle est toujours chaude.
+dlg.marta.return.1,Tenez. C'est pour vous. Je l'ai prise dans le manteau de l'homme froid. Il a rien dit.
+dlg.marta.return.2,"Elle ouvre la Morgue. Faut pas avoir peur de la Morgue. Là-bas, tout le monde est très silencieux."
+dlg.marta.return.3,"Merci. Maintenant, vous pouvez aller vous taire avec eux."
+dlg.marta.after.0,Elle chante dans l'autre pièce. Vous l'entendez?
+dlg.marta.after.1,Non? Oh. Tant mieux. Ne la remontez pas. Elle se remonte toute seule.
+dlg.marta.later4.0,Je l'entends plus. Je crois qu'elle est partie très loin.
+dlg.marta.later4.1,N'allez pas voir. S'il vous plaît. C'était qu'une boîte.
+dlg.weiss.pre.0,Pardon! Pardon. La tournée. Je suis en retard pour ma tournée. Vous êtes sur ma liste?
+dlg.weiss.pre.1,"Non. Non, vous n'êtes pas sur ma liste. Bien. C'est bien."
+dlg.weiss.offer.0,Dieu merci. Des mains. Il me faut des mains. Vous avez la main sûre? Vous avez l'air.
+dlg.weiss.offer.1,"Chambre 4. L'injection. Trois ampoules, verre clair, bouchon bleu. Je les ai comptées. Je compte à chaque garde."
+dlg.weiss.offer.2,"Je les ai posées quelque part à cet étage. Côté chirurgie, les bureaux. Je ne sais pas."
+dlg.weiss.offer.3,Elles roulent. Elles sont petites. Elles seront là où la lumière n'est pas.
+dlg.weiss.offer.4,Rapportez les trois. Je ne lui donnerai pas une dose incomplète. Jamais.
+dlg.weiss.remind.0,"{n} sur trois. Bouchons bleus, verre clair. La chambre 4 attend."
+dlg.weiss.remind.1,Il attend depuis si longtemps.
+dlg.weiss.return.0,Trois. Les trois. Vous êtes une merveille. Je pourrais vous embrasser. Je ne le ferai pas. Le protocole.
+dlg.weiss.return.1,"La clé de la Chirurgie. Tenez. Prenez-la, prenez-la, j'aurai besoin de mes deux mains."
+dlg.weiss.return.2,Chambre 4. Chambre quatre...
+dlg.weiss.return.3,"...elle est vide depuis des années, n'est-ce pas?"
+dlg.weiss.return.4,À qui est-ce que je les donnais?
+dlg.weiss.after.0,La tournée. Je devrais faire ma tournée.
+dlg.weiss.after.1,Il y a toujours une lumière allumée dans la chambre 4. N'est-ce pas? Il y en a toujours une?
+dlg.clerk.a.0,Nom?
+dlg.clerk.a.1,Non. Ne me dites rien. Je l'ai ici quelque part.
+dlg.clerk.a.2,Le dossier est chez le Directeur. Le dossier est toujours chez le Directeur.
+dlg.clerk.a.3,Nom?
+dlg.clerk.b.0,Page quarante et un. Page quarante et un. Page quarante-deux.
+dlg.clerk.b.1,J'ai déjà tapé celui-ci.
+dlg.clerk.b.2,Ne lisez pas par-dessus mon épaule. Ce n'est pas fini.
+dlg.clerk.c.0,"Vous y êtes, vous savez. Page dix-sept. Rubrique « Présents »."
+dlg.clerk.c.1,C'est très aimable à vous de venir. Cela m'évite de chercher.
+dlg.clerk.finale.0,C'est fini.
+dlg.clerk.finale.1,C'était écrit d'avance. Je n'avais qu'à le taper.

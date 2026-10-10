@@ -1,0 +1,79 @@
+key,text
+lore.note.0,"Turnos de noche. Regla 1: las luces se quedan encendidas. Regla 2: si las luces se apagan, no corras. Así es como te encuentra. — Supervisor Okafor"
+lore.note.1,"Paciente 7 no deja de dibujar estrellas en las paredes. Dice que son ""el camino hacia abajo"". Las tapamos con pintura. Por la mañana han vuelto, y brillan."
+lore.note.2,Registro de mantenimiento: presión normal. El fusible 3 ha vuelto a saltar. Alguien sigue pulsando los botones de cierre a las 3 de la madrugada. A las 3 de la madrugada no hay nadie de turno.
+lore.note.3,A quien encuentre esto: las persianas nunca fueron para encerrarte. Las construyeron para frenarlo. Odia las puertas. Ciérralas al pasar.
+lore.note.4,Las velas de la capilla son las únicas luces que no pudieron cortar. Enciende una. No ayuda mucho. Ayuda lo suficiente.
+lore.note.5,"Registro de enterramientos, última página: ""Sujeto A — liberado en los niveles inferiores."" No hay tumba. Nunca hubo tumba."
+lore.note.6,Prueba 14 de las unidades de servicio: los robots viejos se quedan inmóviles bajo observación directa. Ingeniería dice que es un error. Vi a uno moverse cada vez que mi linterna parpadeaba. No es un error.
+lore.note.7,"Nunca apagamos las unidades de servicio. Apagamos las luces de su sala y dejamos de mirar. Con eso bastó, durante un tiempo."
+lore.note.8,"Si estás leyendo esto, llegaste más lejos que nosotros. La salida del fondo es real. Se abre una vez. Llévate las estrellas."
+lore.note.9,"Última entrada. No te está cazando. Te está siguiendo. Por cada planta que superas, baja una planta. No te detengas."
+lore.note.intake,"A QUIEN DESPIERTE DESPUÉS
+
+Aquí abajo mantienen las luces bajas, y algo recorre los pasillos entre las camas. Cinco estrellas esperan en la oscuridad. Reúnelas y la trampilla se abrirá. Siempre se abre. Nunca se queda abierta mucho tiempo.
+
+- una enfermera de noche, Pabellón 1"
+lore.file.100.text,"EXPEDIENTE · PACIENTE 3 · HILDE BRANDT
+
+Ingresada por contar. Cuenta las puertas del Pabellón A, en voz alta, toda la noche. Insiste en que siempre hay una puerta más que ayer.
+
+Nota del personal: tiene razón. Mantenimiento no sabe explicar la puerta nueva del Pabellón A. Mantenerla alejada de ella."
+lore.file.101.text,"EXPEDIENTE · PACIENTE 11 · TOMAS REINER
+
+Antiguo fogonero. Oye pasos en las tuberías y les responde. Dos golpes: todo despejado. Tres golpes: escóndete.
+
+Nota del personal: desde que se selló la Sala de Calderas, las tuberías devuelven los golpes. Nadie del personal golpea tres veces."
+lore.file.102.text,"EXPEDIENTE · PACIENTE 5 · ELIAS VOGT
+
+Sonámbulo. Lo encuentran cada mañana ante las puertas de la morgue, con los ojos abiertos, sujetando su propia pulsera. Dice que el cajón cinco ""lleva su nombre"".
+
+Nota del personal: el cajón cinco lleva su nombre. Nadie lo escribió. Aprobado el traslado a Cirugía."
+lore.file.103.text,"EXPEDIENTE · SUJETO A
+
+Procedimiento 1: extirpación del miedo. Con éxito. El sujeto ya no duerme, ya no habla, ya no se detiene.
+
+Liberado en los niveles inferiores para mantenerlos en silencio. Nota del personal: ahora los niveles inferiores están en silencio. Todos los de allí abajo están muy, muy callados."
+lore.file.104.text,"DIRECTOR KARLHEINZ · PRIVADO
+
+Las unidades de servicio guardan la luz. El Sujeto A guarda la oscuridad. Las estrellas muestran a los pacientes el camino hacia abajo, y el camino hacia abajo los devuelve al Ingreso. Un sistema cerrado.
+
+Necesita un paciente más para cerrarse. El expediente está en mi escritorio."
+lore.file.105.text,"EXPEDIENTE · PACIENTE 7
+
+Ingresos: catorce. Dibuja estrellas en las paredes. Llega al fondo cada vez, con las estrellas en la mano, y vuelve a entrar por el Ingreso preguntando dónde están las camas.
+
+Tratamiento: ninguno eficaz.
+
+Nota del Director: hay un interruptor detrás de este escritorio. Lo apaga todo. Las unidades, la oscuridad, el sujeto, el Manicomio. Nunca tuve el valor. Paciente 7 quizá sí."
+lore.file.100.label,P3 · HILDE BRANDT
+lore.file.101.label,P11 · TOMAS REINER
+lore.file.102.label,P5 · ELIAS VOGT
+lore.file.103.label,SUJETO A
+lore.file.104.label,DIRECTOR · PRIVADO
+lore.file.105.label,PACIENTE 7
+lore.wristband.line,La pulsera está fría. El cajón cinco está abierto.
+lore.ending.discharged.title,ALTA MÉDICA
+lore.ending.discharged.body,"Las puertas principales se abren a la noche. El frío es real. A tu espalda, se enciende una luz en el pabellón de Ingreso. Alguien está haciendo una cama. Sabes para quién es."
+lore.ending.lights_out.title,LIGHTS OUT
+lore.ending.lights_out.body,"Bajas el interruptor. Todas las lámparas de Karlheinz mueren a la vez, y por primera vez nada se mueve en la oscuridad. Ni pasos. Ni golpes. Nadie cuenta. Paciente 7 recibe el alta. Esta vez, nadie hace la cama."
+lore.vignette.bay_card,OTRO INGRESO. PREGUNTÓ DÓNDE ESTÁN LAS CAMAS. DURMIÓ DETRÁS DE LA ESTATUA.
+lore.vignette.bay_card_truth,"OTRO INGRESO. PREGUNTÓ DÓNDE ESTÁN LAS CAMAS. DURMIÓ DETRÁS DE LA ESTATUA.
+ES TU LETRA."
+lore.vignette.evac,ORDEN DE EVACUACIÓN · NOCHE DEL 14 · PRIMERO EL PABELLÓN A. NO
+lore.vignette.tally,ALGUIEN HA ESTADO CONTANDO LAS PUERTAS.
+lore.vignette.admissions,INGRESOS: {list}
+lore.vignette.admissions_more,INGRESOS: {list} Y {n} MÁS
+lore.vignette.admissions.entry,PACIENTE {mark}
+lore.vignette.rota,TURNOS · OKAFOR · LUCES SIEMPRE ENCENDIDAS.
+lore.vignette.rota_late,"TURNOS · OKAFOR · LUCES SIEMPRE ENCENDIDAS.
+RECUENTO A LAS SEIS. RECUENTO A LAS SEIS."
+lore.vignette.room4,HABITACIÓN 4. VACÍA. LA LÁMPARA ESTÁ CALIENTE.
+lore.vignette.stanbay,LUCES DE LA SALA: APAGADAS. NO MIRES DENTRO.
+lore.vignette.pipe_early,DOS ABOLLADURAS EN LA TUBERÍA. EL ACERO AÚN ESTÁ CALIENTE.
+lore.vignette.pipe_late,TRES ABOLLADURAS EN LA TUBERÍA. EL ACERO AÚN ESTÁ CALIENTE.
+lore.vignette.lower,LIBERADO EN LOS NIVELES INFERIORES. SUJETO A. NO SEGUIR.
+lore.vignette.barricade_early,ATRANCARON LA PUERTA. DESDE DENTRO.
+lore.vignette.barricade_late,HAN EMPUJADO LA MESA. DESDE EL OTRO LADO.
+lore.vignette.chalkhouse_early,UNA CASA DE TIZA CON MÁS VENTANAS QUE LA DE VERDAD.
+lore.vignette.chalkhouse_late,"UNA CASA DE TIZA, BORRADA POR UNA MANO."

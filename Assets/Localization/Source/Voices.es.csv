@@ -1,0 +1,106 @@
+key,text
+voice.hunter.spotted.0,no parpadees.
+voice.hunter.spotted.1,ahí está mi lucecita.
+voice.hunter.spotted.2,corre.
+voice.hunter.spotted.3,me perteneces.
+voice.hunter.spotted.4,vas muy despacio.
+voice.hunter.spotted.5,huelo tu pila.
+voice.hunter.spotted.6,"hola, ladrón."
+voice.hunter.chasing.0,corre más.
+voice.hunter.chasing.1,te pesan las piernas.
+voice.hunter.chasing.2,yo no me canso.
+voice.hunter.chasing.3,más cerca…
+voice.hunter.chasing.4,las estrellas no te salvarán.
+voice.hunter.chasing.5,sigue corriendo. me gusta.
+voice.hunter.lost.0,no puedes esconderte para siempre.
+voice.hunter.lost.1,te encontraré.
+voice.hunter.lost.2,conozco mejor este laberinto.
+voice.hunter.lost.3,¿te escondes? bien.
+voice.hunter.searching.0,¿dónde estás…?
+voice.hunter.searching.1,sal.
+voice.hunter.searching.2,oigo tu corazón.
+voice.hunter.searching.3,"lucecita, lucecita…"
+voice.hunter.searching.4,la oscuridad es mía.
+voice.hunter.searching.5,planta {floor}. no saldrás de ella.
+voice.hunter.ambush.0,SORPRESA.
+voice.hunter.ambush.1,TANTO TIEMPO ESPERANDO.
+voice.hunter.ambush.2,¿POR AQUÍ? BIEN.
+voice.hunter.ambush.3,HOLA.
+voice.hunter.locker.0,¿hay alguien ahí dentro?
+voice.hunter.locker.1,te huelo.
+voice.hunter.locker.2,abre.
+voice.hunter.locker.3,uno de estos…
+voice.hunter.locker.4,metal tibio.
+voice.hunter.door.0,las puertas no me detienen.
+voice.hunter.door.1,déjame entrar.
+voice.hunter.door.2,"toc, toc."
+voice.hunter.door.3,se acabaron las puertas.
+voice.hunter.caught.0,TE ATRAPÉ.
+voice.hunter.caught.1,TE TENGO.
+voice.hunter.caught.2,A OSCURAS.
+voice.hunter.caught.3,TE ENCONTRÉ.
+voice.stan.spotted.0,ahí estás.
+voice.stan.spotted.1,te veo.
+voice.stan.spotted.2,te encontré.
+voice.stan.spotted.3,hola otra vez.
+voice.stan.spotted.4,cucú.
+voice.stan.spotted.5,"no corras. por favor, corre."
+voice.stan.spotted.6,tienes cara de cansancio.
+voice.stan.spotted.7,te estaba esperando.
+voice.stan.lit.0,demasiada luz.
+voice.stan.lit.1,no podrás tenerla encendida siempre.
+voice.stan.lit.2,clic. clic.
+voice.stan.lit.3,parpadea.
+voice.stan.lit.4,esperaré.
+voice.stan.lit.5,se te muere la pila.
+voice.stan.lit.6,¿jugamos a las estatuas?
+voice.stan.lit.7,no apartes la vista.
+voice.stan.staring.0,sin moverte.
+voice.stan.staring.1,uno… dos…
+voice.stan.staring.2,shhh.
+voice.stan.staring.3,déjame mirarte.
+voice.stan.staring.4,más cerca.
+voice.stan.staring.5,no te muevas.
+voice.stan.lunge.0,BU.
+voice.stan.lunge.1,¡TE TOQUÉ!
+voice.stan.lunge.2,TE TENGO—
+voice.stan.lunge.3,PARA MÍ.
+voice.stan.lunge.4,AHORA.
+voice.stan.touch.0,te toqué. ahora la llevas tú.
+voice.stan.touch.1,calentito.
+voice.stan.touch.2,él lo oyó.
+voice.stan.touch.3,le dije dónde estás.
+voice.stan.touch.4,tu luz sabe rica.
+voice.stan.lost.0,¿adónde fuiste?
+voice.stan.lost.1,"entonces, a jugar a esconderse."
+voice.stan.lost.2,te oigo respirar.
+voice.stan.lost.3,volverás.
+voice.stan.lost.4,allá voy…
+voice.stan.locker.0,"toc, toc."
+voice.stan.locker.1,sé en cuál estás.
+voice.stan.locker.2,"qué estrecho se está ahí dentro, ¿verdad?"
+voice.stan.locker.3,"sal, sal de ahí."
+voice.stan.locker.4,puedo esperar toda la noche.
+voice.stan.idle.0,¿te gusta el laberinto?
+voice.stan.idle.1,él está más cerca que yo.
+voice.stan.idle.2,planta {floor}. ya quedan pocas.
+voice.stan.idle.3,tu corazón hace mucho ruido.
+voice.stan.idle.4,las estrellas no son para ti.
+voice.stan.idle.5,sigue caminando.
+voice.patient.hilde.default.0,"Cuarenta y una puertas. Ayer, cuarenta."
+voice.patient.hilde.default.1,No abras la nueva.
+voice.patient.hilde.default.2,Cuenta conmigo. Una...
+voice.patient.hilde.fileread.0,Leíste mi expediente. Así que tú también cuentas.
+voice.patient.hilde.late.0,Cuarenta y cuatro. No dejan de aparecer.
+voice.patient.hilde.finale.0,Una puerta más. La tuya.
+voice.patient.tomas.default.0,Dos golpes. Todo despejado.
+voice.patient.tomas.default.1,Escucha. ¿Los oyes caminar?
+voice.patient.tomas.default.2,Las tuberías están calientes esta noche.
+voice.patient.tomas.fileread.0,Escribieron que respondo a las tuberías. Ellas me responden.
+voice.patient.tomas.late.0,Tres. Tres golpes. Escóndete.
+voice.patient.tomas.finale.0,Dejó de golpear. ¿Por qué paró?
+voice.patient.elias.default.0,Los cajones están fríos. El mío es el cinco.
+voice.patient.elias.default.1,Camino de noche. No recuerdo por dónde.
+voice.patient.elias.fileread.0,Viste el cajón cinco. ¿Tenía mi nombre?
+voice.patient.elias.late.0,Mañana me trasladan a Cirugía.
+voice.patient.elias.finale.0,Gracias por bajar.

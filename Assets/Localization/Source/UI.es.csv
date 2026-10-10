@@ -5,7 +5,7 @@ ui.settings.tab.display,PANTALLA
 ui.settings.tab.graphics,GRÁFICOS
 ui.settings.tab.audio,AUDIO
 ui.settings.tab.controls,CONTROLES
-ui.settings.reset,RESTABLECER
+ui.settings.reset,RESTABLECER VALORES
 ui.settings.back,VOLVER
 ui.settings.language,IDIOMA
 ui.settings.window_mode,MODO DE VENTANA
@@ -22,7 +22,7 @@ ui.settings.camera_shake,SACUDIDA DE CÁMARA
 ui.settings.master_volume,VOLUMEN GENERAL
 ui.settings.music_volume,VOLUMEN DE MÚSICA
 ui.settings.effects_volume,VOLUMEN DE EFECTOS
-ui.settings.look,SENSIBILIDAD RATÓN/MANDO
+ui.settings.look,SENSIBILIDAD RATÓN / MANDO
 ui.settings.invert_y,INVERTIR EJE Y
 ui.settings.touch_controls,CONTROLES TÁCTILES
 ui.settings.touch_look,SENSIBILIDAD TÁCTIL
@@ -37,3 +37,101 @@ ui.settings.opt.low,BAJA
 ui.settings.opt.medium,MEDIA
 ui.settings.opt.high,ALTA
 ui.settings.opt.normal,NORMAL
+ui.common.back,VOLVER
+ui.common.continue,CONTINUAR
+ui.menu.tagline,Recoge. Escapa. Que no te vean.
+ui.menu.continue,CONTINUAR
+ui.menu.start_game,EMPEZAR PARTIDA
+ui.menu.controls,CONTROLES
+ui.menu.settings,AJUSTES
+ui.menu.exit,SALIR
+ui.menu.start_over_heading,¿EMPEZAR DE NUEVO?
+ui.menu.start_over_body,Se perderá tu partida guardada (planta {floor}).
+ui.menu.start_over,EMPEZAR DE NUEVO
+ui.rules.heading,CÓMO JUGAR
+ui.rules.item1,<b>1.</b>   Recoge todas las estrellas ocultas en el laberinto.
+ui.rules.item2,<b>2.</b>   Se abrirá una trampilla en algún lugar. Encuéntrala antes de que se acabe el tiempo.
+ui.rules.item3,"<b>3.</b>   No estás a solas aquí abajo. Si te ve, <color=#DB1F17><b>corre</b></color>."
+ui.rules.item4,"<b>4.</b>   Los fragmentos brillan en la oscuridad. Entre plantas, alguien te venderá cosas a cambio."
+ui.rules.start,EMPEZAR
+ui.controls.keyboard,"<b>WASD</b>  moverse   <b>SHIFT</b>  correr   <b>RATÓN</b>  mirar   <b>F</b>  linterna   <b>E</b>  esconderse / hablar
+<b>1</b>  pila de repuesto   <b>2</b>  brújula estelar   <b>ESC</b>  pausa"
+ui.controls.touch,"<b>PULGAR IZQ.</b>  moverse   <b>PULGAR DER.</b>  mirar   botones: <b>LINTERNA</b>, <b>ENFOCAR</b>, <b>INTERACTUAR</b>, <b>LANZAR</b>, <b>CORRER</b>"
+ui.controls.tip,"Tu linterna tiene luz para tres minutos. Tus piernas, para menos. Los casilleros te esconden — a menos que te haya visto meterte."
+ui.pause.title,PAUSA
+ui.pause.resume,REANUDAR
+ui.pause.restart,REINICIAR LABERINTO
+ui.pause.skip_tutorial,SALTAR TUTORIAL
+ui.pause.main_menu,MENÚ PRINCIPAL
+ui.pause.quit,SALIR DEL JUEGO
+ui.ledger.slip_heading,READMISIÓN  ·  INGRESO {admission}  ·  PACIENTE {patient}
+ui.ledger.slip_subtitle,EL ESCRIBIENTE HA REGISTRADO TU REGRESO.
+ui.ledger.subtitle,La trampilla se cerró detrás de ti. Algo aquí abajo está abierto.
+ui.ledger.already_yours,ya es tuyo
+ui.ledger.no_pay,sin pago
+ui.ledger.payout,PAGO  +{amount}
+ui.ledger.wallet,{currency}  {shards}
+ui.ledger.shop_held,EFECTOS RETENIDOS EN LA TIENDA  ·  {shards} {currency}
+ui.ledger.contract_done,CONTRATO  {name}  CUMPLIDO
+ui.ledger.contract_failed,CONTRATO  {name}  FALLIDO
+ui.ledger.contract_void,CONTRATO  {name}  ANULADO
+ui.end.won_final,ESTÁS FUERA
+ui.end.floor_cleared,PLANTA {floor} SUPERADA
+ui.end.won_final_body,La trampilla se cerró detrás de ti. Ya no queda nada más abajo.
+ui.end.floor_cleared_body,La trampilla se cerró detrás de ti. Aquí abajo está más oscuro.
+ui.end.caught,ESO TE ENCONTRÓ
+ui.end.caught_hidden,Te vio esconderte.
+ui.end.caught_torch,Era más rápido en la oscuridad.
+ui.end.caught_silent,Nunca lo oíste venir.
+ui.end.out_of_time,SIN TIEMPO
+ui.end.out_of_time_body,La trampilla se selló. Llevabas {stars} {stars:plural:estrella|estrellas} y estabas a {metres} {metres:plural:metro|metros}.
+ui.end.stats,PLANTA {floor}     ESTRELLAS {collected} / {total}     TIEMPO {time}     SEMILLA {seed}
+ui.end.consolation,CONSOLACIÓN  +{amount}     {currency}  {shards}
+ui.end.no_consolation,SIN CONSOLACIÓN     {currency}  {shards}
+ui.end.final_payout,PAGO  +{amount}     TOTAL DE LA CAMPAÑA  {total}
+ui.end.next_floor,SIGUIENTE PLANTA
+ui.end.replay,REPETIR ESTA PLANTA
+ui.end.retry,REPETIR ESTE LABERINTO
+ui.end.new_maze,NUEVO LABERINTO
+ui.end.main_menu,MENÚ PRINCIPAL
+ui.shop.title,ENTRE PLANTAS
+ui.shop.wallet,{currency}  {shards}
+ui.shop.tip,Los precios suben cuanto más bajas.
+ui.shop.buy,COMPRAR
+ui.shop.buy_price,COMPRAR  {price}
+ui.shop.held_max,AL MÁXIMO
+ui.shop.bought,COMPRADO
+ui.shop.held_count,TIENES  x{count} / {cap}
+ui.shop.held,LO TIENES
+ui.shop.not_held,NO LO TIENES
+ui.shop.ready_for_floor,LISTO PARA LA PLANTA {floor}
+ui.shop.next_floor_only,SOLO LA PRÓXIMA PLANTA
+ui.shop.in_use_named,EN USO: {name}
+ui.shop.in_use,EN USO
+ui.shop.use,USAR
+ui.shop.swatch_price,{name}  {price}
+ui.contracts.title,CONTRATOS
+ui.contracts.tip,Trabajo opcional para la próxima planta. De uno en uno. Se paga en el balance al superarla.
+ui.contracts.take,ACEPTAR
+ui.contracts.taken,ACEPTADO
+ui.contracts.decline,RECHAZAR
+ui.contracts.drop,RENUNCIAR
+ui.contracts.reward,RECOMPENSA  {amount}  {currency}
+ui.contracts.empty,No hay nada en el tablón.
+ui.contracts.took,Aceptaste: {name}.  Planta {floor}.
+ui.key.tap,TOCAR
+ui.key.use,USAR
+ui.touch.interact,INTERACTUAR
+ui.touch.torch,LINTERNA
+ui.touch.focus,ENFOCAR
+ui.touch.throw,LANZAR x{count}
+ui.touch.battery,PILA x{count}
+ui.touch.compass,BRÚJULA x{count}
+ui.touch.sprint,CORRER
+ui.touch.pause,II
+ui.touch.rotate,GIRA TU DISPOSITIVO
+ui.key.back,ATRÁS
+ui.objective.label,OBJETIVO
+ui.dialogue.hint_next,{key}  CONTINUAR    ·    {back}  SALIR
+ui.dialogue.hint_end,{key}  TERMINAR    ·    {back}  SALIR
+ui.dialogue.hint_leave,{key}  SALIR

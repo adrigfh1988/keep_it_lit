@@ -16,180 +16,224 @@ MonoBehaviour:
     m_Code: fr
   m_SharedData: {fileID: 11400000, guid: 604b93daf028d6f4db3b08ed6afbed15, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331672703763193
   m_TableData:
   - m_Id: 635342848
-    m_Localized: 
+    m_Localized: "CONTRAT  -  {name}  -  R\xC9USSI"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 731811840
-    m_Localized: 
+    m_Localized: "CONTRAT  -  {name}  -  \xC9CHOU\xC9"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 731811841
-    m_Localized: 
+    m_Localized: "CONTRAT  -  {name}  -  ANNUL\xC9"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 731811842
-    m_Localized: 
+    m_Localized: CONTRAT  -  {name}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 731811843
-    m_Localized: 
+    m_Localized: CONTRAT  -  {name}  -  {n} / {total} s
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 731811844
-    m_Localized: 
+    m_Localized: CONTRAT  -  {name}  -  {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 731811845
-    m_Localized: 
+    m_Localized: CONTRAT  -  {name}  -  {time} restant
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 731811846
-    m_Localized: 
+    m_Localized: LAMPE
     m_Metadata:
       m_Items: []
   - m_Id: 740200448
-    m_Localized: 
+    m_Localized: "LAMPE \xC0 PLAT"
     m_Metadata:
       m_Items: []
   - m_Id: 740200449
-    m_Localized: 
+    m_Localized: "\xC9TAGE {floor}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 740200450
-    m_Localized: 
+    m_Localized: ASILE
     m_Metadata:
       m_Items: []
   - m_Id: 740200451
-    m_Localized: 
+    m_Localized: '{currency}  {shards}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 740200452
-    m_Localized: 
+    m_Localized: SECOND SOUFFLE
     m_Metadata:
       m_Items: []
   - m_Id: 740200453
-    m_Localized: 
+    m_Localized: '{key}   PILE  x{count}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 740200454
-    m_Localized: 
+    m_Localized: '{key}   BOUSSOLE  x{count}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 740200455
-    m_Localized: 
+    m_Localized: '{key}   LANCER  x{count}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 740200456
-    m_Localized: 
+    m_Localized: SE CACHER
     m_Metadata:
       m_Items: []
   - m_Id: 740200457
-    m_Localized: 
+    m_Localized: SORTIR
     m_Metadata:
       m_Items: []
   - m_Id: 740200458
-    m_Localized: 
+    m_Localized: PARLER
     m_Metadata:
       m_Items: []
   - m_Id: 740200459
-    m_Localized: 
+    m_Localized: CONTRATS
     m_Metadata:
       m_Items: []
   - m_Id: 740200460
-    m_Localized: 
+    m_Localized: DESCENDRE
     m_Metadata:
       m_Items: []
   - m_Id: 740200461
-    m_Localized: 
+    m_Localized: FERMER
     m_Metadata:
       m_Items: []
   - m_Id: 740200462
-    m_Localized: 
+    m_Localized: "\xC9TOILES  {n} / {total}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 740200463
-    m_Localized: 
+    m_Localized: FUSIBLES  {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 740200464
-    m_Localized: 
+    m_Localized: "CL\xC9S  {n} / {total}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 740200465
-    m_Localized: 
+    m_Localized: "VERROUILL\xC9E \xB7 {h} / {t} CL\xC9S"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 740200466
-    m_Localized: 
+    m_Localized: "ASCENSEUR BLOQU\xC9 \xB7 {h} / {t} CL\xC9S"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 740200467
-    m_Localized: 
+    m_Localized: ASCENSEUR EN APPROCHE {percent}%
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 740200468
-    m_Localized: 
+    m_Localized: DOSSIERS  {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763193
   - m_Id: 740200469
-    m_Localized: 
+    m_Localized: RAMASSER LA BOUTEILLE
     m_Metadata:
       m_Items: []
   - m_Id: 740200470
-    m_Localized: 
+    m_Localized: RAMASSER LA CANETTE
     m_Metadata:
       m_Items: []
   - m_Id: 740200471
-    m_Localized: 
+    m_Localized: "PRENDRE LA CL\xC9"
     m_Metadata:
       m_Items: []
   - m_Id: 740200472
-    m_Localized: 
+    m_Localized: RAMASSER LA LANTERNE
     m_Metadata:
       m_Items: []
   - m_Id: 740200473
-    m_Localized: 
+    m_Localized: POSER LA LANTERNE
     m_Metadata:
       m_Items: []
   - m_Id: 740200474
-    m_Localized: 
+    m_Localized: LIRE
     m_Metadata:
       m_Items: []
   - m_Id: 740200475
-    m_Localized: 
+    m_Localized: RAMASSER LA PILE
     m_Metadata:
       m_Items: []
   - m_Id: 740200476
-    m_Localized: 
+    m_Localized: "R\xC9TABLIR LE COURANT"
     m_Metadata:
       m_Items: []
   - m_Id: 740200477
-    m_Localized: 
+    m_Localized: OUVRIR
     m_Metadata:
       m_Items: []
   - m_Id: 740200478
-    m_Localized: 
+    m_Localized: APPUYER
     m_Metadata:
       m_Items: []
   - m_Id: 740200479
-    m_Localized: 
+    m_Localized: SONNER LA CLOCHE
     m_Metadata:
       m_Items: []
   - m_Id: 740200480
-    m_Localized: 
+    m_Localized: OUVRIR LA VANNE
     m_Metadata:
       m_Items: []
   - m_Id: 740200481
-    m_Localized: 
+    m_Localized: ALLUMER LES BOUGIES
     m_Metadata:
       m_Items: []
   - m_Id: 740200482
-    m_Localized: 
+    m_Localized: UTILISER LE TERMINAL
     m_Metadata:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331672703763193
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 635342848
+        - id: 731811840
+        - id: 731811841
+        - id: 731811842
+        - id: 731811843
+        - id: 731811844
+        - id: 731811845
+        - id: 740200449
+        - id: 740200451
+        - id: 740200453
+        - id: 740200454
+        - id: 740200455
+        - id: 740200462
+        - id: 740200463
+        - id: 740200464
+        - id: 740200465
+        - id: 740200466
+        - id: 740200467
+        - id: 740200468

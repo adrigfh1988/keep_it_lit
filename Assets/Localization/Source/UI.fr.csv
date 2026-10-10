@@ -37,3 +37,101 @@ ui.settings.opt.low,FAIBLE
 ui.settings.opt.medium,MOYENNE
 ui.settings.opt.high,ÉLEVÉE
 ui.settings.opt.normal,NORMAL
+ui.common.back,RETOUR
+ui.common.continue,CONTINUER
+ui.menu.tagline,Récoltez. Fuyez. Restez invisible.
+ui.menu.continue,CONTINUER
+ui.menu.start_game,NOUVELLE PARTIE
+ui.menu.controls,COMMANDES
+ui.menu.settings,PARAMÈTRES
+ui.menu.exit,QUITTER
+ui.menu.start_over_heading,RECOMMENCER?
+ui.menu.start_over_body,Votre partie sauvegardée (étage {floor}) sera perdue.
+ui.menu.start_over,RECOMMENCER
+ui.rules.heading,COMMENT JOUER
+ui.rules.item1,<b>1.</b>   Ramassez toutes les étoiles cachées dans le labyrinthe.
+ui.rules.item2,<b>2.</b>   Une trappe s'ouvrira quelque part. Trouvez-la avant la fin du compte à rebours.
+ui.rules.item3,"<b>3.</b>   Quelque chose d'autre rôde ici. Si ça vous voit, <color=#DB1F17><b>courez</b></color>."
+ui.rules.item4,"<b>4.</b>   Les éclats brillent dans le noir. Entre les étages, quelqu'un vous vendra des choses en échange."
+ui.rules.start,COMMENCER
+ui.controls.keyboard,"<b>WASD</b>  se déplacer   <b>SHIFT</b>  sprinter   <b>SOURIS</b>  regarder   <b>F</b>  lampe   <b>E</b>  se cacher / parler
+<b>1</b>  pile de rechange   <b>2</b>  boussole stellaire   <b>ESC</b>  pause"
+ui.controls.touch,"<b>POUCE GAUCHE</b>  se déplacer   <b>POUCE DROIT</b>  regarder   boutons: <b>LAMPE</b>, <b>FOCALISER</b>, <b>INTERAGIR</b>, <b>LANCER</b>, <b>SPRINTER</b>"
+ui.controls.tip,"Votre lampe a trois minutes de lumière. Vos jambes, moins. Les casiers vous cachent — sauf si ça vous regardait y entrer."
+ui.pause.title,PAUSE
+ui.pause.resume,REPRENDRE
+ui.pause.restart,REFAIRE LE LABYRINTHE
+ui.pause.skip_tutorial,PASSER LE TUTORIEL
+ui.pause.main_menu,MENU PRINCIPAL
+ui.pause.quit,QUITTER
+ui.ledger.slip_heading,RÉADMISSION  ·  ENTRÉE {admission}  ·  PATIENT {patient}
+ui.ledger.slip_subtitle,LE GREFFIER A TAPÉ VOTRE RETOUR.
+ui.ledger.subtitle,"La trappe s'est refermée derrière vous. Ici, en bas, quelque chose est ouvert."
+ui.ledger.already_yours,déjà à vous
+ui.ledger.no_pay,non payé
+ui.ledger.payout,PAIEMENT  +{amount}
+ui.ledger.wallet,{currency}  {shards}
+ui.ledger.shop_held,EFFETS EN DÉPÔT À LA BOUTIQUE  ·  {shards} {currency}
+ui.ledger.contract_done,CONTRAT  {name}  RÉUSSI
+ui.ledger.contract_failed,CONTRAT  {name}  ÉCHOUÉ
+ui.ledger.contract_void,CONTRAT  {name}  ANNULÉ
+ui.end.won_final,VOUS VOILÀ DEHORS
+ui.end.floor_cleared,ÉTAGE {floor} TERMINÉ
+ui.end.won_final_body,La trappe s'est refermée derrière vous. Il n'y a plus rien en dessous.
+ui.end.floor_cleared_body,La trappe s'est refermée derrière vous. Il fait plus sombre ici.
+ui.end.caught,ÇA VOUS TIENT
+ui.end.caught_hidden,Ça vous regardait vous cacher.
+ui.end.caught_torch,Ça allait plus vite dans le noir.
+ui.end.caught_silent,Vous ne l'avez jamais entendu venir.
+ui.end.out_of_time,TEMPS ÉCOULÉ
+ui.end.out_of_time_body,La trappe s'est scellée. Vous aviez {stars} {stars:plural:étoile|étoiles} et elle était à {metres} {metres:plural:mètre|mètres}.
+ui.end.stats,ÉTAGE {floor}     ÉTOILES {collected} / {total}     TEMPS {time}     GRAINE {seed}
+ui.end.consolation,CONSOLATION  +{amount}     {currency}  {shards}
+ui.end.no_consolation,PAS DE CONSOLATION     {currency}  {shards}
+ui.end.final_payout,PAIEMENT  +{amount}     TOTAL DE LA CAMPAGNE  {total}
+ui.end.next_floor,ÉTAGE SUIVANT
+ui.end.replay,REJOUER CET ÉTAGE
+ui.end.retry,REFAIRE CE LABYRINTHE
+ui.end.new_maze,NOUVEAU LABYRINTHE
+ui.end.main_menu,MENU PRINCIPAL
+ui.shop.title,ENTRE LES ÉTAGES
+ui.shop.wallet,{currency}  {shards}
+ui.shop.tip,Les prix montent à mesure que vous descendez.
+ui.shop.buy,ACHETER
+ui.shop.buy_price,ACHETER  {price}
+ui.shop.held_max,MAXIMUM
+ui.shop.bought,ACHETÉ
+ui.shop.held_count,POSSÉDÉ  x{count} / {cap}
+ui.shop.held,POSSÉDÉ
+ui.shop.not_held,NON POSSÉDÉ
+ui.shop.ready_for_floor,PRÊT POUR L'ÉTAGE {floor}
+ui.shop.next_floor_only,ÉTAGE SUIVANT SEULEMENT
+ui.shop.in_use_named,ACTIVE: {name}
+ui.shop.in_use,ACTIVE
+ui.shop.use,CHOISIR
+ui.shop.swatch_price,{name}  {price}
+ui.contracts.title,CONTRATS
+ui.contracts.tip,Travail facultatif pour l'étage suivant. Un à la fois. Payé sur le relevé une fois l'étage terminé.
+ui.contracts.take,ACCEPTER
+ui.contracts.taken,ACCEPTÉ
+ui.contracts.decline,REFUSER
+ui.contracts.drop,ABANDONNER
+ui.contracts.reward,PRIME  {amount}  {currency}
+ui.contracts.empty,Rien au tableau.
+ui.contracts.took,Contrat accepté: {name}.  Étage {floor}.
+ui.key.tap,TOUCHER
+ui.key.use,UTILISER
+ui.touch.interact,INTERAGIR
+ui.touch.torch,LAMPE
+ui.touch.focus,FOCALISER
+ui.touch.throw,LANCER x{count}
+ui.touch.battery,PILE x{count}
+ui.touch.compass,BOUSSOLE x{count}
+ui.touch.sprint,SPRINTER
+ui.touch.pause,II
+ui.touch.rotate,TOURNEZ VOTRE APPAREIL
+ui.key.back,RETOUR
+ui.objective.label,OBJECTIF
+ui.dialogue.hint_next,{key}  CONTINUER    ·    {back}  QUITTER
+ui.dialogue.hint_end,{key}  TERMINER    ·    {back}  QUITTER
+ui.dialogue.hint_leave,{key}  QUITTER

@@ -1,0 +1,79 @@
+key,text
+shop.currency,SPLITTER
+shop.item.spare_battery.name,Ersatzbatterie
+shop.item.spare_battery.blurb,Eine frische Zelle. Füllt die Lampe auf und schaltet sie ein. Drück {key}.
+shop.item.star_compass.name,Sternenkompass
+shop.item.star_compass.blurb,Zeigt fünf Sekunden lang auf den nächsten Stern. Drück {key}.
+shop.item.second_wind.name,Zweiter Atem
+shop.item.second_wind.blurb,"Wenn es dich fängt, lässt es los. Einmal."
+shop.item.long_fuse.name,Lange Lunte
+shop.item.long_fuse.blurb,Nächste Etage: zehn Sekunden mehr auf dem Lukentimer.
+shop.item.quiet_shoes.name,Leise Schuhe
+shop.item.quiet_shoes.blurb,Nächste Etage: Deine Schritte tragen ein Drittel weniger weit.
+shop.item.extra_lamps.name,Zusatzlampen
+shop.item.extra_lamps.blurb,Mehr brennende Lampen auf der nächsten Etage.
+shop.item.stamina_tonic.name,Ausdauertonikum
+shop.item.stamina_tonic.blurb,Nächste Etage: vier Sekunden länger sprinten.
+shop.item.torch_colour.name,Lampenfarbe
+shop.item.torch_colour.blurb,Kalt. Glut. Violett.
+shop.item.hud_tint.name,HUD-Farbton
+shop.item.hud_tint.blurb,Phosphor. Bernstein. Eis.
+shop.item.bottle_pack.name,Flaschenpack
+shop.item.bottle_pack.blurb,Starte die nächste Etage schon mit drei Flaschen.
+shop.item.focus_lens.name,Fokuslinse
+shop.item.focus_lens.blurb,"Nächste Etage: Der fokussierte Strahl reicht weiter, ohne mehr Batterie zu kosten."
+shop.item.fuse_map.name,Sicherungskarte
+shop.item.fuse_map.blurb,"Sicherungen, Knöpfe, Tresorräume und Schlüssel leuchten schwach. Auch der Kompass zeigt auf sie."
+shop.palette.torch.0,WARM
+shop.palette.torch.1,KALT
+shop.palette.torch.2,GLUT
+shop.palette.torch.3,VIOLETT
+shop.palette.hud.0,KNOCHEN
+shop.palette.hud.1,PHOSPHOR
+shop.palette.hud.2,BERNSTEIN
+shop.palette.hud.3,EIS
+shop.theme.1,DIE STATION
+shop.theme.2,DAS KESSELDECK
+shop.theme.3,DIE GRUFT
+shop.theme.4,DAS LABOR
+shop.theme.5,DIE SENKE
+shop.rule.dying_grid.name,STERBENDES NETZ
+shop.rule.dying_grid.desc,Jede Minute verliert eine Lampe den Strom.
+shop.rule.keen_ears.name,SCHARFES GEHÖR
+shop.rule.keen_ears.desc,Es hört hier weiter. Splitter sind mehr wert.
+shop.rule.heavy_fog.name,DICHTER NEBEL
+shop.rule.heavy_fog.desc,Du siehst weniger; es auch.
+shop.rule.weak_battery.name,SCHWACHE BATTERIE
+shop.rule.weak_battery.desc,"Du startest halb geladen, doch ausgeschaltet lädt sie schneller."
+shop.rule.restless.name,RASTLOS
+shop.rule.restless.desc,Es wechselt öfter den Ort und taucht häufiger auf.
+shop.rule.glass_floors.name,GLASBÖDEN
+shop.rule.glass_floors.desc,Mehr Glasscherben und Pfützen unter den Füßen.
+shop.rule.rich_veins.name,REICHE ADERN
+shop.rule.rich_veins.desc,"Mehr Splitter, aber es geht etwas schneller."
+shop.temperament.listens,Hier jagt es nach Gehör.
+shop.temperament.sprints,"Hier ist es schnell, doch es vergisst rasch."
+shop.contract.title,{name}.
+shop.contract.never_hide.name,Nie verstecken
+shop.contract.never_hide.text,"Schaff die Etage, ohne einen Spind zu betreten."
+shop.contract.not_a_scratch.name,Kein Kratzer
+shop.contract.not_a_scratch.text,Lass dich nie fangen - und lass dich nie von Stan berühren.
+shop.contract.walk_in_dark.name,Im Dunkeln gehen
+shop.contract.walk_in_dark.text,Geh 60 Sekunden lang mit ausgeschalteter Lampe.
+shop.contract.take_what_glitters.name,"Nimm, was glänzt"
+shop.contract.take_what_glitters.text,Sammle mindestens 60% der Splitter auf der Etage.
+shop.contract.read_it_all.name,Alles lesen
+shop.contract.read_it_all.text,Lies jede Notiz auf der Etage.
+shop.contract.dont_dawdle.name,Nicht trödeln
+shop.contract.dont_dawdle.text,"Schaff die Etage, bevor die Uhr abläuft."
+shop.contract.make_noise.name,Lärm machen
+shop.contract.make_noise.text,Lock das Ding zweimal mit einer geworfenen Flasche oder Dose an.
+shop.contract.light_feet.name,Leichte Füße
+shop.contract.light_feet.text,Niemals sprinten.
+shop.payout.title_floor,ETAGE {floor} GESCHAFFT
+shop.payout.stars,STERNE  {stars} x {value}
+shop.payout.time_left,RESTZEIT  {time}
+shop.payout.floor_cleared,ETAGE {floor} GESCHAFFT
+shop.payout.shards_found,SPLITTER GEFUNDEN  {n} x {value}  (schon deins)
+shop.payout.consolation_title,TROSTPREIS
+shop.payout.consolation,TROSTPREIS  {percent}% von {stars} {stars:plural:Stern|Sternen}

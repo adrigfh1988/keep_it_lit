@@ -1,0 +1,106 @@
+key,text
+voice.hunter.spotted.0,ne cligne pas.
+voice.hunter.spotted.1,voilà ma petite lumière.
+voice.hunter.spotted.2,cours.
+voice.hunter.spotted.3,tu es à moi.
+voice.hunter.spotted.4,pas assez vite.
+voice.hunter.spotted.5,je sens ta pile.
+voice.hunter.spotted.6,"bonsoir, voleur."
+voice.hunter.chasing.0,cours plus vite.
+voice.hunter.chasing.1,tes jambes fatiguent.
+voice.hunter.chasing.2,"moi, je ne fatigue pas."
+voice.hunter.chasing.3,plus près…
+voice.hunter.chasing.4,les étoiles ne te sauveront pas.
+voice.hunter.chasing.5,cours encore. j'aime ça.
+voice.hunter.lost.0,tu ne te cacheras pas toujours.
+voice.hunter.lost.1,je te trouverai.
+voice.hunter.lost.2,je connais mieux ce labyrinthe.
+voice.hunter.lost.3,tu te caches? bien.
+voice.hunter.searching.0,où es-tu…
+voice.hunter.searching.1,sors.
+voice.hunter.searching.2,j'entends ton cœur.
+voice.hunter.searching.3,"petite lumière, petite lumière…"
+voice.hunter.searching.4,le noir est à moi.
+voice.hunter.searching.5,étage {floor}. tu n'en sortiras pas.
+voice.hunter.ambush.0,SURPRISE.
+voice.hunter.ambush.1,J'AI TANT ATTENDU.
+voice.hunter.ambush.2,PAR ICI? PARFAIT.
+voice.hunter.ambush.3,COUCOU.
+voice.hunter.locker.0,il y a quelqu'un là-dedans?
+voice.hunter.locker.1,je te sens.
+voice.hunter.locker.2,ouvre.
+voice.hunter.locker.3,l'un de ceux-là…
+voice.hunter.locker.4,métal tiède.
+voice.hunter.door.0,les portes ne m'arrêtent pas.
+voice.hunter.door.1,laisse-moi entrer.
+voice.hunter.door.2,toc toc.
+voice.hunter.door.3,plus de portes.
+voice.hunter.caught.0,JE TE TIENS.
+voice.hunter.caught.1,À MOI.
+voice.hunter.caught.2,LIGHTS OUT.
+voice.hunter.caught.3,TE VOILÀ.
+voice.stan.spotted.0,te voilà.
+voice.stan.spotted.1,je te vois.
+voice.stan.spotted.2,je sais où tu es.
+voice.stan.spotted.3,rebonjour.
+voice.stan.spotted.4,coucou.
+voice.stan.spotted.5,"ne cours pas. cours, s'il te plaît."
+voice.stan.spotted.6,tu as l'air à bout.
+voice.stan.spotted.7,je t'attendais.
+voice.stan.lit.0,trop clair.
+voice.stan.lit.1,tu ne la garderas pas allumée pour toujours.
+voice.stan.lit.2,clic. clic.
+voice.stan.lit.3,cligne.
+voice.stan.lit.4,j'attendrai.
+voice.stan.lit.5,ta pile se meurt.
+voice.stan.lit.6,"un, deux, trois, soleil?"
+voice.stan.lit.7,ne détourne pas les yeux.
+voice.stan.staring.0,reste immobile.
+voice.stan.staring.1,un… deux…
+voice.stan.staring.2,chhh.
+voice.stan.staring.3,laisse-moi te regarder.
+voice.stan.staring.4,plus près.
+voice.stan.staring.5,ne bouge pas.
+voice.stan.lunge.0,BOUH.
+voice.stan.lunge.1,CHAT!
+voice.stan.lunge.2,JE TE TIENS—
+voice.stan.lunge.3,À MOI.
+voice.stan.lunge.4,MAINTENANT.
+voice.stan.touch.0,touché. c'est toi le chat.
+voice.stan.touch.1,tout chaud.
+voice.stan.touch.2,il a entendu.
+voice.stan.touch.3,je lui ai dit où tu es.
+voice.stan.touch.4,ta lumière a bon goût.
+voice.stan.lost.0,où tu te caches?
+voice.stan.lost.1,"cache-cache, alors."
+voice.stan.lost.2,je t'entends respirer.
+voice.stan.lost.3,tu reviendras.
+voice.stan.lost.4,j'arrive…
+voice.stan.locker.0,toc toc.
+voice.stan.locker.1,je sais lequel.
+voice.stan.locker.2,"on est à l'étroit là-dedans, hein?"
+voice.stan.locker.3,"sors, sors de là."
+voice.stan.locker.4,je peux attendre toute la nuit.
+voice.stan.idle.0,tu aimes le labyrinthe?
+voice.stan.idle.1,il est plus près que moi.
+voice.stan.idle.2,étage {floor}. il n'en reste plus beaucoup.
+voice.stan.idle.3,ton cœur fait du bruit.
+voice.stan.idle.4,les étoiles ne sont pas pour toi.
+voice.stan.idle.5,continue de marcher.
+voice.patient.hilde.default.0,"Quarante et une portes. Hier, quarante."
+voice.patient.hilde.default.1,N'ouvrez pas la nouvelle.
+voice.patient.hilde.default.2,Comptez avec moi. Un...
+voice.patient.hilde.fileread.0,Vous avez lu mon dossier. Alors vous comptez aussi.
+voice.patient.hilde.late.0,Quarante-quatre. Il en vient toujours d'autres.
+voice.patient.hilde.finale.0,Encore une porte. La vôtre.
+voice.patient.tomas.default.0,Deux coups. Rien à signaler.
+voice.patient.tomas.default.1,Écoutez. Vous les entendez marcher?
+voice.patient.tomas.default.2,Les tuyaux sont chauds ce soir.
+voice.patient.tomas.fileread.0,On a écrit que je réponds aux tuyaux. Eux me répondent.
+voice.patient.tomas.late.0,Trois. Trois coups. Cachez-vous.
+voice.patient.tomas.finale.0,Ça ne frappe plus. Pourquoi ça s'est arrêté?
+voice.patient.elias.default.0,"Les tiroirs sont froids. Le mien, c'est le cinq."
+voice.patient.elias.default.1,Je marche la nuit. Je ne sais plus où.
+voice.patient.elias.fileread.0,Vous avez vu le tiroir cinq. Mon nom était dessus?
+voice.patient.elias.late.0,On me transfère en Chirurgie demain.
+voice.patient.elias.finale.0,Merci de descendre me voir.

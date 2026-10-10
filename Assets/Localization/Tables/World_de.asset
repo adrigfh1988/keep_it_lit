@@ -19,67 +19,81 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 232689664
-    m_Localized: 
+    m_Localized: 'ANSTALT KARLHEINZ
+
+      AUFNAHME'
     m_Metadata:
       m_Items: []
   - m_Id: 316575744
-    m_Localized: 
+    m_Localized: 'P3
+
+      HILDE BRANDT'
     m_Metadata:
       m_Items: []
   - m_Id: 316575745
-    m_Localized: 
+    m_Localized: 'P11
+
+      TOMAS REINER'
     m_Metadata:
       m_Items: []
   - m_Id: 316575746
-    m_Localized: 
+    m_Localized: 'P5
+
+      ELIAS VOGT'
     m_Metadata:
       m_Items: []
   - m_Id: 316575747
-    m_Localized: 
+    m_Localized: SUBJEKT A
     m_Metadata:
       m_Items: []
   - m_Id: 316575748
-    m_Localized: 
+    m_Localized: 'DIREKTOR
+
+      PRIVAT'
     m_Metadata:
       m_Items: []
   - m_Id: 316575749
-    m_Localized: 
+    m_Localized: 'ELIAS VOGT
+
+      PATIENT 5'
     m_Metadata:
       m_Items: []
   - m_Id: 316575750
-    m_Localized: 
+    m_Localized: 'SUBJEKT A
+
+      UNTERE EBENE'
     m_Metadata:
       m_Items: []
   - m_Id: 316575751
-    m_Localized: 
+    m_Localized: SERVICEEINHEIT
     m_Metadata:
       m_Items: []
   - m_Id: 316575752
-    m_Localized: 
+    m_Localized: VERWAHRUNG
     m_Metadata:
       m_Items: []
   - m_Id: 316575753
-    m_Localized: 
+    m_Localized: KEIN ZUTRITT
     m_Metadata:
       m_Items: []
   - m_Id: 316575754
-    m_Localized: 
+    m_Localized: "AUFNAHME  \xB7  STATION 1"
     m_Metadata:
       m_Items: []
   - m_Id: 316575755
-    m_Localized: 
+    m_Localized: "SEI LEISE.\nES H\xD6RT ALLES."
     m_Metadata:
       m_Items: []
   - m_Id: 316575756
-    m_Localized: 
+    m_Localized: BLEIB IM BETT
     m_Metadata:
       m_Items: []
   - m_Id: 316575757
-    m_Localized: 
+    m_Localized: "AUFTR\xC4GE"
     m_Metadata:
       m_Items: []
   - m_Id: 316575758
-    m_Localized: 
+    m_Localized: SPLITTER WERDEN ANGENOMMEN
     m_Metadata:
       m_Items: []
   references:

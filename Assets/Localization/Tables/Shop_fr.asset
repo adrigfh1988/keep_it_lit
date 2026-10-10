@@ -16,320 +16,344 @@ MonoBehaviour:
     m_Code: fr
   m_SharedData: {fileID: 11400000, guid: fefa1c381967b3c46b9600b8d091da42, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331672703763211
   m_TableData:
   - m_Id: 295604224
-    m_Localized: 
+    m_Localized: "\xC9CLATS"
     m_Metadata:
       m_Items: []
   - m_Id: 375296000
-    m_Localized: 
+    m_Localized: Pile de rechange
     m_Metadata:
       m_Items: []
   - m_Id: 375296001
-    m_Localized: 
+    m_Localized: Une pile neuve. Recharge la lampe et l'allume. Appuyez sur {key}.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763211
   - m_Id: 375296002
-    m_Localized: 
+    m_Localized: Boussole stellaire
     m_Metadata:
       m_Items: []
   - m_Id: 375296003
-    m_Localized: 
+    m_Localized: "Indique l'\xE9toile la plus proche pendant cinq secondes. Appuyez sur {key}."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763211
   - m_Id: 375296004
-    m_Localized: 
+    m_Localized: Second souffle
     m_Metadata:
       m_Items: []
   - m_Id: 375296005
-    m_Localized: 
+    m_Localized: "Quand \xE7a vous attrape, \xE7a vous l\xE2che. Une fois."
     m_Metadata:
       m_Items: []
   - m_Id: 375296006
-    m_Localized: 
+    m_Localized: "Longue m\xE8che"
     m_Metadata:
       m_Items: []
   - m_Id: 375296007
-    m_Localized: 
+    m_Localized: "Dix secondes de plus au compte \xE0 rebours de la trappe, \xE0 l'\xE9tage suivant."
     m_Metadata:
       m_Items: []
   - m_Id: 375296008
-    m_Localized: 
+    m_Localized: Chaussures silencieuses
     m_Metadata:
       m_Items: []
   - m_Id: 375296009
-    m_Localized: 
+    m_Localized: "Vos pas portent un tiers moins loin, \xE0 l'\xE9tage suivant."
     m_Metadata:
       m_Items: []
   - m_Id: 375296010
-    m_Localized: 
+    m_Localized: Lampes en plus
     m_Metadata:
       m_Items: []
   - m_Id: 375296011
-    m_Localized: 
+    m_Localized: "Plus de lampes allum\xE9es \xE0 l'\xE9tage suivant."
     m_Metadata:
       m_Items: []
   - m_Id: 375296012
-    m_Localized: 
+    m_Localized: Tonique d'endurance
     m_Metadata:
       m_Items: []
   - m_Id: 375296013
-    m_Localized: 
+    m_Localized: "Quatre secondes de sprint en plus, \xE0 l'\xE9tage suivant."
     m_Metadata:
       m_Items: []
   - m_Id: 375296014
-    m_Localized: 
+    m_Localized: Couleur de lampe
     m_Metadata:
       m_Items: []
   - m_Id: 375296015
-    m_Localized: 
+    m_Localized: Froid. Braise. Violet.
     m_Metadata:
       m_Items: []
   - m_Id: 375296016
-    m_Localized: 
+    m_Localized: Teinte du HUD
     m_Metadata:
       m_Items: []
   - m_Id: 375296017
-    m_Localized: 
+    m_Localized: Phosphore. Ambre. Glace.
     m_Metadata:
       m_Items: []
   - m_Id: 375296018
-    m_Localized: 
+    m_Localized: Lot de bouteilles
     m_Metadata:
       m_Items: []
   - m_Id: 375296019
-    m_Localized: 
+    m_Localized: "Commencez l'\xE9tage suivant avec d\xE9j\xE0 trois bouteilles."
     m_Metadata:
       m_Items: []
   - m_Id: 375296020
-    m_Localized: 
+    m_Localized: Lentille de focalisation
     m_Metadata:
       m_Items: []
   - m_Id: 375296021
-    m_Localized: 
+    m_Localized: "Le faisceau focalis\xE9 porte plus loin \xE0 l'\xE9tage suivant, sans consommer plus de pile."
     m_Metadata:
       m_Items: []
   - m_Id: 375296022
-    m_Localized: 
+    m_Localized: Carte des fusibles
     m_Metadata:
       m_Items: []
   - m_Id: 375296023
-    m_Localized: 
+    m_Localized: "Fusibles, boutons, chambres fortes et cl\xE9s luisent faiblement. La boussole les indique aussi."
     m_Metadata:
       m_Items: []
   - m_Id: 375296024
-    m_Localized: 
+    m_Localized: CHAUD
     m_Metadata:
       m_Items: []
   - m_Id: 375296025
-    m_Localized: 
+    m_Localized: FROID
     m_Metadata:
       m_Items: []
   - m_Id: 375296026
-    m_Localized: 
+    m_Localized: BRAISE
     m_Metadata:
       m_Items: []
   - m_Id: 375296027
-    m_Localized: 
+    m_Localized: VIOLET
     m_Metadata:
       m_Items: []
   - m_Id: 375296028
-    m_Localized: 
+    m_Localized: OS
     m_Metadata:
       m_Items: []
   - m_Id: 375296029
-    m_Localized: 
+    m_Localized: PHOSPHORE
     m_Metadata:
       m_Items: []
   - m_Id: 375296030
-    m_Localized: 
+    m_Localized: AMBRE
     m_Metadata:
       m_Items: []
   - m_Id: 375296031
-    m_Localized: 
+    m_Localized: GLACE
     m_Metadata:
       m_Items: []
   - m_Id: 375296032
-    m_Localized: 
+    m_Localized: LE PAVILLON
     m_Metadata:
       m_Items: []
   - m_Id: 375296033
-    m_Localized: 
+    m_Localized: LA CHAUFFERIE
     m_Metadata:
       m_Items: []
   - m_Id: 375296034
-    m_Localized: 
+    m_Localized: LA CRYPTE
     m_Metadata:
       m_Items: []
   - m_Id: 375296035
-    m_Localized: 
+    m_Localized: LE LABORATOIRE
     m_Metadata:
       m_Items: []
   - m_Id: 375296036
-    m_Localized: 
+    m_Localized: LE CREUX
     m_Metadata:
       m_Items: []
   - m_Id: 375296037
-    m_Localized: 
+    m_Localized: "R\xC9SEAU MOURANT"
     m_Metadata:
       m_Items: []
   - m_Id: 375296038
-    m_Localized: 
+    m_Localized: Une lampe perd son courant chaque minute.
     m_Metadata:
       m_Items: []
   - m_Id: 375296039
-    m_Localized: 
+    m_Localized: "OU\xCFE FINE"
     m_Metadata:
       m_Items: []
   - m_Id: 375296040
-    m_Localized: 
+    m_Localized: "\xC7a entend plus loin ici. Les \xE9clats valent plus."
     m_Metadata:
       m_Items: []
   - m_Id: 375296041
-    m_Localized: 
+    m_Localized: "BROUILLARD \xC9PAIS"
     m_Metadata:
       m_Items: []
   - m_Id: 375296042
-    m_Localized: 
+    m_Localized: "Vous voyez moins loin; \xE7a aussi."
     m_Metadata:
       m_Items: []
   - m_Id: 375296043
-    m_Localized: 
+    m_Localized: PILE FAIBLE
     m_Metadata:
       m_Items: []
   - m_Id: 375296044
-    m_Localized: 
+    m_Localized: "Votre pile d\xE9marre \xE0 moiti\xE9, mais se recharge plus vite \xE9teinte."
     m_Metadata:
       m_Items: []
   - m_Id: 375296045
-    m_Localized: 
+    m_Localized: "AGIT\xC9"
     m_Metadata:
       m_Items: []
   - m_Id: 375296046
-    m_Localized: 
+    m_Localized: "\xC7a se d\xE9place et appara\xEEt plus souvent."
     m_Metadata:
       m_Items: []
   - m_Id: 375296047
-    m_Localized: 
+    m_Localized: SOLS DE VERRE
     m_Metadata:
       m_Items: []
   - m_Id: 375296048
-    m_Localized: 
+    m_Localized: "Plus de verre bris\xE9 et de flaques sous vos pieds."
     m_Metadata:
       m_Items: []
   - m_Id: 375296049
-    m_Localized: 
+    m_Localized: FILONS RICHES
     m_Metadata:
       m_Items: []
   - m_Id: 375296050
-    m_Localized: 
+    m_Localized: "Plus d'\xE9clats, mais \xE7a marche un peu plus vite."
     m_Metadata:
       m_Items: []
   - m_Id: 375296051
-    m_Localized: 
+    m_Localized: "Ici, \xE7a chasse au son."
     m_Metadata:
       m_Items: []
   - m_Id: 375296052
-    m_Localized: 
+    m_Localized: "Ici, \xE7a va vite, mais \xE7a oublie vite."
     m_Metadata:
       m_Items: []
   - m_Id: 375296053
-    m_Localized: 
+    m_Localized: '{name}.'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763211
   - m_Id: 375296054
-    m_Localized: 
+    m_Localized: Ne jamais se cacher
     m_Metadata:
       m_Items: []
   - m_Id: 375296055
-    m_Localized: 
+    m_Localized: "Terminez l'\xE9tage sans entrer dans un casier."
     m_Metadata:
       m_Items: []
   - m_Id: 375296056
-    m_Localized: 
+    m_Localized: "Pas une \xE9gratignure"
     m_Metadata:
       m_Items: []
   - m_Id: 375296057
-    m_Localized: 
+    m_Localized: Ne vous faites jamais attraper - et ne laissez jamais Stan vous toucher.
     m_Metadata:
       m_Items: []
   - m_Id: 375296058
-    m_Localized: 
+    m_Localized: Marcher dans le noir
     m_Metadata:
       m_Items: []
   - m_Id: 375296059
-    m_Localized: 
+    m_Localized: "Marchez 60 secondes avec la lampe \xE9teinte."
     m_Metadata:
       m_Items: []
   - m_Id: 375296060
-    m_Localized: 
+    m_Localized: Tout ce qui brille
     m_Metadata:
       m_Items: []
   - m_Id: 375296061
-    m_Localized: 
+    m_Localized: "Ramassez au moins 60% des \xE9clats de l'\xE9tage."
     m_Metadata:
       m_Items: []
   - m_Id: 375296062
-    m_Localized: 
+    m_Localized: Tout lire
     m_Metadata:
       m_Items: []
   - m_Id: 375296063
-    m_Localized: 
+    m_Localized: "Lisez toutes les notes de l'\xE9tage."
     m_Metadata:
       m_Items: []
   - m_Id: 375296064
-    m_Localized: 
+    m_Localized: "Pas de fl\xE2nerie"
     m_Metadata:
       m_Items: []
   - m_Id: 375296065
-    m_Localized: 
+    m_Localized: "Terminez l'\xE9tage avant la fin du chrono."
     m_Metadata:
       m_Items: []
   - m_Id: 375296066
-    m_Localized: 
+    m_Localized: Faire du bruit
     m_Metadata:
       m_Items: []
   - m_Id: 375296067
-    m_Localized: 
+    m_Localized: "Faites venir la chose enqu\xEAter sur une bouteille ou une canette lanc\xE9e, deux fois."
     m_Metadata:
       m_Items: []
   - m_Id: 375296068
-    m_Localized: 
+    m_Localized: "Pas l\xE9gers"
     m_Metadata:
       m_Items: []
   - m_Id: 375296069
-    m_Localized: 
+    m_Localized: Ne sprintez jamais.
     m_Metadata:
       m_Items: []
   - m_Id: 375296070
-    m_Localized: 
+    m_Localized: "\xC9TAGE {floor} TERMIN\xC9"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763211
   - m_Id: 375296071
-    m_Localized: 
+    m_Localized: "\xC9TOILES  {stars} x {value}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763211
   - m_Id: 375296072
-    m_Localized: 
+    m_Localized: TEMPS RESTANT  {time}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763211
   - m_Id: 375296073
-    m_Localized: 
+    m_Localized: "\xC9TAGE {floor} TERMIN\xC9"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763211
   - m_Id: 375296074
-    m_Localized: 
+    m_Localized: "\xC9CLATS TROUV\xC9S  {n} x {value}  (d\xE9j\xE0 \xE0 vous)"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763211
   - m_Id: 375296075
-    m_Localized: 
+    m_Localized: CONSOLATION
     m_Metadata:
       m_Items: []
   - m_Id: 375296076
-    m_Localized: 
+    m_Localized: "CONSOLATION  {percent}% de {stars} {stars:plural:\xE9toile|\xE9toiles}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763211
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331672703763211
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 375296001
+        - id: 375296003
+        - id: 375296053
+        - id: 375296070
+        - id: 375296071
+        - id: 375296072
+        - id: 375296073
+        - id: 375296074
+        - id: 375296076

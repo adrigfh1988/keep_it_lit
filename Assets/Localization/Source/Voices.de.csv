@@ -1,0 +1,106 @@
+key,text
+voice.hunter.spotted.0,nicht blinzeln.
+voice.hunter.spotted.1,da ist mein kleines licht.
+voice.hunter.spotted.2,lauf.
+voice.hunter.spotted.3,du gehörst mir.
+voice.hunter.spotted.4,zu langsam.
+voice.hunter.spotted.5,ich rieche deine batterie.
+voice.hunter.spotted.6,"hallo, dieb."
+voice.hunter.chasing.0,lauf schneller.
+voice.hunter.chasing.1,deine beine sind müde.
+voice.hunter.chasing.2,ich werde nicht müde.
+voice.hunter.chasing.3,näher…
+voice.hunter.chasing.4,die sterne retten dich nicht.
+voice.hunter.chasing.5,lauf weiter. das gefällt mir.
+voice.hunter.lost.0,du kannst dich nicht ewig verstecken.
+voice.hunter.lost.1,ich finde dich.
+voice.hunter.lost.2,ich kenne das labyrinth besser.
+voice.hunter.lost.3,versteckst du dich? gut.
+voice.hunter.searching.0,wo bist du…
+voice.hunter.searching.1,komm raus.
+voice.hunter.searching.2,ich höre dein herz.
+voice.hunter.searching.3,"kleines licht, kleines licht…"
+voice.hunter.searching.4,das dunkel gehört mir.
+voice.hunter.searching.5,etage {floor}. die verlässt du nicht.
+voice.hunter.ambush.0,ÜBERRASCHUNG.
+voice.hunter.ambush.1,SO LANGE GEWARTET.
+voice.hunter.ambush.2,HIER ENTLANG? GUT.
+voice.hunter.ambush.3,HALLO.
+voice.hunter.locker.0,ist da jemand drin?
+voice.hunter.locker.1,ich rieche dich.
+voice.hunter.locker.2,mach auf.
+voice.hunter.locker.3,einer von denen…
+voice.hunter.locker.4,warmes metall.
+voice.hunter.door.0,türen halten mich nicht auf.
+voice.hunter.door.1,lass mich rein.
+voice.hunter.door.2,"klopf, klopf."
+voice.hunter.door.3,keine türen mehr.
+voice.hunter.caught.0,HAB DICH.
+voice.hunter.caught.1,MEINS.
+voice.hunter.caught.2,LIGHTS OUT.
+voice.hunter.caught.3,GEFUNDEN.
+voice.stan.spotted.0,da bist du ja.
+voice.stan.spotted.1,ich seh dich.
+voice.stan.spotted.2,gefunden.
+voice.stan.spotted.3,hallo nochmal.
+voice.stan.spotted.4,kuckuck.
+voice.stan.spotted.5,lauf nicht weg. bitte lauf.
+voice.stan.spotted.6,du siehst müde aus.
+voice.stan.spotted.7,ich hab gewartet.
+voice.stan.lit.0,zu hell.
+voice.stan.lit.1,du kannst es nicht ewig anlassen.
+voice.stan.lit.2,klick. klick.
+voice.stan.lit.3,blinzel.
+voice.stan.lit.4,ich warte.
+voice.stan.lit.5,deine batterie stirbt.
+voice.stan.lit.6,ochs am berg?
+voice.stan.lit.7,schau nicht weg.
+voice.stan.staring.0,bleib stehen.
+voice.stan.staring.1,eins… zwei…
+voice.stan.staring.2,pssst.
+voice.stan.staring.3,lass dich ansehen.
+voice.stan.staring.4,näher.
+voice.stan.staring.5,nicht bewegen.
+voice.stan.lunge.0,BUH.
+voice.stan.lunge.1,ERWISCHT!
+voice.stan.lunge.2,HAB DICH—
+voice.stan.lunge.3,MEINS.
+voice.stan.lunge.4,JETZT.
+voice.stan.touch.0,abgeschlagen. du bist dran.
+voice.stan.touch.1,warm.
+voice.stan.touch.2,er hat das gehört.
+voice.stan.touch.3,"ich hab ihm gesagt, wo du bist."
+voice.stan.touch.4,dein licht schmeckt gut.
+voice.stan.lost.0,wo bist du hin?
+voice.stan.lost.1,dann eben verstecken spielen.
+voice.stan.lost.2,ich hör dich atmen.
+voice.stan.lost.3,du kommst zurück.
+voice.stan.lost.4,ich komme…
+voice.stan.locker.0,"klopf, klopf."
+voice.stan.locker.1,"ich weiß, welcher."
+voice.stan.locker.2,"eng da drin, oder?"
+voice.stan.locker.3,"komm raus, komm raus."
+voice.stan.locker.4,ich kann die ganze nacht warten.
+voice.stan.idle.0,magst du das labyrinth?
+voice.stan.idle.1,er ist näher als ich.
+voice.stan.idle.2,etage {floor}. nicht mehr viele.
+voice.stan.idle.3,dein herz ist laut.
+voice.stan.idle.4,die sterne sind nicht für dich.
+voice.stan.idle.5,geh weiter.
+voice.patient.hilde.default.0,Einundvierzig Türen. Gestern vierzig.
+voice.patient.hilde.default.1,Mach die neue nicht auf.
+voice.patient.hilde.default.2,Zähl mit mir. Eins...
+voice.patient.hilde.fileread.0,Du hast meine Akte gelesen. Dann zählst du auch.
+voice.patient.hilde.late.0,Vierundvierzig. Es werden immer mehr.
+voice.patient.hilde.finale.0,Noch eine Tür. Deine.
+voice.patient.tomas.default.0,Zweimal klopfen. Alles sicher.
+voice.patient.tomas.default.1,Hör mal. Hörst du sie gehen?
+voice.patient.tomas.default.2,Die Rohre sind heute Nacht warm.
+voice.patient.tomas.fileread.0,"Da steht, ich antworte den Rohren. Die Rohre antworten mir."
+voice.patient.tomas.late.0,Drei. Dreimal klopfen. Versteck dich.
+voice.patient.tomas.finale.0,Es hat aufgehört zu klopfen. Warum hat es aufgehört?
+voice.patient.elias.default.0,Die Schubladen sind kalt. Meine ist Nummer fünf.
+voice.patient.elias.default.1,"Ich laufe nachts. Ich weiß nicht mehr, wohin."
+voice.patient.elias.fileread.0,Du hast Schublade fünf gesehen. Stand mein Name drauf?
+voice.patient.elias.late.0,Morgen verlegen sie mich in die Chirurgie.
+voice.patient.elias.finale.0,"Danke, dass du runtergekommen bist."

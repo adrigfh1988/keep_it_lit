@@ -1,0 +1,166 @@
+key,text
+hub.wing.plaque,"{wing}
+<size=60%>{room}  ·  {status}</size>"
+hub.wing.status.open,ABIERTO
+hub.wing.status.locked,BLOQUEADO
+hub.wing.status.cleared,SUPERADO
+hub.wing.status.sealed,SELLADO
+hub.wing.hint,{wing} · {room} · {level}
+hub.wing.1.name,PABELLÓN A
+hub.wing.1.room,SALA DE DÍA
+hub.wing.1.level,PLANTA BAJA
+hub.wing.1.enter,ENTRAR EN EL PABELLÓN A
+hub.wing.1.locked,PABELLÓN A · BLOQUEADO
+hub.wing.1.cleared,PABELLÓN A · SUPERADO
+hub.wing.1.sealed,PABELLÓN A · SELLADO
+hub.wing.1.already_cleared,PABELLÓN A · YA SUPERADO
+hub.wing.1.go_to_door,VE A LA PUERTA DEL PABELLÓN A · PLANTA BAJA
+hub.wing.1.door_open,PLANTA {floor} · LA PUERTA DEL PABELLÓN A ESTÁ ABIERTA · PLANTA BAJA
+hub.wing.1.door_locked,PLANTA {floor} · LA PUERTA DEL PABELLÓN A ESTÁ BLOQUEADA · PLANTA BAJA
+hub.wing.1.door_unlocked,LA PUERTA DEL PABELLÓN A ESTÁ DESBLOQUEADA · PLANTA BAJA
+hub.wing.1.order,PRESÉNTATE ANTE LA HERMANA AGNES · PUESTO DE ENFERMERÍA
+hub.wing.2.name,SALA DE CALDERAS
+hub.wing.2.room,SALA DE MÁQUINAS
+hub.wing.2.level,SÓTANO
+hub.wing.2.enter,ENTRAR EN LA SALA DE CALDERAS
+hub.wing.2.locked,SALA DE CALDERAS · BLOQUEADA
+hub.wing.2.cleared,SALA DE CALDERAS · SUPERADA
+hub.wing.2.sealed,SALA DE CALDERAS · SELLADA
+hub.wing.2.already_cleared,SALA DE CALDERAS · YA SUPERADA
+hub.wing.2.sealed_need_key,SELLADA · NECESITAS LA LLAVE DEL PABELLÓN A
+hub.wing.2.go_to_door,VE A LA PUERTA DE LA SALA DE CALDERAS · SÓTANO
+hub.wing.2.door_open,PLANTA {floor} · LA PUERTA DE LA SALA DE CALDERAS ESTÁ ABIERTA · SÓTANO
+hub.wing.2.door_locked,PLANTA {floor} · LA PUERTA DE LA SALA DE CALDERAS ESTÁ BLOQUEADA · SÓTANO
+hub.wing.2.door_unlocked,LA PUERTA DE LA SALA DE CALDERAS ESTÁ DESBLOQUEADA · SÓTANO
+hub.wing.2.order,PRESÉNTATE ANTE BRUNO · COCINA
+hub.wing.3.name,MORGUE
+hub.wing.3.room,CÁMARA FRIGORÍFICA
+hub.wing.3.level,SÓTANO
+hub.wing.3.enter,ENTRAR EN LA MORGUE
+hub.wing.3.locked,MORGUE · BLOQUEADA
+hub.wing.3.cleared,MORGUE · SUPERADA
+hub.wing.3.sealed,MORGUE · SELLADA
+hub.wing.3.already_cleared,MORGUE · YA SUPERADA
+hub.wing.3.sealed_need_key,SELLADA · NECESITAS LA LLAVE DE LA SALA DE CALDERAS
+hub.wing.3.go_to_door,VE A LA PUERTA DE LA MORGUE · SÓTANO
+hub.wing.3.door_open,PLANTA {floor} · LA PUERTA DE LA MORGUE ESTÁ ABIERTA · SÓTANO
+hub.wing.3.door_locked,PLANTA {floor} · LA PUERTA DE LA MORGUE ESTÁ BLOQUEADA · SÓTANO
+hub.wing.3.door_unlocked,LA PUERTA DE LA MORGUE ESTÁ DESBLOQUEADA · SÓTANO
+hub.wing.3.order,PRESÉNTATE ANTE MARTA · AULA
+hub.wing.4.name,CIRUGÍA
+hub.wing.4.room,QUIRÓFANO
+hub.wing.4.level,PLANTA SUPERIOR
+hub.wing.4.enter,ENTRAR EN CIRUGÍA
+hub.wing.4.locked,CIRUGÍA · BLOQUEADA
+hub.wing.4.cleared,CIRUGÍA · SUPERADA
+hub.wing.4.sealed,CIRUGÍA · SELLADA
+hub.wing.4.already_cleared,CIRUGÍA · YA SUPERADA
+hub.wing.4.sealed_need_key,SELLADA · NECESITAS LA LLAVE DE LA MORGUE
+hub.wing.4.go_to_door,VE A LA PUERTA DE CIRUGÍA · PLANTA SUPERIOR
+hub.wing.4.door_open,PLANTA {floor} · LA PUERTA DE CIRUGÍA ESTÁ ABIERTA · PLANTA SUPERIOR
+hub.wing.4.door_locked,PLANTA {floor} · LA PUERTA DE CIRUGÍA ESTÁ BLOQUEADA · PLANTA SUPERIOR
+hub.wing.4.door_unlocked,LA PUERTA DE CIRUGÍA ESTÁ DESBLOQUEADA · PLANTA SUPERIOR
+hub.wing.4.order,PRESÉNTATE ANTE EL DR. WEISS · SALA DE EXPLORACIÓN
+hub.wing.5.name,DIRECTOR
+hub.wing.5.room,DESPACHO DEL DIRECTOR
+hub.wing.5.level,PLANTA SUPERIOR
+hub.wing.5.enter,ENTRAR EN EL DESPACHO
+hub.wing.5.locked,DIRECTOR · BLOQUEADO
+hub.wing.5.cleared,DIRECTOR · SUPERADO
+hub.wing.5.sealed,DIRECTOR · SELLADO
+hub.wing.5.already_cleared,DIRECTOR · YA SUPERADO
+hub.wing.5.sealed_need_key,SELLADO · NECESITAS LA LLAVE DE CIRUGÍA
+hub.wing.5.go_to_door,VE AL DESPACHO DEL DIRECTOR · PLANTA SUPERIOR
+hub.wing.5.door_open,PLANTA {floor} · LA PUERTA DEL DIRECTOR ESTÁ ABIERTA · PLANTA SUPERIOR
+hub.wing.5.door_locked,PLANTA {floor} · LA PUERTA DEL DIRECTOR ESTÁ BLOQUEADA · PLANTA SUPERIOR
+hub.wing.5.door_unlocked,LA PUERTA DEL DIRECTOR ESTÁ DESBLOQUEADA · PLANTA SUPERIOR
+hub.wing.5.order,LLAVE NO ENTREGADA · ARCHIVO
+hub.wing.5.locked_line,BLOQUEADO · LA LLAVE DEL DIRECTOR ESTÁ EN EL ARCHIVO
+hub.mission.1.locked_line,BLOQUEADO · LA HERMANA AGNES TIENE LA LLAVE · PUESTO DE ENFERMERÍA
+hub.mission.1.key_name,LA LLAVE DEL PABELLÓN A
+hub.mission.1.objective_offered,HABLA CON LA HERMANA AGNES · PUESTO DE ENFERMERÍA
+hub.mission.1.where,PUESTO DE ENFERMERÍA
+hub.mission.1.objective_active,BUSCA EL LLAVERO DE AGNES · LA COCINA
+hub.mission.1.objective_fetched,DEVUELVE EL LLAVERO A LA HERMANA AGNES
+hub.mission.1.item.0.prompt,TOMAR EL LLAVERO
+hub.mission.1.item.0.taken,LLAVERO · RECOGIDO
+hub.mission.2.locked_line,BLOQUEADA · BRUNO TIENE LA LLAVE · COCINA
+hub.mission.2.key_name,LA LLAVE DE LA SALA DE CALDERAS
+hub.mission.2.objective_offered,HABLA CON BRUNO · COCINA
+hub.mission.2.where,COCINA
+hub.mission.2.objective_active,RECOGE LA BANDEJA DE LA CENA DE JOSEF EN LA COCINA
+hub.mission.2.objective_fetched,SUBE LA BANDEJA A JOSEF · DORMITORIO
+hub.mission.2.progress_fetched,LLEVAS · LA BANDEJA DE JOSEF
+hub.mission.2.item.0.prompt,TOMAR LA BANDEJA DE JOSEF
+hub.mission.2.item.0.taken,LLEVAS · LA BANDEJA DE JOSEF
+hub.mission.3.locked_line,BLOQUEADA · MARTA TIENE LA LLAVE · AULA
+hub.mission.3.key_name,LA LLAVE DE LA MORGUE
+hub.mission.3.objective_offered,HABLA CON MARTA · AULA
+hub.mission.3.where,AULA
+hub.mission.3.objective_active,BUSCA LA CAJA DE MÚSICA DE MARTA · EL PASILLO DEL SÓTANO
+hub.mission.3.objective_fetched,DEVUELVE LA CAJA DE MÚSICA A MARTA
+hub.mission.3.item.0.prompt,TOMAR LA CAJA DE MÚSICA
+hub.mission.3.item.0.taken,CAJA DE MÚSICA · RECOGIDA
+hub.mission.4.locked_line,BLOQUEADA · EL DR. WEISS TIENE LA LLAVE · SALA DE EXPLORACIÓN
+hub.mission.4.key_name,LA LLAVE DE CIRUGÍA
+hub.mission.4.objective_offered,HABLA CON EL DR. WEISS · SALA DE EXPLORACIÓN
+hub.mission.4.where,SALA DE EXPLORACIÓN
+hub.mission.4.objective_active,BUSCA LAS TRES AMPOLLAS · PLANTA SUPERIOR
+hub.mission.4.objective_fetched,LLEVA LAS AMPOLLAS AL DR. WEISS
+hub.mission.4.progress_active,AMPOLLAS  {n} / {total}
+hub.mission.4.progress_fetched,AMPOLLAS  {n} / {total}
+hub.mission.4.item.0.prompt,TOMAR LA AMPOLLA
+hub.mission.4.item.0.taken,AMPOLLA {n} / {total}
+hub.mission.4.item.1.prompt,TOMAR LA AMPOLLA
+hub.mission.4.item.1.taken,AMPOLLA {n} / {total}
+hub.mission.4.item.2.prompt,TOMAR LA AMPOLLA
+hub.mission.4.item.2.taken,AMPOLLA {n} / {total}
+hub.mission.door_unlocked,{key} · LA PUERTA ESTÁ DESBLOQUEADA
+hub.npc.agnes,HERMANA AGNES
+hub.npc.bruno,BRUNO
+hub.npc.josef,JOSEF
+hub.npc.marta,MARTA
+hub.npc.weiss,DR. WEISS
+hub.npc.clerk,EL ESCRIBIENTE
+hub.npc.talk_to,HABLAR CON {name}
+hub.not_now,AHORA NO
+hub.catch.wake,Despiertas junto a la puerta.
+hub.finale.office,EL DESPACHO DEL DIRECTOR
+hub.shopdoor.room,EL VESTÍBULO DE LA PLANTA BAJA
+hub.shopdoor.enter,ENTRAR EN LA TIENDA
+hub.shopdoor.closed,TIENDA · CERRADA
+hub.shopdoor.closed_line,CERRADA · VUELVE CON FRAGMENTOS
+hub.shopdoor.plaque,"TIENDA
+<size=60%>EL VENDEDOR  ·  {status}</size>"
+hub.shopdoor.status_open,ABIERTO
+hub.shopdoor.status_closed,CERRADO
+hub.shopdoor.open_line,LA TIENDA ESTÁ ABIERTA
+hub.shopdoor.open_line_room,LA TIENDA ESTÁ ABIERTA · {room}
+hub.examine.tally.prompt,EXAMINAR
+hub.examine.barricade.prompt,EXAMINAR
+hub.examine.room4.prompt,EXAMINAR
+hub.examine.admissions.prompt,LEER EL REGISTRO
+hub.examine.pipe.prompt,ESCUCHAR
+hub.records.read_file,LEER EXPEDIENTE · {label}
+hub.wristband.prompt,LEER PULSERA · ELIAS VOGT · PACIENTE 5
+hub.exit.prompt,SALIR DEL MANICOMIO
+hub.key.prompt,TOMAR LA LLAVE DEL DIRECTOR
+hub.switch.prompt,BAJAR EL INTERRUPTOR GENERAL · LIGHTS OUT
+hub.desk.open,ABRIR EL CAJÓN
+hub.desk.closed,EL CAJÓN
+hub.desk.locked,EL CAJÓN ESTÁ CERRADO CON LLAVE · EXPEDIENTES {n} / {total}
+hub.keyrun.taken,LA LLAVE DEL DIRECTOR · LA PUERTA ESTÁ DESBLOQUEADA
+hub.card.find_key,BUSCA LA LLAVE DEL DIRECTOR · ARCHIVO
+hub.lift.chained,LA ESCALERA AL SÓTANO ESTÁ ENCADENADA · TOMA EL ASCENSOR
+hub.lift.call,LLAMAR AL ASCENSOR
+hub.lift.lift,EL ASCENSOR
+hub.lift.gate,LA REJA
+hub.lift.force,FORZAR LAS PUERTAS
+hub.lift.gate_chained,LA REJA ESTÁ ENCADENADA · TOMA EL ASCENSOR
+hub.lift.does_not_move,EL ASCENSOR NO SE MUEVE
+hub.lift.will_not_come,EL ASCENSOR NO VIENE · LA SALA DE CALDERAS SIGUE BLOQUEADA
+hub.lift.stopped,EL ASCENSOR SE DETUVO
+hub.lift.doors_stuck,LAS PUERTAS ESTÁN ATASCADAS · MANTÉN {key} PARA FORZARLAS
+hub.flood.knocks,ALGO GOLPEA TRES VECES.
+hub.chase.stops,SE DETIENE EN LA PUERTA
+hub.stars.first,ALGUIEN HA DIBUJADO ESTRELLAS EN LA PARED. TODAVÍA BRILLAN.

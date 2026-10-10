@@ -1,0 +1,44 @@
+key,text
+sub.second_wind.release,Es hat losgelassen. Das tut es kein zweites Mal.
+sub.shop.contract_taken,Bring ihn heil zurück.
+sub.shop.contract_declined,Wie du willst.
+sub.star.heard,Es hat das gehört.
+sub.consumable.no_battery,Keine Ersatzbatterie.
+sub.consumable.not_in_here,Nicht hier drin.
+sub.consumable.torch_full,Die Lampe ist voll.
+sub.consumable.fresh_cell,Frische Zelle.
+sub.consumable.no_compass,Kein Sternenkompass.
+sub.consumable.nothing_to_point,Nichts mehr zum Zeigen.
+sub.escape.hatch_unlocked,DIE LUKE IST ENTRIEGELT
+sub.escape.lift_unlocked,DER AUFZUG IST ENTRIEGELT
+sub.pickup.battery_cell,BATTERIEZELLE
+sub.pickup.second_wind,+ ZWEITER ATEM
+sub.pickup.key,SCHLÜSSEL {held} / {total}
+sub.lore.bonus,+{amount} {currency}
+sub.lantern.lure,Etwas wird vom Licht angezogen.
+sub.button.shutter,Irgendwo rollt ein Rollladen hoch.
+sub.theme.terminal,CAM 3: BEWEGUNG
+sub.stalker.screamed,ES HAT GESCHRIEN.
+sub.contract.failed,AUFTRAG GESCHEITERT  -  {name}.
+sub.contract.done,AUFTRAG ERLEDIGT  -  {name}.
+sub.contract.void_shards,Hier unten glitzert nichts - der Auftrag ist hinfällig.
+sub.contract.void_notes,Keine Notizen hier unten - der Auftrag ist hinfällig.
+sub.shop.deal_done,Abgemacht ist abgemacht.
+sub.shop.deal_failed,Man kann nicht immer gewinnen.
+sub.shop.greeting.1,Splitter für die Dunkelheit. Was darf es sein?
+sub.shop.greeting.2,Schon wieder da.
+sub.shop.greeting.3,Da oben wird es lauter.
+sub.shop.greeting.4,Letzter Halt vor dem Grund.
+sub.dread.far,Hinter dir hat sich etwas bewegt.
+sub.dread.mid,Es kommt näher.
+sub.dread.near,Es ist direkt hinter dir.
+sub.dread.lights_dying,Die Lichter sterben.
+sub.dread.it_knows,Es weiß es.
+sub.dread.ambushed,Es hat gewartet.
+sub.banner.floor,ETAGE {floor}
+sub.banner.floor_theme,ETAGE {floor} — {theme}
+sub.banner.find_stars,FINDE {n} STERNE
+sub.banner.restore_fuses,SCHALTE {n} SICHERUNGEN EIN
+sub.banner.find_keys,FINDE {n} SCHLÜSSEL FÜR DIE LUKE
+sub.banner.lockdown,SICHERHEITSSPERRE
+sub.banner.rule,{name} — {description}

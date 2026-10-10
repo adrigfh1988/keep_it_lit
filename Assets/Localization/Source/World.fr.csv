@@ -1,0 +1,25 @@
+key,text
+world.hub.admissions,"ASILE KARLHEINZ
+ADMISSIONS"
+world.hub.slot.100,"P3
+HILDE BRANDT"
+world.hub.slot.101,"P11
+TOMAS REINER"
+world.hub.slot.102,"P5
+ELIAS VOGT"
+world.hub.slot.103,SUJET A
+world.hub.slot.104,"DIRECTEUR
+PRIVÉ"
+world.hub.wristband,"ELIAS VOGT
+PATIENT 5"
+world.hub.lower_level,"SUJET A
+NIVEAU INFÉRIEUR"
+world.hub.service_unit,UNITÉ DE SERVICE
+world.intake.holding,ISOLEMENT
+world.intake.no_entry,ACCÈS INTERDIT
+world.intake.ward,ADMISSION  ·  PAVILLON 1
+world.intake.keep_quiet,"SILENCE.
+ÇA ENTEND TOUT."
+world.intake.stay_in_bed,RESTEZ AU LIT
+world.shop.contracts,CONTRATS
+world.shop.shards_accepted,ÉCLATS ACCEPTÉS

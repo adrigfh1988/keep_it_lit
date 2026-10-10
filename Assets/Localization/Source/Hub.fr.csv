@@ -1,0 +1,166 @@
+key,text
+hub.wing.plaque,"{wing}
+<size=60%>{room}  ·  {status}</size>"
+hub.wing.status.open,OUVERT
+hub.wing.status.locked,VERROUILLÉ
+hub.wing.status.cleared,TERMINÉ
+hub.wing.status.sealed,SCELLÉ
+hub.wing.hint,{wing} · {room} · {level}
+hub.wing.1.name,PAVILLON A
+hub.wing.1.room,SALLE COMMUNE
+hub.wing.1.level,REZ-DE-CHAUSSÉE
+hub.wing.1.enter,ENTRER DANS LE PAVILLON A
+hub.wing.1.locked,PAVILLON A · VERROUILLÉ
+hub.wing.1.cleared,PAVILLON A · TERMINÉ
+hub.wing.1.sealed,PAVILLON A · SCELLÉ
+hub.wing.1.already_cleared,PAVILLON A · DÉJÀ TERMINÉ
+hub.wing.1.go_to_door,ALLER À LA PORTE DU PAVILLON A · REZ-DE-CHAUSSÉE
+hub.wing.1.door_open,ÉTAGE {floor} · LA PORTE DU PAVILLON A EST OUVERTE · REZ-DE-CHAUSSÉE
+hub.wing.1.door_locked,ÉTAGE {floor} · LA PORTE DU PAVILLON A EST VERROUILLÉE · REZ-DE-CHAUSSÉE
+hub.wing.1.door_unlocked,LA PORTE DU PAVILLON A EST DÉVERROUILLÉE · REZ-DE-CHAUSSÉE
+hub.wing.1.order,PRÉSENTEZ-VOUS À SŒUR AGNES · POSTE DE SOINS
+hub.wing.2.name,CHAUFFERIE
+hub.wing.2.room,SALLE DES MACHINES
+hub.wing.2.level,SOUS-SOL
+hub.wing.2.enter,ENTRER DANS LA CHAUFFERIE
+hub.wing.2.locked,CHAUFFERIE · VERROUILLÉE
+hub.wing.2.cleared,CHAUFFERIE · TERMINÉE
+hub.wing.2.sealed,CHAUFFERIE · SCELLÉE
+hub.wing.2.already_cleared,CHAUFFERIE · DÉJÀ TERMINÉE
+hub.wing.2.sealed_need_key,SCELLÉE · IL VOUS FAUT LA CLÉ DU PAVILLON A
+hub.wing.2.go_to_door,ALLER À LA PORTE DE LA CHAUFFERIE · SOUS-SOL
+hub.wing.2.door_open,ÉTAGE {floor} · LA PORTE DE LA CHAUFFERIE EST OUVERTE · SOUS-SOL
+hub.wing.2.door_locked,ÉTAGE {floor} · LA PORTE DE LA CHAUFFERIE EST VERROUILLÉE · SOUS-SOL
+hub.wing.2.door_unlocked,LA PORTE DE LA CHAUFFERIE EST DÉVERROUILLÉE · SOUS-SOL
+hub.wing.2.order,PRÉSENTEZ-VOUS À BRUNO · CUISINE
+hub.wing.3.name,MORGUE
+hub.wing.3.room,CHAMBRE FROIDE
+hub.wing.3.level,SOUS-SOL
+hub.wing.3.enter,ENTRER DANS LA MORGUE
+hub.wing.3.locked,MORGUE · VERROUILLÉE
+hub.wing.3.cleared,MORGUE · TERMINÉE
+hub.wing.3.sealed,MORGUE · SCELLÉE
+hub.wing.3.already_cleared,MORGUE · DÉJÀ TERMINÉE
+hub.wing.3.sealed_need_key,SCELLÉE · IL VOUS FAUT LA CLÉ DE LA CHAUFFERIE
+hub.wing.3.go_to_door,ALLER À LA PORTE DE LA MORGUE · SOUS-SOL
+hub.wing.3.door_open,ÉTAGE {floor} · LA PORTE DE LA MORGUE EST OUVERTE · SOUS-SOL
+hub.wing.3.door_locked,ÉTAGE {floor} · LA PORTE DE LA MORGUE EST VERROUILLÉE · SOUS-SOL
+hub.wing.3.door_unlocked,LA PORTE DE LA MORGUE EST DÉVERROUILLÉE · SOUS-SOL
+hub.wing.3.order,PRÉSENTEZ-VOUS À MARTA · SALLE DE CLASSE
+hub.wing.4.name,CHIRURGIE
+hub.wing.4.room,BLOC OPÉRATOIRE
+hub.wing.4.level,ÉTAGE
+hub.wing.4.enter,ENTRER EN CHIRURGIE
+hub.wing.4.locked,CHIRURGIE · VERROUILLÉE
+hub.wing.4.cleared,CHIRURGIE · TERMINÉE
+hub.wing.4.sealed,CHIRURGIE · SCELLÉE
+hub.wing.4.already_cleared,CHIRURGIE · DÉJÀ TERMINÉE
+hub.wing.4.sealed_need_key,SCELLÉE · IL VOUS FAUT LA CLÉ DE LA MORGUE
+hub.wing.4.go_to_door,ALLER À LA PORTE DE LA CHIRURGIE · À L'ÉTAGE
+hub.wing.4.door_open,ÉTAGE {floor} · LA PORTE DE LA CHIRURGIE EST OUVERTE · À L'ÉTAGE
+hub.wing.4.door_locked,ÉTAGE {floor} · LA PORTE DE LA CHIRURGIE EST VERROUILLÉE · À L'ÉTAGE
+hub.wing.4.door_unlocked,LA PORTE DE LA CHIRURGIE EST DÉVERROUILLÉE · À L'ÉTAGE
+hub.wing.4.order,PRÉSENTEZ-VOUS AU DR. WEISS · SALLE D'EXAMEN
+hub.wing.5.name,DIRECTEUR
+hub.wing.5.room,BUREAU DU DIRECTEUR
+hub.wing.5.level,ÉTAGE
+hub.wing.5.enter,ENTRER CHEZ LE DIRECTEUR
+hub.wing.5.locked,DIRECTEUR · VERROUILLÉ
+hub.wing.5.cleared,DIRECTEUR · TERMINÉ
+hub.wing.5.sealed,DIRECTEUR · SCELLÉ
+hub.wing.5.already_cleared,DIRECTEUR · DÉJÀ TERMINÉ
+hub.wing.5.sealed_need_key,SCELLÉ · IL VOUS FAUT LA CLÉ DE LA CHIRURGIE
+hub.wing.5.go_to_door,ALLER AU BUREAU DU DIRECTEUR · À L'ÉTAGE
+hub.wing.5.door_open,ÉTAGE {floor} · LA PORTE DU DIRECTEUR EST OUVERTE · À L'ÉTAGE
+hub.wing.5.door_locked,ÉTAGE {floor} · LA PORTE DU DIRECTEUR EST VERROUILLÉE · À L'ÉTAGE
+hub.wing.5.door_unlocked,LA PORTE DU DIRECTEUR EST DÉVERROUILLÉE · À L'ÉTAGE
+hub.wing.5.order,CLÉ NON REMISE · SALLE DES ARCHIVES
+hub.wing.5.locked_line,PORTE VERROUILLÉE · LA CLÉ DU DIRECTEUR EST AUX ARCHIVES
+hub.mission.1.locked_line,PORTE VERROUILLÉE · SŒUR AGNES A LA CLÉ · POSTE DE SOINS
+hub.mission.1.key_name,LA CLÉ DU PAVILLON A
+hub.mission.1.objective_offered,PARLER À SŒUR AGNES · POSTE DE SOINS
+hub.mission.1.where,POSTE DE SOINS
+hub.mission.1.objective_active,TROUVER LE TROUSSEAU D'AGNES · LA CUISINE
+hub.mission.1.objective_fetched,RAPPORTER LE TROUSSEAU À SŒUR AGNES
+hub.mission.1.item.0.prompt,PRENDRE LE TROUSSEAU
+hub.mission.1.item.0.taken,TROUSSEAU · PRIS
+hub.mission.2.locked_line,PORTE VERROUILLÉE · BRUNO A LA CLÉ · CUISINE
+hub.mission.2.key_name,LA CLÉ DE LA CHAUFFERIE
+hub.mission.2.objective_offered,PARLER À BRUNO · CUISINE
+hub.mission.2.where,CUISINE
+hub.mission.2.objective_active,PRENDRE LE PLATEAU DE JOSEF À LA CUISINE
+hub.mission.2.objective_fetched,MONTER LE PLATEAU À JOSEF · DORTOIR
+hub.mission.2.progress_fetched,EN MAIN · PLATEAU DE JOSEF
+hub.mission.2.item.0.prompt,PRENDRE LE PLATEAU DE JOSEF
+hub.mission.2.item.0.taken,EN MAIN · PLATEAU DE JOSEF
+hub.mission.3.locked_line,PORTE VERROUILLÉE · MARTA A LA CLÉ · SALLE DE CLASSE
+hub.mission.3.key_name,LA CLÉ DE LA MORGUE
+hub.mission.3.objective_offered,PARLER À MARTA · SALLE DE CLASSE
+hub.mission.3.where,SALLE DE CLASSE
+hub.mission.3.objective_active,TROUVER LA BOÎTE À MUSIQUE DE MARTA · LE COULOIR DU SOUS-SOL
+hub.mission.3.objective_fetched,RAPPORTER LA BOÎTE À MUSIQUE À MARTA
+hub.mission.3.item.0.prompt,PRENDRE LA BOÎTE À MUSIQUE
+hub.mission.3.item.0.taken,BOÎTE À MUSIQUE · PRISE
+hub.mission.4.locked_line,PORTE VERROUILLÉE · LE DR. WEISS A LA CLÉ · SALLE D'EXAMEN
+hub.mission.4.key_name,LA CLÉ DE LA CHIRURGIE
+hub.mission.4.objective_offered,PARLER AU DR. WEISS · SALLE D'EXAMEN
+hub.mission.4.where,SALLE D'EXAMEN
+hub.mission.4.objective_active,TROUVER LES TROIS AMPOULES · À L'ÉTAGE
+hub.mission.4.objective_fetched,APPORTER LES AMPOULES AU DR. WEISS
+hub.mission.4.progress_active,AMPOULES  {n} / {total}
+hub.mission.4.progress_fetched,AMPOULES  {n} / {total}
+hub.mission.4.item.0.prompt,PRENDRE L'AMPOULE
+hub.mission.4.item.0.taken,AMPOULE {n} / {total}
+hub.mission.4.item.1.prompt,PRENDRE L'AMPOULE
+hub.mission.4.item.1.taken,AMPOULE {n} / {total}
+hub.mission.4.item.2.prompt,PRENDRE L'AMPOULE
+hub.mission.4.item.2.taken,AMPOULE {n} / {total}
+hub.mission.door_unlocked,{key} · LA PORTE EST DÉVERROUILLÉE
+hub.npc.agnes,SŒUR AGNES
+hub.npc.bruno,BRUNO
+hub.npc.josef,JOSEF
+hub.npc.marta,MARTA
+hub.npc.weiss,DR. WEISS
+hub.npc.clerk,LE GREFFIER
+hub.npc.talk_to,PARLER AVEC {name}
+hub.not_now,PAS MAINTENANT
+hub.catch.wake,Vous vous réveillez devant la porte.
+hub.finale.office,LE BUREAU DU DIRECTEUR
+hub.shopdoor.room,LE HALL DU REZ-DE-CHAUSSÉE
+hub.shopdoor.enter,ENTRER DANS LA BOUTIQUE
+hub.shopdoor.closed,BOUTIQUE · FERMÉE
+hub.shopdoor.closed_line,FERMÉE · REVENEZ AVEC DES ÉCLATS
+hub.shopdoor.plaque,"BOUTIQUE
+<size=60%>LE MARCHAND  ·  {status}</size>"
+hub.shopdoor.status_open,OUVERTE
+hub.shopdoor.status_closed,FERMÉE
+hub.shopdoor.open_line,LA BOUTIQUE EST OUVERTE
+hub.shopdoor.open_line_room,LA BOUTIQUE EST OUVERTE · {room}
+hub.examine.tally.prompt,EXAMINER
+hub.examine.barricade.prompt,EXAMINER
+hub.examine.room4.prompt,EXAMINER
+hub.examine.admissions.prompt,LIRE LE REGISTRE
+hub.examine.pipe.prompt,ÉCOUTER
+hub.records.read_file,LIRE LE DOSSIER · {label}
+hub.wristband.prompt,LIRE LE BRACELET · ELIAS VOGT · PATIENT 5
+hub.exit.prompt,QUITTER L'ASILE
+hub.key.prompt,PRENDRE LA CLÉ DU DIRECTEUR
+hub.switch.prompt,ACTIONNER L'INTERRUPTEUR GÉNÉRAL · LIGHTS OUT
+hub.desk.open,OUVRIR LE TIROIR
+hub.desk.closed,LE TIROIR
+hub.desk.locked,LE TIROIR EST VERROUILLÉ · DOSSIERS {n} / {total}
+hub.keyrun.taken,LA CLÉ DU DIRECTEUR · LA PORTE EST DÉVERROUILLÉE
+hub.card.find_key,TROUVER LA CLÉ DU DIRECTEUR · SALLE DES ARCHIVES
+hub.lift.chained,L'ESCALIER DU SOUS-SOL EST ENCHAÎNÉ · PRENEZ L'ASCENSEUR
+hub.lift.call,APPELER L'ASCENSEUR
+hub.lift.lift,L'ASCENSEUR
+hub.lift.gate,LA GRILLE
+hub.lift.force,FORCER LES PORTES
+hub.lift.gate_chained,LA GRILLE EST ENCHAÎNÉE · PRENEZ L'ASCENSEUR
+hub.lift.does_not_move,L'ASCENSEUR NE BOUGE PAS
+hub.lift.will_not_come,L'ASCENSEUR NE VIENT PAS · LA CHAUFFERIE EST TOUJOURS VERROUILLÉE
+hub.lift.stopped,L'ASCENSEUR S'EST ARRÊTÉ
+hub.lift.doors_stuck,LES PORTES SONT COINCÉES · MAINTENEZ {key} POUR LES FORCER
+hub.flood.knocks,QUELQUE CHOSE FRAPPE TROIS COUPS.
+hub.chase.stops,ÇA S'ARRÊTE À LA PORTE
+hub.stars.first,QUELQU'UN A DESSINÉ DES ÉTOILES SUR LE MUR. ELLES BRILLENT ENCORE.

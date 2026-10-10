@@ -1,0 +1,44 @@
+key,text
+hud.contract.done,AUFTRAG  -  {name}  -  ERLEDIGT
+hud.contract.failed,AUFTRAG  -  {name}  -  GESCHEITERT
+hud.contract.void,AUFTRAG  -  {name}  -  ENTFALLEN
+hud.contract.plain,AUFTRAG  -  {name}
+hud.contract.progress_dark,AUFTRAG  -  {name}  -  {n} / {total} s
+hud.contract.progress_count,AUFTRAG  -  {name}  -  {n} / {total}
+hud.contract.progress_time,AUFTRAG  -  {name}  -  noch {time}
+hud.torch,LAMPE
+hud.torch_dead,LAMPE LEER
+hud.floor,ETAGE {floor}
+hud.asylum,ANSTALT
+hud.shards,{currency}  {shards}
+hud.second_wind,ZWEITER ATEM
+hud.slot.battery,{key}   BATTERIE  x{count}
+hud.slot.compass,{key}   KOMPASS  x{count}
+hud.slot.throw,{key}   WERFEN  x{count}
+hud.prompt.hide,VERSTECKEN
+hud.prompt.leave,VERLASSEN
+hud.prompt.talk,SPRECHEN
+hud.prompt.contracts,AUFTRÄGE
+hud.prompt.descend,ABSTEIGEN
+hud.prompt.close,SCHLIEßEN
+hud.counter.stars,STERNE  {n} / {total}
+hud.counter.fuses,SICHERUNGEN  {n} / {total}
+hud.counter.keys,SCHLÜSSEL  {n} / {total}
+hud.keys_locked,GESPERRT · {h} / {t} SCHLÜSSEL
+hud.lift_locked,AUFZUG GESPERRT · {h} / {t} SCHLÜSSEL
+hud.lift_arriving,AUFZUG KOMMT {percent}%
+hud.records.header,KRANKENAKTEN  {n} / {total}
+hud.prompt.pick_up_bottle,FLASCHE AUFHEBEN
+hud.prompt.pick_up_can,DOSE AUFHEBEN
+hud.prompt.take_key,SCHLÜSSEL NEHMEN
+hud.prompt.pick_up_lantern,LATERNE AUFHEBEN
+hud.prompt.put_down_lantern,LATERNE ABSTELLEN
+hud.prompt.read,LESEN
+hud.prompt.pick_up_battery_cell,BATTERIEZELLE AUFHEBEN
+hud.prompt.restore_power,STROM EINSCHALTEN
+hud.prompt.open,ÖFFNEN
+hud.prompt.press,DRÜCKEN
+hud.prompt.ring_bell,GLOCKE LÄUTEN
+hud.prompt.open_valve,VENTIL ÖFFNEN
+hud.prompt.light_candles,KERZEN ANZÜNDEN
+hud.prompt.use_terminal,TERMINAL BENUTZEN

@@ -16,180 +16,206 @@ MonoBehaviour:
     m_Code: de
   m_SharedData: {fileID: 11400000, guid: b4c6f04b4f756474980167f6a0846058, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331672703763191
   m_TableData:
   - m_Id: 341741568
-    m_Localized: 
+    m_Localized: Es hat losgelassen. Das tut es kein zweites Mal.
     m_Metadata:
       m_Items: []
   - m_Id: 421433344
-    m_Localized: 
+    m_Localized: "Bring ihn heil zur\xFCck."
     m_Metadata:
       m_Items: []
   - m_Id: 421433345
-    m_Localized: 
+    m_Localized: Wie du willst.
     m_Metadata:
       m_Items: []
   - m_Id: 421433346
-    m_Localized: 
+    m_Localized: "Es hat das geh\xF6rt."
     m_Metadata:
       m_Items: []
   - m_Id: 421433347
-    m_Localized: 
+    m_Localized: Keine Ersatzbatterie.
     m_Metadata:
       m_Items: []
   - m_Id: 421433348
-    m_Localized: 
+    m_Localized: Nicht hier drin.
     m_Metadata:
       m_Items: []
   - m_Id: 421433349
-    m_Localized: 
+    m_Localized: Die Lampe ist voll.
     m_Metadata:
       m_Items: []
   - m_Id: 421433350
-    m_Localized: 
+    m_Localized: Frische Zelle.
     m_Metadata:
       m_Items: []
   - m_Id: 421433351
-    m_Localized: 
+    m_Localized: Kein Sternenkompass.
     m_Metadata:
       m_Items: []
   - m_Id: 421433352
-    m_Localized: 
+    m_Localized: Nichts mehr zum Zeigen.
     m_Metadata:
       m_Items: []
   - m_Id: 421433353
-    m_Localized: 
+    m_Localized: DIE LUKE IST ENTRIEGELT
     m_Metadata:
       m_Items: []
   - m_Id: 421433354
-    m_Localized: 
+    m_Localized: DER AUFZUG IST ENTRIEGELT
     m_Metadata:
       m_Items: []
   - m_Id: 7992965500928
-    m_Localized: 
+    m_Localized: BATTERIEZELLE
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387008
-    m_Localized: 
+    m_Localized: + ZWEITER ATEM
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387009
-    m_Localized: 
+    m_Localized: "SCHL\xDCSSEL {held} / {total}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763191
   - m_Id: 7993049387010
-    m_Localized: 
+    m_Localized: +{amount} {currency}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763191
   - m_Id: 7993049387011
-    m_Localized: 
+    m_Localized: Etwas wird vom Licht angezogen.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387012
-    m_Localized: 
+    m_Localized: Irgendwo rollt ein Rollladen hoch.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387013
-    m_Localized: 
+    m_Localized: 'CAM 3: BEWEGUNG'
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387014
-    m_Localized: 
+    m_Localized: ES HAT GESCHRIEN.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387015
-    m_Localized: 
+    m_Localized: AUFTRAG GESCHEITERT  -  {name}.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763191
   - m_Id: 7993049387016
-    m_Localized: 
+    m_Localized: AUFTRAG ERLEDIGT  -  {name}.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763191
   - m_Id: 7993049387017
-    m_Localized: 
+    m_Localized: "Hier unten glitzert nichts - der Auftrag ist hinf\xE4llig."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387018
-    m_Localized: 
+    m_Localized: "Keine Notizen hier unten - der Auftrag ist hinf\xE4llig."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387019
-    m_Localized: 
+    m_Localized: Abgemacht ist abgemacht.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387020
-    m_Localized: 
+    m_Localized: Man kann nicht immer gewinnen.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387021
-    m_Localized: 
+    m_Localized: "Splitter f\xFCr die Dunkelheit. Was darf es sein?"
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387022
-    m_Localized: 
+    m_Localized: Schon wieder da.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387023
-    m_Localized: 
+    m_Localized: Da oben wird es lauter.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387024
-    m_Localized: 
+    m_Localized: Letzter Halt vor dem Grund.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387025
-    m_Localized: 
+    m_Localized: Hinter dir hat sich etwas bewegt.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387026
-    m_Localized: 
+    m_Localized: "Es kommt n\xE4her."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387027
-    m_Localized: 
+    m_Localized: Es ist direkt hinter dir.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387028
-    m_Localized: 
+    m_Localized: Die Lichter sterben.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387029
-    m_Localized: 
+    m_Localized: "Es wei\xDF es."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387030
-    m_Localized: 
+    m_Localized: Es hat gewartet.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387031
-    m_Localized: 
+    m_Localized: ETAGE {floor}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763191
   - m_Id: 7993049387032
-    m_Localized: 
+    m_Localized: "ETAGE {floor} \u2014 {theme}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763191
   - m_Id: 7993049387033
-    m_Localized: 
+    m_Localized: FINDE {n} STERNE
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763191
   - m_Id: 7993049387034
-    m_Localized: 
+    m_Localized: SCHALTE {n} SICHERUNGEN EIN
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763191
   - m_Id: 7993049387035
-    m_Localized: 
+    m_Localized: "FINDE {n} SCHL\xDCSSEL F\xDCR DIE LUKE"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763191
   - m_Id: 7993049387036
-    m_Localized: 
+    m_Localized: SICHERHEITSSPERRE
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387037
-    m_Localized: 
+    m_Localized: "{name} \u2014 {description}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763191
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331672703763191
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 7993049387009
+        - id: 7993049387010
+        - id: 7993049387015
+        - id: 7993049387016
+        - id: 7993049387031
+        - id: 7993049387032
+        - id: 7993049387033
+        - id: 7993049387034
+        - id: 7993049387035
+        - id: 7993049387037

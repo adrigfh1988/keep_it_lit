@@ -16,404 +16,412 @@ MonoBehaviour:
     m_Code: es
   m_SharedData: {fileID: 11400000, guid: 172e1df55f88b8f408f2e07c6708d5d7, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331672703763204
   m_TableData:
   - m_Id: 698257408
-    m_Localized: 
+    m_Localized: "Ah\xED est\xE1s. Tarde otra vez, y sin abrigo. Estamos en febrero, cielo."
     m_Metadata:
       m_Items: []
   - m_Id: 794726400
-    m_Localized: 
+    m_Localized: "El Pabell\xF3n A est\xE1 cerrado, y las llaves est\xE1n en mi llavero, y mi llavero est\xE1 en la cocina."
     m_Metadata:
       m_Items: []
   - m_Id: 794726401
-    m_Localized: 
+    m_Localized: "Lo dej\xE9 en su gancho cuando se fue la luz. Yo no voy adonde se va la luz."
     m_Metadata:
       m_Items: []
   - m_Id: 794726402
-    m_Localized: 
+    m_Localized: "Hazme el favor. Al fondo, al oeste, pasado el comedor. Un llavero grande de lat\xF3n. Lo oir\xE1s."
     m_Metadata:
       m_Items: []
   - m_Id: 794726403
-    m_Localized: 
+    m_Localized: Y cuidado con el suelo. No lo han fregado desde el... bueno. Desde.
     m_Metadata:
       m_Items: []
   - m_Id: 794726404
-    m_Localized: 
+    m_Localized: "La cocina, cielo. Al fondo, al oeste. Un llavero de lat\xF3n en un gancho."
     m_Metadata:
       m_Items: []
   - m_Id: 794726405
-    m_Localized: 
+    m_Localized: "Ir\xEDa yo misma, pero ya sabes c\xF3mo me pongo con la oscuridad."
     m_Metadata:
       m_Items: []
   - m_Id: 794726406
-    m_Localized: 
+    m_Localized: "Ese es. Pesa m\xE1s de lo que recordaba."
     m_Metadata:
       m_Items: []
   - m_Id: 794726407
-    m_Localized: 
+    m_Localized: "El Pabell\xF3n A es la puerta larga del lado este. Primero la sala de d\xEDa, luego el pabell\xF3n."
     m_Metadata:
       m_Items: []
   - m_Id: 794726408
-    m_Localized: 
+    m_Localized: "La enfermera jefe dice que cada noche quedar\xE1 menos de ti. Yo le digo: tonter\xEDas. Tonter\xEDas, jefa."
     m_Metadata:
       m_Items: []
   - m_Id: 794726409
-    m_Localized: 
+    m_Localized: "Toma la llave. Devu\xE9lvela antes del recuento de la ma\xF1ana."
     m_Metadata:
       m_Items: []
   - m_Id: 794726410
-    m_Localized: 
+    m_Localized: "El recuento de la ma\xF1ana es a las seis. \xBFEstar\xE1s de vuelta a las seis?"
     m_Metadata:
       m_Items: []
   - m_Id: 794726411
-    m_Localized: 
+    m_Localized: "Siempre son las seis. Llevan siendo las seis much\xEDsimo tiempo."
     m_Metadata:
       m_Items: []
   - m_Id: 794726412
-    m_Localized: 
+    m_Localized: "\xBFYa de vuelta? \xBFTe limpiaste los pies?"
     m_Metadata:
       m_Items: []
   - m_Id: 794726413
-    m_Localized: 
+    m_Localized: "Cuidado con el ascensor. Se atasca. Se atasca a prop\xF3sito, creo."
     m_Metadata:
       m_Items: []
   - m_Id: 794726414
-    m_Localized: 
+    m_Localized: "Esta noche cont\xE9 las camas dos veces. Una de ellas siempre sale de m\xE1s."
     m_Metadata:
       m_Items: []
   - m_Id: 794726415
-    m_Localized: 
+    m_Localized: "No se lo digas a la enfermera jefe. Est\xE1 muy cansada."
     m_Metadata:
       m_Items: []
   - m_Id: 794726416
-    m_Localized: 
+    m_Localized: "No le menciones las l\xE1mparas al Dr. Weiss. Se lo toma muy a pecho."
     m_Metadata:
       m_Items: []
   - m_Id: 794726417
-    m_Localized: 
+    m_Localized: "Ah, y si oyes a alguien llamarme por mi nombre, no soy yo. Estoy aqu\xED mismo."
     m_Metadata:
       m_Items: []
   - m_Id: 794726418
-    m_Localized: 
+    m_Localized: "Sal en el alf\xE9izar. Eso dec\xEDa mi madre. Nadie hace caso."
     m_Metadata:
       m_Items: []
   - m_Id: 794726419
-    m_Localized: 
+    m_Localized: "No silbes aqu\xED abajo. Ni se te ocurra."
     m_Metadata:
       m_Items: []
   - m_Id: 794726420
-    m_Localized: 
+    m_Localized: "La sala de calderas, s\xED. Tengo la llave. La llevo encima, en alg\xFAn sitio."
     m_Metadata:
       m_Items: []
   - m_Id: 794726421
-    m_Localized: 
+    m_Localized: "Yo no bajo ah\xED. Ni por dinero. Ni por nada."
     m_Metadata:
       m_Items: []
   - m_Id: 794726422
-    m_Localized: 
+    m_Localized: "Antes hazme un favor. La cena de Josef. La bandeja est\xE1 en el pase. Muerde cuando tiene hambre."
     m_Metadata:
       m_Items: []
   - m_Id: 794726423
-    m_Localized: 
+    m_Localized: "\xBFMuerde?"
     m_Metadata:
       m_Items: []
   - m_Id: 794726424
-    m_Localized: 
+    m_Localized: Es una forma de hablar. Casi siempre.
     m_Metadata:
       m_Items: []
   - m_Id: 794726425
-    m_Localized: 
+    m_Localized: "\xBFPor qu\xE9 no se la llevas t\xFA?"
     m_Metadata:
       m_Items: []
   - m_Id: 794726426
-    m_Localized: 
+    m_Localized: "Sabe cosas. De m\xED. De todos. Prefiero que no me miren."
     m_Metadata:
       m_Items: []
   - m_Id: 794726427
-    m_Localized: 
+    m_Localized: El dormitorio, arriba de la escalera. Sube la bandeja y luego ven a verme.
     m_Metadata:
       m_Items: []
   - m_Id: 794726428
-    m_Localized: 
+    m_Localized: "La bandeja est\xE1 en el pase, junto a los fogones. Que no se enfr\xEDe. Le molesta."
     m_Metadata:
       m_Items: []
   - m_Id: 794726429
-    m_Localized: 
+    m_Localized: Venga, ve. No la derrames. No lo mires demasiado tiempo.
     m_Metadata:
       m_Items: []
   - m_Id: 794726430
-    m_Localized: 
+    m_Localized: "\xBFTe dio la llave? Vaya."
     m_Metadata:
       m_Items: []
   - m_Id: 794726431
-    m_Localized: 
+    m_Localized: "Entonces nunca la tuve. Qu\xE9 raro. Habr\xEDa jurado que la llevaba en el cintur\xF3n."
     m_Metadata:
       m_Items: []
   - m_Id: 794726432
-    m_Localized: 
+    m_Localized: "La sala de calderas est\xE1 abajo, en el s\xF3tano. Solo se llega en ascensor. No me preguntes c\xF3mo es."
     m_Metadata:
       m_Items: []
   - m_Id: 794726433
-    m_Localized: 
+    m_Localized: "Volv\xED a o\xEDr las tuber\xEDas. Tres golpes, luego dos. Me tap\xE9 los o\xEDdos con las manos."
     m_Metadata:
       m_Items: []
   - m_Id: 794726434
-    m_Localized: 
+    m_Localized: No le digas a Tomas que te lo dije.
     m_Metadata:
       m_Items: []
   - m_Id: 794726435
-    m_Localized: 
+    m_Localized: "La sal ya no est\xE1 en el alf\xE9izar. Ni un grano. \xBFQui\xE9n se lleva la sal?"
     m_Metadata:
       m_Items: []
   - m_Id: 794726436
-    m_Localized: 
+    m_Localized: Yo me quedo en la cocina. La cocina tiene puerta.
     m_Metadata:
       m_Items: []
   - m_Id: 794726437
-    m_Localized: 
+    m_Localized: "Caminas como los nuevos. Siempre caminan como si les hubieran dicho d\xF3nde est\xE1 la escalera."
     m_Metadata:
       m_Items: []
   - m_Id: 794726438
-    m_Localized: 
+    m_Localized: "Si\xE9ntate. No, no te sientes. Esa es la cama de Elias, y es muy suyo."
     m_Metadata:
       m_Items: []
   - m_Id: 794726439
-    m_Localized: 
+    m_Localized: "Sin bandeja. Entonces no vienes por m\xED."
     m_Metadata:
       m_Items: []
   - m_Id: 794726440
-    m_Localized: 
+    m_Localized: "Vuelve con la cena. Algo hervido, gris, tarde. Lo reconocer\xE9 por el olor."
     m_Metadata:
       m_Items: []
   - m_Id: 794726441
-    m_Localized: 
+    m_Localized: "La bandeja, muchacho. La cocina. Bruno sabe d\xF3nde est\xE1 la comida. Bruno siempre lo sabe."
     m_Metadata:
       m_Items: []
   - m_Id: 794726442
-    m_Localized: 
+    m_Localized: "Fr\xEDa. Claro que est\xE1 fr\xEDa. Gracias."
     m_Metadata:
       m_Items: []
   - m_Id: 794726443
-    m_Localized: 
+    m_Localized: "Nadie me ha tra\xEDdo nada desde que el m\xE9dico dej\xF3 de venir. El que dej\xF3 de ser m\xE9dico."
     m_Metadata:
       m_Items: []
   - m_Id: 794726444
-    m_Localized: 
+    m_Localized: "Querr\xE1s la sala de calderas. Bruno dice que tiene la llave."
     m_Metadata:
       m_Items: []
   - m_Id: 794726445
-    m_Localized: 
+    m_Localized: Bruno miente. Pobre hombre, se cree cada palabra.
     m_Metadata:
       m_Items: []
   - m_Id: 794726446
-    m_Localized: 
+    m_Localized: Debajo de la almohada. Mi almohada, criatura impertinente. Toma.
     m_Metadata:
       m_Items: []
   - m_Id: 794726447
-    m_Localized: 
+    m_Localized: "De lat\xF3n, con una etiqueta. Se la quit\xE9 del cintur\xF3n el octubre pasado. Aquel octubre."
     m_Metadata:
       m_Items: []
   - m_Id: 794726448
-    m_Localized: 
+    m_Localized: "Cuidado con el ascensor. Se parar\xE1 por ti. Siempre lo hacen."
     m_Metadata:
       m_Items: []
   - m_Id: 794726449
-    m_Localized: 
+    m_Localized: "Anda, ve. Terminar\xE9 mi cena. Ahora me gusta fr\xEDa."
     m_Metadata:
       m_Items: []
   - m_Id: 794726450
-    m_Localized: 
+    m_Localized: "Volver\xE1s. Todos vuelven. Solo es cuesti\xF3n de cu\xE1ntos de ti."
     m_Metadata:
       m_Items: []
   - m_Id: 794726451
-    m_Localized: 
+    m_Localized: "Elias se ha levantado. Est\xE1 de pie, con la cara contra la pared, desde que se fue la luz."
     m_Metadata:
       m_Items: []
   - m_Id: 794726452
-    m_Localized: 
+    m_Localized: "No le hables. Cree que es de mala educaci\xF3n que le contesten."
     m_Metadata:
       m_Items: []
   - m_Id: 794726453
-    m_Localized: 
+    m_Localized: "Esta ma\xF1ana bajaron a Elias. Caj\xF3n cinco. Habr\xEDa querido una ventana."
     m_Metadata:
       m_Items: []
   - m_Id: 794726454
-    m_Localized: 
+    m_Localized: "Alguien debi\xF3 decirle que los cajones no tienen ventanas. Lo habr\xEDa hecho yo."
     m_Metadata:
       m_Items: []
   - m_Id: 794726455
-    m_Localized: 
+    m_Localized: "\xBFQuieres ver mi dibujo? Es la casa. Tiene m\xE1s ventanas que la de verdad."
     m_Metadata:
       m_Items: []
   - m_Id: 794726456
-    m_Localized: 
+    m_Localized: "Shh. La tiza est\xE1 durmiendo."
     m_Metadata:
       m_Items: []
   - m_Id: 794726457
-    m_Localized: 
+    m_Localized: "Ten\xEDa una caja de m\xFAsica. Era azul por dentro, como el agua."
     m_Metadata:
       m_Items: []
   - m_Id: 794726458
-    m_Localized: 
+    m_Localized: "La baj\xE9 al pasillo largo y fr\xEDo para ense\xF1\xE1rsela a las tuber\xEDas. Les gust\xF3."
     m_Metadata:
       m_Items: []
   - m_Id: 794726459
-    m_Localized: 
+    m_Localized: "Luego las luces se fueron yendo una a una, y sub\xED. Se me olvid\xF3."
     m_Metadata:
       m_Items: []
   - m_Id: 794726460
-    m_Localized: 
+    m_Localized: "\xBFMe la traes? No me dejan bajar. Las tuber\xEDas se ponen celosas."
     m_Metadata:
       m_Items: []
   - m_Id: 794726461
-    m_Localized: 
+    m_Localized: "Est\xE1 en el suelo, creo. Junto a la pared. Dile que no estoy enfadada."
     m_Metadata:
       m_Items: []
   - m_Id: 794726462
-    m_Localized: 
+    m_Localized: "El pasillo largo y fr\xEDo. Junto a la pared. Dile que no estoy enfadada."
     m_Metadata:
       m_Items: []
   - m_Id: 794726463
-    m_Localized: 
+    m_Localized: "\xA1La encontraste! Todav\xEDa est\xE1 calentita. Siempre est\xE1 calentita."
     m_Metadata:
       m_Items: []
   - m_Id: 794726464
-    m_Localized: 
+    m_Localized: "Toma. Esto es para ti. Se lo quit\xE9 del abrigo al hombre fr\xEDo. No le import\xF3."
     m_Metadata:
       m_Items: []
   - m_Id: 794726465
-    m_Localized: 
+    m_Localized: "Abre la Morgue. No tengas miedo de la Morgue. All\xED todos est\xE1n muy callados."
     m_Metadata:
       m_Items: []
   - m_Id: 794726466
-    m_Localized: 
+    m_Localized: Gracias. Ahora puedes ir a guardar silencio con ellos.
     m_Metadata:
       m_Items: []
   - m_Id: 794726467
-    m_Localized: 
+    m_Localized: "Est\xE1 cantando en la otra habitaci\xF3n. \xBFLa oyes?"
     m_Metadata:
       m_Items: []
   - m_Id: 794726468
-    m_Localized: 
+    m_Localized: "\xBFNo? Ah. Bien. No le des cuerda. Se da cuerda sola."
     m_Metadata:
       m_Items: []
   - m_Id: 794726469
-    m_Localized: 
+    m_Localized: Ya no la oigo. Creo que se fue muy lejos.
     m_Metadata:
       m_Items: []
   - m_Id: 794726470
-    m_Localized: 
+    m_Localized: No vayas a mirar. Por favor. Solo era una caja.
     m_Metadata:
       m_Items: []
   - m_Id: 794726471
-    m_Localized: 
+    m_Localized: "\xA1Perd\xF3n! Perd\xF3n. La ronda. Llego tarde a la ronda. \xBFEst\xE1s en mi lista?"
     m_Metadata:
       m_Items: []
   - m_Id: 794726472
-    m_Localized: 
+    m_Localized: "No. No, no est\xE1s en mi lista. Bien. Eso est\xE1 bien."
     m_Metadata:
       m_Items: []
   - m_Id: 794726473
-    m_Localized: 
+    m_Localized: "Gracias a Dios. Manos. Necesito manos. \xBFTienes buen pulso? Pareces tener buen pulso."
     m_Metadata:
       m_Items: []
   - m_Id: 794726474
-    m_Localized: 
+    m_Localized: "Habitaci\xF3n 4. La inyecci\xF3n. Tres ampollas, cristal transparente, tap\xF3n azul. Las cont\xE9. Cuento en cada turno."
     m_Metadata:
       m_Items: []
   - m_Id: 794726475
-    m_Localized: 
+    m_Localized: "Las dej\xE9 en alg\xFAn sitio de esta planta. El lado de cirug\xEDa, los despachos. No lo s\xE9."
     m_Metadata:
       m_Items: []
   - m_Id: 794726476
-    m_Localized: 
+    m_Localized: "Ruedan. Son peque\xF1as. Estar\xE1n donde no llegue la luz."
     m_Metadata:
       m_Items: []
   - m_Id: 794726477
-    m_Localized: 
+    m_Localized: Trae las tres. No pienso darle una dosis incompleta. No pienso.
     m_Metadata:
       m_Items: []
   - m_Id: 794726478
-    m_Localized: 
+    m_Localized: "{n} de tres. Tapones azules, cristal transparente. La Habitaci\xF3n 4 espera."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763204
   - m_Id: 794726479
-    m_Localized: 
+    m_Localized: Lleva tanto tiempo esperando.
     m_Metadata:
       m_Items: []
   - m_Id: 794726480
-    m_Localized: 
+    m_Localized: "Tres. Las tres. Eres una maravilla. Podr\xEDa besarte. No lo har\xE9. Protocolo."
     m_Metadata:
       m_Items: []
   - m_Id: 794726481
-    m_Localized: 
+    m_Localized: "La llave de Cirug\xEDa. Toma. T\xF3mala, t\xF3mala, necesitar\xE9 las dos manos."
     m_Metadata:
       m_Items: []
   - m_Id: 794726482
-    m_Localized: 
+    m_Localized: "Habitaci\xF3n 4. Habitaci\xF3n cuatro..."
     m_Metadata:
       m_Items: []
   - m_Id: 794726483
-    m_Localized: 
+    m_Localized: "...lleva a\xF1os vac\xEDa, \xBFverdad?"
     m_Metadata:
       m_Items: []
   - m_Id: 794726484
-    m_Localized: 
+    m_Localized: "\xBFA qui\xE9n se las iba a dar?"
     m_Metadata:
       m_Items: []
   - m_Id: 794726485
-    m_Localized: 
+    m_Localized: "La ronda. Deber\xEDa hacer la ronda."
     m_Metadata:
       m_Items: []
   - m_Id: 794726486
-    m_Localized: 
+    m_Localized: "Siempre hay una luz encendida en la Habitaci\xF3n 4. \xBFNo? \xBFNo la hay siempre?"
     m_Metadata:
       m_Items: []
   - m_Id: 794726487
-    m_Localized: 
+    m_Localized: "\xBFNombre?"
     m_Metadata:
       m_Items: []
   - m_Id: 794726488
-    m_Localized: 
+    m_Localized: "No. No me lo digas. Lo tengo aqu\xED, en alguna parte."
     m_Metadata:
       m_Items: []
   - m_Id: 794726489
-    m_Localized: 
+    m_Localized: El expediente lo tiene el Director. El expediente siempre lo tiene el Director.
     m_Metadata:
       m_Items: []
   - m_Id: 794726490
-    m_Localized: 
+    m_Localized: "\xBFNombre?"
     m_Metadata:
       m_Items: []
   - m_Id: 794726491
-    m_Localized: 
+    m_Localized: "P\xE1gina cuarenta y uno. P\xE1gina cuarenta y uno. P\xE1gina cuarenta y dos."
     m_Metadata:
       m_Items: []
   - m_Id: 794726492
-    m_Localized: 
+    m_Localized: "Esto ya lo pas\xE9 a m\xE1quina antes."
     m_Metadata:
       m_Items: []
   - m_Id: 794726493
-    m_Localized: 
+    m_Localized: "No leas por encima de mi hombro. No est\xE1 terminado."
     m_Metadata:
       m_Items: []
   - m_Id: 794726494
-    m_Localized: 
+    m_Localized: "Est\xE1s aqu\xED dentro, \xBFsabes? P\xE1gina diecisiete. En 'Presentes'."
     m_Metadata:
       m_Items: []
   - m_Id: 794726495
-    m_Localized: 
+    m_Localized: Es todo un detalle que vengas. Me ahorra buscarte.
     m_Metadata:
       m_Items: []
   - m_Id: 794726496
-    m_Localized: 
+    m_Localized: "Est\xE1 terminado."
     m_Metadata:
       m_Items: []
   - m_Id: 794726497
-    m_Localized: 
+    m_Localized: "Siempre iba a estar terminado. Solo ten\xEDa que pasarlo a m\xE1quina."
     m_Metadata:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331672703763204
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 794726478

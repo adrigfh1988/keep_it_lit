@@ -19,139 +19,139 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 538873856
-    m_Localized: 
+    m_Localized: MIRA ALREDEDOR
     m_Metadata:
       m_Items: []
   - m_Id: 631148544
-    m_Localized: 
+    m_Localized: CAMINA HASTA LA MARCA
     m_Metadata:
       m_Items: []
   - m_Id: 631148545
-    m_Localized: 
+    m_Localized: ENCIENDE LA LINTERNA
     m_Metadata:
       m_Items: []
   - m_Id: 631148546
-    m_Localized: 
+    m_Localized: "MANT\xC9N EL HAZ SOBRE EL CARTEL"
     m_Metadata:
       m_Items: []
   - m_Id: 635342848
-    m_Localized: 
+    m_Localized: TOMA LA PILA
     m_Metadata:
       m_Items: []
   - m_Id: 635342849
-    m_Localized: 
+    m_Localized: LEE LA NOTA
     m_Metadata:
       m_Items: []
   - m_Id: 635342850
-    m_Localized: 
+    m_Localized: CIERRA LA NOTA
     m_Metadata:
       m_Items: []
   - m_Id: 635342851
-    m_Localized: 
+    m_Localized: RECOGE LA BOTELLA
     m_Metadata:
       m_Items: []
   - m_Id: 635342852
-    m_Localized: 
+    m_Localized: "L\xC1NZALA CONTRA LA CAMPANA"
     m_Metadata:
       m_Items: []
   - m_Id: 635342853
-    m_Localized: 
+    m_Localized: PASA POR LA PERSIANA
     m_Metadata:
       m_Items: []
   - m_Id: 635342854
-    m_Localized: 
+    m_Localized: "ESC\xD3NDETE EN EL CASILLERO"
     m_Metadata:
       m_Items: []
   - m_Id: 635342855
-    m_Localized: 
+    m_Localized: NO TE MUEVAS
     m_Metadata:
       m_Items: []
   - m_Id: 635342856
-    m_Localized: 
+    m_Localized: ESO SE FUE. SAL DEL CASILLERO
     m_Metadata:
       m_Items: []
   - m_Id: 635342857
-    m_Localized: 
+    m_Localized: TOMA LA ESTRELLA
     m_Metadata:
       m_Items: []
   - m_Id: 635342858
-    m_Localized: 
+    m_Localized: PISA LA TRAMPILLA
     m_Metadata:
       m_Items: []
   - m_Id: 635342859
-    m_Localized: 
+    m_Localized: "RAT\xD3N"
     m_Metadata:
       m_Items: []
   - m_Id: 635342860
-    m_Localized: 
+    m_Localized: CLIC DER.
     m_Metadata:
       m_Items: []
   - m_Id: 635342861
-    m_Localized: 
+    m_Localized: PULGAR DER.
     m_Metadata:
       m_Items: []
   - m_Id: 635342862
-    m_Localized: 
+    m_Localized: PULGAR IZQ.
     m_Metadata:
       m_Items: []
   - m_Id: 635342863
-    m_Localized: 
+    m_Localized: LINTERNA
     m_Metadata:
       m_Items: []
   - m_Id: 635342864
-    m_Localized: 
+    m_Localized: ENFOCAR
     m_Metadata:
       m_Items: []
   - m_Id: 635342865
-    m_Localized: 
+    m_Localized: LANZAR
     m_Metadata:
       m_Items: []
   - m_Id: 635342866
-    m_Localized: 
+    m_Localized: "Despiertas. La cama est\xE1 fr\xEDa. No hay nadie."
     m_Metadata:
       m_Items: []
   - m_Id: 635342867
-    m_Localized: 
+    m_Localized: "Otra vez aqu\xED. Ya conoces el camino - o s\xE1ltalo desde el men\xFA de pausa."
     m_Metadata:
       m_Items: []
   - m_Id: 635342868
-    m_Localized: 
+    m_Localized: "Lev\xE1ntate."
     m_Metadata:
       m_Items: []
   - m_Id: 635342869
-    m_Localized: 
+    m_Localized: "El haz enfocado es m\xE1s estrecho y llega m\xE1s lejos. Mantenlo sobre el cartel."
     m_Metadata:
       m_Items: []
   - m_Id: 635342870
-    m_Localized: 
+    m_Localized: "Tu linterna se est\xE1 apagando. Una pila nueva la recarga."
     m_Metadata:
       m_Items: []
   - m_Id: 635342871
-    m_Localized: 
+    m_Localized: Apagada, la linterna se recarga despacio - pero nunca del todo.
     m_Metadata:
       m_Items: []
   - m_Id: 635342872
-    m_Localized: 
+    m_Localized: "La l\xE1mpara chisporrotea. La sala se queda a oscuras."
     m_Metadata:
       m_Items: []
   - m_Id: 635342873
-    m_Localized: 
+    m_Localized: "Suena la campana. En alg\xFAn lugar, se levanta una persiana."
     m_Metadata:
       m_Items: []
   - m_Id: 635342874
-    m_Localized: 
+    m_Localized: Otra botella sobre la mesa.
     m_Metadata:
       m_Items: []
   - m_Id: 635342875
-    m_Localized: 
+    m_Localized: "Pasos. Est\xE1n arrastrando algo pesado."
     m_Metadata:
       m_Items: []
   - m_Id: 635342876
-    m_Localized: 
+    m_Localized: Las estrellas abren la trampilla. Hacia abajo.
     m_Metadata:
       m_Items: []
   - m_Id: 635342877
-    m_Localized: 
+    m_Localized: "\"Las estrellas abren la trampilla. La trampilla es el camino hacia abajo. Algo ah\xED abajo est\xE1 cazando.\""
     m_Metadata:
       m_Items: []
   references:

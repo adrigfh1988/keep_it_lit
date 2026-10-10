@@ -1,0 +1,79 @@
+key,text
+lore.note.0,"Dienstplan Nachtschicht. Regel 1: Das Licht bleibt an. Regel 2: Wenn das Licht ausgeht, renn nicht. Am Rennen findet es dich. — Schichtleiter Okafor"
+lore.note.1,"Patient 7 malt immer wieder Sterne an die Wände. Sagt, sie seien ""der Weg nach unten"". Wir übermalen sie. Am Morgen sind sie wieder da, und sie leuchten."
+lore.note.2,Wartungsprotokoll: Druck normal. Sicherung 3 schon wieder ausgelöst. Jemand drückt um 3 Uhr nachts immer wieder die Sperrknöpfe. Um 3 Uhr nachts hat niemand Dienst.
+lore.note.3,"An den, der das hier findet: Die Rollläden sollten dich nie einsperren. Sie wurden gebaut, um es zu bremsen. Es hasst Türen. Schließ sie hinter dir."
+lore.note.4,"Die Kapellenkerzen sind die einzigen Lichter, die sie nicht abschalten konnten. Zünde eine an. Es hilft nicht viel. Es hilft genug."
+lore.note.5,"Begräbnisregister, letzte Seite: ""Subjekt A — in die unteren Ebenen entlassen."" Es gibt kein Grab. Es gab nie ein Grab."
+lore.note.6,"Serviceeinheiten, Versuch 14: Die alten Roboter erstarren unter direkter Beobachtung. Die Technik nennt es einen Fehler. Ich habe gesehen, wie sich einer bewegte, jedes Mal, wenn meine Lampe flackerte. Es ist kein Fehler."
+lore.note.7,"Wir haben die Serviceeinheiten nie abgeschaltet. Wir haben das Licht in ihrer Halle ausgemacht und nicht mehr hingesehen. Das reichte, eine Weile."
+lore.note.8,"Wenn du das liest, bist du weiter gekommen als wir. Der Ausgang ganz unten ist echt. Er öffnet sich einmal. Nimm die Sterne mit."
+lore.note.9,"Letzter Eintrag. Es jagt dich nicht. Es folgt dir. Mit jeder Etage, die du schaffst, kommt es eine Etage tiefer. Hör nicht auf."
+lore.note.intake,"AN DEN, DER ALS NÄCHSTES AUFWACHT
+
+Hier unten halten sie das Licht gedämpft, und etwas geht zwischen den Betten durch die Flure. Fünf Sterne liegen im Dunkeln. Sammle sie, und die Luke öffnet sich. Sie öffnet sich immer. Sie bleibt nie lange offen.
+
+- eine Nachtschwester, Station 1"
+lore.file.100.text,"KRANKENAKTE · PATIENTIN 3 · HILDE BRANDT
+
+Aufgenommen wegen Zählens. Zählt die ganze Nacht laut die Türen auf Station A. Besteht darauf, dass es immer eine Tür mehr gibt als gestern.
+
+Personalvermerk: Sie hat recht. Die Wartung kann sich die neue Tür auf Station A nicht erklären. Patientin ist davon fernzuhalten."
+lore.file.101.text,"KRANKENAKTE · PATIENT 11 · TOMAS REINER
+
+Ehemaliger Heizer. Hört Schritte in den Rohren und antwortet ihnen. Zweimal klopfen: alles sicher. Dreimal klopfen: verstecken.
+
+Personalvermerk: Seit der Kesselraum versiegelt wurde, klopfen die Rohre zurück. Niemand vom Personal klopft dreimal."
+lore.file.102.text,"KRANKENAKTE · PATIENT 5 · ELIAS VOGT
+
+Schlafwandler. Wird jeden Morgen an den Türen der Leichenhalle gefunden, mit offenen Augen, sein eigenes Armband in der Hand. Sagt, auf Schublade fünf ""steht sein Name"".
+
+Personalvermerk: Auf Schublade fünf steht tatsächlich sein Name. Niemand hat ihn geschrieben. Verlegung in die Chirurgie genehmigt."
+lore.file.103.text,"KRANKENAKTE · SUBJEKT A
+
+Eingriff 1: Entfernung der Angst. Erfolgreich. Das Subjekt schläft nicht mehr, spricht nicht mehr, hört nicht mehr auf.
+
+In die unteren Ebenen entlassen, um dort für Ruhe zu sorgen. Personalvermerk: In den unteren Ebenen ist es jetzt ruhig. Alle dort unten sind sehr, sehr still."
+lore.file.104.text,"DIREKTOR KARLHEINZ · PRIVAT
+
+Die Serviceeinheiten hüten das Licht. Subjekt A hütet die Dunkelheit. Die Sterne zeigen den Patienten den Weg nach unten, und der Weg nach unten bringt sie zurück zur Aufnahme. Ein geschlossenes System.
+
+Es braucht noch einen Patienten, um sich zu schließen. Die Akte liegt auf meinem Schreibtisch."
+lore.file.105.text,"KRANKENAKTE · PATIENT 7
+
+Aufgenommen: vierzehnmal. Malt Sterne an die Wände. Erreicht jedes Mal den Grund, die Sterne in der Hand, kommt durch die Aufnahme wieder herein und fragt, wo die Betten sind.
+
+Behandlung: keine wirksam.
+
+Vermerk des Direktors: Hinter diesem Schreibtisch ist ein Schalter. Er schaltet alles ab. Die Einheiten, die Dunkelheit, das Subjekt, die Anstalt. Mir fehlte immer der Mut. Patient 7 hat ihn vielleicht."
+lore.file.100.label,P3 · HILDE BRANDT
+lore.file.101.label,P11 · TOMAS REINER
+lore.file.102.label,P5 · ELIAS VOGT
+lore.file.103.label,SUBJEKT A
+lore.file.104.label,DIREKTOR · PRIVAT
+lore.file.105.label,PATIENT 7
+lore.wristband.line,Das Armband ist kalt. Schublade fünf steht offen.
+lore.ending.discharged.title,ENTLASSEN
+lore.ending.discharged.body,"Die Haupttüren öffnen sich zur Nacht. Die Kälte ist echt. Hinter dir geht auf der Aufnahmestation ein Licht an. Jemand bezieht ein Bett. Du weißt, für wen."
+lore.ending.lights_out.title,LIGHTS OUT
+lore.ending.lights_out.body,"Du legst den Schalter um. Jede Lampe in Karlheinz erlischt auf einmal, und zum ersten Mal bewegt sich nichts im Dunkeln. Keine Schritte. Kein Klopfen. Kein Zählen. Patient 7 ist entlassen. Diesmal bezieht niemand das Bett."
+lore.vignette.bay_card,"WIEDER AUFGENOMMEN. FRAGTE, WO DIE BETTEN SIND. SCHLIEF HINTER DER STATUE."
+lore.vignette.bay_card_truth,"WIEDER AUFGENOMMEN. FRAGTE, WO DIE BETTEN SIND. SCHLIEF HINTER DER STATUE.
+ES IST DEINE HANDSCHRIFT."
+lore.vignette.evac,RÄUMUNGSBEFEHL · NACHT DES 14. · STATION A ZUERST. NICHT
+lore.vignette.tally,JEMAND HAT DIE TÜREN GEZÄHLT.
+lore.vignette.admissions,AUFNAHMEN: {list}
+lore.vignette.admissions_more,AUFNAHMEN: {list} UND {n} WEITERE
+lore.vignette.admissions.entry,PATIENT {mark}
+lore.vignette.rota,DIENSTPLAN · OKAFOR · LICHT BLEIBT AN.
+lore.vignette.rota_late,"DIENSTPLAN · OKAFOR · LICHT BLEIBT AN.
+ZÄHLEN UM SECHS. ZÄHLEN UM SECHS."
+lore.vignette.room4,ZIMMER 4. LEER. DIE LAMPE IST WARM.
+lore.vignette.stanbay,HALLENLICHT: AUS. NICHT HINEINSEHEN.
+lore.vignette.pipe_early,ZWEI DELLEN IM ROHR. DER STAHL IST NOCH WARM.
+lore.vignette.pipe_late,DREI DELLEN IM ROHR. DER STAHL IST NOCH WARM.
+lore.vignette.lower,IN DIE UNTEREN EBENEN ENTLASSEN. SUBJEKT A. NICHT FOLGEN.
+lore.vignette.barricade_early,SIE HABEN DIE TÜR VERBARRIKADIERT. VON INNEN.
+lore.vignette.barricade_late,DER TISCH WURDE VERSCHOBEN. VON DER ANDEREN SEITE.
+lore.vignette.chalkhouse_early,EIN KREIDEHAUS MIT MEHR FENSTERN ALS DAS ECHTE.
+lore.vignette.chalkhouse_late,"EIN KREIDEHAUS, VON EINER HAND VERWISCHT."

@@ -16,320 +16,344 @@ MonoBehaviour:
     m_Code: es
   m_SharedData: {fileID: 11400000, guid: fefa1c381967b3c46b9600b8d091da42, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331672703763202
   m_TableData:
   - m_Id: 295604224
-    m_Localized: 
+    m_Localized: FRAGMENTOS
     m_Metadata:
       m_Items: []
   - m_Id: 375296000
-    m_Localized: 
+    m_Localized: Pila de Repuesto
     m_Metadata:
       m_Items: []
   - m_Id: 375296001
-    m_Localized: 
+    m_Localized: Una pila nueva. Recarga la linterna y la enciende. Pulsa {key}.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763202
   - m_Id: 375296002
-    m_Localized: 
+    m_Localized: "Br\xFAjula Estelar"
     m_Metadata:
       m_Items: []
   - m_Id: 375296003
-    m_Localized: 
+    m_Localized: "Apunta a la estrella m\xE1s cercana durante cinco segundos. Pulsa {key}."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763202
   - m_Id: 375296004
-    m_Localized: 
+    m_Localized: Segundo Aliento
     m_Metadata:
       m_Items: []
   - m_Id: 375296005
-    m_Localized: 
+    m_Localized: Cuando te atrapa, te suelta. Una vez.
     m_Metadata:
       m_Items: []
   - m_Id: 375296006
-    m_Localized: 
+    m_Localized: Mecha Larga
     m_Metadata:
       m_Items: []
   - m_Id: 375296007
-    m_Localized: 
+    m_Localized: "Diez segundos m\xE1s para la trampilla en la pr\xF3xima planta."
     m_Metadata:
       m_Items: []
   - m_Id: 375296008
-    m_Localized: 
+    m_Localized: Zapatos Silenciosos
     m_Metadata:
       m_Items: []
   - m_Id: 375296009
-    m_Localized: 
+    m_Localized: "Tus pasos se oyen un tercio menos, en la pr\xF3xima planta."
     m_Metadata:
       m_Items: []
   - m_Id: 375296010
-    m_Localized: 
+    m_Localized: "L\xE1mparas Extra"
     m_Metadata:
       m_Items: []
   - m_Id: 375296011
-    m_Localized: 
+    m_Localized: "M\xE1s l\xE1mparas encendidas en la pr\xF3xima planta."
     m_Metadata:
       m_Items: []
   - m_Id: 375296012
-    m_Localized: 
+    m_Localized: "T\xF3nico de Aguante"
     m_Metadata:
       m_Items: []
   - m_Id: 375296013
-    m_Localized: 
+    m_Localized: "Cuatro segundos m\xE1s de carrera en la pr\xF3xima planta."
     m_Metadata:
       m_Items: []
   - m_Id: 375296014
-    m_Localized: 
+    m_Localized: Color de Linterna
     m_Metadata:
       m_Items: []
   - m_Id: 375296015
-    m_Localized: 
+    m_Localized: "Fr\xEDo. Ascua. Violeta."
     m_Metadata:
       m_Items: []
   - m_Id: 375296016
-    m_Localized: 
+    m_Localized: Tono del HUD
     m_Metadata:
       m_Items: []
   - m_Id: 375296017
-    m_Localized: 
+    m_Localized: "F\xF3sforo. \xC1mbar. Hielo."
     m_Metadata:
       m_Items: []
   - m_Id: 375296018
-    m_Localized: 
+    m_Localized: Pack de Botellas
     m_Metadata:
       m_Items: []
   - m_Id: 375296019
-    m_Localized: 
+    m_Localized: "Empieza la pr\xF3xima planta llevando ya tres botellas."
     m_Metadata:
       m_Items: []
   - m_Id: 375296020
-    m_Localized: 
+    m_Localized: Lente de Enfoque
     m_Metadata:
       m_Items: []
   - m_Id: 375296021
-    m_Localized: 
+    m_Localized: "El haz enfocado llega m\xE1s lejos en la pr\xF3xima planta, sin gastar m\xE1s pila."
     m_Metadata:
       m_Items: []
   - m_Id: 375296022
-    m_Localized: 
+    m_Localized: Mapa de Fusibles
     m_Metadata:
       m_Items: []
   - m_Id: 375296023
-    m_Localized: 
+    m_Localized: "Fusibles, botones, c\xE1maras y llaves brillan levemente. La br\xFAjula tambi\xE9n los se\xF1ala."
     m_Metadata:
       m_Items: []
   - m_Id: 375296024
-    m_Localized: 
+    m_Localized: "C\xC1LIDO"
     m_Metadata:
       m_Items: []
   - m_Id: 375296025
-    m_Localized: 
+    m_Localized: "FR\xCDO"
     m_Metadata:
       m_Items: []
   - m_Id: 375296026
-    m_Localized: 
+    m_Localized: ASCUA
     m_Metadata:
       m_Items: []
   - m_Id: 375296027
-    m_Localized: 
+    m_Localized: VIOLETA
     m_Metadata:
       m_Items: []
   - m_Id: 375296028
-    m_Localized: 
+    m_Localized: HUESO
     m_Metadata:
       m_Items: []
   - m_Id: 375296029
-    m_Localized: 
+    m_Localized: "F\xD3SFORO"
     m_Metadata:
       m_Items: []
   - m_Id: 375296030
-    m_Localized: 
+    m_Localized: "\xC1MBAR"
     m_Metadata:
       m_Items: []
   - m_Id: 375296031
-    m_Localized: 
+    m_Localized: HIELO
     m_Metadata:
       m_Items: []
   - m_Id: 375296032
-    m_Localized: 
+    m_Localized: "EL PABELL\xD3N"
     m_Metadata:
       m_Items: []
   - m_Id: 375296033
-    m_Localized: 
+    m_Localized: LA SALA DE CALDERAS
     m_Metadata:
       m_Items: []
   - m_Id: 375296034
-    m_Localized: 
+    m_Localized: LA CRIPTA
     m_Metadata:
       m_Items: []
   - m_Id: 375296035
-    m_Localized: 
+    m_Localized: EL LABORATORIO
     m_Metadata:
       m_Items: []
   - m_Id: 375296036
-    m_Localized: 
+    m_Localized: LA OQUEDAD
     m_Metadata:
       m_Items: []
   - m_Id: 375296037
-    m_Localized: 
+    m_Localized: RED MORIBUNDA
     m_Metadata:
       m_Items: []
   - m_Id: 375296038
-    m_Localized: 
+    m_Localized: "Cada minuto se apaga una l\xE1mpara."
     m_Metadata:
       m_Items: []
   - m_Id: 375296039
-    m_Localized: 
+    m_Localized: "O\xCDDO FINO"
     m_Metadata:
       m_Items: []
   - m_Id: 375296040
-    m_Localized: 
+    m_Localized: "Aqu\xED oye desde m\xE1s lejos. Los fragmentos valen m\xE1s."
     m_Metadata:
       m_Items: []
   - m_Id: 375296041
-    m_Localized: 
+    m_Localized: NIEBLA DENSA
     m_Metadata:
       m_Items: []
   - m_Id: 375296042
-    m_Localized: 
+    m_Localized: "Ves menos; eso tambi\xE9n."
     m_Metadata:
       m_Items: []
   - m_Id: 375296043
-    m_Localized: 
+    m_Localized: "PILA D\xC9BIL"
     m_Metadata:
       m_Items: []
   - m_Id: 375296044
-    m_Localized: 
+    m_Localized: "Empiezas con media carga, pero apagada se recarga m\xE1s r\xE1pido."
     m_Metadata:
       m_Items: []
   - m_Id: 375296045
-    m_Localized: 
+    m_Localized: INQUIETO
     m_Metadata:
       m_Items: []
   - m_Id: 375296046
-    m_Localized: 
+    m_Localized: "Se mueve y aparece m\xE1s a menudo."
     m_Metadata:
       m_Items: []
   - m_Id: 375296047
-    m_Localized: 
+    m_Localized: SUELOS DE CRISTAL
     m_Metadata:
       m_Items: []
   - m_Id: 375296048
-    m_Localized: 
+    m_Localized: "M\xE1s cristales rotos y charcos bajo tus pies."
     m_Metadata:
       m_Items: []
   - m_Id: 375296049
-    m_Localized: 
+    m_Localized: VETAS RICAS
     m_Metadata:
       m_Items: []
   - m_Id: 375296050
-    m_Localized: 
+    m_Localized: "M\xE1s fragmentos, pero eso camina un poco m\xE1s r\xE1pido."
     m_Metadata:
       m_Items: []
   - m_Id: 375296051
-    m_Localized: 
+    m_Localized: "Aqu\xED caza por el sonido."
     m_Metadata:
       m_Items: []
   - m_Id: 375296052
-    m_Localized: 
+    m_Localized: "Aqu\xED es r\xE1pido, pero olvida enseguida."
     m_Metadata:
       m_Items: []
   - m_Id: 375296053
-    m_Localized: 
+    m_Localized: '{name}.'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763202
   - m_Id: 375296054
-    m_Localized: 
+    m_Localized: No te escondas
     m_Metadata:
       m_Items: []
   - m_Id: 375296055
-    m_Localized: 
+    m_Localized: Termina la planta sin meterte en un casillero.
     m_Metadata:
       m_Items: []
   - m_Id: 375296056
-    m_Localized: 
+    m_Localized: "Ni un rasgu\xF1o"
     m_Metadata:
       m_Items: []
   - m_Id: 375296057
-    m_Localized: 
+    m_Localized: "Que no te atrapen nunca - y que Stan no te toque jam\xE1s."
     m_Metadata:
       m_Items: []
   - m_Id: 375296058
-    m_Localized: 
+    m_Localized: Camina a oscuras
     m_Metadata:
       m_Items: []
   - m_Id: 375296059
-    m_Localized: 
+    m_Localized: Pasa 60 segundos caminando con la linterna apagada.
     m_Metadata:
       m_Items: []
   - m_Id: 375296060
-    m_Localized: 
+    m_Localized: Todo lo que reluce
     m_Metadata:
       m_Items: []
   - m_Id: 375296061
-    m_Localized: 
+    m_Localized: Recoge al menos el 60% de los fragmentos de la planta.
     m_Metadata:
       m_Items: []
   - m_Id: 375296062
-    m_Localized: 
+    m_Localized: "L\xE9elo todo"
     m_Metadata:
       m_Items: []
   - m_Id: 375296063
-    m_Localized: 
+    m_Localized: Lee todas las notas de la planta.
     m_Metadata:
       m_Items: []
   - m_Id: 375296064
-    m_Localized: 
+    m_Localized: Sin demoras
     m_Metadata:
       m_Items: []
   - m_Id: 375296065
-    m_Localized: 
+    m_Localized: Supera la planta antes de que se acabe el tiempo.
     m_Metadata:
       m_Items: []
   - m_Id: 375296066
-    m_Localized: 
+    m_Localized: Haz ruido
     m_Metadata:
       m_Items: []
   - m_Id: 375296067
-    m_Localized: 
+    m_Localized: Haz que la cosa venga a investigar una botella o una lata lanzada, dos veces.
     m_Metadata:
       m_Items: []
   - m_Id: 375296068
-    m_Localized: 
+    m_Localized: Pies ligeros
     m_Metadata:
       m_Items: []
   - m_Id: 375296069
-    m_Localized: 
+    m_Localized: No corras nunca.
     m_Metadata:
       m_Items: []
   - m_Id: 375296070
-    m_Localized: 
+    m_Localized: PLANTA {floor} SUPERADA
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763202
   - m_Id: 375296071
-    m_Localized: 
+    m_Localized: ESTRELLAS  {stars} x {value}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763202
   - m_Id: 375296072
-    m_Localized: 
+    m_Localized: TIEMPO RESTANTE  {time}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763202
   - m_Id: 375296073
-    m_Localized: 
+    m_Localized: PLANTA {floor} SUPERADA
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763202
   - m_Id: 375296074
-    m_Localized: 
+    m_Localized: FRAGMENTOS ENCONTRADOS  {n} x {value}  (ya son tuyos)
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763202
   - m_Id: 375296075
-    m_Localized: 
+    m_Localized: "CONSOLACI\xD3N"
     m_Metadata:
       m_Items: []
   - m_Id: 375296076
-    m_Localized: 
+    m_Localized: "CONSOLACI\xD3N  {percent}% de {stars} {stars:plural:estrella|estrellas}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763202
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331672703763202
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 375296001
+        - id: 375296003
+        - id: 375296053
+        - id: 375296070
+        - id: 375296071
+        - id: 375296072
+        - id: 375296073
+        - id: 375296074
+        - id: 375296076

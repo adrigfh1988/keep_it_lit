@@ -1,0 +1,25 @@
+key,text
+world.hub.admissions,"ANSTALT KARLHEINZ
+AUFNAHME"
+world.hub.slot.100,"P3
+HILDE BRANDT"
+world.hub.slot.101,"P11
+TOMAS REINER"
+world.hub.slot.102,"P5
+ELIAS VOGT"
+world.hub.slot.103,SUBJEKT A
+world.hub.slot.104,"DIREKTOR
+PRIVAT"
+world.hub.wristband,"ELIAS VOGT
+PATIENT 5"
+world.hub.lower_level,"SUBJEKT A
+UNTERE EBENE"
+world.hub.service_unit,SERVICEEINHEIT
+world.intake.holding,VERWAHRUNG
+world.intake.no_entry,KEIN ZUTRITT
+world.intake.ward,AUFNAHME  ·  STATION 1
+world.intake.keep_quiet,"SEI LEISE.
+ES HÖRT ALLES."
+world.intake.stay_in_bed,BLEIB IM BETT
+world.shop.contracts,AUFTRÄGE
+world.shop.shards_accepted,SPLITTER WERDEN ANGENOMMEN

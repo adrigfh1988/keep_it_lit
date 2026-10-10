@@ -16,192 +16,206 @@ MonoBehaviour:
     m_Code: de
   m_SharedData: {fileID: 11400000, guid: bbe146643d6caf2478fe4f018f1c5ef5, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331672703763200
   m_TableData:
   - m_Id: 303992832
-    m_Localized: 
+    m_Localized: "Dienstplan Nachtschicht. Regel 1: Das Licht bleibt an. Regel 2: Wenn das Licht ausgeht, renn nicht. Am Rennen findet es dich. \u2014 Schichtleiter Okafor"
     m_Metadata:
       m_Items: []
   - m_Id: 387878912
-    m_Localized: 
+    m_Localized: "Patient 7 malt immer wieder Sterne an die W\xE4nde. Sagt, sie seien \"der Weg nach unten\". Wir \xFCbermalen sie. Am Morgen sind sie wieder da, und sie leuchten."
     m_Metadata:
       m_Items: []
   - m_Id: 387878913
-    m_Localized: 
+    m_Localized: "Wartungsprotokoll: Druck normal. Sicherung 3 schon wieder ausgel\xF6st. Jemand dr\xFCckt um 3 Uhr nachts immer wieder die Sperrkn\xF6pfe. Um 3 Uhr nachts hat niemand Dienst."
     m_Metadata:
       m_Items: []
   - m_Id: 387878914
-    m_Localized: 
+    m_Localized: "An den, der das hier findet: Die Rolll\xE4den sollten dich nie einsperren. Sie wurden gebaut, um es zu bremsen. Es hasst T\xFCren. Schlie\xDF sie hinter dir."
     m_Metadata:
       m_Items: []
   - m_Id: 387878915
-    m_Localized: 
+    m_Localized: "Die Kapellenkerzen sind die einzigen Lichter, die sie nicht abschalten konnten. Z\xFCnde eine an. Es hilft nicht viel. Es hilft genug."
     m_Metadata:
       m_Items: []
   - m_Id: 387878916
-    m_Localized: 
+    m_Localized: "Begr\xE4bnisregister, letzte Seite: \"Subjekt A \u2014 in die unteren Ebenen entlassen.\" Es gibt kein Grab. Es gab nie ein Grab."
     m_Metadata:
       m_Items: []
   - m_Id: 387878917
-    m_Localized: 
+    m_Localized: 'Serviceeinheiten, Versuch 14: Die alten Roboter erstarren unter direkter Beobachtung. Die Technik nennt es einen Fehler. Ich habe gesehen, wie sich einer bewegte, jedes Mal, wenn meine Lampe flackerte. Es ist kein Fehler.'
     m_Metadata:
       m_Items: []
   - m_Id: 387878918
-    m_Localized: 
+    m_Localized: Wir haben die Serviceeinheiten nie abgeschaltet. Wir haben das Licht in ihrer Halle ausgemacht und nicht mehr hingesehen. Das reichte, eine Weile.
     m_Metadata:
       m_Items: []
   - m_Id: 387878919
-    m_Localized: 
+    m_Localized: "Wenn du das liest, bist du weiter gekommen als wir. Der Ausgang ganz unten ist echt. Er \xF6ffnet sich einmal. Nimm die Sterne mit."
     m_Metadata:
       m_Items: []
   - m_Id: 387878920
-    m_Localized: 
+    m_Localized: "Letzter Eintrag. Es jagt dich nicht. Es folgt dir. Mit jeder Etage, die du schaffst, kommt es eine Etage tiefer. H\xF6r nicht auf."
     m_Metadata:
       m_Items: []
   - m_Id: 387878921
-    m_Localized: 
+    m_Localized: "AN DEN, DER ALS N\xC4CHSTES AUFWACHT\n\nHier unten halten sie das Licht ged\xE4mpft, und etwas geht zwischen den Betten durch die Flure. F\xFCnf Sterne liegen im Dunkeln. Sammle sie, und die Luke \xF6ffnet sich. Sie \xF6ffnet sich immer. Sie bleibt nie lange offen.\n\n- eine Nachtschwester, Station 1"
     m_Metadata:
       m_Items: []
   - m_Id: 387878922
-    m_Localized: 
+    m_Localized: "KRANKENAKTE \xB7 PATIENTIN 3 \xB7 HILDE BRANDT\n\nAufgenommen wegen Z\xE4hlens. Z\xE4hlt die ganze Nacht laut die T\xFCren auf Station A. Besteht darauf, dass es immer eine T\xFCr mehr gibt als gestern.\n\nPersonalvermerk: Sie hat recht. Die Wartung kann sich die neue T\xFCr auf Station A nicht erkl\xE4ren. Patientin ist davon fernzuhalten."
     m_Metadata:
       m_Items: []
   - m_Id: 387878923
-    m_Localized: 
+    m_Localized: "KRANKENAKTE \xB7 PATIENT 11 \xB7 TOMAS REINER\n\nEhemaliger Heizer. H\xF6rt Schritte in den Rohren und antwortet ihnen. Zweimal klopfen: alles sicher. Dreimal klopfen: verstecken.\n\nPersonalvermerk: Seit der Kesselraum versiegelt wurde, klopfen die Rohre zur\xFCck. Niemand vom Personal klopft dreimal."
     m_Metadata:
       m_Items: []
   - m_Id: 387878924
-    m_Localized: 
+    m_Localized: "KRANKENAKTE \xB7 PATIENT 5 \xB7 ELIAS VOGT\n\nSchlafwandler. Wird jeden Morgen an den T\xFCren der Leichenhalle gefunden, mit offenen Augen, sein eigenes Armband in der Hand. Sagt, auf Schublade f\xFCnf \"steht sein Name\".\n\nPersonalvermerk: Auf Schublade f\xFCnf steht tats\xE4chlich sein Name. Niemand hat ihn geschrieben. Verlegung in die Chirurgie genehmigt."
     m_Metadata:
       m_Items: []
   - m_Id: 387878925
-    m_Localized: 
+    m_Localized: "KRANKENAKTE \xB7 SUBJEKT A\n\nEingriff 1: Entfernung der Angst. Erfolgreich. Das Subjekt schl\xE4ft nicht mehr, spricht nicht mehr, h\xF6rt nicht mehr auf.\n\nIn die unteren Ebenen entlassen, um dort f\xFCr Ruhe zu sorgen. Personalvermerk: In den unteren Ebenen ist es jetzt ruhig. Alle dort unten sind sehr, sehr still."
     m_Metadata:
       m_Items: []
   - m_Id: 387878926
-    m_Localized: 
+    m_Localized: "DIREKTOR KARLHEINZ \xB7 PRIVAT\n\nDie Serviceeinheiten h\xFCten das Licht. Subjekt A h\xFCtet die Dunkelheit. Die Sterne zeigen den Patienten den Weg nach unten, und der Weg nach unten bringt sie zur\xFCck zur Aufnahme. Ein geschlossenes System.\n\nEs braucht noch einen Patienten, um sich zu schlie\xDFen. Die Akte liegt auf meinem Schreibtisch."
     m_Metadata:
       m_Items: []
   - m_Id: 387878927
-    m_Localized: 
+    m_Localized: "KRANKENAKTE \xB7 PATIENT 7\n\nAufgenommen: vierzehnmal. Malt Sterne an die W\xE4nde. Erreicht jedes Mal den Grund, die Sterne in der Hand, kommt durch die Aufnahme wieder herein und fragt, wo die Betten sind.\n\nBehandlung: keine wirksam.\n\nVermerk des Direktors: Hinter diesem Schreibtisch ist ein Schalter. Er schaltet alles ab. Die Einheiten, die Dunkelheit, das Subjekt, die Anstalt. Mir fehlte immer der Mut. Patient 7 hat ihn vielleicht."
     m_Metadata:
       m_Items: []
   - m_Id: 387878928
-    m_Localized: 
+    m_Localized: "P3 \xB7 HILDE BRANDT"
     m_Metadata:
       m_Items: []
   - m_Id: 387878929
-    m_Localized: 
+    m_Localized: "P11 \xB7 TOMAS REINER"
     m_Metadata:
       m_Items: []
   - m_Id: 387878930
-    m_Localized: 
+    m_Localized: "P5 \xB7 ELIAS VOGT"
     m_Metadata:
       m_Items: []
   - m_Id: 387878931
-    m_Localized: 
+    m_Localized: SUBJEKT A
     m_Metadata:
       m_Items: []
   - m_Id: 387878932
-    m_Localized: 
+    m_Localized: "DIREKTOR \xB7 PRIVAT"
     m_Metadata:
       m_Items: []
   - m_Id: 387878933
-    m_Localized: 
+    m_Localized: PATIENT 7
     m_Metadata:
       m_Items: []
   - m_Id: 387878934
-    m_Localized: 
+    m_Localized: "Das Armband ist kalt. Schublade f\xFCnf steht offen."
     m_Metadata:
       m_Items: []
   - m_Id: 387878935
-    m_Localized: 
+    m_Localized: ENTLASSEN
     m_Metadata:
       m_Items: []
   - m_Id: 387878936
-    m_Localized: 
+    m_Localized: "Die Hauptt\xFCren \xF6ffnen sich zur Nacht. Die K\xE4lte ist echt. Hinter dir geht auf der Aufnahmestation ein Licht an. Jemand bezieht ein Bett. Du wei\xDFt, f\xFCr wen."
     m_Metadata:
       m_Items: []
   - m_Id: 387878937
-    m_Localized: 
+    m_Localized: LIGHTS OUT
     m_Metadata:
       m_Items: []
   - m_Id: 387878938
-    m_Localized: 
+    m_Localized: "Du legst den Schalter um. Jede Lampe in Karlheinz erlischt auf einmal, und zum ersten Mal bewegt sich nichts im Dunkeln. Keine Schritte. Kein Klopfen. Kein Z\xE4hlen. Patient 7 ist entlassen. Diesmal bezieht niemand das Bett."
     m_Metadata:
       m_Items: []
   - m_Id: 387878939
-    m_Localized: 
+    m_Localized: WIEDER AUFGENOMMEN. FRAGTE, WO DIE BETTEN SIND. SCHLIEF HINTER DER STATUE.
     m_Metadata:
       m_Items: []
   - m_Id: 387878940
-    m_Localized: 
+    m_Localized: 'WIEDER AUFGENOMMEN. FRAGTE, WO DIE BETTEN SIND. SCHLIEF HINTER DER STATUE.
+
+      ES IST DEINE HANDSCHRIFT.'
     m_Metadata:
       m_Items: []
   - m_Id: 387878941
-    m_Localized: 
+    m_Localized: "R\xC4UMUNGSBEFEHL \xB7 NACHT DES 14. \xB7 STATION A ZUERST. NICHT"
     m_Metadata:
       m_Items: []
   - m_Id: 387878942
-    m_Localized: 
+    m_Localized: "JEMAND HAT DIE T\xDCREN GEZ\xC4HLT."
     m_Metadata:
       m_Items: []
   - m_Id: 387878943
-    m_Localized: 
+    m_Localized: 'AUFNAHMEN: {list}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763200
   - m_Id: 392073216
-    m_Localized: 
+    m_Localized: 'AUFNAHMEN: {list} UND {n} WEITERE'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763200
   - m_Id: 392073217
-    m_Localized: 
+    m_Localized: PATIENT {mark}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763200
   - m_Id: 392073218
-    m_Localized: 
+    m_Localized: "DIENSTPLAN \xB7 OKAFOR \xB7 LICHT BLEIBT AN."
     m_Metadata:
       m_Items: []
   - m_Id: 392073219
-    m_Localized: 
+    m_Localized: "DIENSTPLAN \xB7 OKAFOR \xB7 LICHT BLEIBT AN.\nZ\xC4HLEN UM SECHS. Z\xC4HLEN UM SECHS."
     m_Metadata:
       m_Items: []
   - m_Id: 392073220
-    m_Localized: 
+    m_Localized: ZIMMER 4. LEER. DIE LAMPE IST WARM.
     m_Metadata:
       m_Items: []
   - m_Id: 392073221
-    m_Localized: 
+    m_Localized: 'HALLENLICHT: AUS. NICHT HINEINSEHEN.'
     m_Metadata:
       m_Items: []
   - m_Id: 392073222
-    m_Localized: 
+    m_Localized: ZWEI DELLEN IM ROHR. DER STAHL IST NOCH WARM.
     m_Metadata:
       m_Items: []
   - m_Id: 392073223
-    m_Localized: 
+    m_Localized: DREI DELLEN IM ROHR. DER STAHL IST NOCH WARM.
     m_Metadata:
       m_Items: []
   - m_Id: 392073224
-    m_Localized: 
+    m_Localized: IN DIE UNTEREN EBENEN ENTLASSEN. SUBJEKT A. NICHT FOLGEN.
     m_Metadata:
       m_Items: []
   - m_Id: 392073225
-    m_Localized: 
+    m_Localized: "SIE HABEN DIE T\xDCR VERBARRIKADIERT. VON INNEN."
     m_Metadata:
       m_Items: []
   - m_Id: 392073226
-    m_Localized: 
+    m_Localized: DER TISCH WURDE VERSCHOBEN. VON DER ANDEREN SEITE.
     m_Metadata:
       m_Items: []
   - m_Id: 392073227
-    m_Localized: 
+    m_Localized: EIN KREIDEHAUS MIT MEHR FENSTERN ALS DAS ECHTE.
     m_Metadata:
       m_Items: []
   - m_Id: 392073228
-    m_Localized: 
+    m_Localized: EIN KREIDEHAUS, VON EINER HAND VERWISCHT.
     m_Metadata:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331672703763200
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 387878943
+        - id: 392073216
+        - id: 392073217

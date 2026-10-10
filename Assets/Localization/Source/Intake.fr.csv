@@ -1,0 +1,35 @@
+key,text
+intake.goal.look,REGARDER AUTOUR
+intake.goal.move,ALLER JUSQU'AU REPÈRE
+intake.goal.torch,ALLUMER LA LAMPE
+intake.goal.focus,GARDER LE FAISCEAU SUR LE PANNEAU
+intake.goal.battery,PRENDRE LA PILE
+intake.goal.read,LIRE LA NOTE
+intake.goal.read_close,FERMER LA NOTE
+intake.goal.throw_pick,RAMASSER LA BOUTEILLE
+intake.goal.throw,LA LANCER SUR LA CLOCHE
+intake.goal.hide_go,FRANCHIR LE RIDEAU
+intake.goal.hide,SE CACHER DANS LE CASIER
+intake.goal.hide_still,NE PLUS BOUGER
+intake.goal.hide_leave,ÇA S'EN EST ALLÉ. SORTIR DU CASIER
+intake.goal.star,PRENDRE L'ÉTOILE
+intake.goal.hatch,MONTER SUR LA TRAPPE
+intake.key.mouse,SOURIS
+intake.key.rmb,CLIC DROIT
+intake.key.right_thumb,POUCE DROIT
+intake.key.left_thumb,POUCE GAUCHE
+intake.key.torch,LAMPE
+intake.key.focus,FOCALISER
+intake.key.throw,LANCER
+intake.sub.wake,Vous vous réveillez. Le lit est froid. Il n'y a personne.
+intake.sub.welcome_back,Vous revoilà. Vous connaissez le chemin - ou passez le tutoriel depuis le menu pause.
+intake.sub.get_up,Levez-vous.
+intake.sub.focus_hint,Le faisceau focalisé est plus étroit et porte plus loin. Gardez-le sur le panneau.
+intake.sub.battery_hint,Votre lampe faiblit. Une pile la recharge.
+intake.sub.recharge,"Éteinte, la lampe se recharge lentement - mais jamais entièrement."
+intake.sub.lamp_sparks,La lampe grésille. La pièce plonge dans le noir.
+intake.sub.bell_rings,"La cloche sonne. Quelque part, un rideau se lève."
+intake.sub.another_bottle,Une autre bouteille sur la table.
+intake.sub.footsteps,Des pas. On traîne quelque chose de lourd.
+intake.sub.hatch_again,Les étoiles ouvrent la trappe. Descendez.
+intake.sub.hatch_first,"« Les étoiles ouvrent la trappe. La trappe mène vers le bas. En bas, quelque chose chasse. »"

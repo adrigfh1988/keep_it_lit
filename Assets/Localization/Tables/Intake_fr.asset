@@ -19,139 +19,139 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 538873856
-    m_Localized: 
+    m_Localized: REGARDER AUTOUR
     m_Metadata:
       m_Items: []
   - m_Id: 631148544
-    m_Localized: 
+    m_Localized: "ALLER JUSQU'AU REP\xC8RE"
     m_Metadata:
       m_Items: []
   - m_Id: 631148545
-    m_Localized: 
+    m_Localized: ALLUMER LA LAMPE
     m_Metadata:
       m_Items: []
   - m_Id: 631148546
-    m_Localized: 
+    m_Localized: GARDER LE FAISCEAU SUR LE PANNEAU
     m_Metadata:
       m_Items: []
   - m_Id: 635342848
-    m_Localized: 
+    m_Localized: PRENDRE LA PILE
     m_Metadata:
       m_Items: []
   - m_Id: 635342849
-    m_Localized: 
+    m_Localized: LIRE LA NOTE
     m_Metadata:
       m_Items: []
   - m_Id: 635342850
-    m_Localized: 
+    m_Localized: FERMER LA NOTE
     m_Metadata:
       m_Items: []
   - m_Id: 635342851
-    m_Localized: 
+    m_Localized: RAMASSER LA BOUTEILLE
     m_Metadata:
       m_Items: []
   - m_Id: 635342852
-    m_Localized: 
+    m_Localized: LA LANCER SUR LA CLOCHE
     m_Metadata:
       m_Items: []
   - m_Id: 635342853
-    m_Localized: 
+    m_Localized: FRANCHIR LE RIDEAU
     m_Metadata:
       m_Items: []
   - m_Id: 635342854
-    m_Localized: 
+    m_Localized: SE CACHER DANS LE CASIER
     m_Metadata:
       m_Items: []
   - m_Id: 635342855
-    m_Localized: 
+    m_Localized: NE PLUS BOUGER
     m_Metadata:
       m_Items: []
   - m_Id: 635342856
-    m_Localized: 
+    m_Localized: "\xC7A S'EN EST ALL\xC9. SORTIR DU CASIER"
     m_Metadata:
       m_Items: []
   - m_Id: 635342857
-    m_Localized: 
+    m_Localized: "PRENDRE L'\xC9TOILE"
     m_Metadata:
       m_Items: []
   - m_Id: 635342858
-    m_Localized: 
+    m_Localized: MONTER SUR LA TRAPPE
     m_Metadata:
       m_Items: []
   - m_Id: 635342859
-    m_Localized: 
+    m_Localized: SOURIS
     m_Metadata:
       m_Items: []
   - m_Id: 635342860
-    m_Localized: 
+    m_Localized: CLIC DROIT
     m_Metadata:
       m_Items: []
   - m_Id: 635342861
-    m_Localized: 
+    m_Localized: POUCE DROIT
     m_Metadata:
       m_Items: []
   - m_Id: 635342862
-    m_Localized: 
+    m_Localized: POUCE GAUCHE
     m_Metadata:
       m_Items: []
   - m_Id: 635342863
-    m_Localized: 
+    m_Localized: LAMPE
     m_Metadata:
       m_Items: []
   - m_Id: 635342864
-    m_Localized: 
+    m_Localized: FOCALISER
     m_Metadata:
       m_Items: []
   - m_Id: 635342865
-    m_Localized: 
+    m_Localized: LANCER
     m_Metadata:
       m_Items: []
   - m_Id: 635342866
-    m_Localized: 
+    m_Localized: "Vous vous r\xE9veillez. Le lit est froid. Il n'y a personne."
     m_Metadata:
       m_Items: []
   - m_Id: 635342867
-    m_Localized: 
+    m_Localized: "Vous revoil\xE0. Vous connaissez le chemin - ou passez le tutoriel depuis le menu pause."
     m_Metadata:
       m_Items: []
   - m_Id: 635342868
-    m_Localized: 
+    m_Localized: Levez-vous.
     m_Metadata:
       m_Items: []
   - m_Id: 635342869
-    m_Localized: 
+    m_Localized: "Le faisceau focalis\xE9 est plus \xE9troit et porte plus loin. Gardez-le sur le panneau."
     m_Metadata:
       m_Items: []
   - m_Id: 635342870
-    m_Localized: 
+    m_Localized: Votre lampe faiblit. Une pile la recharge.
     m_Metadata:
       m_Items: []
   - m_Id: 635342871
-    m_Localized: 
+    m_Localized: "\xC9teinte, la lampe se recharge lentement - mais jamais enti\xE8rement."
     m_Metadata:
       m_Items: []
   - m_Id: 635342872
-    m_Localized: 
+    m_Localized: "La lampe gr\xE9sille. La pi\xE8ce plonge dans le noir."
     m_Metadata:
       m_Items: []
   - m_Id: 635342873
-    m_Localized: 
+    m_Localized: "La cloche sonne. Quelque part, un rideau se l\xE8ve."
     m_Metadata:
       m_Items: []
   - m_Id: 635342874
-    m_Localized: 
+    m_Localized: Une autre bouteille sur la table.
     m_Metadata:
       m_Items: []
   - m_Id: 635342875
-    m_Localized: 
+    m_Localized: "Des pas. On tra\xEEne quelque chose de lourd."
     m_Metadata:
       m_Items: []
   - m_Id: 635342876
-    m_Localized: 
+    m_Localized: "Les \xE9toiles ouvrent la trappe. Descendez."
     m_Metadata:
       m_Items: []
   - m_Id: 635342877
-    m_Localized: 
+    m_Localized: "\xAB Les \xE9toiles ouvrent la trappe. La trappe m\xE8ne vers le bas. En bas, quelque chose chasse. \xBB"
     m_Metadata:
       m_Items: []
   references:

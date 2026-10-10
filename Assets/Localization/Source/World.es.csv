@@ -1,0 +1,25 @@
+key,text
+world.hub.admissions,"MANICOMIO KARLHEINZ
+ADMISIÓN"
+world.hub.slot.100,"P3
+HILDE BRANDT"
+world.hub.slot.101,"P11
+TOMAS REINER"
+world.hub.slot.102,"P5
+ELIAS VOGT"
+world.hub.slot.103,SUJETO A
+world.hub.slot.104,"DIRECTOR
+PRIVADO"
+world.hub.wristband,"ELIAS VOGT
+PACIENTE 5"
+world.hub.lower_level,"SUJETO A
+NIVEL INFERIOR"
+world.hub.service_unit,UNIDAD DE SERVICIO
+world.intake.holding,RETENCIÓN
+world.intake.no_entry,NO PASAR
+world.intake.ward,INGRESO  ·  PABELLÓN 1
+world.intake.keep_quiet,"SILENCIO.
+ESO LO OYE TODO."
+world.intake.stay_in_bed,QUÉDATE EN LA CAMA
+world.shop.contracts,CONTRATOS
+world.shop.shards_accepted,SE ACEPTAN FRAGMENTOS

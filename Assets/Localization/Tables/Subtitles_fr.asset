@@ -16,180 +16,206 @@ MonoBehaviour:
     m_Code: fr
   m_SharedData: {fileID: 11400000, guid: b4c6f04b4f756474980167f6a0846058, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331672703763194
   m_TableData:
   - m_Id: 341741568
-    m_Localized: 
+    m_Localized: "\xC7a a l\xE2ch\xE9 prise. \xC7a ne recommencera pas."
     m_Metadata:
       m_Items: []
   - m_Id: 421433344
-    m_Localized: 
+    m_Localized: Revenez en un seul morceau.
     m_Metadata:
       m_Items: []
   - m_Id: 421433345
-    m_Localized: 
+    m_Localized: Comme vous voudrez.
     m_Metadata:
       m_Items: []
   - m_Id: 421433346
-    m_Localized: 
+    m_Localized: "\xC7a a entendu."
     m_Metadata:
       m_Items: []
   - m_Id: 421433347
-    m_Localized: 
+    m_Localized: Pas de pile de rechange.
     m_Metadata:
       m_Items: []
   - m_Id: 421433348
-    m_Localized: 
+    m_Localized: Pas ici.
     m_Metadata:
       m_Items: []
   - m_Id: 421433349
-    m_Localized: 
+    m_Localized: "La lampe est charg\xE9e."
     m_Metadata:
       m_Items: []
   - m_Id: 421433350
-    m_Localized: 
+    m_Localized: Pile neuve.
     m_Metadata:
       m_Items: []
   - m_Id: 421433351
-    m_Localized: 
+    m_Localized: Pas de boussole stellaire.
     m_Metadata:
       m_Items: []
   - m_Id: 421433352
-    m_Localized: 
+    m_Localized: "Plus rien \xE0 indiquer."
     m_Metadata:
       m_Items: []
   - m_Id: 421433353
-    m_Localized: 
+    m_Localized: "LA TRAPPE EST D\xC9VERROUILL\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 421433354
-    m_Localized: 
+    m_Localized: "L'ASCENSEUR EST D\xC9VERROUILL\xC9"
     m_Metadata:
       m_Items: []
   - m_Id: 7992965500928
-    m_Localized: 
+    m_Localized: PILE
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387008
-    m_Localized: 
+    m_Localized: + SECOND SOUFFLE
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387009
-    m_Localized: 
+    m_Localized: "CL\xC9 {held} / {total}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763194
   - m_Id: 7993049387010
-    m_Localized: 
+    m_Localized: +{amount} {currency}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763194
   - m_Id: 7993049387011
-    m_Localized: 
+    m_Localized: "Quelque chose est attir\xE9 par la lumi\xE8re."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387012
-    m_Localized: 
+    m_Localized: "Quelque part, un rideau se l\xE8ve."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387013
-    m_Localized: 
+    m_Localized: 'CAM 3: MOUVEMENT'
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387014
-    m_Localized: 
+    m_Localized: "IL A HURL\xC9."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387015
-    m_Localized: 
+    m_Localized: "CONTRAT \xC9CHOU\xC9  -  {name}."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763194
   - m_Id: 7993049387016
-    m_Localized: 
+    m_Localized: "CONTRAT R\xC9USSI  -  {name}."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763194
   - m_Id: 7993049387017
-    m_Localized: 
+    m_Localized: "Rien ne brille ici - le contrat est annul\xE9."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387018
-    m_Localized: 
+    m_Localized: "Pas de notes ici - le contrat est annul\xE9."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387019
-    m_Localized: 
+    m_Localized: "March\xE9 conclu, march\xE9 tenu."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387020
-    m_Localized: 
+    m_Localized: On ne peut pas toujours gagner.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387021
-    m_Localized: 
+    m_Localized: "Des \xE9clats pour le noir. Qu'est-ce que ce sera?"
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387022
-    m_Localized: 
+    m_Localized: Encore vous.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387023
-    m_Localized: 
+    m_Localized: "Le bruit monte, l\xE0-haut."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387024
-    m_Localized: 
+    m_Localized: "Dernier arr\xEAt avant le fond."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387025
-    m_Localized: 
+    m_Localized: "Quelque chose a boug\xE9 derri\xE8re vous."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387026
-    m_Localized: 
+    m_Localized: "\xC7a se rapproche."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387027
-    m_Localized: 
+    m_Localized: "C'est juste derri\xE8re vous."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387028
-    m_Localized: 
+    m_Localized: "Les lumi\xE8res s'\xE9teignent."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387029
-    m_Localized: 
+    m_Localized: "\xC7a sait."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387030
-    m_Localized: 
+    m_Localized: "\xC7a attendait."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387031
-    m_Localized: 
+    m_Localized: "\xC9TAGE {floor}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763194
   - m_Id: 7993049387032
-    m_Localized: 
+    m_Localized: "\xC9TAGE {floor} \u2014 {theme}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763194
   - m_Id: 7993049387033
-    m_Localized: 
+    m_Localized: "TROUVER {n} \xC9TOILES"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763194
   - m_Id: 7993049387034
-    m_Localized: 
+    m_Localized: "R\xC9TABLIR {n} FUSIBLES"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763194
   - m_Id: 7993049387035
-    m_Localized: 
+    m_Localized: "TROUVER {n} CL\xC9S POUR LA TRAPPE"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763194
   - m_Id: 7993049387036
-    m_Localized: 
+    m_Localized: "CONFINEMENT DE S\xC9CURIT\xC9"
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387037
-    m_Localized: 
+    m_Localized: "{name} \u2014 {description}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763194
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331672703763194
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 7993049387009
+        - id: 7993049387010
+        - id: 7993049387015
+        - id: 7993049387016
+        - id: 7993049387031
+        - id: 7993049387032
+        - id: 7993049387033
+        - id: 7993049387034
+        - id: 7993049387035
+        - id: 7993049387037

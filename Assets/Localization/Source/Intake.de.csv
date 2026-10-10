@@ -1,0 +1,35 @@
+key,text
+intake.goal.look,SIEH DICH UM
+intake.goal.move,GEH ZUR MARKIERUNG
+intake.goal.torch,SCHALTE DEINE LAMPE EIN
+intake.goal.focus,HALTE DEN STRAHL AUF DAS SCHILD
+intake.goal.battery,NIMM DIE BATTERIEZELLE
+intake.goal.read,LIES DIE NOTIZ
+intake.goal.read_close,SCHLIEß DIE NOTIZ
+intake.goal.throw_pick,HEB DIE FLASCHE AUF
+intake.goal.throw,WIRF SIE AN DIE GLOCKE
+intake.goal.hide_go,GEH DURCH DEN ROLLLADEN
+intake.goal.hide,VERSTECK DICH IM SPIND
+intake.goal.hide_still,BEWEG DICH NICHT
+intake.goal.hide_leave,ES IST FORT. VERLASS DEN SPIND
+intake.goal.star,NIMM DEN STERN
+intake.goal.hatch,TRITT AUF DIE LUKE
+intake.key.mouse,MAUS
+intake.key.rmb,RECHTSKLICK
+intake.key.right_thumb,RECHTER DAUMEN
+intake.key.left_thumb,LINKER DAUMEN
+intake.key.torch,LAMPE
+intake.key.focus,FOKUS
+intake.key.throw,WERFEN
+intake.sub.wake,Du wachst auf. Das Bett ist kalt. Niemand ist hier.
+intake.sub.welcome_back,Willkommen zurück. Du kennst den Weg - oder überspring ihn im Pausenmenü.
+intake.sub.get_up,Steh auf.
+intake.sub.focus_hint,Der fokussierte Strahl ist schmaler und reicht weiter. Halte ihn auf das Schild.
+intake.sub.battery_hint,Deine Lampe wird schwächer. Eine Batteriezelle lädt sie wieder auf.
+intake.sub.recharge,Ausgeschaltet lädt sich die Lampe langsam auf - aber nie ganz.
+intake.sub.lamp_sparks,Die Lampe sprüht Funken. Der Raum wird dunkel.
+intake.sub.bell_rings,Die Glocke läutet. Irgendwo hebt sich ein Rollladen.
+intake.sub.another_bottle,Noch eine Flasche auf dem Tisch.
+intake.sub.footsteps,Schritte. Etwas Schweres wird geschleift.
+intake.sub.hatch_again,Sterne öffnen die Luke. Ab nach unten.
+intake.sub.hatch_first,"""Sterne öffnen die Luke. Die Luke ist der Weg nach unten. Etwas da unten jagt."""

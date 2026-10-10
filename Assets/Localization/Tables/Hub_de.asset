@@ -16,660 +16,714 @@ MonoBehaviour:
     m_Code: de
   m_SharedData: {fileID: 11400000, guid: f29e2f696e371764886a57603cbe4d01, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331672703763208
   m_TableData:
   - m_Id: 308187136
-    m_Localized: 
+    m_Localized: "{wing}\n<size=60%>{room}  \xB7  {status}</size>"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073216
-    m_Localized: 
+    m_Localized: OFFEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073217
-    m_Localized: 
+    m_Localized: VERSCHLOSSEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073218
-    m_Localized: 
+    m_Localized: ERLEDIGT
     m_Metadata:
       m_Items: []
   - m_Id: 392073219
-    m_Localized: 
+    m_Localized: VERSIEGELT
     m_Metadata:
       m_Items: []
   - m_Id: 392073220
-    m_Localized: 
+    m_Localized: "{wing} \xB7 {room} \xB7 {level}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073221
-    m_Localized: 
+    m_Localized: STATION A
     m_Metadata:
       m_Items: []
   - m_Id: 392073222
-    m_Localized: 
+    m_Localized: AUFENTHALTSRAUM
     m_Metadata:
       m_Items: []
   - m_Id: 392073223
-    m_Localized: 
+    m_Localized: ERDGESCHOSS
     m_Metadata:
       m_Items: []
   - m_Id: 392073224
-    m_Localized: 
+    m_Localized: STATION A BETRETEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073225
-    m_Localized: 
+    m_Localized: "STATION A \xB7 VERSCHLOSSEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073226
-    m_Localized: 
+    m_Localized: "STATION A \xB7 ERLEDIGT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073227
-    m_Localized: 
+    m_Localized: "STATION A \xB7 VERSIEGELT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073228
-    m_Localized: 
+    m_Localized: "STATION A \xB7 BEREITS ERLEDIGT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073229
-    m_Localized: 
+    m_Localized: "GEH ZUR T\xDCR DER STATION A \xB7 ERDGESCHOSS"
     m_Metadata:
       m_Items: []
   - m_Id: 392073230
-    m_Localized: 
+    m_Localized: "ETAGE {floor} \xB7 DIE T\xDCR ZUR STATION A IST OFFEN \xB7 ERDGESCHOSS"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073231
-    m_Localized: 
+    m_Localized: "ETAGE {floor} \xB7 DIE T\xDCR ZUR STATION A IST VERSCHLOSSEN \xB7 ERDGESCHOSS"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073232
-    m_Localized: 
+    m_Localized: "DIE T\xDCR ZUR STATION A IST AUFGESCHLOSSEN \xB7 ERDGESCHOSS"
     m_Metadata:
       m_Items: []
   - m_Id: 392073233
-    m_Localized: 
+    m_Localized: "MELDE DICH BEI SCHWESTER AGNES \xB7 SCHWESTERNZIMMER"
     m_Metadata:
       m_Items: []
   - m_Id: 392073234
-    m_Localized: 
+    m_Localized: KESSELRAUM
     m_Metadata:
       m_Items: []
   - m_Id: 392073235
-    m_Localized: 
+    m_Localized: MASCHINENRAUM
     m_Metadata:
       m_Items: []
   - m_Id: 392073236
-    m_Localized: 
+    m_Localized: KELLER
     m_Metadata:
       m_Items: []
   - m_Id: 392073237
-    m_Localized: 
+    m_Localized: KESSELRAUM BETRETEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073238
-    m_Localized: 
+    m_Localized: "KESSELRAUM \xB7 VERSCHLOSSEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073239
-    m_Localized: 
+    m_Localized: "KESSELRAUM \xB7 ERLEDIGT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073240
-    m_Localized: 
+    m_Localized: "KESSELRAUM \xB7 VERSIEGELT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073241
-    m_Localized: 
+    m_Localized: "KESSELRAUM \xB7 BEREITS ERLEDIGT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073242
-    m_Localized: 
+    m_Localized: "VERSIEGELT \xB7 DU BRAUCHST DEN SCHL\xDCSSEL ZUR STATION A"
     m_Metadata:
       m_Items: []
   - m_Id: 392073243
-    m_Localized: 
+    m_Localized: "GEH ZUR T\xDCR DES KESSELRAUMS \xB7 KELLER"
     m_Metadata:
       m_Items: []
   - m_Id: 392073244
-    m_Localized: 
+    m_Localized: "ETAGE {floor} \xB7 DIE T\xDCR ZUM KESSELRAUM IST OFFEN \xB7 KELLER"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073245
-    m_Localized: 
+    m_Localized: "ETAGE {floor} \xB7 DIE T\xDCR ZUM KESSELRAUM IST VERSCHLOSSEN \xB7 KELLER"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073246
-    m_Localized: 
+    m_Localized: "DIE T\xDCR ZUM KESSELRAUM IST AUFGESCHLOSSEN \xB7 KELLER"
     m_Metadata:
       m_Items: []
   - m_Id: 392073247
-    m_Localized: 
+    m_Localized: "MELDE DICH BEI BRUNO \xB7 K\xDCCHE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073248
-    m_Localized: 
+    m_Localized: LEICHENHALLE
     m_Metadata:
       m_Items: []
   - m_Id: 392073249
-    m_Localized: 
+    m_Localized: "K\xDCHLKAMMER"
     m_Metadata:
       m_Items: []
   - m_Id: 392073250
-    m_Localized: 
+    m_Localized: KELLER
     m_Metadata:
       m_Items: []
   - m_Id: 392073251
-    m_Localized: 
+    m_Localized: LEICHENHALLE BETRETEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073252
-    m_Localized: 
+    m_Localized: "LEICHENHALLE \xB7 VERSCHLOSSEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073253
-    m_Localized: 
+    m_Localized: "LEICHENHALLE \xB7 ERLEDIGT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073254
-    m_Localized: 
+    m_Localized: "LEICHENHALLE \xB7 VERSIEGELT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073255
-    m_Localized: 
+    m_Localized: "LEICHENHALLE \xB7 BEREITS ERLEDIGT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073256
-    m_Localized: 
+    m_Localized: "VERSIEGELT \xB7 DU BRAUCHST DEN SCHL\xDCSSEL ZUM KESSELRAUM"
     m_Metadata:
       m_Items: []
   - m_Id: 392073257
-    m_Localized: 
+    m_Localized: "GEH ZUR T\xDCR DER LEICHENHALLE \xB7 KELLER"
     m_Metadata:
       m_Items: []
   - m_Id: 392073258
-    m_Localized: 
+    m_Localized: "ETAGE {floor} \xB7 DIE T\xDCR ZUR LEICHENHALLE IST OFFEN \xB7 KELLER"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073259
-    m_Localized: 
+    m_Localized: "ETAGE {floor} \xB7 DIE T\xDCR ZUR LEICHENHALLE IST VERSCHLOSSEN \xB7 KELLER"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073260
-    m_Localized: 
+    m_Localized: "DIE T\xDCR ZUR LEICHENHALLE IST AUFGESCHLOSSEN \xB7 KELLER"
     m_Metadata:
       m_Items: []
   - m_Id: 392073261
-    m_Localized: 
+    m_Localized: "MELDE DICH BEI MARTA \xB7 KLASSENZIMMER"
     m_Metadata:
       m_Items: []
   - m_Id: 392073262
-    m_Localized: 
+    m_Localized: CHIRURGIE
     m_Metadata:
       m_Items: []
   - m_Id: 392073263
-    m_Localized: 
+    m_Localized: OPERATIONSSAAL
     m_Metadata:
       m_Items: []
   - m_Id: 392073264
-    m_Localized: 
+    m_Localized: OBERGESCHOSS
     m_Metadata:
       m_Items: []
   - m_Id: 392073265
-    m_Localized: 
+    m_Localized: CHIRURGIE BETRETEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073266
-    m_Localized: 
+    m_Localized: "CHIRURGIE \xB7 VERSCHLOSSEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073267
-    m_Localized: 
+    m_Localized: "CHIRURGIE \xB7 ERLEDIGT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073268
-    m_Localized: 
+    m_Localized: "CHIRURGIE \xB7 VERSIEGELT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073269
-    m_Localized: 
+    m_Localized: "CHIRURGIE \xB7 BEREITS ERLEDIGT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073270
-    m_Localized: 
+    m_Localized: "VERSIEGELT \xB7 DU BRAUCHST DEN SCHL\xDCSSEL ZUR LEICHENHALLE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073271
-    m_Localized: 
+    m_Localized: "GEH ZUR T\xDCR DER CHIRURGIE \xB7 OBERGESCHOSS"
     m_Metadata:
       m_Items: []
   - m_Id: 392073272
-    m_Localized: 
+    m_Localized: "ETAGE {floor} \xB7 DIE T\xDCR ZUR CHIRURGIE IST OFFEN \xB7 OBERGESCHOSS"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073273
-    m_Localized: 
+    m_Localized: "ETAGE {floor} \xB7 DIE T\xDCR ZUR CHIRURGIE IST VERSCHLOSSEN \xB7 OBERGESCHOSS"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073274
-    m_Localized: 
+    m_Localized: "DIE T\xDCR ZUR CHIRURGIE IST AUFGESCHLOSSEN \xB7 OBERGESCHOSS"
     m_Metadata:
       m_Items: []
   - m_Id: 392073275
-    m_Localized: 
+    m_Localized: "MELDE DICH BEI DR. WEISS \xB7 UNTERSUCHUNGSRAUM"
     m_Metadata:
       m_Items: []
   - m_Id: 392073276
-    m_Localized: 
+    m_Localized: DIREKTOR
     m_Metadata:
       m_Items: []
   - m_Id: 392073277
-    m_Localized: 
+    m_Localized: "DIREKTORENB\xDCRO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073278
-    m_Localized: 
+    m_Localized: OBERGESCHOSS
     m_Metadata:
       m_Items: []
   - m_Id: 392073279
-    m_Localized: 
+    m_Localized: ZUM DIREKTOR GEHEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073280
-    m_Localized: 
+    m_Localized: "DIREKTOR \xB7 VERSCHLOSSEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073281
-    m_Localized: 
+    m_Localized: "DIREKTOR \xB7 ERLEDIGT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073282
-    m_Localized: 
+    m_Localized: "DIREKTOR \xB7 VERSIEGELT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073283
-    m_Localized: 
+    m_Localized: "DIREKTOR \xB7 BEREITS ERLEDIGT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073284
-    m_Localized: 
+    m_Localized: "VERSIEGELT \xB7 DU BRAUCHST DEN SCHL\xDCSSEL ZUR CHIRURGIE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073285
-    m_Localized: 
+    m_Localized: "GEH ZUM DIREKTORENB\xDCRO \xB7 OBERGESCHOSS"
     m_Metadata:
       m_Items: []
   - m_Id: 392073286
-    m_Localized: 
+    m_Localized: "ETAGE {floor} \xB7 DIE T\xDCR DES DIREKTORS IST OFFEN \xB7 OBERGESCHOSS"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073287
-    m_Localized: 
+    m_Localized: "ETAGE {floor} \xB7 DIE T\xDCR DES DIREKTORS IST VERSCHLOSSEN \xB7 OBERGESCHOSS"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073288
-    m_Localized: 
+    m_Localized: "DIE T\xDCR DES DIREKTORS IST AUFGESCHLOSSEN \xB7 OBERGESCHOSS"
     m_Metadata:
       m_Items: []
   - m_Id: 392073289
-    m_Localized: 
+    m_Localized: "SCHL\xDCSSEL NICHT AUSGEGEBEN \xB7 ARCHIV"
     m_Metadata:
       m_Items: []
   - m_Id: 392073290
-    m_Localized: 
+    m_Localized: "VERSCHLOSSEN \xB7 DER SCHL\xDCSSEL DES DIREKTORS IST IM ARCHIV"
     m_Metadata:
       m_Items: []
   - m_Id: 392073291
-    m_Localized: 
+    m_Localized: "VERSCHLOSSEN \xB7 SCHWESTER AGNES HAT DEN SCHL\xDCSSEL \xB7 SCHWESTERNZIMMER"
     m_Metadata:
       m_Items: []
   - m_Id: 392073292
-    m_Localized: 
+    m_Localized: "DER SCHL\xDCSSEL ZUR STATION A"
     m_Metadata:
       m_Items: []
   - m_Id: 392073293
-    m_Localized: 
+    m_Localized: "SPRICH MIT SCHWESTER AGNES \xB7 SCHWESTERNZIMMER"
     m_Metadata:
       m_Items: []
   - m_Id: 392073294
-    m_Localized: 
+    m_Localized: SCHWESTERNZIMMER
     m_Metadata:
       m_Items: []
   - m_Id: 392073295
-    m_Localized: 
+    m_Localized: "FINDE AGNES' SCHL\xDCSSELBUND \xB7 K\xDCCHE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073296
-    m_Localized: 
+    m_Localized: "BRING DEN SCHL\xDCSSELBUND ZU SCHWESTER AGNES ZUR\xDCCK"
     m_Metadata:
       m_Items: []
   - m_Id: 392073297
-    m_Localized: 
+    m_Localized: "SCHL\xDCSSELBUND NEHMEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073298
-    m_Localized: 
+    m_Localized: "SCHL\xDCSSELBUND \xB7 GENOMMEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073299
-    m_Localized: 
+    m_Localized: "VERSCHLOSSEN \xB7 BRUNO HAT DEN SCHL\xDCSSEL \xB7 K\xDCCHE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073300
-    m_Localized: 
+    m_Localized: "DER SCHL\xDCSSEL ZUM KESSELRAUM"
     m_Metadata:
       m_Items: []
   - m_Id: 392073301
-    m_Localized: 
+    m_Localized: "SPRICH MIT BRUNO \xB7 K\xDCCHE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073302
-    m_Localized: 
+    m_Localized: "K\xDCCHE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073303
-    m_Localized: 
+    m_Localized: "HOL JOSEFS ABENDTABLETT AUS DER K\xDCCHE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073304
-    m_Localized: 
+    m_Localized: "BRING DAS TABLETT HOCH ZU JOSEF \xB7 SCHLAFSAAL"
     m_Metadata:
       m_Items: []
   - m_Id: 392073305
-    m_Localized: 
+    m_Localized: "IN DER HAND \xB7 JOSEFS TABLETT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073306
-    m_Localized: 
+    m_Localized: JOSEFS TABLETT NEHMEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073307
-    m_Localized: 
+    m_Localized: "IN DER HAND \xB7 JOSEFS TABLETT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073308
-    m_Localized: 
+    m_Localized: "VERSCHLOSSEN \xB7 MARTA HAT DEN SCHL\xDCSSEL \xB7 KLASSENZIMMER"
     m_Metadata:
       m_Items: []
   - m_Id: 392073309
-    m_Localized: 
+    m_Localized: "DER SCHL\xDCSSEL ZUR LEICHENHALLE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073310
-    m_Localized: 
+    m_Localized: "SPRICH MIT MARTA \xB7 KLASSENZIMMER"
     m_Metadata:
       m_Items: []
   - m_Id: 392073311
-    m_Localized: 
+    m_Localized: KLASSENZIMMER
     m_Metadata:
       m_Items: []
   - m_Id: 392073312
-    m_Localized: 
+    m_Localized: "FINDE MARTAS SPIELUHR \xB7 KELLERGANG"
     m_Metadata:
       m_Items: []
   - m_Id: 392073313
-    m_Localized: 
+    m_Localized: "BRING DIE SPIELUHR ZU MARTA ZUR\xDCCK"
     m_Metadata:
       m_Items: []
   - m_Id: 392073314
-    m_Localized: 
+    m_Localized: SPIELUHR NEHMEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073315
-    m_Localized: 
+    m_Localized: "SPIELUHR \xB7 GENOMMEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073316
-    m_Localized: 
+    m_Localized: "VERSCHLOSSEN \xB7 DR. WEISS HAT DEN SCHL\xDCSSEL \xB7 UNTERSUCHUNGSRAUM"
     m_Metadata:
       m_Items: []
   - m_Id: 392073317
-    m_Localized: 
+    m_Localized: "DER SCHL\xDCSSEL ZUR CHIRURGIE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073318
-    m_Localized: 
+    m_Localized: "SPRICH MIT DR. WEISS \xB7 UNTERSUCHUNGSRAUM"
     m_Metadata:
       m_Items: []
   - m_Id: 392073319
-    m_Localized: 
+    m_Localized: UNTERSUCHUNGSRAUM
     m_Metadata:
       m_Items: []
   - m_Id: 392073320
-    m_Localized: 
+    m_Localized: "FINDE DIE DREI AMPULLEN \xB7 OBERGESCHOSS"
     m_Metadata:
       m_Items: []
   - m_Id: 392073321
-    m_Localized: 
+    m_Localized: BRING DIE AMPULLEN ZU DR. WEISS
     m_Metadata:
       m_Items: []
   - m_Id: 392073322
-    m_Localized: 
+    m_Localized: AMPULLEN  {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073323
-    m_Localized: 
+    m_Localized: AMPULLEN  {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073324
-    m_Localized: 
+    m_Localized: AMPULLE NEHMEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073325
-    m_Localized: 
+    m_Localized: AMPULLE {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073326
-    m_Localized: 
+    m_Localized: AMPULLE NEHMEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073327
-    m_Localized: 
+    m_Localized: AMPULLE {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073328
-    m_Localized: 
+    m_Localized: AMPULLE NEHMEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073329
-    m_Localized: 
+    m_Localized: AMPULLE {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073330
-    m_Localized: 
+    m_Localized: "{key} \xB7 DIE T\xDCR IST AUFGESCHLOSSEN"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073331
-    m_Localized: 
+    m_Localized: SCHWESTER AGNES
     m_Metadata:
       m_Items: []
   - m_Id: 392073332
-    m_Localized: 
+    m_Localized: BRUNO
     m_Metadata:
       m_Items: []
   - m_Id: 392073333
-    m_Localized: 
+    m_Localized: JOSEF
     m_Metadata:
       m_Items: []
   - m_Id: 392073334
-    m_Localized: 
+    m_Localized: MARTA
     m_Metadata:
       m_Items: []
   - m_Id: 392073335
-    m_Localized: 
+    m_Localized: DR. WEISS
     m_Metadata:
       m_Items: []
   - m_Id: 392073336
-    m_Localized: 
+    m_Localized: DER SCHREIBER
     m_Metadata:
       m_Items: []
   - m_Id: 392073337
-    m_Localized: 
+    m_Localized: 'SPRECHEN: {name}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073338
-    m_Localized: 
+    m_Localized: NICHT JETZT
     m_Metadata:
       m_Items: []
   - m_Id: 392073339
-    m_Localized: 
+    m_Localized: "Du erwachst an der T\xFCr."
     m_Metadata:
       m_Items: []
   - m_Id: 392073340
-    m_Localized: 
+    m_Localized: "DAS DIREKTORENB\xDCRO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073341
-    m_Localized: 
+    m_Localized: DIE ERDGESCHOSSHALLE
     m_Metadata:
       m_Items: []
   - m_Id: 392073342
-    m_Localized: 
+    m_Localized: LADEN BETRETEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073343
-    m_Localized: 
+    m_Localized: "LADEN \xB7 GESCHLOSSEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073344
-    m_Localized: 
+    m_Localized: "GESCHLOSSEN \xB7 KOMM MIT SPLITTERN WIEDER"
     m_Metadata:
       m_Items: []
   - m_Id: 392073345
-    m_Localized: 
+    m_Localized: "LADEN\n<size=60%>DER H\xC4NDLER  \xB7  {status}</size>"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073346
-    m_Localized: 
+    m_Localized: OFFEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073347
-    m_Localized: 
+    m_Localized: GESCHLOSSEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073348
-    m_Localized: 
+    m_Localized: DER LADEN IST OFFEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073349
-    m_Localized: 
+    m_Localized: "DER LADEN IST OFFEN \xB7 {room}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073350
-    m_Localized: 
+    m_Localized: UNTERSUCHEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073351
-    m_Localized: 
+    m_Localized: UNTERSUCHEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073352
-    m_Localized: 
+    m_Localized: UNTERSUCHEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073353
-    m_Localized: 
+    m_Localized: AUFNAHMEBUCH LESEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073354
-    m_Localized: 
+    m_Localized: LAUSCHEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073355
-    m_Localized: 
+    m_Localized: "AKTE LESEN \xB7 {label}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073356
-    m_Localized: 
+    m_Localized: "ARMBAND LESEN \xB7 ELIAS VOGT \xB7 PATIENT 5"
     m_Metadata:
       m_Items: []
   - m_Id: 392073357
-    m_Localized: 
+    m_Localized: ANSTALT VERLASSEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073358
-    m_Localized: 
+    m_Localized: "SCHL\xDCSSEL DES DIREKTORS NEHMEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073359
-    m_Localized: 
+    m_Localized: "HAUPTSCHALTER UMLEGEN \xB7 LIGHTS OUT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073360
-    m_Localized: 
+    m_Localized: "SCHUBLADE \xD6FFNEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073361
-    m_Localized: 
+    m_Localized: DIE SCHUBLADE
     m_Metadata:
       m_Items: []
   - m_Id: 392073362
-    m_Localized: 
+    m_Localized: "DIE SCHUBLADE IST VERSCHLOSSEN \xB7 KRANKENAKTEN {n} / {total}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073363
-    m_Localized: 
+    m_Localized: "DER SCHL\xDCSSEL DES DIREKTORS \xB7 DIE T\xDCR IST AUFGESCHLOSSEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073364
-    m_Localized: 
+    m_Localized: "FINDE DEN SCHL\xDCSSEL DES DIREKTORS \xB7 ARCHIV"
     m_Metadata:
       m_Items: []
   - m_Id: 392073365
-    m_Localized: 
+    m_Localized: "DIE KELLERTREPPE IST MIT KETTEN VERSPERRT \xB7 NIMM DEN AUFZUG"
     m_Metadata:
       m_Items: []
   - m_Id: 392073366
-    m_Localized: 
+    m_Localized: AUFZUG RUFEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073367
-    m_Localized: 
+    m_Localized: DER AUFZUG
     m_Metadata:
       m_Items: []
   - m_Id: 392073368
-    m_Localized: 
+    m_Localized: DAS GITTER
     m_Metadata:
       m_Items: []
   - m_Id: 392073369
-    m_Localized: 
+    m_Localized: "T\xDCREN AUFSTEMMEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073370
-    m_Localized: 
+    m_Localized: "DAS GITTER IST ANGEKETTET \xB7 NIMM DEN AUFZUG"
     m_Metadata:
       m_Items: []
   - m_Id: 392073371
-    m_Localized: 
+    m_Localized: DER AUFZUG BEWEGT SICH NICHT
     m_Metadata:
       m_Items: []
   - m_Id: 392073372
-    m_Localized: 
+    m_Localized: "DER AUFZUG KOMMT NICHT \xB7 DER KESSELRAUM IST NOCH VERSCHLOSSEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073373
-    m_Localized: 
+    m_Localized: DER AUFZUG IST STEHEN GEBLIEBEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073374
-    m_Localized: 
+    m_Localized: "DIE T\xDCREN KLEMMEN \xB7 HALTE {key}, UM SIE AUFZUSTEMMEN"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763208
   - m_Id: 392073375
-    m_Localized: 
+    m_Localized: ETWAS KLOPFT DREIMAL.
     m_Metadata:
       m_Items: []
   - m_Id: 392073376
-    m_Localized: 
+    m_Localized: "ES BLEIBT AN DER T\xDCR STEHEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073377
-    m_Localized: 
+    m_Localized: JEMAND HAT STERNE AN DIE WAND GEMALT. SIE LEUCHTEN NOCH.
     m_Metadata:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331672703763208
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 308187136
+        - id: 392073220
+        - id: 392073230
+        - id: 392073231
+        - id: 392073244
+        - id: 392073245
+        - id: 392073258
+        - id: 392073259
+        - id: 392073272
+        - id: 392073273
+        - id: 392073286
+        - id: 392073287
+        - id: 392073322
+        - id: 392073323
+        - id: 392073325
+        - id: 392073327
+        - id: 392073329
+        - id: 392073330
+        - id: 392073337
+        - id: 392073345
+        - id: 392073349
+        - id: 392073355
+        - id: 392073362
+        - id: 392073374

@@ -19,67 +19,81 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 232689664
-    m_Localized: 
+    m_Localized: "MANICOMIO KARLHEINZ\nADMISI\xD3N"
     m_Metadata:
       m_Items: []
   - m_Id: 316575744
-    m_Localized: 
+    m_Localized: 'P3
+
+      HILDE BRANDT'
     m_Metadata:
       m_Items: []
   - m_Id: 316575745
-    m_Localized: 
+    m_Localized: 'P11
+
+      TOMAS REINER'
     m_Metadata:
       m_Items: []
   - m_Id: 316575746
-    m_Localized: 
+    m_Localized: 'P5
+
+      ELIAS VOGT'
     m_Metadata:
       m_Items: []
   - m_Id: 316575747
-    m_Localized: 
+    m_Localized: SUJETO A
     m_Metadata:
       m_Items: []
   - m_Id: 316575748
-    m_Localized: 
+    m_Localized: 'DIRECTOR
+
+      PRIVADO'
     m_Metadata:
       m_Items: []
   - m_Id: 316575749
-    m_Localized: 
+    m_Localized: 'ELIAS VOGT
+
+      PACIENTE 5'
     m_Metadata:
       m_Items: []
   - m_Id: 316575750
-    m_Localized: 
+    m_Localized: 'SUJETO A
+
+      NIVEL INFERIOR'
     m_Metadata:
       m_Items: []
   - m_Id: 316575751
-    m_Localized: 
+    m_Localized: UNIDAD DE SERVICIO
     m_Metadata:
       m_Items: []
   - m_Id: 316575752
-    m_Localized: 
+    m_Localized: "RETENCI\xD3N"
     m_Metadata:
       m_Items: []
   - m_Id: 316575753
-    m_Localized: 
+    m_Localized: NO PASAR
     m_Metadata:
       m_Items: []
   - m_Id: 316575754
-    m_Localized: 
+    m_Localized: "INGRESO  \xB7  PABELL\xD3N 1"
     m_Metadata:
       m_Items: []
   - m_Id: 316575755
-    m_Localized: 
+    m_Localized: 'SILENCIO.
+
+      ESO LO OYE TODO.'
     m_Metadata:
       m_Items: []
   - m_Id: 316575756
-    m_Localized: 
+    m_Localized: "QU\xC9DATE EN LA CAMA"
     m_Metadata:
       m_Items: []
   - m_Id: 316575757
-    m_Localized: 
+    m_Localized: CONTRATOS
     m_Metadata:
       m_Items: []
   - m_Id: 316575758
-    m_Localized: 
+    m_Localized: SE ACEPTAN FRAGMENTOS
     m_Metadata:
       m_Items: []
   references:

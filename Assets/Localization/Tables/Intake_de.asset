@@ -19,139 +19,139 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 538873856
-    m_Localized: 
+    m_Localized: SIEH DICH UM
     m_Metadata:
       m_Items: []
   - m_Id: 631148544
-    m_Localized: 
+    m_Localized: GEH ZUR MARKIERUNG
     m_Metadata:
       m_Items: []
   - m_Id: 631148545
-    m_Localized: 
+    m_Localized: SCHALTE DEINE LAMPE EIN
     m_Metadata:
       m_Items: []
   - m_Id: 631148546
-    m_Localized: 
+    m_Localized: HALTE DEN STRAHL AUF DAS SCHILD
     m_Metadata:
       m_Items: []
   - m_Id: 635342848
-    m_Localized: 
+    m_Localized: NIMM DIE BATTERIEZELLE
     m_Metadata:
       m_Items: []
   - m_Id: 635342849
-    m_Localized: 
+    m_Localized: LIES DIE NOTIZ
     m_Metadata:
       m_Items: []
   - m_Id: 635342850
-    m_Localized: 
+    m_Localized: "SCHLIE\xDF DIE NOTIZ"
     m_Metadata:
       m_Items: []
   - m_Id: 635342851
-    m_Localized: 
+    m_Localized: HEB DIE FLASCHE AUF
     m_Metadata:
       m_Items: []
   - m_Id: 635342852
-    m_Localized: 
+    m_Localized: WIRF SIE AN DIE GLOCKE
     m_Metadata:
       m_Items: []
   - m_Id: 635342853
-    m_Localized: 
+    m_Localized: GEH DURCH DEN ROLLLADEN
     m_Metadata:
       m_Items: []
   - m_Id: 635342854
-    m_Localized: 
+    m_Localized: VERSTECK DICH IM SPIND
     m_Metadata:
       m_Items: []
   - m_Id: 635342855
-    m_Localized: 
+    m_Localized: BEWEG DICH NICHT
     m_Metadata:
       m_Items: []
   - m_Id: 635342856
-    m_Localized: 
+    m_Localized: ES IST FORT. VERLASS DEN SPIND
     m_Metadata:
       m_Items: []
   - m_Id: 635342857
-    m_Localized: 
+    m_Localized: NIMM DEN STERN
     m_Metadata:
       m_Items: []
   - m_Id: 635342858
-    m_Localized: 
+    m_Localized: TRITT AUF DIE LUKE
     m_Metadata:
       m_Items: []
   - m_Id: 635342859
-    m_Localized: 
+    m_Localized: MAUS
     m_Metadata:
       m_Items: []
   - m_Id: 635342860
-    m_Localized: 
+    m_Localized: RECHTSKLICK
     m_Metadata:
       m_Items: []
   - m_Id: 635342861
-    m_Localized: 
+    m_Localized: RECHTER DAUMEN
     m_Metadata:
       m_Items: []
   - m_Id: 635342862
-    m_Localized: 
+    m_Localized: LINKER DAUMEN
     m_Metadata:
       m_Items: []
   - m_Id: 635342863
-    m_Localized: 
+    m_Localized: LAMPE
     m_Metadata:
       m_Items: []
   - m_Id: 635342864
-    m_Localized: 
+    m_Localized: FOKUS
     m_Metadata:
       m_Items: []
   - m_Id: 635342865
-    m_Localized: 
+    m_Localized: WERFEN
     m_Metadata:
       m_Items: []
   - m_Id: 635342866
-    m_Localized: 
+    m_Localized: Du wachst auf. Das Bett ist kalt. Niemand ist hier.
     m_Metadata:
       m_Items: []
   - m_Id: 635342867
-    m_Localized: 
+    m_Localized: "Willkommen zur\xFCck. Du kennst den Weg - oder \xFCberspring ihn im Pausenmen\xFC."
     m_Metadata:
       m_Items: []
   - m_Id: 635342868
-    m_Localized: 
+    m_Localized: Steh auf.
     m_Metadata:
       m_Items: []
   - m_Id: 635342869
-    m_Localized: 
+    m_Localized: Der fokussierte Strahl ist schmaler und reicht weiter. Halte ihn auf das Schild.
     m_Metadata:
       m_Items: []
   - m_Id: 635342870
-    m_Localized: 
+    m_Localized: "Deine Lampe wird schw\xE4cher. Eine Batteriezelle l\xE4dt sie wieder auf."
     m_Metadata:
       m_Items: []
   - m_Id: 635342871
-    m_Localized: 
+    m_Localized: "Ausgeschaltet l\xE4dt sich die Lampe langsam auf - aber nie ganz."
     m_Metadata:
       m_Items: []
   - m_Id: 635342872
-    m_Localized: 
+    m_Localized: "Die Lampe spr\xFCht Funken. Der Raum wird dunkel."
     m_Metadata:
       m_Items: []
   - m_Id: 635342873
-    m_Localized: 
+    m_Localized: "Die Glocke l\xE4utet. Irgendwo hebt sich ein Rollladen."
     m_Metadata:
       m_Items: []
   - m_Id: 635342874
-    m_Localized: 
+    m_Localized: Noch eine Flasche auf dem Tisch.
     m_Metadata:
       m_Items: []
   - m_Id: 635342875
-    m_Localized: 
+    m_Localized: Schritte. Etwas Schweres wird geschleift.
     m_Metadata:
       m_Items: []
   - m_Id: 635342876
-    m_Localized: 
+    m_Localized: "Sterne \xF6ffnen die Luke. Ab nach unten."
     m_Metadata:
       m_Items: []
   - m_Id: 635342877
-    m_Localized: 
+    m_Localized: "\"Sterne \xF6ffnen die Luke. Die Luke ist der Weg nach unten. Etwas da unten jagt.\""
     m_Metadata:
       m_Items: []
   references:

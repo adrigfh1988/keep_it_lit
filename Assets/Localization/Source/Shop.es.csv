@@ -1,0 +1,79 @@
+key,text
+shop.currency,FRAGMENTOS
+shop.item.spare_battery.name,Pila de Repuesto
+shop.item.spare_battery.blurb,Una pila nueva. Recarga la linterna y la enciende. Pulsa {key}.
+shop.item.star_compass.name,Brújula Estelar
+shop.item.star_compass.blurb,Apunta a la estrella más cercana durante cinco segundos. Pulsa {key}.
+shop.item.second_wind.name,Segundo Aliento
+shop.item.second_wind.blurb,"Cuando te atrapa, te suelta. Una vez."
+shop.item.long_fuse.name,Mecha Larga
+shop.item.long_fuse.blurb,Diez segundos más para la trampilla en la próxima planta.
+shop.item.quiet_shoes.name,Zapatos Silenciosos
+shop.item.quiet_shoes.blurb,"Tus pasos se oyen un tercio menos, en la próxima planta."
+shop.item.extra_lamps.name,Lámparas Extra
+shop.item.extra_lamps.blurb,Más lámparas encendidas en la próxima planta.
+shop.item.stamina_tonic.name,Tónico de Aguante
+shop.item.stamina_tonic.blurb,Cuatro segundos más de carrera en la próxima planta.
+shop.item.torch_colour.name,Color de Linterna
+shop.item.torch_colour.blurb,Frío. Ascua. Violeta.
+shop.item.hud_tint.name,Tono del HUD
+shop.item.hud_tint.blurb,Fósforo. Ámbar. Hielo.
+shop.item.bottle_pack.name,Pack de Botellas
+shop.item.bottle_pack.blurb,Empieza la próxima planta llevando ya tres botellas.
+shop.item.focus_lens.name,Lente de Enfoque
+shop.item.focus_lens.blurb,"El haz enfocado llega más lejos en la próxima planta, sin gastar más pila."
+shop.item.fuse_map.name,Mapa de Fusibles
+shop.item.fuse_map.blurb,"Fusibles, botones, cámaras y llaves brillan levemente. La brújula también los señala."
+shop.palette.torch.0,CÁLIDO
+shop.palette.torch.1,FRÍO
+shop.palette.torch.2,ASCUA
+shop.palette.torch.3,VIOLETA
+shop.palette.hud.0,HUESO
+shop.palette.hud.1,FÓSFORO
+shop.palette.hud.2,ÁMBAR
+shop.palette.hud.3,HIELO
+shop.theme.1,EL PABELLÓN
+shop.theme.2,LA SALA DE CALDERAS
+shop.theme.3,LA CRIPTA
+shop.theme.4,EL LABORATORIO
+shop.theme.5,LA OQUEDAD
+shop.rule.dying_grid.name,RED MORIBUNDA
+shop.rule.dying_grid.desc,Cada minuto se apaga una lámpara.
+shop.rule.keen_ears.name,OÍDO FINO
+shop.rule.keen_ears.desc,Aquí oye desde más lejos. Los fragmentos valen más.
+shop.rule.heavy_fog.name,NIEBLA DENSA
+shop.rule.heavy_fog.desc,Ves menos; eso también.
+shop.rule.weak_battery.name,PILA DÉBIL
+shop.rule.weak_battery.desc,"Empiezas con media carga, pero apagada se recarga más rápido."
+shop.rule.restless.name,INQUIETO
+shop.rule.restless.desc,Se mueve y aparece más a menudo.
+shop.rule.glass_floors.name,SUELOS DE CRISTAL
+shop.rule.glass_floors.desc,Más cristales rotos y charcos bajo tus pies.
+shop.rule.rich_veins.name,VETAS RICAS
+shop.rule.rich_veins.desc,"Más fragmentos, pero eso camina un poco más rápido."
+shop.temperament.listens,Aquí caza por el sonido.
+shop.temperament.sprints,"Aquí es rápido, pero olvida enseguida."
+shop.contract.title,{name}.
+shop.contract.never_hide.name,No te escondas
+shop.contract.never_hide.text,Termina la planta sin meterte en un casillero.
+shop.contract.not_a_scratch.name,Ni un rasguño
+shop.contract.not_a_scratch.text,Que no te atrapen nunca - y que Stan no te toque jamás.
+shop.contract.walk_in_dark.name,Camina a oscuras
+shop.contract.walk_in_dark.text,Pasa 60 segundos caminando con la linterna apagada.
+shop.contract.take_what_glitters.name,Todo lo que reluce
+shop.contract.take_what_glitters.text,Recoge al menos el 60% de los fragmentos de la planta.
+shop.contract.read_it_all.name,Léelo todo
+shop.contract.read_it_all.text,Lee todas las notas de la planta.
+shop.contract.dont_dawdle.name,Sin demoras
+shop.contract.dont_dawdle.text,Supera la planta antes de que se acabe el tiempo.
+shop.contract.make_noise.name,Haz ruido
+shop.contract.make_noise.text,"Haz que la cosa venga a investigar una botella o una lata lanzada, dos veces."
+shop.contract.light_feet.name,Pies ligeros
+shop.contract.light_feet.text,No corras nunca.
+shop.payout.title_floor,PLANTA {floor} SUPERADA
+shop.payout.stars,ESTRELLAS  {stars} x {value}
+shop.payout.time_left,TIEMPO RESTANTE  {time}
+shop.payout.floor_cleared,PLANTA {floor} SUPERADA
+shop.payout.shards_found,FRAGMENTOS ENCONTRADOS  {n} x {value}  (ya son tuyos)
+shop.payout.consolation_title,CONSOLACIÓN
+shop.payout.consolation,CONSOLACIÓN  {percent}% de {stars} {stars:plural:estrella|estrellas}

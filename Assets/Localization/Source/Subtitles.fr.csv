@@ -1,0 +1,44 @@
+key,text
+sub.second_wind.release,Ça a lâché prise. Ça ne recommencera pas.
+sub.shop.contract_taken,Revenez en un seul morceau.
+sub.shop.contract_declined,Comme vous voudrez.
+sub.star.heard,Ça a entendu.
+sub.consumable.no_battery,Pas de pile de rechange.
+sub.consumable.not_in_here,Pas ici.
+sub.consumable.torch_full,La lampe est chargée.
+sub.consumable.fresh_cell,Pile neuve.
+sub.consumable.no_compass,Pas de boussole stellaire.
+sub.consumable.nothing_to_point,Plus rien à indiquer.
+sub.escape.hatch_unlocked,LA TRAPPE EST DÉVERROUILLÉE
+sub.escape.lift_unlocked,L'ASCENSEUR EST DÉVERROUILLÉ
+sub.pickup.battery_cell,PILE
+sub.pickup.second_wind,+ SECOND SOUFFLE
+sub.pickup.key,CLÉ {held} / {total}
+sub.lore.bonus,+{amount} {currency}
+sub.lantern.lure,Quelque chose est attiré par la lumière.
+sub.button.shutter,"Quelque part, un rideau se lève."
+sub.theme.terminal,CAM 3: MOUVEMENT
+sub.stalker.screamed,IL A HURLÉ.
+sub.contract.failed,CONTRAT ÉCHOUÉ  -  {name}.
+sub.contract.done,CONTRAT RÉUSSI  -  {name}.
+sub.contract.void_shards,Rien ne brille ici - le contrat est annulé.
+sub.contract.void_notes,Pas de notes ici - le contrat est annulé.
+sub.shop.deal_done,"Marché conclu, marché tenu."
+sub.shop.deal_failed,On ne peut pas toujours gagner.
+sub.shop.greeting.1,Des éclats pour le noir. Qu'est-ce que ce sera?
+sub.shop.greeting.2,Encore vous.
+sub.shop.greeting.3,"Le bruit monte, là-haut."
+sub.shop.greeting.4,Dernier arrêt avant le fond.
+sub.dread.far,Quelque chose a bougé derrière vous.
+sub.dread.mid,Ça se rapproche.
+sub.dread.near,C'est juste derrière vous.
+sub.dread.lights_dying,Les lumières s'éteignent.
+sub.dread.it_knows,Ça sait.
+sub.dread.ambushed,Ça attendait.
+sub.banner.floor,ÉTAGE {floor}
+sub.banner.floor_theme,ÉTAGE {floor} — {theme}
+sub.banner.find_stars,TROUVER {n} ÉTOILES
+sub.banner.restore_fuses,RÉTABLIR {n} FUSIBLES
+sub.banner.find_keys,TROUVER {n} CLÉS POUR LA TRAPPE
+sub.banner.lockdown,CONFINEMENT DE SÉCURITÉ
+sub.banner.rule,{name} — {description}

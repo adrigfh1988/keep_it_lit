@@ -16,660 +16,714 @@ MonoBehaviour:
     m_Code: fr
   m_SharedData: {fileID: 11400000, guid: f29e2f696e371764886a57603cbe4d01, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331672703763192
   m_TableData:
   - m_Id: 308187136
-    m_Localized: 
+    m_Localized: "{wing}\n<size=60%>{room}  \xB7  {status}</size>"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073216
-    m_Localized: 
+    m_Localized: OUVERT
     m_Metadata:
       m_Items: []
   - m_Id: 392073217
-    m_Localized: 
+    m_Localized: "VERROUILL\xC9"
     m_Metadata:
       m_Items: []
   - m_Id: 392073218
-    m_Localized: 
+    m_Localized: "TERMIN\xC9"
     m_Metadata:
       m_Items: []
   - m_Id: 392073219
-    m_Localized: 
+    m_Localized: "SCELL\xC9"
     m_Metadata:
       m_Items: []
   - m_Id: 392073220
-    m_Localized: 
+    m_Localized: "{wing} \xB7 {room} \xB7 {level}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073221
-    m_Localized: 
+    m_Localized: PAVILLON A
     m_Metadata:
       m_Items: []
   - m_Id: 392073222
-    m_Localized: 
+    m_Localized: SALLE COMMUNE
     m_Metadata:
       m_Items: []
   - m_Id: 392073223
-    m_Localized: 
+    m_Localized: "REZ-DE-CHAUSS\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073224
-    m_Localized: 
+    m_Localized: ENTRER DANS LE PAVILLON A
     m_Metadata:
       m_Items: []
   - m_Id: 392073225
-    m_Localized: 
+    m_Localized: "PAVILLON A \xB7 VERROUILL\xC9"
     m_Metadata:
       m_Items: []
   - m_Id: 392073226
-    m_Localized: 
+    m_Localized: "PAVILLON A \xB7 TERMIN\xC9"
     m_Metadata:
       m_Items: []
   - m_Id: 392073227
-    m_Localized: 
+    m_Localized: "PAVILLON A \xB7 SCELL\xC9"
     m_Metadata:
       m_Items: []
   - m_Id: 392073228
-    m_Localized: 
+    m_Localized: "PAVILLON A \xB7 D\xC9J\xC0 TERMIN\xC9"
     m_Metadata:
       m_Items: []
   - m_Id: 392073229
-    m_Localized: 
+    m_Localized: "ALLER \xC0 LA PORTE DU PAVILLON A \xB7 REZ-DE-CHAUSS\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073230
-    m_Localized: 
+    m_Localized: "\xC9TAGE {floor} \xB7 LA PORTE DU PAVILLON A EST OUVERTE \xB7 REZ-DE-CHAUSS\xC9E"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073231
-    m_Localized: 
+    m_Localized: "\xC9TAGE {floor} \xB7 LA PORTE DU PAVILLON A EST VERROUILL\xC9E \xB7 REZ-DE-CHAUSS\xC9E"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073232
-    m_Localized: 
+    m_Localized: "LA PORTE DU PAVILLON A EST D\xC9VERROUILL\xC9E \xB7 REZ-DE-CHAUSS\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073233
-    m_Localized: 
+    m_Localized: "PR\xC9SENTEZ-VOUS \xC0 S\u0152UR AGNES \xB7 POSTE DE SOINS"
     m_Metadata:
       m_Items: []
   - m_Id: 392073234
-    m_Localized: 
+    m_Localized: CHAUFFERIE
     m_Metadata:
       m_Items: []
   - m_Id: 392073235
-    m_Localized: 
+    m_Localized: SALLE DES MACHINES
     m_Metadata:
       m_Items: []
   - m_Id: 392073236
-    m_Localized: 
+    m_Localized: SOUS-SOL
     m_Metadata:
       m_Items: []
   - m_Id: 392073237
-    m_Localized: 
+    m_Localized: ENTRER DANS LA CHAUFFERIE
     m_Metadata:
       m_Items: []
   - m_Id: 392073238
-    m_Localized: 
+    m_Localized: "CHAUFFERIE \xB7 VERROUILL\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073239
-    m_Localized: 
+    m_Localized: "CHAUFFERIE \xB7 TERMIN\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073240
-    m_Localized: 
+    m_Localized: "CHAUFFERIE \xB7 SCELL\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073241
-    m_Localized: 
+    m_Localized: "CHAUFFERIE \xB7 D\xC9J\xC0 TERMIN\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073242
-    m_Localized: 
+    m_Localized: "SCELL\xC9E \xB7 IL VOUS FAUT LA CL\xC9 DU PAVILLON A"
     m_Metadata:
       m_Items: []
   - m_Id: 392073243
-    m_Localized: 
+    m_Localized: "ALLER \xC0 LA PORTE DE LA CHAUFFERIE \xB7 SOUS-SOL"
     m_Metadata:
       m_Items: []
   - m_Id: 392073244
-    m_Localized: 
+    m_Localized: "\xC9TAGE {floor} \xB7 LA PORTE DE LA CHAUFFERIE EST OUVERTE \xB7 SOUS-SOL"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073245
-    m_Localized: 
+    m_Localized: "\xC9TAGE {floor} \xB7 LA PORTE DE LA CHAUFFERIE EST VERROUILL\xC9E \xB7 SOUS-SOL"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073246
-    m_Localized: 
+    m_Localized: "LA PORTE DE LA CHAUFFERIE EST D\xC9VERROUILL\xC9E \xB7 SOUS-SOL"
     m_Metadata:
       m_Items: []
   - m_Id: 392073247
-    m_Localized: 
+    m_Localized: "PR\xC9SENTEZ-VOUS \xC0 BRUNO \xB7 CUISINE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073248
-    m_Localized: 
+    m_Localized: MORGUE
     m_Metadata:
       m_Items: []
   - m_Id: 392073249
-    m_Localized: 
+    m_Localized: CHAMBRE FROIDE
     m_Metadata:
       m_Items: []
   - m_Id: 392073250
-    m_Localized: 
+    m_Localized: SOUS-SOL
     m_Metadata:
       m_Items: []
   - m_Id: 392073251
-    m_Localized: 
+    m_Localized: ENTRER DANS LA MORGUE
     m_Metadata:
       m_Items: []
   - m_Id: 392073252
-    m_Localized: 
+    m_Localized: "MORGUE \xB7 VERROUILL\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073253
-    m_Localized: 
+    m_Localized: "MORGUE \xB7 TERMIN\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073254
-    m_Localized: 
+    m_Localized: "MORGUE \xB7 SCELL\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073255
-    m_Localized: 
+    m_Localized: "MORGUE \xB7 D\xC9J\xC0 TERMIN\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073256
-    m_Localized: 
+    m_Localized: "SCELL\xC9E \xB7 IL VOUS FAUT LA CL\xC9 DE LA CHAUFFERIE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073257
-    m_Localized: 
+    m_Localized: "ALLER \xC0 LA PORTE DE LA MORGUE \xB7 SOUS-SOL"
     m_Metadata:
       m_Items: []
   - m_Id: 392073258
-    m_Localized: 
+    m_Localized: "\xC9TAGE {floor} \xB7 LA PORTE DE LA MORGUE EST OUVERTE \xB7 SOUS-SOL"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073259
-    m_Localized: 
+    m_Localized: "\xC9TAGE {floor} \xB7 LA PORTE DE LA MORGUE EST VERROUILL\xC9E \xB7 SOUS-SOL"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073260
-    m_Localized: 
+    m_Localized: "LA PORTE DE LA MORGUE EST D\xC9VERROUILL\xC9E \xB7 SOUS-SOL"
     m_Metadata:
       m_Items: []
   - m_Id: 392073261
-    m_Localized: 
+    m_Localized: "PR\xC9SENTEZ-VOUS \xC0 MARTA \xB7 SALLE DE CLASSE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073262
-    m_Localized: 
+    m_Localized: CHIRURGIE
     m_Metadata:
       m_Items: []
   - m_Id: 392073263
-    m_Localized: 
+    m_Localized: "BLOC OP\xC9RATOIRE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073264
-    m_Localized: 
+    m_Localized: "\xC9TAGE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073265
-    m_Localized: 
+    m_Localized: ENTRER EN CHIRURGIE
     m_Metadata:
       m_Items: []
   - m_Id: 392073266
-    m_Localized: 
+    m_Localized: "CHIRURGIE \xB7 VERROUILL\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073267
-    m_Localized: 
+    m_Localized: "CHIRURGIE \xB7 TERMIN\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073268
-    m_Localized: 
+    m_Localized: "CHIRURGIE \xB7 SCELL\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073269
-    m_Localized: 
+    m_Localized: "CHIRURGIE \xB7 D\xC9J\xC0 TERMIN\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073270
-    m_Localized: 
+    m_Localized: "SCELL\xC9E \xB7 IL VOUS FAUT LA CL\xC9 DE LA MORGUE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073271
-    m_Localized: 
+    m_Localized: "ALLER \xC0 LA PORTE DE LA CHIRURGIE \xB7 \xC0 L'\xC9TAGE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073272
-    m_Localized: 
+    m_Localized: "\xC9TAGE {floor} \xB7 LA PORTE DE LA CHIRURGIE EST OUVERTE \xB7 \xC0 L'\xC9TAGE"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073273
-    m_Localized: 
+    m_Localized: "\xC9TAGE {floor} \xB7 LA PORTE DE LA CHIRURGIE EST VERROUILL\xC9E \xB7 \xC0 L'\xC9TAGE"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073274
-    m_Localized: 
+    m_Localized: "LA PORTE DE LA CHIRURGIE EST D\xC9VERROUILL\xC9E \xB7 \xC0 L'\xC9TAGE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073275
-    m_Localized: 
+    m_Localized: "PR\xC9SENTEZ-VOUS AU DR. WEISS \xB7 SALLE D'EXAMEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073276
-    m_Localized: 
+    m_Localized: DIRECTEUR
     m_Metadata:
       m_Items: []
   - m_Id: 392073277
-    m_Localized: 
+    m_Localized: BUREAU DU DIRECTEUR
     m_Metadata:
       m_Items: []
   - m_Id: 392073278
-    m_Localized: 
+    m_Localized: "\xC9TAGE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073279
-    m_Localized: 
+    m_Localized: ENTRER CHEZ LE DIRECTEUR
     m_Metadata:
       m_Items: []
   - m_Id: 392073280
-    m_Localized: 
+    m_Localized: "DIRECTEUR \xB7 VERROUILL\xC9"
     m_Metadata:
       m_Items: []
   - m_Id: 392073281
-    m_Localized: 
+    m_Localized: "DIRECTEUR \xB7 TERMIN\xC9"
     m_Metadata:
       m_Items: []
   - m_Id: 392073282
-    m_Localized: 
+    m_Localized: "DIRECTEUR \xB7 SCELL\xC9"
     m_Metadata:
       m_Items: []
   - m_Id: 392073283
-    m_Localized: 
+    m_Localized: "DIRECTEUR \xB7 D\xC9J\xC0 TERMIN\xC9"
     m_Metadata:
       m_Items: []
   - m_Id: 392073284
-    m_Localized: 
+    m_Localized: "SCELL\xC9 \xB7 IL VOUS FAUT LA CL\xC9 DE LA CHIRURGIE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073285
-    m_Localized: 
+    m_Localized: "ALLER AU BUREAU DU DIRECTEUR \xB7 \xC0 L'\xC9TAGE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073286
-    m_Localized: 
+    m_Localized: "\xC9TAGE {floor} \xB7 LA PORTE DU DIRECTEUR EST OUVERTE \xB7 \xC0 L'\xC9TAGE"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073287
-    m_Localized: 
+    m_Localized: "\xC9TAGE {floor} \xB7 LA PORTE DU DIRECTEUR EST VERROUILL\xC9E \xB7 \xC0 L'\xC9TAGE"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073288
-    m_Localized: 
+    m_Localized: "LA PORTE DU DIRECTEUR EST D\xC9VERROUILL\xC9E \xB7 \xC0 L'\xC9TAGE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073289
-    m_Localized: 
+    m_Localized: "CL\xC9 NON REMISE \xB7 SALLE DES ARCHIVES"
     m_Metadata:
       m_Items: []
   - m_Id: 392073290
-    m_Localized: 
+    m_Localized: "PORTE VERROUILL\xC9E \xB7 LA CL\xC9 DU DIRECTEUR EST AUX ARCHIVES"
     m_Metadata:
       m_Items: []
   - m_Id: 392073291
-    m_Localized: 
+    m_Localized: "PORTE VERROUILL\xC9E \xB7 S\u0152UR AGNES A LA CL\xC9 \xB7 POSTE DE SOINS"
     m_Metadata:
       m_Items: []
   - m_Id: 392073292
-    m_Localized: 
+    m_Localized: "LA CL\xC9 DU PAVILLON A"
     m_Metadata:
       m_Items: []
   - m_Id: 392073293
-    m_Localized: 
+    m_Localized: "PARLER \xC0 S\u0152UR AGNES \xB7 POSTE DE SOINS"
     m_Metadata:
       m_Items: []
   - m_Id: 392073294
-    m_Localized: 
+    m_Localized: POSTE DE SOINS
     m_Metadata:
       m_Items: []
   - m_Id: 392073295
-    m_Localized: 
+    m_Localized: "TROUVER LE TROUSSEAU D'AGNES \xB7 LA CUISINE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073296
-    m_Localized: 
+    m_Localized: "RAPPORTER LE TROUSSEAU \xC0 S\u0152UR AGNES"
     m_Metadata:
       m_Items: []
   - m_Id: 392073297
-    m_Localized: 
+    m_Localized: PRENDRE LE TROUSSEAU
     m_Metadata:
       m_Items: []
   - m_Id: 392073298
-    m_Localized: 
+    m_Localized: "TROUSSEAU \xB7 PRIS"
     m_Metadata:
       m_Items: []
   - m_Id: 392073299
-    m_Localized: 
+    m_Localized: "PORTE VERROUILL\xC9E \xB7 BRUNO A LA CL\xC9 \xB7 CUISINE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073300
-    m_Localized: 
+    m_Localized: "LA CL\xC9 DE LA CHAUFFERIE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073301
-    m_Localized: 
+    m_Localized: "PARLER \xC0 BRUNO \xB7 CUISINE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073302
-    m_Localized: 
+    m_Localized: CUISINE
     m_Metadata:
       m_Items: []
   - m_Id: 392073303
-    m_Localized: 
+    m_Localized: "PRENDRE LE PLATEAU DE JOSEF \xC0 LA CUISINE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073304
-    m_Localized: 
+    m_Localized: "MONTER LE PLATEAU \xC0 JOSEF \xB7 DORTOIR"
     m_Metadata:
       m_Items: []
   - m_Id: 392073305
-    m_Localized: 
+    m_Localized: "EN MAIN \xB7 PLATEAU DE JOSEF"
     m_Metadata:
       m_Items: []
   - m_Id: 392073306
-    m_Localized: 
+    m_Localized: PRENDRE LE PLATEAU DE JOSEF
     m_Metadata:
       m_Items: []
   - m_Id: 392073307
-    m_Localized: 
+    m_Localized: "EN MAIN \xB7 PLATEAU DE JOSEF"
     m_Metadata:
       m_Items: []
   - m_Id: 392073308
-    m_Localized: 
+    m_Localized: "PORTE VERROUILL\xC9E \xB7 MARTA A LA CL\xC9 \xB7 SALLE DE CLASSE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073309
-    m_Localized: 
+    m_Localized: "LA CL\xC9 DE LA MORGUE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073310
-    m_Localized: 
+    m_Localized: "PARLER \xC0 MARTA \xB7 SALLE DE CLASSE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073311
-    m_Localized: 
+    m_Localized: SALLE DE CLASSE
     m_Metadata:
       m_Items: []
   - m_Id: 392073312
-    m_Localized: 
+    m_Localized: "TROUVER LA BO\xCETE \xC0 MUSIQUE DE MARTA \xB7 LE COULOIR DU SOUS-SOL"
     m_Metadata:
       m_Items: []
   - m_Id: 392073313
-    m_Localized: 
+    m_Localized: "RAPPORTER LA BO\xCETE \xC0 MUSIQUE \xC0 MARTA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073314
-    m_Localized: 
+    m_Localized: "PRENDRE LA BO\xCETE \xC0 MUSIQUE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073315
-    m_Localized: 
+    m_Localized: "BO\xCETE \xC0 MUSIQUE \xB7 PRISE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073316
-    m_Localized: 
+    m_Localized: "PORTE VERROUILL\xC9E \xB7 LE DR. WEISS A LA CL\xC9 \xB7 SALLE D'EXAMEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073317
-    m_Localized: 
+    m_Localized: "LA CL\xC9 DE LA CHIRURGIE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073318
-    m_Localized: 
+    m_Localized: "PARLER AU DR. WEISS \xB7 SALLE D'EXAMEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073319
-    m_Localized: 
+    m_Localized: SALLE D'EXAMEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073320
-    m_Localized: 
+    m_Localized: "TROUVER LES TROIS AMPOULES \xB7 \xC0 L'\xC9TAGE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073321
-    m_Localized: 
+    m_Localized: APPORTER LES AMPOULES AU DR. WEISS
     m_Metadata:
       m_Items: []
   - m_Id: 392073322
-    m_Localized: 
+    m_Localized: AMPOULES  {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073323
-    m_Localized: 
+    m_Localized: AMPOULES  {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073324
-    m_Localized: 
+    m_Localized: PRENDRE L'AMPOULE
     m_Metadata:
       m_Items: []
   - m_Id: 392073325
-    m_Localized: 
+    m_Localized: AMPOULE {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073326
-    m_Localized: 
+    m_Localized: PRENDRE L'AMPOULE
     m_Metadata:
       m_Items: []
   - m_Id: 392073327
-    m_Localized: 
+    m_Localized: AMPOULE {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073328
-    m_Localized: 
+    m_Localized: PRENDRE L'AMPOULE
     m_Metadata:
       m_Items: []
   - m_Id: 392073329
-    m_Localized: 
+    m_Localized: AMPOULE {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073330
-    m_Localized: 
+    m_Localized: "{key} \xB7 LA PORTE EST D\xC9VERROUILL\xC9E"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073331
-    m_Localized: 
+    m_Localized: "S\u0152UR AGNES"
     m_Metadata:
       m_Items: []
   - m_Id: 392073332
-    m_Localized: 
+    m_Localized: BRUNO
     m_Metadata:
       m_Items: []
   - m_Id: 392073333
-    m_Localized: 
+    m_Localized: JOSEF
     m_Metadata:
       m_Items: []
   - m_Id: 392073334
-    m_Localized: 
+    m_Localized: MARTA
     m_Metadata:
       m_Items: []
   - m_Id: 392073335
-    m_Localized: 
+    m_Localized: DR. WEISS
     m_Metadata:
       m_Items: []
   - m_Id: 392073336
-    m_Localized: 
+    m_Localized: LE GREFFIER
     m_Metadata:
       m_Items: []
   - m_Id: 392073337
-    m_Localized: 
+    m_Localized: PARLER AVEC {name}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073338
-    m_Localized: 
+    m_Localized: PAS MAINTENANT
     m_Metadata:
       m_Items: []
   - m_Id: 392073339
-    m_Localized: 
+    m_Localized: "Vous vous r\xE9veillez devant la porte."
     m_Metadata:
       m_Items: []
   - m_Id: 392073340
-    m_Localized: 
+    m_Localized: LE BUREAU DU DIRECTEUR
     m_Metadata:
       m_Items: []
   - m_Id: 392073341
-    m_Localized: 
+    m_Localized: "LE HALL DU REZ-DE-CHAUSS\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073342
-    m_Localized: 
+    m_Localized: ENTRER DANS LA BOUTIQUE
     m_Metadata:
       m_Items: []
   - m_Id: 392073343
-    m_Localized: 
+    m_Localized: "BOUTIQUE \xB7 FERM\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073344
-    m_Localized: 
+    m_Localized: "FERM\xC9E \xB7 REVENEZ AVEC DES \xC9CLATS"
     m_Metadata:
       m_Items: []
   - m_Id: 392073345
-    m_Localized: 
+    m_Localized: "BOUTIQUE\n<size=60%>LE MARCHAND  \xB7  {status}</size>"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073346
-    m_Localized: 
+    m_Localized: OUVERTE
     m_Metadata:
       m_Items: []
   - m_Id: 392073347
-    m_Localized: 
+    m_Localized: "FERM\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073348
-    m_Localized: 
+    m_Localized: LA BOUTIQUE EST OUVERTE
     m_Metadata:
       m_Items: []
   - m_Id: 392073349
-    m_Localized: 
+    m_Localized: "LA BOUTIQUE EST OUVERTE \xB7 {room}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073350
-    m_Localized: 
+    m_Localized: EXAMINER
     m_Metadata:
       m_Items: []
   - m_Id: 392073351
-    m_Localized: 
+    m_Localized: EXAMINER
     m_Metadata:
       m_Items: []
   - m_Id: 392073352
-    m_Localized: 
+    m_Localized: EXAMINER
     m_Metadata:
       m_Items: []
   - m_Id: 392073353
-    m_Localized: 
+    m_Localized: LIRE LE REGISTRE
     m_Metadata:
       m_Items: []
   - m_Id: 392073354
-    m_Localized: 
+    m_Localized: "\xC9COUTER"
     m_Metadata:
       m_Items: []
   - m_Id: 392073355
-    m_Localized: 
+    m_Localized: "LIRE LE DOSSIER \xB7 {label}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073356
-    m_Localized: 
+    m_Localized: "LIRE LE BRACELET \xB7 ELIAS VOGT \xB7 PATIENT 5"
     m_Metadata:
       m_Items: []
   - m_Id: 392073357
-    m_Localized: 
+    m_Localized: QUITTER L'ASILE
     m_Metadata:
       m_Items: []
   - m_Id: 392073358
-    m_Localized: 
+    m_Localized: "PRENDRE LA CL\xC9 DU DIRECTEUR"
     m_Metadata:
       m_Items: []
   - m_Id: 392073359
-    m_Localized: 
+    m_Localized: "ACTIONNER L'INTERRUPTEUR G\xC9N\xC9RAL \xB7 LIGHTS OUT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073360
-    m_Localized: 
+    m_Localized: OUVRIR LE TIROIR
     m_Metadata:
       m_Items: []
   - m_Id: 392073361
-    m_Localized: 
+    m_Localized: LE TIROIR
     m_Metadata:
       m_Items: []
   - m_Id: 392073362
-    m_Localized: 
+    m_Localized: "LE TIROIR EST VERROUILL\xC9 \xB7 DOSSIERS {n} / {total}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073363
-    m_Localized: 
+    m_Localized: "LA CL\xC9 DU DIRECTEUR \xB7 LA PORTE EST D\xC9VERROUILL\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073364
-    m_Localized: 
+    m_Localized: "TROUVER LA CL\xC9 DU DIRECTEUR \xB7 SALLE DES ARCHIVES"
     m_Metadata:
       m_Items: []
   - m_Id: 392073365
-    m_Localized: 
+    m_Localized: "L'ESCALIER DU SOUS-SOL EST ENCHA\xCEN\xC9 \xB7 PRENEZ L'ASCENSEUR"
     m_Metadata:
       m_Items: []
   - m_Id: 392073366
-    m_Localized: 
+    m_Localized: APPELER L'ASCENSEUR
     m_Metadata:
       m_Items: []
   - m_Id: 392073367
-    m_Localized: 
+    m_Localized: L'ASCENSEUR
     m_Metadata:
       m_Items: []
   - m_Id: 392073368
-    m_Localized: 
+    m_Localized: LA GRILLE
     m_Metadata:
       m_Items: []
   - m_Id: 392073369
-    m_Localized: 
+    m_Localized: FORCER LES PORTES
     m_Metadata:
       m_Items: []
   - m_Id: 392073370
-    m_Localized: 
+    m_Localized: "LA GRILLE EST ENCHA\xCEN\xC9E \xB7 PRENEZ L'ASCENSEUR"
     m_Metadata:
       m_Items: []
   - m_Id: 392073371
-    m_Localized: 
+    m_Localized: L'ASCENSEUR NE BOUGE PAS
     m_Metadata:
       m_Items: []
   - m_Id: 392073372
-    m_Localized: 
+    m_Localized: "L'ASCENSEUR NE VIENT PAS \xB7 LA CHAUFFERIE EST TOUJOURS VERROUILL\xC9E"
     m_Metadata:
       m_Items: []
   - m_Id: 392073373
-    m_Localized: 
+    m_Localized: "L'ASCENSEUR S'EST ARR\xCAT\xC9"
     m_Metadata:
       m_Items: []
   - m_Id: 392073374
-    m_Localized: 
+    m_Localized: "LES PORTES SONT COINC\xC9ES \xB7 MAINTENEZ {key} POUR LES FORCER"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763192
   - m_Id: 392073375
-    m_Localized: 
+    m_Localized: QUELQUE CHOSE FRAPPE TROIS COUPS.
     m_Metadata:
       m_Items: []
   - m_Id: 392073376
-    m_Localized: 
+    m_Localized: "\xC7A S'ARR\xCATE \xC0 LA PORTE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073377
-    m_Localized: 
+    m_Localized: "QUELQU'UN A DESSIN\xC9 DES \xC9TOILES SUR LE MUR. ELLES BRILLENT ENCORE."
     m_Metadata:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331672703763192
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 308187136
+        - id: 392073220
+        - id: 392073230
+        - id: 392073231
+        - id: 392073244
+        - id: 392073245
+        - id: 392073258
+        - id: 392073259
+        - id: 392073272
+        - id: 392073273
+        - id: 392073286
+        - id: 392073287
+        - id: 392073322
+        - id: 392073323
+        - id: 392073325
+        - id: 392073327
+        - id: 392073329
+        - id: 392073330
+        - id: 392073337
+        - id: 392073345
+        - id: 392073349
+        - id: 392073355
+        - id: 392073362
+        - id: 392073374

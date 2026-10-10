@@ -16,180 +16,206 @@ MonoBehaviour:
     m_Code: es
   m_SharedData: {fileID: 11400000, guid: b4c6f04b4f756474980167f6a0846058, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331672703763196
   m_TableData:
   - m_Id: 341741568
-    m_Localized: 
+    m_Localized: "Te solt\xF3. No volver\xE1 a hacerlo."
     m_Metadata:
       m_Items: []
   - m_Id: 421433344
-    m_Localized: 
+    m_Localized: "Tr\xE1elo de vuelta de una pieza."
     m_Metadata:
       m_Items: []
   - m_Id: 421433345
-    m_Localized: 
+    m_Localized: Como quieras.
     m_Metadata:
       m_Items: []
   - m_Id: 421433346
-    m_Localized: 
+    m_Localized: "Eso lo oy\xF3."
     m_Metadata:
       m_Items: []
   - m_Id: 421433347
-    m_Localized: 
+    m_Localized: No tienes pila de repuesto.
     m_Metadata:
       m_Items: []
   - m_Id: 421433348
-    m_Localized: 
+    m_Localized: "Aqu\xED dentro no."
     m_Metadata:
       m_Items: []
   - m_Id: 421433349
-    m_Localized: 
+    m_Localized: "La linterna est\xE1 cargada."
     m_Metadata:
       m_Items: []
   - m_Id: 421433350
-    m_Localized: 
+    m_Localized: Pila nueva.
     m_Metadata:
       m_Items: []
   - m_Id: 421433351
-    m_Localized: 
+    m_Localized: "No tienes br\xFAjula estelar."
     m_Metadata:
       m_Items: []
   - m_Id: 421433352
-    m_Localized: 
+    m_Localized: No queda nada a lo que apuntar.
     m_Metadata:
       m_Items: []
   - m_Id: 421433353
-    m_Localized: 
+    m_Localized: "LA TRAMPILLA EST\xC1 DESBLOQUEADA"
     m_Metadata:
       m_Items: []
   - m_Id: 421433354
-    m_Localized: 
+    m_Localized: "EL ASCENSOR EST\xC1 DESBLOQUEADO"
     m_Metadata:
       m_Items: []
   - m_Id: 7992965500928
-    m_Localized: 
+    m_Localized: PILA
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387008
-    m_Localized: 
+    m_Localized: + SEGUNDO ALIENTO
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387009
-    m_Localized: 
+    m_Localized: LLAVE {held} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763196
   - m_Id: 7993049387010
-    m_Localized: 
+    m_Localized: +{amount} {currency}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763196
   - m_Id: 7993049387011
-    m_Localized: 
+    m_Localized: "Algo se siente atra\xEDdo por la luz."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387012
-    m_Localized: 
+    m_Localized: "En alg\xFAn lugar, sube una persiana."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387013
-    m_Localized: 
+    m_Localized: "C\xC1M 3: MOVIMIENTO"
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387014
-    m_Localized: 
+    m_Localized: "ALGO GRIT\xD3."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387015
-    m_Localized: 
+    m_Localized: CONTRATO FALLIDO  -  {name}.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763196
   - m_Id: 7993049387016
-    m_Localized: 
+    m_Localized: CONTRATO CUMPLIDO  -  {name}.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763196
   - m_Id: 7993049387017
-    m_Localized: 
+    m_Localized: "Aqu\xED abajo no brilla nada - el contrato queda anulado."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387018
-    m_Localized: 
+    m_Localized: "Aqu\xED abajo no hay notas - el contrato queda anulado."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387019
-    m_Localized: 
+    m_Localized: Trato es trato.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387020
-    m_Localized: 
+    m_Localized: No siempre se gana.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387021
-    m_Localized: 
+    m_Localized: "Fragmentos a cambio de algo para la oscuridad. \xBFQu\xE9 va a ser?"
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387022
-    m_Localized: 
+    m_Localized: "Otra vez por aqu\xED."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387023
-    m_Localized: 
+    m_Localized: "Ah\xED arriba hay cada vez m\xE1s ruido."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387024
-    m_Localized: 
+    m_Localized: "\xDAltima parada antes del fondo."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387025
-    m_Localized: 
+    m_Localized: "Algo se movi\xF3 detr\xE1s de ti."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387026
-    m_Localized: 
+    m_Localized: "Se est\xE1 acercando."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387027
-    m_Localized: 
+    m_Localized: "Est\xE1 justo detr\xE1s de ti."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387028
-    m_Localized: 
+    m_Localized: "Las luces se est\xE1n muriendo."
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387029
-    m_Localized: 
+    m_Localized: Lo sabe.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387030
-    m_Localized: 
+    m_Localized: Estaba esperando.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387031
-    m_Localized: 
+    m_Localized: PLANTA {floor}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763196
   - m_Id: 7993049387032
-    m_Localized: 
+    m_Localized: "PLANTA {floor} \u2014 {theme}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763196
   - m_Id: 7993049387033
-    m_Localized: 
+    m_Localized: ENCUENTRA {n} ESTRELLAS
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763196
   - m_Id: 7993049387034
-    m_Localized: 
+    m_Localized: REPARA {n} FUSIBLES
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763196
   - m_Id: 7993049387035
-    m_Localized: 
+    m_Localized: ENCUENTRA {n} LLAVES PARA LA TRAMPILLA
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763196
   - m_Id: 7993049387036
-    m_Localized: 
+    m_Localized: CIERRE DE SEGURIDAD
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387037
-    m_Localized: 
+    m_Localized: "{name} \u2014 {description}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763196
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331672703763196
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 7993049387009
+        - id: 7993049387010
+        - id: 7993049387015
+        - id: 7993049387016
+        - id: 7993049387031
+        - id: 7993049387032
+        - id: 7993049387033
+        - id: 7993049387034
+        - id: 7993049387035
+        - id: 7993049387037

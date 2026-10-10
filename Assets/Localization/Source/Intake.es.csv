@@ -1,0 +1,35 @@
+key,text
+intake.goal.look,MIRA ALREDEDOR
+intake.goal.move,CAMINA HASTA LA MARCA
+intake.goal.torch,ENCIENDE LA LINTERNA
+intake.goal.focus,MANTÉN EL HAZ SOBRE EL CARTEL
+intake.goal.battery,TOMA LA PILA
+intake.goal.read,LEE LA NOTA
+intake.goal.read_close,CIERRA LA NOTA
+intake.goal.throw_pick,RECOGE LA BOTELLA
+intake.goal.throw,LÁNZALA CONTRA LA CAMPANA
+intake.goal.hide_go,PASA POR LA PERSIANA
+intake.goal.hide,ESCÓNDETE EN EL CASILLERO
+intake.goal.hide_still,NO TE MUEVAS
+intake.goal.hide_leave,ESO SE FUE. SAL DEL CASILLERO
+intake.goal.star,TOMA LA ESTRELLA
+intake.goal.hatch,PISA LA TRAMPILLA
+intake.key.mouse,RATÓN
+intake.key.rmb,CLIC DER.
+intake.key.right_thumb,PULGAR DER.
+intake.key.left_thumb,PULGAR IZQ.
+intake.key.torch,LINTERNA
+intake.key.focus,ENFOCAR
+intake.key.throw,LANZAR
+intake.sub.wake,Despiertas. La cama está fría. No hay nadie.
+intake.sub.welcome_back,Otra vez aquí. Ya conoces el camino - o sáltalo desde el menú de pausa.
+intake.sub.get_up,Levántate.
+intake.sub.focus_hint,El haz enfocado es más estrecho y llega más lejos. Mantenlo sobre el cartel.
+intake.sub.battery_hint,Tu linterna se está apagando. Una pila nueva la recarga.
+intake.sub.recharge,"Apagada, la linterna se recarga despacio - pero nunca del todo."
+intake.sub.lamp_sparks,La lámpara chisporrotea. La sala se queda a oscuras.
+intake.sub.bell_rings,"Suena la campana. En algún lugar, se levanta una persiana."
+intake.sub.another_bottle,Otra botella sobre la mesa.
+intake.sub.footsteps,Pasos. Están arrastrando algo pesado.
+intake.sub.hatch_again,Las estrellas abren la trampilla. Hacia abajo.
+intake.sub.hatch_first,"""Las estrellas abren la trampilla. La trampilla es el camino hacia abajo. Algo ahí abajo está cazando."""

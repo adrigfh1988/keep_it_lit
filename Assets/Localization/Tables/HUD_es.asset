@@ -16,180 +16,224 @@ MonoBehaviour:
     m_Code: es
   m_SharedData: {fileID: 11400000, guid: 604b93daf028d6f4db3b08ed6afbed15, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331672703763201
   m_TableData:
   - m_Id: 635342848
-    m_Localized: 
+    m_Localized: CONTRATO  -  {name}  -  CUMPLIDO
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 731811840
-    m_Localized: 
+    m_Localized: CONTRATO  -  {name}  -  FALLIDO
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 731811841
-    m_Localized: 
+    m_Localized: CONTRATO  -  {name}  -  ANULADO
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 731811842
-    m_Localized: 
+    m_Localized: CONTRATO  -  {name}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 731811843
-    m_Localized: 
+    m_Localized: CONTRATO  -  {name}  -  {n} / {total} s
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 731811844
-    m_Localized: 
+    m_Localized: CONTRATO  -  {name}  -  {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 731811845
-    m_Localized: 
+    m_Localized: CONTRATO  -  {name}  -  quedan {time}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 731811846
-    m_Localized: 
+    m_Localized: LINTERNA
     m_Metadata:
       m_Items: []
   - m_Id: 740200448
-    m_Localized: 
+    m_Localized: LINTERNA AGOTADA
     m_Metadata:
       m_Items: []
   - m_Id: 740200449
-    m_Localized: 
+    m_Localized: PLANTA {floor}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 740200450
-    m_Localized: 
+    m_Localized: MANICOMIO
     m_Metadata:
       m_Items: []
   - m_Id: 740200451
-    m_Localized: 
+    m_Localized: '{currency}  {shards}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 740200452
-    m_Localized: 
+    m_Localized: SEGUNDO ALIENTO
     m_Metadata:
       m_Items: []
   - m_Id: 740200453
-    m_Localized: 
+    m_Localized: '{key}   PILA  x{count}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 740200454
-    m_Localized: 
+    m_Localized: "{key}   BR\xDAJULA  x{count}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 740200455
-    m_Localized: 
+    m_Localized: '{key}   LANZAR  x{count}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 740200456
-    m_Localized: 
+    m_Localized: ESCONDERSE
     m_Metadata:
       m_Items: []
   - m_Id: 740200457
-    m_Localized: 
+    m_Localized: SALIR
     m_Metadata:
       m_Items: []
   - m_Id: 740200458
-    m_Localized: 
+    m_Localized: HABLAR
     m_Metadata:
       m_Items: []
   - m_Id: 740200459
-    m_Localized: 
+    m_Localized: CONTRATOS
     m_Metadata:
       m_Items: []
   - m_Id: 740200460
-    m_Localized: 
+    m_Localized: BAJAR
     m_Metadata:
       m_Items: []
   - m_Id: 740200461
-    m_Localized: 
+    m_Localized: CERRAR
     m_Metadata:
       m_Items: []
   - m_Id: 740200462
-    m_Localized: 
+    m_Localized: ESTRELLAS  {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 740200463
-    m_Localized: 
+    m_Localized: FUSIBLES  {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 740200464
-    m_Localized: 
+    m_Localized: LLAVES  {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 740200465
-    m_Localized: 
+    m_Localized: "BLOQUEADA \xB7 {h} / {t} LLAVES"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 740200466
-    m_Localized: 
+    m_Localized: "ASCENSOR BLOQUEADO \xB7 {h} / {t} LLAVES"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 740200467
-    m_Localized: 
+    m_Localized: ASCENSOR LLEGANDO {percent}%
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 740200468
-    m_Localized: 
+    m_Localized: EXPEDIENTES  {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763201
   - m_Id: 740200469
-    m_Localized: 
+    m_Localized: RECOGER LA BOTELLA
     m_Metadata:
       m_Items: []
   - m_Id: 740200470
-    m_Localized: 
+    m_Localized: RECOGER LA LATA
     m_Metadata:
       m_Items: []
   - m_Id: 740200471
-    m_Localized: 
+    m_Localized: TOMAR LA LLAVE
     m_Metadata:
       m_Items: []
   - m_Id: 740200472
-    m_Localized: 
+    m_Localized: RECOGER EL FAROL
     m_Metadata:
       m_Items: []
   - m_Id: 740200473
-    m_Localized: 
+    m_Localized: DEJAR EL FAROL
     m_Metadata:
       m_Items: []
   - m_Id: 740200474
-    m_Localized: 
+    m_Localized: LEER
     m_Metadata:
       m_Items: []
   - m_Id: 740200475
-    m_Localized: 
+    m_Localized: RECOGER LA PILA
     m_Metadata:
       m_Items: []
   - m_Id: 740200476
-    m_Localized: 
+    m_Localized: DAR CORRIENTE
     m_Metadata:
       m_Items: []
   - m_Id: 740200477
-    m_Localized: 
+    m_Localized: ABRIR
     m_Metadata:
       m_Items: []
   - m_Id: 740200478
-    m_Localized: 
+    m_Localized: PULSAR
     m_Metadata:
       m_Items: []
   - m_Id: 740200479
-    m_Localized: 
+    m_Localized: TOCAR EL TIMBRE
     m_Metadata:
       m_Items: []
   - m_Id: 740200480
-    m_Localized: 
+    m_Localized: "ABRIR LA V\xC1LVULA"
     m_Metadata:
       m_Items: []
   - m_Id: 740200481
-    m_Localized: 
+    m_Localized: ENCENDER LAS VELAS
     m_Metadata:
       m_Items: []
   - m_Id: 740200482
-    m_Localized: 
+    m_Localized: USAR TERMINAL
     m_Metadata:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331672703763201
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 635342848
+        - id: 731811840
+        - id: 731811841
+        - id: 731811842
+        - id: 731811843
+        - id: 731811844
+        - id: 731811845
+        - id: 740200449
+        - id: 740200451
+        - id: 740200453
+        - id: 740200454
+        - id: 740200455
+        - id: 740200462
+        - id: 740200463
+        - id: 740200464
+        - id: 740200465
+        - id: 740200466
+        - id: 740200467
+        - id: 740200468

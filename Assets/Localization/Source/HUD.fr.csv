@@ -1,0 +1,44 @@
+key,text
+hud.contract.done,CONTRAT  -  {name}  -  RÉUSSI
+hud.contract.failed,CONTRAT  -  {name}  -  ÉCHOUÉ
+hud.contract.void,CONTRAT  -  {name}  -  ANNULÉ
+hud.contract.plain,CONTRAT  -  {name}
+hud.contract.progress_dark,CONTRAT  -  {name}  -  {n} / {total} s
+hud.contract.progress_count,CONTRAT  -  {name}  -  {n} / {total}
+hud.contract.progress_time,CONTRAT  -  {name}  -  {time} restant
+hud.torch,LAMPE
+hud.torch_dead,LAMPE À PLAT
+hud.floor,ÉTAGE {floor}
+hud.asylum,ASILE
+hud.shards,{currency}  {shards}
+hud.second_wind,SECOND SOUFFLE
+hud.slot.battery,{key}   PILE  x{count}
+hud.slot.compass,{key}   BOUSSOLE  x{count}
+hud.slot.throw,{key}   LANCER  x{count}
+hud.prompt.hide,SE CACHER
+hud.prompt.leave,SORTIR
+hud.prompt.talk,PARLER
+hud.prompt.contracts,CONTRATS
+hud.prompt.descend,DESCENDRE
+hud.prompt.close,FERMER
+hud.counter.stars,ÉTOILES  {n} / {total}
+hud.counter.fuses,FUSIBLES  {n} / {total}
+hud.counter.keys,CLÉS  {n} / {total}
+hud.keys_locked,VERROUILLÉE · {h} / {t} CLÉS
+hud.lift_locked,ASCENSEUR BLOQUÉ · {h} / {t} CLÉS
+hud.lift_arriving,ASCENSEUR EN APPROCHE {percent}%
+hud.records.header,DOSSIERS  {n} / {total}
+hud.prompt.pick_up_bottle,RAMASSER LA BOUTEILLE
+hud.prompt.pick_up_can,RAMASSER LA CANETTE
+hud.prompt.take_key,PRENDRE LA CLÉ
+hud.prompt.pick_up_lantern,RAMASSER LA LANTERNE
+hud.prompt.put_down_lantern,POSER LA LANTERNE
+hud.prompt.read,LIRE
+hud.prompt.pick_up_battery_cell,RAMASSER LA PILE
+hud.prompt.restore_power,RÉTABLIR LE COURANT
+hud.prompt.open,OUVRIR
+hud.prompt.press,APPUYER
+hud.prompt.ring_bell,SONNER LA CLOCHE
+hud.prompt.open_valve,OUVRIR LA VANNE
+hud.prompt.light_candles,ALLUMER LES BOUGIES
+hud.prompt.use_terminal,UTILISER LE TERMINAL

@@ -1,0 +1,44 @@
+key,text
+hud.contract.done,CONTRATO  -  {name}  -  CUMPLIDO
+hud.contract.failed,CONTRATO  -  {name}  -  FALLIDO
+hud.contract.void,CONTRATO  -  {name}  -  ANULADO
+hud.contract.plain,CONTRATO  -  {name}
+hud.contract.progress_dark,CONTRATO  -  {name}  -  {n} / {total} s
+hud.contract.progress_count,CONTRATO  -  {name}  -  {n} / {total}
+hud.contract.progress_time,CONTRATO  -  {name}  -  quedan {time}
+hud.torch,LINTERNA
+hud.torch_dead,LINTERNA AGOTADA
+hud.floor,PLANTA {floor}
+hud.asylum,MANICOMIO
+hud.shards,{currency}  {shards}
+hud.second_wind,SEGUNDO ALIENTO
+hud.slot.battery,{key}   PILA  x{count}
+hud.slot.compass,{key}   BRÚJULA  x{count}
+hud.slot.throw,{key}   LANZAR  x{count}
+hud.prompt.hide,ESCONDERSE
+hud.prompt.leave,SALIR
+hud.prompt.talk,HABLAR
+hud.prompt.contracts,CONTRATOS
+hud.prompt.descend,BAJAR
+hud.prompt.close,CERRAR
+hud.counter.stars,ESTRELLAS  {n} / {total}
+hud.counter.fuses,FUSIBLES  {n} / {total}
+hud.counter.keys,LLAVES  {n} / {total}
+hud.keys_locked,BLOQUEADA · {h} / {t} LLAVES
+hud.lift_locked,ASCENSOR BLOQUEADO · {h} / {t} LLAVES
+hud.lift_arriving,ASCENSOR LLEGANDO {percent}%
+hud.records.header,EXPEDIENTES  {n} / {total}
+hud.prompt.pick_up_bottle,RECOGER LA BOTELLA
+hud.prompt.pick_up_can,RECOGER LA LATA
+hud.prompt.take_key,TOMAR LA LLAVE
+hud.prompt.pick_up_lantern,RECOGER EL FAROL
+hud.prompt.put_down_lantern,DEJAR EL FAROL
+hud.prompt.read,LEER
+hud.prompt.pick_up_battery_cell,RECOGER LA PILA
+hud.prompt.restore_power,DAR CORRIENTE
+hud.prompt.open,ABRIR
+hud.prompt.press,PULSAR
+hud.prompt.ring_bell,TOCAR EL TIMBRE
+hud.prompt.open_valve,ABRIR LA VÁLVULA
+hud.prompt.light_candles,ENCENDER LAS VELAS
+hud.prompt.use_terminal,USAR TERMINAL

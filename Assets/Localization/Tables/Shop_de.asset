@@ -16,320 +16,344 @@ MonoBehaviour:
     m_Code: de
   m_SharedData: {fileID: 11400000, guid: fefa1c381967b3c46b9600b8d091da42, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331672703763210
   m_TableData:
   - m_Id: 295604224
-    m_Localized: 
+    m_Localized: SPLITTER
     m_Metadata:
       m_Items: []
   - m_Id: 375296000
-    m_Localized: 
+    m_Localized: Ersatzbatterie
     m_Metadata:
       m_Items: []
   - m_Id: 375296001
-    m_Localized: 
+    m_Localized: "Eine frische Zelle. F\xFCllt die Lampe auf und schaltet sie ein. Dr\xFCck {key}."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763210
   - m_Id: 375296002
-    m_Localized: 
+    m_Localized: Sternenkompass
     m_Metadata:
       m_Items: []
   - m_Id: 375296003
-    m_Localized: 
+    m_Localized: "Zeigt f\xFCnf Sekunden lang auf den n\xE4chsten Stern. Dr\xFCck {key}."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763210
   - m_Id: 375296004
-    m_Localized: 
+    m_Localized: Zweiter Atem
     m_Metadata:
       m_Items: []
   - m_Id: 375296005
-    m_Localized: 
+    m_Localized: "Wenn es dich f\xE4ngt, l\xE4sst es los. Einmal."
     m_Metadata:
       m_Items: []
   - m_Id: 375296006
-    m_Localized: 
+    m_Localized: Lange Lunte
     m_Metadata:
       m_Items: []
   - m_Id: 375296007
-    m_Localized: 
+    m_Localized: "N\xE4chste Etage: zehn Sekunden mehr auf dem Lukentimer."
     m_Metadata:
       m_Items: []
   - m_Id: 375296008
-    m_Localized: 
+    m_Localized: Leise Schuhe
     m_Metadata:
       m_Items: []
   - m_Id: 375296009
-    m_Localized: 
+    m_Localized: "N\xE4chste Etage: Deine Schritte tragen ein Drittel weniger weit."
     m_Metadata:
       m_Items: []
   - m_Id: 375296010
-    m_Localized: 
+    m_Localized: Zusatzlampen
     m_Metadata:
       m_Items: []
   - m_Id: 375296011
-    m_Localized: 
+    m_Localized: "Mehr brennende Lampen auf der n\xE4chsten Etage."
     m_Metadata:
       m_Items: []
   - m_Id: 375296012
-    m_Localized: 
+    m_Localized: Ausdauertonikum
     m_Metadata:
       m_Items: []
   - m_Id: 375296013
-    m_Localized: 
+    m_Localized: "N\xE4chste Etage: vier Sekunden l\xE4nger sprinten."
     m_Metadata:
       m_Items: []
   - m_Id: 375296014
-    m_Localized: 
+    m_Localized: Lampenfarbe
     m_Metadata:
       m_Items: []
   - m_Id: 375296015
-    m_Localized: 
+    m_Localized: Kalt. Glut. Violett.
     m_Metadata:
       m_Items: []
   - m_Id: 375296016
-    m_Localized: 
+    m_Localized: HUD-Farbton
     m_Metadata:
       m_Items: []
   - m_Id: 375296017
-    m_Localized: 
+    m_Localized: Phosphor. Bernstein. Eis.
     m_Metadata:
       m_Items: []
   - m_Id: 375296018
-    m_Localized: 
+    m_Localized: Flaschenpack
     m_Metadata:
       m_Items: []
   - m_Id: 375296019
-    m_Localized: 
+    m_Localized: "Starte die n\xE4chste Etage schon mit drei Flaschen."
     m_Metadata:
       m_Items: []
   - m_Id: 375296020
-    m_Localized: 
+    m_Localized: Fokuslinse
     m_Metadata:
       m_Items: []
   - m_Id: 375296021
-    m_Localized: 
+    m_Localized: "N\xE4chste Etage: Der fokussierte Strahl reicht weiter, ohne mehr Batterie zu kosten."
     m_Metadata:
       m_Items: []
   - m_Id: 375296022
-    m_Localized: 
+    m_Localized: Sicherungskarte
     m_Metadata:
       m_Items: []
   - m_Id: 375296023
-    m_Localized: 
+    m_Localized: "Sicherungen, Kn\xF6pfe, Tresorr\xE4ume und Schl\xFCssel leuchten schwach. Auch der Kompass zeigt auf sie."
     m_Metadata:
       m_Items: []
   - m_Id: 375296024
-    m_Localized: 
+    m_Localized: WARM
     m_Metadata:
       m_Items: []
   - m_Id: 375296025
-    m_Localized: 
+    m_Localized: KALT
     m_Metadata:
       m_Items: []
   - m_Id: 375296026
-    m_Localized: 
+    m_Localized: GLUT
     m_Metadata:
       m_Items: []
   - m_Id: 375296027
-    m_Localized: 
+    m_Localized: VIOLETT
     m_Metadata:
       m_Items: []
   - m_Id: 375296028
-    m_Localized: 
+    m_Localized: KNOCHEN
     m_Metadata:
       m_Items: []
   - m_Id: 375296029
-    m_Localized: 
+    m_Localized: PHOSPHOR
     m_Metadata:
       m_Items: []
   - m_Id: 375296030
-    m_Localized: 
+    m_Localized: BERNSTEIN
     m_Metadata:
       m_Items: []
   - m_Id: 375296031
-    m_Localized: 
+    m_Localized: EIS
     m_Metadata:
       m_Items: []
   - m_Id: 375296032
-    m_Localized: 
+    m_Localized: DIE STATION
     m_Metadata:
       m_Items: []
   - m_Id: 375296033
-    m_Localized: 
+    m_Localized: DAS KESSELDECK
     m_Metadata:
       m_Items: []
   - m_Id: 375296034
-    m_Localized: 
+    m_Localized: DIE GRUFT
     m_Metadata:
       m_Items: []
   - m_Id: 375296035
-    m_Localized: 
+    m_Localized: DAS LABOR
     m_Metadata:
       m_Items: []
   - m_Id: 375296036
-    m_Localized: 
+    m_Localized: DIE SENKE
     m_Metadata:
       m_Items: []
   - m_Id: 375296037
-    m_Localized: 
+    m_Localized: STERBENDES NETZ
     m_Metadata:
       m_Items: []
   - m_Id: 375296038
-    m_Localized: 
+    m_Localized: Jede Minute verliert eine Lampe den Strom.
     m_Metadata:
       m_Items: []
   - m_Id: 375296039
-    m_Localized: 
+    m_Localized: "SCHARFES GEH\xD6R"
     m_Metadata:
       m_Items: []
   - m_Id: 375296040
-    m_Localized: 
+    m_Localized: "Es h\xF6rt hier weiter. Splitter sind mehr wert."
     m_Metadata:
       m_Items: []
   - m_Id: 375296041
-    m_Localized: 
+    m_Localized: DICHTER NEBEL
     m_Metadata:
       m_Items: []
   - m_Id: 375296042
-    m_Localized: 
+    m_Localized: Du siehst weniger; es auch.
     m_Metadata:
       m_Items: []
   - m_Id: 375296043
-    m_Localized: 
+    m_Localized: SCHWACHE BATTERIE
     m_Metadata:
       m_Items: []
   - m_Id: 375296044
-    m_Localized: 
+    m_Localized: "Du startest halb geladen, doch ausgeschaltet l\xE4dt sie schneller."
     m_Metadata:
       m_Items: []
   - m_Id: 375296045
-    m_Localized: 
+    m_Localized: RASTLOS
     m_Metadata:
       m_Items: []
   - m_Id: 375296046
-    m_Localized: 
+    m_Localized: "Es wechselt \xF6fter den Ort und taucht h\xE4ufiger auf."
     m_Metadata:
       m_Items: []
   - m_Id: 375296047
-    m_Localized: 
+    m_Localized: "GLASB\xD6DEN"
     m_Metadata:
       m_Items: []
   - m_Id: 375296048
-    m_Localized: 
+    m_Localized: "Mehr Glasscherben und Pf\xFCtzen unter den F\xFC\xDFen."
     m_Metadata:
       m_Items: []
   - m_Id: 375296049
-    m_Localized: 
+    m_Localized: REICHE ADERN
     m_Metadata:
       m_Items: []
   - m_Id: 375296050
-    m_Localized: 
+    m_Localized: Mehr Splitter, aber es geht etwas schneller.
     m_Metadata:
       m_Items: []
   - m_Id: 375296051
-    m_Localized: 
+    m_Localized: "Hier jagt es nach Geh\xF6r."
     m_Metadata:
       m_Items: []
   - m_Id: 375296052
-    m_Localized: 
+    m_Localized: Hier ist es schnell, doch es vergisst rasch.
     m_Metadata:
       m_Items: []
   - m_Id: 375296053
-    m_Localized: 
+    m_Localized: '{name}.'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763210
   - m_Id: 375296054
-    m_Localized: 
+    m_Localized: Nie verstecken
     m_Metadata:
       m_Items: []
   - m_Id: 375296055
-    m_Localized: 
+    m_Localized: Schaff die Etage, ohne einen Spind zu betreten.
     m_Metadata:
       m_Items: []
   - m_Id: 375296056
-    m_Localized: 
+    m_Localized: Kein Kratzer
     m_Metadata:
       m_Items: []
   - m_Id: 375296057
-    m_Localized: 
+    m_Localized: "Lass dich nie fangen - und lass dich nie von Stan ber\xFChren."
     m_Metadata:
       m_Items: []
   - m_Id: 375296058
-    m_Localized: 
+    m_Localized: Im Dunkeln gehen
     m_Metadata:
       m_Items: []
   - m_Id: 375296059
-    m_Localized: 
+    m_Localized: Geh 60 Sekunden lang mit ausgeschalteter Lampe.
     m_Metadata:
       m_Items: []
   - m_Id: 375296060
-    m_Localized: 
+    m_Localized: "Nimm, was gl\xE4nzt"
     m_Metadata:
       m_Items: []
   - m_Id: 375296061
-    m_Localized: 
+    m_Localized: Sammle mindestens 60% der Splitter auf der Etage.
     m_Metadata:
       m_Items: []
   - m_Id: 375296062
-    m_Localized: 
+    m_Localized: Alles lesen
     m_Metadata:
       m_Items: []
   - m_Id: 375296063
-    m_Localized: 
+    m_Localized: Lies jede Notiz auf der Etage.
     m_Metadata:
       m_Items: []
   - m_Id: 375296064
-    m_Localized: 
+    m_Localized: "Nicht tr\xF6deln"
     m_Metadata:
       m_Items: []
   - m_Id: 375296065
-    m_Localized: 
+    m_Localized: "Schaff die Etage, bevor die Uhr abl\xE4uft."
     m_Metadata:
       m_Items: []
   - m_Id: 375296066
-    m_Localized: 
+    m_Localized: "L\xE4rm machen"
     m_Metadata:
       m_Items: []
   - m_Id: 375296067
-    m_Localized: 
+    m_Localized: Lock das Ding zweimal mit einer geworfenen Flasche oder Dose an.
     m_Metadata:
       m_Items: []
   - m_Id: 375296068
-    m_Localized: 
+    m_Localized: "Leichte F\xFC\xDFe"
     m_Metadata:
       m_Items: []
   - m_Id: 375296069
-    m_Localized: 
+    m_Localized: Niemals sprinten.
     m_Metadata:
       m_Items: []
   - m_Id: 375296070
-    m_Localized: 
+    m_Localized: ETAGE {floor} GESCHAFFT
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763210
   - m_Id: 375296071
-    m_Localized: 
+    m_Localized: STERNE  {stars} x {value}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763210
   - m_Id: 375296072
-    m_Localized: 
+    m_Localized: RESTZEIT  {time}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763210
   - m_Id: 375296073
-    m_Localized: 
+    m_Localized: ETAGE {floor} GESCHAFFT
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763210
   - m_Id: 375296074
-    m_Localized: 
+    m_Localized: SPLITTER GEFUNDEN  {n} x {value}  (schon deins)
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763210
   - m_Id: 375296075
-    m_Localized: 
+    m_Localized: TROSTPREIS
     m_Metadata:
       m_Items: []
   - m_Id: 375296076
-    m_Localized: 
+    m_Localized: TROSTPREIS  {percent}% von {stars} {stars:plural:Stern|Sternen}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763210
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331672703763210
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 375296001
+        - id: 375296003
+        - id: 375296053
+        - id: 375296070
+        - id: 375296071
+        - id: 375296072
+        - id: 375296073
+        - id: 375296074
+        - id: 375296076

@@ -1,0 +1,79 @@
+key,text
+lore.note.0,"Planning de garde de nuit. Règle 1: les lumières restent allumées. Règle 2: si les lumières s'éteignent, ne courez pas. C'est en courant que ça vous trouve. — Surveillant Okafor"
+lore.note.1,"Le patient 7 dessine sans cesse des étoiles sur les murs. Dit qu'elles sont « le chemin vers le bas ». Nous les recouvrons de peinture. Au matin, elles sont revenues, et elles brillent."
+lore.note.2,Journal de maintenance: pression nominale. Le fusible 3 a encore sauté. Quelqu'un appuie sur les boutons de confinement à 3 h du matin. Personne n'est de garde à 3 h du matin.
+lore.note.3,À qui trouvera ceci: les rideaux n'ont jamais été faits pour vous retenir. On les a construits pour ralentir la chose. Ça déteste les portes. Fermez-les derrière vous.
+lore.note.4,Les bougies de la chapelle sont les seules lumières qu'ils n'ont pas pu couper. Allumez-en une. Cela n'aide pas beaucoup. Cela aide assez.
+lore.note.5,"Registre des inhumations, dernière page: « Sujet A — relâché dans les niveaux inférieurs. » Il n'y a pas de tombe. Il n'y a jamais eu de tombe."
+lore.note.6,"Unités de service, essai 14: les anciens robots se figent quand on les observe directement. Le service technique parle de bug. J'en ai vu un bouger chaque fois que ma lampe vacillait. Ce n'est pas un bug."
+lore.note.7,"Nous n'avons jamais éteint les unités de service. Nous avons coupé les lumières de leur alcôve et cessé de regarder. Cela a suffi, un temps."
+lore.note.8,"Si vous lisez ceci, vous avez fait plus de chemin que nous. La sortie, tout en bas, est réelle. Elle ne s'ouvre qu'une fois. Emportez les étoiles avec vous."
+lore.note.9,"Dernière entrée. Ça ne vous chasse pas. Ça vous suit. À chaque étage que vous terminez, ça descend d'un étage. Ne vous arrêtez pas."
+lore.note.intake,"À QUI SE RÉVEILLERA ENSUITE
+
+Ici, en bas, on garde les lumières basses, et quelque chose arpente les couloirs entre les lits. Cinq étoiles attendent dans le noir. Rassemblez-les et la trappe s'ouvrira. Elle s'ouvre toujours. Elle ne reste jamais ouverte longtemps.
+
+- une infirmière de nuit, Pavillon 1"
+lore.file.100.text,"DOSSIER · PATIENTE 3 · HILDE BRANDT
+
+Internée pour comptage. Compte les portes du Pavillon A, à voix haute, toute la nuit. Affirme qu'il y a toujours une porte de plus que la veille.
+
+Note du personnel: elle a raison. La maintenance ne peut expliquer la nouvelle porte du Pavillon A. La tenir à l'écart."
+lore.file.101.text,"DOSSIER · PATIENT 11 · TOMAS REINER
+
+Ancien chauffeur de chaudière. Entend des pas dans les tuyaux et leur répond. Deux coups: rien à signaler. Trois coups: se cacher.
+
+Note du personnel: depuis que la chaufferie a été scellée, les tuyaux répondent. Aucun membre du personnel ne frappe trois coups."
+lore.file.102.text,"DOSSIER · PATIENT 5 · ELIAS VOGT
+
+Somnambule. Retrouvé chaque matin devant les portes de la morgue, les yeux ouverts, tenant son propre bracelet. Dit que le tiroir cinq « porte son nom ».
+
+Note du personnel: le tiroir cinq porte bien son nom. Personne ne l'a écrit. Transfert en Chirurgie approuvé."
+lore.file.103.text,"DOSSIER · SUJET A
+
+Procédure 1: ablation de la peur. Réussie. Le sujet ne dort plus, ne parle plus, ne s'arrête plus.
+
+Relâché dans les niveaux inférieurs pour y maintenir le calme. Note du personnel: les niveaux inférieurs sont calmes, désormais. Tous ceux d'en bas sont très, très silencieux."
+lore.file.104.text,"DIRECTEUR KARLHEINZ · PRIVÉ
+
+Les unités de service gardent les lumières. Le sujet A garde le noir. Les étoiles montrent aux patients le chemin vers le bas, et le chemin vers le bas les ramène à l'Admission. Un système clos.
+
+Il lui faut encore un patient pour se refermer. Le dossier est sur mon bureau."
+lore.file.105.text,"DOSSIER · PATIENT 7
+
+Admissions: quatorze. Dessine des étoiles sur les murs. Atteint le fond chaque fois, les étoiles à la main, et revient par l'Admission en demandant où sont les lits.
+
+Traitement: aucun n'a été efficace.
+
+Note du directeur: il y a un interrupteur derrière ce bureau. Il éteint tout. Les unités, le noir, le sujet, l'Asile. Je n'en ai jamais eu le courage. Le patient 7, peut-être."
+lore.file.100.label,P3 · HILDE BRANDT
+lore.file.101.label,P11 · TOMAS REINER
+lore.file.102.label,P5 · ELIAS VOGT
+lore.file.103.label,SUJET A
+lore.file.104.label,DIRECTEUR · PRIVÉ
+lore.file.105.label,PATIENT 7
+lore.wristband.line,Le bracelet est froid. Le tiroir cinq est ouvert.
+lore.ending.discharged.title,SORTIE AUTORISÉE
+lore.ending.discharged.body,"Les portes principales s'ouvrent sur la nuit. Le froid est réel. Derrière vous, une lumière s'allume au pavillon d'admission. Quelqu'un prépare un lit. Vous savez pour qui."
+lore.ending.lights_out.title,LIGHTS OUT
+lore.ending.lights_out.body,"Vous actionnez l'interrupteur. Toutes les lampes de Karlheinz meurent d'un coup, et pour la première fois, rien ne bouge dans le noir. Aucun pas. Aucun coup. Plus personne ne compte. Le patient 7 obtient sa sortie. Cette fois, personne ne prépare le lit."
+lore.vignette.bay_card,RÉADMISSION. A DEMANDÉ OÙ SONT LES LITS. A DORMI DERRIÈRE LA STATUE.
+lore.vignette.bay_card_truth,"RÉADMISSION. A DEMANDÉ OÙ SONT LES LITS. A DORMI DERRIÈRE LA STATUE.
+C'EST VOTRE ÉCRITURE."
+lore.vignette.evac,ORDRE D'ÉVACUATION · NUIT DU 14 · PAVILLON A D'ABORD. NE PAS
+lore.vignette.tally,QUELQU'UN A COMPTÉ LES PORTES.
+lore.vignette.admissions,ADMISSIONS: {list}
+lore.vignette.admissions_more,"ADMISSIONS: {list}, ET {n} DE PLUS"
+lore.vignette.admissions.entry,PATIENT {mark}
+lore.vignette.rota,PLANNING · OKAFOR · LES LUMIÈRES RESTENT ALLUMÉES.
+lore.vignette.rota_late,"PLANNING · OKAFOR · LES LUMIÈRES RESTENT ALLUMÉES.
+APPEL À SIX HEURES. APPEL À SIX HEURES."
+lore.vignette.room4,CHAMBRE 4. VIDE. LA LAMPE EST TIÈDE.
+lore.vignette.stanbay,LUMIÈRES DE L'ALCÔVE: ÉTEINTES. NE PAS REGARDER DEDANS.
+lore.vignette.pipe_early,DEUX BOSSES DANS LE TUYAU. L'ACIER EST ENCORE CHAUD.
+lore.vignette.pipe_late,TROIS BOSSES DANS LE TUYAU. L'ACIER EST ENCORE CHAUD.
+lore.vignette.lower,RELÂCHÉ DANS LES NIVEAUX INFÉRIEURS. SUJET A. NE PAS SUIVRE.
+lore.vignette.barricade_early,ILS ONT BARRICADÉ LA PORTE. DE L'INTÉRIEUR.
+lore.vignette.barricade_late,LA TABLE A ÉTÉ POUSSÉE. DE L'AUTRE CÔTÉ.
+lore.vignette.chalkhouse_early,"UNE MAISON À LA CRAIE, AVEC PLUS DE FENÊTRES QUE LA VRAIE."
+lore.vignette.chalkhouse_late,"UNE MAISON À LA CRAIE, EFFACÉE D'UN REVERS DE MAIN."

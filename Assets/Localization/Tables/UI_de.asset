@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: de
   m_SharedData: {fileID: 11400000, guid: 09af46286be9e464db8cf054ca095f3b, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331672703763203
   m_TableData:
   - m_Id: 1008635904
     m_Localized: EINSTELLUNGEN
@@ -171,393 +172,456 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315008
-    m_Localized: 
+    m_Localized: "ZUR\xDCCK"
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315009
-    m_Localized: 
+    m_Localized: WEITER
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315010
-    m_Localized: 
+    m_Localized: Sammeln. Entkommen. Nicht gesehen werden.
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315011
-    m_Localized: 
+    m_Localized: WEITER
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315012
-    m_Localized: 
+    m_Localized: SPIEL STARTEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315013
-    m_Localized: 
+    m_Localized: STEUERUNG
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315014
-    m_Localized: 
+    m_Localized: EINSTELLUNGEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315015
-    m_Localized: 
+    m_Localized: BEENDEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315016
-    m_Localized: 
+    m_Localized: NEU BEGINNEN?
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315017
-    m_Localized: 
+    m_Localized: Dein gespeicherter Lauf (Etage {floor}) geht verloren.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315018
-    m_Localized: 
+    m_Localized: NEU BEGINNEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315019
-    m_Localized: 
+    m_Localized: SO WIRD GESPIELT
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315020
-    m_Localized: 
+    m_Localized: <b>1.</b>   Sammle jeden Stern ein, der im Labyrinth versteckt ist.
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315021
-    m_Localized: 
+    m_Localized: "<b>2.</b>   Irgendwo \xF6ffnet sich eine Luke. Finde sie, bevor die Zeit abl\xE4uft."
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315022
-    m_Localized: 
+    m_Localized: <b>3.</b>   Du bist hier unten nicht allein. Wenn es dich sieht, <color=#DB1F17><b>lauf</b></color>.
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315023
-    m_Localized: 
+    m_Localized: "<b>4.</b>   Splitter glitzern im Dunkeln. Zwischen den Etagen verkauft dir jemand Dinge daf\xFCr."
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315024
-    m_Localized: 
+    m_Localized: STARTEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315025
-    m_Localized: 
+    m_Localized: '<b>WASD</b>  bewegen   <b>SHIFT</b>  sprinten   <b>MAUS</b>  umsehen   <b>F</b>  Lampe   <b>E</b>  verstecken / sprechen
+
+      <b>1</b>  Ersatzbatterie   <b>2</b>  Sternenkompass   <b>ESC</b>  Pause'
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315026
-    m_Localized: 
+    m_Localized: '<b>LINKER DAUMEN</b>  bewegen   <b>RECHTER DAUMEN</b>  umsehen   Tasten: <b>LAMPE</b>, <b>FOKUS</b>, <b>INTERAGIEREN</b>, <b>WERFEN</b>, <b>SPRINTEN</b>'
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315027
-    m_Localized: 
+    m_Localized: "Deine Lampe hat Licht f\xFCr drei Minuten. Deine Beine haben weniger. Spinde verstecken dich \u2014 au\xDFer es hat dich hineinklettern sehen."
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315028
-    m_Localized: 
+    m_Localized: PAUSE
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315029
-    m_Localized: 
+    m_Localized: FORTSETZEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315030
-    m_Localized: 
+    m_Localized: NEU STARTEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315031
-    m_Localized: 
+    m_Localized: "\xDCBERSPRINGEN"
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315032
-    m_Localized: 
+    m_Localized: "HAUPTMEN\xDC"
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315033
-    m_Localized: 
+    m_Localized: BEENDEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315034
-    m_Localized: 
+    m_Localized: "WIEDERAUFGENOMMEN  \xB7  AUFNAHME {admission}  \xB7  PATIENT {patient}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315035
-    m_Localized: 
+    m_Localized: "DER SCHREIBER HAT DEINE R\xDCCKKEHR ABGETIPPT."
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315036
-    m_Localized: 
+    m_Localized: Die Luke hat sich hinter dir geschlossen. Etwas hier unten steht offen.
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315037
-    m_Localized: 
+    m_Localized: schon deins
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315038
-    m_Localized: 
+    m_Localized: kein Lohn
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315039
-    m_Localized: 
+    m_Localized: AUSZAHLUNG  +{amount}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315040
-    m_Localized: 
+    m_Localized: '{currency}  {shards}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315041
-    m_Localized: 
+    m_Localized: "EFFEKTEN IM LADEN VERWAHRT  \xB7  {shards} {currency}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315042
-    m_Localized: 
+    m_Localized: AUFTRAG  {name}  ERLEDIGT
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315043
-    m_Localized: 
+    m_Localized: AUFTRAG  {name}  GESCHEITERT
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315044
-    m_Localized: 
+    m_Localized: AUFTRAG  {name}  ENTFALLEN
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315045
-    m_Localized: 
+    m_Localized: DU BIST ENTKOMMEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315046
-    m_Localized: 
+    m_Localized: ETAGE {floor} GESCHAFFT
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315047
-    m_Localized: 
+    m_Localized: Die Luke hat sich hinter dir geschlossen. Darunter ist nichts mehr.
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315048
-    m_Localized: 
+    m_Localized: Die Luke hat sich hinter dir geschlossen. Hier unten ist es dunkler.
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315049
-    m_Localized: 
+    m_Localized: ES HAT DICH GEFUNDEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315050
-    m_Localized: 
+    m_Localized: Es sah dir beim Verstecken zu.
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315051
-    m_Localized: 
+    m_Localized: Im Dunkeln war es schneller.
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315052
-    m_Localized: 
+    m_Localized: "Du hast es nie kommen h\xF6ren."
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315053
-    m_Localized: 
+    m_Localized: ZEIT ABGELAUFEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315054
-    m_Localized: 
+    m_Localized: Die Luke ist versiegelt. Du hattest {stars} {stars:plural:Stern|Sterne} und warst {metres} {metres:plural:Meter|Meter} entfernt.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315055
-    m_Localized: 
+    m_Localized: ETAGE {floor}     STERNE {collected} / {total}     ZEIT {time}     SEED {seed}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315056
-    m_Localized: 
+    m_Localized: TROSTPREIS  +{amount}     {currency}  {shards}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315057
-    m_Localized: 
+    m_Localized: KEIN TROSTPREIS     {currency}  {shards}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315058
-    m_Localized: 
+    m_Localized: AUSZAHLUNG  +{amount}     KAMPAGNEN-SUMME  {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315059
-    m_Localized: 
+    m_Localized: "N\xC4CHSTE ETAGE"
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315060
-    m_Localized: 
+    m_Localized: ETAGE WIEDERHOLEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315061
-    m_Localized: 
+    m_Localized: DIESES LABYRINTH NOCHMAL
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315062
-    m_Localized: 
+    m_Localized: NEUES LABYRINTH
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315063
-    m_Localized: 
+    m_Localized: "HAUPTMEN\xDC"
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315064
-    m_Localized: 
+    m_Localized: ZWISCHEN DEN ETAGEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315065
-    m_Localized: 
+    m_Localized: '{currency}  {shards}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315066
-    m_Localized: 
+    m_Localized: Je tiefer, desto teurer.
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315067
-    m_Localized: 
+    m_Localized: KAUFEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315068
-    m_Localized: 
+    m_Localized: KAUFEN  {price}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315069
-    m_Localized: 
+    m_Localized: MAXIMUM
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315070
-    m_Localized: 
+    m_Localized: GEKAUFT
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315071
-    m_Localized: 
+    m_Localized: IM BESITZ  x{count} / {cap}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315072
-    m_Localized: 
+    m_Localized: IM BESITZ
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315073
-    m_Localized: 
+    m_Localized: NICHT IM BESITZ
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315074
-    m_Localized: 
+    m_Localized: "BEREIT F\xDCR ETAGE {floor}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315075
-    m_Localized: 
+    m_Localized: "NUR N\xC4CHSTE ETAGE"
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315076
-    m_Localized: 
+    m_Localized: 'AKTIV: {name}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315077
-    m_Localized: 
+    m_Localized: AKTIV
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315078
-    m_Localized: 
+    m_Localized: "W\xC4HLEN"
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315079
-    m_Localized: 
+    m_Localized: '{name}  {price}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315080
-    m_Localized: 
+    m_Localized: "AUFTR\xC4GE"
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315081
-    m_Localized: 
+    m_Localized: "Optionale Arbeit f\xFCr die n\xE4chste Etage. Immer nur einer. Bezahlt wird bei der Abrechnung, wenn du sie schaffst."
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315082
-    m_Localized: 
+    m_Localized: ANNEHMEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315083
-    m_Localized: 
+    m_Localized: ANGENOMMEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315084
-    m_Localized: 
+    m_Localized: ABLEHNEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315085
-    m_Localized: 
+    m_Localized: AUFGEBEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315086
-    m_Localized: 
+    m_Localized: BELOHNUNG  {amount}  {currency}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315087
-    m_Localized: 
+    m_Localized: Nichts am Brett.
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315088
-    m_Localized: 
+    m_Localized: 'Angenommen: {name}.  Etage {floor}.'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315089
-    m_Localized: 
+    m_Localized: TIPPEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315090
-    m_Localized: 
+    m_Localized: BENUTZEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315091
-    m_Localized: 
+    m_Localized: INTERAGIEREN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315092
-    m_Localized: 
+    m_Localized: LAMPE
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315093
-    m_Localized: 
+    m_Localized: FOKUS
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315094
-    m_Localized: 
+    m_Localized: WERFEN x{count}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315095
-    m_Localized: 
+    m_Localized: BATTERIE x{count}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315096
-    m_Localized: 
+    m_Localized: KOMPASS x{count}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315097
-    m_Localized: 
+    m_Localized: SPRINTEN
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315098
-    m_Localized: 
+    m_Localized: II
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315099
-    m_Localized: 
+    m_Localized: "DREH DEIN GER\xC4T"
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315100
-    m_Localized: 
+    m_Localized: "ZUR\xDCCK"
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315101
-    m_Localized: 
+    m_Localized: ZIEL
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315102
-    m_Localized: 
+    m_Localized: "{key}  WEITER    \xB7    {back}  VERLASSEN"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315103
-    m_Localized: 
+    m_Localized: "{key}  ENDE    \xB7    {back}  VERLASSEN"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   - m_Id: 22165078315104
-    m_Localized: 
+    m_Localized: '{key}  VERLASSEN'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763203
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331672703763203
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 22165078315017
+        - id: 22165078315034
+        - id: 22165078315039
+        - id: 22165078315040
+        - id: 22165078315041
+        - id: 22165078315042
+        - id: 22165078315043
+        - id: 22165078315044
+        - id: 22165078315046
+        - id: 22165078315054
+        - id: 22165078315055
+        - id: 22165078315056
+        - id: 22165078315057
+        - id: 22165078315058
+        - id: 22165078315065
+        - id: 22165078315068
+        - id: 22165078315071
+        - id: 22165078315074
+        - id: 22165078315076
+        - id: 22165078315079
+        - id: 22165078315086
+        - id: 22165078315088
+        - id: 22165078315094
+        - id: 22165078315095
+        - id: 22165078315096
+        - id: 22165078315102
+        - id: 22165078315103
+        - id: 22165078315104

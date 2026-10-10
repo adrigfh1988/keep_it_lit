@@ -1,0 +1,79 @@
+key,text
+shop.currency,ÉCLATS
+shop.item.spare_battery.name,Pile de rechange
+shop.item.spare_battery.blurb,Une pile neuve. Recharge la lampe et l'allume. Appuyez sur {key}.
+shop.item.star_compass.name,Boussole stellaire
+shop.item.star_compass.blurb,Indique l'étoile la plus proche pendant cinq secondes. Appuyez sur {key}.
+shop.item.second_wind.name,Second souffle
+shop.item.second_wind.blurb,"Quand ça vous attrape, ça vous lâche. Une fois."
+shop.item.long_fuse.name,Longue mèche
+shop.item.long_fuse.blurb,"Dix secondes de plus au compte à rebours de la trappe, à l'étage suivant."
+shop.item.quiet_shoes.name,Chaussures silencieuses
+shop.item.quiet_shoes.blurb,"Vos pas portent un tiers moins loin, à l'étage suivant."
+shop.item.extra_lamps.name,Lampes en plus
+shop.item.extra_lamps.blurb,Plus de lampes allumées à l'étage suivant.
+shop.item.stamina_tonic.name,Tonique d'endurance
+shop.item.stamina_tonic.blurb,"Quatre secondes de sprint en plus, à l'étage suivant."
+shop.item.torch_colour.name,Couleur de lampe
+shop.item.torch_colour.blurb,Froid. Braise. Violet.
+shop.item.hud_tint.name,Teinte du HUD
+shop.item.hud_tint.blurb,Phosphore. Ambre. Glace.
+shop.item.bottle_pack.name,Lot de bouteilles
+shop.item.bottle_pack.blurb,Commencez l'étage suivant avec déjà trois bouteilles.
+shop.item.focus_lens.name,Lentille de focalisation
+shop.item.focus_lens.blurb,"Le faisceau focalisé porte plus loin à l'étage suivant, sans consommer plus de pile."
+shop.item.fuse_map.name,Carte des fusibles
+shop.item.fuse_map.blurb,"Fusibles, boutons, chambres fortes et clés luisent faiblement. La boussole les indique aussi."
+shop.palette.torch.0,CHAUD
+shop.palette.torch.1,FROID
+shop.palette.torch.2,BRAISE
+shop.palette.torch.3,VIOLET
+shop.palette.hud.0,OS
+shop.palette.hud.1,PHOSPHORE
+shop.palette.hud.2,AMBRE
+shop.palette.hud.3,GLACE
+shop.theme.1,LE PAVILLON
+shop.theme.2,LA CHAUFFERIE
+shop.theme.3,LA CRYPTE
+shop.theme.4,LE LABORATOIRE
+shop.theme.5,LE CREUX
+shop.rule.dying_grid.name,RÉSEAU MOURANT
+shop.rule.dying_grid.desc,Une lampe perd son courant chaque minute.
+shop.rule.keen_ears.name,OUÏE FINE
+shop.rule.keen_ears.desc,Ça entend plus loin ici. Les éclats valent plus.
+shop.rule.heavy_fog.name,BROUILLARD ÉPAIS
+shop.rule.heavy_fog.desc,Vous voyez moins loin; ça aussi.
+shop.rule.weak_battery.name,PILE FAIBLE
+shop.rule.weak_battery.desc,"Votre pile démarre à moitié, mais se recharge plus vite éteinte."
+shop.rule.restless.name,AGITÉ
+shop.rule.restless.desc,Ça se déplace et apparaît plus souvent.
+shop.rule.glass_floors.name,SOLS DE VERRE
+shop.rule.glass_floors.desc,Plus de verre brisé et de flaques sous vos pieds.
+shop.rule.rich_veins.name,FILONS RICHES
+shop.rule.rich_veins.desc,"Plus d'éclats, mais ça marche un peu plus vite."
+shop.temperament.listens,"Ici, ça chasse au son."
+shop.temperament.sprints,"Ici, ça va vite, mais ça oublie vite."
+shop.contract.title,{name}.
+shop.contract.never_hide.name,Ne jamais se cacher
+shop.contract.never_hide.text,Terminez l'étage sans entrer dans un casier.
+shop.contract.not_a_scratch.name,Pas une égratignure
+shop.contract.not_a_scratch.text,Ne vous faites jamais attraper - et ne laissez jamais Stan vous toucher.
+shop.contract.walk_in_dark.name,Marcher dans le noir
+shop.contract.walk_in_dark.text,Marchez 60 secondes avec la lampe éteinte.
+shop.contract.take_what_glitters.name,Tout ce qui brille
+shop.contract.take_what_glitters.text,Ramassez au moins 60% des éclats de l'étage.
+shop.contract.read_it_all.name,Tout lire
+shop.contract.read_it_all.text,Lisez toutes les notes de l'étage.
+shop.contract.dont_dawdle.name,Pas de flânerie
+shop.contract.dont_dawdle.text,Terminez l'étage avant la fin du chrono.
+shop.contract.make_noise.name,Faire du bruit
+shop.contract.make_noise.text,"Faites venir la chose enquêter sur une bouteille ou une canette lancée, deux fois."
+shop.contract.light_feet.name,Pas légers
+shop.contract.light_feet.text,Ne sprintez jamais.
+shop.payout.title_floor,ÉTAGE {floor} TERMINÉ
+shop.payout.stars,ÉTOILES  {stars} x {value}
+shop.payout.time_left,TEMPS RESTANT  {time}
+shop.payout.floor_cleared,ÉTAGE {floor} TERMINÉ
+shop.payout.shards_found,ÉCLATS TROUVÉS  {n} x {value}  (déjà à vous)
+shop.payout.consolation_title,CONSOLATION
+shop.payout.consolation,CONSOLATION  {percent}% de {stars} {stars:plural:étoile|étoiles}

@@ -1,0 +1,166 @@
+key,text
+hub.wing.plaque,"{wing}
+<size=60%>{room}  ·  {status}</size>"
+hub.wing.status.open,OFFEN
+hub.wing.status.locked,VERSCHLOSSEN
+hub.wing.status.cleared,ERLEDIGT
+hub.wing.status.sealed,VERSIEGELT
+hub.wing.hint,{wing} · {room} · {level}
+hub.wing.1.name,STATION A
+hub.wing.1.room,AUFENTHALTSRAUM
+hub.wing.1.level,ERDGESCHOSS
+hub.wing.1.enter,STATION A BETRETEN
+hub.wing.1.locked,STATION A · VERSCHLOSSEN
+hub.wing.1.cleared,STATION A · ERLEDIGT
+hub.wing.1.sealed,STATION A · VERSIEGELT
+hub.wing.1.already_cleared,STATION A · BEREITS ERLEDIGT
+hub.wing.1.go_to_door,GEH ZUR TÜR DER STATION A · ERDGESCHOSS
+hub.wing.1.door_open,ETAGE {floor} · DIE TÜR ZUR STATION A IST OFFEN · ERDGESCHOSS
+hub.wing.1.door_locked,ETAGE {floor} · DIE TÜR ZUR STATION A IST VERSCHLOSSEN · ERDGESCHOSS
+hub.wing.1.door_unlocked,DIE TÜR ZUR STATION A IST AUFGESCHLOSSEN · ERDGESCHOSS
+hub.wing.1.order,MELDE DICH BEI SCHWESTER AGNES · SCHWESTERNZIMMER
+hub.wing.2.name,KESSELRAUM
+hub.wing.2.room,MASCHINENRAUM
+hub.wing.2.level,KELLER
+hub.wing.2.enter,KESSELRAUM BETRETEN
+hub.wing.2.locked,KESSELRAUM · VERSCHLOSSEN
+hub.wing.2.cleared,KESSELRAUM · ERLEDIGT
+hub.wing.2.sealed,KESSELRAUM · VERSIEGELT
+hub.wing.2.already_cleared,KESSELRAUM · BEREITS ERLEDIGT
+hub.wing.2.sealed_need_key,VERSIEGELT · DU BRAUCHST DEN SCHLÜSSEL ZUR STATION A
+hub.wing.2.go_to_door,GEH ZUR TÜR DES KESSELRAUMS · KELLER
+hub.wing.2.door_open,ETAGE {floor} · DIE TÜR ZUM KESSELRAUM IST OFFEN · KELLER
+hub.wing.2.door_locked,ETAGE {floor} · DIE TÜR ZUM KESSELRAUM IST VERSCHLOSSEN · KELLER
+hub.wing.2.door_unlocked,DIE TÜR ZUM KESSELRAUM IST AUFGESCHLOSSEN · KELLER
+hub.wing.2.order,MELDE DICH BEI BRUNO · KÜCHE
+hub.wing.3.name,LEICHENHALLE
+hub.wing.3.room,KÜHLKAMMER
+hub.wing.3.level,KELLER
+hub.wing.3.enter,LEICHENHALLE BETRETEN
+hub.wing.3.locked,LEICHENHALLE · VERSCHLOSSEN
+hub.wing.3.cleared,LEICHENHALLE · ERLEDIGT
+hub.wing.3.sealed,LEICHENHALLE · VERSIEGELT
+hub.wing.3.already_cleared,LEICHENHALLE · BEREITS ERLEDIGT
+hub.wing.3.sealed_need_key,VERSIEGELT · DU BRAUCHST DEN SCHLÜSSEL ZUM KESSELRAUM
+hub.wing.3.go_to_door,GEH ZUR TÜR DER LEICHENHALLE · KELLER
+hub.wing.3.door_open,ETAGE {floor} · DIE TÜR ZUR LEICHENHALLE IST OFFEN · KELLER
+hub.wing.3.door_locked,ETAGE {floor} · DIE TÜR ZUR LEICHENHALLE IST VERSCHLOSSEN · KELLER
+hub.wing.3.door_unlocked,DIE TÜR ZUR LEICHENHALLE IST AUFGESCHLOSSEN · KELLER
+hub.wing.3.order,MELDE DICH BEI MARTA · KLASSENZIMMER
+hub.wing.4.name,CHIRURGIE
+hub.wing.4.room,OPERATIONSSAAL
+hub.wing.4.level,OBERGESCHOSS
+hub.wing.4.enter,CHIRURGIE BETRETEN
+hub.wing.4.locked,CHIRURGIE · VERSCHLOSSEN
+hub.wing.4.cleared,CHIRURGIE · ERLEDIGT
+hub.wing.4.sealed,CHIRURGIE · VERSIEGELT
+hub.wing.4.already_cleared,CHIRURGIE · BEREITS ERLEDIGT
+hub.wing.4.sealed_need_key,VERSIEGELT · DU BRAUCHST DEN SCHLÜSSEL ZUR LEICHENHALLE
+hub.wing.4.go_to_door,GEH ZUR TÜR DER CHIRURGIE · OBERGESCHOSS
+hub.wing.4.door_open,ETAGE {floor} · DIE TÜR ZUR CHIRURGIE IST OFFEN · OBERGESCHOSS
+hub.wing.4.door_locked,ETAGE {floor} · DIE TÜR ZUR CHIRURGIE IST VERSCHLOSSEN · OBERGESCHOSS
+hub.wing.4.door_unlocked,DIE TÜR ZUR CHIRURGIE IST AUFGESCHLOSSEN · OBERGESCHOSS
+hub.wing.4.order,MELDE DICH BEI DR. WEISS · UNTERSUCHUNGSRAUM
+hub.wing.5.name,DIREKTOR
+hub.wing.5.room,DIREKTORENBÜRO
+hub.wing.5.level,OBERGESCHOSS
+hub.wing.5.enter,ZUM DIREKTOR GEHEN
+hub.wing.5.locked,DIREKTOR · VERSCHLOSSEN
+hub.wing.5.cleared,DIREKTOR · ERLEDIGT
+hub.wing.5.sealed,DIREKTOR · VERSIEGELT
+hub.wing.5.already_cleared,DIREKTOR · BEREITS ERLEDIGT
+hub.wing.5.sealed_need_key,VERSIEGELT · DU BRAUCHST DEN SCHLÜSSEL ZUR CHIRURGIE
+hub.wing.5.go_to_door,GEH ZUM DIREKTORENBÜRO · OBERGESCHOSS
+hub.wing.5.door_open,ETAGE {floor} · DIE TÜR DES DIREKTORS IST OFFEN · OBERGESCHOSS
+hub.wing.5.door_locked,ETAGE {floor} · DIE TÜR DES DIREKTORS IST VERSCHLOSSEN · OBERGESCHOSS
+hub.wing.5.door_unlocked,DIE TÜR DES DIREKTORS IST AUFGESCHLOSSEN · OBERGESCHOSS
+hub.wing.5.order,SCHLÜSSEL NICHT AUSGEGEBEN · ARCHIV
+hub.wing.5.locked_line,VERSCHLOSSEN · DER SCHLÜSSEL DES DIREKTORS IST IM ARCHIV
+hub.mission.1.locked_line,VERSCHLOSSEN · SCHWESTER AGNES HAT DEN SCHLÜSSEL · SCHWESTERNZIMMER
+hub.mission.1.key_name,DER SCHLÜSSEL ZUR STATION A
+hub.mission.1.objective_offered,SPRICH MIT SCHWESTER AGNES · SCHWESTERNZIMMER
+hub.mission.1.where,SCHWESTERNZIMMER
+hub.mission.1.objective_active,FINDE AGNES' SCHLÜSSELBUND · KÜCHE
+hub.mission.1.objective_fetched,BRING DEN SCHLÜSSELBUND ZU SCHWESTER AGNES ZURÜCK
+hub.mission.1.item.0.prompt,SCHLÜSSELBUND NEHMEN
+hub.mission.1.item.0.taken,SCHLÜSSELBUND · GENOMMEN
+hub.mission.2.locked_line,VERSCHLOSSEN · BRUNO HAT DEN SCHLÜSSEL · KÜCHE
+hub.mission.2.key_name,DER SCHLÜSSEL ZUM KESSELRAUM
+hub.mission.2.objective_offered,SPRICH MIT BRUNO · KÜCHE
+hub.mission.2.where,KÜCHE
+hub.mission.2.objective_active,HOL JOSEFS ABENDTABLETT AUS DER KÜCHE
+hub.mission.2.objective_fetched,BRING DAS TABLETT HOCH ZU JOSEF · SCHLAFSAAL
+hub.mission.2.progress_fetched,IN DER HAND · JOSEFS TABLETT
+hub.mission.2.item.0.prompt,JOSEFS TABLETT NEHMEN
+hub.mission.2.item.0.taken,IN DER HAND · JOSEFS TABLETT
+hub.mission.3.locked_line,VERSCHLOSSEN · MARTA HAT DEN SCHLÜSSEL · KLASSENZIMMER
+hub.mission.3.key_name,DER SCHLÜSSEL ZUR LEICHENHALLE
+hub.mission.3.objective_offered,SPRICH MIT MARTA · KLASSENZIMMER
+hub.mission.3.where,KLASSENZIMMER
+hub.mission.3.objective_active,FINDE MARTAS SPIELUHR · KELLERGANG
+hub.mission.3.objective_fetched,BRING DIE SPIELUHR ZU MARTA ZURÜCK
+hub.mission.3.item.0.prompt,SPIELUHR NEHMEN
+hub.mission.3.item.0.taken,SPIELUHR · GENOMMEN
+hub.mission.4.locked_line,VERSCHLOSSEN · DR. WEISS HAT DEN SCHLÜSSEL · UNTERSUCHUNGSRAUM
+hub.mission.4.key_name,DER SCHLÜSSEL ZUR CHIRURGIE
+hub.mission.4.objective_offered,SPRICH MIT DR. WEISS · UNTERSUCHUNGSRAUM
+hub.mission.4.where,UNTERSUCHUNGSRAUM
+hub.mission.4.objective_active,FINDE DIE DREI AMPULLEN · OBERGESCHOSS
+hub.mission.4.objective_fetched,BRING DIE AMPULLEN ZU DR. WEISS
+hub.mission.4.progress_active,AMPULLEN  {n} / {total}
+hub.mission.4.progress_fetched,AMPULLEN  {n} / {total}
+hub.mission.4.item.0.prompt,AMPULLE NEHMEN
+hub.mission.4.item.0.taken,AMPULLE {n} / {total}
+hub.mission.4.item.1.prompt,AMPULLE NEHMEN
+hub.mission.4.item.1.taken,AMPULLE {n} / {total}
+hub.mission.4.item.2.prompt,AMPULLE NEHMEN
+hub.mission.4.item.2.taken,AMPULLE {n} / {total}
+hub.mission.door_unlocked,{key} · DIE TÜR IST AUFGESCHLOSSEN
+hub.npc.agnes,SCHWESTER AGNES
+hub.npc.bruno,BRUNO
+hub.npc.josef,JOSEF
+hub.npc.marta,MARTA
+hub.npc.weiss,DR. WEISS
+hub.npc.clerk,DER SCHREIBER
+hub.npc.talk_to,SPRECHEN: {name}
+hub.not_now,NICHT JETZT
+hub.catch.wake,Du erwachst an der Tür.
+hub.finale.office,DAS DIREKTORENBÜRO
+hub.shopdoor.room,DIE ERDGESCHOSSHALLE
+hub.shopdoor.enter,LADEN BETRETEN
+hub.shopdoor.closed,LADEN · GESCHLOSSEN
+hub.shopdoor.closed_line,GESCHLOSSEN · KOMM MIT SPLITTERN WIEDER
+hub.shopdoor.plaque,"LADEN
+<size=60%>DER HÄNDLER  ·  {status}</size>"
+hub.shopdoor.status_open,OFFEN
+hub.shopdoor.status_closed,GESCHLOSSEN
+hub.shopdoor.open_line,DER LADEN IST OFFEN
+hub.shopdoor.open_line_room,DER LADEN IST OFFEN · {room}
+hub.examine.tally.prompt,UNTERSUCHEN
+hub.examine.barricade.prompt,UNTERSUCHEN
+hub.examine.room4.prompt,UNTERSUCHEN
+hub.examine.admissions.prompt,AUFNAHMEBUCH LESEN
+hub.examine.pipe.prompt,LAUSCHEN
+hub.records.read_file,AKTE LESEN · {label}
+hub.wristband.prompt,ARMBAND LESEN · ELIAS VOGT · PATIENT 5
+hub.exit.prompt,ANSTALT VERLASSEN
+hub.key.prompt,SCHLÜSSEL DES DIREKTORS NEHMEN
+hub.switch.prompt,HAUPTSCHALTER UMLEGEN · LIGHTS OUT
+hub.desk.open,SCHUBLADE ÖFFNEN
+hub.desk.closed,DIE SCHUBLADE
+hub.desk.locked,DIE SCHUBLADE IST VERSCHLOSSEN · KRANKENAKTEN {n} / {total}
+hub.keyrun.taken,DER SCHLÜSSEL DES DIREKTORS · DIE TÜR IST AUFGESCHLOSSEN
+hub.card.find_key,FINDE DEN SCHLÜSSEL DES DIREKTORS · ARCHIV
+hub.lift.chained,DIE KELLERTREPPE IST MIT KETTEN VERSPERRT · NIMM DEN AUFZUG
+hub.lift.call,AUFZUG RUFEN
+hub.lift.lift,DER AUFZUG
+hub.lift.gate,DAS GITTER
+hub.lift.force,TÜREN AUFSTEMMEN
+hub.lift.gate_chained,DAS GITTER IST ANGEKETTET · NIMM DEN AUFZUG
+hub.lift.does_not_move,DER AUFZUG BEWEGT SICH NICHT
+hub.lift.will_not_come,DER AUFZUG KOMMT NICHT · DER KESSELRAUM IST NOCH VERSCHLOSSEN
+hub.lift.stopped,DER AUFZUG IST STEHEN GEBLIEBEN
+hub.lift.doors_stuck,"DIE TÜREN KLEMMEN · HALTE {key}, UM SIE AUFZUSTEMMEN"
+hub.flood.knocks,ETWAS KLOPFT DREIMAL.
+hub.chase.stops,ES BLEIBT AN DER TÜR STEHEN
+hub.stars.first,JEMAND HAT STERNE AN DIE WAND GEMALT. SIE LEUCHTEN NOCH.

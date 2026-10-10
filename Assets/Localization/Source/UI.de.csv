@@ -37,3 +37,101 @@ ui.settings.opt.low,NIEDRIG
 ui.settings.opt.medium,MITTEL
 ui.settings.opt.high,HOCH
 ui.settings.opt.normal,NORMAL
+ui.common.back,ZURÜCK
+ui.common.continue,WEITER
+ui.menu.tagline,Sammeln. Entkommen. Nicht gesehen werden.
+ui.menu.continue,WEITER
+ui.menu.start_game,SPIEL STARTEN
+ui.menu.controls,STEUERUNG
+ui.menu.settings,EINSTELLUNGEN
+ui.menu.exit,BEENDEN
+ui.menu.start_over_heading,NEU BEGINNEN?
+ui.menu.start_over_body,Dein gespeicherter Lauf (Etage {floor}) geht verloren.
+ui.menu.start_over,NEU BEGINNEN
+ui.rules.heading,SO WIRD GESPIELT
+ui.rules.item1,"<b>1.</b>   Sammle jeden Stern ein, der im Labyrinth versteckt ist."
+ui.rules.item2,"<b>2.</b>   Irgendwo öffnet sich eine Luke. Finde sie, bevor die Zeit abläuft."
+ui.rules.item3,"<b>3.</b>   Du bist hier unten nicht allein. Wenn es dich sieht, <color=#DB1F17><b>lauf</b></color>."
+ui.rules.item4,<b>4.</b>   Splitter glitzern im Dunkeln. Zwischen den Etagen verkauft dir jemand Dinge dafür.
+ui.rules.start,STARTEN
+ui.controls.keyboard,"<b>WASD</b>  bewegen   <b>SHIFT</b>  sprinten   <b>MAUS</b>  umsehen   <b>F</b>  Lampe   <b>E</b>  verstecken / sprechen
+<b>1</b>  Ersatzbatterie   <b>2</b>  Sternenkompass   <b>ESC</b>  Pause"
+ui.controls.touch,"<b>LINKER DAUMEN</b>  bewegen   <b>RECHTER DAUMEN</b>  umsehen   Tasten: <b>LAMPE</b>, <b>FOKUS</b>, <b>INTERAGIEREN</b>, <b>WERFEN</b>, <b>SPRINTEN</b>"
+ui.controls.tip,Deine Lampe hat Licht für drei Minuten. Deine Beine haben weniger. Spinde verstecken dich — außer es hat dich hineinklettern sehen.
+ui.pause.title,PAUSE
+ui.pause.resume,FORTSETZEN
+ui.pause.restart,NEU STARTEN
+ui.pause.skip_tutorial,ÜBERSPRINGEN
+ui.pause.main_menu,HAUPTMENÜ
+ui.pause.quit,BEENDEN
+ui.ledger.slip_heading,WIEDERAUFGENOMMEN  ·  AUFNAHME {admission}  ·  PATIENT {patient}
+ui.ledger.slip_subtitle,DER SCHREIBER HAT DEINE RÜCKKEHR ABGETIPPT.
+ui.ledger.subtitle,Die Luke hat sich hinter dir geschlossen. Etwas hier unten steht offen.
+ui.ledger.already_yours,schon deins
+ui.ledger.no_pay,kein Lohn
+ui.ledger.payout,AUSZAHLUNG  +{amount}
+ui.ledger.wallet,{currency}  {shards}
+ui.ledger.shop_held,EFFEKTEN IM LADEN VERWAHRT  ·  {shards} {currency}
+ui.ledger.contract_done,AUFTRAG  {name}  ERLEDIGT
+ui.ledger.contract_failed,AUFTRAG  {name}  GESCHEITERT
+ui.ledger.contract_void,AUFTRAG  {name}  ENTFALLEN
+ui.end.won_final,DU BIST ENTKOMMEN
+ui.end.floor_cleared,ETAGE {floor} GESCHAFFT
+ui.end.won_final_body,Die Luke hat sich hinter dir geschlossen. Darunter ist nichts mehr.
+ui.end.floor_cleared_body,Die Luke hat sich hinter dir geschlossen. Hier unten ist es dunkler.
+ui.end.caught,ES HAT DICH GEFUNDEN
+ui.end.caught_hidden,Es sah dir beim Verstecken zu.
+ui.end.caught_torch,Im Dunkeln war es schneller.
+ui.end.caught_silent,Du hast es nie kommen hören.
+ui.end.out_of_time,ZEIT ABGELAUFEN
+ui.end.out_of_time_body,Die Luke ist versiegelt. Du hattest {stars} {stars:plural:Stern|Sterne} und warst {metres} {metres:plural:Meter|Meter} entfernt.
+ui.end.stats,ETAGE {floor}     STERNE {collected} / {total}     ZEIT {time}     SEED {seed}
+ui.end.consolation,TROSTPREIS  +{amount}     {currency}  {shards}
+ui.end.no_consolation,KEIN TROSTPREIS     {currency}  {shards}
+ui.end.final_payout,AUSZAHLUNG  +{amount}     KAMPAGNEN-SUMME  {total}
+ui.end.next_floor,NÄCHSTE ETAGE
+ui.end.replay,ETAGE WIEDERHOLEN
+ui.end.retry,DIESES LABYRINTH NOCHMAL
+ui.end.new_maze,NEUES LABYRINTH
+ui.end.main_menu,HAUPTMENÜ
+ui.shop.title,ZWISCHEN DEN ETAGEN
+ui.shop.wallet,{currency}  {shards}
+ui.shop.tip,"Je tiefer, desto teurer."
+ui.shop.buy,KAUFEN
+ui.shop.buy_price,KAUFEN  {price}
+ui.shop.held_max,MAXIMUM
+ui.shop.bought,GEKAUFT
+ui.shop.held_count,IM BESITZ  x{count} / {cap}
+ui.shop.held,IM BESITZ
+ui.shop.not_held,NICHT IM BESITZ
+ui.shop.ready_for_floor,BEREIT FÜR ETAGE {floor}
+ui.shop.next_floor_only,NUR NÄCHSTE ETAGE
+ui.shop.in_use_named,AKTIV: {name}
+ui.shop.in_use,AKTIV
+ui.shop.use,WÄHLEN
+ui.shop.swatch_price,{name}  {price}
+ui.contracts.title,AUFTRÄGE
+ui.contracts.tip,"Optionale Arbeit für die nächste Etage. Immer nur einer. Bezahlt wird bei der Abrechnung, wenn du sie schaffst."
+ui.contracts.take,ANNEHMEN
+ui.contracts.taken,ANGENOMMEN
+ui.contracts.decline,ABLEHNEN
+ui.contracts.drop,AUFGEBEN
+ui.contracts.reward,BELOHNUNG  {amount}  {currency}
+ui.contracts.empty,Nichts am Brett.
+ui.contracts.took,Angenommen: {name}.  Etage {floor}.
+ui.key.tap,TIPPEN
+ui.key.use,BENUTZEN
+ui.touch.interact,INTERAGIEREN
+ui.touch.torch,LAMPE
+ui.touch.focus,FOKUS
+ui.touch.throw,WERFEN x{count}
+ui.touch.battery,BATTERIE x{count}
+ui.touch.compass,KOMPASS x{count}
+ui.touch.sprint,SPRINTEN
+ui.touch.pause,II
+ui.touch.rotate,DREH DEIN GERÄT
+ui.key.back,ZURÜCK
+ui.objective.label,ZIEL
+ui.dialogue.hint_next,{key}  WEITER    ·    {back}  VERLASSEN
+ui.dialogue.hint_end,{key}  ENDE    ·    {back}  VERLASSEN
+ui.dialogue.hint_leave,{key}  VERLASSEN

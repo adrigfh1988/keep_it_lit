@@ -16,660 +16,714 @@ MonoBehaviour:
     m_Code: es
   m_SharedData: {fileID: 11400000, guid: f29e2f696e371764886a57603cbe4d01, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331672703763214
   m_TableData:
   - m_Id: 308187136
-    m_Localized: 
+    m_Localized: "{wing}\n<size=60%>{room}  \xB7  {status}</size>"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073216
-    m_Localized: 
+    m_Localized: ABIERTO
     m_Metadata:
       m_Items: []
   - m_Id: 392073217
-    m_Localized: 
+    m_Localized: BLOQUEADO
     m_Metadata:
       m_Items: []
   - m_Id: 392073218
-    m_Localized: 
+    m_Localized: SUPERADO
     m_Metadata:
       m_Items: []
   - m_Id: 392073219
-    m_Localized: 
+    m_Localized: SELLADO
     m_Metadata:
       m_Items: []
   - m_Id: 392073220
-    m_Localized: 
+    m_Localized: "{wing} \xB7 {room} \xB7 {level}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073221
-    m_Localized: 
+    m_Localized: "PABELL\xD3N A"
     m_Metadata:
       m_Items: []
   - m_Id: 392073222
-    m_Localized: 
+    m_Localized: "SALA DE D\xCDA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073223
-    m_Localized: 
+    m_Localized: PLANTA BAJA
     m_Metadata:
       m_Items: []
   - m_Id: 392073224
-    m_Localized: 
+    m_Localized: "ENTRAR EN EL PABELL\xD3N A"
     m_Metadata:
       m_Items: []
   - m_Id: 392073225
-    m_Localized: 
+    m_Localized: "PABELL\xD3N A \xB7 BLOQUEADO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073226
-    m_Localized: 
+    m_Localized: "PABELL\xD3N A \xB7 SUPERADO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073227
-    m_Localized: 
+    m_Localized: "PABELL\xD3N A \xB7 SELLADO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073228
-    m_Localized: 
+    m_Localized: "PABELL\xD3N A \xB7 YA SUPERADO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073229
-    m_Localized: 
+    m_Localized: "VE A LA PUERTA DEL PABELL\xD3N A \xB7 PLANTA BAJA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073230
-    m_Localized: 
+    m_Localized: "PLANTA {floor} \xB7 LA PUERTA DEL PABELL\xD3N A EST\xC1 ABIERTA \xB7 PLANTA BAJA"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073231
-    m_Localized: 
+    m_Localized: "PLANTA {floor} \xB7 LA PUERTA DEL PABELL\xD3N A EST\xC1 BLOQUEADA \xB7 PLANTA BAJA"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073232
-    m_Localized: 
+    m_Localized: "LA PUERTA DEL PABELL\xD3N A EST\xC1 DESBLOQUEADA \xB7 PLANTA BAJA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073233
-    m_Localized: 
+    m_Localized: "PRES\xC9NTATE ANTE LA HERMANA AGNES \xB7 PUESTO DE ENFERMER\xCDA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073234
-    m_Localized: 
+    m_Localized: SALA DE CALDERAS
     m_Metadata:
       m_Items: []
   - m_Id: 392073235
-    m_Localized: 
+    m_Localized: "SALA DE M\xC1QUINAS"
     m_Metadata:
       m_Items: []
   - m_Id: 392073236
-    m_Localized: 
+    m_Localized: "S\xD3TANO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073237
-    m_Localized: 
+    m_Localized: ENTRAR EN LA SALA DE CALDERAS
     m_Metadata:
       m_Items: []
   - m_Id: 392073238
-    m_Localized: 
+    m_Localized: "SALA DE CALDERAS \xB7 BLOQUEADA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073239
-    m_Localized: 
+    m_Localized: "SALA DE CALDERAS \xB7 SUPERADA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073240
-    m_Localized: 
+    m_Localized: "SALA DE CALDERAS \xB7 SELLADA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073241
-    m_Localized: 
+    m_Localized: "SALA DE CALDERAS \xB7 YA SUPERADA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073242
-    m_Localized: 
+    m_Localized: "SELLADA \xB7 NECESITAS LA LLAVE DEL PABELL\xD3N A"
     m_Metadata:
       m_Items: []
   - m_Id: 392073243
-    m_Localized: 
+    m_Localized: "VE A LA PUERTA DE LA SALA DE CALDERAS \xB7 S\xD3TANO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073244
-    m_Localized: 
+    m_Localized: "PLANTA {floor} \xB7 LA PUERTA DE LA SALA DE CALDERAS EST\xC1 ABIERTA \xB7 S\xD3TANO"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073245
-    m_Localized: 
+    m_Localized: "PLANTA {floor} \xB7 LA PUERTA DE LA SALA DE CALDERAS EST\xC1 BLOQUEADA \xB7 S\xD3TANO"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073246
-    m_Localized: 
+    m_Localized: "LA PUERTA DE LA SALA DE CALDERAS EST\xC1 DESBLOQUEADA \xB7 S\xD3TANO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073247
-    m_Localized: 
+    m_Localized: "PRES\xC9NTATE ANTE BRUNO \xB7 COCINA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073248
-    m_Localized: 
+    m_Localized: MORGUE
     m_Metadata:
       m_Items: []
   - m_Id: 392073249
-    m_Localized: 
+    m_Localized: "C\xC1MARA FRIGOR\xCDFICA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073250
-    m_Localized: 
+    m_Localized: "S\xD3TANO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073251
-    m_Localized: 
+    m_Localized: ENTRAR EN LA MORGUE
     m_Metadata:
       m_Items: []
   - m_Id: 392073252
-    m_Localized: 
+    m_Localized: "MORGUE \xB7 BLOQUEADA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073253
-    m_Localized: 
+    m_Localized: "MORGUE \xB7 SUPERADA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073254
-    m_Localized: 
+    m_Localized: "MORGUE \xB7 SELLADA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073255
-    m_Localized: 
+    m_Localized: "MORGUE \xB7 YA SUPERADA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073256
-    m_Localized: 
+    m_Localized: "SELLADA \xB7 NECESITAS LA LLAVE DE LA SALA DE CALDERAS"
     m_Metadata:
       m_Items: []
   - m_Id: 392073257
-    m_Localized: 
+    m_Localized: "VE A LA PUERTA DE LA MORGUE \xB7 S\xD3TANO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073258
-    m_Localized: 
+    m_Localized: "PLANTA {floor} \xB7 LA PUERTA DE LA MORGUE EST\xC1 ABIERTA \xB7 S\xD3TANO"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073259
-    m_Localized: 
+    m_Localized: "PLANTA {floor} \xB7 LA PUERTA DE LA MORGUE EST\xC1 BLOQUEADA \xB7 S\xD3TANO"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073260
-    m_Localized: 
+    m_Localized: "LA PUERTA DE LA MORGUE EST\xC1 DESBLOQUEADA \xB7 S\xD3TANO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073261
-    m_Localized: 
+    m_Localized: "PRES\xC9NTATE ANTE MARTA \xB7 AULA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073262
-    m_Localized: 
+    m_Localized: "CIRUG\xCDA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073263
-    m_Localized: 
+    m_Localized: "QUIR\xD3FANO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073264
-    m_Localized: 
+    m_Localized: PLANTA SUPERIOR
     m_Metadata:
       m_Items: []
   - m_Id: 392073265
-    m_Localized: 
+    m_Localized: "ENTRAR EN CIRUG\xCDA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073266
-    m_Localized: 
+    m_Localized: "CIRUG\xCDA \xB7 BLOQUEADA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073267
-    m_Localized: 
+    m_Localized: "CIRUG\xCDA \xB7 SUPERADA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073268
-    m_Localized: 
+    m_Localized: "CIRUG\xCDA \xB7 SELLADA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073269
-    m_Localized: 
+    m_Localized: "CIRUG\xCDA \xB7 YA SUPERADA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073270
-    m_Localized: 
+    m_Localized: "SELLADA \xB7 NECESITAS LA LLAVE DE LA MORGUE"
     m_Metadata:
       m_Items: []
   - m_Id: 392073271
-    m_Localized: 
+    m_Localized: "VE A LA PUERTA DE CIRUG\xCDA \xB7 PLANTA SUPERIOR"
     m_Metadata:
       m_Items: []
   - m_Id: 392073272
-    m_Localized: 
+    m_Localized: "PLANTA {floor} \xB7 LA PUERTA DE CIRUG\xCDA EST\xC1 ABIERTA \xB7 PLANTA SUPERIOR"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073273
-    m_Localized: 
+    m_Localized: "PLANTA {floor} \xB7 LA PUERTA DE CIRUG\xCDA EST\xC1 BLOQUEADA \xB7 PLANTA SUPERIOR"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073274
-    m_Localized: 
+    m_Localized: "LA PUERTA DE CIRUG\xCDA EST\xC1 DESBLOQUEADA \xB7 PLANTA SUPERIOR"
     m_Metadata:
       m_Items: []
   - m_Id: 392073275
-    m_Localized: 
+    m_Localized: "PRES\xC9NTATE ANTE EL DR. WEISS \xB7 SALA DE EXPLORACI\xD3N"
     m_Metadata:
       m_Items: []
   - m_Id: 392073276
-    m_Localized: 
+    m_Localized: DIRECTOR
     m_Metadata:
       m_Items: []
   - m_Id: 392073277
-    m_Localized: 
+    m_Localized: DESPACHO DEL DIRECTOR
     m_Metadata:
       m_Items: []
   - m_Id: 392073278
-    m_Localized: 
+    m_Localized: PLANTA SUPERIOR
     m_Metadata:
       m_Items: []
   - m_Id: 392073279
-    m_Localized: 
+    m_Localized: ENTRAR EN EL DESPACHO
     m_Metadata:
       m_Items: []
   - m_Id: 392073280
-    m_Localized: 
+    m_Localized: "DIRECTOR \xB7 BLOQUEADO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073281
-    m_Localized: 
+    m_Localized: "DIRECTOR \xB7 SUPERADO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073282
-    m_Localized: 
+    m_Localized: "DIRECTOR \xB7 SELLADO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073283
-    m_Localized: 
+    m_Localized: "DIRECTOR \xB7 YA SUPERADO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073284
-    m_Localized: 
+    m_Localized: "SELLADO \xB7 NECESITAS LA LLAVE DE CIRUG\xCDA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073285
-    m_Localized: 
+    m_Localized: "VE AL DESPACHO DEL DIRECTOR \xB7 PLANTA SUPERIOR"
     m_Metadata:
       m_Items: []
   - m_Id: 392073286
-    m_Localized: 
+    m_Localized: "PLANTA {floor} \xB7 LA PUERTA DEL DIRECTOR EST\xC1 ABIERTA \xB7 PLANTA SUPERIOR"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073287
-    m_Localized: 
+    m_Localized: "PLANTA {floor} \xB7 LA PUERTA DEL DIRECTOR EST\xC1 BLOQUEADA \xB7 PLANTA SUPERIOR"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073288
-    m_Localized: 
+    m_Localized: "LA PUERTA DEL DIRECTOR EST\xC1 DESBLOQUEADA \xB7 PLANTA SUPERIOR"
     m_Metadata:
       m_Items: []
   - m_Id: 392073289
-    m_Localized: 
+    m_Localized: "LLAVE NO ENTREGADA \xB7 ARCHIVO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073290
-    m_Localized: 
+    m_Localized: "BLOQUEADO \xB7 LA LLAVE DEL DIRECTOR EST\xC1 EN EL ARCHIVO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073291
-    m_Localized: 
+    m_Localized: "BLOQUEADO \xB7 LA HERMANA AGNES TIENE LA LLAVE \xB7 PUESTO DE ENFERMER\xCDA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073292
-    m_Localized: 
+    m_Localized: "LA LLAVE DEL PABELL\xD3N A"
     m_Metadata:
       m_Items: []
   - m_Id: 392073293
-    m_Localized: 
+    m_Localized: "HABLA CON LA HERMANA AGNES \xB7 PUESTO DE ENFERMER\xCDA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073294
-    m_Localized: 
+    m_Localized: "PUESTO DE ENFERMER\xCDA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073295
-    m_Localized: 
+    m_Localized: "BUSCA EL LLAVERO DE AGNES \xB7 LA COCINA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073296
-    m_Localized: 
+    m_Localized: DEVUELVE EL LLAVERO A LA HERMANA AGNES
     m_Metadata:
       m_Items: []
   - m_Id: 392073297
-    m_Localized: 
+    m_Localized: TOMAR EL LLAVERO
     m_Metadata:
       m_Items: []
   - m_Id: 392073298
-    m_Localized: 
+    m_Localized: "LLAVERO \xB7 RECOGIDO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073299
-    m_Localized: 
+    m_Localized: "BLOQUEADA \xB7 BRUNO TIENE LA LLAVE \xB7 COCINA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073300
-    m_Localized: 
+    m_Localized: LA LLAVE DE LA SALA DE CALDERAS
     m_Metadata:
       m_Items: []
   - m_Id: 392073301
-    m_Localized: 
+    m_Localized: "HABLA CON BRUNO \xB7 COCINA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073302
-    m_Localized: 
+    m_Localized: COCINA
     m_Metadata:
       m_Items: []
   - m_Id: 392073303
-    m_Localized: 
+    m_Localized: RECOGE LA BANDEJA DE LA CENA DE JOSEF EN LA COCINA
     m_Metadata:
       m_Items: []
   - m_Id: 392073304
-    m_Localized: 
+    m_Localized: "SUBE LA BANDEJA A JOSEF \xB7 DORMITORIO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073305
-    m_Localized: 
+    m_Localized: "LLEVAS \xB7 LA BANDEJA DE JOSEF"
     m_Metadata:
       m_Items: []
   - m_Id: 392073306
-    m_Localized: 
+    m_Localized: TOMAR LA BANDEJA DE JOSEF
     m_Metadata:
       m_Items: []
   - m_Id: 392073307
-    m_Localized: 
+    m_Localized: "LLEVAS \xB7 LA BANDEJA DE JOSEF"
     m_Metadata:
       m_Items: []
   - m_Id: 392073308
-    m_Localized: 
+    m_Localized: "BLOQUEADA \xB7 MARTA TIENE LA LLAVE \xB7 AULA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073309
-    m_Localized: 
+    m_Localized: LA LLAVE DE LA MORGUE
     m_Metadata:
       m_Items: []
   - m_Id: 392073310
-    m_Localized: 
+    m_Localized: "HABLA CON MARTA \xB7 AULA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073311
-    m_Localized: 
+    m_Localized: AULA
     m_Metadata:
       m_Items: []
   - m_Id: 392073312
-    m_Localized: 
+    m_Localized: "BUSCA LA CAJA DE M\xDASICA DE MARTA \xB7 EL PASILLO DEL S\xD3TANO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073313
-    m_Localized: 
+    m_Localized: "DEVUELVE LA CAJA DE M\xDASICA A MARTA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073314
-    m_Localized: 
+    m_Localized: "TOMAR LA CAJA DE M\xDASICA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073315
-    m_Localized: 
+    m_Localized: "CAJA DE M\xDASICA \xB7 RECOGIDA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073316
-    m_Localized: 
+    m_Localized: "BLOQUEADA \xB7 EL DR. WEISS TIENE LA LLAVE \xB7 SALA DE EXPLORACI\xD3N"
     m_Metadata:
       m_Items: []
   - m_Id: 392073317
-    m_Localized: 
+    m_Localized: "LA LLAVE DE CIRUG\xCDA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073318
-    m_Localized: 
+    m_Localized: "HABLA CON EL DR. WEISS \xB7 SALA DE EXPLORACI\xD3N"
     m_Metadata:
       m_Items: []
   - m_Id: 392073319
-    m_Localized: 
+    m_Localized: "SALA DE EXPLORACI\xD3N"
     m_Metadata:
       m_Items: []
   - m_Id: 392073320
-    m_Localized: 
+    m_Localized: "BUSCA LAS TRES AMPOLLAS \xB7 PLANTA SUPERIOR"
     m_Metadata:
       m_Items: []
   - m_Id: 392073321
-    m_Localized: 
+    m_Localized: LLEVA LAS AMPOLLAS AL DR. WEISS
     m_Metadata:
       m_Items: []
   - m_Id: 392073322
-    m_Localized: 
+    m_Localized: AMPOLLAS  {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073323
-    m_Localized: 
+    m_Localized: AMPOLLAS  {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073324
-    m_Localized: 
+    m_Localized: TOMAR LA AMPOLLA
     m_Metadata:
       m_Items: []
   - m_Id: 392073325
-    m_Localized: 
+    m_Localized: AMPOLLA {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073326
-    m_Localized: 
+    m_Localized: TOMAR LA AMPOLLA
     m_Metadata:
       m_Items: []
   - m_Id: 392073327
-    m_Localized: 
+    m_Localized: AMPOLLA {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073328
-    m_Localized: 
+    m_Localized: TOMAR LA AMPOLLA
     m_Metadata:
       m_Items: []
   - m_Id: 392073329
-    m_Localized: 
+    m_Localized: AMPOLLA {n} / {total}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073330
-    m_Localized: 
+    m_Localized: "{key} \xB7 LA PUERTA EST\xC1 DESBLOQUEADA"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073331
-    m_Localized: 
+    m_Localized: HERMANA AGNES
     m_Metadata:
       m_Items: []
   - m_Id: 392073332
-    m_Localized: 
+    m_Localized: BRUNO
     m_Metadata:
       m_Items: []
   - m_Id: 392073333
-    m_Localized: 
+    m_Localized: JOSEF
     m_Metadata:
       m_Items: []
   - m_Id: 392073334
-    m_Localized: 
+    m_Localized: MARTA
     m_Metadata:
       m_Items: []
   - m_Id: 392073335
-    m_Localized: 
+    m_Localized: DR. WEISS
     m_Metadata:
       m_Items: []
   - m_Id: 392073336
-    m_Localized: 
+    m_Localized: EL ESCRIBIENTE
     m_Metadata:
       m_Items: []
   - m_Id: 392073337
-    m_Localized: 
+    m_Localized: HABLAR CON {name}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073338
-    m_Localized: 
+    m_Localized: AHORA NO
     m_Metadata:
       m_Items: []
   - m_Id: 392073339
-    m_Localized: 
+    m_Localized: Despiertas junto a la puerta.
     m_Metadata:
       m_Items: []
   - m_Id: 392073340
-    m_Localized: 
+    m_Localized: EL DESPACHO DEL DIRECTOR
     m_Metadata:
       m_Items: []
   - m_Id: 392073341
-    m_Localized: 
+    m_Localized: "EL VEST\xCDBULO DE LA PLANTA BAJA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073342
-    m_Localized: 
+    m_Localized: ENTRAR EN LA TIENDA
     m_Metadata:
       m_Items: []
   - m_Id: 392073343
-    m_Localized: 
+    m_Localized: "TIENDA \xB7 CERRADA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073344
-    m_Localized: 
+    m_Localized: "CERRADA \xB7 VUELVE CON FRAGMENTOS"
     m_Metadata:
       m_Items: []
   - m_Id: 392073345
-    m_Localized: 
+    m_Localized: "TIENDA\n<size=60%>EL VENDEDOR  \xB7  {status}</size>"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073346
-    m_Localized: 
+    m_Localized: ABIERTO
     m_Metadata:
       m_Items: []
   - m_Id: 392073347
-    m_Localized: 
+    m_Localized: CERRADO
     m_Metadata:
       m_Items: []
   - m_Id: 392073348
-    m_Localized: 
+    m_Localized: "LA TIENDA EST\xC1 ABIERTA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073349
-    m_Localized: 
+    m_Localized: "LA TIENDA EST\xC1 ABIERTA \xB7 {room}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073350
-    m_Localized: 
+    m_Localized: EXAMINAR
     m_Metadata:
       m_Items: []
   - m_Id: 392073351
-    m_Localized: 
+    m_Localized: EXAMINAR
     m_Metadata:
       m_Items: []
   - m_Id: 392073352
-    m_Localized: 
+    m_Localized: EXAMINAR
     m_Metadata:
       m_Items: []
   - m_Id: 392073353
-    m_Localized: 
+    m_Localized: LEER EL REGISTRO
     m_Metadata:
       m_Items: []
   - m_Id: 392073354
-    m_Localized: 
+    m_Localized: ESCUCHAR
     m_Metadata:
       m_Items: []
   - m_Id: 392073355
-    m_Localized: 
+    m_Localized: "LEER EXPEDIENTE \xB7 {label}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073356
-    m_Localized: 
+    m_Localized: "LEER PULSERA \xB7 ELIAS VOGT \xB7 PACIENTE 5"
     m_Metadata:
       m_Items: []
   - m_Id: 392073357
-    m_Localized: 
+    m_Localized: SALIR DEL MANICOMIO
     m_Metadata:
       m_Items: []
   - m_Id: 392073358
-    m_Localized: 
+    m_Localized: TOMAR LA LLAVE DEL DIRECTOR
     m_Metadata:
       m_Items: []
   - m_Id: 392073359
-    m_Localized: 
+    m_Localized: "BAJAR EL INTERRUPTOR GENERAL \xB7 LIGHTS OUT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073360
-    m_Localized: 
+    m_Localized: "ABRIR EL CAJ\xD3N"
     m_Metadata:
       m_Items: []
   - m_Id: 392073361
-    m_Localized: 
+    m_Localized: "EL CAJ\xD3N"
     m_Metadata:
       m_Items: []
   - m_Id: 392073362
-    m_Localized: 
+    m_Localized: "EL CAJ\xD3N EST\xC1 CERRADO CON LLAVE \xB7 EXPEDIENTES {n} / {total}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073363
-    m_Localized: 
+    m_Localized: "LA LLAVE DEL DIRECTOR \xB7 LA PUERTA EST\xC1 DESBLOQUEADA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073364
-    m_Localized: 
+    m_Localized: "BUSCA LA LLAVE DEL DIRECTOR \xB7 ARCHIVO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073365
-    m_Localized: 
+    m_Localized: "LA ESCALERA AL S\xD3TANO EST\xC1 ENCADENADA \xB7 TOMA EL ASCENSOR"
     m_Metadata:
       m_Items: []
   - m_Id: 392073366
-    m_Localized: 
+    m_Localized: LLAMAR AL ASCENSOR
     m_Metadata:
       m_Items: []
   - m_Id: 392073367
-    m_Localized: 
+    m_Localized: EL ASCENSOR
     m_Metadata:
       m_Items: []
   - m_Id: 392073368
-    m_Localized: 
+    m_Localized: LA REJA
     m_Metadata:
       m_Items: []
   - m_Id: 392073369
-    m_Localized: 
+    m_Localized: FORZAR LAS PUERTAS
     m_Metadata:
       m_Items: []
   - m_Id: 392073370
-    m_Localized: 
+    m_Localized: "LA REJA EST\xC1 ENCADENADA \xB7 TOMA EL ASCENSOR"
     m_Metadata:
       m_Items: []
   - m_Id: 392073371
-    m_Localized: 
+    m_Localized: EL ASCENSOR NO SE MUEVE
     m_Metadata:
       m_Items: []
   - m_Id: 392073372
-    m_Localized: 
+    m_Localized: "EL ASCENSOR NO VIENE \xB7 LA SALA DE CALDERAS SIGUE BLOQUEADA"
     m_Metadata:
       m_Items: []
   - m_Id: 392073373
-    m_Localized: 
+    m_Localized: EL ASCENSOR SE DETUVO
     m_Metadata:
       m_Items: []
   - m_Id: 392073374
-    m_Localized: 
+    m_Localized: "LAS PUERTAS EST\xC1N ATASCADAS \xB7 MANT\xC9N {key} PARA FORZARLAS"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4707331672703763214
   - m_Id: 392073375
-    m_Localized: 
+    m_Localized: ALGO GOLPEA TRES VECES.
     m_Metadata:
       m_Items: []
   - m_Id: 392073376
-    m_Localized: 
+    m_Localized: SE DETIENE EN LA PUERTA
     m_Metadata:
       m_Items: []
   - m_Id: 392073377
-    m_Localized: 
+    m_Localized: "ALGUIEN HA DIBUJADO ESTRELLAS EN LA PARED. TODAV\xCDA BRILLAN."
     m_Metadata:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331672703763214
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 308187136
+        - id: 392073220
+        - id: 392073230
+        - id: 392073231
+        - id: 392073244
+        - id: 392073245
+        - id: 392073258
+        - id: 392073259
+        - id: 392073272
+        - id: 392073273
+        - id: 392073286
+        - id: 392073287
+        - id: 392073322
+        - id: 392073323
+        - id: 392073325
+        - id: 392073327
+        - id: 392073329
+        - id: 392073330
+        - id: 392073337
+        - id: 392073345
+        - id: 392073349
+        - id: 392073355
+        - id: 392073362
+        - id: 392073374

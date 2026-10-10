@@ -1,0 +1,100 @@
+key,text
+dlg.agnes.offer.0,"Da bist du ja. Schon wieder zu spät, und ohne Mantel. Es ist Februar, Liebes."
+dlg.agnes.offer.1,"Station A ist abgeschlossen, und die Schlüssel sind an meinem Bund, und mein Bund ist in der Küche."
+dlg.agnes.offer.2,"Ich hab ihn am Haken gelassen, als das Licht ausging. Wo das Licht hingeht, geh ich nicht hin."
+dlg.agnes.offer.3,"Sei so lieb. Westende, hinter dem Speisesaal. Ein großer Messingring. Du wirst ihn hören."
+dlg.agnes.offer.4,Und pass auf den Boden auf. Gewischt wurde nicht mehr seit dem... na ja. Seitdem.
+dlg.agnes.remind.0,"Die Küche, Liebes. Westende. Ein Messingring an einem Haken."
+dlg.agnes.remind.1,"Ich würde ihn selbst holen, aber du weißt ja, wie ich mit der Dunkelheit bin."
+dlg.agnes.return.0,"Das ist er. Schwerer, als ich ihn in Erinnerung hatte."
+dlg.agnes.return.1,"Station A ist die lange Tür auf der Ostseite. Erst der Aufenthaltsraum, dann der Flügel."
+dlg.agnes.return.2,"Die Oberschwester sagt, jede Nacht werden es weniger von euch. Ich sage, Unsinn. Unsinn, Oberschwester."
+dlg.agnes.return.3,Nimm den Schlüssel. Bring ihn vor der Morgenzählung zurück.
+dlg.agnes.after.0,Die Morgenzählung ist um sechs. Bist du bis sechs zurück?
+dlg.agnes.after.1,Es ist immer sechs. Es ist schon so lange sechs.
+dlg.agnes.later2.0,Schon zurück? Hast du dir die Füße abgetreten?
+dlg.agnes.later2.1,"Vorsicht mit dem Aufzug. Er bleibt hängen. Mit Absicht, glaube ich."
+dlg.agnes.later3.0,Ich hab die Betten heute Nacht zweimal gezählt. Eins davon ist immer wieder eins mehr.
+dlg.agnes.later3.1,Sag's nicht der Oberschwester. Sie ist sehr müde.
+dlg.agnes.later4.0,Erwähn die Lampen nicht vor Dr. Weiss. Er nimmt das so persönlich.
+dlg.agnes.later4.1,"Ach, und wenn du jemanden meinen Namen rufen hörst, das bin nicht ich. Ich bin genau hier."
+dlg.bruno.pre.0,Salz aufs Fensterbrett. Hat meine Mutter immer gesagt. Keiner hört zu.
+dlg.bruno.pre.1,Pfeif hier unten nicht. Lass es einfach.
+dlg.bruno.offer.0,"Kesselraum, ja. Ich hab den Schlüssel. Hab ihn irgendwo bei mir."
+dlg.bruno.offer.1,Ich geh da selber nicht runter. Nicht für Geld. Für gar nichts.
+dlg.bruno.offer.2,"Tu mir erst einen Gefallen. Josefs Abendessen. Das Tablett steht auf der Durchreiche. Er beißt, wenn er Hunger hat."
+dlg.bruno.offer.2.choice.0,Er beißt?
+dlg.bruno.offer.2.choice.0.reply.0,Redensart. Meistens.
+dlg.bruno.offer.2.choice.1,Warum bringst du es nicht?
+dlg.bruno.offer.2.choice.1.reply.0,Er weiß Dinge. Über mich. Über alle. Ich werd lieber nicht angesehen.
+dlg.bruno.offer.3,"Schlafsaal, oben an der Treppe. Bring das Tablett hoch, dann komm zu mir."
+dlg.bruno.remind.0,"Das Tablett steht auf der Durchreiche, beim Herd. Lass es nicht kalt werden. Das mag er nicht."
+dlg.bruno.carry.0,Na los. Verschütt nichts. Schau ihn nicht zu lange an.
+dlg.bruno.after.0,Er hat dir den Schlüssel gegeben? Hm.
+dlg.bruno.after.1,"Dann hatte ich ihn nie. Komisch. Ich hätte schwören können, er hing an meinem Gürtel."
+dlg.bruno.after.2,"Der Kesselraum ist unten im Keller. Nur mit dem Aufzug. Frag mich nicht, wie's da ist."
+dlg.bruno.later3.0,"Hab die Rohre wieder gehört. Dreimal klopfen, dann zweimal. Ich hab mir die Ohren zugehalten."
+dlg.bruno.later3.1,"Sag Tomas nicht, dass ich das gesagt hab."
+dlg.bruno.later4.0,Das Salz ist weg vom Fensterbrett. Alles. Wer nimmt denn Salz?
+dlg.bruno.later4.1,Ich bleib in der Küche. Die Küche hat eine Tür.
+dlg.josef.pre.0,"Du gehst wie der Neue. Die gehen immer, als hätte man ihnen gesagt, wo die Treppe ist."
+dlg.josef.pre.1,"Setz dich. Nein, setz dich nicht. Das ist Elias' Bett, und er ist eigen."
+dlg.josef.hello.0,Kein Tablett. Dann bist du nicht meinetwegen hier.
+dlg.josef.hello.1,"Komm mit dem Abendessen wieder. Irgendwas Gekochtes, grau, zu spät. Ich erkenne es am Geruch."
+dlg.josef.remind.0,"Das Tablett, Junge. Die Küche. Bruno weiß, wo das Essen ist. Bruno weiß es immer."
+dlg.josef.deliver.0,Kalt. Natürlich ist es kalt. Danke.
+dlg.josef.deliver.1,"Mir hat keiner mehr was gebracht, seit der Doktor nicht mehr kommt. Der, der aufgehört hat, Doktor zu sein."
+dlg.josef.deliver.2,"Du willst in den Kesselraum. Bruno sagt, er hat den Schlüssel."
+dlg.josef.deliver.3,"Bruno lügt. Der Arme, er glaubt jedes Wort davon."
+dlg.josef.deliver.4,"Unterm Kissen. Meinem Kissen, du unverschämtes Ding. Da."
+dlg.josef.deliver.5,"Messing, mit Anhänger. Hab ihn ihm letzten Oktober vom Gürtel genommen. Jenem Oktober."
+dlg.josef.deliver.6,Vorsicht mit dem Aufzug. Er wird für dich anhalten. Das tun sie immer.
+dlg.josef.after.0,Geh nur. Ich ess mein Abendessen auf. Kalt mag ich es inzwischen.
+dlg.josef.after.1,"Du kommst wieder. Alle kommen wieder. Die Frage ist nur, wie viele von euch."
+dlg.josef.later3.0,"Elias ist auf. Steht mit dem Gesicht zur Wand, seit das Licht weg ist."
+dlg.josef.later3.1,"Sprich ihn nicht an. Er findet es unhöflich, wenn man ihm antwortet."
+dlg.josef.later4.0,Sie haben Elias heute Morgen runtergebracht. Schublade fünf. Er hätte gern ein Fenster gehabt.
+dlg.josef.later4.1,"Jemand hätte ihm sagen sollen, dass die Schubladen keine Fenster haben. Ich hätte es getan."
+dlg.marta.pre.0,Willst du mein Bild sehen? Das ist das Haus. Es hat mehr Fenster als das echte.
+dlg.marta.pre.1,Pst. Die Kreide schläft.
+dlg.marta.offer.0,"Ich hatte eine Spieluhr. Innen war sie blau, wie Wasser."
+dlg.marta.offer.1,"Ich hab sie in den langen kalten Gang mitgenommen, um sie den Rohren zu zeigen. Sie mochten sie."
+dlg.marta.offer.2,"Dann ist das Licht weggegangen, eins nach dem anderen, und ich bin nach oben. Ich hab sie vergessen."
+dlg.marta.offer.3,Holst du sie? Ich darf da nicht runter. Die Rohre werden eifersüchtig.
+dlg.marta.offer.4,"Sie liegt auf dem Boden, glaub ich. An der Wand. Sag ihr, ich bin nicht böse."
+dlg.marta.remind.0,"Der lange kalte Gang. An der Wand. Sag ihr, ich bin nicht böse."
+dlg.marta.return.0,Du hast sie gefunden! Sie ist noch warm. Sie ist immer warm.
+dlg.marta.return.1,Hier. Der ist für dich. Ich hab ihn aus dem Mantel vom kalten Mann genommen. Er hatte nichts dagegen.
+dlg.marta.return.2,Er macht die Leichenhalle auf. Hab keine Angst vor der Leichenhalle. Dort sind alle ganz still.
+dlg.marta.return.3,Danke. Jetzt kannst du hingehen und mit ihnen still sein.
+dlg.marta.after.0,Sie singt im anderen Zimmer. Hörst du sie?
+dlg.marta.after.1,Nein? Oh. Gut. Zieh sie nicht auf. Sie zieht sich selbst auf.
+dlg.marta.later4.0,"Ich kann sie nicht mehr hören. Ich glaub, sie ist ganz weit weggegangen."
+dlg.marta.later4.1,Geh nicht nachsehen. Bitte. Es war nur ein Kästchen.
+dlg.weiss.pre.0,Verzeihung! Verzeihung. Visite. Ich bin spät dran für die Visite. Stehst du auf meiner Liste?
+dlg.weiss.pre.1,"Nein. Nein, du stehst nicht auf meiner Liste. Gut. Das ist gut."
+dlg.weiss.offer.0,Gott sei Dank. Hände. Ich brauche Hände. Hast du eine ruhige Hand? Du siehst so aus.
+dlg.weiss.offer.1,"Zimmer 4. Die Injektion. Drei Ampullen, klares Glas, blaue Kappe. Ich habe sie gezählt. Ich zähle jede Schicht."
+dlg.weiss.offer.2,"Ich habe sie irgendwo auf diesem Stockwerk abgelegt. Die Chirurgie, die Büros. Ich weiß es nicht."
+dlg.weiss.offer.3,"Sie rollen. Sie sind klein. Sie sind dort, wo das Licht nicht ist."
+dlg.weiss.offer.4,Bring alle drei. Ich gebe ihm keine halbe Dosis. Niemals.
+dlg.weiss.remind.0,"{n} von drei. Blaue Kappen, klares Glas. Zimmer 4 wartet."
+dlg.weiss.remind.1,Er wartet schon so lange.
+dlg.weiss.return.0,Drei. Alle drei. Du bist ein Wunder. Ich könnte dich küssen. Tu ich nicht. Vorschrift.
+dlg.weiss.return.1,"Der Schlüssel zur Chirurgie. Hier. Nimm ihn, nimm ihn, ich brauche beide Hände."
+dlg.weiss.return.2,Zimmer 4. Zimmer vier...
+dlg.weiss.return.3,"...das steht seit Jahren leer, nicht wahr?"
+dlg.weiss.return.4,Wem wollte ich die eigentlich geben?
+dlg.weiss.after.0,Visite. Ich sollte meine Visite machen.
+dlg.weiss.after.1,In Zimmer 4 brennt immer Licht. Nicht wahr? Brennt da nicht immer Licht?
+dlg.clerk.a.0,Name?
+dlg.clerk.a.1,Nein. Sag's mir nicht. Ich hab ihn hier irgendwo.
+dlg.clerk.a.2,Die Akte ist beim Direktor. Die Akte ist immer beim Direktor.
+dlg.clerk.a.3,Name?
+dlg.clerk.b.0,Seite einundvierzig. Seite einundvierzig. Seite zweiundvierzig.
+dlg.clerk.b.1,Die hier habe ich schon einmal getippt.
+dlg.clerk.b.2,Lies mir nicht über die Schulter. Es ist nicht fertig.
+dlg.clerk.c.0,"Du stehst hier drin, weißt du. Seite siebzehn. Unter 'Anwesend'."
+dlg.clerk.c.1,"Sehr nett, dass du kommst. Das erspart mir das Suchen."
+dlg.clerk.finale.0,Es ist fertig.
+dlg.clerk.finale.1,"Es stand immer fest, dass es fertig wird. Ich musste es nur abtippen."

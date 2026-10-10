@@ -1,0 +1,44 @@
+key,text
+sub.second_wind.release,Te soltó. No volverá a hacerlo.
+sub.shop.contract_taken,Tráelo de vuelta de una pieza.
+sub.shop.contract_declined,Como quieras.
+sub.star.heard,Eso lo oyó.
+sub.consumable.no_battery,No tienes pila de repuesto.
+sub.consumable.not_in_here,Aquí dentro no.
+sub.consumable.torch_full,La linterna está cargada.
+sub.consumable.fresh_cell,Pila nueva.
+sub.consumable.no_compass,No tienes brújula estelar.
+sub.consumable.nothing_to_point,No queda nada a lo que apuntar.
+sub.escape.hatch_unlocked,LA TRAMPILLA ESTÁ DESBLOQUEADA
+sub.escape.lift_unlocked,EL ASCENSOR ESTÁ DESBLOQUEADO
+sub.pickup.battery_cell,PILA
+sub.pickup.second_wind,+ SEGUNDO ALIENTO
+sub.pickup.key,LLAVE {held} / {total}
+sub.lore.bonus,+{amount} {currency}
+sub.lantern.lure,Algo se siente atraído por la luz.
+sub.button.shutter,"En algún lugar, sube una persiana."
+sub.theme.terminal,CÁM 3: MOVIMIENTO
+sub.stalker.screamed,ALGO GRITÓ.
+sub.contract.failed,CONTRATO FALLIDO  -  {name}.
+sub.contract.done,CONTRATO CUMPLIDO  -  {name}.
+sub.contract.void_shards,Aquí abajo no brilla nada - el contrato queda anulado.
+sub.contract.void_notes,Aquí abajo no hay notas - el contrato queda anulado.
+sub.shop.deal_done,Trato es trato.
+sub.shop.deal_failed,No siempre se gana.
+sub.shop.greeting.1,Fragmentos a cambio de algo para la oscuridad. ¿Qué va a ser?
+sub.shop.greeting.2,Otra vez por aquí.
+sub.shop.greeting.3,Ahí arriba hay cada vez más ruido.
+sub.shop.greeting.4,Última parada antes del fondo.
+sub.dread.far,Algo se movió detrás de ti.
+sub.dread.mid,Se está acercando.
+sub.dread.near,Está justo detrás de ti.
+sub.dread.lights_dying,Las luces se están muriendo.
+sub.dread.it_knows,Lo sabe.
+sub.dread.ambushed,Estaba esperando.
+sub.banner.floor,PLANTA {floor}
+sub.banner.floor_theme,PLANTA {floor} — {theme}
+sub.banner.find_stars,ENCUENTRA {n} ESTRELLAS
+sub.banner.restore_fuses,REPARA {n} FUSIBLES
+sub.banner.find_keys,ENCUENTRA {n} LLAVES PARA LA TRAMPILLA
+sub.banner.lockdown,CIERRE DE SEGURIDAD
+sub.banner.rule,{name} — {description}
