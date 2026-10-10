@@ -82,6 +82,15 @@ public class MazeDoor : MonoBehaviour, IInteractable
     /// <summary>F75 Fuse Map shop item: true for a vault's security door(s), set by MazeGenerator.PlaceVaults.</summary>
     public bool IsVaultDoor { get; set; }
 
+    /// <summary>Which kind of door this is (MazeGenerator.DebugMap's legend).</summary>
+    public Kind DoorKind => _kind;
+
+    /// <summary>True while the shutter is (rolling) up - the intent, see the class's note on _open.</summary>
+    public bool IsOpen => _open;
+
+    /// <summary>True once its button (or an all-stars release) has unlocked it for good or for its timer. A Manual door is never locked.</summary>
+    public bool IsUnlocked => _kind == Kind.Manual || _unlocked || _permanentlyOpen;
+
     private Beacon _beacon;
 
     /// <summary>F75 Fuse Map shop item: a slow-pulsing 3 m beacon above the door.</summary>

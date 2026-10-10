@@ -28,6 +28,9 @@ public class WallButton : MonoBehaviour, IInteractable
     private bool _everPressed;
     private Beacon _beacon;
 
+    /// <summary>The door this button opens (MazeGenerator.DebugMap's legend).</summary>
+    public MazeDoor Door => _door;
+
     /// <summary>F75 Fuse Map: whether this button still needs pressing - the Star Compass skips one already used (unless it is a re-pressable Timed button whose door has closed again).</summary>
     public bool NeedsAttention => !_everPressed || (_door != null && _door.CanBePressedAgain);
 

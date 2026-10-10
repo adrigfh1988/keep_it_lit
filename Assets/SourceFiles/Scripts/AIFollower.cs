@@ -1672,6 +1672,12 @@ public class AIFollower : MonoBehaviour
     {
         if (!_ambushArrived)
         {
+            // Released every frame like TickWander/TickChase/TickSearch: a door stall (or a listen pause) landing on the
+            // walk to the ambush cell set isStopped from Update, and nothing let go of it - the hunter stood frozen,
+            // never arriving, so the ambush timer never started and it was gone for the whole floor (seed 26249140,
+            // floor 5, 10 Oct 2026). The overrides in Update run after the state machine, so they still hold it while they last.
+            _agent.isStopped = false;
+
             // moveSpeed, not WanderSpeed(): dormantSpeed exists to read as barely stirring before the
             // first star, and an ambusher that takes twenty seconds to arrive never gets there in time.
             MoveSpeedTowards(moveSpeed);

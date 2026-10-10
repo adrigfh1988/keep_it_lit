@@ -180,6 +180,10 @@ public class MazeGenerator : MonoBehaviour
     [Tooltip("One switch per Tier A terror feature, plus the [Terror] Console log. Spec: plannings/maze-terror-spec.md")]
     [SerializeField] private TerrorSettings terror = new TerrorSettings();
 
+    [Header("Door buttons")]
+    [Tooltip("A door's button goes on a wall the player can see from in front of the door: a cell in a straight open line from it, at most this many cells away (10 Oct 2026 - a button out of sight turned a Lockdown floor into a hunt for a switch). Only when no such wall is free does it go anywhere farther.")]
+    [SerializeField, Min(1)] private int buttonSightCells = 4;
+
     [Header("F103 A10 - bait dead ends")]
     [Tooltip("A dead end deeper than this (cells from the junction it hangs off) is opened after all: only short pockets survive braiding")]
     [SerializeField, Min(1)] private int maxDeadEndDepth = 2;
@@ -244,6 +248,8 @@ public class MazeGenerator : MonoBehaviour
     /// <summary>F72: every door/button/vault-loot instance built this run, kept so SetUpAtmosphere can late-bind the HUD/flashlight once they exist (same pattern as _lockers).</summary>
     private readonly List<MazeDoor> _doors = new List<MazeDoor>();
     private readonly List<WallButton> _buttons = new List<WallButton>();
+    // Which passage each door sits in (CreateDoor), for DebugMap: a door's position is on the wall line, between two cells.
+    private readonly Dictionary<MazeDoor, Passage> _doorPassages = new Dictionary<MazeDoor, Passage>();
     private readonly List<BatteryCellPickup> _batteryPickups = new List<BatteryCellPickup>();
     /// <summary>F72: cells SpawnShards must place a shard in (a vault's 2 forced shards), consumed and cleared by SpawnShards. Each entry is one shard - a vault with 2 shards appears twice.</summary>
     private readonly List<Vector2Int> _vaultForcedShardCells = new List<Vector2Int>();
@@ -2744,6 +2750,7 @@ public class MazeGenerator : MonoBehaviour
     {
         _vaultForcedShardCells.Clear();
         _doors.Clear();
+        _doorPassages.Clear();
         _buttons.Clear();
         _batteryPickups.Clear();
 
@@ -3073,6 +3080,10 @@ public class MazeGenerator : MonoBehaviour
         if (want <= 0) return;
 
         Vector2Int start = Vector2Int.zero;
+        // The hunter spawns in the farthest cell (PlaceAI), which is usually a dead end - and since F103 A10 keeps some dead ends,
+        // a vault kept landing on it: the hunter started the floor locked in, bashed its way out and (before the TickAmbush fix)
+        // froze for good on that stall (seed 26249140, floor 5, 10 Oct 2026). Never vault the spawn cell.
+        Vector2Int hunterCell = FarthestCell();
         HashSet<Vector2Int> starCellSet = new HashSet<Vector2Int>(_starCells);
         HashSet<Vector2Int> lockerCellSet = new HashSet<Vector2Int>(_lockerCells);
 
@@ -3082,7 +3093,7 @@ public class MazeGenerator : MonoBehaviour
             for (int z = 0; z < height; z++)
             {
                 Vector2Int cell = new Vector2Int(x, z);
-                if (cell == start || WallCount(x, z) != 3) continue;
+                if (cell == start || cell == hunterCell || WallCount(x, z) != 3) continue;
                 if (starCellSet.Contains(cell) || lockerCellSet.Contains(cell) || _setPieceCells.Contains(cell)) continue;
                 if (usedCells.Contains(cell)) continue;
                 deadEnds.Add(cell);
@@ -3136,7 +3147,7 @@ public class MazeGenerator : MonoBehaviour
                 for (int z = 0; z < height; z++)
                 {
                     Vector2Int cell = new Vector2Int(x, z);
-                    if (cell == start || WallCount(x, z) != 2) continue;
+                    if (cell == start || cell == hunterCell || WallCount(x, z) != 2) continue;
                     if (Mathf.Max(Mathf.Abs(x), Mathf.Abs(z)) <= 1) continue; // not beside the start
                     if (starCellSet.Contains(cell) || lockerCellSet.Contains(cell) || _setPieceCells.Contains(cell)) continue;
                     if (usedCells.Contains(cell)) continue;
@@ -3298,32 +3309,35 @@ public class MazeGenerator : MonoBehaviour
         }
 
         _doors.Add(door);
+        _doorPassages[door] = p;
         return door;
     }
 
-    /// <summary>A button somewhere in `startSide`, at least 3 BFS steps from the door, on a free closed wall - registered in _propWalls so nothing else dresses over it.</summary>
+    /// <summary>
+    /// A button for `door` on a free closed wall of `startSide`, registered in _propWalls so nothing else dresses over it.
+    /// 10 Oct 2026: it goes where the player can see it from the door - a cell in a straight open line from `doorStartCell`
+    /// (the cell in front of the door), at most buttonSightCells away, preferring one that is not the door's own cell. The old
+    /// rule (anywhere on the start side, at least 3 BFS steps away) put a Lockdown door's button in a pocket out of sight
+    /// (seed 26249140, floor 5) and turned the floor into a hunt for a switch; it is now only the last resort.
+    /// One rng draw either way, so the rest of the +11 stream draws the same samples.
+    /// </summary>
     private WallButton PlaceButtonFor(MazeDoor door, HashSet<Vector2Int> startSide, Vector2Int doorStartCell, System.Random rng, HashSet<Vector2Int> usedCells)
     {
         HashSet<Vector2Int> starCellSet = new HashSet<Vector2Int>(_starCells);
         HashSet<Vector2Int> lockerCellSet = new HashSet<Vector2Int>(_lockerCells);
-        Dictionary<Vector2Int, int> distances = BfsWithin(doorStartCell, startSide);
 
         List<(Vector2Int cell, int dir)> options = new List<(Vector2Int, int)>();
-        foreach (KeyValuePair<Vector2Int, int> kv in distances)
+        AddButtonWalls(SightLineCells(doorStartCell, startSide), starCellSet, lockerCellSet, usedCells, options);
+        if (options.Count == 0) AddButtonWalls(new[] { doorStartCell }, starCellSet, lockerCellSet, usedCells, options);
+        if (options.Count == 0)
         {
-            Vector2Int cell = kv.Key;
-            if (kv.Value < 3) continue;
-            if (starCellSet.Contains(cell) || lockerCellSet.Contains(cell) || _setPieceCells.Contains(cell)) continue;
-            if (usedCells.Contains(cell)) continue;
-
-            for (int dir = 0; dir < 4; dir++)
+            List<Vector2Int> farCells = new List<Vector2Int>();
+            foreach (KeyValuePair<Vector2Int, int> kv in BfsWithin(doorStartCell, startSide))
             {
-                if (!IsWallClosed(cell.x, cell.y, dir)) continue;
-                Vector3 dirVec = DirVector(dir);
-                if (_propWalls.TryGetValue(cell, out List<Vector3> taken) && taken.Contains(dirVec)) continue;
-                if (IsLampWall(cell, dirVec)) continue;
-                options.Add((cell, dir));
+                if (kv.Value >= 3) farCells.Add(kv.Key);
             }
+            AddButtonWalls(farCells, starCellSet, lockerCellSet, usedCells, options);
+            if (options.Count > 0) Debug.LogWarning($"MazeGenerator: no free wall in sight of the door at {doorStartCell}; its button goes out of sight.", this);
         }
         if (options.Count == 0) return null;
 
@@ -3340,6 +3354,44 @@ public class MazeGenerator : MonoBehaviour
         usedCells.Add(chosen.cell);
 
         return button;
+    }
+
+    /// <summary>
+    /// The cells seen from in front of a door: walking straight from `origin` in each direction through open passages, staying
+    /// inside `region`, up to buttonSightCells steps (the origin itself is not included). The locked side is not in `region`, so the
+    /// walk never looks through the door.
+    /// </summary>
+    private List<Vector2Int> SightLineCells(Vector2Int origin, HashSet<Vector2Int> region)
+    {
+        List<Vector2Int> cells = new List<Vector2Int>();
+        for (int dir = 0; dir < 4; dir++)
+        {
+            Vector2Int current = origin;
+            for (int step = 0; step < buttonSightCells; step++)
+            {
+                if (IsWallClosed(current.x, current.y, dir)) break;
+                Vector2Int next = Neighbour(current, dir);
+                if (next.x < 0 || next.x >= width || next.y < 0 || next.y >= height || !region.Contains(next)) break;
+
+                cells.Add(next);
+                current = next;
+            }
+        }
+        return cells;
+    }
+
+    /// <summary>Every free closed wall (not claimed in _propWalls, no lamp) of the given cells that may hold a button: not a star, locker, set-piece or already-used cell.</summary>
+    private void AddButtonWalls(IEnumerable<Vector2Int> cells, HashSet<Vector2Int> starCells, HashSet<Vector2Int> lockerCells, HashSet<Vector2Int> usedCells, List<(Vector2Int cell, int dir)> options)
+    {
+        foreach (Vector2Int cell in cells)
+        {
+            if (starCells.Contains(cell) || lockerCells.Contains(cell) || _setPieceCells.Contains(cell) || usedCells.Contains(cell)) continue;
+
+            for (int dir = 0; dir < 4; dir++)
+            {
+                if (IsFreeWall(cell, dir)) options.Add((cell, dir));
+            }
+        }
     }
 
     private WallButton CreateButtonInstance(Vector2Int cell, int dir, MazeDoor door)
@@ -4919,6 +4971,154 @@ public class MazeGenerator : MonoBehaviour
         if (baseMusic[index] != null) return baseMusic[index];
         foreach (AudioClip clip in baseMusic) if (clip != null) return clip;
         return null;
+    }
+
+    // ---------------------------------------------------------------- debug map
+
+    /// <summary>
+    /// Debug: the current maze as ASCII, north up, for debugging sessions (LIGHTS OUT &gt; Debug &gt; Print Maze Map, this
+    /// component's context menu, or <c>unity command eval --code 'return UnityEngine.Object.FindAnyObjectByType&lt;MazeGenerator&gt;().DebugMap();'</c>).
+    /// Draws the walls and the doors (each door's id on its wall), and marks the live stars, the keys still lying about,
+    /// the buttons (b + the id of the door they open), the start, the player, the hunter and an open hatch; a legend
+    /// below lists every door with its kind, state and button. Play mode only - the maze is built at runtime. Read it in
+    /// a monospace font: the Console is not one, which is why the menu item also copies it to the clipboard.
+    /// </summary>
+    public string DebugMap()
+    {
+        if (_wallN == null) return "MazeGenerator.DebugMap: no maze yet - it is built when Play starts.";
+
+        // Doors: an id per door (1-9, then A-Z), looked up from either side of its passage.
+        Dictionary<(Vector2Int, int), char> doorGlyphs = new Dictionary<(Vector2Int, int), char>();
+        Dictionary<MazeDoor, char> doorIds = new Dictionary<MazeDoor, char>();
+        for (int i = 0; i < _doors.Count; i++)
+        {
+            MazeDoor door = _doors[i];
+            if (door == null || !_doorPassages.TryGetValue(door, out Passage p)) continue;
+
+            char id = i < 9 ? (char)('1' + i) : (char)('A' + i - 9);
+            doorIds[door] = id;
+            doorGlyphs[(p.CellA, p.Dir)] = id;
+            doorGlyphs[(p.CellB, (p.Dir + 2) % 4)] = id;
+        }
+
+        // Cell marks, most important first; a cell shows at most three characters (the legend lists everything).
+        string[,] marks = new string[width, height];
+        void Mark(Vector3 world, string token)
+        {
+            if (TryWorldToCell(world, out Vector2Int c)) marks[c.x, c.y] += token;
+        }
+
+        Transform player = FindPlayer();
+        if (player != null) Mark(player.position, "@");
+        if (aiFollower != null) Mark(aiFollower.transform.position, "H");
+        for (int i = 0; i < _stars.Count; i++)
+        {
+            if (_stars[i] != null) Mark(_stars[i].position, "*");
+        }
+        foreach (KeyPickup key in _keys)
+        {
+            if (key != null && !key.IsTaken) Mark(key.transform.position, "k");
+        }
+        foreach (WallButton button in _buttons)
+        {
+            if (button == null) continue;
+            char id = button.Door != null && doorIds.TryGetValue(button.Door, out char d) ? d : '?';
+            Mark(button.transform.position, "b" + id);
+        }
+        MazeEscape escape = FindAnyObjectByType<MazeEscape>();
+        if (escape != null && escape.HatchOpen) Mark(escape.HatchPosition, "E");
+        marks[0, 0] += "S";
+
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        sb.Append($"Maze seed {UsedSeed}, floor {GameFlow.CurrentFloor}, {width}x{height}, north up, start S = (0,0) bottom-left.\n");
+
+        // Column numbers over each cell's interior, row numbers beside it.
+        sb.Append("    ");
+        for (int x = 0; x < width; x++) sb.Append(' ').Append(x.ToString().PadLeft(2)).Append(' ');
+        sb.Append('\n');
+
+        for (int z = height - 1; z >= 0; z--)
+        {
+            AppendDebugBorder(sb, z, 0, doorGlyphs);
+            sb.Append(z.ToString().PadLeft(2)).Append("  ");
+            for (int x = 0; x < width; x++)
+            {
+                sb.Append(DebugWallGlyph(x, z, 3, '|', doorGlyphs));
+                string m = marks[x, z] ?? string.Empty;
+                sb.Append(m.Length > 3 ? m.Substring(0, 3) : m.PadRight(3));
+            }
+            sb.Append(DebugWallGlyph(width - 1, z, 1, '|', doorGlyphs)).Append('\n');
+        }
+        AppendDebugBorder(sb, 0, 2, doorGlyphs);
+
+        sb.Append("\n* star   k key   bN button for door N   S start   @ you   H hunter   E hatch/lift   digit/letter on a wall = door\n");
+        AppendDebugLegend(sb, doorIds);
+        return sb.ToString();
+    }
+
+    /// <summary>A row of corners and north (dir 0) or south (dir 2) walls: "---" closed, "-N-" door N, blank open.</summary>
+    private void AppendDebugBorder(System.Text.StringBuilder sb, int z, int dir, Dictionary<(Vector2Int, int), char> doorGlyphs)
+    {
+        sb.Append("    ");
+        for (int x = 0; x < width; x++)
+        {
+            sb.Append('+');
+            char glyph = DebugWallGlyph(x, z, dir, '-', doorGlyphs);
+            sb.Append(glyph == '-' ? "---" : glyph == ' ' ? "   " : "-" + glyph + "-");
+        }
+        sb.Append("+\n");
+    }
+
+    /// <summary>The character for one wall of a cell: the door's id when a door sits in it, `closed` for a wall, a space for a passage.</summary>
+    private char DebugWallGlyph(int x, int z, int dir, char closed, Dictionary<(Vector2Int, int), char> doorGlyphs)
+    {
+        if (doorGlyphs.TryGetValue((new Vector2Int(x, z), dir), out char id)) return id;
+        return IsWallClosed(x, z, dir) ? closed : ' ';
+    }
+
+    /// <summary>Doors (kind, cells, state, the button that opens them), then the stars, keys and buttons with their cells.</summary>
+    private void AppendDebugLegend(System.Text.StringBuilder sb, Dictionary<MazeDoor, char> doorIds)
+    {
+        foreach (KeyValuePair<MazeDoor, char> entry in doorIds)
+        {
+            MazeDoor door = entry.Key;
+            Passage p = _doorPassages[door];
+            sb.Append($"door {entry.Value}: {door.DoorKind} between {p.CellA} and {p.CellB}, {(door.IsOpen ? "open" : "closed")}{(door.IsUnlocked ? "" : ", locked")}{(door.IsVaultDoor ? ", vault" : "")}");
+            foreach (WallButton button in _buttons)
+            {
+                if (button != null && button.Door == door && TryWorldToCell(button.transform.position, out Vector2Int bc)) sb.Append($", button at {bc}");
+            }
+            if (door.LinkedDoor != null && doorIds.TryGetValue(door.LinkedDoor, out char linked)) sb.Append($", also opens door {linked}");
+            sb.Append('\n');
+        }
+
+        int taken = 0;
+        sb.Append("stars left:");
+        for (int i = 0; i < _stars.Count; i++)
+        {
+            if (_stars[i] == null) { taken++; continue; }
+            if (TryWorldToCell(_stars[i].position, out Vector2Int sc)) sb.Append(' ').Append(sc);
+        }
+        sb.Append($"   (taken {taken} of {_stars.Count})\n");
+
+        if (_keys.Count > 0)
+        {
+            sb.Append("keys:");
+            foreach (KeyPickup key in _keys)
+            {
+                if (key != null && TryWorldToCell(key.transform.position, out Vector2Int kc)) sb.Append(' ').Append(kc).Append(key.IsTaken ? " taken" : "");
+            }
+            sb.Append('\n');
+        }
+    }
+
+    /// <summary>Right-click the component in Play: logs DebugMap and copies it to the clipboard (paste into anything monospace).</summary>
+    [ContextMenu("Debug: Print Maze Map")]
+    private void PrintDebugMap()
+    {
+        string map = DebugMap();
+        GUIUtility.systemCopyBuffer = map;
+        Debug.Log(map, this);
     }
 
     private static Transform FindPlayer()
