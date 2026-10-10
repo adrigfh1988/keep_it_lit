@@ -122,7 +122,9 @@ public class TensionDirector : MonoBehaviour
 
         float radius = Mathf.Lerp(starNoiseRadius, starNoiseRadiusAtPeak, Progress);
         bool heard = _follower.HearNoise(at, radius);
-        if (heard && _hud != null && Progress >= 0.5f)
+        // F103 A7: the "IT HEARD YOU" beat stamps LastHeardYouTime synchronously inside HearNoise, so it fired on
+        // this very pickup when the stamp equals now - its world text wins, and this line would double it.
+        if (heard && _hud != null && Progress >= 0.5f && _follower.LastHeardYouTime < Time.time)
         {
             _hud.ShowSubtitle(L10n.T("sub.star.heard"), 2.2f);
         }

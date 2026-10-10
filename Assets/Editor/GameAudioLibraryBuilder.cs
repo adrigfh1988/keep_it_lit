@@ -16,6 +16,7 @@ public static class GameAudioLibraryBuilder
     private const string FP = "Assets/Free Pack/";
     private const string HE = "Assets/Horror Elements/";
     private const string SB = "Assets/Libraries/Soundbits_freeSFX_2025/Sounds/";
+    private const string SF = "Assets/Scary Sound FX/";
 
     private struct Row
     {
@@ -82,6 +83,8 @@ public static class GameAudioLibraryBuilder
         R("relocationCue", new[] { FP + "Ghost Manifestation 1", FP + "Ghost Manifestation 2" }, 0.7f, 0f, 0f, 6f, mono: false),
         R("phantomWhisper", new[] { HE + "Misc/Misc_Whisper", HE + "Misc/Misc_Shh" }, 3f, 0f, 0.3f, 5f),
         R("captureSting", new[] { HE + "Hits/Hit_Drama" }, 0.9f, mono: false),
+        R("hunterAlert", new[] { SB + "jm-sm_metal_squeak-050", SB + "jm-sm_metal_squeak-082", SB + "ji-e2_metal_jolt_rattle_scrape-054" }, 1f, 0.06f, 0f, 1.6f),
+        R("spottedSting", new[] { SF + "Impacts & Hits/H_Screamer_Bell_Short", SF + "Impacts & Hits/H_Impact_Low_Short", HE + "Hits/Hit_Suspens", SB + "cht2_cinematic_hit_156" }, 1f, mono: false),
         // ---- player, UI, music
         R("torchClick", new[] { SB + "buttons_switches_048" }, 2.5f, 0.04f, 0.12f, 0.5f, mono: false),
         R("lockerDoor", new[] { SB + "oc_door-metal-02-01" }, 1.5f, 0.05f, 0.15f, 1.6f),

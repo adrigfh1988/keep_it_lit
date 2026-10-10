@@ -11,6 +11,11 @@ using Random = UnityEngine.Random;
 /// that is about to matter, which is why they refuse to fire near the hunter or during a relocation
 /// telegraph (DreadDirector.IsTelegraphing).
 ///
+/// F103 A2/A8: phantoms are contaminated so they stop proving the hunter is far away - audio ones may fire
+/// closer to it, some footsteps are hunter-pitched, and an "honest" one ends by really relocating the
+/// hunter (DreadDirector.TryRelocateOnTrail, the single exception to "never touches the hunter"). Wrong
+/// sounds (the game's own sounds from somewhere unseen) never fake an objective and never raise a noise.
+///
 /// No execution-order attribute - everything it needs is handed in through Configure, after MazeGenerator
 /// has built the world. Added at runtime, so OnEnable runs during AddComponent, before Configure.
 /// </summary>
@@ -21,7 +26,8 @@ public class PhantomDirector : MonoBehaviour
         Silhouette,
         Footsteps,
         LampBlink,
-        Whisper
+        Whisper,
+        WrongSound
     }
 
     [Header("Scheduling")]
@@ -29,8 +35,10 @@ public class PhantomDirector : MonoBehaviour
     [SerializeField] private float phantomInterval = 18f;
     [Tooltip("Minimum seconds between two phantoms, even if the roll comes up short")]
     [SerializeField] private float minSpacing = 8f;
-    [Tooltip("No phantom fires while the hunter is this close or closer (m) - a fake must not mask something real")]
+    [Tooltip("No visual phantom fires while the hunter is this close or closer (m) - a fake must not mask something real. Audio phantoms use audioHunterExclusionDistance while contaminated phantoms are on.")]
     [SerializeField] private float hunterExclusionDistance = 12f;
+    [Tooltip("F103 A2: audio phantoms (footsteps, whisper, wrong sounds) may fire this close to the hunter (m) - so a phantom no longer proves it is far away")]
+    [SerializeField] private float audioHunterExclusionDistance = 6f;
     [Tooltip("A skipped check is retried after interval x this fraction, rather than waiting a full interval")]
     [SerializeField] private float failRetryFraction = 0.5f;
 
@@ -39,6 +47,8 @@ public class PhantomDirector : MonoBehaviour
     [SerializeField] private float footstepsWeight = 3f;
     [SerializeField] private float lampBlinkWeight = 2f;
     [SerializeField] private float whisperWeight = 2f;
+    [Tooltip("F103 A8: weight of the wrong-sound phantom (the game's own sounds from somewhere unseen)")]
+    [SerializeField] private float wrongSoundWeight = 2f;
     [Tooltip("Multiplier on the silhouette's weight while the torch is off - then only the eyes are visible")]
     [SerializeField] private float silhouetteTorchOffMultiplier = 2f;
 
@@ -66,9 +76,45 @@ public class PhantomDirector : MonoBehaviour
     [Tooltip("How late the final step lands after the player stops (s) - that lateness is the beat")]
     [SerializeField] private float footstepLateStepDelay = 0.35f;
 
+    [Header("F103 A2 - contaminated footsteps")]
+    [Tooltip("Chance a footsteps phantom is pitched and weighted like the hunter's own")]
+    [Range(0f, 1f)]
+    [SerializeField] private float hunterPitchedChance = 0.3f;
+    [Tooltip("Per-step pitch of a hunter-pitched phantom, min..max (AIPresence's own footsteps use 0.55-0.70)")]
+    [SerializeField] private Vector2 hunterPitch = new Vector2(0.55f, 0.70f);
+    [SerializeField] private float hunterStepVolume = 0.6f;
+    [Tooltip("Chance a footsteps phantom is honest: it ends by really relocating the hunter onto the player's trail")]
+    [Range(0f, 1f)]
+    [SerializeField] private float honestChance = 0.15f;
+    [Tooltip("An honest phantom needs the hunter to be patrolling at least this far away (m)")]
+    [SerializeField] private float honestMinHunterDistance = 20f;
+    [Tooltip("How far back along the trail the honest relocation puts the hunter (m)")]
+    [SerializeField] private float honestRelocateDistance = 11f;
+
     [Header("Lamp beside you dies")]
     [SerializeField] private float lampBlinkRadius = 6f;
     [SerializeField] private float lampBlinkSeconds = 0.45f;
+
+    [Header("F103 A2 - silhouettes leave a trace")]
+    [Range(0f, 1f)]
+    [SerializeField] private float silhouetteLampKillChance = 0.35f;
+    [Tooltip("The nearest lamp within this of where the silhouette stood dies (m)")]
+    [SerializeField] private float silhouetteLampKillRadius = 3.5f;
+    [SerializeField] private float silhouetteLampFadeSeconds = 1.2f;
+
+    [Header("F103 A8 - wrong sounds")]
+    [Tooltip("A cell centre this far from the camera (min..max, m) may host a can, shutter or bottle sound")]
+    [SerializeField] private Vector2 wrongSoundDistance = new Vector2(8f, 22f);
+    [Tooltip("A real locker this far from the camera (min..max, m), with its front out of view, may slam")]
+    [SerializeField] private Vector2 wrongSoundLockerDistance = new Vector2(6f, 25f);
+    [SerializeField] private float wrongSoundVolume = 0.7f;
+    [Tooltip("How far a wrong sound carries (m)")]
+    [SerializeField] private float wrongSoundMaxDistance = 30f;
+    [Tooltip("Low-pass cutoff for a wrong sound whose slot has none of its own, so it reads as heard through a wall (Hz)")]
+    [SerializeField] private float wrongSoundLowPassHz = 2200f;
+    [Tooltip("The torch click comes from this far behind the camera (m): someone else switching a torch on")]
+    [SerializeField] private float torchClickBehindDistance = 0.6f;
+    [SerializeField] private float torchClickVolume = 0.35f;
 
     private MazeGenerator _maze;
     private Transform _player;
@@ -79,6 +125,7 @@ public class PhantomDirector : MonoBehaviour
     private PlayerStealthState _stealth;
     private GameOutcome _outcome;
     private DreadDirector _dread;
+    private TerrorSettings _terror = new TerrorSettings();
     private AudioClip[] _footstepClips;
 
     private GameObject _phantomsRoot;
@@ -179,12 +226,25 @@ public class PhantomDirector : MonoBehaviour
         return GameOutcome.IsOver || (_outcome != null && _outcome.IsEnding) || !GameFlow.IsRunActive;
     }
 
-    private bool PassesGate()
+    /// <summary>F103: which Tier A features run, and the [Terror] log.</summary>
+    public void ApplyTerror(TerrorSettings terror)
+    {
+        _terror = terror ?? new TerrorSettings();
+    }
+
+    private static bool IsAudioType(PhantomType type)
+    {
+        return type == PhantomType.Footsteps || type == PhantomType.Whisper || type == PhantomType.WrongSound;
+    }
+
+    private bool PassesGate(PhantomType type)
     {
         if (_maze == null || _player == null || _follower == null) return false;
         if (BailedOut()) return false;
         if (_follower.IsChasing) return false;
-        if (_follower.FlatDistanceToTarget <= hunterExclusionDistance) return false;
+        // F103 A2: a sound may come from a hunter that is close; a figure may not. Otherwise every phantom proves the hunter is far away.
+        float exclusion = IsAudioType(type) && _terror.contaminatedPhantoms ? audioHunterExclusionDistance : hunterExclusionDistance;
+        if (_follower.FlatDistanceToTarget <= exclusion) return false;
         if (_stealth != null && _stealth.Hidden) return false;
         if (Time.time - _lastPhantomTime < minSpacing) return false;
         if (_dread != null && _dread.IsTelegraphing) return false;
@@ -194,10 +254,11 @@ public class PhantomDirector : MonoBehaviour
 
     private bool TryFirePhantom()
     {
-        if (!PassesGate()) return false;
+        PhantomType type = PickType();
+        if (!PassesGate(type)) return false;
 
         bool fired;
-        switch (PickType())
+        switch (type)
         {
             case PhantomType.Silhouette:
                 fired = TrySpawnSilhouette();
@@ -208,8 +269,11 @@ public class PhantomDirector : MonoBehaviour
             case PhantomType.LampBlink:
                 fired = TryBlinkLamp();
                 break;
-            default:
+            case PhantomType.Whisper:
                 fired = TryWhisper();
+                break;
+            default:
+                fired = TryWrongSound();
                 break;
         }
 
@@ -220,7 +284,8 @@ public class PhantomDirector : MonoBehaviour
     private PhantomType PickType()
     {
         float silhouette = silhouetteWeight * (_flashlight != null && !_flashlight.IsOn ? silhouetteTorchOffMultiplier : 1f);
-        float total = silhouette + footstepsWeight + lampBlinkWeight + whisperWeight;
+        float wrongSound = _terror.wrongSounds ? wrongSoundWeight : 0f;
+        float total = silhouette + footstepsWeight + lampBlinkWeight + whisperWeight + wrongSound;
 
         float r = Random.value * total;
         if (r < silhouette) return PhantomType.Silhouette;
@@ -228,7 +293,9 @@ public class PhantomDirector : MonoBehaviour
         if (r < footstepsWeight) return PhantomType.Footsteps;
         r -= footstepsWeight;
         if (r < lampBlinkWeight) return PhantomType.LampBlink;
-        return PhantomType.Whisper;
+        r -= lampBlinkWeight;
+        if (r < whisperWeight) return PhantomType.Whisper;
+        return PhantomType.WrongSound;
     }
 
     // ---------------------------------------------------------------- silhouette
@@ -319,18 +386,23 @@ public class PhantomDirector : MonoBehaviour
     {
         float lifetime = Random.Range(silhouetteLifetimeMin, silhouetteLifetimeMax);
         float t = 0f;
+        bool bailed = false;
 
         while (t < lifetime)
         {
-            if (BailedOut()) break;
+            if (BailedOut())
+            {
+                bailed = true;
+                break;
+            }
 
             // Vanish the instant the torch beam actually reaches it, whatever the random lifetime says.
-            if (_flashlight != null && _flashlight.IsOn && _camera != null)
+            if (_flashlight != null && _flashlight.IsBeamLit)
             {
-                Vector3 dir = position - _camera.transform.position;
+                Vector3 dir = position - _flashlight.BeamOrigin; // F103 A4: tested from the torch mount, not the eye
                 float distance = dir.magnitude;
                 if (distance < _flashlight.Range * silhouetteBeamRangeFraction
-                    && Vector3.Angle(_camera.transform.forward, dir) < _flashlight.OuterAngle * silhouetteBeamAngleFraction)
+                    && Vector3.Angle(_flashlight.BeamForward, dir) < _flashlight.OuterAngle * silhouetteBeamAngleFraction)
                 {
                     break;
                 }
@@ -341,6 +413,35 @@ public class PhantomDirector : MonoBehaviour
         }
 
         if (root != null) Destroy(root);
+        if (!bailed) MaybeKillLampNear(position);
+    }
+
+    /// <summary>F103 A2: a silhouette sometimes leaves a trace - the nearest lamp where it stood dies, so the dark it came from stays.</summary>
+    private void MaybeKillLampNear(Vector3 position)
+    {
+        if (!_terror.contaminatedPhantoms || _maze == null || Random.value >= silhouetteLampKillChance) return;
+
+        IReadOnlyList<WallLamp> lamps = _maze.Lamps;
+        WallLamp nearest = null;
+        float nearestDistance = silhouetteLampKillRadius;
+        for (int i = 0; i < lamps.Count; i++)
+        {
+            WallLamp lamp = lamps[i];
+            if (lamp == null || lamp.IsDead || !lamp.IsPowered || lamp.IsLockerLamp) continue;
+            if (_maze.IsNearLiveStar(lamp.transform.position)) continue;
+
+            float distance = Vector3.Distance(lamp.transform.position, position);
+            if (distance <= nearestDistance)
+            {
+                nearestDistance = distance;
+                nearest = lamp;
+            }
+        }
+
+        if (nearest == null) return;
+
+        nearest.Kill(silhouetteLampFadeSeconds);
+        _terror.Log("Silhouette killed a lamp", this);
     }
 
     // ---------------------------------------------------------------- footsteps behind you
@@ -361,11 +462,14 @@ public class PhantomDirector : MonoBehaviour
         source.maxDistance = footstepMaxDistance;
         source.pitch = footstepPitch;
 
-        StartCoroutine(FootstepsRoutine(holder, source));
+        // F103 A2: rolled once, here, and handed to the routine - two overlapping routines must not share state.
+        bool honest = RollHonestFootsteps();
+        bool hunterPitched = honest || (_terror.contaminatedPhantoms && Random.value < hunterPitchedChance);
+        StartCoroutine(FootstepsRoutine(holder, source, hunterPitched, honest));
         return true;
     }
 
-    private IEnumerator FootstepsRoutine(GameObject holder, AudioSource source)
+    private IEnumerator FootstepsRoutine(GameObject holder, AudioSource source, bool hunterPitched, bool honest)
     {
         float duration = Random.Range(footstepDurationMin, footstepDurationMax);
         // Offset half a stride so the first step does not land right on spawn.
@@ -408,7 +512,7 @@ public class PhantomDirector : MonoBehaviour
             if (distanceSinceStep >= footstepStrideLength)
             {
                 distanceSinceStep = 0f;
-                PlayFootstep(source);
+                PlayFootstep(source, hunterPitched);
             }
 
             if (_stealth != null && _stealth.NoiseRadius <= 0f) break;
@@ -431,16 +535,34 @@ public class PhantomDirector : MonoBehaviour
             yield return null;
         }
 
-        PlayFootstep(source);
+        PlayFootstep(source, hunterPitched);
+
+        if (honest)
+        {
+            bool relocated = _dread != null && _dread.TryRelocateOnTrail(honestRelocateDistance);
+            _terror.Log($"Honest footsteps -> relocated: {relocated}", this);
+        }
 
         yield return new WaitForSeconds(1f);
         if (holder != null) Destroy(holder);
     }
 
-    private void PlayFootstep(AudioSource source)
+    /// <summary>F103 A2: an honest phantom is rolled only when the hunter is patrolling far away and not hunting - then the sound it imitates is about to become true.</summary>
+    private bool RollHonestFootsteps()
+    {
+        return _terror.contaminatedPhantoms
+            && _follower != null && _follower.IsWandering && !_follower.IsHunting
+            && _follower.FlatDistanceToTarget >= honestMinHunterDistance
+            && Random.value < honestChance;
+    }
+
+    private void PlayFootstep(AudioSource source, bool hunterPitched)
     {
         if (_footstepClips == null || _footstepClips.Length == 0) return;
-        source.PlayOneShot(_footstepClips[Random.Range(0, _footstepClips.Length)], footstepVolume);
+
+        // A hunter-pitched step re-pitches the shared source per step, like AIPresence does for the real thing.
+        if (hunterPitched) source.pitch = Random.Range(hunterPitch.x, hunterPitch.y);
+        source.PlayOneShot(_footstepClips[Random.Range(0, _footstepClips.Length)], hunterPitched ? hunterStepVolume : footstepVolume);
     }
 
     // ---------------------------------------------------------------- lamp beside you dies
@@ -482,6 +604,114 @@ public class PhantomDirector : MonoBehaviour
         float pan = Random.value < 0.5f ? -0.9f : 0.9f;
         _audio.PlayWhisper(pan);
         return true;
+    }
+
+    // ---------------------------------------------------------------- F103 A8: wrong sounds
+
+    /// <summary>One thing the wrong-sound phantom could play: a library slot (by field name, for the log), where, how loud.</summary>
+    private struct WrongSoundOption
+    {
+        public string Name;
+        public AudioSlot Slot;
+        public Vector3 Position;
+        public float Volume;
+    }
+
+    private readonly List<WrongSoundOption> _wrongSoundOptions = new List<WrongSoundOption>(8);
+    private readonly List<Vector3> _occludedCells = new List<Vector3>(32);
+
+    /// <summary>
+    /// F103 A8: "someone else is here, using the things I use" - a locker door, a can, a shutter, a bottle or a torch click from
+    /// somewhere out of sight. Never fakes an objective sound (star, hatch, key, shard, fuse) and never raises a noise event.
+    /// </summary>
+    private bool TryWrongSound()
+    {
+        if (!_terror.wrongSounds || _camera == null || _maze == null) return false;
+
+        Vector3 camPos = _camera.transform.position;
+        GameAudioLibrary library = GameAudio.Library;
+        _wrongSoundOptions.Clear();
+
+        AddLockerOption(camPos, library.lockerDoor);
+        CollectOccludedCells(camPos);
+        AddCellOption("canClatter", library.canClatter);
+        AddCellOption("shutterSlam", library.shutterSlam);
+        AddCellOption("bottleShatter", library.bottleShatter);
+        if (library.torchClick.Has)
+        {
+            // Just behind the player: someone else switching a torch on.
+            _wrongSoundOptions.Add(new WrongSoundOption
+            {
+                Name = "torchClick", Slot = library.torchClick,
+                Position = camPos - _camera.transform.forward * torchClickBehindDistance, Volume = torchClickVolume
+            });
+        }
+
+        if (_wrongSoundOptions.Count == 0) return false;
+
+        WrongSoundOption pick = _wrongSoundOptions[Random.Range(0, _wrongSoundOptions.Count)];
+        AudioSource source = GameAudio.SpawnAt(pick.Slot, pick.Position, pick.Volume, 1f, wrongSoundMaxDistance);
+        if (source == null) return false;
+
+        // Heard through a wall - except the torch click, which is right behind you.
+        if (pick.Slot.lowPassHz <= 0f && pick.Name != "torchClick")
+        {
+            source.gameObject.AddComponent<AudioLowPassFilter>().cutoffFrequency = wrongSoundLowPassHz;
+        }
+
+        _terror.Log("Wrong sound: " + pick.Name, this);
+        return true;
+    }
+
+    /// <summary>A random real locker in range whose front the camera cannot see.</summary>
+    private void AddLockerOption(Vector3 camPos, AudioSlot slot)
+    {
+        if (!slot.Has) return;
+
+        IReadOnlyList<Locker> lockers = _maze.Lockers;
+        int seen = 0;
+        Vector3 chosen = default;
+        for (int i = 0; i < lockers.Count; i++)
+        {
+            if (lockers[i] == null) continue;
+
+            Vector3 front = lockers[i].FrontPosition;
+            float distance = Vector3.Distance(camPos, front);
+            if (distance < wrongSoundLockerDistance.x || distance > wrongSoundLockerDistance.y) continue;
+            if (IsRayClear(camPos, front + Vector3.up * 1.2f)) continue;
+
+            // Reservoir pick: uniform over the matches without a scratch list.
+            seen++;
+            if (Random.Range(0, seen) == 0) chosen = front;
+        }
+
+        if (seen > 0)
+        {
+            _wrongSoundOptions.Add(new WrongSoundOption { Name = "lockerDoor", Slot = slot, Position = chosen, Volume = wrongSoundVolume });
+        }
+    }
+
+    private void CollectOccludedCells(Vector3 camPos)
+    {
+        _occludedCells.Clear();
+        IReadOnlyList<Vector3> cells = _maze.CellCenters;
+        for (int i = 0; i < cells.Count; i++)
+        {
+            float distance = Vector3.Distance(camPos, cells[i]);
+            if (distance < wrongSoundDistance.x || distance > wrongSoundDistance.y) continue;
+            if (!IsRayClear(camPos, cells[i] + Vector3.up * 1.2f)) _occludedCells.Add(cells[i]);
+        }
+    }
+
+    private void AddCellOption(string slotName, AudioSlot slot)
+    {
+        if (!slot.Has || _occludedCells.Count == 0) return;
+
+        _wrongSoundOptions.Add(new WrongSoundOption
+        {
+            Name = slotName, Slot = slot, Volume = wrongSoundVolume,
+            Position = _occludedCells[Random.Range(0, _occludedCells.Count)] + Vector3.up
+        });
     }
 
     // ---------------------------------------------------------------- shared helpers
@@ -536,11 +766,11 @@ public class PhantomDirector : MonoBehaviour
 
         Material copy = new Material(source) { name = "Phantom_Eyes" };
         copy.EnableKeyword("_EMISSION");
-        Color eyeColor = new Color(1f, 0.05f, 0.03f);
+        Color eyeColor = new Color(0.8f, 0.86f, 1f);
         if (copy.HasProperty("_BaseColor")) copy.SetColor("_BaseColor", eyeColor);
         if (copy.HasProperty("_Color")) copy.SetColor("_Color", eyeColor);
-        // Dimmer than the real eyes (AIPresence.eyeEmission 4) - a phantom should read as almost right.
-        copy.SetColor("_EmissionColor", eyeColor * 2.5f);
+        // F103 A2: cold white, not red - red stays the real hunter's. A phantom should read as wrong, not as it.
+        copy.SetColor("_EmissionColor", eyeColor * 1.5f);
 
         return copy;
     }

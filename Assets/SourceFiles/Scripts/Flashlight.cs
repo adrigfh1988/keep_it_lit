@@ -59,9 +59,27 @@ public class Flashlight : MonoBehaviour
     [Tooltip("Beam intensity multiplier at the very end of the battery")]
     [SerializeField] private float dyingIntensityFraction = 0.55f;
 
+    [Header("F103 A4 - beam mount")]
+    [Tooltip("Where the beam sits, in camera space (m). Keep |x| below the player's CharacterController radius (about 0.28 m) so the light origin never leaves the capsule and can't end up behind a wall the player is brushing. Most of the effect comes from the vertical offset and the lag.")]
+    [SerializeField] private Vector3 beamOffset = new Vector3(0.12f, -0.25f, 0.05f);
+    [Tooltip("The beam is aimed at the point this far down the view axis, so it still lands on the crosshair (m)")]
+    [SerializeField] private float beamConvergeDistance = 8f;
+    [Tooltip("Seconds the beam trails the view when you turn. Scaled by the Camera shake setting; 0 there means a rigid mount.")]
+    [SerializeField] private float swayLagSeconds = 0.07f;
+    [Tooltip("The beam never trails the view by more than this (degrees)")]
+    [SerializeField] private float swayMaxDegrees = 12f;
+
+    [Header("F103 A6 - failure")]
+    [Tooltip("The tail of a scripted failure, in which the beam sputters back before it steadies (seconds)")]
+    [SerializeField] private float blackoutStutterSeconds = 0.4f;
+
     private Light _light;
+    private Transform _beam;
+    private TorchSway _sway;
     private PlayerStealthState _stealth;
+    private TerrorSettings _terror = new TerrorSettings();
     private float _stutterRemaining;
+    private float _blackoutRemaining;
     private float _offSeconds;
     private float _rangeMultiplier = 1f;
     private float _rechargeMultiplier = 1f;
@@ -69,6 +87,12 @@ public class Flashlight : MonoBehaviour
     private float _focusedDrainMultiplierOverride = -1f;
 
     public bool IsOn { get; private set; } = true;
+
+    /// <summary>
+    /// F103 A6: true while the beam is actually emitting (on, and not mid-failure). Use it for "does the light reach X"
+    /// tests. Stealth visibility keeps reading IsOn: a failed torch is still a torch the player is holding up.
+    /// </summary>
+    public bool IsBeamLit => IsOn && _blackoutRemaining <= 0f;
 
     /// <summary>True while RMB / gamepad LT is held and the input gates (InputEnabled, not hidden) allow it.</summary>
     public bool IsFocused { get; private set; }
@@ -89,6 +113,12 @@ public class Flashlight : MonoBehaviour
     // The multiplier only scales the focused end of the blend, so the Focus Lens shop item (F75) makes
     // focusing reach further without changing the wide, default beam at all.
     private float CurrentRange => Mathf.Lerp(wideRange, focusedRange * _rangeMultiplier, FocusBlend);
+
+    /// <summary>F103 A4: world position of the beam, which sits off the eye axis. Beam tests ("is X lit by the torch") must use this, not the camera.</summary>
+    public Vector3 BeamOrigin => _beam.position;
+
+    /// <summary>F103 A4: the direction the beam points, which lags the view slightly. Beam tests must use this, not the camera's forward.</summary>
+    public Vector3 BeamForward => _beam.forward;
 
     /// <summary>Ignore the toggle key while false: under the pause menu, and through an ending.</summary>
     public bool InputEnabled = true;
@@ -194,6 +224,15 @@ public class Flashlight : MonoBehaviour
     }
 
     /// <summary>
+    /// F103 A6, a DreadDirector beat: the beam goes dark for `seconds`, then sputters back. Independent of the battery;
+    /// while on, IsOn stays true. Extends like Stutter does. Switching off and on mid-failure stays dark - deliberate.
+    /// </summary>
+    public void Blackout(float seconds)
+    {
+        _blackoutRemaining = Mathf.Max(_blackoutRemaining, seconds);
+    }
+
+    /// <summary>
     /// Called by FirstPersonRig right after AddComponent — which means Awake has already run with no
     /// stealth state to push the initial value into, so re-apply it here.
     /// </summary>
@@ -201,6 +240,13 @@ public class Flashlight : MonoBehaviour
     {
         _stealth = stealth;
         ApplyState();
+    }
+
+    /// <summary>F103: which Tier A features run. Applies torchSway once (the beam offset stays either way - its whole point is the shadows).</summary>
+    public void ApplyTerror(TerrorSettings terror)
+    {
+        _terror = terror ?? new TerrorSettings();
+        if (_sway != null) _sway.enabled = _terror.torchSway;
     }
 
     private void OnEnable() => GameSettings.Changed += ApplyShadowSetting;
@@ -229,7 +275,19 @@ public class Flashlight : MonoBehaviour
     {
         SecondsLeft = batterySeconds;
 
-        _light = gameObject.AddComponent<Light>();
+        // F103 A4: the light lives on its own child, offset from the eye and aimed at the crosshair, so its
+        // shadows no longer hide directly behind what casts them. The offset stays even when sway is off.
+        Vector3 aimPoint = new Vector3(0f, 0f, beamConvergeDistance);
+        Quaternion restRotation = Quaternion.LookRotation(aimPoint - beamOffset);
+        GameObject beamObject = new GameObject("TorchBeam");
+        _beam = beamObject.transform;
+        _beam.SetParent(transform, false);
+        _beam.localPosition = beamOffset;
+        _beam.localRotation = restRotation;
+        _sway = beamObject.AddComponent<TorchSway>();
+        _sway.Configure(restRotation, swayLagSeconds, swayMaxDegrees);
+
+        _light = beamObject.AddComponent<Light>();
         _light.type = LightType.Spot;
         _light.color = beamColor;
         _light.shadows = LightShadows.Soft;
@@ -261,6 +319,7 @@ public class Flashlight : MonoBehaviour
         // Decremented every frame, on or off, so a stutter queued while the torch happens to be off
         // cannot linger and fire later once it is switched on.
         _stutterRemaining = Mathf.Max(0f, _stutterRemaining - Time.deltaTime);
+        _blackoutRemaining = Mathf.Max(0f, _blackoutRemaining - Time.deltaTime);
 
         bool hiddenGate = _stealth == null || !_stealth.Hidden;
 
@@ -319,7 +378,13 @@ public class Flashlight : MonoBehaviour
             }
         }
 
-        if (IsOn)
+        if (IsOn && _blackoutRemaining > 0f)
+        {
+            // F103 A6: a scripted failure - dark, then (in its last blackoutStutterSeconds) sputtering back.
+            bool sputtering = _blackoutRemaining <= blackoutStutterSeconds && Mathf.PerlinNoise(Time.time * 25f, 3f) > 0.5f;
+            _light.intensity = sputtering ? CurrentIntensity * 0.6f : 0f;
+        }
+        else if (IsOn)
         {
             bool stuttering = _stutterRemaining > 0f;
             float amount = stuttering ? 0.75f
@@ -355,6 +420,7 @@ public class Flashlight : MonoBehaviour
 
         if (_stealth != null)
         {
+            // F103 A6: IsOn, not IsBeamLit - a scripted failure must not make the player any harder to spot.
             _stealth.FlashlightOn = IsOn;
         }
     }

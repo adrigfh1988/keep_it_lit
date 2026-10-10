@@ -74,10 +74,10 @@ public class StanEcho : HubSetPiece
 
         // The torch finds it: gone for good.
         Flashlight torch = hub.Torch;
-        if (torch != null && torch.IsOn && distance <= torchRange && visible)
+        if (torch != null && torch.IsBeamLit && distance <= torchRange && visible)
         {
-            Vector3 to = head - cam.transform.position;
-            if (Vector3.Angle(cam.transform.forward, to) <= torch.OuterAngle * 0.5f + 4f && distance <= torch.Range)
+            Vector3 to = head - torch.BeamOrigin; // F103 A4: the beam, not the view, decides what it lights
+            if (Vector3.Angle(torch.BeamForward, to) <= torch.OuterAngle * 0.5f + 4f && distance <= torch.Range)
             {
                 Vanish();
                 return;

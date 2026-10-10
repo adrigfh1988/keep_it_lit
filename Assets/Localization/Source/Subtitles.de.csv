@@ -3,6 +3,7 @@ sub.second_wind.release,Es hat losgelassen. Das tut es kein zweites Mal.
 sub.shop.contract_taken,Bring ihn heil zurück.
 sub.shop.contract_declined,Wie du willst.
 sub.star.heard,Es hat das gehört.
+sub.hunter.heard_you,ES HAT DICH GEHÖRT.
 sub.consumable.no_battery,Keine Ersatzbatterie.
 sub.consumable.not_in_here,Nicht hier drin.
 sub.consumable.torch_full,Die Lampe ist voll.
@@ -29,11 +30,7 @@ sub.shop.greeting.1,Splitter für die Dunkelheit. Was darf es sein?
 sub.shop.greeting.2,Schon wieder da.
 sub.shop.greeting.3,Da oben wird es lauter.
 sub.shop.greeting.4,Letzter Halt vor dem Grund.
-sub.dread.far,Hinter dir hat sich etwas bewegt.
-sub.dread.mid,Es kommt näher.
-sub.dread.near,Es ist direkt hinter dir.
 sub.dread.lights_dying,Die Lichter sterben.
-sub.dread.it_knows,Es weiß es.
 sub.dread.ambushed,Es hat gewartet.
 sub.banner.floor,ETAGE {floor}
 sub.banner.floor_theme,ETAGE {floor} — {theme}

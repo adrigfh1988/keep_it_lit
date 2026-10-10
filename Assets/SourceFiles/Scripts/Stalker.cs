@@ -415,7 +415,7 @@ public class Stalker : MonoBehaviour
         Vector3 chest = transform.position + Vector3.up * ChestHeight;
         if (LightPool.ExposureAt(chest) > ExposureThreshold) return true;
 
-        if (_torch == null || _torchCamera == null || !_torch.IsOn) return false;
+        if (_torch == null || !_torch.IsBeamLit) return false;
 
         Vector3 head = transform.position + Vector3.up * HeadHeight;
         float halfAngle = _torch.OuterAngle * 0.5f + TorchAngleSlack;
@@ -426,11 +426,11 @@ public class Stalker : MonoBehaviour
 
     private bool TestBeamPoint(Vector3 point, float halfAngle, float range)
     {
-        Vector3 toPoint = point - _torchCamera.position;
+        Vector3 toPoint = point - _torch.BeamOrigin;
         float distance = toPoint.magnitude;
         if (distance < 0.0001f || distance > range) return false;
-        if (Vector3.Angle(_torchCamera.forward, toPoint) >= halfAngle) return false;
-        return HasClearLine(_torchCamera.position, point);
+        if (Vector3.Angle(_torch.BeamForward, toPoint) >= halfAngle) return false;
+        return HasClearLine(_torch.BeamOrigin, point);
     }
 
     /// <summary>Camera -&gt; point, ignoring the stalker's own colliders/triggers (and triggers globally

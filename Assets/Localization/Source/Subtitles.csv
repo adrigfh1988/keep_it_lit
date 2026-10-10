@@ -3,6 +3,7 @@ sub.second_wind.release,"Subtitle after a Second Wind frees you from the hunter 
 sub.shop.contract_taken,Salesman subtitle after the player takes a contract (shown 3 s),Bring it back in one piece.
 sub.shop.contract_declined,Salesman subtitle after the player declines or drops a contract (shown 2.5 s),Suit yourself.
 sub.star.heard,Subtitle after a star is taken loudly enough for the hunter to hear (shown ~2 s),It heard that.
+sub.hunter.heard_you,"World text (the game speaking, not the hunter) when a noise the player made stops the hunter dead, just before it rushes the spot (shown 2 s). ALL CAPS like THE HATCH IS UNLOCKED. ""IT"" = the hunter, never named",IT HEARD YOU.
 sub.consumable.no_battery,Subtitle: pressed the spare-battery key with none held (1.8 s),No spare battery.
 sub.consumable.not_in_here,Subtitle: tried to use a consumable while hidden in a locker (1.8 s),Not in here.
 sub.consumable.torch_full,Subtitle: tried to use a spare battery with a full torch (1.8 s),The torch is full.
@@ -29,11 +30,7 @@ sub.shop.greeting.1,Salesman greeting when the shop opens after floor 1 (shown 3
 sub.shop.greeting.2,Salesman greeting when the shop opens after floor 2 (shown 3 s),Back again.
 sub.shop.greeting.3,Salesman greeting when the shop opens after floor 3 (shown 3 s),It's getting louder up there.
 sub.shop.greeting.4,Salesman greeting when the shop opens after floor 4 (shown 3 s),Last stop before the bottom.
-sub.dread.far,"Subtitle when the hunter relocated far away from the player (shown 2.6 s). ""Something"" = the hunter, never named",Something moved behind you.
-sub.dread.mid,"Subtitle when the hunter relocated at a middle distance (shown 2.6 s). ""It"" = the hunter",It's getting closer.
-sub.dread.near,"Subtitle when the hunter relocated very close (shown 2.6 s). ""It"" = the hunter",It's right behind you.
 sub.dread.lights_dying,Subtitle when the first lamps die as the maze empties of stars (shown 2.6 s),The lights are dying.
-sub.dread.it_knows,"Subtitle when the last star is taken (shown 2.6 s). ""It"" = the hunter",It knows.
 sub.dread.ambushed,"Subtitle, once per campaign, the first time an ambush ends because the star it guarded was taken (shown 2.6 s). ""It"" = the hunter",It was waiting.
 sub.banner.floor,"Floor intro banner title when the floor has no named look (96 pt, one line). {floor} = floor number",FLOOR {floor}
 sub.banner.floor_theme,"Floor intro banner title (96 pt, one line, 1400 px, auto-size). {floor} = floor number, {theme} = the look's name in capitals (shop.theme.*)",FLOOR {floor} — {theme}

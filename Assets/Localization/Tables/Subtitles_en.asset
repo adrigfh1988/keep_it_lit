@@ -143,24 +143,8 @@ MonoBehaviour:
     m_Localized: Last stop before the bottom.
     m_Metadata:
       m_Items: []
-  - m_Id: 7993049387025
-    m_Localized: Something moved behind you.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7993049387026
-    m_Localized: It's getting closer.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7993049387027
-    m_Localized: It's right behind you.
-    m_Metadata:
-      m_Items: []
   - m_Id: 7993049387028
     m_Localized: The lights are dying.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7993049387029
-    m_Localized: It knows.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387030
@@ -201,6 +185,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763132
+  - m_Id: 41651860836352
+    m_Localized: IT HEARD YOU.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

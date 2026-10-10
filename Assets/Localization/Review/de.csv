@@ -560,11 +560,7 @@ Subtitles,sub.shop.greeting.1,Salesman greeting when the shop opens after floor 
 Subtitles,sub.shop.greeting.2,Salesman greeting when the shop opens after floor 2 (shown 3 s),Back again.,Schon wieder da.
 Subtitles,sub.shop.greeting.3,Salesman greeting when the shop opens after floor 3 (shown 3 s),It's getting louder up there.,Da oben wird es lauter.
 Subtitles,sub.shop.greeting.4,Salesman greeting when the shop opens after floor 4 (shown 3 s),Last stop before the bottom.,Letzter Halt vor dem Grund.
-Subtitles,sub.dread.far,"Subtitle when the hunter relocated far away from the player (shown 2.6 s). ""Something"" = the hunter, never named",Something moved behind you.,Hinter dir hat sich etwas bewegt.
-Subtitles,sub.dread.mid,"Subtitle when the hunter relocated at a middle distance (shown 2.6 s). ""It"" = the hunter",It's getting closer.,Es kommt näher.
-Subtitles,sub.dread.near,"Subtitle when the hunter relocated very close (shown 2.6 s). ""It"" = the hunter",It's right behind you.,Es ist direkt hinter dir.
 Subtitles,sub.dread.lights_dying,Subtitle when the first lamps die as the maze empties of stars (shown 2.6 s),The lights are dying.,Die Lichter sterben.
-Subtitles,sub.dread.it_knows,"Subtitle when the last star is taken (shown 2.6 s). ""It"" = the hunter",It knows.,Es weiß es.
 Subtitles,sub.dread.ambushed,"Subtitle, once per campaign, the first time an ambush ends because the star it guarded was taken (shown 2.6 s). ""It"" = the hunter",It was waiting.,Es hat gewartet.
 Subtitles,sub.banner.floor,"Floor intro banner title when the floor has no named look (96 pt, one line). {floor} = floor number",FLOOR {floor},ETAGE {floor}
 Subtitles,sub.banner.floor_theme,"Floor intro banner title (96 pt, one line, 1400 px, auto-size). {floor} = floor number, {theme} = the look's name in capitals (shop.theme.*)",FLOOR {floor} — {theme},ETAGE {floor} — {theme}

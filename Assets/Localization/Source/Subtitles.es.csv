@@ -3,6 +3,7 @@ sub.second_wind.release,Te soltó. No volverá a hacerlo.
 sub.shop.contract_taken,Tráelo de vuelta de una pieza.
 sub.shop.contract_declined,Como quieras.
 sub.star.heard,Eso lo oyó.
+sub.hunter.heard_you,TE HA OÍDO.
 sub.consumable.no_battery,No tienes pila de repuesto.
 sub.consumable.not_in_here,Aquí dentro no.
 sub.consumable.torch_full,La linterna está cargada.
@@ -29,11 +30,7 @@ sub.shop.greeting.1,Fragmentos a cambio de algo para la oscuridad. ¿Qué va a s
 sub.shop.greeting.2,Otra vez por aquí.
 sub.shop.greeting.3,Ahí arriba hay cada vez más ruido.
 sub.shop.greeting.4,Última parada antes del fondo.
-sub.dread.far,Algo se movió detrás de ti.
-sub.dread.mid,Se está acercando.
-sub.dread.near,Está justo detrás de ti.
 sub.dread.lights_dying,Las luces se están muriendo.
-sub.dread.it_knows,Lo sabe.
 sub.dread.ambushed,Estaba esperando.
 sub.banner.floor,PLANTA {floor}
 sub.banner.floor_theme,PLANTA {floor} — {theme}

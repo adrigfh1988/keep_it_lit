@@ -6,8 +6,9 @@ using UnityEngine.AI;
 /// <summary>
 /// Tier 3's orchestrator for two things that both key off the same progress number: F23's relocation
 /// (the hunter appearing behind you, telegraphed, along your own trail) and F27's reaction to the star
-/// count (lamp ripples/deaths, the world darkening, the last-star breath). Subtitles for both live here
-/// too, via PlayerHud.ShowSubtitle.
+/// count (lamp ripples/deaths, the world darkening, the last-star breath). Relocations are deliberately
+/// wordless since F103 A1; only facts the player cannot perceive (lights dying, the ambush) get a subtitle,
+/// via PlayerHud.ShowSubtitle.
 ///
 /// No execution-order attribute: everything it needs (PlayerHud, the maze, the actors) is built earlier
 /// in MazeGenerator.SetUpAtmosphere and handed in through Configure. Added at runtime, so OnEnable runs
@@ -69,16 +70,9 @@ public class DreadDirector : MonoBehaviour
 
     [Header("Subtitles")]
     [SerializeField] private float subtitleSeconds = 2.6f;
-    [Tooltip("Relocation distance at or above this reads as the far band")]
-    [SerializeField] private float farBand = 13f;
-    [Tooltip("Relocation distance at or above this (and below farBand) reads as the mid band")]
-    [SerializeField] private float midBand = 9f;
     // S9: the C# defaults below are the English fallbacks; the lines players see come from the Subtitles table (sub.dread.*) via Loc().
-    [SerializeField] private string lineFar = "Something moved behind you.";
-    [SerializeField] private string lineMid = "It's getting closer.";
-    [SerializeField] private string lineNear = "It's right behind you.";
+    // F103 A1: the relocation distance bands and "it knows" were cut - a threat that has been named is a bounded threat.
     [SerializeField] private string lineLightsDying = "The lights are dying.";
-    [SerializeField] private string lineItKnows = "It knows.";
     [Tooltip("F45: shown once per campaign, the first time an ambush ends because the ambushed star was actually taken")]
     [SerializeField] private string lineAmbushed = "It was waiting.";
 
@@ -97,6 +91,56 @@ public class DreadDirector : MonoBehaviour
     [SerializeField] private float darkenSeconds = 2f;
     [SerializeField] private float eyeEmissionAtSecondDeath = 6f;
     [SerializeField] private float breathSeconds = 1.6f;
+
+    [Header("F103 A5 - unpredictability")]
+    [Tooltip("Each telegraph beat is scaled by a fresh roll in 1 +- this")]
+    [Range(0f, 0.9f)]
+    [SerializeField] private float timingJitter = 0.5f;
+    [Tooltip("Chance a telegraph warps nothing at the end (the star is spent, no cooldown starts)")]
+    [Range(0f, 1f)]
+    [SerializeField] private float feintChance = 0.33f;
+    [Tooltip("Chance a relocation late in the floor skips the telegraph entirely and just happens")]
+    [Range(0f, 1f)]
+    [SerializeField] private float silentWarpChance = 0.2f;
+    [Tooltip("Progress (0..1) from which a silent warp is possible")]
+    [SerializeField] private float silentWarpFromProgress = 0.75f;
+    [Tooltip("A silent warp only lands at least this far from the player (m)")]
+    [SerializeField] private float silentWarpMinDistance = 10f;
+
+    [Header("F103 A3 - eyes")]
+    [Tooltip("After a warp the hunter's eyes burn for this long, so a player who turns fast sees them (s)")]
+    [SerializeField] private float eyeRevealAfterWarpSeconds = 1.5f;
+
+    [Header("F103 A7 - heard you")]
+    [Tooltip("How long the world text IT HEARD YOU. stays up (s)")]
+    [SerializeField] private float heardYouSubtitleSeconds = 2f;
+
+    [Header("F103 A6 - torch failure")]
+    [Tooltip("Most scripted torch failures per floor")]
+    [SerializeField] private int maxTorchFailuresPerFloor = 2;
+    [Tooltip("Minimum seconds between two torch failures")]
+    [SerializeField] private float torchFailureSpacing = 30f;
+    [Tooltip("How long the beam stays dark, min..max (s)")]
+    [SerializeField] private Vector2 torchFailureSeconds = new Vector2(1.2f, 2.5f);
+    [Tooltip("First sighting: the hunter has to be at least this far for the torch to fail (m); closer, the sighting is scary enough")]
+    [SerializeField] private float sightingFailureMinHunterDistance = 8f;
+    [Tooltip("First sighting: seconds after the chase starts before the torch fails")]
+    [SerializeField] private float sightingFailureDelay = 0.25f;
+    [Tooltip("No failure while the hunter is chasing and closer than this (m): the chase is already the threat")]
+    [SerializeField] private float chaseGuardDistance = 6f;
+    [Tooltip("No failure while the Stalker is within this of the player (m): a scripted blackout must never release a Stan the player is holding frozen")]
+    [SerializeField] private float stalkerGuardDistance = 10f;
+    [Tooltip("Dead end: the hunter has to be within this of the player, not chasing (m)")]
+    [SerializeField] private float deadEndFailureHunterDistance = 15f;
+    [Tooltip("Lamps within this of the player blink along with the torch (m)")]
+    [SerializeField] private float failureLampRadius = 10f;
+    [Tooltip("Seconds between checks for the player standing in a dead end")]
+    [SerializeField] private float deadEndCheckInterval = 0.5f;
+
+    // F103 A5: the jittered beats keep these minimum gaps, so the stutter, the cue and the warp stay in order and apart.
+    private const float MinCueGapSeconds = 0.05f;
+    private const float MinWarpGapSeconds = 0.3f;
+    private const float HumHoldTailSeconds = 0.3f;
 
     private static string Loc(string key, string fallback) => L10n.Has(key) ? L10n.T(key) : fallback;
 
@@ -135,6 +179,15 @@ public class DreadDirector : MonoBehaviour
     private bool _secondDeathsFired;
     private int _originalLiveLampCount = -1;
     private System.Random _lampRng;
+
+    private TerrorSettings _terror = new TerrorSettings();
+    // F103 A6
+    private int _torchFailures;
+    private float _lastTorchFailureTime = -9999f;
+    private bool _sawFirstChase;
+    private float _deadEndTimer;
+    private Vector3 _lastDeadEndCell;
+    private bool _hasLastDeadEndCell;
 
     // F45: shown once per campaign. With Enter Play Mode > Reload Domain disabled this static would
     // otherwise survive between presses of Play, same as GameFlow's own statics - reset alongside them.
@@ -190,18 +243,26 @@ public class DreadDirector : MonoBehaviour
         {
             _follower.ChaseStateChanged -= HandleChaseStateChanged;
             _follower.AmbushStateChanged -= HandleAmbushStateChanged;
+            _follower.HeardYou -= HandleHeardYou;
         }
         _follower = follower;
         if (_follower != null)
         {
             _follower.ChaseStateChanged += HandleChaseStateChanged;
             _follower.AmbushStateChanged += HandleAmbushStateChanged;
+            _follower.HeardYou += HandleHeardYou;
         }
 
         if (profile != null)
         {
             nearDistance = profile.RelocateNearDistance;
         }
+    }
+
+    /// <summary>F103: which Tier A features run, and the [Terror] log.</summary>
+    public void ApplyTerror(TerrorSettings terror)
+    {
+        _terror = terror ?? new TerrorSettings();
     }
 
     /// <summary>F74 Restless run rule: scales hardMinimumCooldown so relocations can chain tighter. Called at most once per floor (MazeGenerator.SetUpAtmosphere), so multiplying in place is safe.</summary>
@@ -226,6 +287,7 @@ public class DreadDirector : MonoBehaviour
         {
             _follower.ChaseStateChanged -= HandleChaseStateChanged;
             _follower.AmbushStateChanged -= HandleAmbushStateChanged;
+            _follower.HeardYou -= HandleHeardYou;
         }
 
         StopAllCoroutines();
@@ -253,6 +315,13 @@ public class DreadDirector : MonoBehaviour
                 _checkTimer = checkInterval;
                 TryConsiderRelocation();
             }
+        }
+
+        _deadEndTimer -= Time.deltaTime;
+        if (_deadEndTimer <= 0f)
+        {
+            _deadEndTimer = deadEndCheckInterval;
+            CheckDeadEndFailure();
         }
     }
 
@@ -454,7 +523,23 @@ public class DreadDirector : MonoBehaviour
         if (!PassesCoreRules(distance)) return;
         if (!TryFindRelocationSpot(distance, out Vector3 spot)) return;
 
+        // F103 A5: late in a floor it is sometimes just there - no stutter, no cue, no hold.
+        if (ShouldWarpSilently(spot))
+        {
+            if (CommitRelocation(spot, distance)) _terror.Log("Silent warp", this);
+            return;
+        }
+
         StartCoroutine(RelocateRoutine(spot, distance));
+    }
+
+    /// <summary>F103 A5: a rare telegraph-free warp, only late in the floor and only a good way off (a warp next to the player would just be a jump scare).</summary>
+    private bool ShouldWarpSilently(Vector3 spot)
+    {
+        return _terror.unpredictableTelegraphs
+            && Progress >= silentWarpFromProgress
+            && FlatDistance(_player.position, spot) >= silentWarpMinDistance
+            && Random.value < silentWarpChance;
     }
 
     private float ComputeRelocationDistance(float progress)
@@ -463,14 +548,18 @@ public class DreadDirector : MonoBehaviour
         return Mathf.Max(minDistance, Mathf.Lerp(farDistance, nearDistance, t));
     }
 
-    /// <summary>Trigger rules 1-5 of 23.2 (6: the star-armed window, and 7: candidate search, are checked separately).</summary>
-    private bool PassesCoreRules(float distance)
+    /// <summary>
+    /// Trigger rules 1-5 of 23.2 (6: the star-armed window, and 7: candidate search, are checked separately).
+    /// F103 A2: <paramref name="requireProgress"/> false skips only the startProgress test, for TryRelocateOnTrail's honest phantoms;
+    /// the hatch hunt, chase, ambush, hidden and distance rules still hold.
+    /// </summary>
+    private bool PassesCoreRules(float distance, bool requireProgress = true)
     {
         if (_maze == null || _player == null || _follower == null) return false;
         if (!GameFlow.IsRunActive || GameOutcome.IsOver || (_outcome != null && _outcome.IsEnding)) return false;
 
-        float progress = Progress;
-        if (progress < startProgress || _follower.IsHunting) return false;
+        if (requireProgress && Progress < startProgress) return false;
+        if (_follower.IsHunting) return false;
         if (_follower.IsChasing || _follower.IsCaptured) return false;
         // F45: an ambush is a beat of its own - it should not be interrupted by a relocation telegraph.
         if (_follower.IsAmbushing) return false;
@@ -482,38 +571,81 @@ public class DreadDirector : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Re-validates rules 1-5 and the spot with fresh positions, then warps the hunter and does the bookkeeping: stamps the
+    /// cooldown, disarms (one relocation per star) and lights its eyes for a moment. Failing is not an error - a telegraph
+    /// that cannot warp simply reads as a phantom. Shared by the telegraph, the silent warp and TryRelocateOnTrail.
+    /// </summary>
+    private bool CommitRelocation(Vector3 spot, float distance, bool requireProgress = true)
+    {
+        if (!PassesCoreRules(distance, requireProgress) || !ValidateCandidateVisibilityAndDistance(spot)) return false;
+        if (!_follower.RelocateTo(spot, _player.position)) return false;
+
+        _lastRelocationTime = Time.time;
+        _armedUntil = -1f;
+        if (_presence != null) _presence.RevealEyes(eyeRevealAfterWarpSeconds);
+        return true;
+    }
+
+    /// <summary>
+    /// F103 A2: an untelegraphed relocation onto the player's trail, for PhantomDirector's "honest" footsteps. Same rules and
+    /// cooldowns as a star-armed relocation, minus the armed window and the startProgress gate - without that, an honest phantom
+    /// would do nothing before 40 % progress, which is exactly when players learn that "phantom" means "safe".
+    /// </summary>
+    public bool TryRelocateOnTrail(float distance)
+    {
+        if (_isTelegraphing || Time.time - _lastRelocationTime < hardMinimumCooldown) return false;
+        if (!PassesCoreRules(distance, requireProgress: false) || !TryFindRelocationSpot(distance, out Vector3 spot)) return false;
+
+        return CommitRelocation(spot, distance, requireProgress: false);
+    }
+
+    /// <summary>A beat's offset from the trigger, scaled by a fresh roll in 1 +- jitter. Zero jitter returns the beat unchanged.</summary>
+    private static float Jittered(float seconds, float jitter)
+    {
+        return seconds * Random.Range(1f - jitter, 1f + jitter);
+    }
+
     private IEnumerator RelocateRoutine(Vector3 spot, float distance)
     {
         _isTelegraphing = true;
 
-        if (_presence != null) _presence.Hold(humHoldSeconds);
+        // F103 A5: each beat gets its own roll, so the ritual never lands on the same count twice; a feint warps nothing.
+        // With the flag off the jitter is zero and there is no feint: exactly the serialized timings.
+        bool varied = _terror.unpredictableTelegraphs;
+        float jitter = varied ? timingJitter : 0f;
+        float stutter = Jittered(stutterAt, jitter);
+        float cue = Mathf.Max(stutter + MinCueGapSeconds, Jittered(cueAt, jitter));
+        float warp = Mathf.Max(cue + MinWarpGapSeconds, Jittered(warpAt, jitter));
+        bool feint = varied && Random.value < feintChance;
+
+        if (_presence != null) _presence.Hold(Mathf.Max(humHoldSeconds, warp + HumHoldTailSeconds));
         if (_audio != null) _audio.SkipBeat();
 
-        yield return WaitSeconds(stutterAt);
+        yield return WaitSeconds(stutter);
         if (BailedOut()) { _isTelegraphing = false; yield break; }
         if (_flashlight != null) _flashlight.Stutter(stutterSeconds);
 
-        yield return WaitSeconds(cueAt - stutterAt);
+        yield return WaitSeconds(cue - stutter);
         if (BailedOut()) { _isTelegraphing = false; yield break; }
         if (_audio != null) _audio.PlayRelocationCue();
 
-        yield return WaitSeconds(warpAt - cueAt);
+        yield return WaitSeconds(warp - cue);
         if (BailedOut())
         {
             _isTelegraphing = false;
             yield break;
         }
 
-        // Re-validate rules 1-5 and the spot with fresh positions. Failing here is not an error - the
-        // telegraph simply reads as a phantom, and nothing warps.
-        if (PassesCoreRules(distance) && ValidateCandidateVisibilityAndDistance(spot) && _follower.RelocateTo(spot, _player.position))
+        if (feint)
         {
-            _lastRelocationTime = Time.time;
-            // One relocation per star: disarm until the next pickup
+            // This star is spent, but no cooldown is stamped: the next one can still relocate.
             _armedUntil = -1f;
-
-            string line = distance >= farBand ? Loc("sub.dread.far", lineFar) : distance >= midBand ? Loc("sub.dread.mid", lineMid) : Loc("sub.dread.near", lineNear);
-            if (_hud != null) _hud.ShowSubtitle(line, subtitleSeconds);
+            _terror.Log("Feint telegraph", this);
+        }
+        else
+        {
+            CommitRelocation(spot, distance);
         }
 
         _isTelegraphing = false;
@@ -537,7 +669,95 @@ public class DreadDirector : MonoBehaviour
 
     private void HandleChaseStateChanged(bool chasing)
     {
-        if (!chasing) _lastChaseEndTime = Time.time;
+        if (!chasing)
+        {
+            _lastChaseEndTime = Time.time;
+            return;
+        }
+
+        // F103 A6: the first sighting of the floor, from far enough that the failure is a surprise rather than a pile-on.
+        if (_sawFirstChase) return;
+        _sawFirstChase = true;
+        if (_follower != null && _follower.FlatDistanceToTarget >= sightingFailureMinHunterDistance)
+        {
+            StartCoroutine(SightingFailureRoutine());
+        }
+    }
+
+    /// <summary>F103 A7: the game, not the hunter, says it - a fact the player caused and cannot see. The rush follows the listening pause.</summary>
+    private void HandleHeardYou()
+    {
+        if (_hud != null) _hud.ShowSubtitle(L10n.T("sub.hunter.heard_you"), heardYouSubtitleSeconds);
+    }
+
+    // ---------------------------------------------------------------- F103 A6: scripted torch failures
+
+    private IEnumerator SightingFailureRoutine()
+    {
+        yield return WaitSeconds(sightingFailureDelay);
+        TryTorchFailure(RandomFailureSeconds(), "first sighting");
+    }
+
+    private float RandomFailureSeconds()
+    {
+        return Random.Range(torchFailureSeconds.x, torchFailureSeconds.y);
+    }
+
+    /// <summary>F103 A6: the player is standing in a dead end with the hunter close but not chasing - the torch dies on them there.</summary>
+    private void CheckDeadEndFailure()
+    {
+        if (!_terror.torchFailures || _maze == null || _player == null || _follower == null) return;
+        if (_follower.IsChasing || _follower.FlatDistanceToTarget > deadEndFailureHunterDistance) return;
+        if (!_maze.IsDeadEndAt(_player.position, out Vector3 cell)) return;
+        if (_hasLastDeadEndCell && (cell - _lastDeadEndCell).sqrMagnitude < 0.01f) return;
+
+        // Remembered only if it fired, so a refused attempt (spacing, cap) can still fire on the next check.
+        if (!TryTorchFailure(RandomFailureSeconds(), "dead end")) return;
+        _lastDeadEndCell = cell;
+        _hasLastDeadEndCell = true;
+    }
+
+    /// <summary>Is the floor's Stalker out and close to the player? Stan moving during a blackout is correct, but a blackout must never release one the player is holding frozen.</summary>
+    private bool StalkerNearPlayer()
+    {
+        Stalker stalker = _maze != null ? _maze.Stalker : null;
+        if (stalker == null || !stalker.gameObject.activeInHierarchy || stalker.IsHiddenAfterTouch) return false;
+        return FlatDistance(stalker.transform.position, _player.position) < stalkerGuardDistance;
+    }
+
+    /// <summary>
+    /// F103 A6: cuts the torch for `seconds` (and blinks the lamps around the player) if every fairness rule allows it.
+    /// Capped per floor and spaced out, so each failure lands as a story beat rather than a bug.
+    /// </summary>
+    private bool TryTorchFailure(float seconds, string reason)
+    {
+        if (!_terror.torchFailures || BailedOut() || _flashlight == null || _player == null || _follower == null) return false;
+        if (_torchFailures >= maxTorchFailuresPerFloor || Time.time - _lastTorchFailureTime < torchFailureSpacing) return false;
+        if (!_flashlight.IsBeamLit || _isTelegraphing) return false;
+        if (_stealth != null && _stealth.Hidden) return false;
+        if (_follower.IsChasing && _follower.FlatDistanceToTarget < chaseGuardDistance) return false;
+        if (StalkerNearPlayer()) return false;
+
+        _flashlight.Blackout(seconds);
+        BlinkLampsAround(_player.position, failureLampRadius, seconds);
+        _torchFailures++;
+        _lastTorchFailureTime = Time.time;
+        _terror.Log($"TorchFailure ({reason}) {seconds:0.0}s", this);
+        return true;
+    }
+
+    private void BlinkLampsAround(Vector3 centre, float radius, float seconds)
+    {
+        if (_maze == null) return;
+
+        IReadOnlyList<WallLamp> lamps = _maze.Lamps;
+        float radiusSqr = radius * radius;
+        for (int i = 0; i < lamps.Count; i++)
+        {
+            WallLamp lamp = lamps[i];
+            if (lamp == null || lamp.IsDead || !lamp.IsPowered) continue;
+            if ((lamp.transform.position - centre).sqrMagnitude <= radiusSqr) lamp.Blink(seconds);
+        }
     }
 
 
@@ -621,7 +841,8 @@ public class DreadDirector : MonoBehaviour
 
         if (_audio != null) _audio.HoldBreath(breathSeconds);
         if (_presence != null) _presence.Hold(breathSeconds);
-        if (_hud != null) _hud.ShowSubtitle(Loc("sub.dread.it_knows", lineItKnows), subtitleSeconds);
+        // F103 A6: replaces the cut "it knows" subtitle - the torch dies for the same breath the lamps hold.
+        TryTorchFailure(breathSeconds, "last star");
     }
 
     /// <summary>
@@ -653,7 +874,7 @@ public class DreadDirector : MonoBehaviour
             // F71: a lamp within 1 cell of a live star is exempt, same reasoning as the locker-lamp
             // exemption above it - a star you cannot find is not a reward, it is a bug.
             // F73: an unpowered lamp (Blackout floor, before its fuse) has nothing to kill.
-            if (lamp != null && !lamp.IsLockerLamp && !lamp.IsDead && lamp.IsPowered && !IsNearLiveStar(lamp)) candidates.Add(lamp);
+            if (lamp != null && !lamp.IsLockerLamp && !lamp.IsDead && lamp.IsPowered && !_maze.IsNearLiveStar(lamp.transform.position)) candidates.Add(lamp);
         }
 
         for (int i = candidates.Count - 1; i > 0; i--)
@@ -667,22 +888,5 @@ public class DreadDirector : MonoBehaviour
         {
             candidates[i].Kill(deathFadeSeconds);
         }
-    }
-
-    /// <summary>F71: true if an uncollected star sits within one cell of this lamp. Collected stars are
-    /// destroyed (MazeGenerator.Stars entries go null), so they stop counting on their own.</summary>
-    private bool IsNearLiveStar(WallLamp lamp)
-    {
-        if (_maze == null) return false;
-
-        IReadOnlyList<Transform> stars = _maze.Stars;
-        float threshold = _maze.CellSize * 1.5f; // adjacent cell centres are one cellSize apart
-        for (int i = 0; i < stars.Count; i++)
-        {
-            Transform star = stars[i];
-            if (star != null && Vector3.Distance(lamp.transform.position, star.position) <= threshold) return true;
-        }
-
-        return false;
     }
 }

@@ -119,6 +119,8 @@ public class GameAudioLibrary : ScriptableObject
     public AudioSlot hunterMoan = new AudioSlot();     // the hunter's wordless moans; OrderlyPa uses these instead of orderlyPatrol while filled
     public AudioSlot mazeWind = new AudioSlot();       // wind gusts through the maze (MazeAmbience)
     public AudioSlot mazeFar = new AudioSlot();        // distant unsettling one-shots in the maze (MazeAmbience)
+    public AudioSlot hunterAlert = new AudioSlot();    // F103 A7: servo whine when a noise stops the hunter dead
+    public AudioSlot spottedSting = new AudioSlot();    // F103 A9: alternatives to MazeGenerator.spottedClip; one is picked per chase
 
     [Header("Player, UI, music")]
     public AudioSlot torchClick = new AudioSlot();     // 53

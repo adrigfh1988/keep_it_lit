@@ -165,31 +165,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763118
-  - m_Id: 7993049387025
-    m_Key: sub.dread.far
-    m_Metadata:
-      m_Items:
-      - rid: 4707331672703763119
-  - m_Id: 7993049387026
-    m_Key: sub.dread.mid
-    m_Metadata:
-      m_Items:
-      - rid: 4707331672703763120
-  - m_Id: 7993049387027
-    m_Key: sub.dread.near
-    m_Metadata:
-      m_Items:
-      - rid: 4707331672703763121
   - m_Id: 7993049387028
     m_Key: sub.dread.lights_dying
     m_Metadata:
       m_Items:
       - rid: 4707331672703763122
-  - m_Id: 7993049387029
-    m_Key: sub.dread.it_knows
-    m_Metadata:
-      m_Items:
-      - rid: 4707331672703763123
   - m_Id: 7993049387030
     m_Key: sub.dread.ambushed
     m_Metadata:
@@ -230,6 +210,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763131
+  - m_Id: 41651860836352
+    m_Key: sub.hunter.heard_you
+    m_Metadata:
+      m_Items:
+      - rid: 4707331674882703723
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -361,26 +346,10 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Salesman greeting when the shop opens after floor 4 (shown 3 s)
-    - rid: 4707331672703763119
-      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
-      data:
-        m_CommentText: Subtitle when the hunter relocated far away from the player (shown 2.6 s). "Something" = the hunter, never named
-    - rid: 4707331672703763120
-      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
-      data:
-        m_CommentText: Subtitle when the hunter relocated at a middle distance (shown 2.6 s). "It" = the hunter
-    - rid: 4707331672703763121
-      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
-      data:
-        m_CommentText: Subtitle when the hunter relocated very close (shown 2.6 s). "It" = the hunter
     - rid: 4707331672703763122
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Subtitle when the first lamps die as the maze empties of stars (shown 2.6 s)
-    - rid: 4707331672703763123
-      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
-      data:
-        m_CommentText: Subtitle when the last star is taken (shown 2.6 s). "It" = the hunter
     - rid: 4707331672703763124
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
@@ -413,3 +382,7 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Floor intro banner rule line (one line, auto-size). {name} = the rule name (shop.rule.*.name), {description} = its sentence (shop.rule.*.desc)
+    - rid: 4707331674882703723
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: World text (the game speaking, not the hunter) when a noise the player made stops the hunter dead, just before it rushes the spot (shown 2 s). ALL CAPS like THE HATCH IS UNLOCKED. "IT" = the hunter, never named

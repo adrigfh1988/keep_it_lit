@@ -48,7 +48,26 @@ public class AIPresence : MonoBehaviour
     [SerializeField] private float eyeSpacing = 0.055f;
 
     [Header("Face")]
+    [Tooltip("Eye brightness while lurking. Only used with rationed eyes off: rationed, an ambusher is pitch dark.")]
     [SerializeField] private float lurkingEyeEmissionScale = 0.3f;
+
+    [Header("F103 A3 - rationed eyes")]
+    [Tooltip("Seconds the eyes take to snap on (the reveal sting)")]
+    [SerializeField] private float eyeFadeInSeconds = 0.08f;
+    [Tooltip("Seconds the eyes take to die back to dark")]
+    [SerializeField] private float eyeFadeOutSeconds = 0.6f;
+    [Tooltip("The far torch beam only catches a glint of the eyes at least this far away (m); closer, it is a sighting")]
+    [SerializeField] private float glintMinDistance = 8f;
+    [Tooltip("How long one glint lasts (s)")]
+    [SerializeField] private float glintSeconds = 0.4f;
+    [Tooltip("Minimum seconds between two glints")]
+    [SerializeField] private float glintCooldown = 3f;
+
+    [Header("F103 A7 - alert")]
+    [Tooltip("Volume of the servo whine when a heard noise stops the hunter dead")]
+    [SerializeField] private float alertVolume = 0.9f;
+    [Tooltip("How far the whine carries (m)")]
+    [SerializeField] private float alertMaxDistance = 30f;
 
     /// <summary>The mode the built eyes currently read as.</summary>
     public enum FaceMode
@@ -57,6 +76,15 @@ public class AIPresence : MonoBehaviour
         Lurking
     }
 
+    /// <summary>An emissive renderer of the body (the Orderly's screen eyes) and the emission colour it was authored with.</summary>
+    private struct BodyEmitter
+    {
+        public Renderer Renderer;
+        public Color BaseEmission;
+    }
+
+    private static readonly int EmissionColorId = Shader.PropertyToID("_EmissionColor");
+
     private NavMeshAgent _agent;
     private AudioSource _footstepSource;
     private AudioSource _humSource;
@@ -64,9 +92,23 @@ public class AIPresence : MonoBehaviour
 
     private Material _eyeMaterial;
     private readonly List<Transform> _eyes = new List<Transform>();
+    private readonly List<Renderer> _eyeRenderers = new List<Renderer>();
     private FaceMode _faceMode = FaceMode.Normal;
     private float _holdRemaining;
     private bool _humMuted;
+
+    // F103 A3: eyes are rationed. _eyeLevel (0..1) scales the eye spheres' and the body's emission; it fades
+    // toward a target TickEyes picks each frame. _appliedLevel is what was last written (-1 = nothing yet).
+    private AIFollower _follower;
+    private TerrorSettings _terror = new TerrorSettings();
+    private readonly List<BodyEmitter> _bodyEmitters = new List<BodyEmitter>();
+    private MaterialPropertyBlock _emissionBlock;
+    private float _eyeLevel = 1f;
+    private float _appliedLevel = -1f;
+    private float _revealUntil = -1f;
+    private float _glintUntil = -1f;
+    private float _nextGlintTime;
+    private bool _litAtRest = true;
 
     /// <summary>Called by MazeGenerator before Awake, so the clips can come from the player prefab.</summary>
     public void Configure(AudioClip[] footsteps, AudioClip hum, Material eyeMaterialSource)
@@ -79,6 +121,7 @@ public class AIPresence : MonoBehaviour
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _follower = GetComponent<AIFollower>();
 
         _footstepSource = CreateSource("AI_Footsteps", footstepMaxDistance, false);
         _humSource = CreateSource("AI_Hum", humMaxDistance, true);
@@ -86,6 +129,8 @@ public class AIPresence : MonoBehaviour
 
     private void Start()
     {
+        CacheBodyEmitters();
+
         // The scene's sci-fi loop, pitched down, read as radio static. The hunter gets a
         // synthesised stone choir instead; the scene clip is only a fallback if that is switched off.
         if (playHum && (useChoirHum || humClip != null))
@@ -102,6 +147,7 @@ public class AIPresence : MonoBehaviour
         // Ticked before every early return below, so a Hold() during a footstep-free moment (the AI
         // standing still, or with no footstep clips) still releases on schedule.
         TickHold();
+        TickEyes();
 
         if (_agent == null || footstepClips == null || footstepClips.Length == 0) return;
 
@@ -166,28 +212,130 @@ public class AIPresence : MonoBehaviour
         if (_holdRemaining > 0f) _holdRemaining = 0.001f;
     }
 
-    /// <summary>Brightens/dims the eye glow. Used by F27's second lamp-death wave. Re-applies the current face mode, which multiplies this base.</summary>
+    /// <summary>Brightens/dims the eye glow. Used by F27's second lamp-death wave. The current eye level (F103 A3) multiplies this base.</summary>
     public void SetEyeEmission(float emission)
     {
         eyeEmission = emission;
-        ApplyFaceMode();
+        ApplyEyeLevel(force: true);
     }
 
     /// <summary>Switches the eyes between idle and lurking (the ambush).</summary>
     public void SetFaceMode(FaceMode mode)
     {
         _faceMode = mode;
-        ApplyFaceMode();
+        ApplyEyeLevel(force: true);
     }
 
-    private void ApplyFaceMode()
+    /// <summary>F103 A3: whether the eyes glow while the hunter patrols. Floor 1 teaches what the eyes mean by leaving them lit; later floors ration them. Applied once, at setup.</summary>
+    public void SetEyesLitAtRest(bool lit)
     {
-        float eyeEmissionScale = _faceMode == FaceMode.Lurking ? lurkingEyeEmissionScale : 1f;
+        _litAtRest = lit;
+    }
+
+    /// <summary>F103 A3: lights the eyes for `seconds` (extends rather than restarts). DreadDirector calls it after a warp, so a player who turns fast sees them.</summary>
+    public void RevealEyes(float seconds)
+    {
+        _revealUntil = Mathf.Max(_revealUntil, Time.time + seconds);
+    }
+
+    /// <summary>F103 A7: the servo whine of a hunter stopped dead by a noise. An empty library slot plays nothing - the stop on its own is still the beat.</summary>
+    public void PlayAlert()
+    {
+        GameAudio.PlayAt(GameAudio.Library.hunterAlert, transform.position + Vector3.up * 1.6f, alertVolume, 1f, alertMaxDistance);
+    }
+
+    /// <summary>F103: which Tier A features run, and the [Terror] log.</summary>
+    public void ApplyTerror(TerrorSettings terror)
+    {
+        _terror = terror ?? new TerrorSettings();
+    }
+
+    /// <summary>The eye level (0..1) this frame wants: 1 when chasing, caught, revealed or glinting; 0 when ambushing or resting dark.</summary>
+    private float TargetEyeLevel()
+    {
+        if (!_terror.rationedEyes || _follower == null) return _faceMode == FaceMode.Lurking ? lurkingEyeEmissionScale : 1f;
+
+        if (_faceMode == FaceMode.Lurking) return 0f; // an ambusher is pitch dark; its footsteps and the heartbeat stay honest
+        if (_follower.IsChasing || _follower.IsCaptured) return 1f; // the reveal sting
+        if (Time.time < _revealUntil) return 1f;
+
+        if (_follower.IsInTorchBeam && _follower.FlatDistanceToTarget >= glintMinDistance && Time.time >= _nextGlintTime)
+        {
+            _glintUntil = Time.time + glintSeconds;
+            _nextGlintTime = Time.time + glintCooldown;
+            _terror.Log("Eyes glint", this);
+        }
+        if (Time.time < _glintUntil) return 1f;
+
+        return _litAtRest ? 1f : 0f;
+    }
+
+    private void TickEyes()
+    {
+        float target = TargetEyeLevel();
+        if (_appliedLevel < 0f)
+        {
+            _eyeLevel = target; // first frame: start at the resting level instead of fading out of it
+        }
+        else
+        {
+            float fadeSeconds = target > _eyeLevel ? eyeFadeInSeconds : eyeFadeOutSeconds;
+            _eyeLevel = fadeSeconds > 0f ? Mathf.MoveTowards(_eyeLevel, target, Time.deltaTime / fadeSeconds) : target;
+        }
+
+        ApplyEyeLevel(force: false);
+    }
+
+    /// <summary>
+    /// Writes the eye level to the eye spheres and to the body's own emission (the Orderly's screen has red eye texels in its
+    /// emission map, so darkening only the spheres would leave them glowing). Only does work when the level has moved.
+    /// </summary>
+    private void ApplyEyeLevel(bool force)
+    {
+        if (!force && Mathf.Abs(_eyeLevel - _appliedLevel) <= 0.002f) return;
+        _appliedLevel = _eyeLevel;
 
         if (_eyeMaterial != null)
         {
-            _eyeMaterial.SetColor("_EmissionColor", eyeColor * eyeEmission * eyeEmissionScale);
+            _eyeMaterial.SetColor(EmissionColorId, eyeColor * eyeEmission * _eyeLevel);
         }
+
+        // A red-albedo sphere would still show in the torch beam at zero emission, so the spheres switch off with the glow.
+        bool eyesVisible = _eyeLevel > 0.01f;
+        for (int i = 0; i < _eyeRenderers.Count; i++)
+        {
+            _eyeRenderers[i].enabled = eyesVisible;
+        }
+
+        for (int i = 0; i < _bodyEmitters.Count; i++)
+        {
+            BodyEmitter emitter = _bodyEmitters[i];
+            emitter.Renderer.GetPropertyBlock(_emissionBlock);
+            _emissionBlock.SetColor(EmissionColorId, emitter.BaseEmission * _eyeLevel);
+            emitter.Renderer.SetPropertyBlock(_emissionBlock);
+        }
+    }
+
+    /// <summary>
+    /// F103 A3: finds every renderer on the body (not the eye spheres) whose material emits, and remembers its authored emission.
+    /// Driven later through one shared MaterialPropertyBlock - the materials themselves are never instantiated.
+    /// </summary>
+    private void CacheBodyEmitters()
+    {
+        _emissionBlock = new MaterialPropertyBlock();
+        _bodyEmitters.Clear();
+
+        foreach (Renderer candidate in GetComponentsInChildren<Renderer>(true))
+        {
+            if (_eyeRenderers.Contains(candidate)) continue;
+
+            Material material = candidate.sharedMaterial;
+            if (material == null || !material.IsKeywordEnabled("_EMISSION") || !material.HasProperty(EmissionColorId)) continue;
+
+            _bodyEmitters.Add(new BodyEmitter { Renderer = candidate, BaseEmission = material.GetColor(EmissionColorId) });
+        }
+
+        _appliedLevel = -1f; // the next TickEyes applies the level to the freshly found emitters
     }
 
     /// <summary>Stop the hum and footsteps for good. Used once the run is over.</summary>
@@ -322,6 +470,7 @@ public class AIPresence : MonoBehaviour
         renderer.sharedMaterial = material;
         renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         renderer.receiveShadows = false;
+        _eyeRenderers.Add(renderer);
 
         return eye.transform;
     }

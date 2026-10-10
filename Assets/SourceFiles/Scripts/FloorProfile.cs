@@ -248,6 +248,16 @@ public class FloorProfile
     /// <summary>True on floors 4 and 5 - MazeGenerator.BuildStalker gates on this.</summary>
     public bool HasStalker;
 
+    // ---- rationed eyes (F103 A3)
+    /// <summary>True on floor 1 only: the hunter's eyes stay lit while it patrols, so the teaching floor still shows what they mean. Later floors ration them (AIPresence).</summary>
+    public bool HunterEyesLitAtRest;
+
+    // ---- bait dead ends (F103 A10)
+    /// <summary>Fraction of the maze's dead ends that survive braiding (0 on floor 1). Only short pockets stay - see MazeGenerator.maxDeadEndDepth.</summary>
+    public float DeadEndKeep;
+    /// <summary>How many stars prefer a kept dead end (0 on floor 1).</summary>
+    public int DeadEndBaitStars;
+
     /// <summary>
     /// Base profile, no mechanics rolled (Objectives = None). F77 decision 3: only PlayerWallet.
     /// ComputeConsolation should use this overload - the consolation cap is deliberately on the base
@@ -377,6 +387,13 @@ public class FloorProfile
         // has had time to establish what "the one thing chasing you" feels like.
         p.HasStalker = floor >= 4;
 
+        // F103 A3: floor 1 is the teaching floor - the eyes stay lit there.
+        p.HunterEyesLitAtRest = floor == 1;
+
+        // F103 A10: floor 1 is the teaching floor and stays fully braided; from floor 2 some dead ends survive, and a star or two waits in one.
+        p.DeadEndKeep = floor <= 1 ? 0f : Blend(0.15f, 0.35f, t);
+        p.DeadEndBaitStars = floor <= 1 ? 0 : floor <= 3 ? 1 : 2;
+
         return p;
     }
 
@@ -384,7 +401,7 @@ public class FloorProfile
     {
         return $"floor {Floor}/{FinalFloor}: {Width}x{Height}, cell {CellSize:0.0} wall {WallHeight:0.0}, {StarCount} stars, {LockerCount} lockers, " +
                $"hunter walk {WalkSpeed:0.0} run {RunSpeed:0.0} sees {ViewDistance:0}m, escape {EscapeSeconds:0}s, {ShardCount} shards, " +
-               $"ambush {AmbushBias:0.00}, objectives {Objectives}";
+               $"ambush {AmbushBias:0.00}, objectives {Objectives}, dead ends kept {DeadEndKeep:0.00} (bait stars {DeadEndBaitStars})";
     }
 
     private static float Blend(float first, float final, float t) => Mathf.Lerp(first, final, t);

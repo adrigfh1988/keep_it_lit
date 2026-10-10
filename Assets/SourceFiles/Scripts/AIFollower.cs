@@ -66,6 +66,17 @@ public class AIFollower : MonoBehaviour
     [Tooltip("Seconds between hearing checks")]
     [SerializeField] private float hearingInterval = 0.3f;
 
+    [Header("F103 A7 - heard you")]
+    [Tooltip("A noise that pulls it off a patrol or out of an ambush stops it dead for this long, listening, before it rushes (s)")]
+    [SerializeField] private float listenPauseSeconds = 1.2f;
+    [Tooltip("Minimum seconds between two heard-you beats, so a run of noises cannot chain them (s)")]
+    [SerializeField] private float listenCooldown = 12f;
+    [Tooltip("After the pause it sprints toward the spot it heard for this long (s)")]
+    [SerializeField] private float rushSeconds = 3f;
+    [Tooltip("Rush speed as a fraction of the player's sprint speed. Always clamped to the speed cap, so a sprinting player still gets away.")]
+    [Range(0.1f, 0.99f)]
+    [SerializeField] private float rushSprintFraction = 0.8f;
+
     [Header("Wander")]
     [Tooltip("How close the follower has to get to a wander point before picking the next one")]
     [SerializeField] private float wanderStoppingDistance = 0.3f;
@@ -206,6 +217,12 @@ public class AIFollower : MonoBehaviour
     // F72: a closed MazeDoor held the hunter here. Unlike _stunnedUntil, perception keeps running -
     // this only overrides movement, applied after the state machine each frame (see Update). -1 = not stalled.
     private float _stallUntil = -1f;
+    // F103 A7: it heard something and is standing still for a beat before going to look. Like _stallUntil, a movement-only override. -1 = not listening.
+    private float _listenUntil = -1f;
+    private float _rushUntil = -1f;
+    private float _rushSpeed;
+    private float _nextListenTime;
+    private TerrorSettings _terror = new TerrorSettings();
     private bool _hasSight;
     private float _sightTimer;
     private float _lostSightTimer;
@@ -240,11 +257,12 @@ public class AIFollower : MonoBehaviour
     private MazeGenerator _maze;
     private AIPresence _presence;
 
-    // F73: the player's torch and camera, bound once by MazeGenerator.SetUpAtmosphere (after both
-    // exist) so the hunter can notice the beam itself landing on it, not just what it lights up.
+    // F73: the player's torch, bound once by MazeGenerator.SetUpAtmosphere (after it exists) so the
+    // hunter can notice the beam itself landing on it, not just what it lights up. F103 A4: the beam
+    // is tested from the torch's own mount (BeamOrigin/BeamForward), not from the camera.
     private Flashlight _torch;
-    private Transform _torchCamera;
     private float _torchNoiseCooldownUntil = -1f;
+    private float _torchBeamDistance;
 
     // Ambush (F45)
     private int _ambushStarIndex = -1;
@@ -261,6 +279,12 @@ public class AIFollower : MonoBehaviour
 
     /// <summary>Raised once, when the follower reaches a player it can see.</summary>
     public event Action PlayerCaught;
+
+    /// <summary>F103 A7: raised the moment a heard noise stops it dead (the "IT HEARD YOU" beat). DreadDirector shows the world text.</summary>
+    public event Action HeardYou;
+
+    /// <summary>F103 A7: Time.time of the last HeardYou beat, so TensionDirector can tell its own star-heard line was just superseded.</summary>
+    public float LastHeardYouTime { get; private set; } = -9999f;
 
     /// <summary>Height of the eyes above the feet, for anything that wants to look at them.</summary>
     public float EyeHeight => eyeHeight;
@@ -288,6 +312,12 @@ public class AIFollower : MonoBehaviour
 
     /// <summary>F50: true while a line-of-sight check most recently succeeded. Read by HunterGaze; never written outside UpdatePerception/legacy chase.</summary>
     public bool HasSight => _hasSight;
+
+    /// <summary>F103 A3: true while the lit torch beam is on the hunter (in cone, in range, with a clear line). Refreshed every sight tick; AIPresence uses it for the eye glint.</summary>
+    public bool IsInTorchBeam { get; private set; }
+
+    /// <summary>F103 A2: true while patrolling (not chasing, searching, ambushing or captured). PhantomDirector rolls its "honest" footsteps only then.</summary>
+    public bool IsWandering => _state == State.Wander;
 
     /// <summary>F50: true while actively sweeping the area around a noise or a lost sighting.</summary>
     public bool IsSearching => _state == State.Search;
@@ -378,11 +408,10 @@ public class AIFollower : MonoBehaviour
         _maze = maze;
     }
 
-    /// <summary>F73: called once by MazeGenerator.SetUpAtmosphere, after both exist. Either argument may be null.</summary>
-    public void BindTorch(Flashlight torch, Transform camera)
+    /// <summary>F73: called once by MazeGenerator.SetUpAtmosphere, after the torch exists. May be null.</summary>
+    public void BindTorch(Flashlight torch)
     {
         _torch = torch;
-        _torchCamera = camera;
     }
 
     /// <summary>
@@ -515,6 +544,11 @@ public class AIFollower : MonoBehaviour
             runSpeed = Mathf.Min(runSpeed, cap);
             moveSpeed = Mathf.Min(moveSpeed, cap);
             dormantSpeed = Mathf.Min(dormantSpeed, cap);
+            _rushSpeed = Mathf.Min(player.SprintSpeed * rushSprintFraction, cap);
+        }
+        else
+        {
+            _rushSpeed = runSpeed;
         }
 
         if (!_agent.isOnNavMesh)
@@ -615,7 +649,8 @@ public class AIFollower : MonoBehaviour
 
         // F72: applied after the state machine, so perception/targeting ran normally this frame and
         // only the actual movement is overridden - a closed door holds the body, not the senses.
-        if (Time.time < _stallUntil)
+        // F103 A7: a listen pause holds the body the same way.
+        if (Time.time < _stallUntil || Time.time < _listenUntil)
         {
             _agent.isStopped = true;
             _agent.velocity = Vector3.zero;
@@ -639,7 +674,46 @@ public class AIFollower : MonoBehaviour
     {
         if (_state == State.Captured) return;
         _lastKnownPosition = position;
-        if (_state != State.Chase) EnterSearch();
+        if (_state != State.Chase)
+        {
+            State previous = _state;
+            EnterSearch();
+            ReactToNoise(previous);
+        }
+    }
+
+    /// <summary>F103: which Tier A features run, and the [Terror] log.</summary>
+    public void ApplyTerror(TerrorSettings terror)
+    {
+        _terror = terror ?? new TerrorSettings();
+    }
+
+    /// <summary>
+    /// F103 A7: something it heard (not saw) pulled it off a patrol or out of an ambush - it stops dead, its servos whine,
+    /// the game says IT HEARD YOU (HeardYou -> DreadDirector), then it rushes the spot it heard for rushSeconds. The player
+    /// hears the consequence of their own noise instead of reading it off a meter.
+    /// Not used by RelocateTo, nor by TryEndAmbushForStar (an ambush ended because its star was taken stays instant).
+    /// </summary>
+    private void ReactToNoise(State previous)
+    {
+        if (!_terror.hunterListens || (previous != State.Wander && previous != State.Ambush) || Time.time < _nextListenTime) return;
+
+        _listenUntil = Time.time + listenPauseSeconds;
+        _rushUntil = _listenUntil + rushSeconds;
+        _nextListenTime = Time.time + listenCooldown;
+        LastHeardYouTime = Time.time;
+        _presence?.PlayAlert();
+        HeardYou?.Invoke();
+        _terror.Log($"Hunter heard you -> rush {rushSeconds:0.#}s at {_rushSpeed:0.0} m/s to {_lastKnownPosition}", this);
+    }
+
+    /// <summary>F103 A7: true during the burst after the listening pause. The rush targets the spot it heard, never the live player: EnterSearch already queued it first.</summary>
+    private bool IsRushing => Time.time >= _listenUntil && Time.time < _rushUntil;
+
+    private void CancelHeardYouBeat()
+    {
+        _listenUntil = -1f;
+        _rushUntil = -1f;
     }
 
     // ---------------------------------------------------------------- legacy behaviour
@@ -675,26 +749,41 @@ public class AIFollower : MonoBehaviour
         _sightTimer = sightCheckInterval;
 
         _hasSight = CanSeeTarget();
+        UpdateTorchBeamState();
         CheckTorchBeamNoise();
     }
 
     /// <summary>
-    /// F73 (B3.1): the hunter notices the player's torch beam landing on it, even without full sight -
-    /// angle/distance against the beam's own (blended, F71) shape, plus a plain LOS check, so it cannot
-    /// fire through a wall. Never overrides an active sighting (_hasSight already means something
-    /// stronger than this), and is cooled down so standing still in the beam does not spam HearNoise.
+    /// F103 A3: refreshes IsInTorchBeam - the lit torch's own (blended, F71) cone from its mount, within its
+    /// range, with a plain LOS check so it cannot fire through a wall. Split out of the F73 noise check so
+    /// AIPresence's eye glint reads the same fact the hunter's own beam awareness does.
+    /// </summary>
+    private void UpdateTorchBeamState()
+    {
+        IsInTorchBeam = false;
+        if (_torch == null || target == null || !_torch.IsBeamLit) return;
+
+        Vector3 eyePoint = transform.position + Vector3.up * eyeHeight;
+        Vector3 beamOrigin = _torch.BeamOrigin;
+        Vector3 toHunter = eyePoint - beamOrigin;
+        float distance = toHunter.magnitude;
+        if (distance < 0.0001f || distance >= _torch.Range) return;
+        if (Vector3.Angle(_torch.BeamForward, toHunter) >= _torch.OuterAngle * 0.5f) return;
+        if (!HasLineOfSightIgnoring(beamOrigin, eyePoint, target)) return;
+
+        IsInTorchBeam = true;
+        _torchBeamDistance = distance;
+    }
+
+    /// <summary>
+    /// F73 (B3.1): the hunter notices the player's torch beam landing on it, even without full sight.
+    /// Never overrides an active sighting (_hasSight already means something stronger than this), and is
+    /// cooled down so standing still in the beam does not spam HearNoise.
     /// </summary>
     private void CheckTorchBeamNoise()
     {
-        if (_torch == null || _torchCamera == null || _hasSight || target == null) return;
-        if (!_torch.IsOn || Time.time < _torchNoiseCooldownUntil) return;
-
-        Vector3 camPos = _torchCamera.position;
-        Vector3 toHunter = (transform.position + Vector3.up * eyeHeight) - camPos;
-        float distance = toHunter.magnitude;
-        if (distance < 0.0001f || distance >= _torch.Range * 0.8f) return;
-        if (Vector3.Angle(_torchCamera.forward, toHunter) >= _torch.OuterAngle * 0.5f) return;
-        if (!HasLineOfSightIgnoring(camPos, transform.position + Vector3.up * eyeHeight, target)) return;
+        if (!IsInTorchBeam || _hasSight || Time.time < _torchNoiseCooldownUntil) return;
+        if (_torchBeamDistance >= _torch.Range * 0.8f) return;
 
         _torchNoiseCooldownUntil = Time.time + torchBeamNoiseCooldown;
         HearNoise(target.position, torchBeamNoiseRadius);
@@ -725,7 +814,9 @@ public class AIFollower : MonoBehaviour
         // own sight-driven timers own its transitions, not a background noise check.
         if (_state != State.Chase && _state != State.Captured)
         {
+            State previous = _state;
             EnterSearch();
+            ReactToNoise(previous);
         }
     }
 
@@ -770,7 +861,9 @@ public class AIFollower : MonoBehaviour
         _lastKnownPosition = at;
         if (_state != State.Chase)
         {
+            State previous = _state;
             EnterSearch();
+            ReactToNoise(previous);
         }
         return true;
     }
@@ -990,6 +1083,7 @@ public class AIFollower : MonoBehaviour
             {
                 if (_state == State.Ambush) LeaveAmbush();
                 _state = State.Chase;
+                _listenUntil = -1f; // F103 A7: it must never stand still while it can see the player
             }
         }
         else if (_state == State.Chase && !_bustingHidingSpot)
@@ -1029,7 +1123,7 @@ public class AIFollower : MonoBehaviour
         // into its YAML, and a stopping distance outside the capture radius means it never catches.
         _agent.stoppingDistance = Mathf.Min(stoppingDistance, captureRadius - 0.3f);
         _agent.isStopped = false;
-        MoveSpeedTowards(ChaseSpeed());
+        MoveSpeedTowards(IsRushing ? Mathf.Max(ChaseSpeed(), _rushSpeed) : ChaseSpeed());
 
         _repathTimer -= Time.deltaTime;
         if (_repathTimer <= 0f)
@@ -1070,6 +1164,7 @@ public class AIFollower : MonoBehaviour
     private void EnterCaptured()
     {
         _state = State.Captured;
+        CancelHeardYouBeat();
         _bustingHidingSpot = false;
         _agent.isStopped = true;
         _agent.velocity = Vector3.zero;
@@ -1149,7 +1244,7 @@ public class AIFollower : MonoBehaviour
     private void TickSearch()
     {
         _agent.stoppingDistance = wanderStoppingDistance;
-        MoveSpeedTowards(WanderSpeed());
+        MoveSpeedTowards(IsRushing ? Mathf.Max(WanderSpeed(), _rushSpeed) : WanderSpeed());
 
         // Without a hard budget, repeated noises can keep refilling the queue forever
         _searchBudgetTimer -= Time.deltaTime;
@@ -1187,6 +1282,11 @@ public class AIFollower : MonoBehaviour
             }
             return;
         }
+
+        // F103 A7 (V21): the moving part let go of the agent nowhere, so a stall landing during a search
+        // left it parked until the budget ran out. Released here like TickWander/TickChase do; the stall and
+        // listen overrides in Update run after the state machine and still hold the body while they last.
+        _agent.isStopped = false;
 
         if (ReachedDestination())
         {
@@ -1521,6 +1621,7 @@ public class AIFollower : MonoBehaviour
         _sightTimer = 0f;
         _repathTimer = 0f;
         _lastKnownPosition = towards;
+        CancelHeardYouBeat();
         // EnterSearch already clears isStopped and sets a fresh budget/queue - do not add a second
         // isStopped write here.
         EnterSearch();
@@ -1537,6 +1638,7 @@ public class AIFollower : MonoBehaviour
     {
         if (_agent == null || _state != State.Captured) return false;
         if (NavMesh.SamplePosition(warpTo, out NavMeshHit hit, 3f, NavMesh.AllAreas)) _agent.Warp(hit.position);
+        CancelHeardYouBeat();
 
         _state = State.Wander;
         _wanderIndex = -1;

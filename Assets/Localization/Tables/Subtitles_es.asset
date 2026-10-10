@@ -143,24 +143,8 @@ MonoBehaviour:
     m_Localized: "\xDAltima parada antes del fondo."
     m_Metadata:
       m_Items: []
-  - m_Id: 7993049387025
-    m_Localized: "Algo se movi\xF3 detr\xE1s de ti."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7993049387026
-    m_Localized: "Se est\xE1 acercando."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7993049387027
-    m_Localized: "Est\xE1 justo detr\xE1s de ti."
-    m_Metadata:
-      m_Items: []
   - m_Id: 7993049387028
     m_Localized: "Las luces se est\xE1n muriendo."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7993049387029
-    m_Localized: Lo sabe.
     m_Metadata:
       m_Items: []
   - m_Id: 7993049387030
@@ -201,6 +185,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763196
+  - m_Id: 41651860836352
+    m_Localized: "TE HA O\xCDDO."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -38,6 +39,11 @@ public class HorrorAudioDirector : MonoBehaviour
     [SerializeField] private float spottedVolume = 0.6f;
     [Tooltip("Seconds before the spotted cue may play again - the hunter can lose and regain a chase in a few seconds")]
     [SerializeField] private float spottedCooldown = 10f;
+    [Tooltip("F103 A9: chance a chase starts with no sting at all, from silentSpottedFromFloor on")]
+    [Range(0f, 1f)]
+    [SerializeField] private float silentSpottedChance = 0.15f;
+    [Tooltip("F103 A9: first floor on which a chase may start in silence (floors 1-2 always sting, so the cue is learned first)")]
+    [SerializeField] private int silentSpottedFromFloor = 3;
 
     [Header("Drone")]
     [SerializeField] private AudioClip droneClip;
@@ -77,6 +83,11 @@ public class HorrorAudioDirector : MonoBehaviour
     private AudioSource _oneShots;
     private AudioSource _sting;
     private float _nextSpottedTime;
+    // F103 A9: spottedClip plus the library's alternatives, each with its volume; one is picked per chase, never the same twice running.
+    private readonly List<AudioClip> _spottedPool = new List<AudioClip>();
+    private readonly List<float> _spottedVolumes = new List<float>();
+    private int _lastSpottedIndex = -1;
+    private TerrorSettings _terror = new TerrorSettings();
     private bool _bedWaitingForRun;
     private AudioSource _drone;
     private AudioSource _whisper;
@@ -209,6 +220,8 @@ public class HorrorAudioDirector : MonoBehaviour
             _follower.ChaseStateChanged += HandleChaseStateChanged;
         }
 
+        BuildSpottedPool();
+
         if (droneClip != null)
         {
             _drone.clip = droneClip;
@@ -269,22 +282,78 @@ public class HorrorAudioDirector : MonoBehaviour
         else _oneShots.PlayOneShot(_heartbeat, volume);
     }
 
+    /// <summary>F103: which Tier A features run, and the [Terror] log.</summary>
+    public void ApplyTerror(TerrorSettings terror)
+    {
+        _terror = terror ?? new TerrorSettings();
+    }
+
+    /// <summary>F103 A9: the spotted cue plus every non-null clip of the library's spottedSting slot, built once (the slot's own loudness trim applies to its clips).</summary>
+    private void BuildSpottedPool()
+    {
+        _spottedPool.Clear();
+        _spottedVolumes.Clear();
+
+        if (spottedClip != null)
+        {
+            _spottedPool.Add(spottedClip);
+            _spottedVolumes.Add(spottedVolume);
+        }
+
+        AudioSlot slot = GameAudio.Library.spottedSting;
+        for (int i = 0; i < slot.clips.Length; i++)
+        {
+            if (slot.clips[i] == null) continue;
+            _spottedPool.Add(slot.clips[i]);
+            _spottedVolumes.Add(spottedVolume * slot.volume);
+        }
+    }
+
+    /// <summary>A pool index other than the one used last time, while the pool has more than one entry.</summary>
+    private int PickSpottedIndex()
+    {
+        int index = Random.Range(0, _spottedPool.Count);
+        if (_spottedPool.Count > 1 && index == _lastSpottedIndex) index = (index + 1 + Random.Range(0, _spottedPool.Count - 1)) % _spottedPool.Count;
+
+        _lastSpottedIndex = index;
+        return index;
+    }
+
     private void HandleChaseStateChanged(bool chasing)
     {
         if (!chasing) return;
 
-        // A real "spotted" cue (Violin Stabs) plays whole, at its own pitch, no more than once per spottedCooldown -
+        // A real "spotted" cue plays whole, at its own pitch, no more than once per spottedCooldown -
         // the hunter can drop and regain a chase within seconds, and a stab on every flicker turns into noise.
-        if (spottedClip != null)
+        bool varied = _terror.varyingSpottedSting && _spottedPool.Count > 0;
+        if (varied || spottedClip != null)
         {
             if (Time.time < _nextSpottedTime) return;
             _nextSpottedTime = Time.time + spottedCooldown;
-            _sting.clip = spottedClip;
+
+            AudioClip spotted = spottedClip;
+            float volume = spottedVolume;
+            if (varied)
+            {
+                // F103 A9: from floor 3 some chases start in silence, so the sting's absence stops meaning "not chased".
+                if (GameFlow.CurrentFloor >= silentSpottedFromFloor && Random.value < silentSpottedChance)
+                {
+                    _terror.Log("Silent chase start", this);
+                    return;
+                }
+
+                int index = PickSpottedIndex();
+                spotted = _spottedPool[index];
+                volume = _spottedVolumes[index];
+                _terror.Log("Spotted sting: " + spotted.name, this);
+            }
+
+            _sting.clip = spotted;
             _sting.pitch = 1f;
-            _sting.volume = spottedVolume;
+            _sting.volume = volume;
             _sting.Play();
             // Same source as the capture sting, which schedules a cut-off - replace it with this clip's own end.
-            _sting.SetScheduledEndTime(AudioSettings.dspTime + spottedClip.length + 0.1);
+            _sting.SetScheduledEndTime(AudioSettings.dspTime + spotted.length + 0.1);
             return;
         }
 

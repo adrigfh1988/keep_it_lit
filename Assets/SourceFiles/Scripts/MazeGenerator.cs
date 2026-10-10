@@ -176,6 +176,16 @@ public class MazeGenerator : MonoBehaviour
     [Tooltip("For testing: forces this floor's mechanics instead of rolling them. None = roll normally.")]
     [SerializeField] private FloorProfile.Objective debugObjectives = FloorProfile.Objective.None;
 
+    [Header("F103 - Maze terror (Tier A)")]
+    [Tooltip("One switch per Tier A terror feature, plus the [Terror] Console log. Spec: plannings/maze-terror-spec.md")]
+    [SerializeField] private TerrorSettings terror = new TerrorSettings();
+
+    [Header("F103 A10 - bait dead ends")]
+    [Tooltip("A dead end deeper than this (cells from the junction it hangs off) is opened after all: only short pockets survive braiding")]
+    [SerializeField, Min(1)] private int maxDeadEndDepth = 2;
+    [Tooltip("A dead end must be at least this many steps (Manhattan, from the start cell) away to be kept - never a pocket at the spawn")]
+    [SerializeField, Min(0)] private int deadEndStartClearance = 3;
+
     /// <summary>
     /// F70: one dressing source, two providers. Every prop pass (wall/ceiling/floor props, decals, set
     /// pieces, dust) reads this instead of _theme directly. Resolved once by ResolveDressing, right after ResolveTheme.
@@ -256,6 +266,11 @@ public class MazeGenerator : MonoBehaviour
     /// <summary>F75: this floor's stalker (floors 4-5 only, FloorProfile.HasStalker), late-bound once the player/camera/flashlight/hunter/HUD/outcome exist. Null on every other floor.</summary>
     private Stalker _stalker;
 
+    /// <summary>F103 A10: the dead ends that survived braiding on this floor (short pockets only), in generation order.</summary>
+    private readonly List<Vector2Int> _keptDeadEnds = new List<Vector2Int>();
+    /// <summary>F103 A10: the kept dead ends that hold a star (the first FloorProfile.DeadEndBaitStars usable ones). Locker cells avoid them, and a locker stands at each one's mouth.</summary>
+    private readonly List<Vector2Int> _baitDeadEnds = new List<Vector2Int>();
+
     /// <summary>The theme this maze was built from, or null when the primitive fallback was used.</summary>
     public FloorTheme Theme => _theme;
 
@@ -298,6 +313,47 @@ public class MazeGenerator : MonoBehaviour
             FloorTop,
             origin.z + (z + 0.5f) * cellSize);
     }
+
+    /// <summary>The cell a world position falls in. False outside the maze (or before it has been generated).</summary>
+    private bool TryWorldToCell(Vector3 worldPosition, out Vector2Int cell)
+    {
+        cell = new Vector2Int(
+            Mathf.FloorToInt((worldPosition.x - origin.x) / cellSize),
+            Mathf.FloorToInt((worldPosition.z - origin.z) / cellSize));
+        return _wallN != null && cell.x >= 0 && cell.x < width && cell.y >= 0 && cell.y < height;
+    }
+
+    /// <summary>
+    /// F103 A6: true if the position is in a cell with three logical walls (a dead end, an opened vault, a bait dead end;
+    /// doors are ignored). <paramref name="cellCenter"/> is that cell's floor-level centre, so a caller can remember which one.
+    /// </summary>
+    public bool IsDeadEndAt(Vector3 worldPosition, out Vector3 cellCenter)
+    {
+        cellCenter = default;
+        if (!TryWorldToCell(worldPosition, out Vector2Int cell) || WallCount(cell.x, cell.y) != 3) return false;
+
+        cellCenter = CellCenter(cell.x, cell.y);
+        return true;
+    }
+
+    /// <summary>
+    /// F71: true if an uncollected star sits within one cell of the position (a kill-wave keeps clear of those lamps, a silhouette's dead lamp likewise).
+    /// Collected stars are destroyed (Stars entries go null), so they stop counting on their own.
+    /// </summary>
+    public bool IsNearLiveStar(Vector3 position)
+    {
+        float threshold = cellSize * 1.5f; // adjacent cell centres are one cellSize apart
+        for (int i = 0; i < _stars.Count; i++)
+        {
+            Transform star = _stars[i];
+            if (star != null && Vector3.Distance(position, star.position) <= threshold) return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>F103 A6: this floor's Stalker (floors 4-5), or null. DreadDirector refuses a scripted torch failure while it is close.</summary>
+    public Stalker Stalker => _stalker;
 
     /// <summary>F45: cell centres two steps from star `starIndex`, around a corner from it - never a straight line to it. Empty for an out-of-range index or a star that sits in a dead end.</summary>
     public IReadOnlyList<Vector3> AmbushCellsFor(int starIndex)
@@ -373,6 +429,7 @@ public class MazeGenerator : MonoBehaviour
         if (debugShards != 0) PlayerWallet.DebugDeposit(debugShards);
 
         Generate(usedSeed);
+        ChooseBaitDeadEnds();
         CacheCellCenters();
         ChooseLockerCells(new System.Random(usedSeed + 3));
         BuildGeometry();
@@ -681,7 +738,8 @@ public class MazeGenerator : MonoBehaviour
             stack.Push(next);
         }
 
-        if (removeDeadEnds) RemoveDeadEnds(rng);
+        _keptDeadEnds.Clear();
+        if (removeDeadEnds) RemoveDeadEnds(rng, new System.Random(usedSeed + 20));
 
         ComputeDistances();
     }
@@ -696,8 +754,13 @@ public class MazeGenerator : MonoBehaviour
     /// knocked through, so there are no dead ends and the maze is full of loops. Prefers a wall whose
     /// far side is also a dead end, which fixes two at once and keeps the number of new loops low.
     /// Only interior walls are ever opened, so the outer boundary stays sealed.
+    ///
+    /// F103 A10: a fraction of the dead ends (FloorProfile.DeadEndKeep) survives, so the maze keeps its most
+    /// frightening shape. The keep decisions use <paramref name="keepRng"/> (the +20 stream) and the loop draws from
+    /// <paramref name="rng"/> (the carve stream) exactly as it always did: with nothing kept - floor 1, the toggle
+    /// off - it draws the identical sequence, so a seed still produces a byte-identical maze.
     /// </summary>
-    private void RemoveDeadEnds(System.Random rng)
+    private void RemoveDeadEnds(System.Random rng, System.Random keepRng)
     {
         List<Vector2Int> deadEnds = new List<Vector2Int>();
         for (int x = 0; x < width; x++)
@@ -710,30 +773,172 @@ public class MazeGenerator : MonoBehaviour
 
         Shuffle(deadEnds, rng);
 
+        HashSet<Vector2Int> kept = ChooseDeadEndsToKeep(deadEnds, keepRng);
+
         List<int> options = new List<int>(4);
         foreach (Vector2Int cell in deadEnds)
         {
+            if (kept.Contains(cell)) continue;
+
             // An earlier removal may already have opened this one up
             if (WallCount(cell.x, cell.y) != 3) continue;
 
             options.Clear();
             int preferred = -1;
+            int intoKept = -1;
             for (int direction = 0; direction < 4; direction++)
             {
                 if (!IsWallClosed(cell.x, cell.y, direction)) continue;
 
                 Vector2Int neighbour = Neighbour(cell, direction);
                 if (neighbour.x < 0 || neighbour.x >= width || neighbour.y < 0 || neighbour.y >= height) continue;
+                // F103 A10: a kept dead end must not be opened from the other side either...
+                if (kept.Contains(neighbour))
+                {
+                    if (intoKept < 0) intoKept = direction;
+                    continue;
+                }
 
                 options.Add(direction);
                 if (preferred < 0 && WallCount(neighbour.x, neighbour.y) == 3) preferred = direction;
             }
 
             // A dead end has three closed walls and at most two of them are on the boundary
-            if (options.Count == 0) continue;
+            if (options.Count == 0)
+            {
+                // ...unless that is this cell's only way out: then the kept one gives way (TrimKeptDeadEnds drops it), rather than
+                // leaving this cell a dead end of any depth that nothing tracks. No rng draw, so the nothing-kept sequence is unchanged.
+                if (intoKept >= 0) OpenWall(cell, intoKept);
+                continue;
+            }
 
             int chosen = preferred >= 0 ? preferred : options[rng.Next(options.Count)];
             OpenWall(cell, chosen);
+        }
+
+        TrimKeptDeadEnds(kept, keepRng);
+        if (_keptDeadEnds.Count > 0)
+        {
+            terror.Log($"Kept {_keptDeadEnds.Count} dead ends (cells {string.Join(", ", _keptDeadEnds)})", this);
+        }
+    }
+
+    /// <summary>F103 A10: which of the dead ends survive braiding - a seeded fraction of those far enough from the start. Empty when the feature is off or the floor keeps none.</summary>
+    private HashSet<Vector2Int> ChooseDeadEndsToKeep(List<Vector2Int> deadEnds, System.Random keepRng)
+    {
+        HashSet<Vector2Int> kept = new HashSet<Vector2Int>();
+        float keep = terror.baitDeadEnds && _profile != null ? _profile.DeadEndKeep : 0f;
+        if (keep <= 0f) return kept;
+
+        List<Vector2Int> candidates = new List<Vector2Int>();
+        foreach (Vector2Int cell in deadEnds)
+        {
+            if (cell.x + cell.y >= deadEndStartClearance) candidates.Add(cell);
+        }
+
+        Shuffle(candidates, keepRng);
+        int count = Mathf.RoundToInt(candidates.Count * keep);
+        for (int i = 0; i < count; i++) kept.Add(candidates[i]);
+
+        return kept;
+    }
+
+    /// <summary>
+    /// F103 A10: of the dead ends left standing, only short pockets stay. One deeper than maxDeadEndDepth is opened after all
+    /// (a wall chosen with keepRng), and what survives goes into _keptDeadEnds. Processed in a fixed order, not the HashSet's.
+    /// </summary>
+    private void TrimKeptDeadEnds(HashSet<Vector2Int> kept, System.Random keepRng)
+    {
+        if (kept.Count == 0) return;
+
+        List<Vector2Int> ordered = new List<Vector2Int>(kept);
+        ordered.Sort((a, b) => a.x != b.x ? a.x.CompareTo(b.x) : a.y.CompareTo(b.y));
+
+        List<int> interiorWalls = new List<int>(4);
+        foreach (Vector2Int cell in ordered)
+        {
+            // Defensive: a neighbouring trim may already have opened this one.
+            if (WallCount(cell.x, cell.y) != 3) continue;
+
+            if (DeadEndDepth(cell) <= maxDeadEndDepth)
+            {
+                _keptDeadEnds.Add(cell);
+                continue;
+            }
+
+            interiorWalls.Clear();
+            for (int direction = 0; direction < 4; direction++)
+            {
+                Vector2Int neighbour = Neighbour(cell, direction);
+                if (IsWallClosed(cell.x, cell.y, direction) && neighbour.x >= 0 && neighbour.x < width && neighbour.y >= 0 && neighbour.y < height)
+                {
+                    interiorWalls.Add(direction);
+                }
+            }
+
+            if (interiorWalls.Count > 0) OpenWall(cell, interiorWalls[keepRng.Next(interiorWalls.Count)]);
+        }
+
+        // Opening a deep pocket can break into one already accepted above, so keep only cells that are still dead ends.
+        _keptDeadEnds.RemoveAll(cell => WallCount(cell.x, cell.y) != 3);
+    }
+
+    /// <summary>Steps from a dead end to the first cell with three or more openings (a junction), walking through the 2-opening cells between. Capped at the cell count.</summary>
+    private int DeadEndDepth(Vector2Int deadEnd)
+    {
+        Vector2Int previous = deadEnd;
+        Vector2Int current = MouthOf(deadEnd);
+        int steps = 1;
+
+        while (steps < width * height && 4 - WallCount(current.x, current.y) == 2)
+        {
+            Vector2Int next = current;
+            for (int direction = 0; direction < 4; direction++)
+            {
+                if (IsWallClosed(current.x, current.y, direction)) continue;
+                Vector2Int candidate = Neighbour(current, direction);
+                if (candidate != previous) next = candidate;
+            }
+
+            previous = current;
+            current = next;
+            steps++;
+        }
+
+        return steps;
+    }
+
+    /// <summary>F103 A10: the cell on the far side of a dead end's one open wall - where the player has to come back out.</summary>
+    private Vector2Int MouthOf(Vector2Int deadEnd)
+    {
+        for (int direction = 0; direction < 4; direction++)
+        {
+            if (!IsWallClosed(deadEnd.x, deadEnd.y, direction)) return Neighbour(deadEnd, direction);
+        }
+
+        return deadEnd;
+    }
+
+    /// <summary>
+    /// F103 A10: the first FloorProfile.DeadEndBaitStars kept dead ends become bait: SpawnStars puts a star at the end of each.
+    /// Runs right after Generate (distances exist). Skips the hunter's cell and any whose mouth is the hunter's cell or the start;
+    /// a mouth with no wall at all (an open junction) is skipped too, as no locker can stand there. Empty with superEasyMode.
+    /// </summary>
+    private void ChooseBaitDeadEnds()
+    {
+        _baitDeadEnds.Clear();
+        int wanted = terror.baitDeadEnds && _profile != null && !superEasyMode ? _profile.DeadEndBaitStars : 0;
+        if (wanted <= 0) return;
+
+        Vector2Int aiCell = FarthestCell();
+        foreach (Vector2Int cell in _keptDeadEnds)
+        {
+            if (_baitDeadEnds.Count >= wanted) break;
+            if (cell == aiCell) continue;
+
+            Vector2Int mouth = MouthOf(cell);
+            if (mouth == aiCell || mouth == Vector2Int.zero || WallCount(mouth.x, mouth.y) < 1) continue;
+            _baitDeadEnds.Add(cell);
         }
     }
 
@@ -844,6 +1049,7 @@ public class MazeGenerator : MonoBehaviour
             {
                 if (x == 0 && z == 0) continue;
                 if (x == aiCell.x && z == aiCell.y) continue;
+                if (_baitDeadEnds.Contains(new Vector2Int(x, z))) continue; // F103 A10: a bait dead end never hosts a locker, its mouth does
 
                 bool northSouth = _wallN[x, z] && _wallS[x, z] && !_wallE[x, z] && !_wallW[x, z];
                 bool eastWest = _wallE[x, z] && _wallW[x, z] && !_wallN[x, z] && !_wallS[x, z];
@@ -873,6 +1079,8 @@ public class MazeGenerator : MonoBehaviour
             }
         }
 
+        EnsureLockersAtBaitMouths(chosen);
+
         _lockerCells.AddRange(chosen);
 
         // Which wall each locker stands against: one of the cell's real walls, picked from the seed
@@ -890,6 +1098,33 @@ public class MazeGenerator : MonoBehaviour
         if (chosen.Count < lockerCount)
         {
             Debug.LogWarning($"MazeGenerator: only {chosen.Count} of {lockerCount} lockers fit in this maze.", this);
+        }
+    }
+
+    /// <summary>
+    /// F103 A10 safety valve: every bait dead end gets a locker at its mouth, so the player always has somewhere to go on the way
+    /// out of the bet. A mouth missing from the greedy pick replaces the last entry that is not itself a bait mouth (or is appended
+    /// if lockers are still owed). This shifts the +3 locker stream's picks only on floors that have bait dead ends, where the layout already differs.
+    /// </summary>
+    private void EnsureLockersAtBaitMouths(List<Vector2Int> chosen)
+    {
+        foreach (Vector2Int bait in _baitDeadEnds)
+        {
+            Vector2Int mouth = MouthOf(bait);
+            if (chosen.Contains(mouth)) continue;
+
+            if (chosen.Count < lockerCount)
+            {
+                chosen.Add(mouth);
+                continue;
+            }
+
+            for (int i = chosen.Count - 1; i >= 0; i--)
+            {
+                if (_baitDeadEnds.Exists(b => MouthOf(b) == chosen[i])) continue;
+                chosen[i] = mouth;
+                break;
+            }
         }
     }
 
@@ -2066,6 +2301,7 @@ public class MazeGenerator : MonoBehaviour
         Shuffle(preferred, rng);
         Shuffle(fallback, rng);
         preferred.AddRange(fallback);
+        PrioritiseBaitCells(preferred);
         // Super easy mode: the nearest cells to the start, side by side (after the shuffle, so the +1 stream is unchanged).
         if (superEasyMode) SortByStartDistance(preferred);
 
@@ -2099,6 +2335,8 @@ public class MazeGenerator : MonoBehaviour
             if (starLights) AttachStarLight(star);
         }
 
+        LogBaitStars(chosen);
+
         _starCells.Clear();
         _starCells.AddRange(chosen);
 
@@ -2108,6 +2346,32 @@ public class MazeGenerator : MonoBehaviour
         }
 
         PrecomputeAmbushCells();
+    }
+
+    /// <summary>
+    /// F103 A10: a stable partition that moves the bait dead ends to the front of the candidate list, in order. No rng draw, so the +1
+    /// star stream is unchanged. The first candidate is always accepted; the rest still respect the star separation, so a second
+    /// bait may be skipped if it is too close to the first.
+    /// </summary>
+    private void PrioritiseBaitCells(List<Vector2Int> candidates)
+    {
+        int front = 0;
+        foreach (Vector2Int bait in _baitDeadEnds)
+        {
+            int index = candidates.IndexOf(bait);
+            if (index < front) continue;
+
+            candidates.RemoveAt(index);
+            candidates.Insert(front++, bait);
+        }
+    }
+
+    private void LogBaitStars(List<Vector2Int> chosen)
+    {
+        if (_baitDeadEnds.Count == 0) return;
+
+        List<Vector2Int> baited = chosen.FindAll(cell => _baitDeadEnds.Contains(cell));
+        terror.Log($"Bait stars: {baited.Count} at ({string.Join(", ", baited)})", this);
     }
 
     /// <summary>
@@ -4133,6 +4397,7 @@ public class MazeGenerator : MonoBehaviour
 
         AudioClip music = PickBaseMusic();
         director.Bind(FindPlayer(), aiFollower, stingClip, music != null ? music : droneClip, panicClip, droneIsMusic: music != null, spotted: spottedClip);
+        director.ApplyTerror(terror); // F103 A9
 
         TensionDirector tension = FindAnyObjectByType<TensionDirector>();
         if (tension == null) tension = gameObject.AddComponent<TensionDirector>();
@@ -4253,7 +4518,8 @@ public class MazeGenerator : MonoBehaviour
         if (RunRules.Current == RunRules.Rule.DyingGrid) StartCoroutine(DyingGridRoutine());
 
         // F73: lets the hunter notice the torch beam itself, not just what it lights up.
-        aiFollower?.BindTorch(flashlight, camera != null ? camera.transform : null);
+        aiFollower?.BindTorch(flashlight);
+        flashlight?.ApplyTerror(terror); // F103 A4
 
         // F82: the hunter talks in speech bubbles too (same engine as Stan's). LIGHTS OUT > Build Phrase
         // Books puts a HunterVoice with its phrase book on the scene hunter; added here if missing.
@@ -4297,6 +4563,10 @@ public class MazeGenerator : MonoBehaviour
         DreadDirector dread = FindAnyObjectByType<DreadDirector>();
         if (dread == null) dread = gameObject.AddComponent<DreadDirector>();
         dread.Configure(this, player, camera, aiFollower, presence, director, atmosphere, flashlight, stealth, hud, outcome, _profile);
+        dread.ApplyTerror(terror); // F103
+        presence?.SetEyesLitAtRest(_profile == null || _profile.HunterEyesLitAtRest); // F103 A3
+        presence?.ApplyTerror(terror);
+        aiFollower?.ApplyTerror(terror); // F103 A7
         // F74 Restless run rule: relocations can chain tighter. PhantomInterval's own x0.6 is already
         // folded into _profile by RunRules.ApplyToProfile, read by PhantomDirector.Configure below.
         if (RunRules.Current == RunRules.Rule.Restless) dread.SetHardMinimumCooldownMultiplier(0.7f);
@@ -4305,6 +4575,7 @@ public class MazeGenerator : MonoBehaviour
         if (phantoms == null) phantoms = gameObject.AddComponent<PhantomDirector>();
         Material phantomWallMat = _theme != null && _theme.WallMaterial != null ? _theme.WallMaterial : _wallMat;
         phantoms.Configure(this, player, camera, aiFollower, director, flashlight, stealth, outcome, dread, phantomWallMat, FindStarMaterial(), FindPlayerFootsteps(), _profile);
+        phantoms.ApplyTerror(terror); // F103 A2
 
         // Tier 4: the room between floors. Unlike everything else here it is authored in the scene
         // (Assets/Prefabs/ShopRoom.prefab, first generated by LIGHTS OUT > Build > Shop Room (regenerate)), so it can be inspected and edited in the

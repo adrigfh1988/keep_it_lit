@@ -450,6 +450,27 @@ MonoBehaviour:
     startOffset: 0
     maxSeconds: 0
     lowPassHz: 0
+  hunterAlert:
+    clips:
+    - {fileID: 8300000, guid: 8f69a9904ac6ef74cab7ff1472cee83b, type: 3}
+    - {fileID: 8300000, guid: 84fb0126c4bf09c43bb8b350ce937d25, type: 3}
+    - {fileID: 8300000, guid: fb96dbc1d4fd05e4d8f681efd94800d6, type: 3}
+    volume: 1
+    pitchJitter: 0.06
+    startOffset: 0
+    maxSeconds: 1.6
+    lowPassHz: 0
+  spottedSting:
+    clips:
+    - {fileID: 8300000, guid: 95805c217e9e6c948b6e78bb4ad4870a, type: 3}
+    - {fileID: 8300000, guid: f41a225739809f3479aec08799e0cb73, type: 3}
+    - {fileID: 8300000, guid: 587e6727b10650440bc4f6b82849c5fe, type: 3}
+    - {fileID: 8300000, guid: c28c992e006e0104d928eee9e19de066, type: 3}
+    volume: 1
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
   torchClick:
     clips:
     - {fileID: 8300000, guid: ef63163d7914a654bbc2cebda4c597ce, type: 3}
