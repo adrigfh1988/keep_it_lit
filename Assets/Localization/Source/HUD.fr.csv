@@ -54,3 +54,4 @@ hud.descent.found,TROUVÉ: {item}
 hud.descent.found_next,TROUVÉ: {item}  ·  NIVEAU SUIVANT
 hud.descent.hands_full,MAINS PLEINES
 hud.prompt.open_cache,OUVRIR LA CACHE
+hud.tenant.held,ÇA TIENT LA PORTE

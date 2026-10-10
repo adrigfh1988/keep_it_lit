@@ -690,6 +690,10 @@ MonoBehaviour:
     m_Localized: "PAS DE SORTIE AUTORIS\xC9E."
     m_Metadata:
       m_Items: []
+  - m_Id: 200700661239808
+    m_Localized: ENTENDU
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

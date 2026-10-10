@@ -15,7 +15,7 @@ using UnityEngine.SceneManagement;
 /// left completely alone, so a later slice (F73's fuse box, etc.) can add its own template without
 /// touching this one. Re-running this menu item is always safe.
 /// </summary>
-public static class InteractableKitBuilder
+public static partial class InteractableKitBuilder
 {
     private const string MaterialFolder = "Assets/SourceFiles/Materials/Interactables";
     private const string GalleryName = "InteractableKit";
@@ -302,6 +302,20 @@ public static class InteractableKitBuilder
             if (cache != null)
             {
                 cacheProp.objectReferenceValue = cache;
+                x += PieceSpacing;
+                built++;
+            }
+        }
+
+        // F107 D2: the Listener, same build-missing-only rule. Needs Char_Subject.fbx and the Mixamo clips; without them the slot stays empty and
+        // MazeGenerator.BuildEntities logs an error naming this menu item (the level plays without a Listener).
+        SerializedProperty listenerProp = so.FindProperty("listener");
+        if (listenerProp.objectReferenceValue == null)
+        {
+            Listener listener = BuildListenerTemplate(root.transform, new Vector3(x, 0f, 0f));
+            if (listener != null)
+            {
+                listenerProp.objectReferenceValue = listener;
                 x += PieceSpacing;
                 built++;
             }

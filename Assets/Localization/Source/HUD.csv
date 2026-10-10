@@ -54,3 +54,4 @@ hud.descent.found,"Subtitle after opening an item cache, item usable now. {item}
 hud.descent.found_next,"Subtitle after opening an item cache, item applies from the next level. {item} = the item's shop name",FOUND: {item}  ·  NEXT LEVEL
 hud.descent.hands_full,"Item cache prompt when nothing it holds fits (all-caps prompt, after the E key cap)",HANDS FULL
 hud.prompt.open_cache,"Prompt after the E key cap while looking at a closed item cache in a DESCENT (hold E)",OPEN CACHE
+hud.tenant.held,"Prompt under the crosshair at a locker that something already occupies, after it has shoved the player out once (E key chip + this text, one line, ALL CAPS). ""IT"" = the thing inside, never named",IT HOLDS THE DOOR

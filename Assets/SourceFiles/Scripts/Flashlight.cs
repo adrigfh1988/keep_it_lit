@@ -133,6 +133,34 @@ public class Flashlight : MonoBehaviour
     /// <summary>F103 A4: the direction the beam points, which lags the view slightly. Beam tests must use this, not the camera's forward.</summary>
     public Vector3 BeamForward => _beam.forward;
 
+    private readonly RaycastHit[] _illuminationHits = new RaycastHit[8];
+
+    /// <summary>
+    /// F107 D4: true if the beam is emitting and `point` is inside its reach and outer cone (plus `slackDegrees`) with nothing solid between
+    /// the beam and it. The player's own hierarchy and `ignore` (the thing being tested) never block; triggers never do. Same rule as
+    /// Stalker.TestBeamPoint, shared here for the living bodies.
+    /// </summary>
+    public bool IlluminatesPoint(Vector3 point, Transform ignore = null, float slackDegrees = 4f)
+    {
+        if (!IsBeamLit) return false;
+
+        Vector3 origin = BeamOrigin;
+        Vector3 to = point - origin;
+        float distance = to.magnitude;
+        if (distance < 0.0001f) return true;
+        if (distance > Range || Vector3.Angle(BeamForward, to) >= OuterAngle * 0.5f + slackDegrees) return false;
+
+        int count = Physics.RaycastNonAlloc(origin, to / distance, _illuminationHits, distance, ~0, QueryTriggerInteraction.Ignore);
+        for (int i = 0; i < count; i++)
+        {
+            Transform hit = _illuminationHits[i].transform;
+            if (hit.IsChildOf(transform.root) || (ignore != null && hit.IsChildOf(ignore))) continue;
+            return false;
+        }
+
+        return true;
+    }
+
     /// <summary>Ignore the toggle key while false: under the pause menu, and through an ending.</summary>
     public bool InputEnabled = true;
 

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 /// The second creature (F75, decision D7): the robot body (Assets/Prefabs/PlayerRobot.prefab),
 /// blackened, with pin-prick eyes, scaled 1.15 - deliberately not Adam, so the two killers still read
 /// differently once LIGHTS OUT &gt; Build &gt; Hunter Body has been run for the hunter. Appears on floors 4
-/// and 5 (FloorProfile.HasStalker). It moves only while unlit - not in the torch cone, not in a powered
+/// and 5 (EntityRoster). It moves only while unlit - not in the torch cone, not in a powered
 /// lamp/candle/lantern pool (LightPool) - and freezes mid-stride the instant a light finds it.
 ///
 /// It is not lethal: touching the player makes it shriek (the hunter hears the exact position from

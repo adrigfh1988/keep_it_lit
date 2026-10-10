@@ -127,7 +127,7 @@ public partial class GameOutcome
         y -= 110f;
         AddSlipLine(root, L10n.T("ui.descent.end.stats", ("stars", DescentRun.StarsTaken), ("time", MazeEscape.FormatTime(DescentRun.TotalRunSeconds))), 36f, Grey, y);
         y -= 58f;
-        AddSlipLine(root, L10n.T("ui.descent.end.cause", ("cause", L10n.T("ui.descent.cause." + DescentRun.Cause.ToString().ToLowerInvariant()))), 36f, Grey, y);
+        AddSlipLine(root, L10n.T("ui.descent.end.cause", ("cause", L10n.T("ui.descent.cause." + CauseWord()))), 36f, Grey, y);
         y -= 58f;
         string learned = LearnedHabitsText(title.font);
         if (learned != null)
@@ -161,6 +161,13 @@ public partial class GameOutcome
         _typing = true;
         StartCoroutine(TypeLedger());
         PlayerLock.SetCursorFree(true);
+    }
+
+    /// <summary>The suffix of the cause word's key: the entity's own name when an entity ended it (listener = HEARD), the cause's otherwise.</summary>
+    private static string CauseWord()
+    {
+        if (DescentRun.Cause == DescentCause.Entity && DescentRun.CauseEntity != EntityKind.None) return DescentRun.CauseEntity.ToString().ToLowerInvariant();
+        return DescentRun.Cause.ToString().ToLowerInvariant();
     }
 
     /// <summary>"LOCKERS ▮▮▯ · DARK ▮▯▯" for every habit the hunter learned during this descent (level 1 or more), or null when it learned nothing.</summary>

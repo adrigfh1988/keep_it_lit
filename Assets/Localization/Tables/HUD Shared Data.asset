@@ -290,6 +290,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331682537308447
+  - m_Id: 178536625115136
+    m_Key: hud.tenant.held
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308581
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -521,3 +526,7 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Prompt after the E key cap while looking at a closed item cache in a DESCENT (hold E)
+    - rid: 4707331682537308581
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Prompt under the crosshair at a locker that something already occupies, after it has shoved the player out once (E key chip + this text, one line, ALL CAPS). "IT" = the thing inside, never named

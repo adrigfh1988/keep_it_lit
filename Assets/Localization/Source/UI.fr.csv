@@ -150,6 +150,7 @@ ui.descent.cause.hunter,SUIVI
 ui.descent.cause.visitor,RETENU
 ui.descent.cause.timer,LUMIÈRES RÉTABLIES
 ui.descent.cause.entity,EMPORTÉ
+ui.descent.cause.listener,ENTENDU
 ui.descent.end.learned,ÇA AVAIT APPRIS: {habits}
 ui.descent.habit.lockers,CASIERS
 ui.descent.habit.throws,JETS

@@ -37,6 +37,12 @@ public static class DescentRun
     /// <summary>What ended the descent (read by the end screen).</summary>
     public static DescentCause Cause { get; set; } = DescentCause.Hunter;
 
+    /// <summary>F107 D2: which entity it was when <see cref="Cause"/> is Entity (the end screen names it: Listener = HEARD). None otherwise.</summary>
+    public static EntityKind CauseEntity { get; set; } = EntityKind.None;
+
+    /// <summary>F107 D4: a living body has acted in this descent. From then on every level also gives other bodies a harmless twitch, so the player can never again tell which one is real.</summary>
+    public static bool BodiesWoke { get; set; }
+
     /// <summary>A new descent: everything back to depth 1, and the campaign statics reset the way GameFlow.ReturnToMenu does. HunterMemory is reset here and then persists across the levels of this descent, which is the point of it.</summary>
     public static void Begin()
     {
@@ -71,6 +77,8 @@ public static class DescentRun
         LastLoopDepth = Never;
         LastSecondWindDepth = Never;
         Cause = DescentCause.Hunter;
+        CauseEntity = EntityKind.None;
+        BodiesWoke = false;
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]

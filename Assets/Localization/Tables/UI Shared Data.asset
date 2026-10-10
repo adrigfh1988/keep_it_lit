@@ -810,6 +810,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331682537308469
+  - m_Id: 200700661239808
+    m_Key: ui.descent.cause.listener
+    m_Metadata:
+      m_Items:
+      - rid: 4707331682537308582
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -1457,3 +1462,7 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: 'DESCENT end screen: closing line (44 pt red, one line)'
+    - rid: 4707331682537308582
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'DESCENT cause word: the blind listener that follows sound found you. Ends the sentence ''CAUSE: ...'' (a single word, all caps; it means you were heard)'

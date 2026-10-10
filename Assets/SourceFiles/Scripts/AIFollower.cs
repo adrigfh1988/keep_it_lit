@@ -1070,7 +1070,7 @@ public class AIFollower : MonoBehaviour
         if (_torchBeamDistance >= _torch.Range * 0.8f) return;
 
         _torchNoiseCooldownUntil = Time.time + torchBeamNoiseCooldown;
-        HearNoise(target.position, torchBeamNoiseRadius);
+        HearNoiseInternal(target.position, torchBeamNoiseRadius); // F107 D2: the beam on the hunter is sight, not sound - it must not wake a Listener
     }
 
     /// <summary>
@@ -1134,6 +1134,13 @@ public class AIFollower : MonoBehaviour
     /// if it was heard, so the caller can say so (a subtitle).
     /// </summary>
     public bool HearNoise(Vector3 at, float radius)
+    {
+        MazeNoise.Emit(at, radius); // F107 D2: before any gate of the hunter's own, so every listening entity hears it
+        return HearNoiseInternal(at, radius);
+    }
+
+    /// <summary>F107 D2: the hunter's half of HearNoise, without the MazeNoise broadcast. The torch-beam check calls this directly.</summary>
+    private bool HearNoiseInternal(Vector3 at, float radius)
     {
         if (_agent == null || !_agent.isOnNavMesh || _state == State.Captured || GameFlow.IsInIntake || GameFlow.IsInHub) return false;
 

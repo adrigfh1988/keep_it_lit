@@ -328,6 +328,7 @@ public class PhantomDirector : MonoBehaviour
         // F103 A2: a sound may come from a hunter that is close; a figure may not. Otherwise every phantom proves the hunter is far away.
         float exclusion = IsAudioType(type) && _terror.contaminatedPhantoms ? audioHunterExclusionDistance : hunterExclusionDistance;
         if (_follower.FlatDistanceToTarget <= exclusion) return false;
+        if (_maze.IsKillerEntityNear(_player.position, exclusion)) return false; // F107 D2: a Listener close by counts like the hunter
         if (_stealth != null && _stealth.Hidden && !HiddenAllowsAudio(type)) return false;
         if (Time.time - _lastPhantomTime < minSpacing) return false;
         if (_dread != null && _dread.IsTelegraphing) return false;

@@ -105,6 +105,9 @@ public class DreadMeter : MonoBehaviour
     private int _overlayHundredths = -1;
     private bool _overlayBackoff;
 
+    /// <summary>F107 D2: a one-off spike, the same input a Stan touch makes (a Listener lunge, a Tenant shove, a living body). Fades like that pulse does.</summary>
+    public void Spike() => _stanAt = Time.time;
+
     /// <summary>The hidden fear value, 0..1.</summary>
     public float Value { get; private set; }
 

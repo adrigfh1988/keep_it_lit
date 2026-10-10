@@ -36,6 +36,12 @@ public class Locker : MonoBehaviour, IHidingSpot
     [Tooltip("Where the player stands when they leave, roughly 1 m in front of the door.")]
     [SerializeField] private Transform frontAnchor;
 
+    [Header("F107 D3 - the Tenant")]
+    [Tooltip("Seconds the door takes to burst open when something shoves the player out")]
+    [SerializeField] private float burstOpenSeconds = 0.08f;
+    [Tooltip("Seconds the door hangs open before it slams shut again")]
+    [SerializeField] private float burstHoldSeconds = 0.35f;
+
     [Header("F104 B3 - sanctuary decay")]
     [Tooltip("Seconds hidden before the locker stops being safe: louder breathing, then knocks and scrapes outside")]
     [SerializeField] private float quietSeconds = 15f;
@@ -92,6 +98,9 @@ public class Locker : MonoBehaviour, IHidingSpot
     public Vector3 FrontPosition { get; private set; }
     public bool Occupied { get; private set; }
 
+    /// <summary>F107 D3: set when something already lives in this locker. E asks it instead of entering; the player is never hidden here.</summary>
+    public LockerTenant Tenant { get; set; }
+
     /// <summary>Called by MazeGenerator.BuildLockers right after the geometry is built.</summary>
     public void Configure(Vector3 insidePosition, Vector3 frontPosition, float facingYaw, Transform door)
     {
@@ -144,14 +153,18 @@ public class Locker : MonoBehaviour, IHidingSpot
         if (!Occupied && _interactor != null && _interactor.HasFocus) return;
 
         if (Occupied) Leave();
-        else if (_playerInTrigger) Enter();
+        else if (_playerInTrigger)
+        {
+            if (Tenant != null) Tenant.Attempt(); // F107 D3: something is already in here
+            else Enter();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!IsPlayer(other)) return;
         _playerInTrigger = true;
-        if (!Occupied && _hud != null) _hud.SetPromptKey("E", "hud.prompt.hide");
+        if (!Occupied && _hud != null) RefreshPrompt();
     }
 
     private void OnTriggerExit(Collider other)
@@ -305,6 +318,32 @@ public class Locker : MonoBehaviour, IHidingSpot
     public void ForceLeave()
     {
         if (Occupied) Leave();
+    }
+
+    // ---------------------------------------------------------------- F107 D3: the Tenant
+
+    /// <summary>F107 D3: the trigger prompt for standing at this locker: "hide", or the tenant's "it holds the door" once it has shoved the player out.</summary>
+    public void RefreshPrompt()
+    {
+        if (_hud == null) return;
+        _hud.SetPromptKey("E", Tenant != null && Tenant.Held ? "hud.tenant.held" : "hud.prompt.hide");
+    }
+
+    /// <summary>F107 D3: the door bursts open and slams shut again, fast (a tenant shoving the player out). Ignored while someone is hidden inside.</summary>
+    public void Burst()
+    {
+        if (_door == null || Occupied) return;
+
+        if (_doorMotion != null) StopCoroutine(_doorMotion);
+        _doorMotion = StartCoroutine(BurstRoutine());
+    }
+
+    private IEnumerator BurstRoutine()
+    {
+        yield return TurnDoor(_doorClosed * Quaternion.Euler(0f, doorOpenDegrees, 0f), burstOpenSeconds);
+        yield return new WaitForSeconds(burstHoldSeconds);
+        yield return TurnDoor(_doorClosed, burstOpenSeconds * 1.5f);
+        _doorMotion = null;
     }
 
     // ---------------------------------------------------------------- F104 B3: sanctuary decay

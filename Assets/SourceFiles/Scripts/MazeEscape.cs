@@ -149,6 +149,9 @@ public class MazeEscape : MonoBehaviour
     /// <summary>F36 Second Wind: holds the countdown without the permanent Stop(), so it can resume.</summary>
     public bool Frozen { get; set; }
 
+    /// <summary>F107 D2: true during the hatch walk-in (freeze, leaves open, the lowering), before GameOutcome.IsEnding flips. Entities never kill then.</summary>
+    public bool IsEntering => _entering;
+
     /// <summary>Called by MazeGenerator once the maze and the actors exist.</summary>
     /// <summary>Per-floor countdown. Read when the hatch opens, so it can be set any time before that.</summary>
     public void SetEscapeSeconds(float seconds) { escapeSeconds = Mathf.Max(10f, seconds); }

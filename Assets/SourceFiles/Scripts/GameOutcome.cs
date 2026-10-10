@@ -160,17 +160,34 @@ public partial class GameOutcome : MonoBehaviour
     /// </summary>
     public void CaughtByLoopVisitor(Vector3 lookAt, System.Action onSecondWind)
     {
+        CaughtBy(lookAt, onSecondWind, DescentCause.Visitor, EntityKind.None, "sub.loop.second_wind");
+    }
+
+    /// <summary>
+    /// F107 D2: a maze entity that kills (the Listener) has the player. The same two outcomes as the hunter's catch, through the same single-shot
+    /// guards: a held Second Wind is consumed and `onSecondWind` runs at full black (the entity warps itself away); otherwise a real death with
+    /// the camera easing onto `lookAt`, and the descent end screen names `kind` as the cause.
+    /// </summary>
+    public void CaughtByEntity(Vector3 lookAt, System.Action onSecondWind, EntityKind kind)
+    {
+        CaughtBy(lookAt, onSecondWind, DescentCause.Entity, kind, "sub.loop.second_wind");
+    }
+
+    /// <summary>The shared body of <see cref="CaughtByLoopVisitor"/> and <see cref="CaughtByEntity"/>.</summary>
+    private void CaughtBy(Vector3 lookAt, System.Action onSecondWind, DescentCause cause, EntityKind kind, string secondWindLineKey)
+    {
         if (IsOver || IsEnding) return;
 
         if (PlayerInventory.TryConsume(ShopItem.SecondWind))
         {
-            StartCoroutine(SecondWindSequence(onSecondWind, "sub.loop.second_wind"));
+            StartCoroutine(SecondWindSequence(onSecondWind, secondWindLineKey));
             return;
         }
 
         _captureLookAt = lookAt;
         _hasCaptureLookAt = true;
-        DescentRun.Cause = DescentCause.Visitor; // F107: read only by the descent end screen
+        DescentRun.Cause = cause; // F107: read only by the descent end screen
+        DescentRun.CauseEntity = kind;
         Lose(LoseReason.Caught);
     }
 

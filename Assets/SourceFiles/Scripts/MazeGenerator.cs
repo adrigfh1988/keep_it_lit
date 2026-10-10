@@ -276,7 +276,7 @@ public partial class MazeGenerator : MonoBehaviour
     /// <summary>F74: Lab terminals specifically - ConfigureTerminal needs the player camera, which does not exist yet when BuildThemeInteractables runs.</summary>
     private readonly List<ThemeInteractable> _pendingTerminals = new List<ThemeInteractable>();
 
-    /// <summary>F75: this floor's stalker (floors 4-5 only, FloorProfile.HasStalker), late-bound once the player/camera/flashlight/hunter/HUD/outcome exist. Null on every other floor.</summary>
+    /// <summary>F75: this floor's stalker (whenever EntityRoster says so: story floors 4-5, a descent from depth 4), late-bound once the player/camera/flashlight/hunter/HUD/outcome exist. Null on every other floor.</summary>
     private Stalker _stalker;
 
     /// <summary>F103 A10: the dead ends that survived braiding on this floor (short pockets only), in generation order.</summary>
@@ -447,6 +447,7 @@ public partial class MazeGenerator : MonoBehaviour
         ResolveTheme();
 
         ResolveDressing();
+        ResolveEntitySet(usedSeed); // F107 D1: before the dressing passes record their living-body candidates
 
         // Saved scenes carry their own cellSize, so the width rule is enforced here rather than trusted
         float minCellSize = minCorridorWidth + wallThickness;
@@ -546,8 +547,11 @@ public partial class MazeGenerator : MonoBehaviour
         PlacePlayer();
         PlaceAI();
 
-        // F75, post-PlaceAI: the second creature (+16), on floors where FloorProfile.HasStalker.
+        // F75, post-PlaceAI: the second creature (+16), whenever the entity set (EntityRoster) has the Stalker.
         BuildStalker(new System.Random(usedSeed + 16));
+
+        // F107 D, post-BuildStalker: the Listener, the Tenant and the living bodies (+25). Draws nothing for a kind that is not in the level's set.
+        BuildEntities(new System.Random(usedSeed + EntitySalt));
 
         SetUpAtmosphere();
 
@@ -1504,6 +1508,7 @@ public partial class MazeGenerator : MonoBehaviour
                 _ceilingPropCells.Add(cell); // F107 A: after every draw, so no stream moves
                 ApplyModelVariants(clone, x, z, 0x4B22);
                 RecordShiftable(clone, cell, Vector3.zero, false);
+                if (clone.GetComponentInChildren<HangingBodyFit>(true) != null) NoteLivingCandidate(clone, cell, true); // F107 D4: no rng draw
                 foreach (HangingBodyFit fit in clone.GetComponentsInChildren<HangingBodyFit>(true)) fit.Fit(wallHeight); // F85: rope cut to this floor's ceiling
             }
         }
@@ -1623,6 +1628,7 @@ public partial class MazeGenerator : MonoBehaviour
             // Look-alike models (the FallenRunner's corpses), picked by a hash of the cell - no rng draw.
             if (clone.TryGetComponent(out ModelVariants models)) models.Apply((cell.x * 73856093) ^ (cell.y * 19349663) ^ 0x5EED);
             RecordShiftable(clone, cell, dir, true);
+            if (clone.transform.Find("Bodies") != null) NoteLivingCandidate(clone, cell, false); // F107 D4: the FallenRunner's corpses; no rng draw
 
             foreach (FlickerLight flicker in clone.GetComponentsInChildren<FlickerLight>(true))
             {
@@ -3682,6 +3688,7 @@ public partial class MazeGenerator : MonoBehaviour
 
         foreach (Collider collider in twin.GetComponentsInChildren<Collider>(true)) Destroy(collider);
         foreach (FlickerLight flicker in twin.GetComponentsInChildren<FlickerLight>(true)) Destroy(flicker);
+        foreach (LivingBody living in twin.GetComponentsInChildren<LivingBody>(true)) Destroy(living); // F107 D4: a twin is only a look-alike, never a second living body
 
         if (!_propWalls.TryGetValue(cell, out List<Vector3> taken))
         {
@@ -4505,7 +4512,7 @@ public partial class MazeGenerator : MonoBehaviour
     }
 
     /// <summary>
-    /// F75 (+16, post-PlaceAI): clones InteractableKit.stalker onto floors where FloorProfile.HasStalker
+    /// F75 (+16, post-PlaceAI): clones InteractableKit.stalker onto floors whose entity set (EntityRoster) has the Stalker
     /// (4 and 5), warped onto the navmesh at least 8 BFS steps from the start and at least 4 from the
     /// hunter's own cell (FarthestCell - the same cell PlaceAI warped the hunter onto). Falls back to the
     /// single farthest-from-start reachable cell if no cell satisfies both, rather than skip the floor's
@@ -4513,7 +4520,7 @@ public partial class MazeGenerator : MonoBehaviour
     /// </summary>
     private void BuildStalker(System.Random rng)
     {
-        if (_profile == null || !_profile.HasStalker) return;
+        if ((_entitySet & EntityKind.Stalker) == 0) return; // F107 D1: the roster decides (was FloorProfile.HasStalker)
 
         if (interactableKit == null) interactableKit = FindAnyObjectByType<InteractableKit>(FindObjectsInactive.Include);
         if (interactableKit == null || !interactableKit.HasStalker)
@@ -4791,7 +4798,7 @@ public partial class MazeGenerator : MonoBehaviour
         if (floorMap == null) floorMap = gameObject.AddComponent<FloorMapUi>();
         BindLoop(player, player != null ? player.GetComponent<ThirdPersonController>() : null, camera, flashlight, director, GetComponent<MazeAmbience>(), outcome, hud, floorMap); // F105 C4, F106
 
-        // F75: the second creature (floors 4-5 only, FloorProfile.HasStalker). Built earlier in Awake
+        // F75: the second creature (see EntityRoster). Built earlier in Awake
         // (BuildStalker, +16), before the player/camera/flashlight/hunter/HUD/outcome existed -
         // late-bound here, same pattern as the lantern/lore notes above.
         _stalker?.Configure(this, player, flashlight, camera != null ? camera.transform : null, stealth, aiFollower, hud, outcome);
@@ -4925,6 +4932,7 @@ public partial class MazeGenerator : MonoBehaviour
 
         outcome.Configure(player, aiFollower, director, escape, flashlight, UsedSeed);
         outcome.BindShop(shop, this, hud, stealth);
+        ConfigureEntities(player); // F107 D1: the Listener, Tenant and living bodies, now that the HUD, outcome and escape exist
 
         MainMenu menu = null;
         if (mainMenu)
@@ -5136,6 +5144,7 @@ public partial class MazeGenerator : MonoBehaviour
         marks[0, 0] += "S";
         AddLayoutMarks(marks); // F105 C2/C3: r / g / q, only on a cell with no other mark
         AddLoopMark(marks); // F105 C4: L
+        AddEntityMarks(marks); // F107 D: l t b d
 
         System.Text.StringBuilder sb = new System.Text.StringBuilder();
         sb.Append($"Maze seed {UsedSeed}, floor {GameFlow.CurrentFloor}, {width}x{height}, north up, start S = (0,0) bottom-left.\n");
@@ -5163,6 +5172,7 @@ public partial class MazeGenerator : MonoBehaviour
         AppendDebugLegend(sb, data);
         AppendLayoutLegend(sb);
         AppendLoopLegend(sb);
+        AppendEntityLegend(sb); // F107 D
         return sb.ToString();
     }
 

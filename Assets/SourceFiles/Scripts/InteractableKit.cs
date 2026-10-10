@@ -65,6 +65,10 @@ public class InteractableKit : MonoBehaviour
     [Tooltip("Optional. The trapdoor MazeEscape.BuildHatch clones: a child 'Glow' renderer takes the hatch's emissive material, and children 'LidL'/'LidR' are the two leaves, hinged about their local Z. Empty = the old glowing slab.")]
     [SerializeField] private GameObject escapeHatch;
 
+    [Header("DESCENT Listener (F107 D2)")]
+    [Tooltip("The blind second killer: Char_Subject (pale, gaunt, no emission) on Animation/Descent/Listener.controller, with a Listener on the root. MazeGenerator.BuildEntities clones it, adds a NavMeshAgent and warps it onto the mesh.")]
+    [SerializeField] private Listener listener;
+
     [Header("DESCENT item cache (F107)")]
     [Tooltip("A small chest against a wall: hold E to open it for one item. MazeGenerator.BuildItemCaches clones it in a DESCENT only.")]
     [SerializeField] private DescentItem itemCache;
@@ -104,6 +108,7 @@ public class InteractableKit : MonoBehaviour
     public ParticleSystem FogBank => fogBank;
     public LoreNote PatientFile => patientFile;
     public DescentItem ItemCache => itemCache;
+    public Listener Listener => listener;
 
     /// <summary>True once every F72 template slot is assigned - MazeGenerator.BuildDoors logs and skips the whole feature otherwise.</summary>
     public bool HasDoorsAndButtons => shutterDoor != null && wallButton != null && batteryCell != null;
@@ -137,4 +142,7 @@ public class InteractableKit : MonoBehaviour
 
     /// <summary>F107: true once the item cache template is assigned - MazeGenerator.BuildItemCaches logs and skips otherwise.</summary>
     public bool HasItemCache => itemCache != null;
+
+    /// <summary>F107 D2: true once the Listener template is assigned - MazeGenerator.BuildEntities logs and skips the Listener otherwise.</summary>
+    public bool HasListener => listener != null;
 }

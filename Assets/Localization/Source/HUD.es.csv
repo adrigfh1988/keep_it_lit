@@ -54,3 +54,4 @@ hud.descent.found,ENCONTRADO: {item}
 hud.descent.found_next,ENCONTRADO: {item}  ·  SIGUIENTE NIVEL
 hud.descent.hands_full,MANOS LLENAS
 hud.prompt.open_cache,ABRIR ALIJO
+hud.tenant.held,ALGO SUJETA LA PUERTA

@@ -23,6 +23,15 @@ public class HangingBodyFit : MonoBehaviour
     [SerializeField] private float depth0;
     [SerializeField] private float feetClearance = 0.4f;
 
+    /// <summary>F107 D4: the rope bone (its local Y is the rope length).</summary>
+    public Transform Rope => rope;
+
+    /// <summary>F107 D4: the container the body hangs from; moving it moves the whole figure.</summary>
+    public Transform Body => body;
+
+    /// <summary>F107 D4: the collider that fills the hanging body's space, switched off when the body drops.</summary>
+    public BoxCollider Box => box;
+
     /// <summary>Re-seats the rope and body for a room whose ceiling underside is ceilingHeight above its floor.</summary>
     public void Fit(float ceilingHeight)
     {

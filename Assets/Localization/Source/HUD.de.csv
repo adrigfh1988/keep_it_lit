@@ -54,3 +54,4 @@ hud.descent.found,GEFUNDEN: {item}
 hud.descent.found_next,GEFUNDEN: {item}  ·  NÄCHSTE EBENE
 hud.descent.hands_full,HÄNDE VOLL
 hud.prompt.open_cache,VERSTECK ÖFFNEN
+hud.tenant.held,ES HÄLT DIE TÜR ZU

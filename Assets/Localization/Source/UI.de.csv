@@ -150,6 +150,7 @@ ui.descent.cause.hunter,VERFOLGT
 ui.descent.cause.visitor,FESTGEHALTEN
 ui.descent.cause.timer,LICHT WIEDERHERGESTELLT
 ui.descent.cause.entity,GEHOLT
+ui.descent.cause.listener,GEHÖRT
 ui.descent.end.learned,ES HATTE GELERNT: {habits}
 ui.descent.habit.lockers,SPINDE
 ui.descent.habit.throws,WÜRFE

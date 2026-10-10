@@ -276,9 +276,6 @@ public class FloorProfile
     /// <summary>S9: the translated line (empty when the floor has no temperament twist). The key is a Shop-table key.</summary>
     public string TemperamentText => string.IsNullOrEmpty(TemperamentKey) ? "" : L10n.T(TemperamentKey);
 
-    // ---- the Stalker (F75, decision D7)
-    /// <summary>True on floors 4 and 5 - MazeGenerator.BuildStalker gates on this.</summary>
-    public bool HasStalker;
 
     // ---- rationed eyes (F103 A3)
     /// <summary>True on floor 1 only: the hunter's eyes stay lit while it patrols, so the teaching floor still shows what they mean. Later floors ration them (AIPresence).</summary>
@@ -411,7 +408,7 @@ public class FloorProfile
 
         // F75, decision D7: the Stalker appears on the last two floors only - by then the hunter alone
         // has had time to establish what "the one thing chasing you" feels like.
-        p.HasStalker = floor >= 4;
+        // F107 D1: which entities a floor gets is EntityRoster's call now (it was p.HasStalker = floor >= 4).
 
         // F103 A3: floor 1 is the teaching floor - the eyes stay lit there.
         p.HunterEyesLitAtRest = floor == 1;
@@ -505,7 +502,6 @@ public class FloorProfile
         p.LockerCount = lockers;
 
         p.ShardCount = 0;
-        p.HasStalker = depth >= 4;
 
         // Every fifth level is a boss level: the final floor's temperament and its lift.
         bool boss = depth % DescentBossEvery == 0;
