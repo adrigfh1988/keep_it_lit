@@ -268,6 +268,15 @@ MonoBehaviour:
     m_Localized: IT HOLDS THE DOOR
     m_Metadata:
       m_Items: []
+  - m_Id: 405334386446336
+    m_Localized: '{key}   FLOOR PLAN  x{count}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663390
+  - m_Id: 405334482915328
+    m_Localized: HOLD TO USE THE FLOOR PLAN
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -301,3 +310,4 @@ MonoBehaviour:
         - id: 171011926298628
         - id: 171011926298630
         - id: 171011926298631
+        - id: 405334386446336

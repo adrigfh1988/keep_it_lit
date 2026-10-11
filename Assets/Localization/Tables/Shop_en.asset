@@ -344,6 +344,15 @@ MonoBehaviour:
     m_Localized: It will not let you leave.
     m_Metadata:
       m_Items: []
+  - m_Id: 397341183873024
+    m_Localized: Floor Plan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 397341263564800
+    m_Localized: 'Rare. Hold {key} on the floor that needs it: the map shows only where you have walked.'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763065
   references:
     version: 2
     RefIds:
@@ -361,3 +370,4 @@ MonoBehaviour:
         - id: 375296073
         - id: 375296074
         - id: 375296076
+        - id: 397341263564800

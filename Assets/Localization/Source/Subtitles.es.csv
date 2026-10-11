@@ -48,3 +48,4 @@ sub.loop.rule,"SI ALGO ESTÁ MAL, VUELVE. SI NO, SIGUE ANDANDO."
 sub.loop.reference,MIRA BIEN. ASÍ ES COMO DEBE VERSE.
 sub.loop.reward,RECUERDAS EL LABERINTO.
 sub.loop.second_wind,TE DEJA IR. UNA VEZ.
+sub.map.used,EL PLANO. SOLO LO QUE HAS RECORRIDO.

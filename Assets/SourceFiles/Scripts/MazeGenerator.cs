@@ -4989,8 +4989,8 @@ public partial class MazeGenerator : MonoBehaviour
 
         // Campaign cosmetics (F35), applied on every scene build so the choice survives a reload.
         if (flashlight != null) flashlight.SetBeamColor(ShopCatalogue.TorchColours[PlayerInventory.TorchColourIndex].Colour);
-        if (hud != null) hud.SetTint(ShopCatalogue.HudTints[PlayerInventory.HudTintIndex].Colour);
-        tension.SetCalmColor(ShopCatalogue.HudTints[PlayerInventory.HudTintIndex].Colour);
+        if (hud != null) hud.SetTint(ShopCatalogue.HudTints[0].Colour); // F110: the HUD tint is retired, always the default
+        tension.SetCalmColor(ShopCatalogue.HudTints[0].Colour);
         if (_profile != null && stealth != null) stealth.NoiseScale = _profile.NoiseScale;
 
         // F74: the "FLOOR n - THE X" card. Built last, once every other system (theme,
@@ -5286,12 +5286,7 @@ public partial class MazeGenerator : MonoBehaviour
             data.HatchCell = hatch;
         }
 
-        if (_mapPlayer == null)
-        {
-            _mapPlayer = FindPlayer();
-            FirstPersonRig rig = _mapPlayer != null ? _mapPlayer.GetComponent<FirstPersonRig>() : null;
-            _mapCamera = rig != null && rig.PlayerCamera != null ? rig.PlayerCamera.transform : _mapPlayer;
-        }
+        EnsureMapPlayer();
 
         if (_mapPlayer != null && TryWorldToCell(_mapPlayer.position, out Vector2Int playerCell))
         {
@@ -5303,6 +5298,32 @@ public partial class MazeGenerator : MonoBehaviour
         }
 
         return data;
+    }
+
+    private void EnsureMapPlayer()
+    {
+        if (_mapPlayer != null) return;
+
+        _mapPlayer = FindPlayer();
+        FirstPersonRig rig = _mapPlayer != null ? _mapPlayer.GetComponent<FirstPersonRig>() : null;
+        _mapCamera = rig != null && rig.PlayerCamera != null ? rig.PlayerCamera.transform : _mapPlayer;
+    }
+
+    /// <summary>
+    /// F110: the player in map units (cell units from the start cell's corner, so (3.5, 2.5) is the centre of cell (3, 2)) and the way the body faces,
+    /// degrees clockwise from north. The first-person controller locks the body's yaw to the camera's, so the yaw is steady looking straight up or down.
+    /// False when the player is not inside the maze.
+    /// </summary>
+    public bool TryGetPlayerOnMap(out Vector2 cellUnits, out float yaw)
+    {
+        cellUnits = default;
+        yaw = 0f;
+        EnsureMapPlayer();
+        if (_mapPlayer == null || !TryWorldToCell(_mapPlayer.position, out _)) return false;
+
+        cellUnits = new Vector2((_mapPlayer.position.x - origin.x) / cellSize, (_mapPlayer.position.z - origin.z) / cellSize);
+        yaw = _mapPlayer.eulerAngles.y;
+        return true;
     }
 
     /// <summary>The label of the `index`-th door on the maps: 1-9, then A-Z.</summary>

@@ -226,6 +226,10 @@ MonoBehaviour:
     m_Localized: "REGARDEZ BIEN. C'EST AINSI QUE \xC7A DOIT \xCATRE."
     m_Metadata:
       m_Items: []
+  - m_Id: 405333857964032
+    m_Localized: "LE PLAN D'\xC9TAGE. SEULEMENT CE QUE VOUS AVEZ PARCOURU."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

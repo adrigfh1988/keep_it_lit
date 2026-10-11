@@ -55,3 +55,5 @@ hud.descent.found_next,TROUVÉ: {item}  ·  NIVEAU SUIVANT
 hud.descent.hands_full,MAINS PLEINES
 hud.prompt.open_cache,OUVRIR LA CACHE
 hud.tenant.held,ÇA TIENT LA PORTE
+hud.slot.floor_plan,{key}   PLAN D'ÉTAGE  x{count}
+hud.prompt.use_floor_plan,MAINTENIR POUR UTILISER LE PLAN

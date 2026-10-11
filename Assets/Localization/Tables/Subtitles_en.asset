@@ -226,6 +226,10 @@ MonoBehaviour:
     m_Localized: LOOK CAREFULLY. THIS IS HOW IT SHOULD LOOK.
     m_Metadata:
       m_Items: []
+  - m_Id: 405333857964032
+    m_Localized: THE FLOOR PLAN. ONLY WHAT YOU HAVE WALKED.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

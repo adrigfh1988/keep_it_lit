@@ -48,3 +48,4 @@ sub.loop.rule,"World text (the game speaking) when the looping corridor seals be
 sub.loop.reference,"World text queued right after sub.loop.rule when the looping corridor traps the player (shown 4 s): the lap they are on is always normal, so it is the one to remember. ALL CAPS like IT HEARD YOU",LOOK CAREFULLY. THIS IS HOW IT SHOULD LOOK.
 sub.loop.reward,"World text when the player has solved the looping corridor and is let out with the floor map (shown 3.5 s). ALL CAPS like IT HEARD YOU",YOU REMEMBER THE MAZE.
 sub.loop.second_wind,"World text after a Second Wind lets the player go from the looping corridor's Visitor (shown 3.2 s). ""IT"" = the Visitor, never named. ALL CAPS like IT HEARD YOU",IT LETS YOU GO. ONCE.
+sub.map.used,"Subtitle (plain, about 4 s) when a Floor Plan is used: the map is on for this floor and shows only what has been walked",THE FLOOR PLAN. ONLY WHAT YOU HAVE WALKED.

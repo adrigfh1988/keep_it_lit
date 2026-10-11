@@ -145,7 +145,7 @@ public class PauseMenu : MonoBehaviour
         // F86: only the Intake offers a way out of itself.
         if (_skipButton != null) _skipButton.gameObject.SetActive(GameFlow.IsInIntake);
         // F106: the map button is for touch players (no M key) and anyone who forgot it; only once the loop corridor has handed the map over.
-        if (_mapButton != null) _mapButton.gameObject.SetActive(_map != null && _map.Available);
+        if (_mapButton != null) _mapButton.gameObject.SetActive(_map != null && (_map.Available || _map.CanUsePlan)); // F110: a held, unused Floor Plan also offers it (touch has no M)
         RefreshLessons();
         _panel.SetActive(true);
         _panel.transform.SetAsLastSibling();
@@ -183,7 +183,11 @@ public class PauseMenu : MonoBehaviour
     private void OpenMap()
     {
         Resume();
-        if (_map != null) _map.Open();
+        if (_map != null)
+        {
+            if (_map.CanUsePlan) _map.UsePlan();
+            else _map.Open();
+        }
     }
 
     private void OnEnable() => L10n.Changed += HandleLanguage;

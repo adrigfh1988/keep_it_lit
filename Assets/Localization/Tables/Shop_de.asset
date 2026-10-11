@@ -344,6 +344,15 @@ MonoBehaviour:
     m_Localized: "Es l\xE4sst dich nicht gehen."
     m_Metadata:
       m_Items: []
+  - m_Id: 397341183873024
+    m_Localized: Grundriss
+    m_Metadata:
+      m_Items: []
+  - m_Id: 397341263564800
+    m_Localized: 'Selten. Halte {key} im Stockwerk, das es braucht: Die Karte zeigt nur, wo du gelaufen bist.'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763210
   references:
     version: 2
     RefIds:
@@ -361,3 +370,4 @@ MonoBehaviour:
         - id: 375296073
         - id: 375296074
         - id: 375296076
+        - id: 397341263564800

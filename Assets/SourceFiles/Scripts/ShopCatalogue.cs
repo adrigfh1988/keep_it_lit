@@ -14,7 +14,8 @@ public enum ShopItem
     HudTint,
     BottlePack,
     FocusLens,
-    FuseMap
+    FuseMap,
+    FloorPlan
 }
 
 /// <summary>What kind of thing a ShopItem is - drives how ShopMenu draws its card and how PlayerInventory holds it.</summary>
@@ -40,7 +41,7 @@ public sealed class ShopItemDef
     public string Name => L10n.T("shop.item." + Slug + ".name");
 
     /// <summary>The translated description. {key} is the physical key that uses a consumable (1 / 2).</summary>
-    public string Blurb => L10n.T("shop.item." + Slug + ".blurb", ("key", Id == ShopItem.SpareBattery ? "1" : "2"));
+    public string Blurb => L10n.T("shop.item." + Slug + ".blurb", ("key", Id == ShopItem.SpareBattery ? "1" : Id == ShopItem.FloorPlan ? "M" : "2"));
 }
 
 /// <summary>
@@ -70,8 +71,9 @@ public static class ShopCatalogue
             BasePrice = 30, Cap = 1 },
         new ShopItemDef { Id = ShopItem.TorchColour, Kind = ItemKind.Cosmetic, Slug = "torch_colour",
             BasePrice = 50, Cap = 0 },
-        new ShopItemDef { Id = ShopItem.HudTint, Kind = ItemKind.Cosmetic, Slug = "hud_tint",
-            BasePrice = 25, Cap = 0 },
+        // F110: the Floor Plan took the retired HUD Tint card's slot (the enum value HudTint stays, saves store ints).
+        new ShopItemDef { Id = ShopItem.FloorPlan, Kind = ItemKind.Consumable, Slug = "floor_plan",
+            BasePrice = 50, Cap = 1 },
 
         // F75 shop depth.
         new ShopItemDef { Id = ShopItem.BottlePack, Kind = ItemKind.FloorModifier, Slug = "bottle_pack",
@@ -118,8 +120,8 @@ public static class ShopCatalogue
                 {
                     bool torch = def.Id == ShopItem.TorchColour;
                     open = false;
-                    int count = torch ? TorchColours.Length : HudTints.Length;
-                    for (int i = 1; i < count && !open; i++) open = !(torch ? PlayerInventory.OwnsTorchColour(i) : PlayerInventory.OwnsHudTint(i));
+                    int count = TorchColours.Length;
+                    for (int i = 1; i < count && !open; i++) open = !PlayerInventory.OwnsTorchColour(i);
                     break;
                 }
             }

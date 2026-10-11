@@ -55,3 +55,5 @@ hud.descent.found_next,"Subtitle after opening an item cache, item applies from 
 hud.descent.hands_full,"Item cache prompt when nothing it holds fits (all-caps prompt, after the E key cap)",HANDS FULL
 hud.prompt.open_cache,"Prompt after the E key cap while looking at a closed item cache in a DESCENT (hold E)",OPEN CACHE
 hud.tenant.held,"Prompt under the crosshair at a locker that something already occupies, after it has shoved the player out once (E key chip + this text, one line, ALL CAPS). ""IT"" = the thing inside, never named",IT HOLDS THE DOOR
+hud.slot.floor_plan,"HUD consumable slot, bottom-right (24 pt, 360 px, auto-size). {key} = M (hold) or TAP on touch (do not translate the key), {count} = floor plans held",{key}   FLOOR PLAN  x{count}
+hud.prompt.use_floor_plan,"Hint on the prompt line (34 pt, 600 x 50, auto-size, 4 s) when a Floor Plan is held and unused; shown after the key label M: ""M  HOLD TO USE THE FLOOR PLAN"". Instruction, ALL CAPS",HOLD TO USE THE FLOOR PLAN

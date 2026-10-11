@@ -295,6 +295,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331682537308581
+  - m_Id: 405334386446336
+    m_Key: hud.slot.floor_plan
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429700
+  - m_Id: 405334482915328
+    m_Key: hud.prompt.use_floor_plan
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429701
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -530,3 +540,11 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Prompt under the crosshair at a locker that something already occupies, after it has shoved the player out once (E key chip + this text, one line, ALL CAPS). "IT" = the thing inside, never named
+    - rid: 4707331695923429700
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD consumable slot, bottom-right (24 pt, 360 px, auto-size). {key} = M (hold) or TAP on touch (do not translate the key), {count} = floor plans held
+    - rid: 4707331695923429701
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hint on the prompt line (34 pt, 600 x 50, auto-size, 4 s) when a Floor Plan is held and unused; shown after the key label M: "M  HOLD TO USE THE FLOOR PLAN". Instruction, ALL CAPS'

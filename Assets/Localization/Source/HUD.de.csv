@@ -55,3 +55,5 @@ hud.descent.found_next,GEFUNDEN: {item}  ·  NÄCHSTE EBENE
 hud.descent.hands_full,HÄNDE VOLL
 hud.prompt.open_cache,VERSTECK ÖFFNEN
 hud.tenant.held,ES HÄLT DIE TÜR ZU
+hud.slot.floor_plan,{key}   GRUNDRISS  x{count}
+hud.prompt.use_floor_plan,GEDRÜCKT HALTEN FÜR DEN GRUNDRISS

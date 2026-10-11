@@ -260,6 +260,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331695923429579
+  - m_Id: 405333857964032
+    m_Key: sub.map.used
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429702
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -467,3 +472,7 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: 'World text queued right after sub.loop.rule when the looping corridor traps the player (shown 4 s): the lap they are on is always normal, so it is the one to remember. ALL CAPS like IT HEARD YOU'
+    - rid: 4707331695923429702
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (plain, about 4 s) when a Floor Plan is used: the map is on for this floor and shows only what has been walked'

@@ -79,6 +79,16 @@ public static class DescentLoot
         return ShopItem.SpareBattery;
     }
 
+    /// <summary>F110: percent of DESCENT levels with a Floor Plan in one of their caches. Decided by a seed hash, not by the +24 stream.</summary>
+    public const int FloorPlanPercent = 40;
+
+    /// <summary>F110: whether the level at `depth` of the maze built from `seed` hides a Floor Plan (a pure function: no rng draw, same answer on a retry).</summary>
+    public static bool LevelHasFloorPlan(int seed, int depth)
+    {
+        int hash = RunRules.HashSeedFloor(seed ^ 0x464C504E, depth); // "FLPN"
+        return (hash & 0x7FFFFFFF) % 100 < FloorPlanPercent;
+    }
+
     /// <summary>A Second Wind only while none is held and the last one is at least five depths back.</summary>
     public static bool CanGrantSecondWind(int depth) =>
         PlayerInventory.Count(ShopItem.SecondWind) == 0 && depth - DescentRun.LastSecondWindDepth >= SecondWindSpacing;
@@ -93,6 +103,8 @@ public static class DescentLoot
                 return PlayerInventory.CanHoldMore(item);
             case ShopItem.SecondWind:
                 return CanGrantSecondWind(depth);
+            case ShopItem.FloorPlan:
+                return PlayerInventory.Count(ShopItem.FloorPlan) == 0; // F110: a held plan is unused - the cap is 1
             case ShopItem.BottlePack:
                 return throws != null && !throws.IsFull;
             case ShopItem.FocusLens:
@@ -105,6 +117,12 @@ public static class DescentLoot
     /// <summary>The rolled item if it fits, otherwise the next row of the table that does. False when nothing fits (hands full).</summary>
     public static bool TryResolve(ShopItem rolled, ThrowController throws, Flashlight flashlight, int depth, out ShopItem result)
     {
+        if (rolled == ShopItem.FloorPlan && Fits(rolled, throws, flashlight, depth))
+        {
+            result = rolled;
+            return true;
+        }
+
         int start = 0;
         for (int i = 0; i < Table.Length; i++)
         {
@@ -131,6 +149,9 @@ public static class DescentLoot
             case ShopItem.SpareBattery:
             case ShopItem.StarCompass:
                 PlayerInventory.Grant(item);
+                break;
+            case ShopItem.FloorPlan:
+                PlayerInventory.Grant(item); // held, used on a floor of the player's choosing (FloorMapUi.UsePlan)
                 break;
             case ShopItem.SecondWind:
                 PlayerInventory.Grant(item);

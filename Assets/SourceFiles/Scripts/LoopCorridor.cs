@@ -442,7 +442,11 @@ public class LoopCorridor : MonoBehaviour
     private void Free()
     {
         _setup.terror.Log($"Loop corridor at {_setup.entranceCell}: freed on lap {_lap}, the floor map is unlocked", this);
-        if (_map != null) _map.Unlock();
+        if (_map != null)
+        {
+            _map.Unlock();
+            _map.RevealAll(); // F110: the reward is the whole layout, no plan needed
+        }
         if (_hud != null) _hud.ShowSubtitle(L10n.T("sub.loop.reward"), 3.5f);
         LeaveToMaze();
         Retire();

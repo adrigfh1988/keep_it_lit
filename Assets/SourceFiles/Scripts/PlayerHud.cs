@@ -63,6 +63,10 @@ public class PlayerHud : MonoBehaviour
     private TextMeshProUGUI _secondWindText;
     private float _slot1Punch;
     private float _slot2Punch;
+    // F110: the Floor Plan line (M, hold), stacked above the throw line.
+    private TextMeshProUGUI _planText;
+    private float _planPunch;
+    private string _slotKeyPlan;
 
     // F74: throwable carry count, stacked above the two consumable slots.
     private static readonly Color ThrowColour = new Color(0.85f, 0.78f, 0.6f);
@@ -77,6 +81,7 @@ public class PlayerHud : MonoBehaviour
     {
         if (index == 0) _slot1Punch = 1f;
         else if (index == 1) _slot2Punch = 1f;
+        else if (index == 2) _planPunch = 1f;
     }
 
     /// <summary>Either may be null (no rig, or a scene with no player).</summary>
@@ -146,10 +151,10 @@ public class PlayerHud : MonoBehaviour
     /// F106: "{keyLabel}  {L10n.T(textKey)}" for `seconds`, whenever nothing else holds the prompt line (an interactable's prompt wins and the hint
     /// reappears behind it). A second call replaces the first. Hidden on touch, like every prompt: the on-screen buttons say it.
     /// </summary>
-    public void ShowHintPrompt(string keyLabel, string textKey, float seconds)
+    public void ShowHintPrompt(string keyLabel, string textKey, float seconds, int percent = -1)
     {
         if (_hintRoutine != null) StopCoroutine(_hintRoutine);
-        _hintPrompt = new PromptParts { Key = keyLabel, TextKey = textKey, Percent = -1 };
+        _hintPrompt = new PromptParts { Key = keyLabel, TextKey = textKey, Percent = percent };
         RefreshPrompt();
         _hintRoutine = StartCoroutine(ClearHintAfter(seconds));
     }
@@ -367,6 +372,12 @@ public class PlayerHud : MonoBehaviour
         _throwText.alignment = TextAlignmentOptions.Right;
         PlaceBottomRight(_throwText.rectTransform, new Vector2(-20f, 146f), new Vector2(360f, 34f));
         _throwText.gameObject.SetActive(false);
+
+        _planText = RuntimeUi.CreateText(canvas.transform, "PlanSlot", "", 24f, _tint);
+        _planText.alignment = TextAlignmentOptions.Right;
+        PlaceBottomRight(_planText.rectTransform, new Vector2(-20f, 188f), new Vector2(360f, 34f));
+        _planText.gameObject.SetActive(false);
+        RuntimeUi.AutoFit(_planText, 0.7f);
         RuntimeUi.AutoFit(_slot1Text, 0.7f);
         RuntimeUi.AutoFit(_slot2Text, 0.7f);
         RuntimeUi.AutoFit(_throwText, 0.7f);
@@ -379,7 +390,7 @@ public class PlayerHud : MonoBehaviour
     private void OnLanguageChanged()
     {
         _floorShownValid = false;
-        _slotKey1 = _slotKey2 = _slotKeyThrow = null;
+        _slotKey1 = _slotKey2 = _slotKeyThrow = _slotKeyPlan = null;
         if (_shardText != null) _shardText.text = ShardLabel(_shardShown);
         _promptBuiltText = null;
     }
@@ -435,6 +446,7 @@ public class PlayerHud : MonoBehaviour
         _slot2Text.gameObject.SetActive(!inShop);
         if (_secondWindText != null) _secondWindText.gameObject.SetActive(!inShop && secondWindHeld);
         if (_throwText != null && (GameFlow.IsInShop || GameFlow.IsInHub)) _throwText.gameObject.SetActive(false);
+        if (_planText != null && inShop) _planText.gameObject.SetActive(false);
         if (GameFlow.IsInIntake)
         {
             if (_throwText != null)
@@ -457,6 +469,18 @@ public class PlayerHud : MonoBehaviour
         int compassCount = PlayerInventory.Count(ShopItem.StarCompass);
         SetSlotText(_slot2Text, ref _slotKey2, "hud.slot.compass", "2", compassCount);
         ApplySlot(_slot2Text, compassCount > 0, _slot2Punch);
+
+        if (_planText != null)
+        {
+            _planPunch = Mathf.MoveTowards(_planPunch, 0f, Time.unscaledDeltaTime / 0.25f);
+            int plans = PlayerInventory.Count(ShopItem.FloorPlan);
+            _planText.gameObject.SetActive(plans > 0);
+            if (plans > 0)
+            {
+                SetSlotText(_planText, ref _slotKeyPlan, "hud.slot.floor_plan", "M", plans);
+                ApplySlot(_planText, true, _planPunch);
+            }
+        }
 
         if (_throwText != null)
         {

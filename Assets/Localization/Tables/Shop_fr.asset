@@ -344,6 +344,15 @@ MonoBehaviour:
     m_Localized: "\xC7a ne vous laissera pas partir."
     m_Metadata:
       m_Items: []
+  - m_Id: 397341183873024
+    m_Localized: "Plan d'\xE9tage"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 397341263564800
+    m_Localized: "Rare. Maintenez {key} \xE0 l'\xE9tage qui l'exige : la carte ne montre que ce que vous avez parcouru."
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763211
   references:
     version: 2
     RefIds:
@@ -361,3 +370,4 @@ MonoBehaviour:
         - id: 375296073
         - id: 375296074
         - id: 375296076
+        - id: 397341263564800

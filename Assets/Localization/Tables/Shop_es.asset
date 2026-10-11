@@ -344,6 +344,15 @@ MonoBehaviour:
     m_Localized: "No dejar\xE1 que te vayas."
     m_Metadata:
       m_Items: []
+  - m_Id: 397341183873024
+    m_Localized: Plano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 397341263564800
+    m_Localized: "Raro. Mant\xE9n {key} en el piso que lo necesite: el mapa solo muestra lo que has recorrido."
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763202
   references:
     version: 2
     RefIds:
@@ -361,3 +370,4 @@ MonoBehaviour:
         - id: 375296073
         - id: 375296074
         - id: 375296076
+        - id: 397341263564800

@@ -96,6 +96,8 @@ public partial class MazeGenerator
             PlaceItemCache(vaultCell, depth, rng, used);
         }
 
+        int vaultCaches = _itemCaches.Count;
+
         List<Vector2Int> deadEnds = new List<Vector2Int>();
         List<Vector2Int> others = new List<Vector2Int>();
         HashSet<Vector2Int> starCells = new HashSet<Vector2Int>(_starCells);
@@ -124,7 +126,23 @@ public partial class MazeGenerator
         }
 
         if (_itemCaches.Count < want) Debug.LogWarning($"MazeGenerator: only {_itemCaches.Count} of {want} item caches fit on level -{depth}.", this);
+        PlaceFloorPlan(depth, vaultCaches);
         terror.Log($"Item caches: {string.Join(", ", _itemCaches.ConvertAll(c => $"{c.name}={c.Rolled}"))}", this);
+    }
+
+    /// <summary>
+    /// F110: on 40 % of levels (a seed hash, no draw from the +24 stream) one cache holds a Floor Plan instead of its rolled item - preferably a
+    /// cache outside a vault, picked by the same hash.
+    /// </summary>
+    private void PlaceFloorPlan(int depth, int vaultCaches)
+    {
+        if (_itemCaches.Count == 0 || !DescentLoot.LevelHasFloorPlan(UsedSeed, depth)) return;
+
+        int hash = RunRules.HashSeedFloor(UsedSeed ^ 0x464C504F, depth) & 0x7FFFFFFF; // "FLPO"
+        int pool = _itemCaches.Count - vaultCaches;
+        int index = pool > 0 ? vaultCaches + hash % pool : hash % _itemCaches.Count;
+        _itemCaches[index].Configure(ShopItem.FloorPlan, depth);
+        terror.Log($"Floor Plan in cache {_itemCaches[index].name} on level -{depth}", this);
     }
 
     /// <summary>Puts one cache on a free wall of `cell` (floor level, +Z into the cell) and rolls its contents. False if the cell has no free wall.</summary>

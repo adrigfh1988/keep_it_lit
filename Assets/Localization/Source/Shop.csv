@@ -78,3 +78,5 @@ shop.payout.shards_found,"Ledger line label, informational (36 pt, left column 9
 shop.payout.consolation_title,"End screen heading for a consolation payout after dying (84 pt, one line)",CONSOLATION
 shop.payout.consolation,"Ledger line label for the consolation payout (36 pt, left column 900 px). {percent} = 35, {stars} = stars collected (plural: 1 star / 2 stars)",CONSOLATION  {percent}% of {stars} {stars:plural:star|stars}
 shop.temperament.final,"Floor 5 temperament line in the floor intro banner. ""It"" = the hunter, never named",It will not let you leave.
+shop.item.floor_plan.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Floor Plan
+shop.item.floor_plan.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). {key} = M, the key you hold to use it. Rare; shows only the cells you have walked","Rare. Hold {key} on the floor that needs it: the map shows only where you have walked."

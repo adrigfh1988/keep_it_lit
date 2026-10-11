@@ -268,6 +268,15 @@ MonoBehaviour:
     m_Localized: "ES H\xC4LT DIE T\xDCR ZU"
     m_Metadata:
       m_Items: []
+  - m_Id: 405334386446336
+    m_Localized: '{key}   GRUNDRISS  x{count}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763209
+  - m_Id: 405334482915328
+    m_Localized: "GEDR\xDCCKT HALTEN F\xDCR DEN GRUNDRISS"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -301,3 +310,4 @@ MonoBehaviour:
         - id: 171011926298628
         - id: 171011926298630
         - id: 171011926298631
+        - id: 405334386446336

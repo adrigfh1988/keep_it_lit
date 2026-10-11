@@ -27,7 +27,7 @@ public static class PlayerInventory
 
     public static int Count(ShopItem item) => Held.TryGetValue(item, out int n) ? n : 0;
 
-    public static int CapFor(ShopItem item) => item == ShopItem.SecondWind ? 1 : ConsumableCap;
+    public static int CapFor(ShopItem item) => item == ShopItem.SecondWind || item == ShopItem.FloorPlan ? 1 : ConsumableCap;
 
     public static bool CanHoldMore(ShopItem item) => Count(item) < CapFor(item);
 

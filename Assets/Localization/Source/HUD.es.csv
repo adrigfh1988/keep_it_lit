@@ -55,3 +55,5 @@ hud.descent.found_next,ENCONTRADO: {item}  ·  SIGUIENTE NIVEL
 hud.descent.hands_full,MANOS LLENAS
 hud.prompt.open_cache,ABRIR ALIJO
 hud.tenant.held,ALGO SUJETA LA PUERTA
+hud.slot.floor_plan,{key}   PLANO  x{count}
+hud.prompt.use_floor_plan,MANTÉN PARA USAR EL PLANO

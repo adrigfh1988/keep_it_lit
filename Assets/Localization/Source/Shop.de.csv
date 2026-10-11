@@ -78,3 +78,5 @@ shop.payout.shards_found,SPLITTER GEFUNDEN  {n} x {value}  (schon deins)
 shop.payout.consolation_title,TROSTPREIS
 shop.payout.consolation,TROSTPREIS  {percent}% von {stars} {stars:plural:Stern|Sternen}
 shop.temperament.final,Es lässt dich nicht gehen.
+shop.item.floor_plan.name,Grundriss
+shop.item.floor_plan.blurb,"Selten. Halte {key} im Stockwerk, das es braucht: Die Karte zeigt nur, wo du gelaufen bist."

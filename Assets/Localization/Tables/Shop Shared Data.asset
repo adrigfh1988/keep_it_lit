@@ -410,6 +410,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331677479764077
+  - m_Id: 397341183873024
+    m_Key: shop.item.floor_plan.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429698
+  - m_Id: 397341263564800
+    m_Key: shop.item.floor_plan.blurb
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429699
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -737,3 +747,11 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Floor 5 temperament line in the floor intro banner. "It" = the hunter, never named
+    - rid: 4707331695923429698
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card item name (26 pt bold, one line, 340 px, auto-size)
+    - rid: 4707331695923429699
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). {key} = M, the key you hold to use it. Rare; shows only the cells you have walked

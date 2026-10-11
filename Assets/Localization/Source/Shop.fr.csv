@@ -78,3 +78,5 @@ shop.payout.shards_found,ÉCLATS TROUVÉS  {n} x {value}  (déjà à vous)
 shop.payout.consolation_title,CONSOLATION
 shop.payout.consolation,CONSOLATION  {percent}% de {stars} {stars:plural:étoile|étoiles}
 shop.temperament.final,"Ça ne vous laissera pas partir."
+shop.item.floor_plan.name,Plan d'étage
+shop.item.floor_plan.blurb,"Rare. Maintenez {key} à l'étage qui l'exige : la carte ne montre que ce que vous avez parcouru."

@@ -226,6 +226,10 @@ MonoBehaviour:
     m_Localized: "MIRA BIEN. AS\xCD ES COMO DEBE VERSE."
     m_Metadata:
       m_Items: []
+  - m_Id: 405333857964032
+    m_Localized: EL PLANO. SOLO LO QUE HAS RECORRIDO.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
