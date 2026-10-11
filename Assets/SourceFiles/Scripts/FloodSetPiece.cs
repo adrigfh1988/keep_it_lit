@@ -27,7 +27,7 @@ public class FloodSetPiece : HubSetPiece
         AsylumHub hub = Hub;
         if (hub == null || !IsComplete)
         {
-            Debug.LogError("FloodSetPiece: the hall zone is missing. Run LIGHTS OUT > Build Missing Pieces. The hall's lights stay on.", this);
+            Debug.LogError("FloodSetPiece: the hall zone is missing. Run KEEP IT LIT > Build Missing Pieces. The hall's lights stay on.", this);
             return;
         }
         _knocked = false;

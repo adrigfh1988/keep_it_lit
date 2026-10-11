@@ -19,7 +19,7 @@ public class ShopDoor : MonoBehaviour, IInteractable
     [Tooltip("1.5 m in front of the door, facing away from it. Where the player comes back out of the shop.")]
     public Transform arrivalPoint;
 
-    [Tooltip("F100: where the door is, for the arrival line THE SHOP IS OPEN · ..., e.g. THE ENTRANCE HALL. Filled by LIGHTS OUT > Build Missing Pieces.")]
+    [Tooltip("F100: where the door is, for the arrival line THE SHOP IS OPEN · ..., e.g. THE ENTRANCE HALL. Filled by KEEP IT LIT > Build Missing Pieces.")]
     public string roomName = "";
 
     [Header("Look")]

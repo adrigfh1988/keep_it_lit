@@ -38,21 +38,21 @@ public static class LocalizationImporter
 
     // ---------------------------------------------------------------- menu
 
-    [MenuItem("LIGHTS OUT/Localization/Import CSVs", priority = 300)]
+    [MenuItem("KEEP IT LIT/Localization/Import CSVs", priority = 300)]
     public static void ImportMenu()
     {
         string report = ImportAll();
         EditorUtility.DisplayDialog("Import CSVs", report, "OK");
     }
 
-    [MenuItem("LIGHTS OUT/Localization/Set Up Project (settings, locales, Boot scene)", priority = 301)]
+    [MenuItem("KEEP IT LIT/Localization/Set Up Project (settings, locales, Boot scene)", priority = 301)]
     public static void SetUpMenu()
     {
         EnsureProject();
         EditorUtility.DisplayDialog("Localization", "Settings, locales, startup selectors and the Boot scene are set up.\n\n" + (Problem() ?? "Check: OK"), "OK");
     }
 
-    [MenuItem("LIGHTS OUT/Localization/Check Completeness", priority = 302)]
+    [MenuItem("KEEP IT LIT/Localization/Check Completeness", priority = 302)]
     public static void CheckMenu()
     {
         string r = CompletenessReport();
@@ -60,13 +60,13 @@ public static class LocalizationImporter
         EditorUtility.DisplayDialog("Completeness", r.Length > 1500 ? r.Substring(0, 1500) + "\n..." : r, "OK");
     }
 
-    [MenuItem("LIGHTS OUT/Localization/Export Review CSV", priority = 310)]
+    [MenuItem("KEEP IT LIT/Localization/Export Review CSV", priority = 310)]
     public static void ExportMenu()
     {
         EditorUtility.DisplayDialog("Export Review CSV", ExportReview(), "OK");
     }
 
-    [MenuItem("LIGHTS OUT/Localization/Import Review CSV", priority = 311)]
+    [MenuItem("KEEP IT LIT/Localization/Import Review CSV", priority = 311)]
     public static void ImportReviewMenu()
     {
         string report = ImportReview();

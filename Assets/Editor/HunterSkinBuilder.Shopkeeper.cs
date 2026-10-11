@@ -13,7 +13,7 @@ public static partial class HunterSkinBuilder
     public const string ShopkeeperMaterialName = "Shopkeeper";
     private const string ShopkeeperFolder = "Assets/SourceFiles/Characters/Shopkeeper";
 
-    [MenuItem("LIGHTS OUT/Build/Shopkeeper Skin (repaint)", priority = 107)]
+    [MenuItem("KEEP IT LIT/Build/Shopkeeper Skin (repaint)", priority = 107)]
     public static void RepaintShopkeeper()
     {
         Material m = GenerateSkin(ShopkeeperFolder, ShopkeeperMaterialName, PaintShopkeeper, 1.6f);

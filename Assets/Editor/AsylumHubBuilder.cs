@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// LIGHTS OUT > Build > Asylum Hub (regenerate). F92: drafts the asylum the player walks through between mazes from the
+/// KEEP IT LIT > Build > Asylum Hub (regenerate). F92: drafts the asylum the player walks through between mazes from the
 /// Karlheinz Asylum pack's finished building (Assets/Abandoned_Asylum/Prefabs/Asylum.prefab, fully unpacked), fixes it for
 /// this project (URP materials, realtime lights within budget, trimmed colliders, static flags) and saves the result as a
 /// hand-editable prefab, Assets/Prefabs/AsylumHub.prefab - from then on the prefab is the source of truth, exactly like
@@ -71,7 +71,7 @@ public static partial class AsylumHubBuilder
     /// Generates the hub from scratch and saves it over the prefab - a reset, not the way to change the hub. To change it,
     /// open Assets/Prefabs/AsylumHub.prefab and edit it by hand.
     /// </summary>
-    [MenuItem("LIGHTS OUT/Build/Asylum Hub (regenerate)", priority = 106)]
+    [MenuItem("KEEP IT LIT/Build/Asylum Hub (regenerate)", priority = 106)]
     public static void Build()
     {
         Scene scene = SceneManager.GetActiveScene();

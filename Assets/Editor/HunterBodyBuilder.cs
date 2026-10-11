@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// LIGHTS OUT &gt; Build &gt; Hunter Body (F47, redone as F102). The hunter is Timmy again - the player's own robot
+/// KEEP IT LIT &gt; Build &gt; Hunter Body (F47, redone as F102). The hunter is Timmy again - the player's own robot
 /// (PlayerRobot.prefab, unpacked and stripped to its Animator + mesh like the Stalker and the hub pursuer) - in the
 /// "Hospital orderly" skin made by <see cref="HunterSkinBuilder"/>. Adam (Adam Character Pack, F47) is retired as the
 /// hunter body.
@@ -69,7 +69,7 @@ public static partial class HunterBodyBuilder
     private const float ReachContactNormalizedTime = 0.55f;
     private const float PoseCrossfadeSeconds = 0.25f;
 
-    [MenuItem("LIGHTS OUT/Build/Hunter Body", priority = 105)]
+    [MenuItem("KEEP IT LIT/Build/Hunter Body", priority = 105)]
     public static void Build() => Build(true);
 
     /// <summary>Dialog-free rebuild: replaces an existing HunterBody / leftover robot child without asking.</summary>
@@ -632,7 +632,7 @@ public static partial class HunterBodyBuilder
 
     /// <summary>
     /// Hunter.controller is generated data, not authored content: this method deletes and recreates it
-    /// from scratch on every run of LIGHTS OUT &gt; Build &gt; Hunter Body, wiring whatever clips resolved this
+    /// from scratch on every run of KEEP IT LIT &gt; Build &gt; Hunter Body, wiring whatever clips resolved this
     /// run into a fixed shape - a Locomotion blend tree (1D on Speed, or 2D on Speed/Turn once a turn clip
     /// exists), one state each for LookAround/Lurk/Stunned when their clip resolved, and a Reach one-shot
     /// from Any State when a reach clip resolved. Nothing here is meant

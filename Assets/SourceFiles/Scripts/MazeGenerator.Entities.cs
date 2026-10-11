@@ -116,7 +116,7 @@ public partial class MazeGenerator
     {
         if (interactableKit == null || !interactableKit.HasListener)
         {
-            Debug.LogError("MazeGenerator: no InteractableKit (listener) in the scene - skipping the Listener this run. Run LIGHTS OUT > Build > Interactables in the Editor, then save the scene.", this);
+            Debug.LogError("MazeGenerator: no InteractableKit (listener) in the scene - skipping the Listener this run. Run KEEP IT LIT > Build > Interactables in the Editor, then save the scene.", this);
             return;
         }
 

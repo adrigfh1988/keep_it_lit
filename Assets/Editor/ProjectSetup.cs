@@ -6,14 +6,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// The two top entries of the LIGHTS OUT menu, so nobody has to remember which builder was run when.
+/// The two top entries of the KEEP IT LIT menu, so nobody has to remember which builder was run when.
 ///
-/// LIGHTS OUT &gt; Check Project reports, piece by piece, whether everything the game clones or reads out of the
+/// KEEP IT LIT &gt; Check Project reports, piece by piece, whether everything the game clones or reads out of the
 /// scene is there and up to date, naming the menu item that fixes each gap. It changes nothing.
 ///
-/// LIGHTS OUT &gt; Build Missing Pieces runs only the builders whose piece is missing, in dependency order
+/// KEEP IT LIT &gt; Build Missing Pieces runs only the builders whose piece is missing, in dependency order
 /// (Interactables before Phrase Books, which assigns Stan's book to the Stalker template). Pieces that already
-/// exist are never rebuilt - rebuilding one on purpose is LIGHTS OUT &gt; Build &gt; that piece.
+/// exist are never rebuilt - rebuilding one on purpose is KEEP IT LIT &gt; Build &gt; that piece.
 ///
 /// Every new builder adds a Piece here (see CLAUDE.md, "Editor menu").
 /// </summary>
@@ -379,7 +379,7 @@ public static class ProjectSetup
         },
     };
 
-    [MenuItem("LIGHTS OUT/Check Project", priority = 0)]
+    [MenuItem("KEEP IT LIT/Check Project", priority = 0)]
     public static void Check()
     {
         if (!SceneReady("Check Project")) return;
@@ -396,16 +396,16 @@ public static class ProjectSetup
             else
             {
                 problems++;
-                report.AppendLine($"FIX   {piece.Name}: {problem}\n        -> LIGHTS OUT > {piece.FixMenu}");
+                report.AppendLine($"FIX   {piece.Name}: {problem}\n        -> KEEP IT LIT > {piece.FixMenu}");
             }
         }
 
         string header = problems == 0 ? "Everything is built and up to date.\n\n" : $"{problems} thing(s) need attention.\n\n";
-        Debug.Log("LIGHTS OUT > Check Project\n" + header + report);
+        Debug.Log("KEEP IT LIT > Check Project\n" + header + report);
         EditorUtility.DisplayDialog("Check Project", header + report, "OK");
     }
 
-    [MenuItem("LIGHTS OUT/Build Missing Pieces", priority = 1)]
+    [MenuItem("KEEP IT LIT/Build Missing Pieces", priority = 1)]
     public static void BuildMissing()
     {
         if (!SceneReady("Build Missing Pieces")) return;

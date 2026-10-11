@@ -7,8 +7,8 @@ using UnityEngine;
 /// </summary>
 public static class DescentRecords
 {
-    public const string BestDepthKey = "lightsout.descent.bestDepth";
-    public const string BestSecondsKey = "lightsout.descent.bestSeconds";
+    public const string BestDepthKey = "keepitlit.descent.bestDepth";
+    public const string BestSecondsKey = "keepitlit.descent.bestSeconds";
 
     /// <summary>Deepest level reached, 0 when there is no record yet.</summary>
     public static int BestDepth

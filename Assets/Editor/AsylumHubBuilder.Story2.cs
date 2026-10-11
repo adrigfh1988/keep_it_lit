@@ -272,7 +272,7 @@ public static partial class AsylumHubBuilder
         FloorTheme ward = themes != null ? themes.ForFloor(1) : null;
         if (ward == null || ward.Locker == null)
         {
-            Debug.LogError("Asylum story layer: no Floor Themes row with a locker - the hub lockers were not built. Run LIGHTS OUT > Build > Floor Themes first.");
+            Debug.LogError("Asylum story layer: no Floor Themes row with a locker - the hub lockers were not built. Run KEEP IT LIT > Build > Floor Themes first.");
             return;
         }
         Transform group = Group(life, "Lockers");
@@ -307,7 +307,7 @@ public static partial class AsylumHubBuilder
         Transform board = life.Find(RecordsBoardName);
         if (kit == null || kit.KeyPickup == null || board == null)
         {
-            Debug.LogError("Asylum story layer: the key template (LIGHTS OUT > Build > Interactables) or the records board is missing; the Director's key was not built.");
+            Debug.LogError("Asylum story layer: the key template (KEEP IT LIT > Build > Interactables) or the records board is missing; the Director's key was not built.");
             return null;
         }
         KeyPickup clone = Object.Instantiate(kit.KeyPickup, life);
@@ -352,7 +352,7 @@ public static partial class AsylumHubBuilder
         InteractableKit kit = Object.FindAnyObjectByType<InteractableKit>(FindObjectsInactive.Include);
         if (kit == null || kit.Stalker == null || route.childCount < 2)
         {
-            Debug.LogError("Asylum story layer: the Stalker template (LIGHTS OUT > Build > Interactables) is missing; Stan's echo was not built.");
+            Debug.LogError("Asylum story layer: the Stalker template (KEEP IT LIT > Build > Interactables) is missing; Stan's echo was not built.");
             return;
         }
         Transform holder = Group(life, "StanEcho");

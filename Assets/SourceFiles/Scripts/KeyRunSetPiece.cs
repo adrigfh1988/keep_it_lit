@@ -33,7 +33,7 @@ public class KeyRunSetPiece : HubSetPiece
         AsylumHub hub = Hub;
         if (hub == null || !IsComplete)
         {
-            Debug.LogError("KeyRunSetPiece: the pursuer, the patrol route or the key is missing. Run LIGHTS OUT > Build Missing Pieces. The Director's door stays open.", this);
+            Debug.LogError("KeyRunSetPiece: the pursuer, the patrol route or the key is missing. Run KEEP IT LIT > Build Missing Pieces. The Director's door stays open.", this);
             return;
         }
 

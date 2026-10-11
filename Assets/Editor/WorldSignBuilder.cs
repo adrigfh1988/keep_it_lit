@@ -11,7 +11,7 @@ using UnityEngine;
 /// </summary>
 public static partial class WorldSignBuilder
 {
-    [MenuItem("LIGHTS OUT/Build/World Signs (restyle missing)", priority = 109)]
+    [MenuItem("KEEP IT LIT/Build/World Signs (restyle missing)", priority = 109)]
     public static void RestyleMissingMenu()
     {
         string report = RestyleAll();

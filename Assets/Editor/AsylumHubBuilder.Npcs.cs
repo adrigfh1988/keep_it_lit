@@ -519,7 +519,7 @@ public static partial class AsylumHubBuilder
                 key.localScale *= 1.6f;
             }
         }
-        else Debug.LogError("Asylum NPCs: the key template (LIGHTS OUT > Build > Interactables) is missing; the key ring has no model.");
+        else Debug.LogError("Asylum NPCs: the key template (KEEP IT LIT > Build > Interactables) is missing; the key ring has no model.");
         return root;
     }
 

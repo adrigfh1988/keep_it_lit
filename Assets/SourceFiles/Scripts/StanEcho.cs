@@ -25,7 +25,7 @@ public class StanEcho : HubSetPiece
     {
         if (!IsComplete)
         {
-            Debug.LogError("StanEcho: the body or the echo route is missing. Run LIGHTS OUT > Build Missing Pieces.", this);
+            Debug.LogError("StanEcho: the body or the echo route is missing. Run KEEP IT LIT > Build Missing Pieces.", this);
             return;
         }
         _index = 0;

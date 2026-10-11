@@ -90,5 +90,8 @@ desktop.ini
 /Assets/Horror Elements/
 /Assets/Libraries/
 
-# Player builds (LIGHTS OUT > Build > Windows Player)
+# Player builds (KEEP IT LIT > Build > Windows Player)
 /Builds/
+
+# Marketing screenshots (local only, for Firefly / image tools)
+/MarketingShots/

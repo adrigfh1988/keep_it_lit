@@ -4,7 +4,7 @@ using UnityEngine;
 /// Look-alike models under one set piece (the FallenRunner's six DeadBody LITE corpses): all are children, one
 /// is active. MazeGenerator.BuildSetPieces calls Apply with a hash of the cell - the same no-rng-draw trick as
 /// DecalVariants and InteractableKit.bottleVariants, so the +8 set-piece stream is untouched.
-/// Written by LIGHTS OUT &gt; Build &gt; Floor Themes (CorpseUpgrade); never edited by hand.
+/// Written by KEEP IT LIT &gt; Build &gt; Floor Themes (CorpseUpgrade); never edited by hand.
 /// F104 B9: it also changes at runtime now - WorldShiftDirector calls ApplyNext on an unobserved placement to swap
 /// the active model for the next look-alike.
 /// </summary>

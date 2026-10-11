@@ -60,7 +60,7 @@ public class AudioSlot
 /// (Assets/SourceFiles/Audio/GameAudioLibrary.asset, filled by GameAudioLibraryBuilder, assigned to MazeGenerator.audioLibrary).
 /// Read through <see cref="GameAudio.Library"/>; slot numbers refer to plannings/audio-asset-list.md.
 /// </summary>
-[CreateAssetMenu(menuName = "LIGHTS OUT/Game Audio Library", fileName = "GameAudioLibrary")]
+[CreateAssetMenu(menuName = "KEEP IT LIT/Game Audio Library", fileName = "GameAudioLibrary")]
 public class GameAudioLibrary : ScriptableObject
 {
     [Header("Asylum hub - ambience (2-11)")]

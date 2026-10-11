@@ -3,11 +3,11 @@ using UnityEngine;
 /// <summary>
 /// F82: the pool of lines the hunter says in speech bubbles, one array per situation
 /// (HunterVoice picks from them with a per-category shuffle bag). Edit the asset
-/// (Assets/SourceFiles/Data/HunterPhrases.asset, made by LIGHTS OUT &gt; Build &gt; Phrase Books) in the
+/// (Assets/SourceFiles/Data/HunterPhrases.asset, made by KEEP IT LIT &gt; Build &gt; Phrase Books) in the
 /// Inspector; "Reset" from the component menu restores the defaults. An empty category is legal and just
 /// means it says nothing for that event. The token {floor} is replaced with the current floor number.
 /// </summary>
-[CreateAssetMenu(menuName = "LIGHTS OUT/Hunter Phrase Book")]
+[CreateAssetMenu(menuName = "KEEP IT LIT/Hunter Phrase Book")]
 public class HunterPhraseBook : ScriptableObject
 {
     public enum Category { Spotted, Chasing, Lost, Searching, Ambush, Locker, Door, Caught }

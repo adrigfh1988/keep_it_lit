@@ -3,11 +3,11 @@ using UnityEngine;
 /// <summary>
 /// F82: the pool of lines Stan says in speech bubbles, one array per situation (StalkerVoice picks from
 /// them with a per-category shuffle bag). Edit the asset (Assets/SourceFiles/Data/StanPhrases.asset, made
-/// by LIGHTS OUT &gt; Build &gt; Phrase Books) in the Inspector; "Reset" from the component menu restores
+/// by KEEP IT LIT &gt; Build &gt; Phrase Books) in the Inspector; "Reset" from the component menu restores
 /// the defaults. An empty category is legal and just means Stan says nothing for that event. The token
 /// {floor} in a line is replaced with the current floor number.
 /// </summary>
-[CreateAssetMenu(menuName = "LIGHTS OUT/Stan Phrase Book")]
+[CreateAssetMenu(menuName = "KEEP IT LIT/Stan Phrase Book")]
 public class StalkerPhraseBook : ScriptableObject
 {
     public enum Category { Spotted, Lit, Staring, Lunge, Touch, Lost, Locker, Idle }

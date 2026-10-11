@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// LIGHTS OUT > Build > Shop Room (regenerate). Generates the first draft of the room between floors and saves it as
+/// KEEP IT LIT > Build > Shop Room (regenerate). Generates the first draft of the room between floors and saves it as
 /// the hand-editable prefab Assets/Prefabs/ShopRoom.prefab (ShopRoomBuilder.Prefab.cs); from then on the prefab is
 /// the source of truth, BuildSilently only places it, and the menu item is a confirmed reset. Nothing here runs in a
 /// build; at Play time the ShopRoom component just drives what this made.
@@ -38,7 +38,7 @@ public static partial class ShopRoomBuilder
     /// Generates the room from scratch and saves it over the prefab - a reset, not the way to change the room. To change
     /// it, open Assets/Prefabs/ShopRoom.prefab and edit it by hand.
     /// </summary>
-    [MenuItem("LIGHTS OUT/Build/Shop Room (regenerate)", priority = 104)]
+    [MenuItem("KEEP IT LIT/Build/Shop Room (regenerate)", priority = 104)]
     public static void Build()
     {
         Scene scene = SceneManager.GetActiveScene();

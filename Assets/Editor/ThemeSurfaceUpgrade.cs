@@ -11,8 +11,8 @@ using UnityEngine;
 /// a column's tiling; the Crypt pillar is Crypt_Stone already) and the gameplay-fixture metals and wood (lockers, lamp housings,
 /// shutter, call bell, steam valve: library sets with a constant smoothness / metallic, colour kept as a tint).
 ///
-/// Run automatically at the end of LIGHTS OUT &gt; Build &gt; Floor Themes (a "Replace everything" rebuild recreates the
-/// materials untextured and this puts the textures back) and flagged by LIGHTS OUT &gt; Check Project. Idempotent: a material that
+/// Run automatically at the end of KEEP IT LIT &gt; Build &gt; Floor Themes (a "Replace everything" rebuild recreates the
+/// materials untextured and this puts the textures back) and flagged by KEEP IT LIT &gt; Check Project. Idempotent: a material that
 /// already has its set assigned is left alone (so a hand-tweaked tint survives). It edits the existing .mat assets in place;
 /// it never touches the scene.
 ///

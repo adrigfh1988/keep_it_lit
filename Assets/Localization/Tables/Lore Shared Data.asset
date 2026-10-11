@@ -363,7 +363,7 @@ MonoBehaviour:
     - rid: 4707331672703763045
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: 'End screen title of ending B, pulling the master switch. This is the game''s title phrase LIGHTS OUT used as a phrase: translators may keep it in English as the brand'
+        m_CommentText: 'End screen title of ending B, pulling the master switch. This is the old game title LIGHTS OUT, kept as ending B''s name: translators may keep it in English as the brand'
     - rid: 4707331672703763046
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:

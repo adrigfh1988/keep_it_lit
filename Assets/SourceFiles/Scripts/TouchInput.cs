@@ -25,8 +25,8 @@ public static class TouchInput
     public enum Mode { Auto, On, Off }
 
     private const int ActionCount = 8;
-    private const string ModePrefKey = "LightsOut.TouchControls.Mode";
-    private const string SensitivityPrefKey = "LightsOut.TouchControls.LookSensitivity";
+    private const string ModePrefKey = "KeepItLit.TouchControls.Mode";
+    private const string SensitivityPrefKey = "KeepItLit.TouchControls.LookSensitivity";
     public const float DefaultLookSensitivity = 1f;
     public const float MinLookSensitivity = 0.25f;
     public const float MaxLookSensitivity = 3f;

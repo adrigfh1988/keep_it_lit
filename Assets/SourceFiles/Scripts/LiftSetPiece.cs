@@ -159,7 +159,7 @@ public class LiftSetPiece : HubSetPiece
 
     protected override void OnBegin()
     {
-        if (!IsComplete) Debug.LogError("LiftSetPiece: a part of the lift set is missing (the car, a shaft door, the gate or a call point). Run LIGHTS OUT > Build Missing Pieces. Floor 2 will use the stairs.", this);
+        if (!IsComplete) Debug.LogError("LiftSetPiece: a part of the lift set is missing (the car, a shaft door, the gate or a call point). Run KEEP IT LIT > Build Missing Pieces. Floor 2 will use the stairs.", this);
         else if (Hub != null && Hub.MissionDone(2)) Hub.QueueSubtitleLine(ChainedText, 4f); // F100: before the key the arrival line is the order; HubMission.Complete says it once the wing is unlocked
     }
 

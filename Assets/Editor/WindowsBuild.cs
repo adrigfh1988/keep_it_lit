@@ -6,8 +6,8 @@ using UnityEditor.Build.Reporting;
 using UnityEngine;
 
 /// <summary>
-/// LIGHTS OUT &gt; Build &gt; Windows Player (Steam plan S1). Builds the 64-bit Windows standalone player into
-/// Builds/Windows/LightsOut.exe from the enabled scenes in the Build Settings list, as a release-style (non-development)
+/// KEEP IT LIT &gt; Build &gt; Windows Player (Steam plan S1). Builds the 64-bit Windows standalone player into
+/// Builds/Windows/keep_it_lit.exe from the enabled scenes in the Build Settings list, as a release-style (non-development)
 /// Mono build. <see cref="Build"/> is the dialog-free core; the menu item wraps it with a result dialog and
 /// <see cref="BuildFromCommandLine"/> wraps it for <c>-executeMethod</c> / <c>unity command eval</c> (exit code in batch mode).
 ///
@@ -18,10 +18,10 @@ using UnityEngine;
 public static class WindowsBuild
 {
     private const string OutputFolder = "Builds/Windows";
-    private const string ExeName = "LightsOut.exe";
+    private const string ExeName = "keep_it_lit.exe";
 
     /// <summary>Menu entry: builds, then reports the result in a dialog.</summary>
-    [MenuItem("LIGHTS OUT/Build/Windows Player", priority = 110)]
+    [MenuItem("KEEP IT LIT/Build/Windows Player", priority = 110)]
     public static void BuildFromMenu()
     {
         BuildReport report = Build();

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Scene gallery of interactable templates (F72 decision D11), built once by LIGHTS OUT &gt; Build
+/// Scene gallery of interactable templates (F72 decision D11), built once by KEEP IT LIT &gt; Build
 /// Interactables (Assets/Editor/InteractableKitBuilder.cs). MazeGenerator.BuildDoors clones these at
 /// Play time exactly like FloorThemes clones its rows; the gallery itself is deactivated afterwards.
 ///

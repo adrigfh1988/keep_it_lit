@@ -4,7 +4,7 @@ using UnityEditor.Animations;
 using UnityEngine;
 
 /// <summary>
-/// F107 D2: the Listener template of the InteractableKit (slot `listener`), part of LIGHTS OUT &gt; Build &gt; Interactables (build-missing-only).
+/// F107 D2: the Listener template of the InteractableKit (slot `listener`), part of KEEP IT LIT &gt; Build &gt; Interactables (build-missing-only).
 /// The body is the hub pursuer's Mixamo subject (Char_Subject.fbx) stripped to an Animator and renderers, in a pale, gaunt, non-emissive
 /// material, driving Animation/Descent/Listener.controller (clips copied from the Mixamo library, no transitions: Listener.cs cross-fades by
 /// state name). No eyes and no AIPresence: it is blind.

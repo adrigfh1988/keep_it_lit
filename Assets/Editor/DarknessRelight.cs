@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// The F71 darkness pass, run automatically at the end of LIGHTS OUT &gt; Build &gt; Floor Themes (it used to
+/// The F71 darkness pass, run automatically at the end of KEEP IT LIT &gt; Build &gt; Floor Themes (it used to
 /// be its own menu item, which was easy to forget after a rebuild). F71: FloorProfile's ambient numbers dropped a lot
 /// (0.10/0.035 -&gt; 0.015/0.006, see plannings/darkness-and-interactivity-spec.md decision D2), but a
 /// themed floor never uses FloorProfile.Ambient at all - MazeGenerator.ResolveTheme takes _theme.Ambient
 /// instead (CLAUDE.md, "Verified facts") - so lowering the profile alone does nothing on floors 1-5; only
 /// the kit maze and the primitive fallback would have gotten darker. FloorTheme's own ambient (authored
-/// by LIGHTS OUT &gt; Build &gt; Floor Themes) is up to 0.12 max channel (the Crypt row) and needs relighting to
+/// by KEEP IT LIT &gt; Build &gt; Floor Themes) is up to 0.12 max channel (the Crypt row) and needs relighting to
 /// match. This scales every FloorTheme's ambient colour down so its brightest channel is
 /// TargetMaxChannel, keeping the tint (a warm row stays warmer than a cool one) but bringing every row
 /// into the new range.

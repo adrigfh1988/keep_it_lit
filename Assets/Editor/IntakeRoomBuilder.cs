@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// LIGHTS OUT > Build > Intake Room. Generates the F86 tutorial room as ordinary scene objects, once, so it can be
+/// KEEP IT LIT > Build > Intake Room. Generates the F86 tutorial room as ordinary scene objects, once, so it can be
 /// inspected and edited in Unity like the shop. Nothing here runs in a build; at Play time the IntakeRoom component
 /// drives what this made.
 ///
@@ -75,7 +75,7 @@ public static partial class IntakeRoomBuilder
     /// Generates the room from scratch and saves it over the prefab - a reset, not the way to change the room. To change
     /// it, open Assets/Prefabs/IntakeRoom.prefab and edit it by hand.
     /// </summary>
-    [MenuItem("LIGHTS OUT/Build/Intake Room (regenerate)", priority = 105)]
+    [MenuItem("KEEP IT LIT/Build/Intake Room (regenerate)", priority = 105)]
     public static void Build()
     {
         Scene scene = SceneManager.GetActiveScene();
@@ -137,10 +137,10 @@ public static partial class IntakeRoomBuilder
 
         InteractableKit kit = Object.FindAnyObjectByType<InteractableKit>(FindObjectsInactive.Include);
         FloorThemeSet themes = Object.FindAnyObjectByType<FloorThemeSet>(FindObjectsInactive.Include);
-        if (kit == null) Debug.LogError("Build Intake Room: no InteractableKit in the scene - the battery, bottle, note and trapdoor will be missing. Run LIGHTS OUT > Build > Interactables first.");
+        if (kit == null) Debug.LogError("Build Intake Room: no InteractableKit in the scene - the battery, bottle, note and trapdoor will be missing. Run KEEP IT LIT > Build > Interactables first.");
         if (themes == null || themes.ForFloor(1) == null || themes.ForFloor(1).Locker == null)
         {
-            Debug.LogError("Build Intake Room: no Floor Themes row with a locker - the hiding step will be missing. Run LIGHTS OUT > Build > Floor Themes first.");
+            Debug.LogError("Build Intake Room: no Floor Themes row with a locker - the hiding step will be missing. Run KEEP IT LIT > Build > Floor Themes first.");
         }
 
         BuildCore(scene, kit, themes);

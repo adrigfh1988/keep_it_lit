@@ -45,7 +45,7 @@ public static partial class HunterSkinBuilder
         }
     }
 
-    [MenuItem("LIGHTS OUT/Build/Hub NPC Skins (repaint)", priority = 108)]
+    [MenuItem("KEEP IT LIT/Build/Hub NPC Skins (repaint)", priority = 108)]
     public static void RepaintNpcSkins()
     {
         foreach (string who in NpcSkinNames) GenerateNpcSkin(who);

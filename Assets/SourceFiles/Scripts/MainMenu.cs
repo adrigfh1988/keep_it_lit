@@ -13,7 +13,7 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     [Header("Identity")]
-    [SerializeField] private string gameTitle = "LIGHTS OUT";
+    [SerializeField] private string gameTitle = "KEEP IT LIT";
     // S9: the tagline now comes from ui.menu.tagline (the old serialized field is gone).
 
     [Header("Cover")]

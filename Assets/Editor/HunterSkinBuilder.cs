@@ -28,7 +28,7 @@ public static partial class HunterSkinBuilder
 
     private const byte ClsNone = 0, ClsShell = 1, ClsLimb = 2, ClsScreen = 3, ClsEye = 4, ClsMouth = 5;
 
-    [MenuItem("LIGHTS OUT/Build/Hunter Skin (repaint)", priority = 106)]
+    [MenuItem("KEEP IT LIT/Build/Hunter Skin (repaint)", priority = 106)]
     public static void Repaint()
     {
         Material m = Generate();

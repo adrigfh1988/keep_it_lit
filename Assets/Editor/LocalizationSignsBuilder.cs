@@ -117,7 +117,7 @@ public static class LocalizationSignsBuilder
         return changed;
     }
 
-    [MenuItem("LIGHTS OUT/Localization/Localize World Signs", priority = 310)]
+    [MenuItem("KEEP IT LIT/Localization/Localize World Signs", priority = 310)]
     public static void Menu()
     {
         int n = BuildSilently();

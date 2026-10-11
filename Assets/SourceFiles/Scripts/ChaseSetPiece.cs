@@ -30,7 +30,7 @@ public class ChaseSetPiece : HubSetPiece
     {
         if (!IsComplete)
         {
-            Debug.LogError("ChaseSetPiece: the pursuer, the rise spot or a trigger zone is missing. Run LIGHTS OUT > Build Missing Pieces. Floor 4 has no chase.", this);
+            Debug.LogError("ChaseSetPiece: the pursuer, the rise spot or a trigger zone is missing. Run KEEP IT LIT > Build Missing Pieces. Floor 4 has no chase.", this);
             return;
         }
         _state = State.Armed;

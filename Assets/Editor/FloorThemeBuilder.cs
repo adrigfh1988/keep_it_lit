@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// LIGHTS OUT &gt; Build &gt; Floor Themes. Generates five floors' worth of themed set-dressing - materials
+/// KEEP IT LIT &gt; Build &gt; Floor Themes. Generates five floors' worth of themed set-dressing - materials
 /// and prefabs under Assets/SourceFiles/Themes, and a scene gallery (FloorThemes) with one live prefab
 /// instance of each piece per floor - so an artist can inspect and retouch every piece MazeGenerator
 /// clones at Play time. Nothing here runs in a build; at Play time MazeGenerator.ResolveTheme just finds
@@ -42,7 +42,7 @@ public static partial class FloorThemeBuilder
 
     private static Material _plinthMaterial;
 
-    [MenuItem("LIGHTS OUT/Build/Floor Themes", priority = 100)]
+    [MenuItem("KEEP IT LIT/Build/Floor Themes", priority = 100)]
     public static void Build()
     {
         Scene scene = SceneManager.GetActiveScene();
@@ -71,7 +71,7 @@ public static partial class FloorThemeBuilder
         BuildSilently(replaceAssets: choice == 2);
     }
 
-    /// <summary>No dialogs: replaces any existing gallery, keeping the theme assets unless replaceAssets. Used by LIGHTS OUT &gt; Build Missing Pieces.</summary>
+    /// <summary>No dialogs: replaces any existing gallery, keeping the theme assets unless replaceAssets. Used by KEEP IT LIT &gt; Build Missing Pieces.</summary>
     public static void BuildSilently(bool replaceAssets = false)
     {
         Scene scene = SceneManager.GetActiveScene();

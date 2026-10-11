@@ -44,7 +44,7 @@ public partial class MazeGenerator
     [SerializeField, Min(1)] private int loopFromFloor = 3;
     [Tooltip("Chance per eligible floor. The loop appears on at most one floor of a campaign (set when that floor is cleared); 1 forces it for testing")]
     [SerializeField, Range(0f, 1f)] private float loopChance = 0.6f;
-    [Tooltip("Testing: build the loop on any themed floor, skipping the first-floor rule, the once-per-campaign rule and the roll (the roll is still drawn, so the maze is unchanged). LIGHTS OUT > Debug > Go To Loop Entrance takes you there in Play")]
+    [Tooltip("Testing: build the loop on any themed floor, skipping the first-floor rule, the once-per-campaign rule and the roll (the roll is still drawn, so the maze is unchanged). KEEP IT LIT > Debug > Go To Loop Entrance takes you there in Play")]
     [SerializeField] private bool debugForceLoop = false;
     [Tooltip("The entrance cell is at least this many steps (x + z) from the start cell, so the corridor is found deeper in the floor")]
     [SerializeField, Min(0)] private int loopMinStartDistance = 4;
@@ -729,7 +729,7 @@ public partial class MazeGenerator
     }
 
     /// <summary>
-    /// Testing (LIGHTS OUT &gt; Debug &gt; Go To Loop Entrance): puts the player in the loop's entrance cell, 1 m back from the opening and
+    /// Testing (KEEP IT LIT &gt; Debug &gt; Go To Loop Entrance): puts the player in the loop's entrance cell, 1 m back from the opening and
     /// facing it. Returns what happened; nothing moves when this floor has no loop corridor or it is already sealed.
     /// </summary>
     public string DebugGoToLoopEntrance()

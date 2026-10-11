@@ -9,14 +9,14 @@ using UnityEngine;
 /// locomotion and Mixamo pose clips drive it exactly as they drive Timmy. Its PBR sets become URP Lit materials under
 /// Assets/Cyborg/Materials (roughness baked into the metallic map's alpha, red emissive on the gear and headgear).
 ///
-/// Which body the hunter wears is an Editor preference (<see cref="CurrentLook"/>), switched by LIGHTS OUT &gt; Build &gt; Hunter Body Look,
+/// Which body the hunter wears is an Editor preference (<see cref="CurrentLook"/>), switched by KEEP IT LIT &gt; Build &gt; Hunter Body Look,
 /// which rebuilds the hunter at once; Build Hunter Body and Check Project follow the selected look. The cyborg is the default (11 Oct 2026).
 /// </summary>
 public static partial class HunterBodyBuilder
 {
     public enum BodyLook { Orderly, Cyborg }
 
-    private const string LookPref = "LightsOut.HunterBodyLook";
+    private const string LookPref = "KeepItLit.HunterBodyLook";
     internal const string CyborgModelPath = "Assets/Cyborg/Cyborg_APose.fbx";
     private const string CyborgTextureFolder = "Assets/Cyborg/Textures";
     private const string CyborgMaterialFolder = "Assets/Cyborg/Materials";
@@ -31,17 +31,17 @@ public static partial class HunterBodyBuilder
         set => EditorPrefs.SetInt(LookPref, (int)value);
     }
 
-    [MenuItem("LIGHTS OUT/Build/Hunter Body Look/Cyborg (test)", priority = 110)]
+    [MenuItem("KEEP IT LIT/Build/Hunter Body Look/Cyborg (test)", priority = 110)]
     public static void UseCyborg() { CurrentLook = BodyLook.Cyborg; BuildSilently(); }
 
-    [MenuItem("LIGHTS OUT/Build/Hunter Body Look/Orderly robot", priority = 111)]
+    [MenuItem("KEEP IT LIT/Build/Hunter Body Look/Orderly robot", priority = 111)]
     public static void UseOrderly() { CurrentLook = BodyLook.Orderly; BuildSilently(); }
 
-    [MenuItem("LIGHTS OUT/Build/Hunter Body Look/Cyborg (test)", true)]
-    private static bool UseCyborgValidate() { Menu.SetChecked("LIGHTS OUT/Build/Hunter Body Look/Cyborg (test)", CurrentLook == BodyLook.Cyborg); return true; }
+    [MenuItem("KEEP IT LIT/Build/Hunter Body Look/Cyborg (test)", true)]
+    private static bool UseCyborgValidate() { Menu.SetChecked("KEEP IT LIT/Build/Hunter Body Look/Cyborg (test)", CurrentLook == BodyLook.Cyborg); return true; }
 
-    [MenuItem("LIGHTS OUT/Build/Hunter Body Look/Orderly robot", true)]
-    private static bool UseOrderlyValidate() { Menu.SetChecked("LIGHTS OUT/Build/Hunter Body Look/Orderly robot", CurrentLook == BodyLook.Orderly); return true; }
+    [MenuItem("KEEP IT LIT/Build/Hunter Body Look/Orderly robot", true)]
+    private static bool UseOrderlyValidate() { Menu.SetChecked("KEEP IT LIT/Build/Hunter Body Look/Orderly robot", CurrentLook == BodyLook.Orderly); return true; }
 
     /// <summary>The cyborg model imported as a valid Humanoid, with its materials made; null when the pack is missing or the avatar is not valid.</summary>
     private static GameObject EnsureCyborgModel()

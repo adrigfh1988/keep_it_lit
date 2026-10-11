@@ -145,7 +145,7 @@ hub.records.read_file,"Interaction prompt on a folder on the records board in th
 hub.wristband.prompt,Interaction prompt on Elias's wristband on the morgue table (floor 4 on),READ WRISTBAND · ELIAS VOGT · PATIENT 5
 hub.exit.prompt,Interaction prompt at the asylum main doors in the finale (ending A),LEAVE THE ASYLUM
 hub.key.prompt,Interaction prompt on the Director's key on the records board (floor 5),TAKE THE DIRECTOR'S KEY
-hub.switch.prompt,Interaction prompt (hold E 3 s) on the master switch in the finale (ending B). LIGHTS OUT is the game title: keep it,PULL THE MASTER SWITCH · LIGHTS OUT
+hub.switch.prompt,Interaction prompt (hold E 3 s) on the master switch in the finale (ending B). LIGHTS OUT is the name of ending B: keep it,PULL THE MASTER SWITCH · LIGHTS OUT
 hub.desk.open,Interaction prompt on the Director's desk drawer when all five case files were read,OPEN THE DRAWER
 hub.desk.closed,Interaction prompt on the Director's desk drawer while the case files are incomplete,THE DRAWER
 hub.desk.locked,Subtitle (3 s) when E is pressed at the locked drawer. {n} of {total} case files read,THE DRAWER IS LOCKED · CASE FILES {n} / {total}

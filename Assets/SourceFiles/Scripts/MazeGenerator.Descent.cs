@@ -80,7 +80,7 @@ public partial class MazeGenerator
         if (interactableKit == null) interactableKit = FindAnyObjectByType<InteractableKit>(FindObjectsInactive.Include);
         if (interactableKit == null || !interactableKit.HasItemCache)
         {
-            Debug.LogError("MazeGenerator: no InteractableKit item cache in the scene - the descent has no caches. Run LIGHTS OUT > Build > Interactables in the Editor, then save the scene.", this);
+            Debug.LogError("MazeGenerator: no InteractableKit item cache in the scene - the descent has no caches. Run KEEP IT LIT > Build > Interactables in the Editor, then save the scene.", this);
             return;
         }
 

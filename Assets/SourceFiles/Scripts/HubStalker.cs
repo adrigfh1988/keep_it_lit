@@ -140,7 +140,7 @@ public class HubStalker : MonoBehaviour
             }
         }
         if (_agentType != -1) _agent.agentTypeID = _agentType;
-        else Debug.LogError("HubStalker: the \"Hub\" NavMesh agent type does not exist. Run LIGHTS OUT > Build Missing Pieces.", this);
+        else Debug.LogError("HubStalker: the \"Hub\" NavMesh agent type does not exist. Run KEEP IT LIT > Build Missing Pieces.", this);
         _agent.radius = 0.3f;
         _agent.height = 1.8f;
         _agent.acceleration = 12f;

@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// F97 (plannings/audio-wiring-plan.md): creates Assets/SourceFiles/Audio/GameAudioLibrary.asset, fills every EMPTY slot from the table below
 /// (never overwrites a slot the user has changed), applies the import settings of D4 to every clip it references, and assigns the asset to
-/// the scene's MazeGenerator. No menu item: run by LIGHTS OUT > Build Missing Pieces through the "Audio library" piece in ProjectSetup.
+/// the scene's MazeGenerator. No menu item: run by KEEP IT LIT > Build Missing Pieces through the "Audio library" piece in ProjectSetup.
 /// Never saves the scene - it only marks it dirty.
 /// </summary>
 public static class GameAudioLibraryBuilder

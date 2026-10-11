@@ -18,7 +18,7 @@ using UnityEngine.AI;
 /// </summary>
 public class HubStarTrail : MonoBehaviour
 {
-    [Tooltip("The pool of wall quads (inactive in the prefab). Built by LIGHTS OUT > Build Missing Pieces.")]
+    [Tooltip("The pool of wall quads (inactive in the prefab). Built by KEEP IT LIT > Build Missing Pieces.")]
     [SerializeField] private Renderer[] pool = new Renderer[0];
     [Tooltip("The star scratched on the SHOP door's leaf.")]
     [SerializeField] private Renderer shopStar;

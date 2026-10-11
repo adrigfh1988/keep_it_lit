@@ -1425,7 +1425,7 @@ MonoBehaviour:
     - rid: 4707331672703762793
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: 'Interaction prompt (hold E 3 s) on the master switch in the finale (ending B). LIGHTS OUT is the game title: keep it'
+        m_CommentText: 'Interaction prompt (hold E 3 s) on the master switch in the finale (ending B). LIGHTS OUT is the name of ending B: keep it'
     - rid: 4707331672703762794
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:

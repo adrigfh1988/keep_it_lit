@@ -55,7 +55,7 @@ public static class GameFlow
     public static bool IsDescent;
 
     /// <summary>F86: PlayerPrefs flag set once the Intake has been finished or skipped. Only changes wording ("Welcome back"); the Intake is still offered every new campaign.</summary>
-    public const string TutorialDoneKey = "lightsout.tutorial.done";
+    public const string TutorialDoneKey = "keepitlit.tutorial.done";
 
     public static bool TutorialDone
     {

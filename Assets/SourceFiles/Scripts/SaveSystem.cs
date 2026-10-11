@@ -60,7 +60,7 @@ public static class SaveSystem
     public const int Version = 1;
 
     /// <summary>Namespaced: itch.io serves many games from shared origins.</summary>
-    public const string Key = "lightsout.save.v1";
+    public const string Key = "keepitlit.save.v1";
 
     // ---------------------------------------------------------------- storage
 

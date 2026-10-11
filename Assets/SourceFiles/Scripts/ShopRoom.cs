@@ -12,7 +12,7 @@ using UnityEngine.InputSystem;
 /// The lit room between floors: a counter, a salesman whose head follows the player, and a door to the
 /// next floor. Unlike everything else in this project the room is AUTHORED in the scene, so it can be
 /// selected, moved and restyled in the Editor: it is the hand-editable prefab Assets/Prefabs/ShopRoom.prefab (first
-/// drafted by LIGHTS OUT > Build > Shop Room (regenerate), Assets/Editor/ShopRoomBuilder.cs); this component only drives it.
+/// drafted by KEEP IT LIT > Build > Shop Room (regenerate), Assets/Editor/ShopRoomBuilder.cs); this component only drives it.
 ///
 /// It is not a run and not an ending: see GameFlow.IsInShop. MazeGenerator finds it, hands it the
 /// player/HUD/menu through Configure, and GameOutcome.FloorCleared teleports the player onto the
@@ -27,7 +27,7 @@ public class ShopRoom : MonoBehaviour
     [SerializeField] private Collider counterZone;
     [Tooltip("Trigger volume in front of the door. Only its XZ footprint is used.")]
     [SerializeField] private Collider doorZone;
-    [Tooltip("F87: trigger volume in front of the contract board. Only its XZ footprint is used. Empty = no board (LIGHTS OUT > Build Missing Pieces adds it).")]
+    [Tooltip("F87: trigger volume in front of the contract board. Only its XZ footprint is used. Empty = no board (KEEP IT LIT > Build Missing Pieces adds it).")]
     [SerializeField] private Collider contractZone;
     [Tooltip("The salesman's head: a plain pivot, or the head bone of an animated body. It turns to follow the player, within Head Yaw Limit of how it (or the animated body) is facing here.")]
     [SerializeField] private Transform headPivot;
@@ -111,7 +111,7 @@ public class ShopRoom : MonoBehaviour
             foreach (Renderer r in doorHinge.GetComponentsInChildren<Renderer>())
             {
                 if (!r.isPartOfStaticBatch) continue;
-                Debug.LogWarning("ShopRoom: the door leaf is Static, so static batching froze it shut and it will not swing. Run LIGHTS OUT > Build Missing Pieces, then save the scene.", r);
+                Debug.LogWarning("ShopRoom: the door leaf is Static, so static batching froze it shut and it will not swing. Run KEEP IT LIT > Build Missing Pieces, then save the scene.", r);
                 break;
             }
             Bounds leaf = RendererBounds(doorHinge);

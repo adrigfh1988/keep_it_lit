@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 
 /// <summary>
 /// S2: the player's machine settings (display, graphics, audio, controls). A static, like <see cref="TouchInput"/>: PlayerPrefs under
-/// <c>lightsout.settings.&lt;name&gt;</c>, reloaded in SubsystemRegistration so an Editor Play session starts from the saved values, applied once
+/// <c>keepitlit.settings.&lt;name&gt;</c>, reloaded in SubsystemRegistration so an Editor Play session starts from the saved values, applied once
 /// in BeforeSceneLoad. NOT campaign state: not in SaveData, not cleared by GameFlow.ReturnToMenu, untouched by a scene reload.
 ///
 /// Every setter clamps, stores, saves, applies the part that needs applying right now and raises <see cref="Changed"/>; the systems that
@@ -36,7 +36,7 @@ public static class GameSettings
     public const float MinMouseSensitivity = 0.25f, MaxMouseSensitivity = 3f;
     public const float MinFov = 60f, MaxFov = 90f, DefaultFov = 70f;
 
-    private const string Prefix = "lightsout.settings.";
+    private const string Prefix = "keepitlit.settings.";
 
     /// <summary>Raised after any setter or reset. Subscribers must unsubscribe in OnDisable / OnDestroy.</summary>
     public static event Action Changed;
@@ -376,9 +376,9 @@ public static class GameSettings
             {
                 _mixer = mixer; _musicGroup = music[0]; _effectsGroup = effects[0]; _hasMixer = true;
             }
-            else Debug.LogWarning("GameSettings: the mixer is missing the Music / Effects groups or the exposed volume parameters - run LIGHTS OUT > Build Missing Pieces. Falling back to AudioListener.volume.");
+            else Debug.LogWarning("GameSettings: the mixer is missing the Music / Effects groups or the exposed volume parameters - run KEEP IT LIT > Build Missing Pieces. Falling back to AudioListener.volume.");
         }
-        else Debug.LogWarning("GameSettings: MazeGenerator has no audio mixer assigned (LIGHTS OUT > Build Missing Pieces): only the Master volume works.");
+        else Debug.LogWarning("GameSettings: MazeGenerator has no audio mixer assigned (KEEP IT LIT > Build Missing Pieces): only the Master volume works.");
 
         foreach (AudioSource s in MusicSources) if (s != null) s.outputAudioMixerGroup = _musicGroup;
         ApplyAudio();
