@@ -1,0 +1,15 @@
+{
+    "asset": "a9c0a3ef33648564d949c1cb5ef7be3d",
+    "fileName": "01a12016-c716-726b-a889-005caa10a754.wav",
+    "prompt": "A single human heartbeat: one deep muffled \"lub-dub\" double thump, heard from inside the chest, very low frequency, dry and close, then silence.",
+    "negativePrompt": "",
+    "model": "elevenlabs-sound-effects-v2",
+    "modelName": "ElevenLabs Sound Effects V2",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "duration": 10.0,
+    "autoTrim": false,
+    "hasReference": false,
+    "voice": ""
+}

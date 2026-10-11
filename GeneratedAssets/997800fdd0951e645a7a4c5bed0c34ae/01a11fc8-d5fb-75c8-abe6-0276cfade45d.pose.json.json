@@ -1,0 +1,12 @@
+{
+  "asset": "997800fdd0951e645a7a4c5bed0c34ae",
+  "fileName": "01a11fc8-d5fb-75c8-abe6-0276cfade45d.pose.json",
+  "prompt": "In place: a man bends forward at the waist about 30 degrees, both arms reaching down and forward to hip height, the right hand makes slow circular rubbing motions on a flat surface at hip height, the left hand rests flat on the surface beside it, head looking down at his hands, loop seamlessly.",
+  "negativePrompt": "hands at chest height, upright posture, arms raised, walking, stepping, turning, foot sliding, waving, gesturing, fast movement, exaggerated",
+  "model": "unity-text-to-motion",
+  "modelName": "Text to Motion",
+  "customSeed": 668594446,
+  "w3CTraceId": "",
+  "feedback": -1,
+  "isTrimmed": false
+}

@@ -1,0 +1,12 @@
+{
+  "asset": "997800fdd0951e645a7a4c5bed0c34ae",
+  "fileName": "01a11fc9-bae2-7755-8bb6-acaaea17e6ef.pose.json",
+  "prompt": "A man cooking and cleaning a table",
+  "negativePrompt": "",
+  "model": "unity-text-to-motion",
+  "modelName": "Text to Motion",
+  "customSeed": 146506112,
+  "w3CTraceId": "",
+  "feedback": 1,
+  "isTrimmed": false
+}

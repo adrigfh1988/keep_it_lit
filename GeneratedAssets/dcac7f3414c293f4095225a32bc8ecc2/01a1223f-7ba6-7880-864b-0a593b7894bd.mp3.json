@@ -1,0 +1,15 @@
+{
+    "asset": "dcac7f3414c293f4095225a32bc8ecc2",
+    "fileName": "01a1223f-7ba6-7880-864b-0a593b7894bd.mp3",
+    "prompt": "Lights out. Return to your bed.",
+    "negativePrompt": "",
+    "model": "google-lyria-3-clip",
+    "modelName": "Google Lyria 3 Clip",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "duration": 10.0,
+    "autoTrim": false,
+    "hasReference": false,
+    "voice": ""
+}

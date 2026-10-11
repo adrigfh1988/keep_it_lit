@@ -1,0 +1,15 @@
+{
+    "asset": "a9c0a3ef33648564d949c1cb5ef7be3d",
+    "fileName": "01a12013-fe29-7e3a-b65c-4ebd1b4995aa.wav",
+    "prompt": "do a distressed heartbeat, like in a horror movie",
+    "negativePrompt": "",
+    "model": "elevenlabs-multilingual-v2",
+    "modelName": "ElevenLabs Multilingual V2",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "duration": 10.0,
+    "autoTrim": false,
+    "hasReference": false,
+    "voice": "NoSampleVoice"
+}

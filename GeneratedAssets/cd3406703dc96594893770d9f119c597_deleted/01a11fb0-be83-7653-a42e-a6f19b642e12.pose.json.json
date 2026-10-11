@@ -1,0 +1,12 @@
+{
+  "asset": "cd3406703dc96594893770d9f119c597",
+  "fileName": "01a11fb0-be83-7653-a42e-a6f19b642e12.pose.json",
+  "prompt": " A heavy-set cook standing at a counter slowly wipes the counter surface in circles with a cloth in his right hand, leaning slightly forward, tired, unhurried, in place, loop seamlessly.",
+  "negativePrompt": " walking, stepping, turning around, foot sliding, jumping, sitting, kneeling, arms above shoulders, waving, dancing, fast movement, exaggerated, cartoonish, jittery",
+  "model": "unity-text-to-motion",
+  "modelName": "Text to Motion",
+  "customSeed": 1695727212,
+  "w3CTraceId": "",
+  "feedback": 1,
+  "isTrimmed": false
+}
