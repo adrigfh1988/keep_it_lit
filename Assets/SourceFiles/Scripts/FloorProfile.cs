@@ -99,7 +99,7 @@ public class FloorProfile
     /// present, so None means "no extra mechanic" (floor 1, the teaching floor). Lockdown means the F72
     /// door/button table plus one Timed door. Blackout means the lights start off and FuseCount fuse
     /// boxes have to be found to bring them back. KeyHunt means KeyCount brass keys have to be found
-    /// before the hatch/lift will complete (see MazeEscape's padlock).
+    /// before the hatch/gates will complete (see MazeEscape's padlock).
     /// </summary>
     [System.Flags]
     public enum Objective { None = 0, Lockdown = 1, Blackout = 2, KeyHunt = 4 }
@@ -110,8 +110,8 @@ public class FloorProfile
     public const int FirstRolledFloor = 2;
 
     /// <summary>
-    /// F105 F5: the final floor always plays keys + a timed lockdown on top of its stars (and always ends in the lift,
-    /// see <see cref="ForceLift"/>), so it is the hardest floor; it is not rolled. Floor 4's roll never lands on this pair.
+    /// F105 F5: the final floor always plays keys + a timed lockdown on top of its stars (and always ends in the exit gates,
+    /// see <see cref="ForceGates"/>), so it is the hardest floor; it is not rolled. Floor 4's roll never lands on this pair.
     /// </summary>
     public const Objective FinalFloorObjectives = Objective.KeyHunt | Objective.Lockdown;
 
@@ -257,10 +257,14 @@ public class FloorProfile
     public int KeyCount;
 
     // ---- the escape (F105 F5)
-    /// <summary>F105 F5: the final floor always ends in the lift, never a hatch (MazeEscape still rolls +17 for the other floors).</summary>
-    public bool ForceLift;
-    /// <summary>F105 F5: seconds standing in the lift ring to complete the escape - 8 everywhere, 12 on the final floor.</summary>
-    public float LiftFillSeconds = 8f;
+    /// <summary>F105 F5 / F111: the final floor (and a DESCENT boss level) always ends in the two exit gates, never a hatch (MazeGenerator.Gates still rolls +17 for the other floors).</summary>
+    public bool ForceGates;
+    /// <summary>F111: how many exit gates a gate floor has - 1 on floors 3-4 (and a rolled DESCENT level), 2 on the final floor and the DESCENT boss.</summary>
+    public int GateCount = 1;
+    /// <summary>F111: seconds holding E on a gate's lever to open it - 10 everywhere, 14 on the final floor and the DESCENT boss. Each gate keeps its own progress and it never goes down.</summary>
+    public float GateLeverSeconds = 10f;
+    /// <summary>F111: the escape countdown on a gate floor, always 120 s (EscapeSeconds is ignored there); the Long Fuse adds 10 (PlayerInventory.ApplyActiveModifiers).</summary>
+    public float GateEscapeSeconds = 120f;
 
     /// <summary>Chance a wander leg becomes an ambush. Read raw - see AIFollower.EffectiveAmbushBias.</summary>
     public float AmbushBias;
@@ -402,9 +406,10 @@ public class FloorProfile
         // the banner's one-line flavour text. Every other floor is untouched (implicit x1, no line).
         if (storyTemperament) ApplyTemperament(p, floor == 3 ? Temperament.Listens : floor == 4 ? Temperament.Sprints : floor == FinalFloor ? Temperament.Final : Temperament.None);
 
-        // F105 F5: the final floor always ends in the lift, and the lift takes longer to fill.
-        p.ForceLift = floor == FinalFloor;
-        p.LiftFillSeconds = p.ForceLift ? 12f : 8f;
+        // F105 F5 / F111: the final floor always ends in the exit gates, and their levers take longer to pull.
+        p.ForceGates = floor == FinalFloor;
+        p.GateCount = p.ForceGates ? 2 : 1;
+        p.GateLeverSeconds = p.ForceGates ? 14f : 10f;
 
         // F75, decision D7: the Stalker appears on the last two floors only - by then the hunter alone
         // has had time to establish what "the one thing chasing you" feels like.
@@ -503,10 +508,11 @@ public class FloorProfile
 
         p.ShardCount = 0;
 
-        // Every fifth level is a boss level: the final floor's temperament and its lift.
+        // Every fifth level is a boss level: the final floor's temperament and its exit gates.
         bool boss = depth % DescentBossEvery == 0;
-        p.ForceLift = boss;
-        p.LiftFillSeconds = boss ? 12f : 8f;
+        p.ForceGates = boss;
+        p.GateCount = boss ? 2 : 1;
+        p.GateLeverSeconds = boss ? 14f : 10f;
         // Depths 1-5 keep the story's temperaments (a gentle start); deeper levels pick one from the seed.
         Temperament temperament = boss ? Temperament.Final
             : depth <= FinalFloor ? (depth == 3 ? Temperament.Listens : depth == 4 ? Temperament.Sprints : Temperament.None)

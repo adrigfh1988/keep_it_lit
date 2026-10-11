@@ -63,8 +63,8 @@ MonoBehaviour:
     m_Localized: "LA TRAPPE EST D\xC9VERROUILL\xC9E"
     m_Metadata:
       m_Items: []
-  - m_Id: 421433354
-    m_Localized: "L'ASCENSEUR EST D\xC9VERROUILL\xC9"
+  - m_Id: 441658820694016
+    m_Localized: LES PORTES DE SORTIE SONT SOUS TENSION
     m_Metadata:
       m_Items: []
   - m_Id: 7992965500928
@@ -189,11 +189,10 @@ MonoBehaviour:
     m_Localized: "\xC7A VOUS A ENTENDU."
     m_Metadata:
       m_Items: []
-  - m_Id: 82051891892224
-    m_Localized: "TROUVER {n} CL\xC9S POUR L'ASCENSEUR"
+  - m_Id: 441658736807936
+    m_Localized: "LES PORTES SONT D\xC9VERROUILL\xC9ES"
     m_Metadata:
-      m_Items:
-      - rid: 4707331672703763194
+      m_Items: []
   - m_Id: 82051979972608
     m_Localized: "\xC7A SE SOUVIENT DES CASIERS."
     m_Metadata:
@@ -230,6 +229,15 @@ MonoBehaviour:
     m_Localized: "LE PLAN D'\xC9TAGE. SEULEMENT CE QUE VOUS AVEZ PARCOURU."
     m_Metadata:
       m_Items: []
+  - m_Id: 441658820694017
+    m_Localized: LA PORTE EST OUVERTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 441658820694018
+    m_Localized: "TROUVER {n} CL\xC9S POUR LES PORTES"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763194
   references:
     version: 2
     RefIds:
@@ -248,4 +256,4 @@ MonoBehaviour:
         - id: 7993049387034
         - id: 7993049387035
         - id: 7993049387037
-        - id: 82051891892224
+        - id: 441658820694018

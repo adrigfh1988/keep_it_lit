@@ -25,8 +25,9 @@ hud.counter.stars,ÉTOILES  {n} / {total}
 hud.counter.fuses,FUSIBLES  {n} / {total}
 hud.counter.keys,CLÉS  {n} / {total}
 hud.keys_locked,VERROUILLÉE · {h} / {t} CLÉS
-hud.lift_locked,ASCENSEUR BLOQUÉ · {h} / {t} CLÉS
-hud.lift_arriving,ASCENSEUR EN APPROCHE {percent}%
+hud.gate.pull,TIRER LE LEVIER
+hud.gate.no_power,PAS DE COURANT
+hud.gate.locked,VERROUILLÉES · {h} / {t} CLÉS
 hud.records.header,DOSSIERS  {n} / {total}
 hud.prompt.pick_up_bottle,RAMASSER LA BOUTEILLE
 hud.prompt.pick_up_can,RAMASSER LA CANETTE

@@ -11,7 +11,9 @@ sub.consumable.fresh_cell,Pila nueva.
 sub.consumable.no_compass,No tienes brújula estelar.
 sub.consumable.nothing_to_point,No queda nada a lo que apuntar.
 sub.escape.hatch_unlocked,LA TRAMPILLA ESTÁ DESBLOQUEADA
-sub.escape.lift_unlocked,EL ASCENSOR ESTÁ DESBLOQUEADO
+sub.escape.gates_unlocked,LAS PUERTAS ESTÁN DESBLOQUEADAS
+sub.escape.gates_powered,LAS PUERTAS DE SALIDA TIENEN CORRIENTE
+sub.escape.gate_open,LA PUERTA ESTÁ ABIERTA
 sub.pickup.battery_cell,PILA
 sub.pickup.second_wind,+ SEGUNDO ALIENTO
 sub.pickup.key,LLAVE {held} / {total}
@@ -39,7 +41,7 @@ sub.banner.restore_fuses,REPARA {n} FUSIBLES
 sub.banner.find_keys,ENCUENTRA {n} LLAVES PARA LA TRAMPILLA
 sub.banner.lockdown,CIERRE DE SEGURIDAD
 sub.banner.rule,{name} — {description}
-sub.banner.find_keys_lift,ENCUENTRA {n} LLAVES PARA EL ASCENSOR
+sub.banner.find_keys_gates,ENCUENTRA {n} LLAVES PARA LAS PUERTAS
 sub.hunter.learned_lockers,RECUERDA LOS CASILLEROS.
 sub.hunter.learned_throws,CONOCE LAS BOTELLAS.
 sub.hunter.learned_dark,HA APRENDIDO LA OSCURIDAD.

@@ -63,8 +63,8 @@ MonoBehaviour:
     m_Localized: THE HATCH IS UNLOCKED
     m_Metadata:
       m_Items: []
-  - m_Id: 421433354
-    m_Localized: THE LIFT IS UNLOCKED
+  - m_Id: 441658820694016
+    m_Localized: THE EXIT GATES HAVE POWER
     m_Metadata:
       m_Items: []
   - m_Id: 7992965500928
@@ -189,11 +189,10 @@ MonoBehaviour:
     m_Localized: IT HEARD YOU.
     m_Metadata:
       m_Items: []
-  - m_Id: 82051891892224
-    m_Localized: FIND {n} KEYS FOR THE LIFT
+  - m_Id: 441658736807936
+    m_Localized: THE GATES ARE UNLOCKED
     m_Metadata:
-      m_Items:
-      - rid: 4707331672703763132
+      m_Items: []
   - m_Id: 82051979972608
     m_Localized: IT REMEMBERS THE LOCKERS.
     m_Metadata:
@@ -230,6 +229,15 @@ MonoBehaviour:
     m_Localized: THE FLOOR PLAN. ONLY WHAT YOU HAVE WALKED.
     m_Metadata:
       m_Items: []
+  - m_Id: 441658820694017
+    m_Localized: THE GATE IS OPEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 441658820694018
+    m_Localized: FIND {n} KEYS FOR THE GATES
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763132
   references:
     version: 2
     RefIds:
@@ -248,4 +256,4 @@ MonoBehaviour:
         - id: 7993049387034
         - id: 7993049387035
         - id: 7993049387037
-        - id: 82051891892224
+        - id: 441658820694018

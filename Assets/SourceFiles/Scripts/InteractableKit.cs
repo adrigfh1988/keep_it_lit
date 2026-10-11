@@ -65,6 +65,12 @@ public class InteractableKit : MonoBehaviour
     [Tooltip("Optional. The trapdoor MazeEscape.BuildHatch clones: a child 'Glow' renderer takes the hatch's emissive material, and children 'LidL'/'LidR' are the two leaves, hinged about their local Z. Empty = the old glowing slab.")]
     [SerializeField] private GameObject escapeHatch;
 
+    [Header("Exit gate (F111)")]
+    [Tooltip("One exit gate, set into the maze's outer wall by MazeGenerator.BuildExitGates (two per gate floor). Local space: origin at the floor centre of the wall segment, +Z into the maze. " +
+             "Children the runtime finds by name: PostL, PostR, Lintel (frame, colliders), Shutter (slatted door with a solid box collider, rises when open), LeverBox (with LeverFocus, a solid box collider, and LeverHandle), " +
+             "Lamp0/Lamp1/Lamp2 (each a Bulb renderer and a disabled Light), Chain (padlock look, hidden), Stairwell (outside the wall) and StubLight (disabled).")]
+    [SerializeField] private GameObject escapeGate;
+
     [Header("DESCENT Listener (F107 D2)")]
     [Tooltip("The blind second killer: Char_Subject (pale, gaunt, no emission) on Animation/Descent/Listener.controller, with a Listener on the root. MazeGenerator.BuildEntities clones it, adds a NavMeshAgent and warps it onto the mesh.")]
     [SerializeField] private Listener listener;
@@ -104,6 +110,7 @@ public class InteractableKit : MonoBehaviour
     public Stalker Stalker => stalker;
     public KeyPickup KeyPickup => keyPickup;
     public GameObject EscapeHatch => escapeHatch;
+    public GameObject EscapeGate => escapeGate;
     public GameObject ShardModel => shardModel;
     public ParticleSystem FogBank => fogBank;
     public LoreNote PatientFile => patientFile;

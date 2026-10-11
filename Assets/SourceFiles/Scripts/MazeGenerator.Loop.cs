@@ -172,7 +172,7 @@ public partial class MazeGenerator
     /// <summary>A cell the placement passes keep clear: the squeeze (F105 C3) and the loop's entrance (C4).</summary>
     private bool IsLayoutReserved(Vector2Int cell)
     {
-        return _squeezeCells.Contains(cell) || (_loopActive && cell == _loopEntrance);
+        return _squeezeCells.Contains(cell) || (_loopActive && cell == _loopEntrance) || IsGateCell(cell);
     }
 
     // ---------------------------------------------------------------- choosing the entrance (+23)

@@ -584,7 +584,8 @@ public partial class MazeGenerator
         foreach (FuseBox box in _fuseBoxes) if (box != null) Check(box.transform.position, "fuse box");
         foreach (WallButton button in _buttons) if (button != null) Check(button.transform.position, "button");
         MazeEscape escape = FindAnyObjectByType<MazeEscape>();
-        if (escape != null && escape.HatchOpen) Check(escape.HatchPosition, "hatch");
+        if (HasExitGates) foreach (Vector2Int gateCell in GateCells) Check(CellCenter(gateCell.x, gateCell.y), "exit gate"); // F111: always built, so always checked
+        else if (escape != null && escape.HatchOpen) Check(escape.HatchPosition, "hatch");
 
         sb.Append($"reachability (locked doors are walls until their button is reached): {withoutButtons} of {width * height} cells before any button, {reached.Count} after; ");
         sb.Append(missing.Count == 0 ? $"all {targets} targets reachable\n" : $"UNREACHABLE: {string.Join(", ", missing)}\n");

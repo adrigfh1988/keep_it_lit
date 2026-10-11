@@ -31,7 +31,8 @@ public class PlayerInteractor : MonoBehaviour
 
     /// <summary>F76: 0..1 progress toward completing the focused hold interaction, for TouchControls'
     /// INTERACT radial fill. 0 when nothing is focused or the focused interactable is not a hold one.</summary>
-    public float HoldProgress => _focused != null && _focused.HoldSeconds > 0f ? Mathf.Clamp01(_holdElapsed / _focused.HoldSeconds) : 0f;
+    public float HoldProgress => _focused is IProgressInteractable progressive ? Mathf.Clamp01(progressive.Progress01) // F111
+        : _focused != null && _focused.HoldSeconds > 0f ? Mathf.Clamp01(_holdElapsed / _focused.HoldSeconds) : 0f;
 
     /// <summary>The camera the probe casts from - read by F74's Lantern/theme interactables that need it for their own purposes (parenting a held prop, a screen-space marker) rather than duplicating the reference.</summary>
     public Camera Camera => _camera;
@@ -90,6 +91,18 @@ public class PlayerInteractor : MonoBehaviour
         }
 
         bool canInteract = _focused.CanInteract;
+
+        // F111: a hold whose progress never resets (the exit gates' levers) - see IProgressInteractable.
+        if (_focused is IProgressInteractable progressive)
+        {
+            if (held && canInteract) progressive.HoldTick(Time.deltaTime);
+            if (_hud != null)
+            {
+                float fill = progressive.Progress01;
+                _hud.SetFocusPrompt("E", progressive.Prompt, fill > 0f ? Mathf.RoundToInt(Mathf.Clamp01(fill) * 100f) : -1);
+            }
+            return;
+        }
 
         if (_focused.HoldSeconds <= 0f)
         {
@@ -157,7 +170,8 @@ public class PlayerInteractor : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             IInteractable candidate = Hits[i].collider.GetComponentInParent<IInteractable>();
-            if (candidate == null || !candidate.CanInteract) continue;
+            // F111: a progress lever stays focusable while it cannot be used, so its prompt can say why (NO POWER, LOCKED).
+            if (candidate == null || (!candidate.CanInteract && !(candidate is IProgressInteractable))) continue;
             if (Hits[i].distance >= bestDistance) continue;
 
             bestDistance = Hits[i].distance;

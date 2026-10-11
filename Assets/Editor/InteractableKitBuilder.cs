@@ -247,6 +247,16 @@ public static partial class InteractableKitBuilder
             }
         }
 
+        // F111: the exit gate (primitives and the kit's own materials, no pack, so never null), same build-missing-only rule. Not optional:
+        // without it MazeGenerator.ChooseGates logs an error naming this menu item and the floor keeps its hatch.
+        SerializedProperty gateProp = so.FindProperty("escapeGate");
+        if (gateProp.objectReferenceValue == null)
+        {
+            gateProp.objectReferenceValue = BuildEscapeGate(root.transform, new Vector3(x, 0f, 0f));
+            x += PieceSpacing;
+            built++;
+        }
+
         // F90: the currency shard's model (a pack item), same build-missing-only rule. Optional - without the pack the slot stays
         // empty and MazeGenerator.BuildShard keeps its cube.
         SerializedProperty shardProp = so.FindProperty("shardModel");

@@ -70,11 +70,6 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331669776663345
-  - m_Id: 421433354
-    m_Key: sub.escape.lift_unlocked
-    m_Metadata:
-      m_Items:
-      - rid: 4707331669776663346
   - m_Id: 7992965500928
     m_Key: sub.pickup.battery_cell
     m_Metadata:
@@ -215,11 +210,6 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331674882703723
-  - m_Id: 82051891892224
-    m_Key: sub.banner.find_keys_lift
-    m_Metadata:
-      m_Items:
-      - rid: 4707331677479764078
   - m_Id: 82051979972608
     m_Key: sub.hunter.learned_lockers
     m_Metadata:
@@ -265,6 +255,26 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331695923429702
+  - m_Id: 441658736807936
+    m_Key: sub.escape.gates_unlocked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331699516899522
+  - m_Id: 441658820694016
+    m_Key: sub.escape.gates_powered
+    m_Metadata:
+      m_Items:
+      - rid: 4707331699516899523
+  - m_Id: 441658820694017
+    m_Key: sub.escape.gate_open
+    m_Metadata:
+      m_Items:
+      - rid: 4707331699516899524
+  - m_Id: 441658820694018
+    m_Key: sub.banner.find_keys_gates
+    m_Metadata:
+      m_Items:
+      - rid: 4707331699516899525
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -320,10 +330,6 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Subtitle when the last key is picked up on a key-hunt floor with a hatch (2.5 s)
-    - rid: 4707331669776663346
-      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
-      data:
-        m_CommentText: Subtitle when the last key is picked up on a key-hunt floor with a lift (2.5 s)
     - rid: 4707331672703763101
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
@@ -436,10 +442,6 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: World text (the game speaking, not the hunter) when a noise the player made stops the hunter dead, just before it rushes the spot (shown 2 s). ALL CAPS like THE HATCH IS UNLOCKED. "IT" = the hunter, never named
-    - rid: 4707331677479764078
-      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
-      data:
-        m_CommentText: Floor intro banner objective part on the final floor, whose exit is always the lift. {n} = keys to find (3)
     - rid: 4707331677479764079
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
@@ -476,3 +478,19 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: 'Subtitle (plain, about 4 s) when a Floor Plan is used: the map is on for this floor and shows only what has been walked'
+    - rid: 4707331699516899522
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle when the last key is picked up on a key-hunt floor with exit gates (2.5 s)
+    - rid: 4707331699516899523
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle when the last star is taken and the exit gates get power (2.5 s)
+    - rid: 4707331699516899524
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle when a gate's lever is full and its shutter starts to rise (2 s)
+    - rid: 4707331699516899525
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Floor intro banner objective part on a key-hunt floor whose exit is the gates. {n} = keys to find (3)

@@ -139,16 +139,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763201
-  - m_Id: 740200466
-    m_Localized: "ASCENSOR BLOQUEADO \xB7 {h} / {t} LLAVES"
+  - m_Id: 441659449839616
+    m_Localized: "SIN ENERG\xCDA"
     m_Metadata:
-      m_Items:
-      - rid: 4707331672703763201
-  - m_Id: 740200467
-    m_Localized: ASCENSOR LLEGANDO {percent}%
+      m_Items: []
+  - m_Id: 441659361759232
+    m_Localized: TIRA DE LA PALANCA
     m_Metadata:
-      m_Items:
-      - rid: 4707331672703763201
+      m_Items: []
   - m_Id: 740200468
     m_Localized: EXPEDIENTES  {n} / {total}
     m_Metadata:
@@ -277,6 +275,11 @@ MonoBehaviour:
     m_Localized: "MANT\xC9N PARA USAR EL PLANO"
     m_Metadata:
       m_Items: []
+  - m_Id: 441659449839617
+    m_Localized: "BLOQUEADAS \xB7 {h} / {t} LLAVES"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763201
   references:
     version: 2
     RefIds:
@@ -301,8 +304,7 @@ MonoBehaviour:
         - id: 740200463
         - id: 740200464
         - id: 740200465
-        - id: 740200466
-        - id: 740200467
+        - id: 441659449839617
         - id: 740200468
         - id: 171011829829632
         - id: 171011926298624

@@ -477,6 +477,7 @@ public partial class MazeGenerator : MonoBehaviour
         BuildSetPieces(new System.Random(usedSeed + 8));
         BuildSqueeze(); // F105 C3: after the set pieces' reset of _setPieceCells, which it adds its cells to; before the bake, so the inserts carve it
         ReserveLoopEntrance(); // F105 C4: after BuildSetPieces for the same reason
+        ReserveGates(); // F111: the gates' cells likewise
 
         // +4 is the RNG offset props own (+0 carve, +1 stars, +2 lamps, +3 lockers, +5 shards). One
         // instance is threaded through both prop passes below so the stream stays continuous across the
@@ -496,6 +497,7 @@ public partial class MazeGenerator : MonoBehaviour
         BuildCeilingProps(propRng);
         BuildWallLamps();
         BuildLoopCorridor(); // F105 C4: post-bake and outside the volume, so the hunter's NavMesh never reaches it
+        BuildExitGates(); // F111: post-bake too, outside the volume
 
         // F70, post-bake: flat, collider-less dressing - safe to add after the navmesh has already
         // been carved from the bodies built above.
@@ -519,7 +521,7 @@ public partial class MazeGenerator : MonoBehaviour
         BuildFuses(new System.Random(usedSeed + 12));
 
         // F77, post-bake, after BuildFuses (fuse walls reserved) and before +13 (so throwables/notes see
-        // key walls). +18: +17 is MazeEscape's lift roll.
+        // key walls). +18: +17 is the exit gates' roll (MazeGenerator.Gates).
         BuildKeys(new System.Random(usedSeed + 18));
 
         // F107 C, after BuildKeys: a DESCENT's item caches (+24). Draws nothing outside a descent.
@@ -540,7 +542,7 @@ public partial class MazeGenerator : MonoBehaviour
 
         BuildLantern(new System.Random(usedSeed + 15));
 
-        // F93, post-BuildLoreNotes: the floor's patient case file (+19, its own System.Random; +17 is MazeEscape's lift roll, +18 BuildKeys).
+        // F93, post-BuildLoreNotes: the floor's patient case file (+19, its own System.Random; +17 is the exit gates' roll, +18 BuildKeys).
         if (!GameFlow.IsDescent) BuildPatientFile(new System.Random(usedSeed + 19)); // F107: nor a case file
 
         SpawnShards(usedSeed);
@@ -816,6 +818,7 @@ public partial class MazeGenerator : MonoBehaviour
         BuildRoomsAndGallery(usedSeed);
         ChooseSqueeze(usedSeed);
         ChooseLoop(usedSeed); // F105 C4 (+23): the loop's entrance on the maze edge, picked once rooms, gallery and squeeze are final
+        ChooseGates(usedSeed); // F111 (+26): the exit gates, picked after the loop so they keep clear of its entrance and side
     }
 
     private int WallCount(int x, int z)
@@ -2155,7 +2158,7 @@ public partial class MazeGenerator : MonoBehaviour
             {
                 // Walls are shared, so only the west and south sides are built per cell; the outer
                 // east and north sides are added once on the last column / row.
-                if (_wallW[x, z] && !IsLoopOpening(x, z, 3))
+                if (_wallW[x, z] && !IsLoopOpening(x, z, 3) && !IsGateOpening(x, z, 3))
                 {
                     SpawnThemedWall(
                         $"Wall_W_{x}_{z}",
@@ -2163,7 +2166,7 @@ public partial class MazeGenerator : MonoBehaviour
                         Quaternion.Euler(0f, 90f, 0f));
                 }
 
-                if (_wallS[x, z] && !IsLoopOpening(x, z, 2))
+                if (_wallS[x, z] && !IsLoopOpening(x, z, 2) && !IsGateOpening(x, z, 2))
                 {
                     SpawnThemedWall(
                         $"Wall_S_{x}_{z}",
@@ -2171,7 +2174,7 @@ public partial class MazeGenerator : MonoBehaviour
                         Quaternion.identity);
                 }
 
-                if (x == width - 1 && _wallE[x, z] && !IsLoopOpening(x, z, 1))
+                if (x == width - 1 && _wallE[x, z] && !IsLoopOpening(x, z, 1) && !IsGateOpening(x, z, 1))
                 {
                     SpawnThemedWall(
                         $"Wall_E_{x}_{z}",
@@ -2179,7 +2182,7 @@ public partial class MazeGenerator : MonoBehaviour
                         Quaternion.Euler(0f, 90f, 0f));
                 }
 
-                if (z == height - 1 && _wallN[x, z] && !IsLoopOpening(x, z, 0))
+                if (z == height - 1 && _wallN[x, z] && !IsLoopOpening(x, z, 0) && !IsGateOpening(x, z, 0))
                 {
                     SpawnThemedWall(
                         $"Wall_N_{x}_{z}",
@@ -2226,7 +2229,7 @@ public partial class MazeGenerator : MonoBehaviour
             {
                 // Walls are shared, so only the west and south sides are built per cell; the outer
                 // east and north sides are added once on the last column / row.
-                if (_wallW[x, z])
+                if (_wallW[x, z] && !IsGateOpening(x, z, 3))
                 {
                     CreateBox(
                         $"Wall_W_{x}_{z}",
@@ -2236,7 +2239,7 @@ public partial class MazeGenerator : MonoBehaviour
                         _wallsGroup);
                 }
 
-                if (_wallS[x, z])
+                if (_wallS[x, z] && !IsGateOpening(x, z, 2))
                 {
                     CreateBox(
                         $"Wall_S_{x}_{z}",
@@ -2246,7 +2249,7 @@ public partial class MazeGenerator : MonoBehaviour
                         _wallsGroup);
                 }
 
-                if (x == width - 1 && _wallE[x, z])
+                if (x == width - 1 && _wallE[x, z] && !IsGateOpening(x, z, 1))
                 {
                     CreateBox(
                         $"Wall_E_{x}_{z}",
@@ -2256,7 +2259,7 @@ public partial class MazeGenerator : MonoBehaviour
                         _wallsGroup);
                 }
 
-                if (z == height - 1 && _wallN[x, z])
+                if (z == height - 1 && _wallN[x, z] && !IsGateOpening(x, z, 0))
                 {
                     CreateBox(
                         $"Wall_N_{x}_{z}",
@@ -4923,10 +4926,11 @@ public partial class MazeGenerator : MonoBehaviour
             if (_profile != null)
             {
                 escape.SetEscapeSeconds(_profile.EscapeSeconds);
-                escape.SetLiftFillSeconds(_profile.LiftFillSeconds); // F105 F5
-                escape.SetForceLift(_profile.ForceLift);
+                escape.SetGateLeverSeconds(_profile.GateLeverSeconds); // F111
+                escape.SetGateEscapeSeconds(_profile.GateEscapeSeconds);
+                if (HasExitGates) escape.SetGates(_exitGates);
             }
-            // F77: the padlock - the hatch/lift refuses to complete while keys are still missing.
+            // F77: the padlock - the hatch/gates refuse to complete while keys are still missing.
             escape.BindKeyRing(keyRing, hud);
         }
 
@@ -5031,7 +5035,7 @@ public partial class MazeGenerator : MonoBehaviour
 
         List<string> parts = new List<string> { L10n.T("sub.banner.find_stars", ("n", _profile.StarCount)) };
         if (_profile.Has(FloorProfile.Objective.Blackout)) parts.Add(L10n.T("sub.banner.restore_fuses", ("n", _profile.FuseCount)));
-        if (_profile.Has(FloorProfile.Objective.KeyHunt)) parts.Add(L10n.T(_profile.ForceLift ? "sub.banner.find_keys_lift" : "sub.banner.find_keys", ("n", _profile.KeyCount)));
+        if (_profile.Has(FloorProfile.Objective.KeyHunt)) parts.Add(L10n.T(HasExitGates ? "sub.banner.find_keys_gates" : "sub.banner.find_keys", ("n", _profile.KeyCount)));
         if (_profile.Has(FloorProfile.Objective.Lockdown)) parts.Add(L10n.T("sub.banner.lockdown"));
         return string.Join(" · ", parts);
     }
@@ -5168,10 +5172,11 @@ public partial class MazeGenerator : MonoBehaviour
         }
         AppendDebugBorder(sb, 0, 2, doorGlyphs);
 
-        sb.Append("\n* star   k key   bN button for door N   S start   @ you   H hunter   E hatch/lift   digit/letter on a wall = door\n");
+        sb.Append("\n* star   k key   bN button for door N   S start   @ you   H hunter   E hatch   G exit gate   digit/letter on a wall = door\n");
         AppendDebugLegend(sb, data);
         AppendLayoutLegend(sb);
         AppendLoopLegend(sb);
+        AppendGateLegend(sb); // F111
         AppendEntityLegend(sb); // F107 D
         return sb.ToString();
     }
@@ -5193,6 +5198,7 @@ public partial class MazeGenerator : MonoBehaviour
     private char DebugWallGlyph(int x, int z, int dir, char closed, Dictionary<(Vector2Int, int), char> doorGlyphs)
     {
         if (doorGlyphs.TryGetValue((new Vector2Int(x, z), dir), out char id)) return id;
+        if (IsGateOpening(x, z, dir)) return 'G'; // F111: the gate stands in this outer wall
         return IsWallClosed(x, z, dir) ? closed : ' ';
     }
 
@@ -5230,7 +5236,7 @@ public partial class MazeGenerator : MonoBehaviour
 
     /// <summary>
     /// F106: the floor as one snapshot for DebugMap's text and FloorMapUi's picture - the walls, the doors with their state, the live stars,
-    /// the keys, the buttons, the open hatch or lift, and the player's cell and heading (the hunter is not in it). Pass the previous snapshot
+    /// the keys, the buttons, the open hatch, and the player's cell and heading (the hunter is not in it). Pass the previous snapshot
     /// as `into` to refill it in place instead of allocating a new one. Null before the maze exists (Play starts it).
     /// </summary>
     public MazeMapData BuildMapData(MazeMapData into = null)
@@ -5280,7 +5286,7 @@ public partial class MazeGenerator : MonoBehaviour
         }
 
         if (_mapEscape == null) _mapEscape = FindAnyObjectByType<MazeEscape>();
-        if (_mapEscape != null && _mapEscape.HatchOpen && TryWorldToCell(_mapEscape.HatchPosition, out Vector2Int hatch))
+        if (!HasExitGates && _mapEscape != null && _mapEscape.HatchOpen && TryWorldToCell(_mapEscape.HatchPosition, out Vector2Int hatch))
         {
             data.HatchOpen = true;
             data.HatchCell = hatch;

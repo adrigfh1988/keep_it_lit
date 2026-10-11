@@ -11,7 +11,9 @@ sub.consumable.fresh_cell,Subtitle: a spare battery was used (1.8 s),Fresh cell.
 sub.consumable.no_compass,Subtitle: pressed the star-compass key with none held (1.8 s),No star compass.
 sub.consumable.nothing_to_point,Subtitle: the star compass has nothing left to point at (1.8 s),Nothing left to point at.
 sub.escape.hatch_unlocked,Subtitle when the last key is picked up on a key-hunt floor with a hatch (2.5 s),THE HATCH IS UNLOCKED
-sub.escape.lift_unlocked,Subtitle when the last key is picked up on a key-hunt floor with a lift (2.5 s),THE LIFT IS UNLOCKED
+sub.escape.gates_unlocked,Subtitle when the last key is picked up on a key-hunt floor with exit gates (2.5 s),THE GATES ARE UNLOCKED
+sub.escape.gates_powered,Subtitle when the last star is taken and the exit gates get power (2.5 s),THE EXIT GATES HAVE POWER
+sub.escape.gate_open,"Subtitle when a gate's lever is full and its shutter starts to rise (2 s)",THE GATE IS OPEN
 sub.pickup.battery_cell,"Subtitle after picking up a battery cell in the maze (shown 2 s, one line at the bottom of the screen)",BATTERY CELL
 sub.pickup.second_wind,Subtitle after a vault battery cell also grants a Second Wind (shown 3 s). Second Wind = the shop item that frees you once when the hunter catches you,+ SECOND WIND
 sub.pickup.key,"Subtitle after picking up a key on a key-hunt floor (shown 2 s). {held} = keys held, {total} = keys on the floor",KEY {held} / {total}
@@ -39,7 +41,7 @@ sub.banner.restore_fuses,Floor intro banner objective part on a blackout floor. 
 sub.banner.find_keys,Floor intro banner objective part on a key-hunt floor. {n} = keys to find (2 or 3); the hatch is the floor exit,FIND {n} KEYS FOR THE HATCH
 sub.banner.lockdown,Floor intro banner objective part on a floor with a timed security door,SECURITY LOCKDOWN
 sub.banner.rule,"Floor intro banner rule line (one line, auto-size). {name} = the rule name (shop.rule.*.name), {description} = its sentence (shop.rule.*.desc)",{name} — {description}
-sub.banner.find_keys_lift,"Floor intro banner objective part on the final floor, whose exit is always the lift. {n} = keys to find (3)",FIND {n} KEYS FOR THE LIFT
+sub.banner.find_keys_gates,"Floor intro banner objective part on a key-hunt floor whose exit is the gates. {n} = keys to find (3)",FIND {n} KEYS FOR THE GATES
 sub.hunter.learned_lockers,"World text (the game speaking, not the hunter) shown at the start of a floor on the hunter-lesson card (42 pt goal line, shrinks to fit) when the hunter has learned the player's locker habit. ALL CAPS like IT HEARD YOU. ""IT"" = the hunter, never named",IT REMEMBERS THE LOCKERS.
 sub.hunter.learned_throws,"World text (the game speaking, not the hunter) shown at the start of a floor on the hunter-lesson card (42 pt goal line, shrinks to fit) when the hunter has learned the player's throwing habit. ALL CAPS like IT HEARD YOU. ""IT"" = the hunter, never named",IT KNOWS THE BOTTLES.
 sub.hunter.learned_dark,"World text (the game speaking, not the hunter) shown at the start of a floor on the hunter-lesson card (42 pt goal line, shrinks to fit) when the hunter has learned the player's dark-walking habit. ALL CAPS like IT HEARD YOU. ""IT"" = the hunter, never named",IT HAS LEARNED THE DARK.

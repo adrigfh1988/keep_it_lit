@@ -25,8 +25,9 @@ hud.counter.stars,STERNE  {n} / {total}
 hud.counter.fuses,SICHERUNGEN  {n} / {total}
 hud.counter.keys,SCHLÜSSEL  {n} / {total}
 hud.keys_locked,GESPERRT · {h} / {t} SCHLÜSSEL
-hud.lift_locked,AUFZUG GESPERRT · {h} / {t} SCHLÜSSEL
-hud.lift_arriving,AUFZUG KOMMT {percent}%
+hud.gate.pull,HEBEL ZIEHEN
+hud.gate.no_power,KEIN STROM
+hud.gate.locked,GESPERRT · {h} / {t} SCHLÜSSEL
 hud.records.header,KRANKENAKTEN  {n} / {total}
 hud.prompt.pick_up_bottle,FLASCHE AUFHEBEN
 hud.prompt.pick_up_can,DOSE AUFHEBEN

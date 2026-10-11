@@ -336,6 +336,10 @@ public class AIFollower : MonoBehaviour
     // fake-null, so filtering the list is self-cleaning and needs no event.
     private IReadOnlyList<Transform> _patrolTargets;
 
+    // F111: the exit gates' inside points on a two-gate floor once they have power. While hunting, a lost player sends every wander leg
+    // to the nearest gate other than the one it is standing at, so it walks between them. Empty = the normal wander.
+    private readonly List<Vector3> _gatePatrol = new List<Vector3>();
+
     // Escalation. Left at 1 so the follower behaves at full strength if nothing drives it.
     private float _threat = 1f;
     // Multiplies how far the player's noise carries. Set per floor; 1 = full hearing.
@@ -480,6 +484,13 @@ public class AIFollower : MonoBehaviour
     public void SetPatrolTargets(IReadOnlyList<Transform> targets)
     {
         _patrolTargets = targets;
+    }
+
+    /// <summary>F111: the exit gates to patrol between once the escape is on (MazeEscape, two gates only). Null or fewer than two = normal wander.</summary>
+    public void SetGatePatrol(IEnumerable<Vector3> gates)
+    {
+        _gatePatrol.Clear();
+        if (gates != null) _gatePatrol.AddRange(gates);
     }
 
     /// <summary>Front-of-locker positions. Called from MazeGenerator.PlaceAI, before this component's Awake.</summary>
@@ -1709,6 +1720,19 @@ public class AIFollower : MonoBehaviour
             return;
         }
 
+        // F111: hunting on a two-gate floor - guard the gates instead of the ambush, the hunch and the random legs.
+        if (_hunting && _gatePatrol.Count >= 2)
+        {
+            int gateLeg = WanderPointNearestNextGate();
+            if (gateLeg >= 0)
+            {
+                _wanderIndex = gateLeg;
+                _wanderRepickCooldown = 0.25f;
+                SetDestinationNear(_wanderPoints[gateLeg]);
+                return;
+            }
+        }
+
         // F45: try an ambush before the hunch roll - a wander leg becomes lying in wait near the star
         // the player is heading for, instead of another lap of the maze.
         if (_maze != null && _patrolTargets != null && Random.value < EffectiveAmbushBias && TryEnterAmbush())
@@ -1988,6 +2012,38 @@ public class AIFollower : MonoBehaviour
         }
 
         return nearestCell;
+    }
+
+    /// <summary>F111: index of the wander point nearest the closest gate it is not already standing at (within a cell), or -1. With two gates it alternates.</summary>
+    private int WanderPointNearestNextGate()
+    {
+        float atGate = _maze != null ? _maze.CellSize : 3f;
+        int gate = -1;
+        float gateDistance = float.MaxValue;
+        for (int i = 0; i < _gatePatrol.Count; i++)
+        {
+            float distance = FlatDirection(_gatePatrol[i] - transform.position).magnitude;
+            if (distance <= atGate || distance >= gateDistance) continue;
+            gateDistance = distance;
+            gate = i;
+        }
+
+        if (gate < 0) return -1;
+
+        int nearest = -1;
+        float nearestDistance = float.MaxValue;
+        for (int i = 0; i < _wanderPoints.Count; i++)
+        {
+            float distance = Vector3.Distance(_wanderPoints[i], _gatePatrol[gate]);
+            if (distance < nearestDistance)
+            {
+                nearestDistance = distance;
+                nearest = i;
+            }
+        }
+
+        if (nearest >= 0) _terror.Log($"Hunter patrols to exit gate {gate}", this);
+        return nearest;
     }
 
     /// <summary>Index of the wander point closest to the player's actual position, or -1. Backs HunchBias only - it never grants sight or a live-tracked destination beyond this one wander leg.</summary>

@@ -443,7 +443,7 @@ public static class ProjectSetup
         return false;
     }
 
-    /// <summary>Every object-reference slot on the kit that is empty. escapeHatch is optional (an empty slot is the old glowing slab).</summary>
+    /// <summary>Every object-reference slot on the kit that is empty. escapeHatch is optional (an empty slot is the old glowing slab); escapeGate (F111) is not.</summary>
     private static List<string> EmptySlots(InteractableKit kit)
     {
         List<string> empty = new List<string>();

@@ -25,8 +25,9 @@ hud.counter.stars,ESTRELLAS  {n} / {total}
 hud.counter.fuses,FUSIBLES  {n} / {total}
 hud.counter.keys,LLAVES  {n} / {total}
 hud.keys_locked,BLOQUEADA · {h} / {t} LLAVES
-hud.lift_locked,ASCENSOR BLOQUEADO · {h} / {t} LLAVES
-hud.lift_arriving,ASCENSOR LLEGANDO {percent}%
+hud.gate.pull,TIRA DE LA PALANCA
+hud.gate.no_power,SIN ENERGÍA
+hud.gate.locked,BLOQUEADAS · {h} / {t} LLAVES
 hud.records.header,EXPEDIENTES  {n} / {total}
 hud.prompt.pick_up_bottle,RECOGER LA BOTELLA
 hud.prompt.pick_up_can,RECOGER LA LATA

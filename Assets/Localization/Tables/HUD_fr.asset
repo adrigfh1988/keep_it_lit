@@ -139,16 +139,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763193
-  - m_Id: 740200466
-    m_Localized: "ASCENSEUR BLOQU\xC9 \xB7 {h} / {t} CL\xC9S"
+  - m_Id: 441659449839616
+    m_Localized: PAS DE COURANT
     m_Metadata:
-      m_Items:
-      - rid: 4707331672703763193
-  - m_Id: 740200467
-    m_Localized: ASCENSEUR EN APPROCHE {percent}%
+      m_Items: []
+  - m_Id: 441659361759232
+    m_Localized: TIRER LE LEVIER
     m_Metadata:
-      m_Items:
-      - rid: 4707331672703763193
+      m_Items: []
   - m_Id: 740200468
     m_Localized: DOSSIERS  {n} / {total}
     m_Metadata:
@@ -277,6 +275,11 @@ MonoBehaviour:
     m_Localized: MAINTENIR POUR UTILISER LE PLAN
     m_Metadata:
       m_Items: []
+  - m_Id: 441659449839617
+    m_Localized: "VERROUILL\xC9ES \xB7 {h} / {t} CL\xC9S"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763193
   references:
     version: 2
     RefIds:
@@ -301,8 +304,7 @@ MonoBehaviour:
         - id: 740200463
         - id: 740200464
         - id: 740200465
-        - id: 740200466
-        - id: 740200467
+        - id: 441659449839617
         - id: 740200468
         - id: 171011829829632
         - id: 171011926298624

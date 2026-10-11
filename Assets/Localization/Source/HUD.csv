@@ -25,8 +25,9 @@ hud.counter.stars,"HUD counter, first segment, top-left (38 pt, one line, 1100 p
 hud.counter.fuses,"HUD counter, second segment on blackout floors. Joined to the first with three spaces. {n} of {total} fuse boxes restored",FUSES  {n} / {total}
 hud.counter.keys,"HUD counter, third segment on key-hunt floors. Joined with three spaces. {n} of {total} keys held",KEYS  {n} / {total}
 hud.keys_locked,"Subtitle-style reminder when stepping on a locked hatch (1.8 s, one line). {h} keys held of {t}",LOCKED · {h} / {t} KEYS
-hud.lift_locked,"Text above the lift ring while the lift is locked (28 pt, 400 x 50, auto-size). {h} keys held of {t}",LIFT LOCKED · {h} / {t} KEYS
-hud.lift_arriving,"Text above the lift ring while it fills (28 pt, 400 x 50, auto-size). {percent} = 0-100",LIFT ARRIVING {percent}%
+hud.gate.pull,"Interaction prompt on an exit gate's lever once the gates have power. Shown as ""E  <text>  nn%"" while the hold fills (34 pt, 600 x 50, auto-size)",PULL THE LEVER
+hud.gate.no_power,"Interaction prompt on an exit gate's lever before the escape opens (the gates are dead)",NO POWER
+hud.gate.locked,"Interaction prompt on a padlocked exit gate's lever on a key-hunt floor. {h} keys held of {t}",LOCKED · {h} / {t} KEYS
 hud.records.header,"Records board header in the asylum office (world-space sign, auto-size). {n} of {total} maze case files found",CASE FILES  {n} / {total}
 hud.prompt.pick_up_bottle,"Interaction prompt on a bottle on the floor. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",PICK UP BOTTLE
 hud.prompt.pick_up_can,Interaction prompt on a can on the floor,PICK UP CAN

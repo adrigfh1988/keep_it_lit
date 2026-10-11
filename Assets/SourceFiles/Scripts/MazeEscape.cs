@@ -4,9 +4,9 @@ using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// The endgame. Collecting the last star does not win: a hatch opens somewhere in the maze and the
-/// player has one minute to find it. Reaching it drops them out of the maze onto a platform below and
-/// wins. Running out of time loses.
+/// The endgame. Collecting the last star does not win: the way out opens and the player has a countdown to reach it. On a hatch floor a hatch opens
+/// somewhere in the maze (one minute, or more on the early floors); dropping through it wins the floor. On a gate floor (F111) the maze's exit gates
+/// get power instead (two minutes) and one has to be opened by holding E on its lever and walked out of. Running out of time loses.
 /// </summary>
 public class MazeEscape : MonoBehaviour
 {
@@ -23,15 +23,9 @@ public class MazeEscape : MonoBehaviour
     [Tooltip("Cells this far or closer to the player when the hatch opens are skipped, so it is never a free win")]
     [SerializeField] private float minimumDistanceFromPlayer = 12f;
 
-    [Header("Lift variant (F73)")]
-    [Tooltip("Radius of the ring the player has to stand inside")]
-    [SerializeField] private float liftRingRadius = 2f;
-    [Tooltip("Total seconds standing inside the ring to complete it")]
-    [SerializeField] private float liftFillSeconds = 8f;
-    [Tooltip("Fraction of the fill rate the progress decays at per second while outside the ring")]
-    [SerializeField] private float liftDecayFraction = 0.5f;
-    [Tooltip("How far calling the lift (first time standing inside it) can be heard (m)")]
-    [SerializeField] private float liftCallNoiseRadius = 60f;
+    [Header("Exit gates (F111)")]
+    [Tooltip("The countdown on a gate floor (s), whatever the floor; the profile's EscapeSeconds is ignored there")]
+    [SerializeField] private float gateEscapeSeconds = 120f;
 
     [Header("Drop")]
     [Tooltip("How far below the maze floor the landing platform sits")]
@@ -91,7 +85,7 @@ public class MazeEscape : MonoBehaviour
     // F104 B4: when the next hunter ping is due, the alarm's object (so Stop can silence it), and the reused hatch-candidate list.
     private float _nextHunterPing;
     private bool _huntActive;
-    private GameObject _alarmObject;
+    private readonly System.Collections.Generic.List<GameObject> _alarmObjects = new System.Collections.Generic.List<GameObject>();
     private readonly System.Collections.Generic.List<Vector3> _hatchCandidates = new System.Collections.Generic.List<Vector3>();
 
     // F77 Key Hunt: the padlock. A KeyHunt floor's hatch/lift refuses to complete while _keys is
@@ -124,14 +118,12 @@ public class MazeEscape : MonoBehaviour
     private float _timeLeft;
     private Vector3 _hatchPosition;
 
-    // F73: 50% seeded chance (floors 3-5) that the escape point is a Lift - same cell choice and
-    // countdown as a Hatch, but completed by standing inside a ring for liftFillSeconds instead of
-    // walking onto a trigger.
-    private bool _isLift;
-    private bool _forceLift;
-    private float _liftProgress;
-    private bool _liftCalled;
-    private TextMeshProUGUI _liftText;
+    // F111: on a gate floor (MazeGenerator.HasExitGates) the exit is the maze's exit gates, not a hatch: no hatch cell, no landing platform,
+    // a fixed countdown, completed by walking out of an open gate (ExitGate.PlayerReached).
+    private readonly System.Collections.Generic.List<ExitGate> _gates = new System.Collections.Generic.List<ExitGate>();
+    private bool _gateMode;
+    private bool _gatesHooked;
+    private string _exitKind = "hatch";
 
     private TextMeshProUGUI _timerText;
     private TextMeshProUGUI _chevronText;
@@ -140,7 +132,13 @@ public class MazeEscape : MonoBehaviour
     private float _pingTimer;
     private float _chevronPulse;
 
-    public Vector3 HatchPosition => _hatchPosition;
+    /// <summary>
+    /// Where the way out is: the hatch, or on a gate floor the wayfinding exit - the nearest gate to the player (flat), or the nearest one that is
+    /// opening or open once there is one. Callers: GameOutcome's out-of-time distance, the reachability check (hatch floors only), the debug map (hatch floors only).
+    /// </summary>
+    public Vector3 HatchPosition => _gateMode ? NearestExit(_player != null ? _player.position : _hatchPosition) : _hatchPosition;
+
+    /// <summary>True once the escape has begun (the hatch is open or the gates have power).</summary>
     public bool HatchOpen { get; private set; }
 
     /// <summary>Seconds left on the countdown. Valid even after Stop() - Stop() hides the display, it does not zero the field.</summary>
@@ -156,11 +154,28 @@ public class MazeEscape : MonoBehaviour
     /// <summary>Per-floor countdown. Read when the hatch opens, so it can be set any time before that.</summary>
     public void SetEscapeSeconds(float seconds) { escapeSeconds = Mathf.Max(10f, seconds); }
 
-    /// <summary>F105 F5: the profile's lift fill time (12 s on the final floor). Read while the lift fills, so any time before that.</summary>
-    public void SetLiftFillSeconds(float seconds) { liftFillSeconds = Mathf.Max(1f, seconds); }
+    /// <summary>F111: the profile's lever time (10 s, 14 s on the final floor and the DESCENT boss). Passed on to the gates.</summary>
+    public void SetGateLeverSeconds(float seconds)
+    {
+        _gateLeverSeconds = Mathf.Max(1f, seconds);
+        foreach (ExitGate gate in _gates) gate.SetLeverSeconds(_gateLeverSeconds);
+    }
 
-    /// <summary>F105 F5: the final floor always ends in the lift, never a hatch. Read when the escape opens.</summary>
-    public void SetForceLift(bool force) { _forceLift = force; }
+    /// <summary>F111: the gate floor's countdown from the profile (120 s, +10 with the Long Fuse). Read when the escape opens.</summary>
+    public void SetGateEscapeSeconds(float seconds) { gateEscapeSeconds = Mathf.Max(10f, seconds); }
+
+    /// <summary>F111: this floor's exit gates (MazeGenerator.BuildExitGates). Subscribes to them; OnDisable unsubscribes.</summary>
+    public void SetGates(System.Collections.Generic.IReadOnlyList<ExitGate> gates)
+    {
+        HookGates(false);
+        _gates.Clear();
+        if (gates != null) foreach (ExitGate gate in gates) if (gate != null) _gates.Add(gate);
+        _gateMode = _gates.Count > 0;
+        foreach (ExitGate gate in _gates) gate.SetLeverSeconds(_gateLeverSeconds);
+        if (isActiveAndEnabled) HookGates(true);
+    }
+
+    private float _gateLeverSeconds = 10f;
 
     public void Configure(MazeGenerator maze, Transform player, Material emissiveSource, GameOutcome outcome, AIFollower hunter)
     {
@@ -180,6 +195,7 @@ public class MazeEscape : MonoBehaviour
         if (_timerText != null) _timerText.gameObject.SetActive(false);
         if (_ping != null) _ping.Stop();
         EndAlarm();
+        foreach (ExitGate gate in _gates) gate.Silence();
     }
 
     /// <summary>F77: the player's KeyRing (an instance component, built alongside it) and the HUD, for the padlock's subtitles. Unsubscribes any previous ring first - CLAUDE.md's every-subscriber-unsubscribes rule.</summary>
@@ -194,52 +210,138 @@ public class MazeEscape : MonoBehaviour
     private void OnEnable()
     {
         GameManager.AllStarsCollected += BeginEscape;
+        HookGates(true);
     }
 
     private void OnDisable()
     {
         GameManager.AllStarsCollected -= BeginEscape;
         if (_keys != null) _keys.Changed -= HandleKeysChanged;
+        HookGates(false);
     }
 
-    /// <summary>KeyRing.Changed: once every key is held, the padlock clears and the hatch/lift resumes.</summary>
+    /// <summary>F111: subscribes to (or releases) the gates' events. Idempotent, so OnEnable, OnDisable and SetGates can all call it.</summary>
+    private void HookGates(bool on)
+    {
+        if (on == _gatesHooked) return;
+        _gatesHooked = on;
+        foreach (ExitGate gate in _gates)
+        {
+            if (on)
+            {
+                gate.Opened += HandleGateOpened;
+                gate.PlayerReached += HandleGateReached;
+            }
+            else
+            {
+                gate.Opened -= HandleGateOpened;
+                gate.PlayerReached -= HandleGateReached;
+            }
+        }
+    }
+
+    /// <summary>KeyRing.Changed: once every key is held, the padlock clears and the hatch/gates resume.</summary>
     private void HandleKeysChanged()
     {
         if (!_locked || _keys == null || !_keys.IsComplete) return;
         _locked = false;
         ApplyLockLook();
-        _hud?.ShowSubtitle(L10n.T(_isLift ? "sub.escape.lift_unlocked" : "sub.escape.hatch_unlocked"), 2.5f);
+        _hud?.ShowSubtitle(L10n.T(_gateMode ? "sub.escape.gates_unlocked" : "sub.escape.hatch_unlocked"), 2.5f);
     }
 
     private void BeginEscape()
     {
         if (_running || _finished || _maze == null || _player == null || GameOutcome.IsOver) return;
 
-        _hatchPosition = ChooseHatchCell();
-        HatchOpen = true;
-
-        // F73 (+17): floors 1-2 always a Hatch; floors 3-5 a 50% seeded Lift, tied to UsedSeed alone
-        // (not the floor) so a same-seed retry always gets the same variant. F105 F5: the final floor is
-        // always a Lift; the roll is still drawn so the stream is unchanged.
-        bool rolledLift = GameFlow.CurrentFloor >= 3 && new System.Random(_maze.UsedSeed + 17).NextDouble() < 0.5;
-        _isLift = _forceLift || rolledLift;
-
-        if (_isLift) BuildLift(_hatchPosition);
-        else BuildHatch(_hatchPosition);
-
-        BuildLandingPlatform(_hatchPosition);
-        BuildTimerText();
-
         // F77: locked for the whole escape if this is a KeyHunt floor and keys are still missing.
         _locked = _keys != null && !_keys.IsComplete;
-        ApplyLockLook();
 
-        _timeLeft = escapeSeconds;
+        if (_gateMode)
+        {
+            // F111: the exit gates were built with the maze (MazeGenerator.HasExitGates decided, with the old +17 roll). Power them; no hatch, no platform.
+            _exitKind = "gates";
+            HatchOpen = true;
+            _hatchPosition = NearestExit(_player.position);
+            foreach (ExitGate gate in _gates)
+            {
+                gate.Bind(this, _hunter, _player, _keys);
+                gate.Power(_locked);
+            }
+
+            // F111: with two gates, a hunter that has lost the player patrols between them (one gate: its normal patrol).
+            if (_hunter != null && _gates.Count >= 2)
+            {
+                var gatePoints = new System.Collections.Generic.List<Vector3>(_gates.Count);
+                foreach (ExitGate gate in _gates) gatePoints.Add(gate.Position);
+                _hunter.SetGatePatrol(gatePoints);
+            }
+
+            BuildPingSource(_hatchPosition);
+            _timeLeft = gateEscapeSeconds;
+            BuildTimerText();
+            ApplyLockLook();
+            _hud?.ShowSubtitle(L10n.T("sub.escape.gates_powered"), 2.5f);
+        }
+        else
+        {
+            _hatchPosition = ChooseHatchCell();
+            HatchOpen = true;
+            BuildHatch(_hatchPosition);
+            BuildLandingPlatform(_hatchPosition);
+            _timeLeft = escapeSeconds;
+            BuildTimerText();
+            ApplyLockLook();
+        }
+
         _running = true;
 
         if (_terror.escapeHunt && !_maze.SuperEasyMode) BeginEscapeHunt();
 
-        Debug.Log($"MazeEscape: {(_isLift ? "lift" : "hatch")} opened at {_hatchPosition}. {escapeSeconds:0} seconds.", this);
+        Debug.Log($"MazeEscape: {_exitKind} {(_gateMode ? "powered" : "open")}{(_gateMode ? $" ({_gates.Count})" : $" at {_hatchPosition}")}. {_timeLeft:0} seconds.", this);
+    }
+
+    /// <summary>ExitGate.Opened: say so, and let the ping and chevron move on to the open gate right away.</summary>
+    private void HandleGateOpened(ExitGate gate)
+    {
+        _hud?.ShowSubtitle(L10n.T("sub.escape.gate_open"), 2f);
+        _pingTimer = 0f;
+    }
+
+    /// <summary>ExitGate.PlayerReached (every frame the player is in an open gate's stub): starts the walk-out once.</summary>
+    private void HandleGateReached(ExitGate gate)
+    {
+        if (!_running || _finished || Frozen || _entering || GameOutcome.IsOver || (_outcome != null && _outcome.IsEnding)) return;
+        if (_stealth != null && _stealth.Hidden) return;
+        StartCoroutine(ExitThroughGate(gate));
+    }
+
+    /// <summary>The wayfinding exit on a gate floor: the nearest gate that is opening or open, else the nearest gate, by flat distance from `from`.</summary>
+    private Vector3 NearestExit(Vector3 from)
+    {
+        ExitGate best = null;
+        float bestDistance = float.MaxValue;
+        for (int pass = 0; pass < 2 && best == null; pass++)
+        {
+            foreach (ExitGate gate in _gates)
+            {
+                bool open = gate.State == ExitGate.GateState.Opening || gate.State == ExitGate.GateState.Open;
+                if (pass == 0 && !open) continue;
+                float distance = FlatDistance(gate.Position, from);
+                if (distance >= bestDistance) continue;
+                bestDistance = distance;
+                best = gate;
+            }
+        }
+
+        return best != null ? best.Position : _hatchPosition;
+    }
+
+    /// <summary>True when `point` is within lampWaveHatchClearance of the hatch, or of either gate.</summary>
+    private bool IsNearExit(Vector3 point)
+    {
+        if (!_gateMode) return FlatDistance(point, _hatchPosition) <= lampWaveHatchClearance;
+        foreach (ExitGate gate in _gates) if (FlatDistance(point, gate.Position) <= lampWaveHatchClearance) return true;
+        return false;
     }
 
     private void Update()
@@ -274,14 +376,12 @@ public class MazeEscape : MonoBehaviour
         }
 
         // Impossible in practice (the hatch spawns >= 12 m from the player and a locker cannot move
-        // them there), but guarded anyway: a hatch/lift drop must never fire while inside a locker.
+        // them there), but guarded anyway: a hatch drop must never fire while inside a locker.
         if (_stealth != null && _stealth.Hidden) return;
 
-        if (_isLift)
-        {
-            UpdateLift(dt);
-            return;
-        }
+        // F111: a gate floor is completed by ExitGate.PlayerReached (HandleGateReached), not by a trigger here.
+        if (_gateMode) return;
+
 
         Vector3 toHatch = _player.position - _hatchPosition;
         toHatch.y = 0f;
@@ -304,55 +404,6 @@ public class MazeEscape : MonoBehaviour
         _hud?.ShowSubtitle(L10n.T("hud.keys_locked", ("h", _keys.Held), ("t", _keys.Total)), 1.8f);
         if (_padlockClip == null) _padlockClip = DoorAudio.BuildClunkClip(0.18f, 160f, 0.35f);
         if (!GameAudio.PlayAt(GameAudio.Library.lockedRattle, _hatchPosition, 0.7f)) GameAudio.ClipAtPoint(_padlockClip, _hatchPosition, 0.7f); // F97
-    }
-
-    /// <summary>Standing inside the ring fills liftProgress at 1 s/s; standing outside it drains at liftDecayFraction s/s. Completes through the exact same path as the hatch trigger above.</summary>
-    private void UpdateLift(float dt)
-    {
-        Vector3 flat = _player.position - _hatchPosition;
-        flat.y = 0f;
-        bool inside = flat.magnitude <= liftRingRadius;
-
-        // F77: locked - no fill, no decay, no call noise. Just a reminder while standing in the ring.
-        if (_locked)
-        {
-            if (_liftText != null)
-            {
-                _liftText.gameObject.SetActive(inside);
-                if (inside) _liftText.text = L10n.T("hud.lift_locked", ("h", _keys.Held), ("t", _keys.Total));
-            }
-            return;
-        }
-
-        if (inside)
-        {
-            if (!_liftCalled)
-            {
-                _liftCalled = true;
-                _hunter?.HearNoise(_hatchPosition, liftCallNoiseRadius);
-            }
-            _liftProgress = Mathf.Min(liftFillSeconds, _liftProgress + dt);
-        }
-        else
-        {
-            _liftProgress = Mathf.Max(0f, _liftProgress - dt * liftDecayFraction);
-        }
-
-        if (_liftText != null)
-        {
-            bool show = inside || _liftProgress > 0f;
-            _liftText.gameObject.SetActive(show);
-            if (show)
-            {
-                int percent = liftFillSeconds > 0f ? Mathf.RoundToInt(_liftProgress / liftFillSeconds * 100f) : 0;
-                _liftText.text = L10n.T("hud.lift_arriving", ("percent", percent));
-            }
-        }
-
-        if (_liftProgress >= liftFillSeconds)
-        {
-            CompleteEscape();
-        }
     }
 
     private void UpdatePing(float dt)
@@ -409,11 +460,11 @@ public class MazeEscape : MonoBehaviour
         _chevronText.color = c;
     }
 
-    /// <summary>F77: while locked, the ping and chevron point at the nearest missing key instead of the hatch/lift - fairness while the player cannot finish yet.</summary>
+    /// <summary>F77: while locked, the ping and chevron point at the nearest missing key instead of the hatch or gate - fairness while the player cannot finish yet.</summary>
     private Vector3 WayfindingTarget()
     {
         if (_locked && _keys != null && _keys.TryNearestMissing(_player.position, out Vector3 key)) return key;
-        return _hatchPosition;
+        return _gateMode ? NearestExit(_player.position) : _hatchPosition;
     }
 
     /// <summary>F77: red while locked (same language as a fuse box's red indicator), back to hatchColor once every key is held.</summary>
@@ -426,6 +477,7 @@ public class MazeEscape : MonoBehaviour
             _exitGlow.SetColor("_EmissionColor", c * 3f);
             _exitGlow.SetColor("_BaseColor", c);
         }
+        foreach (ExitGate gate in _gates) gate.SetLocked(_locked); // F111: the gates draw their own lamps and chains
         SetLidAngle(_locked ? 0f : LidAjarAngle, 0.7f);
     }
 
@@ -529,11 +581,12 @@ public class MazeEscape : MonoBehaviour
         StartCoroutine(AlarmRoutine());
     }
 
-    /// <summary>Every hunterPingInterval seconds, while the hunter is not already chasing, it is pointed at the spot the player is in (no IT HEARD YOU beat).</summary>
+    /// <summary>Every hunterPingInterval seconds, while the hunter is not already chasing, it is pointed at the spot the player is in (no IT HEARD YOU beat). Hatch floors only.</summary>
     private void UpdateHunterPing()
     {
         // Only once BeginEscapeHunt ran (not in super easy mode, and not with the flag off when the hatch opened).
-        if (!_huntActive || !_terror.escapeHunt || _hunter == null || Time.time < _nextHunterPing) return;
+        // F111: never on a gate floor - its 120 s made the reveals relentless; the levers' noise is what gives the player away there.
+        if (_gateMode || !_huntActive || !_terror.escapeHunt || _hunter == null || Time.time < _nextHunterPing) return;
 
         _nextHunterPing = Time.time + hunterPingInterval;
         if (!_hunter.IsChasing) _hunter.ForceLastKnownPosition(_player.position, reactAsHeard: false);
@@ -559,7 +612,7 @@ public class MazeEscape : MonoBehaviour
         foreach (WallLamp lamp in _maze.Lamps)
         {
             if (lamp == null || lamp.IsLockerLamp || lamp.IsDead || !lamp.IsPowered) continue;
-            if (FlatDistance(lamp.transform.position, _hatchPosition) <= lampWaveHatchClearance) continue;
+            if (IsNearExit(lamp.transform.position)) continue;
 
             float delay = FlatDistance(lamp.transform.position, origin) / Mathf.Max(0.01f, lampWaveSpeed);
             lamp.Blink(lampWaveBlinkSeconds, delay);
@@ -588,19 +641,11 @@ public class MazeEscape : MonoBehaviour
         AudioClip clip = slot.Pick();
         if (clip == null) yield break;
 
-        _alarmObject = new GameObject("EscapeAlarm");
-        _alarmObject.transform.position = _hatchPosition;
-        AudioSource source = _alarmObject.AddComponent<AudioSource>();
-        source.clip = clip;
-        source.loop = true;
-        source.spatialBlend = 1f;
-        source.rolloffMode = AudioRolloffMode.Linear;
-        source.minDistance = 2f;
-        source.maxDistance = alarmMaxDistance;
+        // One source per exit: the hatch, or each gate.
         float volume = alarmVolume * slot.volume;
-        source.volume = volume;
-        GameSettings.RouteEffect(source);
-        source.Play();
+        System.Collections.Generic.List<AudioSource> sources = new System.Collections.Generic.List<AudioSource>();
+        if (_gateMode) foreach (ExitGate gate in _gates) sources.Add(AddAlarmSource(gate.Position, clip, volume));
+        else sources.Add(AddAlarmSource(_hatchPosition, clip, volume));
 
         float t = 0f;
         while (t < alarmSeconds && !_finished)
@@ -613,17 +658,35 @@ public class MazeEscape : MonoBehaviour
         while (fade < alarmFadeSeconds && !_finished)
         {
             fade += Time.deltaTime;
-            source.volume = Mathf.Lerp(volume, 0f, fade / Mathf.Max(0.0001f, alarmFadeSeconds));
+            foreach (AudioSource source in sources) if (source != null) source.volume = Mathf.Lerp(volume, 0f, fade / Mathf.Max(0.0001f, alarmFadeSeconds));
             yield return null;
         }
 
         EndAlarm();
     }
 
+    private AudioSource AddAlarmSource(Vector3 position, AudioClip clip, float volume)
+    {
+        GameObject holder = new GameObject("EscapeAlarm");
+        holder.transform.position = position;
+        _alarmObjects.Add(holder);
+        AudioSource source = holder.AddComponent<AudioSource>();
+        source.clip = clip;
+        source.loop = true;
+        source.spatialBlend = 1f;
+        source.rolloffMode = AudioRolloffMode.Linear;
+        source.minDistance = 2f;
+        source.maxDistance = alarmMaxDistance;
+        source.volume = volume;
+        GameSettings.RouteEffect(source);
+        source.Play();
+        return source;
+    }
+
     private void EndAlarm()
     {
-        if (_alarmObject != null) Destroy(_alarmObject);
-        _alarmObject = null;
+        foreach (GameObject holder in _alarmObjects) if (holder != null) Destroy(holder);
+        _alarmObjects.Clear();
     }
 
     // ---------------------------------------------------------------- placement
@@ -719,64 +782,7 @@ public class MazeEscape : MonoBehaviour
         BuildPingSource(position);
     }
 
-    /// <summary>
-    /// A 2 m ring of emissive floor plus a caged platform, built from primitives - acceptable here (per
-    /// the spec) since MazeEscape already builds its hatch at runtime the same way. Standing inside the
-    /// ring is what UpdateLift tracks; everything else (the ping, the light, the timer) is identical to
-    /// BuildHatch.
-    /// </summary>
-    private void BuildLift(Vector3 position)
-    {
-        GameObject root = new GameObject("EscapeLift");
-        root.transform.position = position;
-
-        GameObject ring = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-        ring.name = "LiftRing";
-        Destroy(ring.GetComponent<Collider>());
-        ring.transform.SetParent(root.transform, false);
-        ring.transform.localPosition = new Vector3(0f, 0.03f, 0f);
-        ring.transform.localScale = new Vector3(liftRingRadius * 2f, 0.03f, liftRingRadius * 2f);
-
-        Material glow = null;
-        if (_emissiveSource != null)
-        {
-            glow = new Material(_emissiveSource) { name = "LiftGlow" };
-            glow.EnableKeyword("_EMISSION");
-            glow.SetColor("_BaseColor", hatchColor);
-            glow.SetColor("_EmissionColor", hatchColor * 3f);
-            ring.GetComponent<MeshRenderer>().sharedMaterial = glow;
-            _exitGlow = glow;
-        }
-
-        // The "caged platform": four thin vertical bars around the ring's perimeter.
-        for (int i = 0; i < 4; i++)
-        {
-            float angle = i * 90f * Mathf.Deg2Rad;
-            GameObject bar = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            bar.name = "LiftBar";
-            Destroy(bar.GetComponent<Collider>());
-            bar.transform.SetParent(root.transform, false);
-            bar.transform.localPosition = new Vector3(Mathf.Sin(angle) * liftRingRadius, 1.5f, Mathf.Cos(angle) * liftRingRadius);
-            bar.transform.localScale = new Vector3(0.08f, 3f, 0.08f);
-            if (glow != null) bar.GetComponent<MeshRenderer>().sharedMaterial = glow;
-        }
-
-        GameObject lightHolder = new GameObject("LiftLight");
-        lightHolder.transform.SetParent(root.transform, false);
-        lightHolder.transform.localPosition = new Vector3(0f, 1.5f, 0f);
-
-        Light light = lightHolder.AddComponent<Light>();
-        light.type = LightType.Point;
-        light.color = hatchColor;
-        light.range = hatchLightRange;
-        light.intensity = hatchLightIntensity;
-        light.shadows = LightShadows.None;
-        _exitLight = light;
-
-        BuildPingSource(position);
-    }
-
-    /// <summary>F77: the ping's AudioSource lives on its own unparented GameObject (not the hatch/lift light holder), so UpdatePing can move it onto the current wayfinding target (the hatch, or the nearest missing key while locked) right before each PlayOneShot.</summary>
+    /// <summary>F77: the ping's AudioSource lives on its own unparented GameObject (not the hatch light holder), so UpdatePing can move it onto the current wayfinding target (the hatch, or the nearest missing key while locked) right before each PlayOneShot.</summary>
     private void BuildPingSource(Vector3 position)
     {
         GameObject pingGo = new GameObject("EscapePing");
@@ -911,6 +917,53 @@ public class MazeEscape : MonoBehaviour
         Stop();
     }
 
+    /// <summary>
+    /// F111: the walk out of an open gate. Freezes the player, eases them a further 1.5 m down the stub looking down the stairwell, then the blackout
+    /// (FloorCleared) and Stop, exactly the order of EnterHatch. Bails out untouched if an ending (a capture) starts while the player is still stepping across.
+    /// </summary>
+    private IEnumerator ExitThroughGate(ExitGate gate)
+    {
+        _entering = true;
+        PlayerLock.Freeze(_player, true);
+
+        ThirdPersonController controller = _player.GetComponent<ThirdPersonController>();
+        CharacterController characterController = _player.GetComponent<CharacterController>();
+
+        Vector3 start = _player.position;
+        Vector3 over = gate.ExitEasePoint(start.y);
+        Vector3 lookPoint = gate.StairLookPoint;
+
+        float t = 0f;
+        while (t < HatchApproachSeconds)
+        {
+            if (GameOutcome.IsOver || (_outcome != null && _outcome.IsEnding))
+            {
+                _entering = false;
+                yield break;
+            }
+
+            t += Time.deltaTime;
+            MovePlayer(characterController, Vector3.Lerp(start, over, Mathf.SmoothStep(0f, 1f, t / HatchApproachSeconds)));
+            if (controller != null) controller.LookAt(lookPoint, 1f - Mathf.Exp(-7f * Time.deltaTime));
+            yield return null;
+        }
+
+        // The blackout starts here and covers the last steps toward the stairs.
+        if (controller != null) controller.MovementLocked = true;
+        _outcome.FloorCleared();
+
+        Vector3 end = over + (over - start).normalized * 0.6f;
+        t = 0f;
+        while (t < HatchDescendSeconds)
+        {
+            t += Time.deltaTime;
+            MovePlayer(characterController, Vector3.Lerp(over, end, Mathf.Clamp01(t / HatchDescendSeconds)));
+            yield return null;
+        }
+
+        Stop();
+    }
+
     /// <summary>A CharacterController overrides transform writes unless it is switched off around them.</summary>
     private void MovePlayer(CharacterController characterController, Vector3 position)
     {
@@ -970,7 +1023,7 @@ public class MazeEscape : MonoBehaviour
         _timerText.fontSize = timerFontSize;
         _timerText.color = timerColor;
         _timerText.alignment = TextAlignmentOptions.Center;
-        _timerText.text = FormatTime(escapeSeconds);
+        _timerText.text = FormatTime(_timeLeft); // BeginEscape sets the countdown first
 
         RectTransform rect = _timerText.rectTransform;
         rect.anchorMin = new Vector2(0.5f, 1f);
@@ -986,18 +1039,6 @@ public class MazeEscape : MonoBehaviour
         chevronRect.anchorMax = new Vector2(0.5f, 0.5f);
         chevronRect.pivot = new Vector2(0.5f, 0.5f);
         chevronRect.sizeDelta = new Vector2(50f, 50f);
-
-        // F73: hidden until UpdateLift has something to show - a no-op, always-inactive child on a
-        // Hatch floor. Parented under the timer, so it hides with it in Stop() too.
-        _liftText = RuntimeUi.CreateText(_timerText.transform, "LiftProgress", "", 28f, hatchColor);
-        RectTransform liftRect = _liftText.rectTransform;
-        liftRect.anchorMin = new Vector2(0.5f, 0f);
-        liftRect.anchorMax = new Vector2(0.5f, 0f);
-        liftRect.pivot = new Vector2(0.5f, 1f);
-        liftRect.anchoredPosition = new Vector2(0f, -20f);
-        liftRect.sizeDelta = new Vector2(400f, 50f);
-        RuntimeUi.AutoFit(_liftText, 0.6f); // D14
-        _liftText.gameObject.SetActive(false);
     }
 }
 

@@ -41,4 +41,15 @@ public static class MazeMapDebugMenu
 
     [MenuItem("KEEP IT LIT/Debug/Go To Loop Entrance", true)]
     private static bool GoToLoopEntranceValidate() => EditorApplication.isPlaying;
+
+    /// <summary>KEEP IT LIT &gt; Debug &gt; Go To Exit Gate: Play only, moves the player to a gate that is not yet open (MazeGenerator.DebugGoToExitGate).</summary>
+    [MenuItem("KEEP IT LIT/Debug/Go To Exit Gate", priority = 203)]
+    private static void GoToExitGate()
+    {
+        MazeGenerator maze = Object.FindAnyObjectByType<MazeGenerator>();
+        Debug.Log(maze != null ? "Go To Exit Gate: " + maze.DebugGoToExitGate() : "Go To Exit Gate: there is no MazeGenerator in the open scene.", maze);
+    }
+
+    [MenuItem("KEEP IT LIT/Debug/Go To Exit Gate", true)]
+    private static bool GoToExitGateValidate() => EditorApplication.isPlaying;
 }

@@ -11,7 +11,9 @@ sub.consumable.fresh_cell,Frische Zelle.
 sub.consumable.no_compass,Kein Sternenkompass.
 sub.consumable.nothing_to_point,Nichts mehr zum Zeigen.
 sub.escape.hatch_unlocked,DIE LUKE IST ENTRIEGELT
-sub.escape.lift_unlocked,DER AUFZUG IST ENTRIEGELT
+sub.escape.gates_unlocked,DIE TORE SIND ENTRIEGELT
+sub.escape.gates_powered,DIE AUSGANGSTORE HABEN STROM
+sub.escape.gate_open,DAS TOR IST OFFEN
 sub.pickup.battery_cell,BATTERIEZELLE
 sub.pickup.second_wind,+ ZWEITER ATEM
 sub.pickup.key,SCHLÜSSEL {held} / {total}
@@ -39,7 +41,7 @@ sub.banner.restore_fuses,SCHALTE {n} SICHERUNGEN EIN
 sub.banner.find_keys,FINDE {n} SCHLÜSSEL FÜR DIE LUKE
 sub.banner.lockdown,SICHERHEITSSPERRE
 sub.banner.rule,{name} — {description}
-sub.banner.find_keys_lift,FINDE {n} SCHLÜSSEL FÜR DEN AUFZUG
+sub.banner.find_keys_gates,FINDE {n} SCHLÜSSEL FÜR DIE TORE
 sub.hunter.learned_lockers,ES ERINNERT SICH AN DIE SPINDE.
 sub.hunter.learned_throws,ES KENNT DIE FLASCHEN.
 sub.hunter.learned_dark,ES HAT DIE DUNKELHEIT GELERNT.

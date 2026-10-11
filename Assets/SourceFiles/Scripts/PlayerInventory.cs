@@ -90,7 +90,11 @@ public static class PlayerInventory
     public static void ApplyActiveModifiers(FloorProfile p)
     {
         if (p == null) return;
-        if (HasActive(ShopItem.LongFuse)) p.EscapeSeconds += 10f;
+        if (HasActive(ShopItem.LongFuse))
+        {
+            p.EscapeSeconds += 10f;
+            p.GateEscapeSeconds += 10f; // F111: a gate floor's fixed 120 s
+        }
         if (HasActive(ShopItem.StaminaTonic)) p.SprintSeconds += 4f;
         // F71: CellsPerLamp got sparser (5..8, was 2..3), so the old floor of 2 no longer reads as
         // "extra" - 3 is the new minimum spacing this perk guarantees.
