@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: de
   m_SharedData: {fileID: 11400000, guid: 4a4bec294d45f9340a3e380de17ee432, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331695923429569
   m_TableData:
   - m_Id: 232689664
     m_Localized: 'ANSTALT KARLHEINZ
@@ -196,6 +197,37 @@ MonoBehaviour:
     m_Localized: ISOLIERUNG 2
     m_Metadata:
       m_Items: []
+  - m_Id: 382911238803456
+    m_Localized: "HAT SICH NICHTS VER\xC4NDERT,\nGEH WEITER.\nIST ETWAS ANDERS,\nKEHR SOFORT UM.\n{n}-MAL OHNE FEHLER\nUND DER WEG \xD6FFNET SICH."
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429569
+  - m_Id: 387183045152768
+    m_Localized: RICHTIG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387183137427456
+    m_Localized: NICHTS WAR ANDERS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387183137427457
+    m_Localized: "DU HAST ETWAS \xDCBERSEHEN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387183137427458
+    m_Localized: "NICHTS VER\xC4NDERT? GEH WEITER."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387183137427459
+    m_Localized: ETWAS ANDERS? KEHR UM.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331695923429569
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 382911238803456

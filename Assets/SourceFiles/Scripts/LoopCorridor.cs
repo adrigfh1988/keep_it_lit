@@ -58,6 +58,7 @@ public class LoopCorridor : MonoBehaviour
         public GameObject handprint;
         /// <summary>F106: the chalk numeral on the first leg's wall that shows the count. Inactive until the trap closes.</summary>
         public TMP_Text counter;
+        public TMP_Text[] signVerdicts, signCounts; // the hanging light-box signs, one per leg so the cut stays seamless (empty = none)
         /// <summary>Inactive until the opening is walled up.</summary>
         public GameObject sealWall;
         public Vector3 sealPoint;
@@ -402,7 +403,11 @@ public class LoopCorridor : MonoBehaviour
         }
 
         GameAudio.PlayAt(GameAudio.Library.farSlam, _setup.sealPoint, _setup.puzzle.thudVolume);
-        if (_hud != null) _hud.ShowSubtitle(L10n.T("sub.loop.rule"), _setup.puzzle.ruleSeconds);
+        if (_hud != null)
+        {
+            _hud.ShowSubtitle(L10n.T("sub.loop.rule"), _setup.puzzle.ruleSeconds);
+            _hud.QueueSubtitle(L10n.T("sub.loop.reference"), _setup.puzzle.ruleSeconds); // this lap is always normal: the one to remember
+        }
         if (_visitor != null) _visitor.Begin();
         _setup.terror.Log($"Loop corridor at {_setup.entranceCell}: the trap closed on lap {_lap}", this);
     }
@@ -419,6 +424,7 @@ public class LoopCorridor : MonoBehaviour
         _setup.terror.Log($"Loop corridor lap {_lap}: {(turnedBack ? "turned back" : "kept walking")} with {(anomalous ? _active.Name : "nothing wrong")} - {(correct ? "right" : "wrong")}, count {_count}/{_setup.puzzle.targetCount}", this);
 
         ShowCount();
+        ShowVerdict(correct, turnedBack);
         if (correct) GameAudio.PlayAt(GameAudio.Library.shardChime, _player.position, _setup.puzzle.chimeVolume);
         else GameAudio.PlayAt(GameAudio.Library.farSlam, _player.position, _setup.puzzle.thudVolume);
         if (_visitor != null) _visitor.Decided(correct);
@@ -530,9 +536,32 @@ public class LoopCorridor : MonoBehaviour
         enabled = false;
     }
 
+    // ---------------------------------------------------------------- the hanging sign
+
+    private static readonly Color RightColour = new Color(0.05f, 0.42f, 0.12f);
+    private static readonly Color WrongColour = new Color(0.62f, 0.04f, 0.02f);
+
+    /// <summary>
+    /// Every decision is answered on the light-box signs hanging over both legs (the player faces one after every cut): CORRECT in green,
+    /// or why it was wrong (NOTHING WAS DIFFERENT / YOU MISSED SOMETHING) in red; the count under it says the rest. Changed at the cut.
+    /// </summary>
+    private void ShowVerdict(bool correct, bool turnedBack)
+    {
+        if (_setup.signVerdicts == null) return;
+        string verdict = correct ? L10n.T("world.loop.correct") : L10n.T(turnedBack ? "world.loop.wrong_turned" : "world.loop.wrong_missed");
+        foreach (TMP_Text sign in _setup.signVerdicts)
+        {
+            if (sign == null) continue;
+            sign.text = verdict;
+            sign.color = correct ? RightColour : WrongColour;
+        }
+    }
+
     private void ShowCount()
     {
-        if (_setup.counter != null) _setup.counter.text = _count.ToString();
+        string count = $"{_count} / {_setup.puzzle.targetCount}";
+        if (_setup.counter != null) _setup.counter.text = count;
+        if (_setup.signCounts != null) foreach (TMP_Text sign in _setup.signCounts) if (sign != null) sign.text = count;
     }
 
     // ---------------------------------------------------------------- the Visitor

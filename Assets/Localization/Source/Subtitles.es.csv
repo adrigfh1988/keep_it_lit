@@ -45,5 +45,6 @@ sub.hunter.learned_throws,CONOCE LAS BOTELLAS.
 sub.hunter.learned_dark,HA APRENDIDO LA OSCURIDAD.
 sub.hunter.learned_sprint,TE OYE CORRER.
 sub.loop.rule,"SI ALGO ESTÁ MAL, VUELVE. SI NO, SIGUE ANDANDO."
+sub.loop.reference,MIRA BIEN. ASÍ ES COMO DEBE VERSE.
 sub.loop.reward,RECUERDAS EL LABERINTO.
 sub.loop.second_wind,TE DEJA IR. UNA VEZ.

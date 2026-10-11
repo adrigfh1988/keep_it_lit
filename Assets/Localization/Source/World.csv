@@ -48,3 +48,14 @@ world.room.Bedroom,"Name plate over the bedroom (patients' sleeping room) door i
 world.room.alt.Bedroom,"The bedroom name plate after it has quietly changed (deep in the story, while nobody is looking): it now speaks to the player. Replaces world.room.Bedroom (one line, ALL CAPS, ~18 characters)",YOUR ROOM
 world.room.SeclusionRoomA,"Name plate over the first seclusion cell door in the asylum basement (one line, ALL CAPS, ~14 characters). The number stays",SECLUSION 1
 world.room.SeclusionRoomB,"Name plate over the second seclusion cell door in the asylum basement (one line, ALL CAPS, ~14 characters). The number stays",SECLUSION 2
+world.loop.rules,"Printed rules notice taped to the wall at the start of the looping corridor (world text, 6 short lines, ALL CAPS, at most ~28 characters a line). {n} = how many right decisions in a row free the player (6)","IF NOTHING HAS CHANGED,
+KEEP WALKING.
+IF ANYTHING IS DIFFERENT,
+TURN BACK AT ONCE.
+{n} TIMES WITHOUT A MISTAKE
+AND THE WAY OPENS."
+world.loop.correct,"Hanging light-box sign in the looping corridor, top line: the player's last decision was right (ALL CAPS, ~22 characters, shown in green)",CORRECT
+world.loop.wrong_turned,"Hanging light-box sign in the looping corridor, top line: the player turned back but the lap was normal; the count went back to 0 (ALL CAPS, ~22 characters, red)",NOTHING WAS DIFFERENT
+world.loop.wrong_missed,"Hanging light-box sign in the looping corridor, top line: the player walked on past a lap that had something different; the count went back to 0 (ALL CAPS, ~22 characters, red)",YOU MISSED SOMETHING
+world.loop.continue,"Hanging light-box sign in the looping corridor, lower line: the rule for a normal lap (ALL CAPS, ~32 characters)",NOTHING CHANGED? CONTINUE.
+world.loop.turn,"Hanging light-box sign in the looping corridor, lowest line: the rule for a lap with something different (ALL CAPS, ~32 characters)",SOMETHING DIFFERENT? TURN AROUND.

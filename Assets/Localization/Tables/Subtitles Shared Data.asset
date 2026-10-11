@@ -255,6 +255,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331677479764497
+  - m_Id: 390904076472320
+    m_Key: sub.loop.reference
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429579
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -458,3 +463,7 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: World text after a Second Wind lets the player go from the looping corridor's Visitor (shown 3.2 s). "IT" = the Visitor, never named. ALL CAPS like IT HEARD YOU
+    - rid: 4707331695923429579
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'World text queued right after sub.loop.rule when the looping corridor traps the player (shown 4 s): the lap they are on is always normal, so it is the one to remember. ALL CAPS like IT HEARD YOU'

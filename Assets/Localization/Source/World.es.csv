@@ -48,3 +48,14 @@ world.room.Bedroom,DORMITORIO
 world.room.alt.Bedroom,TU HABITACIÓN
 world.room.SeclusionRoomA,AISLAMIENTO 1
 world.room.SeclusionRoomB,AISLAMIENTO 2
+world.loop.rules,"SI NADA HA CAMBIADO,
+SIGUE ANDANDO.
+SI ALGO ES DISTINTO,
+DA LA VUELTA ENSEGUIDA.
+{n} VECES SIN UN ERROR
+Y EL CAMINO SE ABRE."
+world.loop.correct,CORRECTO
+world.loop.wrong_turned,NADA ERA DISTINTO
+world.loop.wrong_missed,SE TE ESCAPÓ ALGO
+world.loop.continue,¿NADA HA CAMBIADO? SIGUE.
+world.loop.turn,¿ALGO DISTINTO? DA LA VUELTA.

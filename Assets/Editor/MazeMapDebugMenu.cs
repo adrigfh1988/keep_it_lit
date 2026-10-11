@@ -30,4 +30,15 @@ public static class MazeMapDebugMenu
 
     [MenuItem(MenuPath, true)]
     private static bool PrintMazeMapValidate() => EditorApplication.isPlaying;
+
+    /// <summary>LIGHTS OUT &gt; Debug &gt; Go To Loop Entrance: Play only, moves the player to the floor's loop corridor (MazeGenerator.DebugGoToLoopEntrance).</summary>
+    [MenuItem("LIGHTS OUT/Debug/Go To Loop Entrance", priority = 202)]
+    private static void GoToLoopEntrance()
+    {
+        MazeGenerator maze = Object.FindAnyObjectByType<MazeGenerator>();
+        Debug.Log(maze != null ? "Go To Loop Entrance: " + maze.DebugGoToLoopEntrance() : "Go To Loop Entrance: there is no MazeGenerator in the open scene.", maze);
+    }
+
+    [MenuItem("LIGHTS OUT/Debug/Go To Loop Entrance", true)]
+    private static bool GoToLoopEntranceValidate() => EditorApplication.isPlaying;
 }

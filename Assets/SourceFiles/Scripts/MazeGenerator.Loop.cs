@@ -44,6 +44,8 @@ public partial class MazeGenerator
     [SerializeField, Min(1)] private int loopFromFloor = 3;
     [Tooltip("Chance per eligible floor. The loop appears on at most one floor of a campaign (set when that floor is cleared); 1 forces it for testing")]
     [SerializeField, Range(0f, 1f)] private float loopChance = 0.6f;
+    [Tooltip("Testing: build the loop on any themed floor, skipping the first-floor rule, the once-per-campaign rule and the roll (the roll is still drawn, so the maze is unchanged). LIGHTS OUT > Debug > Go To Loop Entrance takes you there in Play")]
+    [SerializeField] private bool debugForceLoop = false;
     [Tooltip("The entrance cell is at least this many steps (x + z) from the start cell, so the corridor is found deeper in the floor")]
     [SerializeField, Min(0)] private int loopMinStartDistance = 4;
     [Tooltip("How far along the second leg the player is carried back to the same place in the first, in cells from the start of the leg")]
@@ -98,6 +100,21 @@ public partial class MazeGenerator
     [SerializeField, Min(0.5f)] private float loopCounterHeight = 1.5f;
     [Tooltip("The chalk numeral's font size (TextMeshPro world text: about a tenth of a metre per point)")]
     [SerializeField, Min(1f)] private float loopCounterFontSize = 6f;
+    [Tooltip("The chalk count's font and its lit text material (Reenie Beanie from F109). Empty = the UI font, unlit")]
+    [SerializeField] private TMP_FontAsset loopCounterFont;
+    [SerializeField] private Material loopCounterTextMaterial;
+    [Tooltip("The rules notice taped to the first leg's left wall: its paper (Sign_Paper), font and lit text material (Barlow from F109). Empty paper = text on the wall")]
+    [SerializeField] private Material loopNoticePaper;
+    [SerializeField] private TMP_FontAsset loopNoticeFont;
+    [SerializeField] private Material loopNoticeTextMaterial;
+    [Tooltip("The rules notice's distance from the opening along the first leg, in cells, and its centre height (m)")]
+    [SerializeField, Range(0.3f, 2.8f)] private float loopNoticeCells = 0.8f;
+    [SerializeField, Min(0.5f)] private float loopNoticeHeight = 1.45f;
+    [Tooltip("The hanging light-box sign over each leg that answers every decision (verdict, count, the rule): its glowing panel (Sign_LightPanel) and the metal of its frame and chains (Sign_Steel). Empty panel = no sign")]
+    [SerializeField] private Material loopSignPanel;
+    [SerializeField] private Material loopSignFrame;
+    [Tooltip("The hanging sign's distance from the start of each leg, in cells (the player lands at loopTriggerCells after a cut and faces it)")]
+    [SerializeField, Range(0.5f, 2.9f)] private float loopSignCells = 2.6f;
     [Tooltip("Footsteps-behind anomaly: how far behind the player the steps are (m)")]
     [SerializeField, Min(1f)] private float loopFootstepsBehind = 3f;
     [Tooltip("Footsteps-behind anomaly: how long they follow (s)")]
@@ -170,10 +187,10 @@ public partial class MazeGenerator
     {
         _loopActive = false;
         _loopRng = null;
-        if (!terror.loopCorridor || _theme == null || _profile == null || !LoopAllowedHere()) return; // F107: a descent has its own spacing rule
+        if (!terror.loopCorridor || _theme == null || _profile == null || (!debugForceLoop && !LoopAllowedHere())) return; // F107: a descent has its own spacing rule
 
         System.Random rng = new System.Random(usedSeed + LoopSalt);
-        if (rng.NextDouble() >= loopChance)
+        if (rng.NextDouble() >= loopChance && !debugForceLoop)
         {
             terror.Log("No loop corridor on this floor (the roll)", this);
             return;
@@ -312,6 +329,9 @@ public partial class MazeGenerator
         GameObject locker = BuildLoopLocker(legB, root);
         GameObject handprint = BuildLoopHandprint(chain[LoopSecondLegIndex], legB, root);
         TMP_Text counter = BuildLoopCounter(legA, root);
+        BuildLoopNotice(legA, root);
+        TMP_Text verdictA = BuildLoopSign(legA, root, out TMP_Text countA);
+        TMP_Text verdictB = BuildLoopSign(legB, root, out TMP_Text countB);
 
         Vector3 backward = -outward;
         LoopCorridor.Setup setup = new LoopCorridor.Setup
@@ -334,6 +354,8 @@ public partial class MazeGenerator
             locker = locker,
             handprint = handprint,
             counter = counter,
+            signVerdicts = verdictA != null ? new[] { verdictA, verdictB } : null,
+            signCounts = verdictA != null ? new[] { countA, countB } : null,
             sealWall = sealWall,
             sealPoint = openingCentre + Vector3.up * LoopSealPointHeight,
             figurePosition = legA.position + legA.forward * (LoopFigureCells * cellSize),
@@ -548,17 +570,131 @@ public partial class MazeGenerator
             Quaternion.LookRotation(towardWall, Vector3.up));
 
         TextMeshPro text = holder.AddComponent<TextMeshPro>();
-        TMP_FontAsset font = RuntimeUi.ResolveFont();
+        TMP_FontAsset font = loopCounterFont != null ? loopCounterFont : RuntimeUi.ResolveFont();
         if (font != null) text.font = font;
-        text.text = "0";
+        if (loopCounterFont != null && loopCounterTextMaterial != null) text.fontSharedMaterial = loopCounterTextMaterial;
+        text.text = $"0 / {loopTargetCount}";
         text.fontSize = loopCounterFontSize;
-        text.fontStyle = FontStyles.Bold;
+        text.fontStyle = loopCounterFont != null ? FontStyles.Normal : FontStyles.Bold;
         text.alignment = TextAlignmentOptions.Center;
         text.color = new Color(0.45f, 0.04f, 0.03f);
         text.textWrappingMode = TextWrappingModes.NoWrap;
         text.rectTransform.sizeDelta = new Vector2(1f, 1f);
         holder.SetActive(false);
         return text;
+    }
+
+    /// <summary>
+    /// The rules, always there to re-read: a printed notice taped to the first leg's left wall near the opening (the chalk count is on the right
+    /// wall), lit text on paper. Part of the corridor, so the same on every lap - it is never an anomaly.
+    /// </summary>
+    private void BuildLoopNotice(Transform leg, Transform parent)
+    {
+        Vector3 towardWall = -leg.right;
+        GameObject holder = new GameObject("LoopNotice");
+        holder.transform.SetParent(parent, false);
+        // Like the count: forward into the wall, the text read from the corridor side.
+        holder.transform.SetPositionAndRotation(
+            leg.position + leg.forward * (loopNoticeCells * cellSize) + towardWall * (cellSize * 0.5f - wallThickness * 0.5f - LoopDecalWallGap) + Vector3.up * loopNoticeHeight,
+            Quaternion.LookRotation(towardWall, Vector3.up) * Quaternion.Euler(0f, 0f, -1.5f));
+
+        if (loopNoticePaper != null)
+        {
+            GameObject paper = GameObject.CreatePrimitive(PrimitiveType.Quad); // a textured paper sheet, not decor primitive: the material is the F109 paper
+            paper.name = "Paper";
+            Destroy(paper.GetComponent<Collider>());
+            paper.transform.SetParent(holder.transform, false);
+            paper.transform.localPosition = new Vector3(0f, 0f, 0.006f);
+            paper.transform.localScale = new Vector3(0.95f, 0.72f, 1f);
+            Renderer r = paper.GetComponent<Renderer>();
+            r.sharedMaterial = loopNoticePaper;
+            r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        }
+
+        GameObject textGo = new GameObject("Text");
+        textGo.transform.SetParent(holder.transform, false);
+        TextMeshPro text = textGo.AddComponent<TextMeshPro>();
+        TMP_FontAsset font = loopNoticeFont != null ? loopNoticeFont : RuntimeUi.ResolveFont();
+        if (font != null) text.font = font;
+        if (loopNoticeFont != null && loopNoticeTextMaterial != null) text.fontSharedMaterial = loopNoticeTextMaterial;
+        text.text = L10n.T("world.loop.rules", ("n", loopTargetCount));
+        text.alignment = TextAlignmentOptions.Center;
+        text.color = loopNoticePaper != null ? new Color(0.1f, 0.09f, 0.08f) : new Color(0.75f, 0.72f, 0.65f);
+        text.enableAutoSizing = true;
+        text.fontSizeMin = 0.3f;
+        text.fontSizeMax = 1.2f;
+        text.lineSpacing = -10f;
+        text.rectTransform.sizeDelta = new Vector2(0.85f, 0.62f);
+    }
+
+    /// <summary>
+    /// A light-box sign hanging from the ceiling over the leg, facing a player walking toward the corner: the verdict on the last decision
+    /// (empty until the first), the count, and the rule in two lines. Its panel glows on its own (no Light). One per leg, built the same, so the
+    /// seamless cut shows the same sign in the same place. Returns the verdict line (null without a panel material), the count line in `count`.
+    /// </summary>
+    private TMP_Text BuildLoopSign(Transform leg, Transform parent, out TMP_Text count)
+    {
+        count = null;
+        if (loopSignPanel == null) return null;
+
+        const float width = 1.5f, height = 0.8f, depth = 0.06f;
+        float bottom = Mathf.Min(2.1f, wallHeight - height - 0.25f);
+        GameObject holder = new GameObject("LoopSign");
+        holder.transform.SetParent(parent, false);
+        holder.transform.SetPositionAndRotation(leg.position + leg.forward * (loopSignCells * cellSize) + Vector3.up * (bottom + height * 0.5f), leg.rotation);
+
+        SignBox(holder.transform, "Panel", new Vector3(0f, 0f, 0f), new Vector3(width, height, depth), loopSignPanel);
+        Material frame = loopSignFrame != null ? loopSignFrame : loopSignPanel;
+        SignBox(holder.transform, "FrameTop", new Vector3(0f, height * 0.5f + 0.02f, 0f), new Vector3(width + 0.08f, 0.04f, depth + 0.02f), frame);
+        SignBox(holder.transform, "FrameBottom", new Vector3(0f, -height * 0.5f - 0.02f, 0f), new Vector3(width + 0.08f, 0.04f, depth + 0.02f), frame);
+        SignBox(holder.transform, "FrameLeft", new Vector3(-width * 0.5f - 0.02f, 0f, 0f), new Vector3(0.04f, height, depth + 0.02f), frame);
+        SignBox(holder.transform, "FrameRight", new Vector3(width * 0.5f + 0.02f, 0f, 0f), new Vector3(0.04f, height, depth + 0.02f), frame);
+        float chain = wallHeight - (bottom + height) - 0.02f;
+        if (chain > 0.02f)
+        {
+            foreach (float side in new[] { -1f, 1f })
+                SignBox(holder.transform, "Chain", new Vector3(side * width * 0.38f, height * 0.5f + 0.04f + chain * 0.5f, 0f), new Vector3(0.02f, chain, 0.02f), frame);
+        }
+
+        // The face toward the player: text is read from behind its forward, so its forward is the leg's (away from the player).
+        float face = -depth * 0.5f - 0.004f;
+        TMP_Text verdict = SignLine(holder.transform, "Verdict", new Vector3(0f, 0.25f, face), new Vector2(width - 0.12f, 0.2f), 1.6f, "");
+        count = SignLine(holder.transform, "Count", new Vector3(0f, 0.04f, face), new Vector2(width - 0.12f, 0.24f), 2.4f, $"0 / {loopTargetCount}");
+        SignLine(holder.transform, "Rule", new Vector3(0f, -0.24f, face), new Vector2(width - 0.12f, 0.26f), 1.0f,
+            L10n.T("world.loop.continue") + "\n" + L10n.T("world.loop.turn"));
+        return verdict;
+    }
+
+    private void SignBox(Transform parent, string name, Vector3 local, Vector3 size, Material material)
+    {
+        GameObject box = GameObject.CreatePrimitive(PrimitiveType.Cube); // a sign part in the F109 sign materials, not bare decor
+        box.name = name;
+        Destroy(box.GetComponent<Collider>());
+        box.transform.SetParent(parent, false);
+        box.transform.localPosition = local;
+        box.transform.localScale = size;
+        Renderer r = box.GetComponent<Renderer>();
+        r.sharedMaterial = material;
+        r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+    }
+
+    private TMP_Text SignLine(Transform parent, string name, Vector3 local, Vector2 size, float maxFontSize, string text)
+    {
+        GameObject go = new GameObject(name);
+        go.transform.SetParent(parent, false);
+        go.transform.localPosition = local;
+        TextMeshPro line = go.AddComponent<TextMeshPro>();
+        TMP_FontAsset font = loopNoticeFont != null ? loopNoticeFont : RuntimeUi.ResolveFont();
+        if (font != null) line.font = font;
+        // Plain ink on the glowing panel: the font's own unlit material, so the verdict's green and red read in the dark.
+        line.text = text;
+        line.alignment = TextAlignmentOptions.Center;
+        line.color = new Color(0.08f, 0.07f, 0.06f);
+        line.enableAutoSizing = true;
+        line.fontSizeMin = 0.2f;
+        line.fontSizeMax = maxFontSize;
+        line.rectTransform.sizeDelta = size;
+        return line;
     }
 
     /// <summary>Hands the corridor the player's controller, camera, torch, the sound it ducks, the hunter whose body the Visitor copies, the outcome that ends the run, the HUD and the floor map, once SetUpAtmosphere has them.</summary>
@@ -590,5 +726,28 @@ public partial class MazeGenerator
         string side = (_loopTurn - _loopOut + 4) % 4 == 1 ? "right" : "left";
         string state = _loop == null ? "not built" : $"lap {_loop.Lap}, count {_loop.Count}, {(_loop.IsInside ? "player inside" : "player outside")}, {(_loop.IsTrapped ? "trapped" : _loop.IsSealed ? "sealed" : _loop.SealPending ? "sealing" : "open")}";
         sb.Append($"L loop corridor: opening in the {EdgeNames[_loopOut]} wall of {_loopEntrance} (the wall is closed in the maze's own data), turning {side} outside; {state}\n");
+    }
+
+    /// <summary>
+    /// Testing (LIGHTS OUT &gt; Debug &gt; Go To Loop Entrance): puts the player in the loop's entrance cell, 1 m back from the opening and
+    /// facing it. Returns what happened; nothing moves when this floor has no loop corridor or it is already sealed.
+    /// </summary>
+    public string DebugGoToLoopEntrance()
+    {
+        if (!_loopActive || _loop == null) return "This floor has no loop corridor. Tick Debug Force Loop on the MazeGenerator (a themed floor) and start again.";
+        if (_loop.IsSealed) return "The loop corridor on this floor is already sealed.";
+        ThirdPersonController player = FindAnyObjectByType<ThirdPersonController>();
+        if (player == null) return "No player found.";
+
+        Vector3 facing = DirVector(_loopOut);
+        Vector3 spot = CellCenter(_loopEntrance.x, _loopEntrance.y) - facing * 1f;
+        CharacterController controller = player.GetComponent<CharacterController>();
+        if (controller != null) controller.enabled = false;
+        player.transform.position = new Vector3(spot.x, player.transform.position.y, spot.z);
+        if (controller != null) controller.enabled = true;
+        Camera view = Camera.main;
+        float currentYaw = view != null ? view.transform.eulerAngles.y : player.transform.eulerAngles.y;
+        player.AddYaw(Mathf.DeltaAngle(currentYaw, Quaternion.LookRotation(facing).eulerAngles.y));
+        return $"At the loop entrance {_loopEntrance}, facing the opening ({EdgeNames[_loopOut]}).";
     }
 }

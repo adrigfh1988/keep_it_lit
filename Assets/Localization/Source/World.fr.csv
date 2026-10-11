@@ -48,3 +48,14 @@ world.room.Bedroom,DORTOIR
 world.room.alt.Bedroom,TA CHAMBRE
 world.room.SeclusionRoomA,ISOLEMENT 1
 world.room.SeclusionRoomB,ISOLEMENT 2
+world.loop.rules,"SI RIEN N'A CHANGÉ,
+CONTINUEZ.
+SI QUELQUE CHOSE A CHANGÉ,
+FAITES DEMI-TOUR AUSSITÔT.
+{n} FOIS SANS ERREUR
+ET LE PASSAGE S'OUVRE."
+world.loop.correct,CORRECT
+world.loop.wrong_turned,RIEN N'AVAIT CHANGÉ
+world.loop.wrong_missed,QUELQUE CHOSE VOUS A ÉCHAPPÉ
+world.loop.continue,"RIEN N'A CHANGÉ ? CONTINUEZ."
+world.loop.turn,"QUELQUE CHOSE A CHANGÉ ? DEMI-TOUR."

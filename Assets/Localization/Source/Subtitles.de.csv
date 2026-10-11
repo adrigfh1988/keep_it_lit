@@ -45,5 +45,6 @@ sub.hunter.learned_throws,ES KENNT DIE FLASCHEN.
 sub.hunter.learned_dark,ES HAT DIE DUNKELHEIT GELERNT.
 sub.hunter.learned_sprint,ES HÖRT DICH RENNEN.
 sub.loop.rule,"WENN ETWAS NICHT STIMMT, KEHR UM. WENN NICHT, GEH WEITER."
+sub.loop.reference,SIEH GENAU HIN. SO SOLL ES AUSSEHEN.
 sub.loop.reward,DU ERINNERST DICH AN DAS LABYRINTH.
 sub.loop.second_wind,ES LÄSST DICH GEHEN. EINMAL.

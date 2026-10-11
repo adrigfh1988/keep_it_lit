@@ -222,6 +222,10 @@ MonoBehaviour:
     m_Localized: IT LETS YOU GO. ONCE.
     m_Metadata:
       m_Items: []
+  - m_Id: 390904076472320
+    m_Localized: LOOK CAREFULLY. THIS IS HOW IT SHOULD LOOK.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

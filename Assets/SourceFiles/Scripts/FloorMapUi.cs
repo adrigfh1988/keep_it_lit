@@ -20,7 +20,9 @@ public class FloorMapUi : MonoBehaviour
     [Tooltip("Seconds between redraws while the map is open (the player and the doors move)")]
     [SerializeField, Min(0.1f)] private float refreshSeconds = 0.5f;
     [Tooltip("Longest side of the picture on the 1920 x 1080 canvas (px)")]
-    [SerializeField, Min(200f)] private float pictureSize = 820f;
+    [SerializeField, Min(200f)] private float pictureSize = 480f;
+    [Tooltip("Gap between the map and the top-right corner of the 1920 x 1080 canvas (px)")]
+    [SerializeField, Min(0f)] private float cornerMargin = 32f;
     [Tooltip("Seconds the 'M MAP' hint stays on the prompt line the first time the map can be opened")]
     [SerializeField, Min(1f)] private float hintSeconds = 4f;
     [SerializeField] private Color paper = new Color(0.70f, 0.66f, 0.56f);
@@ -33,7 +35,7 @@ public class FloorMapUi : MonoBehaviour
     [SerializeField] private Color hatchColor = new Color(0.15f, 0.80f, 0.35f);
     [SerializeField] private Color playerColor = new Color(0.95f, 0.95f, 0.98f);
 
-    private const float PanelPadding = 40f;
+    private const float PanelPadding = 20f;
     private const float FramePixels = 6f;
 
     private MazeGenerator _maze;
@@ -178,7 +180,11 @@ public class FloorMapUi : MonoBehaviour
         Vector2 picture = new Vector2(_width * scale, _height * scale);
 
         _panel = RuntimeUi.CreatePanel(canvas.transform, "FloorMapPanel", new Color(0.02f, 0.02f, 0.02f, 0.88f));
-        RuntimeUi.Place(_panel.GetComponent<RectTransform>(), new Vector2(0.5f, 0.5f), Vector2.zero, picture + Vector2.one * PanelPadding);
+        // Top-right corner, out of the way of the HUD counter (top-left) and the prompts (bottom).
+        RectTransform panelRect = _panel.GetComponent<RectTransform>();
+        RuntimeUi.Place(panelRect, new Vector2(1f, 1f), Vector2.zero, picture + Vector2.one * PanelPadding);
+        panelRect.pivot = new Vector2(1f, 1f);
+        panelRect.anchoredPosition = new Vector2(-cornerMargin, -cornerMargin);
         Button tap = _panel.AddComponent<Button>();
         tap.targetGraphic = _panel.GetComponent<Image>();
         tap.transition = Selectable.Transition.None;

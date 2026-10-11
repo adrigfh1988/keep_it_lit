@@ -222,6 +222,10 @@ MonoBehaviour:
     m_Localized: TE DEJA IR. UNA VEZ.
     m_Metadata:
       m_Items: []
+  - m_Id: 390904076472320
+    m_Localized: "MIRA BIEN. AS\xCD ES COMO DEBE VERSE."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 4a4bec294d45f9340a3e380de17ee432, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331695923429580
   m_TableData:
   - m_Id: 232689664
     m_Localized: 'KARLHEINZ ASYLUM
@@ -198,6 +199,47 @@ MonoBehaviour:
     m_Localized: SECLUSION 2
     m_Metadata:
       m_Items: []
+  - m_Id: 382911238803456
+    m_Localized: 'IF NOTHING HAS CHANGED,
+
+      KEEP WALKING.
+
+      IF ANYTHING IS DIFFERENT,
+
+      TURN BACK AT ONCE.
+
+      {n} TIMES WITHOUT A MISTAKE
+
+      AND THE WAY OPENS.'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429580
+  - m_Id: 387183045152768
+    m_Localized: CORRECT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387183137427456
+    m_Localized: NOTHING WAS DIFFERENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387183137427457
+    m_Localized: YOU MISSED SOMETHING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387183137427458
+    m_Localized: NOTHING CHANGED? CONTINUE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387183137427459
+    m_Localized: SOMETHING DIFFERENT? TURN AROUND.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331695923429580
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 382911238803456

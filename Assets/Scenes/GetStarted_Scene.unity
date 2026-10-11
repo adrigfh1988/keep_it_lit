@@ -49945,6 +49945,7 @@ MonoBehaviour:
   squeezeBreathVolume: 0.35
   loopFromFloor: 3
   loopChance: 0.6
+  debugForceLoop: 0
   loopMinStartDistance: 4
   loopTriggerCells: 2
   loopDuckGain: 0.3
@@ -49971,6 +49972,16 @@ MonoBehaviour:
   loopCounterCells: 1.5
   loopCounterHeight: 1.5
   loopCounterFontSize: 6
+  loopCounterFont: {fileID: 11400000, guid: f36e8224290927442abb98d70d03e5af, type: 2}
+  loopCounterTextMaterial: {fileID: 2100000, guid: d5d33c9927da32a4a95174d3d9b0ce78, type: 2}
+  loopNoticePaper: {fileID: 2100000, guid: 6cb8c2c64d8b8db44a55a65b410d7741, type: 2}
+  loopNoticeFont: {fileID: 11400000, guid: e45619a0a235e5f45bc1ed177b1e0724, type: 2}
+  loopNoticeTextMaterial: {fileID: 2100000, guid: c857be0aab77ebd45ac55e2d86f5e128, type: 2}
+  loopNoticeCells: 0.8
+  loopNoticeHeight: 1.45
+  loopSignPanel: {fileID: 2100000, guid: 0b149fc6e67769745a172d983599ef9b, type: 2}
+  loopSignFrame: {fileID: 2100000, guid: 31e4bfe8d4f8bf94ab7568b08ece25bd, type: 2}
+  loopSignCells: 2.6
   loopFootstepsBehind: 3
   loopFootstepsSeconds: 4
   loopFootstepsStride: 1.4

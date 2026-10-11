@@ -220,6 +220,36 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331692992135945
+  - m_Id: 382911238803456
+    m_Key: world.loop.rules
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429577
+  - m_Id: 387183045152768
+    m_Key: world.loop.correct
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429610
+  - m_Id: 387183137427456
+    m_Key: world.loop.wrong_turned
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429611
+  - m_Id: 387183137427457
+    m_Key: world.loop.wrong_missed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429612
+  - m_Id: 387183137427458
+    m_Key: world.loop.continue
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429613
+  - m_Id: 387183137427459
+    m_Key: world.loop.turn
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429614
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -395,3 +425,27 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Name plate over the second seclusion cell door in the asylum basement (one line, ALL CAPS, ~14 characters). The number stays
+    - rid: 4707331695923429577
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Printed rules notice taped to the wall at the start of the looping corridor (world text, 6 short lines, ALL CAPS, at most ~28 characters a line). {n} = how many right decisions in a row free the player (6)
+    - rid: 4707331695923429610
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hanging light-box sign in the looping corridor, top line: the player''s last decision was right (ALL CAPS, ~22 characters, shown in green)'
+    - rid: 4707331695923429611
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hanging light-box sign in the looping corridor, top line: the player turned back but the lap was normal; the count went back to 0 (ALL CAPS, ~22 characters, red)'
+    - rid: 4707331695923429612
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hanging light-box sign in the looping corridor, top line: the player walked on past a lap that had something different; the count went back to 0 (ALL CAPS, ~22 characters, red)'
+    - rid: 4707331695923429613
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hanging light-box sign in the looping corridor, lower line: the rule for a normal lap (ALL CAPS, ~32 characters)'
+    - rid: 4707331695923429614
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hanging light-box sign in the looping corridor, lowest line: the rule for a lap with something different (ALL CAPS, ~32 characters)'

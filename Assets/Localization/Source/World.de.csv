@@ -48,3 +48,14 @@ world.room.Bedroom,SCHLAFSAAL
 world.room.alt.Bedroom,DEIN ZIMMER
 world.room.SeclusionRoomA,ISOLIERUNG 1
 world.room.SeclusionRoomB,ISOLIERUNG 2
+world.loop.rules,"HAT SICH NICHTS VERÄNDERT,
+GEH WEITER.
+IST ETWAS ANDERS,
+KEHR SOFORT UM.
+{n}-MAL OHNE FEHLER
+UND DER WEG ÖFFNET SICH."
+world.loop.correct,RICHTIG
+world.loop.wrong_turned,NICHTS WAR ANDERS
+world.loop.wrong_missed,DU HAST ETWAS ÜBERSEHEN
+world.loop.continue,NICHTS VERÄNDERT? GEH WEITER.
+world.loop.turn,ETWAS ANDERS? KEHR UM.

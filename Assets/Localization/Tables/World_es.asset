@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: es
   m_SharedData: {fileID: 11400000, guid: 4a4bec294d45f9340a3e380de17ee432, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4707331695923429578
   m_TableData:
   - m_Id: 232689664
     m_Localized: "MANICOMIO KARLHEINZ\nADMISI\xD3N"
@@ -196,6 +197,47 @@ MonoBehaviour:
     m_Localized: AISLAMIENTO 2
     m_Metadata:
       m_Items: []
+  - m_Id: 382911238803456
+    m_Localized: 'SI NADA HA CAMBIADO,
+
+      SIGUE ANDANDO.
+
+      SI ALGO ES DISTINTO,
+
+      DA LA VUELTA ENSEGUIDA.
+
+      {n} VECES SIN UN ERROR
+
+      Y EL CAMINO SE ABRE.'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429578
+  - m_Id: 387183045152768
+    m_Localized: CORRECTO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387183137427456
+    m_Localized: NADA ERA DISTINTO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387183137427457
+    m_Localized: "SE TE ESCAP\xD3 ALGO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387183137427458
+    m_Localized: "\xBFNADA HA CAMBIADO? SIGUE."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 387183137427459
+    m_Localized: "\xBFALGO DISTINTO? DA LA VUELTA."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4707331695923429578
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 382911238803456

@@ -45,5 +45,6 @@ sub.hunter.learned_throws,ÇA CONNAÎT LES BOUTEILLES.
 sub.hunter.learned_dark,ÇA A APPRIS L'OBSCURITÉ.
 sub.hunter.learned_sprint,ÇA VOUS ENTEND COURIR.
 sub.loop.rule,"SI QUELQUE CHOSE CLOCHE, REVENEZ SUR VOS PAS. SINON, CONTINUEZ."
+sub.loop.reference,REGARDEZ BIEN. C'EST AINSI QUE ÇA DOIT ÊTRE.
 sub.loop.reward,VOUS VOUS SOUVENEZ DU LABYRINTHE.
 sub.loop.second_wind,ÇA VOUS LAISSE PARTIR. UNE FOIS.
