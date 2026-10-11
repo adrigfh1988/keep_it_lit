@@ -37,7 +37,7 @@ public class AIPresence : MonoBehaviour
     [SerializeField] private Color eyeColor = new Color(1f, 0.05f, 0.03f);
     [Tooltip("Emission multiplier. Needs to be well above 1 to punch through fog and catch bloom.")]
     [SerializeField] private float eyeEmission = 4f;
-    [SerializeField] private float eyeSize = 0.075f;
+    [SerializeField] private float eyeSize = 0.035f;
     [Tooltip("Bone name used to anchor the eyes/face light when the model is not Humanoid, or has no Head-mapped bone")]
     [SerializeField] private string headBoneName = "Head";
     [Tooltip("Eye bone names. Used when the rig actually has eye bones (the Timmy robot does); a rig without them (the zombie) falls back to an offset from the head instead.")]

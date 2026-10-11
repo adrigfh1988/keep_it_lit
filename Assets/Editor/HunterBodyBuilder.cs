@@ -22,7 +22,7 @@ using UnityEngine.SceneManagement;
 ///
 /// Nothing here runs in a build; it is a one-shot scene edit, same pattern as ShopRoomBuilder.
 /// </summary>
-public static class HunterBodyBuilder
+public static partial class HunterBodyBuilder
 {
     private const string RobotPrefabPath = "Assets/Prefabs/PlayerRobot.prefab";
     private const string StarterClipFolder = "Assets/SourceFiles/StarterAssets/ThirdPersonController/Character/Animations";
@@ -116,8 +116,17 @@ public static class HunterBodyBuilder
 
         // The Starter clips are in place (root-locked, no travel to measure), so these are the Starter Assets design speeds; the hunter robot is
         // scaled by BodyScale, which does not change the stride a humanoid clip covers (measured: the same stance speed at scale 1.0 and 1.05).
-        float walkSpeed = GetClipSpeed(walkClip, DefaultWalkSpeed, robotPrefab);
-        float runSpeed = GetClipSpeed(runClip, DefaultRunSpeed, robotPrefab);
+        // Measured on the body that will wear them: the cyborg's legs are not the robot's (see HunterBodyBuilder.Cyborg.cs).
+        bool cyborg = CurrentLook == BodyLook.Cyborg;
+        GameObject cyborgModel = cyborg ? EnsureCyborgModel() : null;
+        if (cyborg && cyborgModel == null)
+        {
+            Debug.LogError($"HunterBodyBuilder: the cyborg body is selected but {CyborgModelPath} is missing or not a valid Humanoid; nothing was changed.");
+            return;
+        }
+        GameObject measureModel = cyborg ? cyborgModel : robotPrefab;
+        float walkSpeed = GetClipSpeed(walkClip, DefaultWalkSpeed, measureModel);
+        float runSpeed = GetClipSpeed(runClip, DefaultRunSpeed, measureModel);
 
         // F50: the optional pose clips. Each degrades to "missing" - no state, Pose maps to Idle - when no clip resolves.
         AnimationClip turnClip = ResolveTurnClip(out AnimationClip turnMirroredClip, out string turnSource);
@@ -128,7 +137,7 @@ public static class HunterBodyBuilder
 
         // ---------------------------------------------------------------- skin + controller (rebuilt every run)
 
-        Material skin = HunterSkinBuilder.EnsureSkin();
+        Material skin = cyborg ? null : HunterSkinBuilder.EnsureSkin();
         AnimatorController controller = BuildController(idleClip, walkClip, runClip, turnClip, turnMirroredClip,
             lookClip, lurkClip, stunClip, reachClip);
 
@@ -163,22 +172,31 @@ public static class HunterBodyBuilder
         bool aiWasActive = aiRoot.gameObject.activeSelf;
         aiRoot.gameObject.SetActive(true); // Animator.Rebind / Update need an active object
 
-        GameObject bodyInstance = (GameObject)PrefabUtility.InstantiatePrefab(robotPrefab, aiRoot);
-        Undo.RegisterCreatedObjectUndo(bodyInstance, "Build Hunter Body");
-        InteractableKitBuilder.StripRobotToVisuals(bodyInstance); // unpacks the instance; PlayerRobot.prefab itself is never touched
+        GameObject bodyInstance;
+        if (cyborg)
+        {
+            bodyInstance = InstantiateCyborg(cyborgModel, aiRoot);
+            Undo.RegisterCreatedObjectUndo(bodyInstance, "Build Hunter Body");
+        }
+        else
+        {
+            bodyInstance = (GameObject)PrefabUtility.InstantiatePrefab(robotPrefab, aiRoot);
+            Undo.RegisterCreatedObjectUndo(bodyInstance, "Build Hunter Body");
+            InteractableKitBuilder.StripRobotToVisuals(bodyInstance); // unpacks the instance; PlayerRobot.prefab itself is never touched
+            bodyInstance.transform.localScale = Vector3.one * BodyScale;
+
+            foreach (Renderer renderer in bodyInstance.GetComponentsInChildren<Renderer>(true))
+            {
+                Material[] mats = renderer.sharedMaterials;
+                for (int i = 0; i < mats.Length; i++) mats[i] = skin;
+                renderer.sharedMaterials = mats;
+            }
+
+            HunterSkinBuilder.AttachChestStencil(bodyInstance);
+        }
         bodyInstance.name = BodyChildName;
         bodyInstance.transform.localPosition = Vector3.zero;
         bodyInstance.transform.localRotation = Quaternion.identity;
-        bodyInstance.transform.localScale = Vector3.one * BodyScale;
-
-        foreach (Renderer renderer in bodyInstance.GetComponentsInChildren<Renderer>(true))
-        {
-            Material[] mats = renderer.sharedMaterials;
-            for (int i = 0; i < mats.Length; i++) mats[i] = skin;
-            renderer.sharedMaterials = mats;
-        }
-
-        HunterSkinBuilder.AttachChestStencil(bodyInstance);
 
         Animator bodyAnimator = bodyInstance.GetComponentInChildren<Animator>();
         float eyeHeight = DefaultEyeHeight;
@@ -232,7 +250,7 @@ public static class HunterBodyBuilder
         Debug.Log($"HunterBodyBuilder: idle={StarterIdleName}, walk={StarterWalkName}, run={StarterRunName} " +
             $"(walkSpeed={walkSpeed:F2}, runSpeed={runSpeed:F2}), turn={turnSource}, " +
             $"look={lookSource}, lurk={lurkSource}, stun={stunSource}, reach={reachSource}, " +
-            $"eyeHeight={eyeHeight:F2} m, skin={skin.name}, bodySweepsDuringSearch={(lookClip == null)}.", bodyInstance);
+            $"eyeHeight={eyeHeight:F2} m, skin={(cyborg ? "Cyborg" : skin.name)}, bodySweepsDuringSearch={(lookClip == null)}.", bodyInstance);
 
         Undo.CollapseUndoOperations(undoGroup);
 
@@ -251,8 +269,12 @@ public static class HunterBodyBuilder
     {
         Transform body = aiRoot.Find(BodyChildName);
         if (body == null) return false;
-        Renderer renderer = body.GetComponentInChildren<Renderer>(true);
-        return renderer != null && renderer.sharedMaterial != null && renderer.sharedMaterial.name == HunterSkinBuilder.MaterialName;
+        // The body matching the selected look (Build > Hunter Body Look): the Orderly skin, or the cyborg's own materials.
+        Renderer renderer = body.GetComponentInChildren<SkinnedMeshRenderer>(true);
+        if (renderer == null || renderer.sharedMaterial == null) return false;
+        return CurrentLook == BodyLook.Cyborg
+            ? renderer.sharedMaterial.name.StartsWith(CyborgMaterialPrefix)
+            : renderer.sharedMaterial.name == HunterSkinBuilder.MaterialName;
     }
 
     // ---------------------------------------------------------------- clips

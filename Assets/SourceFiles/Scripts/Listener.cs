@@ -71,7 +71,8 @@ public class Listener : MazeEntity
     private const float SnapRadius = 2f;
     private const float KillHeight = 1.6f;
     private const float EyeHeight = 0.6f;
-    private const float MaxDormantLift = 1.2f;
+    private const float MaxGroundOffset = 1.2f;
+    private const float GroundRate = 2.5f; // m/s the body is eased up or down to stay on the floor
 
     private NavMeshAgent _agent;
     private Animator _animator;
@@ -92,7 +93,7 @@ public class Listener : MazeEntity
     private float _nextLungeAt;
     private float _dormantUntil;
     private float _nextBreathAt;
-    private float _dormantLift = float.NaN;
+    private bool _groundedOnce;
 
     public override EntityKind Kind => EntityKind.Listener;
 
@@ -391,32 +392,30 @@ public class Listener : MazeEntity
 
         _currentStateHash = hash;
         if (_animator.HasState(0, hash)) _animator.CrossFadeInFixedTime(hash, StateFadeSeconds);
-        if (state == dormantState) StartCoroutine(GroundDormantPose());
-        else if (_body != null) _body.localPosition = Vector3.zero;
     }
 
     /// <summary>
-    /// The lying clip may sit a little above or below the agent's feet point. Once the pose has been evaluated, the body is lifted so the
-    /// lowest point of its renderers rests on the floor; measured the first time only, then reused.
+    /// Every clip sits at its own height above the agent's feet point (the Mixamo crawl lifts the body about half a metre, the lying clip
+    /// sinks it), so after the Animator has posed the body each frame, the body is moved up or down until the lowest point of its renderers
+    /// rests on the floor. Eased, so a crossfade between two clips never pops; capped at <see cref="MaxGroundOffset"/>.
     /// </summary>
-    private IEnumerator GroundDormantPose()
+    private void LateUpdate()
     {
-        if (float.IsNaN(_dormantLift))
+        if (_body == null || _renderers == null) return;
+
+        float lowest = float.PositiveInfinity;
+        foreach (Renderer r in _renderers)
         {
-            yield return null;
-            yield return null;
-            yield return new WaitForSeconds(StateFadeSeconds);
-
-            float lowest = float.PositiveInfinity;
-            foreach (Renderer r in _renderers)
-            {
-                if (r != null && r.enabled) lowest = Mathf.Min(lowest, r.bounds.min.y);
-            }
-
-            _dormantLift = float.IsInfinity(lowest) ? 0f : Mathf.Clamp(transform.position.y - lowest, -MaxDormantLift, MaxDormantLift);
+            if (r != null && r.enabled && r is SkinnedMeshRenderer) lowest = Mathf.Min(lowest, r.bounds.min.y);
         }
+        if (float.IsInfinity(lowest)) return;
 
-        if (_mode == Mode.Dormant && _body != null) _body.localPosition = new Vector3(0f, _dormantLift, 0f);
+        float parentScale = _body.parent != null ? Mathf.Max(0.01f, _body.parent.lossyScale.y) : 1f;
+        float offset = _body.localPosition.y + (transform.position.y - lowest) / parentScale;
+        offset = Mathf.Clamp(offset, -MaxGroundOffset, MaxGroundOffset);
+        float y = _groundedOnce ? Mathf.MoveTowards(_body.localPosition.y, offset, GroundRate * Time.deltaTime) : offset;
+        _groundedOnce = true;
+        _body.localPosition = new Vector3(0f, y, 0f);
     }
 
     /// <summary>The breathing loop: the locker-breath recording, pitched down, within breathAudibleRange in every state.</summary>
