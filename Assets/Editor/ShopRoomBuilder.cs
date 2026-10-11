@@ -114,6 +114,7 @@ public static partial class ShopRoomBuilder
         BuildCore(scene);
 
         ShopRoom built = Object.FindAnyObjectByType<ShopRoom>(FindObjectsInactive.Include);
+        if (built != null) WorldSignBuilder.RestyleShopRoot(built.gameObject, out int _, out int _); // F109: a regenerate keeps the restyled signs
         if (built != null) SaveAsPrefab(built.gameObject);
     }
 

@@ -92,6 +92,106 @@ MonoBehaviour:
     m_Localized: "\xC9CLATS ACCEPT\xC9S"
     m_Metadata:
       m_Items: []
+  - m_Id: 356817399877632
+    m_Localized: APOTHICAIRERIE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958016
+    m_Localized: ADMISSION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958017
+    m_Localized: OBSERVATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958018
+    m_Localized: PAS DE VISITES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958019
+    m_Localized: PAVILLON 4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958020
+    m_Localized: SALLE COMMUNE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958021
+    m_Localized: SALLE DES MACHINES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958022
+    m_Localized: CHAMBRE FROIDE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958023
+    m_Localized: "BLOC OP\xC9RATOIRE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958024
+    m_Localized: BUREAU DU DIRECTEUR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958025
+    m_Localized: SALLE DES ARCHIVES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958026
+    m_Localized: POSTE DE SOINS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958027
+    m_Localized: CORPS DE GARDE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958028
+    m_Localized: PARLOIR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958029
+    m_Localized: "R\xC9SERVE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958030
+    m_Localized: GARDE-MANGER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958031
+    m_Localized: "R\xC9FECTOIRE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958032
+    m_Localized: CUISINE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958033
+    m_Localized: SALLE DE CLASSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958034
+    m_Localized: SALLE D'EAU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958035
+    m_Localized: SALLE D'EXAMEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958036
+    m_Localized: DORTOIR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958037
+    m_Localized: TA CHAMBRE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958038
+    m_Localized: ISOLEMENT 1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958039
+    m_Localized: ISOLEMENT 2
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -1,10 +1,14 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
 /// F105 C6: counts what the player leans on during a floor - hiding in lockers, throwing, walking in the dark, sprinting - and
 /// at floor clear (<see cref="CommitLearning"/>, called by GameOutcome.FloorCleared) teaches the hunter every habit over its
 /// threshold through <see cref="HunterMemory"/>. A death or a retry commits nothing. It also announces the lessons learned on
-/// the previous floor as world text, a few seconds into this floor's run (once the floor intro banner has gone).
+/// the previous floor, a few seconds into this floor's run (once the floor intro banner has gone), on a red-barred objective card;
+/// the pause menu lists everything it has learned so far (PauseMenu's lessons panel).
 ///
 /// An instance component on the player, added by MazeGenerator.SetUpAtmosphere like ContractTracker, so a scene reload
 /// recreates it with zeroed counts - exactly "per floor". Counts only while the run is active, so the Intake, the hub and the
@@ -27,8 +31,15 @@ public class HabitTracker : MonoBehaviour
     [Header("F105 C6 - announcement")]
     [Tooltip("Seconds after the run starts before a learned lesson is shown (the floor intro banner takes about 5.5 s)")]
     [SerializeField] private float announceDelay = 6f;
-    [Tooltip("Seconds each learned-lesson line stays on screen")]
-    [SerializeField] private float announceSeconds = 3f;
+    [Tooltip("Seconds each learned-lesson card stays fully on screen (run time: a pause holds it)")]
+    [SerializeField] private float announceSeconds = 5f;
+
+    /// <summary>The lesson card's bar: red, a threat, not the amber of a goal.</summary>
+    private static readonly Color LessonAccent = new Color(0.85f, 0.12f, 0.08f);
+
+    private const float CardTop = 190f;
+
+    private ObjectiveCard _card;
 
     private PlayerStealthState _stealth;
     private Flashlight _flashlight;
@@ -64,6 +75,7 @@ public class HabitTracker : MonoBehaviour
     private void OnDestroy()
     {
         if (_throws != null) _throws.Thrown -= HandleThrown;
+        if (_card != null) Destroy(_card.gameObject);
     }
 
     private bool Counting => _terror.learningHunter && GameFlow.IsRunActive && !GameOutcome.IsOver;
@@ -115,26 +127,50 @@ public class HabitTracker : MonoBehaviour
         _terror.Log($"Hunter learned {habit} (level {HunterMemory.Level(habit)}): {evidence}", this);
     }
 
-    /// <summary>Shows one world-text line per lesson learned on an earlier floor, in order, then never again this floor.</summary>
+    /// <summary>
+    /// Shows one card per lesson learned on an earlier floor, in order, then never again this floor. A card is the objective card
+    /// with a red bar and the IT HAS LEARNED label: the lesson as the goal, the level bar as the counter, what it does now as the
+    /// second line. The hold runs on scaled time, so a pause freezes the card rather than letting it fade out behind the menu.
+    /// </summary>
     private void Announce()
     {
         _announced = true;
-        if (_hud == null || !HunterMemory.HasPending) return;
+        if (!HunterMemory.HasPending) return;
 
-        foreach (HunterMemory.Habit habit in HunterMemory.TakePendingAnnouncements())
+        List<HunterMemory.Habit> lessons = HunterMemory.TakePendingAnnouncements();
+        Canvas canvas = RuntimeUi.ResolveCanvas();
+        if (canvas == null)
         {
-            _hud.QueueSubtitle(L10n.T(AnnouncementKey(habit)), announceSeconds);
+            // No UI at all: fall back to the old world text.
+            if (_hud != null) foreach (HunterMemory.Habit habit in lessons) _hud.QueueSubtitle(HunterMemory.LessonText(habit), announceSeconds);
+            return;
         }
+
+        if (_card == null)
+        {
+            _card = ObjectiveCard.Create(canvas.transform, "HunterLessonCard", false, true, "ui.hunter.lesson.label", LessonAccent);
+            _card.SetTop(CardTop); // clear of the three-row star / floor / shard counter top-left
+        }
+        StartCoroutine(ShowLessons(lessons));
     }
 
-    private static string AnnouncementKey(HunterMemory.Habit habit)
+    private IEnumerator ShowLessons(List<HunterMemory.Habit> lessons)
     {
-        switch (habit)
+        TMP_FontAsset font = TMP_Settings.defaultFontAsset;
+        foreach (HunterMemory.Habit habit in lessons)
         {
-            case HunterMemory.Habit.Lockers: return "sub.hunter.learned_lockers";
-            case HunterMemory.Habit.Throws: return "sub.hunter.learned_throws";
-            case HunterMemory.Habit.Dark: return "sub.hunter.learned_dark";
-            default: return "sub.hunter.learned_sprint";
+            if (GameOutcome.IsOver) break;
+
+            _card.Set(HunterMemory.LevelBar(habit, font), HunterMemory.LessonText(habit), null, HunterMemory.EffectText(habit));
+            GameAudio.Play2D(GameAudio.Library.whisperEcho, 0.6f);
+            yield return _card.Fade(0f, 1f, 0.35f);
+
+            float until = Time.time + announceSeconds;
+            while (Time.time < until && !GameOutcome.IsOver) yield return null;
+
+            yield return _card.Fade(1f, 0f, 0.35f);
+            yield return new WaitForSeconds(0.3f);
         }
+        _card.HideNow();
     }
 }

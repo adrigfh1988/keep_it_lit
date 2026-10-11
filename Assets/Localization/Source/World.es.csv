@@ -23,3 +23,28 @@ ESO LO OYE TODO."
 world.intake.stay_in_bed,QUÉDATE EN LA CAMA
 world.shop.contracts,CONTRATOS
 world.shop.shards_accepted,SE ACEPTAN FRAGMENTOS
+world.shop.name,BOTICA
+world.intake.admissions,ADMISIÓN
+world.intake.observation,OBSERVACIÓN
+world.ghost.no_visitors,SIN VISITAS
+world.ghost.ward4,PABELLÓN 4
+world.room.DayRoom,SALA DE DÍA
+world.room.MachineRoom,SALA DE MÁQUINAS
+world.room.Morgue,CÁMARA FRIGORÍFICA
+world.room.Surgery,QUIRÓFANO
+world.room.Office,DESPACHO DEL DIRECTOR
+world.room.OfficeA,ARCHIVO
+world.room.Gatehouse,PUESTO DE ENFERMERÍA
+world.room.GuardRoom,SALA DE GUARDIA
+world.room.VisitRoom,SALA DE VISITAS
+world.room.Stock,ALMACÉN
+world.room.KitchenStock,DESPENSA
+world.room.DiningRoom,COMEDOR
+world.room.KitchenA,COCINA
+world.room.Classroom,AULA
+world.room.Bathroom,ASEOS
+world.room.ExamRoom,SALA DE EXPLORACIÓN
+world.room.Bedroom,DORMITORIO
+world.room.alt.Bedroom,TU HABITACIÓN
+world.room.SeclusionRoomA,AISLAMIENTO 1
+world.room.SeclusionRoomB,AISLAMIENTO 2

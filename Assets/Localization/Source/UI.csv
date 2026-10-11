@@ -156,6 +156,12 @@ ui.descent.habit.lockers,"Habit name inside the IT HAD LEARNED line: you hid in 
 ui.descent.habit.throws,"Habit name inside the IT HAD LEARNED line: you threw things (one word, all caps)",THROWS
 ui.descent.habit.dark,"Habit name inside the IT HAD LEARNED line: you moved without the torch (one word, all caps)",DARK
 ui.descent.habit.sprint,"Habit name inside the IT HAD LEARNED line: you ran (one word, all caps)",SPRINT
+ui.hunter.lesson.label,"Small grey label at the top of the hunter-lesson card (20 pt, letter-spaced, 400 px), the card that says the hunter has learned a habit of yours. IT = the hunter, never named",IT HAS LEARNED
+ui.pause.lessons_title,"Small grey title of the pause menu's top-right panel listing every habit the hunter has learned (20 pt, letter-spaced, 500 px). IT = the hunter, never named",WHAT IT HAS LEARNED
+ui.hunter.effect.lockers,"What the hunter does now that it learned you hide in lockers. Second line of the lesson card (shrinks to fit 720 px) and the pause lessons panel (wraps, 500 px). ALL CAPS",IT CHECKS LOCKERS AND WAITS OUTSIDE LONGER
+ui.hunter.effect.throws,"What the hunter does now that it learned you throw bottles to distract it. Same places and limits as ui.hunter.effect.lockers",IT IGNORES REPEATED THROWS AND MAY COME FOR YOU
+ui.hunter.effect.dark,"What the hunter does now that it learned you walk with the torch off. Same places and limits as ui.hunter.effect.lockers",IT SEES FARTHER WHILE YOUR TORCH IS OFF
+ui.hunter.effect.sprint,"What the hunter does now that it learned you sprint a lot. Same places and limits as ui.hunter.effect.lockers",IT HEARS YOU RUN FROM FARTHER AWAY
 ui.descent.end.seed,"DESCENT end screen: the seed of the level you died on (30 pt, dim). {seed} = number",SEED {seed}
 ui.descent.end.best,"DESCENT end screen: the record (36 pt green, one line). {n} = deepest level ever reached, shown as -n",DEEPEST ON RECORD: LEVEL -{n}
 ui.descent.end.new_best,"DESCENT end screen: shown only when this run beat the record (36 pt amber, one line)",THE STARS GO DEEPER THAN LAST TIME.

@@ -27,6 +27,12 @@ public class PauseMenu : MonoBehaviour
     private TextMeshProUGUI _descentWarning; // F107
     private Button _skipButton;
     private Button _mapButton;
+    // F105 C6: the top-right panel listing what the hunter has learned (HunterMemory), refreshed on every pause.
+    private RectTransform _lessonsPanel;
+    private TextMeshProUGUI _lessonsBody;
+
+    private const float LessonsWidth = 560f;
+    private static readonly Color LessonsRed = new Color(0.85f, 0.12f, 0.08f);
     private bool _paused;
     /// <summary>Last frame the cursor was locked and a pause was allowed. See the lock-loss check in Update.</summary>
     private bool _wasLockedAndPausable;
@@ -140,6 +146,7 @@ public class PauseMenu : MonoBehaviour
         if (_skipButton != null) _skipButton.gameObject.SetActive(GameFlow.IsInIntake);
         // F106: the map button is for touch players (no M key) and anyone who forgot it; only once the loop corridor has handed the map over.
         if (_mapButton != null) _mapButton.gameObject.SetActive(_map != null && _map.Available);
+        RefreshLessons();
         _panel.SetActive(true);
         _panel.transform.SetAsLastSibling();
 
@@ -177,6 +184,89 @@ public class PauseMenu : MonoBehaviour
     {
         Resume();
         if (_map != null) _map.Open();
+    }
+
+    private void OnEnable() => L10n.Changed += HandleLanguage;
+
+    private void OnDisable() => L10n.Changed -= HandleLanguage;
+
+    // SETTINGS opens over the pause menu, so the language can change while the lessons panel is up.
+    private void HandleLanguage()
+    {
+        if (_paused) RefreshLessons();
+    }
+
+    /// <summary>
+    /// F105 C6: one entry per habit the hunter has learned - its name, the level bar and what it does differently now. Hidden while
+    /// it has learned nothing (always, with TerrorSettings.learningHunter off: then no level ever rises).
+    /// </summary>
+    private void RefreshLessons()
+    {
+        if (_lessonsPanel == null) return;
+        bool any = HunterMemory.HasLearnedAny;
+        _lessonsPanel.gameObject.SetActive(any);
+        if (!any) return;
+
+        string red = ColorUtility.ToHtmlStringRGB(LessonsRed);
+        System.Text.StringBuilder text = new System.Text.StringBuilder();
+        foreach (HunterMemory.Habit habit in System.Enum.GetValues(typeof(HunterMemory.Habit)))
+        {
+            if (HunterMemory.Level(habit) < 1) continue;
+            if (text.Length > 0) text.Append("\n<size=12> </size>\n");
+            text.Append("<b>").Append(HunterMemory.NameText(habit)).Append("</b>  <color=#").Append(red).Append('>')
+                .Append(HunterMemory.LevelBar(habit, _lessonsBody.font)).Append("</color>\n");
+            text.Append("<size=21><color=#C9B58A>").Append(HunterMemory.EffectText(habit)).Append("</color></size>");
+        }
+
+        _lessonsBody.text = text.ToString();
+        float inner = LessonsWidth - 54f;
+        float bodyHeight = Mathf.Ceil(_lessonsBody.GetPreferredValues(_lessonsBody.text, inner, 0f).y);
+        _lessonsBody.rectTransform.sizeDelta = new Vector2(inner, bodyHeight);
+        _lessonsPanel.sizeDelta = new Vector2(LessonsWidth, 58f + bodyHeight + 20f);
+    }
+
+    private void BuildLessonsPanel()
+    {
+        GameObject panel = RuntimeUi.CreatePanel(_panel.transform, "HunterLessons", new Color(0.02f, 0.02f, 0.03f, 0.8f));
+        panel.GetComponent<Image>().raycastTarget = false;
+        _lessonsPanel = panel.GetComponent<RectTransform>();
+        _lessonsPanel.anchorMin = _lessonsPanel.anchorMax = new Vector2(1f, 1f);
+        _lessonsPanel.pivot = new Vector2(1f, 1f);
+        _lessonsPanel.anchoredPosition = new Vector2(-40f, -40f);
+        _lessonsPanel.sizeDelta = new Vector2(LessonsWidth, 200f);
+
+        // The same red bar as the lesson card that announced them.
+        GameObject bar = RuntimeUi.CreatePanel(panel.transform, "RedBar", LessonsRed);
+        bar.GetComponent<Image>().raycastTarget = false;
+        RectTransform barRect = bar.GetComponent<RectTransform>();
+        barRect.anchorMin = new Vector2(0f, 0f);
+        barRect.anchorMax = new Vector2(0f, 1f);
+        barRect.pivot = new Vector2(0f, 0.5f);
+        barRect.sizeDelta = new Vector2(6f, 0f);
+        barRect.anchoredPosition = Vector2.zero;
+
+        TextMeshProUGUI title = RuntimeUi.CreateText(panel.transform, "Title", L10n.T("ui.pause.lessons_title"), 20f, new Color(0.75f, 0.75f, 0.78f));
+        RuntimeUi.Bind(title, "ui.pause.lessons_title", 0.6f);
+        title.alignment = TextAlignmentOptions.TopLeft;
+        title.characterSpacing = 6f;
+        title.textWrappingMode = TextWrappingModes.NoWrap;
+        PlaceTopLeft(title.rectTransform, new Vector2(30f, -18f), new Vector2(LessonsWidth - 54f, 28f));
+
+        _lessonsBody = RuntimeUi.CreateText(panel.transform, "Body", "", 28f, Color.white);
+        _lessonsBody.alignment = TextAlignmentOptions.TopLeft;
+        _lessonsBody.characterSpacing = 2f;
+        _lessonsBody.textWrappingMode = TextWrappingModes.Normal;
+        _lessonsBody.raycastTarget = false;
+        PlaceTopLeft(_lessonsBody.rectTransform, new Vector2(30f, -58f), new Vector2(LessonsWidth - 54f, 100f));
+        panel.SetActive(false);
+    }
+
+    private static void PlaceTopLeft(RectTransform rect, Vector2 offset, Vector2 size)
+    {
+        rect.anchorMin = rect.anchorMax = new Vector2(0f, 1f);
+        rect.pivot = new Vector2(0f, 1f);
+        rect.anchoredPosition = offset;
+        rect.sizeDelta = size;
     }
 
     private void OnDestroy()
@@ -249,5 +339,7 @@ public class PauseMenu : MonoBehaviour
         RuntimeUi.BindButton(quit, "ui.pause.quit");
         quit.onClick.AddListener(GameFlow.Quit);
         quit.gameObject.SetActive(GameFlow.CanQuit);
+
+        BuildLessonsPanel();
     }
 }

@@ -156,6 +156,12 @@ ui.descent.habit.lockers,CASIERS
 ui.descent.habit.throws,JETS
 ui.descent.habit.dark,OBSCURITÉ
 ui.descent.habit.sprint,COURSE
+ui.hunter.lesson.label,ÇA A APPRIS
+ui.pause.lessons_title,CE QUE ÇA A APPRIS
+ui.hunter.effect.lockers,ÇA FOUILLE LES CASIERS ET ATTEND PLUS LONGTEMPS DEVANT
+ui.hunter.effect.throws,ÇA IGNORE LES JETS RÉPÉTÉS ET PEUT VENIR VOUS CHERCHER
+ui.hunter.effect.dark,ÇA VOIT PLUS LOIN QUAND VOTRE LAMPE EST ÉTEINTE
+ui.hunter.effect.sprint,ÇA VOUS ENTEND COURIR DE PLUS LOIN
 ui.descent.end.seed,GRAINE {seed}
 ui.descent.end.best,PLUS PROFOND ENREGISTRÉ: NIVEAU -{n}
 ui.descent.end.new_best,LES ÉTOILES VONT PLUS BAS QUE LA DERNIÈRE FOIS.

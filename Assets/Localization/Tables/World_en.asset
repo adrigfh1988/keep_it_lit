@@ -98,6 +98,106 @@ MonoBehaviour:
     m_Localized: SHARDS ACCEPTED
     m_Metadata:
       m_Items: []
+  - m_Id: 356817399877632
+    m_Localized: APOTHECARY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958016
+    m_Localized: ADMISSIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958017
+    m_Localized: OBSERVATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958018
+    m_Localized: NO VISITORS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958019
+    m_Localized: WARD 4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958020
+    m_Localized: DAY ROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958021
+    m_Localized: MACHINE ROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958022
+    m_Localized: COLD STORAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958023
+    m_Localized: OPERATING THEATRE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958024
+    m_Localized: DIRECTOR'S OFFICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958025
+    m_Localized: RECORDS ROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958026
+    m_Localized: NURSE STATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958027
+    m_Localized: GUARD ROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958028
+    m_Localized: VISITING ROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958029
+    m_Localized: STORE ROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958030
+    m_Localized: PANTRY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958031
+    m_Localized: DINING HALL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958032
+    m_Localized: KITCHEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958033
+    m_Localized: CLASSROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958034
+    m_Localized: WASHROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958035
+    m_Localized: EXAM ROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958036
+    m_Localized: BEDROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958037
+    m_Localized: YOUR ROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958038
+    m_Localized: SECLUSION 1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958039
+    m_Localized: SECLUSION 2
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

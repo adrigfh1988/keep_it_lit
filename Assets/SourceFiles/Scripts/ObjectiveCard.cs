@@ -22,6 +22,7 @@ public class ObjectiveCard : MonoBehaviour
     private const float CardHeight = 176f;
     private const float CardHeightNoRow = 116f;
     private const float CardTop = 36f;
+    private float _top = CardTop;
 
     // The compact card sits under the HUD's floor label, where the hub's old objective line was.
     private const float CompactWidth = 540f;
@@ -29,6 +30,8 @@ public class ObjectiveCard : MonoBehaviour
     private const float CompactTop = 112f;
 
     private bool _shrinkWhenEmpty;
+    private string _labelKey = "ui.objective.label";
+    private Color _accent = Amber;
 
     private RectTransform _card;
     private CanvasGroup _cardGroup;
@@ -52,9 +55,9 @@ public class ObjectiveCard : MonoBehaviour
     /// <summary>
     /// Builds the card on a new full-screen child of <paramref name="parent"/> (so it draws where that child sits in the sibling
     /// order). compact = also build the small top-left card; shrinkWhenEmpty = a card with neither keys nor a second line drops its
-    /// empty bottom row.
+    /// empty bottom row. labelKey / accent replace the OBJECTIVE label and the amber bar (the hunter's lesson card uses its own).
     /// </summary>
-    public static ObjectiveCard Create(Transform parent, string name, bool compact, bool shrinkWhenEmpty)
+    public static ObjectiveCard Create(Transform parent, string name, bool compact, bool shrinkWhenEmpty, string labelKey = null, Color? accent = null)
     {
         GameObject root = new GameObject(name, typeof(RectTransform));
         root.transform.SetParent(parent, false);
@@ -62,6 +65,8 @@ public class ObjectiveCard : MonoBehaviour
         RuntimeUi.Stretch((RectTransform)root.transform);
         ObjectiveCard card = root.AddComponent<ObjectiveCard>();
         card._shrinkWhenEmpty = shrinkWhenEmpty;
+        if (!string.IsNullOrEmpty(labelKey)) card._labelKey = labelKey;
+        if (accent.HasValue) card._accent = accent.Value;
         card.BuildFull();
         if (compact) card.BuildCompact();
         return card;
@@ -183,11 +188,18 @@ public class ObjectiveCard : MonoBehaviour
         SetAlpha(to);
     }
 
+    /// <summary>Moves the full card down from the top edge (36 px by default). The maze's lesson card sits under the HUD counter.</summary>
+    public void SetTop(float top)
+    {
+        _top = top;
+        SetAlpha(FullAlpha);
+    }
+
     public void SetAlpha(float alpha)
     {
         if (_cardGroup == null) return;
         _cardGroup.alpha = alpha;
-        _card.anchoredPosition = new Vector2(0f, -CardTop + 20f * (1f - alpha));
+        _card.anchoredPosition = new Vector2(0f, -_top + 20f * (1f - alpha));
     }
 
     /// <summary>Goal done: the tick shows for about 0.4 s.</summary>
@@ -279,19 +291,19 @@ public class ObjectiveCard : MonoBehaviour
         _card.anchorMin = _card.anchorMax = new Vector2(0.5f, 1f);
         _card.pivot = new Vector2(0.5f, 1f);
         _card.sizeDelta = new Vector2(CardWidth, CardHeight);
-        _card.anchoredPosition = new Vector2(0f, -CardTop);
+        _card.anchoredPosition = new Vector2(0f, -_top);
         _cardGroup = card.AddComponent<CanvasGroup>();
         _cardGroup.alpha = 0f;
         _cardGroup.blocksRaycasts = false;
         _cardGroup.interactable = false;
 
-        AmberBar(card.transform);
+        AccentBar(card.transform, _accent);
 
-        TextMeshProUGUI label = RuntimeUi.CreateText(card.transform, "Label", L10n.T("ui.objective.label"), 20f, Grey);
+        TextMeshProUGUI label = RuntimeUi.CreateText(card.transform, "Label", L10n.T(_labelKey), 20f, Grey);
         label.alignment = TextAlignmentOptions.TopLeft;
         label.characterSpacing = 6f;
-        PlaceTopLeft(label.rectTransform, new Vector2(30f, -14f), new Vector2(300f, 26f));
-        RuntimeUi.Bind(label, "ui.objective.label", 0.6f);
+        PlaceTopLeft(label.rectTransform, new Vector2(30f, -14f), new Vector2(400f, 26f));
+        RuntimeUi.Bind(label, _labelKey, 0.6f);
 
         _counter = RuntimeUi.CreateText(card.transform, "Counter", "", 20f, Grey);
         _counter.alignment = TextAlignmentOptions.TopRight;
@@ -350,7 +362,7 @@ public class ObjectiveCard : MonoBehaviour
         _compactGroup.blocksRaycasts = false;
         _compactGroup.interactable = false;
 
-        AmberBar(card.transform);
+        AccentBar(card.transform, _accent);
 
         _compactGoal = RuntimeUi.CreateText(card.transform, "Goal", "", 24f, Color.white);
         _compactGoal.alignment = TextAlignmentOptions.TopLeft;
@@ -367,10 +379,10 @@ public class ObjectiveCard : MonoBehaviour
         _compactSub.gameObject.SetActive(false);
     }
 
-    /// <summary>The thin amber bar on a card's left edge.</summary>
-    private static void AmberBar(Transform card)
+    /// <summary>The thin accent bar on a card's left edge (amber unless the owner chose another colour).</summary>
+    private static void AccentBar(Transform card, Color colour)
     {
-        GameObject bar = RuntimeUi.CreatePanel(card, "AmberBar", Amber);
+        GameObject bar = RuntimeUi.CreatePanel(card, "AmberBar", colour);
         bar.GetComponent<Image>().raycastTarget = false;
         RectTransform barRect = bar.GetComponent<RectTransform>();
         barRect.anchorMin = new Vector2(0f, 0f);

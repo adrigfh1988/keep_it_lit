@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// F93: the human Mixamo bodies. Copied from the user's library into Assets/SourceFiles/Characters/Mixamo (Humanoid, textures and materials
 /// extracted next to the FBX, URP Lit, smoothness &lt;= 0.35, textures capped at 1024). Tomas is Pete, the pursuer is Timmy the robot (not Mixamo),
-/// the Director's finale memory is the doctor. Hilde and Elias stay on Crowd_LOD0 until a body exists for them - every patient body goes
+/// the Director's finale memory is the doctor. Hilde and Elias are Timmy robots (AsylumHubBuilder.NpcBodies.cs); a human patient body goes
 /// through <see cref="SwapPatientBody"/>, so the next patch swaps them with one call each.
 /// </summary>
 public static partial class AsylumHubBuilder
@@ -199,7 +199,7 @@ public static partial class AsylumHubBuilder
     }
 
     /// <summary>Two red eye beads on the head bone, `forward`/`up` in front of and above the joint and `spacing` either side, `size` across (world metres).</summary>
-    private static void AddRedEyes(Animator animator, float forward, float up, float spacing, float size)
+    internal static void AddRedEyes(Animator animator, float forward, float up, float spacing, float size)
     {
         Material eyes = FindMaterial("Intake_Eyes");
         // Measure in the avatar's own T-pose, then give the controller back.

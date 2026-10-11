@@ -173,16 +173,11 @@ public partial class GameOutcome
     /// <summary>"LOCKERS ▮▮▯ · DARK ▮▯▯" for every habit the hunter learned during this descent (level 1 or more), or null when it learned nothing.</summary>
     private static string LearnedHabitsText(TMP_FontAsset font)
     {
-        bool glyphs = font != null && font.HasCharacter('▮', true, true) && font.HasCharacter('▯', true, true);
         List<string> parts = new List<string>();
         foreach (HunterMemory.Habit habit in System.Enum.GetValues(typeof(HunterMemory.Habit)))
         {
-            int level = HunterMemory.Level(habit);
-            if (level < 1) continue;
-
-            System.Text.StringBuilder bar = new System.Text.StringBuilder();
-            for (int i = 0; i < HunterMemory.MaxLevel; i++) bar.Append(i < level ? (glyphs ? "▮" : "#") : (glyphs ? "▯" : "-"));
-            parts.Add(L10n.T("ui.descent.habit." + habit.ToString().ToLowerInvariant()) + " " + bar);
+            if (HunterMemory.Level(habit) < 1) continue;
+            parts.Add(HunterMemory.NameText(habit) + " " + HunterMemory.LevelBar(habit, font));
         }
 
         return parts.Count == 0 ? null : string.Join(" · ", parts);

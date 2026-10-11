@@ -156,6 +156,12 @@ ui.descent.habit.lockers,SPINDE
 ui.descent.habit.throws,WÜRFE
 ui.descent.habit.dark,DUNKEL
 ui.descent.habit.sprint,RENNEN
+ui.hunter.lesson.label,ES HAT GELERNT
+ui.pause.lessons_title,WAS ES GELERNT HAT
+ui.hunter.effect.lockers,ES DURCHSUCHT SPINDE UND WARTET LÄNGER DAVOR
+ui.hunter.effect.throws,ES IGNORIERT WIEDERHOLTE WÜRFE UND KOMMT VIELLEICHT ZU DIR
+ui.hunter.effect.dark,"ES SIEHT WEITER, WENN DEINE LAMPE AUS IST"
+ui.hunter.effect.sprint,ES HÖRT DICH AUS GRÖSSERER ENTFERNUNG RENNEN
 ui.descent.end.seed,SEED {seed}
 ui.descent.end.best,TIEFSTER WERT: EBENE -{n}
 ui.descent.end.new_best,DIE STERNE REICHEN TIEFER ALS BEIM LETZTEN MAL.

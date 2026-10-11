@@ -24,8 +24,6 @@ public static partial class IntakeRoomBuilder
 {
     private const string RoomName = "IntakeRoom";
     private const string MaterialFolder = "Assets/SourceFiles/Materials/Intake";
-    private const string AdamModel = "Assets/UnityTechnologies/Adam Character Pack/Adam/Adam.FBX";
-    private const string AdamController = "Assets/UnityTechnologies/Adam Character Pack/Adam/Adam_AnimationController.controller";
     private const string PropFolder = "Assets/SourceFiles/Themes/Common/Prefabs/";
 
     private static readonly Vector3 RoomPosition = new Vector3(-100f, 5f, -100f);
@@ -318,6 +316,7 @@ public static partial class IntakeRoomBuilder
         Selection.activeGameObject = rootGo;
         EditorSceneManager.MarkSceneDirty(scene);
         Debug.Log($"Intake room built. Save the scene (Ctrl+S) to keep it.\n{Audit(rootGo.transform)}", rootGo);
+        WorldSignBuilder.RestyleIntakeRoot(rootGo, out int _, out int _); // F109: the signs are styled, so a regenerate keeps the look
         SaveAsPrefab(rootGo);
     }
 
@@ -504,53 +503,14 @@ public static partial class IntakeRoomBuilder
 
     private static Transform BuildSilhouette(Mats m, Vector3 localPosition)
     {
-        GameObject adam = AssetDatabase.LoadAssetAtPath<GameObject>(AdamModel);
         Transform holder = Group(_root, "Silhouette");
         holder.localPosition = localPosition;
-        if (adam == null)
+        if (AddRobotSilhouette(holder, m.Black) == null)
         {
-            Debug.LogError($"Build Intake Room: {AdamModel} is missing, so the hide step has no silhouette. Import the Adam Character Pack.");
+            Debug.LogError("Build Intake Room: the robot body could not be built, so the hide step has no silhouette.");
             // A bare black pillar stands in so the room still works.
             GameObject pillar = Prim(holder, PrimitiveType.Capsule, "Body", new Vector3(0f, 0.9f, 0f), new Vector3(0.5f, 0.9f, 0.5f), m.Black);
             Object.DestroyImmediate(pillar.GetComponent<Collider>());
-            return holder;
-        }
-
-        GameObject body = (GameObject)PrefabUtility.InstantiatePrefab(adam, holder);
-        body.name = "Adam";
-        body.transform.localPosition = Vector3.zero;
-        body.transform.localRotation = Quaternion.identity;
-
-        Animator animator = body.GetComponent<Animator>();
-        if (animator == null) animator = body.AddComponent<Animator>();
-        animator.runtimeAnimatorController = AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(AdamController);
-        animator.applyRootMotion = false;
-        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
-
-        foreach (Renderer r in body.GetComponentsInChildren<Renderer>(true))
-        {
-            Material[] mats = new Material[r.sharedMaterials.Length];
-            for (int i = 0; i < mats.Length; i++) mats[i] = m.Black;
-            r.sharedMaterials = mats;
-            r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-        }
-        foreach (Collider c in body.GetComponentsInChildren<Collider>(true)) Object.DestroyImmediate(c);
-
-        Transform head = animator.isHuman ? animator.GetBoneTransform(HumanBodyBones.Head) : null;
-        if (head != null)
-        {
-            foreach (float side in new[] { -1f, 1f })
-            {
-                GameObject eye = Prim(head, PrimitiveType.Sphere, side < 0f ? "EyeL" : "EyeR", Vector3.zero, Vector3.one, m.Eyes);
-                Object.DestroyImmediate(eye.GetComponent<Collider>());
-                eye.transform.position = head.position + body.transform.forward * 0.1f + body.transform.up * 0.07f + body.transform.right * (0.035f * side);
-                Vector3 parent = head.lossyScale;
-                eye.transform.localScale = new Vector3(0.02f / parent.x, 0.02f / parent.y, 0.02f / parent.z);
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Build Intake Room: Adam has no Humanoid Head bone, so the silhouette has no eyes.", body);
         }
         return holder;
     }

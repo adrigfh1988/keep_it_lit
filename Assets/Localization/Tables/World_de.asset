@@ -96,6 +96,106 @@ MonoBehaviour:
     m_Localized: SPLITTER ANGENOMMEN
     m_Metadata:
       m_Items: []
+  - m_Id: 356817399877632
+    m_Localized: APOTHEKE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958016
+    m_Localized: AUFNAHME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958017
+    m_Localized: BEOBACHTUNG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958018
+    m_Localized: KEIN BESUCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958019
+    m_Localized: STATION 4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958020
+    m_Localized: AUFENTHALTSRAUM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958021
+    m_Localized: MASCHINENRAUM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958022
+    m_Localized: "K\xDCHLKAMMER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958023
+    m_Localized: OPERATIONSSAAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958024
+    m_Localized: "DIREKTORENB\xDCRO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958025
+    m_Localized: ARCHIV
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958026
+    m_Localized: SCHWESTERNZIMMER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958027
+    m_Localized: WACHRAUM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958028
+    m_Localized: BESUCHSRAUM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958029
+    m_Localized: LAGERRAUM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958030
+    m_Localized: VORRATSKAMMER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958031
+    m_Localized: SPEISESAAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958032
+    m_Localized: "K\xDCCHE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958033
+    m_Localized: KLASSENZIMMER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958034
+    m_Localized: WASCHRAUM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958035
+    m_Localized: UNTERSUCHUNGSRAUM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958036
+    m_Localized: SCHLAFSAAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958037
+    m_Localized: DEIN ZIMMER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958038
+    m_Localized: ISOLIERUNG 1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958039
+    m_Localized: ISOLIERUNG 2
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

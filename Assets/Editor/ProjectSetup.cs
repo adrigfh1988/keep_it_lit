@@ -275,6 +275,27 @@ public static class ProjectSetup
         },
         new Piece
         {
+            Name = "Asylum NPC robot bodies (the six hub NPCs are Timmy robots, each in its own skin)",
+            FixMenu = "Build Missing Pieces (swaps the remaining bodies in the scene hub and applies them to the prefab)",
+            Problem = AsylumHubBuilder.NpcRobotProblem,
+            Build = AsylumHubBuilder.NpcRobotRepair
+        },
+        new Piece
+        {
+            Name = "Asylum robot patients (Hilde, Elias and the morgue body are Timmy robots; the Adam Character Pack is gone)",
+            FixMenu = "Build Missing Pieces (swaps the remaining bodies in the scene hub and applies them to the prefab)",
+            Problem = AsylumHubBuilder.PatientRobotProblem,
+            Build = AsylumHubBuilder.PatientRobotRepair
+        },
+        new Piece
+        {
+            Name = "Intake silhouette (the hide step's figure is a black Timmy robot; the Adam Character Pack is gone)",
+            FixMenu = "Build Missing Pieces (swaps the body inside IntakeRoom.prefab)",
+            Problem = IntakeRoomBuilder.SilhouetteProblem,
+            Build = IntakeRoomBuilder.SilhouetteRepair
+        },
+        new Piece
+        {
             Name = "Asylum wayfinding (F100: mission where-words, shop door room name)",
             FixMenu = "Build Missing Pieces (fills the missing words in the scene hub and applies them to the prefab)",
             Problem = AsylumHubBuilder.WayfindingProblem,
@@ -293,6 +314,34 @@ public static class ProjectSetup
             FixMenu = "Build Missing Pieces (adds only the missing pieces to the scene hub, rebakes the NavMesh, refits fog and probes and applies it to the prefab)",
             Problem = AsylumHubBuilder.PropsProblem,
             Build = AsylumHubBuilder.PropsRepair
+        },
+        new Piece
+        {
+            Name = "Sign fonts (F109: six static TMP font assets + lit text materials)",
+            FixMenu = "Build > World Signs (restyle missing)",
+            Problem = () => WorldSignBuilder.FontsPresent() ? null : "a sign font asset or its lit text material is missing",
+            Build = WorldSignBuilder.EnsureFonts
+        },
+        new Piece
+        {
+            Name = "Intake signs (F109: enamel, light box, stencil, wall paint, paper notice, room plates)",
+            FixMenu = "Build > World Signs (restyle missing)",
+            Problem = WorldSignBuilder.IntakeProblem,
+            Build = () => WorldSignBuilder.RestyleIntake()
+        },
+        new Piece
+        {
+            Name = "Shop signs (F109: hanging name board, brass counter plaque, chalk door slate, contracts header)",
+            FixMenu = "Build > World Signs (restyle missing)",
+            Problem = WorldSignBuilder.ShopProblem,
+            Build = () => WorldSignBuilder.RestyleShop()
+        },
+        new Piece
+        {
+            Name = "Hub signs + room plates (F109: brass wing plaques, stencils, a name plate at every room door)",
+            FixMenu = "Build > World Signs (restyle missing) (edits the scene hub and applies it to the prefab)",
+            Problem = WorldSignBuilder.HubProblem,
+            Build = () => WorldSignBuilder.RestyleHub()
         },
         new Piece
         {

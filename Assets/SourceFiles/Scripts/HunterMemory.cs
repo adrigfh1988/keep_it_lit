@@ -40,6 +40,45 @@ public static class HunterMemory
         return true;
     }
 
+    /// <summary>True when any habit has been learned at least once (the pause menu's lessons panel shows only then).</summary>
+    public static bool HasLearnedAny
+    {
+        get
+        {
+            for (int i = 0; i < HabitCount; i++) if (Levels[i] > 0) return true;
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// The level as a bar, "▮▮▯" for level 2: ■□ when <paramref name="font"/> lacks ▮▯ (LiberationSans does), #- when it lacks
+    /// both. Shared by the lesson card (HabitTracker), the pause menu's lessons panel and the descent end screen.
+    /// </summary>
+    public static string LevelBar(Habit habit, TMPro.TMP_FontAsset font)
+    {
+        char on = '#', off = '-';
+        if (Has(font, '▮') && Has(font, '▯')) { on = '▮'; off = '▯'; }
+        else if (Has(font, '■') && Has(font, '□')) { on = '■'; off = '□'; }
+
+        int level = Level(habit);
+        System.Text.StringBuilder bar = new System.Text.StringBuilder(MaxLevel);
+        for (int i = 0; i < MaxLevel; i++) bar.Append(i < level ? on : off);
+        return bar.ToString();
+    }
+
+    private static bool Has(TMPro.TMP_FontAsset font, char glyph) => font != null && font.HasCharacter(glyph, true, true);
+
+    /// <summary>The habit's short name: LOCKERS, THROWS, DARK, SPRINT.</summary>
+    public static string NameText(Habit habit) => L10n.T("ui.descent.habit." + Key(habit));
+
+    /// <summary>The lesson as the game says it: IT REMEMBERS THE LOCKERS.</summary>
+    public static string LessonText(Habit habit) => L10n.T("sub.hunter.learned_" + Key(habit));
+
+    /// <summary>What it does differently now: IT CHECKS LOCKERS AND WAITS OUTSIDE LONGER.</summary>
+    public static string EffectText(Habit habit) => L10n.T("ui.hunter.effect." + Key(habit));
+
+    private static string Key(Habit habit) => habit.ToString().ToLowerInvariant();
+
     /// <summary>The lessons learned since they were last announced, each once; clears the queue.</summary>
     public static List<Habit> TakePendingAnnouncements()
     {

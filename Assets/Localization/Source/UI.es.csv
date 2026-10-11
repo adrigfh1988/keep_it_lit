@@ -156,6 +156,12 @@ ui.descent.habit.lockers,CASILLEROS
 ui.descent.habit.throws,LANZAMIENTOS
 ui.descent.habit.dark,OSCURIDAD
 ui.descent.habit.sprint,CARRERA
+ui.hunter.lesson.label,HA APRENDIDO
+ui.pause.lessons_title,LO QUE HA APRENDIDO
+ui.hunter.effect.lockers,REVISA LOS CASILLEROS Y ESPERA FUERA MÁS TIEMPO
+ui.hunter.effect.throws,IGNORA LOS LANZAMIENTOS REPETIDOS Y PUEDE IR A POR TI
+ui.hunter.effect.dark,VE MÁS LEJOS CUANDO TU LINTERNA ESTÁ APAGADA
+ui.hunter.effect.sprint,TE OYE CORRER DESDE MÁS LEJOS
 ui.descent.end.seed,SEMILLA {seed}
 ui.descent.end.best,MÁS PROFUNDO REGISTRADO: NIVEL -{n}
 ui.descent.end.new_best,LAS ESTRELLAS LLEGAN MÁS HONDO QUE LA VEZ ANTERIOR.

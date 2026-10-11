@@ -694,6 +694,30 @@ MonoBehaviour:
     m_Localized: ENTENDU
     m_Metadata:
       m_Items: []
+  - m_Id: 356483168374784
+    m_Localized: "\xC7A A APPRIS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649472
+    m_Localized: "CE QUE \xC7A A APPRIS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649473
+    m_Localized: "\xC7A FOUILLE LES CASIERS ET ATTEND PLUS LONGTEMPS DEVANT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649474
+    m_Localized: "\xC7A IGNORE LES JETS R\xC9P\xC9T\xC9S ET PEUT VENIR VOUS CHERCHER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649475
+    m_Localized: "\xC7A VOIT PLUS LOIN QUAND VOTRE LAMPE EST \xC9TEINTE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649476
+    m_Localized: "\xC7A VOUS ENTEND COURIR DE PLUS LOIN"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

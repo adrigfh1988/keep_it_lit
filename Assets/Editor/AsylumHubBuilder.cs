@@ -213,6 +213,7 @@ public static partial class AsylumHubBuilder
         OpenRouteDoors(hub);
         BuildAmbienceAndDust(hub);
         Dress(hub);
+        WorldSignBuilder.RestyleHubInstance(hub, false, false); // F109: restyle the signs; the room plates come from Build Missing Pieces once the NavMesh exists
 
         EditorSceneManager.MarkSceneDirty(scene);
         SaveAsPrefab(rootGo);

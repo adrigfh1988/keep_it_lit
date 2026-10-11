@@ -1352,6 +1352,35 @@ public static partial class InteractableKitBuilder
         }
     }
 
+    /// <summary>
+    /// A stripped PlayerRobot.prefab reduced to its Animator node (the prefab's Robot child: Geometry + Skeleton, whose forward is the
+    /// mesh's visual facing), parented to <paramref name="parent"/> at local zero with the wrapper deleted. Null when the prefab is missing.
+    /// Shared by the hub NPCs, the patients, the morgue body and the Intake silhouette. The prefab asset itself is never touched.
+    /// </summary>
+    internal static Transform InstantiateRobotNode(Transform parent)
+    {
+        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(RobotPrefabPath);
+        if (prefab == null) return null;
+        GameObject wrapper = (GameObject)PrefabUtility.InstantiatePrefab(prefab, parent);
+        StripRobotToVisuals(wrapper);
+        Animator animator = wrapper.GetComponentInChildren<Animator>(true);
+        if (animator == null)
+        {
+            Object.DestroyImmediate(wrapper);
+            return null;
+        }
+        Transform robot = animator.transform;
+        robot.SetParent(parent, false);
+        Object.DestroyImmediate(wrapper);
+        robot.localPosition = Vector3.zero;
+        robot.localRotation = Quaternion.identity;
+        robot.localScale = Vector3.one;
+        foreach (Transform t in robot.GetComponentsInChildren<Transform>(true)) GameObjectUtility.SetStaticEditorFlags(t.gameObject, 0);
+        animator.applyRootMotion = false;
+        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+        return robot;
+    }
+
     private static void DestroyAllOfType<T>(GameObject root) where T : Component
     {
         foreach (T component in root.GetComponentsInChildren<T>(true))

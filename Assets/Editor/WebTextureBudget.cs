@@ -27,7 +27,6 @@ public static class WebTextureBudget
         "Assets/GreenMossGames/",
         "Assets/Morgue Room PBR/Models/wall/",
         "Assets/Morgue Room PBR/Models/floor/",
-        "Assets/UnityTechnologies/Adam Character Pack/",
         "Assets/SourceFiles/Characters/",
         "Assets/SourceFiles/TimmyRobot/",
     };

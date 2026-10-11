@@ -23,3 +23,28 @@ IT HEARS EVERYTHING."
 world.intake.stay_in_bed,"World sign at the foot of the Intake bed, visible only in the focused torch beam (one line, ALL CAPS, ~16 characters)",STAY IN YOUR BED
 world.shop.contracts,"World sign above the contract board in the shop (one line, ALL CAPS, ~10 characters)",CONTRACTS
 world.shop.shards_accepted,"World sign on the shop counter (one line, ALL CAPS, ~18 characters). Shards = the currency (see shop.currency)",SHARDS ACCEPTED
+world.shop.name,"Name board hanging over the shop counter (3D text on a wooden board, one line, ALL CAPS, ~12 characters). The shop is an old-fashioned apothecary run by the salesman",APOTHECARY
+world.intake.admissions,"Name plate over the exit of the Intake's first room, enamel plate (3D text, one line, ALL CAPS, ~12 characters). The room where the patient is admitted",ADMISSIONS
+world.intake.observation,"Name plate over the entrance of the Intake's last room, enamel plate (3D text, one line, ALL CAPS, ~12 characters). The room where patients are watched",OBSERVATION
+world.ghost.no_visitors,"Faint older paint behind the 'stay in your bed' wall warning in the Intake: what the wall used to say before it was painted over (3D text at ~16 % opacity, one line, ALL CAPS, ~12 characters)",NO VISITORS
+world.ghost.ward4,"Faint older lettering behind the DAY ROOM name plate in the asylum: what the plate used to say (3D text at ~16 % opacity, one line, ALL CAPS, ~8 characters)",WARD 4
+world.room.DayRoom,"Name plate over the day room door in the asylum (3D text on an enamel plate, one line, ALL CAPS, ~18 characters). Same words as hub.wing.1.room",DAY ROOM
+world.room.MachineRoom,"Name plate over the machine room door in the asylum (one line, ALL CAPS, ~18 characters). Same words as hub.wing.2.room",MACHINE ROOM
+world.room.Morgue,"Name plate over the cold storage (morgue) door in the asylum (one line, ALL CAPS, ~18 characters). Same words as hub.wing.3.room",COLD STORAGE
+world.room.Surgery,"Name plate over the operating theatre door in the asylum (one line, ALL CAPS, ~18 characters). Same words as hub.wing.4.room",OPERATING THEATRE
+world.room.Office,"Name plate (brass) over the director's office door in the asylum (one line, ALL CAPS, ~18 characters). Same words as hub.wing.5.room",DIRECTOR'S OFFICE
+world.room.OfficeA,"Name plate over the records room door in the asylum, where the case files are kept (one line, ALL CAPS, ~18 characters)",RECORDS ROOM
+world.room.Gatehouse,"Name plate over the nurse station door in the asylum (one line, ALL CAPS, ~18 characters). Must match the NURSE STATION of hub.mission.1.where",NURSE STATION
+world.room.GuardRoom,"Name plate over the guards' room door in the asylum (one line, ALL CAPS, ~18 characters)",GUARD ROOM
+world.room.VisitRoom,"Name plate over the visiting room door in the asylum, where relatives met patients (one line, ALL CAPS, ~18 characters)",VISITING ROOM
+world.room.Stock,"Name plate over the store room door in the asylum (one line, ALL CAPS, ~18 characters)",STORE ROOM
+world.room.KitchenStock,"Name plate over the pantry door next to the kitchen in the asylum (one line, ALL CAPS, ~18 characters)",PANTRY
+world.room.DiningRoom,"Name plate over the dining hall door in the asylum (one line, ALL CAPS, ~18 characters)",DINING HALL
+world.room.KitchenA,"Name plate over the kitchen door in the asylum (one line, ALL CAPS, ~18 characters). Must match the KITCHEN of hub.mission.2.where",KITCHEN
+world.room.Classroom,"Name plate over the classroom door in the asylum (one line, ALL CAPS, ~18 characters). Must match the CLASSROOM of hub.mission.3.where",CLASSROOM
+world.room.Bathroom,"Name plate over the washroom door in the asylum (one line, ALL CAPS, ~18 characters)",WASHROOM
+world.room.ExamRoom,"Name plate over the exam room door in the asylum (one line, ALL CAPS, ~18 characters). Must match the EXAM ROOM of hub.mission.4.where",EXAM ROOM
+world.room.Bedroom,"Name plate over the bedroom (patients' sleeping room) door in the asylum (one line, ALL CAPS, ~18 characters)",BEDROOM
+world.room.alt.Bedroom,"The bedroom name plate after it has quietly changed (deep in the story, while nobody is looking): it now speaks to the player. Replaces world.room.Bedroom (one line, ALL CAPS, ~18 characters)",YOUR ROOM
+world.room.SeclusionRoomA,"Name plate over the first seclusion cell door in the asylum basement (one line, ALL CAPS, ~14 characters). The number stays",SECLUSION 1
+world.room.SeclusionRoomB,"Name plate over the second seclusion cell door in the asylum basement (one line, ALL CAPS, ~14 characters). The number stays",SECLUSION 2

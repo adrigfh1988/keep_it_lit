@@ -815,6 +815,36 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331682537308582
+  - m_Id: 356483168374784
+    m_Key: ui.hunter.lesson.label
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135346
+  - m_Id: 356483260649472
+    m_Key: ui.pause.lessons_title
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135347
+  - m_Id: 356483260649473
+    m_Key: ui.hunter.effect.lockers
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135348
+  - m_Id: 356483260649474
+    m_Key: ui.hunter.effect.throws
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135349
+  - m_Id: 356483260649475
+    m_Key: ui.hunter.effect.dark
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135350
+  - m_Id: 356483260649476
+    m_Key: ui.hunter.effect.sprint
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135351
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -1466,3 +1496,27 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: 'DESCENT cause word: the blind listener that follows sound found you. Ends the sentence ''CAUSE: ...'' (a single word, all caps; it means you were heard)'
+    - rid: 4707331692992135346
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Small grey label at the top of the hunter-lesson card (20 pt, letter-spaced, 400 px), the card that says the hunter has learned a habit of yours. IT = the hunter, never named
+    - rid: 4707331692992135347
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Small grey title of the pause menu's top-right panel listing every habit the hunter has learned (20 pt, letter-spaced, 500 px). IT = the hunter, never named
+    - rid: 4707331692992135348
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: What the hunter does now that it learned you hide in lockers. Second line of the lesson card (shrinks to fit 720 px) and the pause lessons panel (wraps, 500 px). ALL CAPS
+    - rid: 4707331692992135349
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: What the hunter does now that it learned you throw bottles to distract it. Same places and limits as ui.hunter.effect.lockers
+    - rid: 4707331692992135350
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: What the hunter does now that it learned you walk with the torch off. Same places and limits as ui.hunter.effect.lockers
+    - rid: 4707331692992135351
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: What the hunter does now that it learned you sprint a lot. Same places and limits as ui.hunter.effect.lockers

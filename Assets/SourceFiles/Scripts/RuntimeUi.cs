@@ -130,7 +130,7 @@ public static class RuntimeUi
         float max = text.fontSize;
         text.enableAutoSizing = true;
         text.fontSizeMax = max;
-        text.fontSizeMin = Mathf.Max(8f, max * minFraction);
+        text.fontSizeMin = max >= 16f ? Mathf.Max(8f, max * minFraction) : max * minFraction; // F109: world-space text (sizes 1-4) must not get a UI-sized floor of 8
     }
 
     public static void Place(RectTransform rect, Vector2 anchor, Vector2 anchoredPosition, Vector2 size)

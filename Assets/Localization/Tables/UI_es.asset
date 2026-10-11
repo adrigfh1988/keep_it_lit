@@ -694,6 +694,30 @@ MonoBehaviour:
     m_Localized: "O\xCDDO"
     m_Metadata:
       m_Items: []
+  - m_Id: 356483168374784
+    m_Localized: HA APRENDIDO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649472
+    m_Localized: LO QUE HA APRENDIDO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649473
+    m_Localized: "REVISA LOS CASILLEROS Y ESPERA FUERA M\xC1S TIEMPO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649474
+    m_Localized: IGNORA LOS LANZAMIENTOS REPETIDOS Y PUEDE IR A POR TI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649475
+    m_Localized: "VE M\xC1S LEJOS CUANDO TU LINTERNA EST\xC1 APAGADA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649476
+    m_Localized: "TE OYE CORRER DESDE M\xC1S LEJOS"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

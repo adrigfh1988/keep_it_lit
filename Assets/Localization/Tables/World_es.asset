@@ -96,6 +96,106 @@ MonoBehaviour:
     m_Localized: SE ACEPTAN FRAGMENTOS
     m_Metadata:
       m_Items: []
+  - m_Id: 356817399877632
+    m_Localized: BOTICA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958016
+    m_Localized: "ADMISI\xD3N"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958017
+    m_Localized: "OBSERVACI\xD3N"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958018
+    m_Localized: SIN VISITAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958019
+    m_Localized: "PABELL\xD3N 4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958020
+    m_Localized: "SALA DE D\xCDA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958021
+    m_Localized: "SALA DE M\xC1QUINAS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958022
+    m_Localized: "C\xC1MARA FRIGOR\xCDFICA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958023
+    m_Localized: "QUIR\xD3FANO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958024
+    m_Localized: DESPACHO DEL DIRECTOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958025
+    m_Localized: ARCHIVO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958026
+    m_Localized: "PUESTO DE ENFERMER\xCDA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958027
+    m_Localized: SALA DE GUARDIA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958028
+    m_Localized: SALA DE VISITAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958029
+    m_Localized: "ALMAC\xC9N"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958030
+    m_Localized: DESPENSA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958031
+    m_Localized: COMEDOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958032
+    m_Localized: COCINA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958033
+    m_Localized: AULA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958034
+    m_Localized: ASEOS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958035
+    m_Localized: "SALA DE EXPLORACI\xD3N"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958036
+    m_Localized: DORMITORIO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958037
+    m_Localized: "TU HABITACI\xD3N"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958038
+    m_Localized: AISLAMIENTO 1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356817487958039
+    m_Localized: AISLAMIENTO 2
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

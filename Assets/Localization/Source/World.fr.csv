@@ -23,3 +23,28 @@ world.intake.keep_quiet,"SILENCE.
 world.intake.stay_in_bed,RESTEZ AU LIT
 world.shop.contracts,CONTRATS
 world.shop.shards_accepted,ÉCLATS ACCEPTÉS
+world.shop.name,APOTHICAIRERIE
+world.intake.admissions,ADMISSION
+world.intake.observation,OBSERVATION
+world.ghost.no_visitors,PAS DE VISITES
+world.ghost.ward4,PAVILLON 4
+world.room.DayRoom,SALLE COMMUNE
+world.room.MachineRoom,SALLE DES MACHINES
+world.room.Morgue,CHAMBRE FROIDE
+world.room.Surgery,BLOC OPÉRATOIRE
+world.room.Office,BUREAU DU DIRECTEUR
+world.room.OfficeA,SALLE DES ARCHIVES
+world.room.Gatehouse,POSTE DE SOINS
+world.room.GuardRoom,CORPS DE GARDE
+world.room.VisitRoom,PARLOIR
+world.room.Stock,RÉSERVE
+world.room.KitchenStock,GARDE-MANGER
+world.room.DiningRoom,RÉFECTOIRE
+world.room.KitchenA,CUISINE
+world.room.Classroom,SALLE DE CLASSE
+world.room.Bathroom,SALLE D'EAU
+world.room.ExamRoom,SALLE D'EXAMEN
+world.room.Bedroom,DORTOIR
+world.room.alt.Bedroom,TA CHAMBRE
+world.room.SeclusionRoomA,ISOLEMENT 1
+world.room.SeclusionRoomB,ISOLEMENT 2

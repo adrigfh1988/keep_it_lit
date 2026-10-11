@@ -18,7 +18,6 @@ public static partial class AsylumHubBuilder
     private const string HubAnimDir = "Assets/SourceFiles/Animation/Hub";
     public const string PeopleControllerPath = HubAnimDir + "/HubPeople.controller";
     public const string PursuerControllerPath = HubAnimDir + "/HubPursuer.controller";
-    private const string AdamModelPath = "Assets/UnityTechnologies/Adam Character Pack/Adam/Adam.FBX";
 
     private static AnimationClip MixamoClip(string name)
     {
@@ -67,6 +66,12 @@ public static partial class AsylumHubBuilder
         ("Look", "Look_Around"), ("Nervous", "Nervous_Look_Around"), ("Lie", "Laying_Idle"), ("SitIdle", "Sitting_Idle"),
         ("SitDisbelief", "Sitting_Disbelief"), ("Talking", "Talking"), ("StandUp", "Standing_Up"), ("StoopIdle", "Zombie_Idle"),
         ("Walk", "Walking"), ("Typing", "Typing"),
+    });
+
+    /// <summary>The Intake's hide-step silhouette: one looping walk (IntakeRoom only toggles animator.speed, so the default state must walk).</summary>
+    public static AnimatorController IntakeSilhouetteController() => EnsureController(HubAnimDir + "/IntakeSilhouette.controller", new[]
+    {
+        ("Walk", "Zombie_Walk"),
     });
 
     public static AnimatorController PursuerController() => EnsureController(PursuerControllerPath, new[]
@@ -157,61 +162,18 @@ public static partial class AsylumHubBuilder
 
     private static Transform BuildPursuer(AsylumHub hub, Transform life, System.Text.StringBuilder report)
     {
-        GameObject adam = AssetDatabase.LoadAssetAtPath<GameObject>(AdamModelPath);
-        if (adam == null) { Debug.LogError($"Asylum story layer: {AdamModelPath} is missing; no pursuer."); return null; }
-
+        // The pursuer is Timmy (SwapPursuerBody); it used to be the Adam Character Pack's Adam, removed for licence reasons.
         Transform holder = Group(life, "Pursuer");
-        GameObject body = (GameObject)PrefabUtility.InstantiatePrefab(adam, holder);
-        body.name = "Body";
-        body.transform.localPosition = Vector3.zero;
-        body.transform.localRotation = Quaternion.identity;
-        StripPhysics(body);
-
-        Animator animator = body.GetComponent<Animator>();
-        if (animator == null) animator = body.AddComponent<Animator>();
-        animator.runtimeAnimatorController = PursuerController();
-        animator.applyRootMotion = false;
-        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
-
-        Material black = FindMaterial("Intake_Silhouette");
-        Material eyes = FindMaterial("Intake_Eyes");
-        foreach (Renderer r in body.GetComponentsInChildren<Renderer>(true))
-        {
-            Material[] mats = new Material[r.sharedMaterials.Length];
-            for (int i = 0; i < mats.Length; i++) mats[i] = black != null ? black : r.sharedMaterials[i];
-            r.sharedMaterials = mats;
-            r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-        }
-
-        Transform head = animator.isHuman ? animator.GetBoneTransform(HumanBodyBones.Head) : null;
-        if (head != null && eyes != null)
-        {
-            foreach (float side in new[] { -1f, 1f })
-            {
-                GameObject eye = GameObject.CreatePrimitive(PrimitiveType.Sphere); // two emissive beads: an eye, not decor
-                eye.name = side < 0f ? "EyeL" : "EyeR";
-                Object.DestroyImmediate(eye.GetComponent<Collider>());
-                eye.transform.SetParent(head, false);
-                eye.GetComponent<Renderer>().sharedMaterial = eyes;
-                eye.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-                eye.transform.position = head.position + body.transform.forward * 0.1f + body.transform.up * 0.07f + body.transform.right * (0.035f * side);
-                Vector3 parent = head.lossyScale;
-                eye.transform.localScale = new Vector3(0.02f / parent.x, 0.02f / parent.y, 0.02f / parent.z);
-            }
-        }
-
-        HubStalker stalker = holder.gameObject.AddComponent<HubStalker>();
-        SerializedObject so = new SerializedObject(stalker);
-        so.FindProperty("animator").objectReferenceValue = animator;
-        so.ApplyModifiedPropertiesWithoutUndo();
+        holder.gameObject.AddComponent<HubStalker>(); // SwapPursuerBody wires its animator
         NavMeshAgent agent = holder.gameObject.AddComponent<NavMeshAgent>();
         int type = HubNavMesh.FindAgentType();
         if (type != -1) agent.agentTypeID = type;
         agent.radius = 0.3f;
         agent.height = 1.8f;
         agent.enabled = false; // the prefab is saved with it off; HubStalker.Place enables it on the navmesh
+        report.AppendLine(SwapPursuerBody(holder, PursuerRobotPrefab));
         holder.gameObject.SetActive(false);
-        report.AppendLine("Pursuer built (Adam, black, red eyes, zombie controller)");
+        report.AppendLine("Pursuer built (Timmy, dulled, red eyes)");
         return holder;
     }
 

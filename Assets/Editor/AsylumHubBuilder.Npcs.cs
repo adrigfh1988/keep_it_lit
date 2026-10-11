@@ -169,82 +169,16 @@ public static partial class AsylumHubBuilder
         if (dirty) importer.SaveAndReimport();
     }
 
-    // ---------------------------------------------------------------- bodies and materials
+    // ---------------------------------------------------------------- bodies
 
     private sealed class NpcSpec
     {
         public string name;
         public HubNpc.Who who;
         public string display;
-        public string model;
-        public Color gown = new Color(0.8f, 0.8f, 0.8f);
-        public Color skin = new Color(0.74f, 0.7f, 0.66f);
-        public Color multiply = Color.white;
-        public Color? flatColour;   // a textured body drawn in one plain colour (the black Mixamo subject becomes a uniform)
-        public bool flat;           // Crowd body: flat tinted gown + skin, like the patients
         public float scale = 1f;
         public string baseState = "Look", talkState = "Talking";
         public bool lying, turnsHead = true, seated, faceMe = true;
-    }
-
-    private static Material NpcFlatMaterial(string name, string sourceName, Color tint, float smoothness)
-    {
-        string path = $"{NpcMaterialFolder}/{name}.mat";
-        Material existing = AssetDatabase.LoadAssetAtPath<Material>(path);
-        if (existing != null) return existing;
-        Material source = null;
-        foreach (string guid in AssetDatabase.FindAssets(sourceName + " t:Material", new[] { "Assets/UnityTechnologies" }))
-        {
-            Material m = AssetDatabase.LoadAssetAtPath<Material>(AssetDatabase.GUIDToAssetPath(guid));
-            if (m != null && m.name == sourceName) { source = m; break; }
-        }
-        Material copy = source != null ? new Material(source) : new Material(Shader.Find("Universal Render Pipeline/Lit"));
-        copy.name = name;
-        if (copy.HasProperty("_BaseColor")) copy.SetColor("_BaseColor", tint);
-        if (copy.HasProperty("_Smoothness")) copy.SetFloat("_Smoothness", smoothness);
-        if (copy.HasProperty("_Metallic")) copy.SetFloat("_Metallic", 0f);
-        foreach (string tex in new[] { "_BaseMap", "_BumpMap", "_MetallicGlossMap", "_OcclusionMap", "_EmissionMap", "_ParallaxMap", "_DetailAlbedoMap", "_DetailNormalMap" })
-        {
-            if (copy.HasProperty(tex)) copy.SetTexture(tex, null);
-        }
-        copy.DisableKeyword("_EMISSION");
-        if (copy.HasProperty("_EmissionColor")) copy.SetColor("_EmissionColor", Color.black);
-        AssetDatabase.CreateAsset(copy, path);
-        return copy;
-    }
-
-    /// <summary>A copy of `source` with its base colour multiplied by `mul` (textures kept), saved once under the NPC folder.</summary>
-    private static Material NpcMultipliedMaterial(Material source, Color mul, string key)
-    {
-        string path = $"{NpcMaterialFolder}/{key}.mat";
-        Material existing = AssetDatabase.LoadAssetAtPath<Material>(path);
-        if (existing != null) return existing;
-        Material copy = new Material(source);
-        copy.name = key;
-        if (copy.HasProperty("_BaseColor")) copy.SetColor("_BaseColor", copy.GetColor("_BaseColor") * mul);
-        AssetDatabase.CreateAsset(copy, path);
-        return copy;
-    }
-
-    /// <summary>A copy of `source` in one plain colour: textures dropped, no emission (the Mixamo subject's texture has glowing eyes).</summary>
-    private static Material NpcPlainCopy(Material source, Color colour, string key)
-    {
-        string path = $"{NpcMaterialFolder}/{key}.mat";
-        Material existing = AssetDatabase.LoadAssetAtPath<Material>(path);
-        if (existing != null) return existing;
-        Material copy = new Material(source);
-        copy.name = key;
-        if (copy.HasProperty("_BaseColor")) copy.SetColor("_BaseColor", colour);
-        if (copy.HasProperty("_Smoothness")) copy.SetFloat("_Smoothness", 0.15f);
-        if (copy.HasProperty("_Metallic")) copy.SetFloat("_Metallic", 0f);
-        foreach (string tex in new[] { "_BaseMap", "_BumpMap", "_MetallicGlossMap", "_OcclusionMap", "_EmissionMap", "_ParallaxMap", "_DetailAlbedoMap", "_DetailNormalMap" })
-        {
-            if (copy.HasProperty(tex)) copy.SetTexture(tex, null);
-        }
-        copy.DisableKeyword("_EMISSION");
-        if (copy.HasProperty("_EmissionColor")) copy.SetColor("_EmissionColor", Color.black);
-        AssetDatabase.CreateAsset(copy, path);
-        return copy;
     }
 
     private static HubNpc BuildNpcHolder(Transform npcs, NpcSpec spec, AnimatorController people, Vector3 root, float yaw, Vector3 floorPoint, System.Text.StringBuilder report)
@@ -262,59 +196,18 @@ public static partial class AsylumHubBuilder
         npc.playerFacesMe = spec.faceMe;
         npc.anchor = Anchor(holderGo.transform, "Anchor", root, yaw);
 
-        GameObject model = AssetDatabase.LoadAssetAtPath<GameObject>(spec.model);
-        if (model == null)
+        // Timmy in the NPC's own skin (the Adam Character Pack bodies were removed for licence reasons).
+        Material skinMat = HunterSkinBuilder.EnsureNpcSkin(spec.who);
+        Transform body = skinMat != null ? RobotBodyLike(holderGo.transform, null, skinMat) : null;
+        if (body == null)
         {
-            Debug.LogError($"Asylum NPCs: {spec.model} is missing, {spec.name} has no body.");
+            Debug.LogError($"Asylum NPCs: the robot body or skin could not be built, {spec.name} has no body.");
             return npc;
         }
-        GameObject body = (GameObject)PrefabUtility.InstantiatePrefab(model, holderGo.transform);
-        body.name = "Body";
-        StripPhysics(body);
-        Animator animator = body.GetComponent<Animator>();
-        if (animator == null) animator = body.AddComponent<Animator>();
-        if (animator.avatar == null)
-        {
-            Avatar avatar = AssetDatabase.LoadAllAssetsAtPath(spec.model).OfType<Avatar>().FirstOrDefault();
-            if (avatar != null) animator.avatar = avatar;
-        }
-        animator.runtimeAnimatorController = people;
-        animator.applyRootMotion = false;
-        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
-
-        if (spec.flat)
-        {
-            Material gown = NpcFlatMaterial("Npc_Gown_" + spec.name, "Crowd_LOD0_Mat_Torso", spec.gown, 0.2f);
-            Material skin = NpcFlatMaterial("Npc_Skin_" + spec.name, "Crowd_LOD0_Mat_Limbs", spec.skin, 0.15f);
-            foreach (Renderer r in body.GetComponentsInChildren<Renderer>(true))
-            {
-                if (r.name == "RootMotion") { r.enabled = false; continue; }
-                Material[] mats = r.sharedMaterials;
-                for (int i = 0; i < mats.Length; i++) mats[i] = mats[i] != null && mats[i].name.Contains("Torso") ? gown : skin;
-                r.sharedMaterials = mats;
-                r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-            }
-        }
-        else
-        {
-            foreach (Renderer r in body.GetComponentsInChildren<Renderer>(true))
-            {
-                if (r.name == "RootMotion") { r.enabled = false; continue; }
-                Material[] mats = r.sharedMaterials;
-                for (int i = 0; i < mats.Length; i++)
-                {
-                    if (mats[i] == null) continue;
-                    if (spec.flatColour.HasValue) mats[i] = NpcPlainCopy(mats[i], spec.flatColour.Value, $"Npc_{spec.name}_{mats[i].name.Replace(' ', '_')}_Plain");
-                    else if (spec.multiply != Color.white) mats[i] = NpcMultipliedMaterial(mats[i], spec.multiply, $"Npc_{spec.name}_{mats[i].name.Replace(' ', '_')}");
-                }
-                r.sharedMaterials = mats;
-                r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-            }
-        }
-
-        body.transform.SetPositionAndRotation(root, Quaternion.Euler(0f, yaw, 0f));
-        body.transform.localScale = Vector3.one * spec.scale;
-        npc.body = body.transform;
+        body.GetComponent<Animator>().runtimeAnimatorController = people;
+        body.SetPositionAndRotation(root, Quaternion.Euler(0f, yaw, 0f));
+        body.localScale = Vector3.one * spec.scale;
+        npc.body = body;
 
         // The collider lives on its own child at floor level, so it never moves with the seated / lying body offsets.
         GameObject colGo = new GameObject("Collider");
@@ -361,7 +254,7 @@ public static partial class AsylumHubBuilder
                 float fy = GroundYAt(new Vector3(95f, 5f, -58f), 5f);
                 Vector3 look = new Vector3(95.2f, fy, -56.8f);
                 Vector3 spot = SpotOrFallback(name, new Vector3(94.7f, fy, -58.3f), 0f, 1.6f, fy, look, new Vector3(94.7f, fy, -58.3f));
-                NpcSpec spec = new NpcSpec { name = name, who = HubNpc.Who.Agnes, display = HubDialogue.Agnes, model = CrowdModelPath, flat = true, gown = new Color(0.82f, 0.84f, 0.86f), skin = new Color(0.76f, 0.71f, 0.67f), baseState = "Look", talkState = "Talking" };
+                NpcSpec spec = new NpcSpec { name = name, who = HubNpc.Who.Agnes, display = HubDialogue.Agnes, baseState = "Look", talkState = "Talking" };
                 return BuildNpcHolder(npcs, spec, people, spot, YawTo(spot, look), spot, report);
             }
             case "Bruno":
@@ -369,7 +262,7 @@ public static partial class AsylumHubBuilder
                 float fy = GroundYAt(new Vector3(76f, 5f, -48f), 5f);
                 Vector3 table = new Vector3(78.9f, fy, -48.4f);
                 Vector3 spot = SpotOrFallback(name, new Vector3(75.6f, fy, -48.6f), 0f, 2.4f, fy, table, new Vector3(75.6f, fy, -48.6f));
-                NpcSpec spec = new NpcSpec { name = name, who = HubNpc.Who.Bruno, display = HubDialogue.Bruno, model = CharMixamoDir + "Char_Subject.fbx", flatColour = new Color(0.3f, 0.35f, 0.43f), baseState = "Nervous", talkState = "Talking" };
+                NpcSpec spec = new NpcSpec { name = name, who = HubNpc.Who.Bruno, display = HubDialogue.Bruno, baseState = "Nervous", talkState = "Talking" };
                 return BuildNpcHolder(npcs, spec, people, spot, YawTo(spot, table), spot, report);
             }
             case "Josef":
@@ -389,7 +282,7 @@ public static partial class AsylumHubBuilder
                 Vector3 feet = new Vector3(mb.center.x, 0f, mb.center.z) - headDir * Mathf.Min(length * 0.5f - 0.1f, 0.95f);
                 feet.y = mb.max.y + 0.13f;
                 float yaw = Quaternion.LookRotation(-headDir, Vector3.up).eulerAngles.y;
-                NpcSpec spec = new NpcSpec { name = name, who = HubNpc.Who.Josef, display = HubDialogue.Josef, model = CrowdModelPath, flat = true, gown = new Color(0.64f, 0.6f, 0.47f), skin = new Color(0.72f, 0.66f, 0.6f), baseState = "Lie", talkState = "", lying = true, turnsHead = false };
+                NpcSpec spec = new NpcSpec { name = name, who = HubNpc.Who.Josef, display = HubDialogue.Josef, baseState = "Lie", talkState = "", lying = true, turnsHead = false };
                 return BuildNpcHolder(npcs, spec, people, feet, yaw, feet, report);
             }
             case "Marta":
@@ -402,7 +295,7 @@ public static partial class AsylumHubBuilder
                 DressRoomCtx r = NewDressCtx(hub, def);
                 Placed chair = Put(r, "ChairSchool", spot, yaw + ChairSchoolYawFix, 1f, null, false, false);
                 FinishDressCtx(r);
-                NpcSpec spec = new NpcSpec { name = name, who = HubNpc.Who.Marta, display = HubDialogue.Marta, model = CrowdModelPath, flat = true, gown = new Color(0.72f, 0.6f, 0.64f), skin = new Color(0.76f, 0.7f, 0.66f), scale = 0.82f, baseState = "SitIdle", talkState = "", seated = true };
+                NpcSpec spec = new NpcSpec { name = name, who = HubNpc.Who.Marta, display = HubDialogue.Marta, scale = 0.82f, baseState = "SitIdle", talkState = "", seated = true };
                 return BuildNpcHolder(npcs, spec, people, spot + Vector3.up * SeatLift, yaw, spot, report);
             }
             case "Weiss":
@@ -410,7 +303,7 @@ public static partial class AsylumHubBuilder
                 RoomDef def = DressRooms.First(d => d.name == "ExamRoom");
                 Vector3 table = new Vector3(87.7f, def.floorY, -57.3f);
                 Vector3 spot = SpotOrFallback(name, new Vector3(88.6f, def.floorY, -59.6f), 0f, 2.4f, def.floorY, table, new Vector3(88.6f, def.floorY, -59.6f));
-                NpcSpec spec = new NpcSpec { name = name, who = HubNpc.Who.Weiss, display = HubDialogue.Weiss, model = CharMixamoDir + "Doctor_Director.fbx", baseState = "Nervous", talkState = "Talking" };
+                NpcSpec spec = new NpcSpec { name = name, who = HubNpc.Who.Weiss, display = HubDialogue.Weiss, baseState = "Nervous", talkState = "Talking" };
                 return BuildNpcHolder(npcs, spec, people, spot, YawTo(spot, table), spot, report);
             }
             default: // Clerk
@@ -423,7 +316,7 @@ public static partial class AsylumHubBuilder
                 float fy = FloorHeight("OfficeA", RoomBounds(_building, "OfficeA", 0f)); // not a raycast: it would land on the chair
                 seat.y = fy;
                 deskC.y = fy;
-                NpcSpec spec = new NpcSpec { name = name, who = HubNpc.Who.Clerk, display = HubDialogue.Clerk, model = AdamModelPath, multiply = new Color(0.62f, 0.56f, 0.5f), baseState = "Typing", talkState = "", seated = true, turnsHead = false };
+                NpcSpec spec = new NpcSpec { name = name, who = HubNpc.Who.Clerk, display = HubDialogue.Clerk, baseState = "Typing", talkState = "", seated = true, turnsHead = false };
                 return BuildNpcHolder(npcs, spec, people, seat + Vector3.up * SeatLift, YawTo(seat, deskC), seat, report);
             }
         }

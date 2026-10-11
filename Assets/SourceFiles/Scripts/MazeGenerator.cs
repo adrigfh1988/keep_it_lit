@@ -101,7 +101,7 @@ public partial class MazeGenerator : MonoBehaviour
     [Header("Floors")]
     [Tooltip("Scale the maze, hunter, light and timers to how far into the game the player is (see FloorProfile). Off = use the values in this Inspector as they are.")]
     [SerializeField] private bool useFloorProfile = true;
-    [Tooltip("For testing: start a fresh run on this floor (1 to 5) without playing up to it. The game carries on from there - the shop door still leads to the next floor. 0 = start on floor 1.")]
+    [Tooltip("For testing: start a fresh run on this floor (1 to 5) without playing up to it. The game carries on from there - the shop door still leads to the next floor. 0 = start on floor 1. With Debug Start In Maze + Debug Descent: the DESCENT depth to start at (any n, e.g. 12 = LEVEL -12).")]
     [SerializeField] private int debugFloor = 0;
 
     [Header("Lockers")]

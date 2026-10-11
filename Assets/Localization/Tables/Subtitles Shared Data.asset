@@ -433,19 +433,19 @@ MonoBehaviour:
     - rid: 4707331677479764079
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: World text (the game speaking, not the hunter) shown at the start of a floor when the hunter has learned the player's locker habit (3 s). ALL CAPS like IT HEARD YOU. "IT" = the hunter, never named
+        m_CommentText: World text (the game speaking, not the hunter) shown at the start of a floor on the hunter-lesson card (42 pt goal line, shrinks to fit) when the hunter has learned the player's locker habit. ALL CAPS like IT HEARD YOU. "IT" = the hunter, never named
     - rid: 4707331677479764080
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: World text (the game speaking, not the hunter) shown at the start of a floor when the hunter has learned the player's throwing habit (3 s). ALL CAPS like IT HEARD YOU. "IT" = the hunter, never named
+        m_CommentText: World text (the game speaking, not the hunter) shown at the start of a floor on the hunter-lesson card (42 pt goal line, shrinks to fit) when the hunter has learned the player's throwing habit. ALL CAPS like IT HEARD YOU. "IT" = the hunter, never named
     - rid: 4707331677479764081
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: World text (the game speaking, not the hunter) shown at the start of a floor when the hunter has learned the player's dark-walking habit (3 s). ALL CAPS like IT HEARD YOU. "IT" = the hunter, never named
+        m_CommentText: World text (the game speaking, not the hunter) shown at the start of a floor on the hunter-lesson card (42 pt goal line, shrinks to fit) when the hunter has learned the player's dark-walking habit. ALL CAPS like IT HEARD YOU. "IT" = the hunter, never named
     - rid: 4707331677479764082
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: World text (the game speaking, not the hunter) shown at the start of a floor when the hunter has learned the player's sprinting habit (3 s). ALL CAPS like IT HEARD YOU. "IT" = the hunter, never named
+        m_CommentText: World text (the game speaking, not the hunter) shown at the start of a floor on the hunter-lesson card (42 pt goal line, shrinks to fit) when the hunter has learned the player's sprinting habit. ALL CAPS like IT HEARD YOU. "IT" = the hunter, never named
     - rid: 4707331677479764495
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:

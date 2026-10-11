@@ -696,6 +696,30 @@ MonoBehaviour:
     m_Localized: "GEH\xD6RT"
     m_Metadata:
       m_Items: []
+  - m_Id: 356483168374784
+    m_Localized: ES HAT GELERNT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649472
+    m_Localized: WAS ES GELERNT HAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649473
+    m_Localized: "ES DURCHSUCHT SPINDE UND WARTET L\xC4NGER DAVOR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649474
+    m_Localized: "ES IGNORIERT WIEDERHOLTE W\xDCRFE UND KOMMT VIELLEICHT ZU DIR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649475
+    m_Localized: ES SIEHT WEITER, WENN DEINE LAMPE AUS IST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649476
+    m_Localized: "ES H\xD6RT DICH AUS GR\xD6SSERER ENTFERNUNG RENNEN"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -23,3 +23,28 @@ ES HÖRT ALLES."
 world.intake.stay_in_bed,BLEIB IM BETT
 world.shop.contracts,AUFTRÄGE
 world.shop.shards_accepted,SPLITTER ANGENOMMEN
+world.shop.name,APOTHEKE
+world.intake.admissions,AUFNAHME
+world.intake.observation,BEOBACHTUNG
+world.ghost.no_visitors,KEIN BESUCH
+world.ghost.ward4,STATION 4
+world.room.DayRoom,AUFENTHALTSRAUM
+world.room.MachineRoom,MASCHINENRAUM
+world.room.Morgue,KÜHLKAMMER
+world.room.Surgery,OPERATIONSSAAL
+world.room.Office,DIREKTORENBÜRO
+world.room.OfficeA,ARCHIV
+world.room.Gatehouse,SCHWESTERNZIMMER
+world.room.GuardRoom,WACHRAUM
+world.room.VisitRoom,BESUCHSRAUM
+world.room.Stock,LAGERRAUM
+world.room.KitchenStock,VORRATSKAMMER
+world.room.DiningRoom,SPEISESAAL
+world.room.KitchenA,KÜCHE
+world.room.Classroom,KLASSENZIMMER
+world.room.Bathroom,WASCHRAUM
+world.room.ExamRoom,UNTERSUCHUNGSRAUM
+world.room.Bedroom,SCHLAFSAAL
+world.room.alt.Bedroom,DEIN ZIMMER
+world.room.SeclusionRoomA,ISOLIERUNG 1
+world.room.SeclusionRoomB,ISOLIERUNG 2

@@ -22,7 +22,6 @@ public static partial class AsylumHubBuilder
     private const string RecordsBoardName = "RecordsBoard";
     private const string EliasMorgueName = "EliasMorgue";
 
-    private const string CrowdModelPath = "Assets/UnityTechnologies/Adam Character Pack/Adam/Crowd_LOD0.FBX";
     private const string IdleClipFbx = "Assets/SourceFiles/StarterAssets/ThirdPersonController/Character/Animations/Stand--Idle.anim.fbx";
     private const string PatientFolder = "Assets/SourceFiles/Materials/Asylum/Patients";
     private const string PatientControllerPath = "Assets/SourceFiles/Animation/Patients/Patient_Idle.controller";
@@ -211,11 +210,10 @@ public static partial class AsylumHubBuilder
     private static string BuildEliasMorgue(AsylumHub hub, Transform life)
     {
         Transform group = Group(life, EliasMorgueName);
-        GameObject crowd = AssetDatabase.LoadAssetAtPath<GameObject>(CrowdModelPath);
         Renderer bed = NearestRenderer("MorgueWheelBed", new Vector3(126.4f, 1.6f, -52.6f), 2.0f);
-        if (crowd == null || bed == null)
+        if (bed == null)
         {
-            Debug.LogError($"Asylum story layer: the morgue gurney or {CrowdModelPath} is missing; Elias's body was not built.");
+            Debug.LogError("Asylum story layer: the morgue gurney is missing; Elias's body was not built.");
             return "EliasMorgue: skipped";
         }
 
@@ -223,24 +221,10 @@ public static partial class AsylumHubBuilder
         bool alongZ = bb.size.z >= bb.size.x;
         Vector3 along = alongZ ? Vector3.forward : Vector3.right;
 
-        GameObject body = (GameObject)PrefabUtility.InstantiatePrefab(crowd, group);
-        body.name = "Body_Sheeted";
-        StripPhysics(body);
-        foreach (Renderer r in body.GetComponentsInChildren<Renderer>(true))
-        {
-            if (r.name == "RootMotion") { r.enabled = false; continue; }
-            Material sheet = AssetDatabase.LoadAssetAtPath<Material>("Assets/SourceFiles/Materials/Asylum/Asylum_Sheet.mat");
-            Material[] mats = new Material[r.sharedMaterials.Length];
-            for (int i = 0; i < mats.Length; i++) mats[i] = sheet;
-            r.sharedMaterials = mats;
-        }
-        Animator anim = body.GetComponent<Animator>();
-        if (anim != null) { anim.runtimeAnimatorController = IdleController(); anim.applyRootMotion = false; anim.cullingMode = AnimatorCullingMode.AlwaysAnimate; } // idle pose: arms at the sides under the sheet
-        // Lying on its back, head toward -along, thickened so it reads as a body under a sheet.
+        // Timmy lying on his back under the sheet, head toward -along, thickened so it reads as a body under cloth.
         Vector3 feetPos = new Vector3(bb.center.x, bb.max.y + 0.13f, bb.center.z) + along * 0.85f;
-        body.transform.rotation = Quaternion.LookRotation(along, Vector3.up) * Quaternion.Euler(-90f, 0f, 0f);
-        body.transform.position = feetPos;
-        body.transform.localScale = new Vector3(1.3f, 1f, 1.9f);
+        if (BuildMorgueRobot(group, feetPos, Quaternion.LookRotation(along, Vector3.up) * Quaternion.Euler(-90f, 0f, 0f)) == null)
+            Debug.LogError("Asylum story layer: the robot for Elias's sheeted body could not be built.");
 
         // Wristband tag: a pack paper sheet with a name on it, lying on the sheet by the chest.
         GameObject tag = new GameObject("Wristband");
@@ -299,7 +283,7 @@ public static partial class AsylumHubBuilder
         EditorUtility.SetDirty(patient);
     }
 
-    /// <summary>A patient holder: HubPatient + PatientVoice, the Crowd body on the idle controller in a gown, a fitted capsule.</summary>
+    /// <summary>A patient holder: HubPatient + PatientVoice and the patient's body, Timmy in that patient's skin on the HubPeople controller, with a fitted capsule.</summary>
     private static GameObject NewPatient(Transform patients, string name, HubState.Patient who, Color gownTint, out HubPatient patient)
     {
         GameObject holder = new GameObject(name);
@@ -308,65 +292,18 @@ public static partial class AsylumHubBuilder
         patient.patient = who;
         holder.AddComponent<PatientVoice>();
 
-        GameObject crowd = AssetDatabase.LoadAssetAtPath<GameObject>(CrowdModelPath);
-        if (crowd == null)
+        // gownTint is unused since the patients are robots (the Adam Character Pack's Crowd body is gone); each has its own skin.
+        Material skin = HunterSkinBuilder.EnsureNpcSkin(name);
+        Transform body = skin != null ? RobotBodyLike(holder.transform, null, skin) : null;
+        if (body == null)
         {
-            Debug.LogError($"Asylum story layer: {CrowdModelPath} is missing, patient {name} has no body.");
+            Debug.LogError($"Asylum story layer: the robot body or skin could not be built, patient {name} has no body.");
             return holder;
         }
-        GameObject body = (GameObject)PrefabUtility.InstantiatePrefab(crowd, holder.transform);
-        body.name = "Body";
-        StripPhysics(body);
-        Animator animator = body.GetComponent<Animator>();
-        if (animator == null) animator = body.AddComponent<Animator>();
-        animator.runtimeAnimatorController = IdleController();
-        animator.applyRootMotion = false;
-        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
-
-        Material gown = PatientMaterial("Patient_Gown_" + name, "Crowd_LOD0_Mat_Torso", gownTint, 0.2f);
-        Material skin = PatientMaterial("Patient_Skin_" + name, "Crowd_LOD0_Mat_Limbs", new Color(0.74f, 0.7f, 0.66f), 0.15f);
-        foreach (Renderer r in body.GetComponentsInChildren<Renderer>(true))
-        {
-            if (r.name == "RootMotion") { r.enabled = false; continue; }
-            Material[] mats = r.sharedMaterials;
-            for (int i = 0; i < mats.Length; i++) mats[i] = mats[i] != null && mats[i].name.Contains("Torso") ? gown : skin;
-            r.sharedMaterials = mats;
-            r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-        }
-
-        CapsuleCollider capsule = body.AddComponent<CapsuleCollider>();
-        capsule.center = new Vector3(0f, 0.9f, 0f);
-        capsule.radius = 0.3f;
-        capsule.height = 1.8f;
-        patient.body = body.transform;
+        patient.controller = PeopleController(); // RobotBodyLike already put the body on it (it has the Lie state)
+        AddPatientCapsule(body.gameObject);
+        patient.body = body;
         return holder;
-    }
-
-    private static Material PatientMaterial(string name, string sourceName, Color tint, float smoothness)
-    {
-        string path = $"{PatientFolder}/{name}.mat";
-        Material existing = AssetDatabase.LoadAssetAtPath<Material>(path);
-        if (existing != null) return existing;
-        Material source = null;
-        foreach (string guid in AssetDatabase.FindAssets(sourceName + " t:Material", new[] { "Assets/UnityTechnologies" }))
-        {
-            Material m = AssetDatabase.LoadAssetAtPath<Material>(AssetDatabase.GUIDToAssetPath(guid));
-            if (m != null && m.name == sourceName) { source = m; break; }
-        }
-        Material copy = source != null ? new Material(source) : new Material(Shader.Find("Universal Render Pipeline/Lit"));
-        copy.name = name;
-        if (copy.HasProperty("_BaseColor")) copy.SetColor("_BaseColor", tint);
-        if (copy.HasProperty("_Smoothness")) copy.SetFloat("_Smoothness", smoothness);
-        if (copy.HasProperty("_Metallic")) copy.SetFloat("_Metallic", 0f);
-        // A plain hospital gown / bare limbs: the Crowd texture is a sci-fi vest, so the textures are dropped and only the tint stays.
-        foreach (string tex in new[] { "_BaseMap", "_BumpMap", "_MetallicGlossMap", "_OcclusionMap", "_EmissionMap", "_ParallaxMap", "_DetailAlbedoMap", "_DetailNormalMap" })
-        {
-            if (copy.HasProperty(tex)) copy.SetTexture(tex, null);
-        }
-        copy.DisableKeyword("_EMISSION");
-        if (copy.HasProperty("_EmissionColor")) copy.SetColor("_EmissionColor", Color.black);
-        AssetDatabase.CreateAsset(copy, path);
-        return copy;
     }
 
     /// <summary>One idle state on the project's humanoid Stand--Idle clip (created once).</summary>

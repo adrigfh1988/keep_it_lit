@@ -95,6 +95,131 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763018
+  - m_Id: 356817399877632
+    m_Key: world.shop.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135921
+  - m_Id: 356817487958016
+    m_Key: world.intake.admissions
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135922
+  - m_Id: 356817487958017
+    m_Key: world.intake.observation
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135923
+  - m_Id: 356817487958018
+    m_Key: world.ghost.no_visitors
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135924
+  - m_Id: 356817487958019
+    m_Key: world.ghost.ward4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135925
+  - m_Id: 356817487958020
+    m_Key: world.room.DayRoom
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135926
+  - m_Id: 356817487958021
+    m_Key: world.room.MachineRoom
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135927
+  - m_Id: 356817487958022
+    m_Key: world.room.Morgue
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135928
+  - m_Id: 356817487958023
+    m_Key: world.room.Surgery
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135929
+  - m_Id: 356817487958024
+    m_Key: world.room.Office
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135930
+  - m_Id: 356817487958025
+    m_Key: world.room.OfficeA
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135931
+  - m_Id: 356817487958026
+    m_Key: world.room.Gatehouse
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135932
+  - m_Id: 356817487958027
+    m_Key: world.room.GuardRoom
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135933
+  - m_Id: 356817487958028
+    m_Key: world.room.VisitRoom
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135934
+  - m_Id: 356817487958029
+    m_Key: world.room.Stock
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135935
+  - m_Id: 356817487958030
+    m_Key: world.room.KitchenStock
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135936
+  - m_Id: 356817487958031
+    m_Key: world.room.DiningRoom
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135937
+  - m_Id: 356817487958032
+    m_Key: world.room.KitchenA
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135938
+  - m_Id: 356817487958033
+    m_Key: world.room.Classroom
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135939
+  - m_Id: 356817487958034
+    m_Key: world.room.Bathroom
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135940
+  - m_Id: 356817487958035
+    m_Key: world.room.ExamRoom
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135941
+  - m_Id: 356817487958036
+    m_Key: world.room.Bedroom
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135942
+  - m_Id: 356817487958037
+    m_Key: world.room.alt.Bedroom
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135943
+  - m_Id: 356817487958038
+    m_Key: world.room.SeclusionRoomA
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135944
+  - m_Id: 356817487958039
+    m_Key: world.room.SeclusionRoomB
+    m_Metadata:
+      m_Items:
+      - rid: 4707331692992135945
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -170,3 +295,103 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: World sign on the shop counter (one line, ALL CAPS, ~18 characters). Shards = the currency (see shop.currency)
+    - rid: 4707331692992135921
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name board hanging over the shop counter (3D text on a wooden board, one line, ALL CAPS, ~12 characters). The shop is an old-fashioned apothecary run by the salesman
+    - rid: 4707331692992135922
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the exit of the Intake's first room, enamel plate (3D text, one line, ALL CAPS, ~12 characters). The room where the patient is admitted
+    - rid: 4707331692992135923
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the entrance of the Intake's last room, enamel plate (3D text, one line, ALL CAPS, ~12 characters). The room where patients are watched
+    - rid: 4707331692992135924
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Faint older paint behind the ''stay in your bed'' wall warning in the Intake: what the wall used to say before it was painted over (3D text at ~16 % opacity, one line, ALL CAPS, ~12 characters)'
+    - rid: 4707331692992135925
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Faint older lettering behind the DAY ROOM name plate in the asylum: what the plate used to say (3D text at ~16 % opacity, one line, ALL CAPS, ~8 characters)'
+    - rid: 4707331692992135926
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the day room door in the asylum (3D text on an enamel plate, one line, ALL CAPS, ~18 characters). Same words as hub.wing.1.room
+    - rid: 4707331692992135927
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the machine room door in the asylum (one line, ALL CAPS, ~18 characters). Same words as hub.wing.2.room
+    - rid: 4707331692992135928
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the cold storage (morgue) door in the asylum (one line, ALL CAPS, ~18 characters). Same words as hub.wing.3.room
+    - rid: 4707331692992135929
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the operating theatre door in the asylum (one line, ALL CAPS, ~18 characters). Same words as hub.wing.4.room
+    - rid: 4707331692992135930
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate (brass) over the director's office door in the asylum (one line, ALL CAPS, ~18 characters). Same words as hub.wing.5.room
+    - rid: 4707331692992135931
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the records room door in the asylum, where the case files are kept (one line, ALL CAPS, ~18 characters)
+    - rid: 4707331692992135932
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the nurse station door in the asylum (one line, ALL CAPS, ~18 characters). Must match the NURSE STATION of hub.mission.1.where
+    - rid: 4707331692992135933
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the guards' room door in the asylum (one line, ALL CAPS, ~18 characters)
+    - rid: 4707331692992135934
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the visiting room door in the asylum, where relatives met patients (one line, ALL CAPS, ~18 characters)
+    - rid: 4707331692992135935
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the store room door in the asylum (one line, ALL CAPS, ~18 characters)
+    - rid: 4707331692992135936
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the pantry door next to the kitchen in the asylum (one line, ALL CAPS, ~18 characters)
+    - rid: 4707331692992135937
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the dining hall door in the asylum (one line, ALL CAPS, ~18 characters)
+    - rid: 4707331692992135938
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the kitchen door in the asylum (one line, ALL CAPS, ~18 characters). Must match the KITCHEN of hub.mission.2.where
+    - rid: 4707331692992135939
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the classroom door in the asylum (one line, ALL CAPS, ~18 characters). Must match the CLASSROOM of hub.mission.3.where
+    - rid: 4707331692992135940
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the washroom door in the asylum (one line, ALL CAPS, ~18 characters)
+    - rid: 4707331692992135941
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the exam room door in the asylum (one line, ALL CAPS, ~18 characters). Must match the EXAM ROOM of hub.mission.4.where
+    - rid: 4707331692992135942
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the bedroom (patients' sleeping room) door in the asylum (one line, ALL CAPS, ~18 characters)
+    - rid: 4707331692992135943
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The bedroom name plate after it has quietly changed (deep in the story, while nobody is looking): it now speaks to the player. Replaces world.room.Bedroom (one line, ALL CAPS, ~18 characters)'
+    - rid: 4707331692992135944
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the first seclusion cell door in the asylum basement (one line, ALL CAPS, ~14 characters). The number stays
+    - rid: 4707331692992135945
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name plate over the second seclusion cell door in the asylum basement (one line, ALL CAPS, ~14 characters). The number stays

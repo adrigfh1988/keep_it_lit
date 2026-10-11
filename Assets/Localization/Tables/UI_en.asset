@@ -696,6 +696,30 @@ MonoBehaviour:
     m_Localized: HEARD
     m_Metadata:
       m_Items: []
+  - m_Id: 356483168374784
+    m_Localized: IT HAS LEARNED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649472
+    m_Localized: WHAT IT HAS LEARNED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649473
+    m_Localized: IT CHECKS LOCKERS AND WAITS OUTSIDE LONGER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649474
+    m_Localized: IT IGNORES REPEATED THROWS AND MAY COME FOR YOU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649475
+    m_Localized: IT SEES FARTHER WHILE YOUR TORCH IS OFF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356483260649476
+    m_Localized: IT HEARS YOU RUN FROM FARTHER AWAY
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
