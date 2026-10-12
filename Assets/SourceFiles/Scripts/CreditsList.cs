@@ -26,8 +26,12 @@ public static class CreditsList
     public static readonly Section[] Sections =
     {
         new Section("ui.credits.unity",
-            // Easy to edit: the exact wording / licence of this line is being confirmed (licence-audit.md, open question 1).
-            "Robot character and Starter Assets controller: Unity Technologies",
+            // The Unity Companion License notice (licence-audit.md, question 1): the template's assets ship with it. The full text is in
+            // Notices/THIRD-PARTY-NOTICES.txt, which WindowsBuild copies next to the exe.
+            "Robot character, Starter Assets third-person controller and tutorial assets",
+            "from \"Get Started With Unity\" (com.unity.template.get-started)",
+            "© 2025 Unity Technologies, used under the Unity Companion License",
+            "unity.com/legal/licenses/unity-companion-license",
             "Made with Unity"),
 
         new Section("ui.credits.music",

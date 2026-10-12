@@ -19,6 +19,7 @@ public static class WindowsBuild
 {
     private const string OutputFolder = "Builds/Windows";
     private const string ExeName = "keep_it_lit.exe";
+    private const string NoticesFile = "Notices/THIRD-PARTY-NOTICES.txt"; // project root, outside Assets
 
     /// <summary>Menu entry: builds, then reports the result in a dialog.</summary>
     [MenuItem("KEEP IT LIT/Build/Windows Player", priority = 110)]
@@ -82,6 +83,21 @@ public static class WindowsBuild
         string line = $"[WindowsBuild] {summary.result}: {summary.totalSize / (1024.0 * 1024.0):F1} MB, " +
                       $"{summary.totalErrors} errors, {summary.totalWarnings} warnings, build {summary.totalTime.TotalSeconds:F0} s (wall {seconds:F0} s) -> {summary.outputPath}";
         if (summary.result == BuildResult.Succeeded) Debug.Log(line); else Debug.LogError(line);
+
+        // The Unity Companion License notice must ship with the game (plannings/licence-audit.md): copied next to the exe.
+        if (summary.result == BuildResult.Succeeded)
+        {
+            if (File.Exists(NoticesFile)) File.Copy(NoticesFile, Path.Combine(OutputFolder, Path.GetFileName(NoticesFile)), true);
+            else Debug.LogError($"[WindowsBuild] {NoticesFile} is missing: the build must ship the Unity Companion License notice.");
+
+            // Unity's debug-symbol backup must never be uploaded: moved beside the output folder, so Builds/Windows is pushed as is.
+            foreach (string backup in Directory.GetDirectories(OutputFolder, "*DontShip*").Concat(Directory.GetDirectories(OutputFolder, "*DoNotShip*")))
+            {
+                string target = Path.Combine(Path.GetDirectoryName(OutputFolder), Path.GetFileName(backup));
+                if (Directory.Exists(target)) Directory.Delete(target, true);
+                Directory.Move(backup, target);
+            }
+        }
         return report;
     }
 }
