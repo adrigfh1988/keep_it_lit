@@ -238,6 +238,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763191
+  - m_Id: 791730481696768
+    m_Localized: "EIN NEBENWEG. DU MUSST NICHT. HINTER DER ECKE GIBT ES KEIN ZUR\xDCCK."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 791730569777152
+    m_Localized: "{n}-MAL HINTEREINANDER RICHTIG: DIE GANZE KARTE, EINE VOLLE LAMPE UND VORR\xC4TE."
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763191
+  - m_Id: 791730569777153
+    m_Localized: VOLLE LAMPE
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -257,3 +270,4 @@ MonoBehaviour:
         - id: 7993049387035
         - id: 7993049387037
         - id: 441658820694018
+        - id: 791730569777152

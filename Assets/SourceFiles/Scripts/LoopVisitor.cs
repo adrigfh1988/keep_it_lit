@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// F106: the Visitor, the looping corridor's own creature (the hunter cannot enter it, so this is the threat inside). A dark, frozen copy of the
 /// hunter's body that stands behind the player and, like Stan, only moves while nobody is looking at it. The whole state is one number, `Distance`:
-/// how far behind the player it is along the corridor's path (the first leg, through the corner, to the lap trigger). It creeps closer while
+/// how far behind the player it is along the corridor's path (the first leg, through the corner, to the lap trigger; behind is the other way on a lap walked back). It creeps closer while
 /// unseen, falls back a little for every right decision and comes four metres nearer for every wrong one; at the catch distance it has you.
 /// A plain class ticked by LoopCorridor, so it lives and stops with it.
 /// </summary>
@@ -67,8 +67,13 @@ public sealed class LoopVisitor
     /// <param name="pathPosition">The player's distance along the path (m).</param>
     public void Tick(float pathPosition, float deltaTime)
     {
-        float visitorPosition = pathPosition - Distance;
-        bool hidden = visitorPosition < 0f;
+        // Walked back, behind is further along the path, and it is round the corner once past the second leg's third cell (the mirror of the
+        // first leg's start).
+        LoopCorridor.Setup setup = _owner.Config;
+        float pathEnd = setup.legLength + setup.trapDistance;
+        bool reverse = _owner.IsReverse;
+        float visitorPosition = reverse ? pathPosition + Distance : pathPosition - Distance;
+        bool hidden = reverse ? visitorPosition > pathEnd : visitorPosition < 0f;
         Vector3 player = _owner.PlayerTransform.position;
         bool observed = false;
 
@@ -96,7 +101,7 @@ public sealed class LoopVisitor
         if (_creptSinceStep < _tuning.visitorStepStride) return;
 
         _creptSinceStep = 0f;
-        GameAudio.PlayAt(GameAudio.Library.timmyStep, _owner.PointOnPath(Mathf.Max(visitorPosition, 0f)), _tuning.visitorStepVolume, _tuning.visitorStepPitch);
+        GameAudio.PlayAt(GameAudio.Library.timmyStep, _owner.PointOnPath(Mathf.Clamp(visitorPosition, 0f, pathEnd)), _tuning.visitorStepVolume, _tuning.visitorStepPitch);
     }
 
     /// <summary>The catch: it stands right behind the player, shown. Returns where its head is, which the camera should end up looking at.</summary>

@@ -15,11 +15,15 @@ using UnityEngine;
 public partial class MazeGenerator
 {
     // The corridor is two legs of this many cells joined by a corner cell, each leg followed by a cell that looks the same: the corner,
-    // and a cell with a stub that makes the end of the second leg look like the corner at the end of the first.
+    // and a cell with a stub that makes the end of the second leg look like the corner at the end of the first. Before the first leg is a
+    // vestibule behind the opening, with its own stub, so once the opening is walled up the start of the first leg looks like the corner too
+    // (seen from the second leg) and the corridor can be walked back seamlessly.
     private const int LoopLegCells = 3;
     private const int LoopSalt = 23;
-    // Chain order: the first leg, the corner, the second leg, the cell at its end, and the stub beyond that cell.
-    private const int LoopSecondLegIndex = LoopLegCells + 1;
+    // Chain order: the vestibule's stub, the vestibule, the first leg, the corner, the second leg, the cell at its end, and the stub beyond that cell.
+    private const int LoopVestibuleIndex = 1;
+    private const int LoopFirstLegIndex = LoopVestibuleIndex + 1;
+    private const int LoopSecondLegIndex = LoopFirstLegIndex + LoopLegCells + 1;
     // The blood on the floor lies in the second leg's first cell: round the corner from the landing point, so it is never seen to appear.
     private const int LoopBloodIndex = LoopSecondLegIndex;
     // Lamp positions along a leg (in cells): the rear one is on the left wall, the front one on the right, both before the corner so both walls are closed.
@@ -48,7 +52,7 @@ public partial class MazeGenerator
     [SerializeField] private bool debugForceLoop = false;
     [Tooltip("The entrance cell is at least this many steps (x + z) from the start cell, so the corridor is found deeper in the floor")]
     [SerializeField, Min(0)] private int loopMinStartDistance = 4;
-    [Tooltip("How far along the second leg the player is carried back to the same place in the first, in cells from the start of the leg")]
+    [Tooltip("How far along the second leg the player is carried back to the same place in the first, in cells from the start of the leg. The return line (walking back down the first leg) mirrors it: as far from the vestibule as this is from the end cell")]
     [SerializeField, Range(0.5f, 2.9f)] private float loopTriggerCells = 2f;
     [Tooltip("The maze's music and ambience level while the player is inside the corridor")]
     [SerializeField, Range(0f, 1f)] private float loopDuckGain = 0.3f;
@@ -75,17 +79,15 @@ public partial class MazeGenerator
 
     [Header("F106 - the loop puzzle (spot the anomaly)")]
     [Tooltip("Right decisions in a row that free the player (the chalk numeral counts up to this)")]
-    [SerializeField, Min(1)] private int loopTargetCount = 6;
+    [SerializeField, Min(1)] private int loopTargetCount = 3;
+    [Tooltip("What solving the loop gives besides the whole floor map: each item the player has room for (a full hand skips it). SpareBattery, StarCompass and SecondWind go to the inventory; BottlePack and the modifiers as a DESCENT cache gives them")]
+    [SerializeField] private ShopItem[] loopRewardItems = { ShopItem.SpareBattery, ShopItem.StarCompass, ShopItem.BottlePack, ShopItem.SecondWind };
+    [Tooltip("Solving the loop also recharges the torch to full")]
+    [SerializeField] private bool loopRewardRefillsTorch = true;
     [Tooltip("Chance that a lap after the trap closes has an anomaly (otherwise it is normal)")]
     [SerializeField, Range(0f, 1f)] private float loopAnomalyChance = 0.5f;
     [Tooltip("With fewer anomalies than this available (a theme without a locker or blood decal, no robot template), the old fixed passes run instead of the puzzle")]
     [SerializeField, Min(1)] private int loopMinAnomalies = 3;
-    [Tooltip("How far from the opening the return line is, in cells: crossing it toward the opening is 'turn back'")]
-    [SerializeField, Range(0.3f, 2f)] private float loopReturnCells = 1f;
-    [Tooltip("Where a player who turned back starts, in cells from the opening, facing inward")]
-    [SerializeField, Range(0.1f, 1.5f)] private float loopTurnBackStartCells = 0.5f;
-    [Tooltip("Seconds the lamps and the torch go out for at a turn-back cut (hides the half turn)")]
-    [SerializeField, Min(0f)] private float loopTurnBackSeconds = 0.35f;
     [Tooltip("Seconds the rule text stays up when the trap closes")]
     [SerializeField, Min(1f)] private float loopRuleSeconds = 4f;
     [Tooltip("Volume of the soft chime for a right decision")]
@@ -248,16 +250,23 @@ public partial class MazeGenerator
         terror.Log("No loop corridor: no edge cell has room for it", this);
     }
 
-    /// <summary>The corridor's cells in order: the first leg, the corner, the second leg, the cell at its end, and the stub beyond that cell.</summary>
+    /// <summary>
+    /// The corridor's cells in order: the vestibule's stub, the vestibule (behind the opening), the first leg, the corner, the second leg, the
+    /// cell at its end, and the stub beyond that cell. Both stubs turn the way that makes their cell read as the corner: the end cell seen
+    /// walking the second leg forward, the vestibule seen walking the first leg back.
+    /// </summary>
     private static List<Vector2Int> LoopChain(Vector2Int entrance, int outDir, int turnDir)
     {
         Vector2Int outward = Neighbour(Vector2Int.zero, outDir);
         Vector2Int turn = Neighbour(Vector2Int.zero, turnDir);
-        Vector2Int corner = entrance + outward * (LoopLegCells + 1);
+        Vector2Int vestibule = entrance + outward;
+        Vector2Int corner = vestibule + outward * (LoopLegCells + 1);
         Vector2Int end = corner + turn * (LoopLegCells + 1);
 
-        List<Vector2Int> chain = new List<Vector2Int>(2 * LoopLegCells + 3);
-        for (int k = 1; k <= LoopLegCells; k++) chain.Add(entrance + outward * k);
+        List<Vector2Int> chain = new List<Vector2Int>(2 * LoopLegCells + 5);
+        chain.Add(vestibule + turn);
+        chain.Add(vestibule);
+        for (int k = 1; k <= LoopLegCells; k++) chain.Add(vestibule + outward * k);
         chain.Add(corner);
         for (int k = 1; k <= LoopLegCells; k++) chain.Add(corner + turn * k);
         chain.Add(end);
@@ -311,16 +320,21 @@ public partial class MazeGenerator
 
         Vector3 outward = DirVector(_loopOut);
         Vector3 turn = DirVector(_loopTurn);
-        Transform legA = MakeLoopFrame("LegA", CellCenter(chain[0].x, chain[0].y) - outward * (cellSize * 0.5f), outward, root);
+        Transform legA = MakeLoopFrame("LegA", CellCenter(chain[LoopFirstLegIndex].x, chain[LoopFirstLegIndex].y) - outward * (cellSize * 0.5f), outward, root);
         Transform legB = MakeLoopFrame("LegB", CellCenter(chain[LoopSecondLegIndex].x, chain[LoopSecondLegIndex].y) - turn * (cellSize * 0.5f), turn, root);
 
-        WallLamp[] lamps = { MakeLoopLamp("LoopLamp_A_Rear", legA, LoopRearLampCells, -1f, root), MakeLoopLamp("LoopLamp_A_Front", legA, LoopFrontLampCells, 1f, root) };
+        WallLamp rearA = MakeLoopLamp("LoopLamp_A_Rear", legA, LoopRearLampCells, -1f, root);
+        WallLamp frontA = MakeLoopLamp("LoopLamp_A_Front", legA, LoopFrontLampCells, 1f, root);
         WallLamp[] mirror = { MakeLoopLamp("LoopLamp_B_Rear", legB, LoopRearLampCells, -1f, root), MakeLoopLamp("LoopLamp_B_Front", legB, LoopFrontLampCells, 1f, root) };
+        // The first leg's front lamp glints through the corner's mouth seen from the second leg; its twin in the vestibule's stub glints the same
+        // way seen from the first leg walking back. Third in the list: the anomalies only ever touch the rear lamp.
+        WallLamp[] lamps = { rearA, frontA,TwinLampInLeg(frontA, legB, legA, "LoopLamp_Vestibule", root) };
 
         Vector3 openingCentre = BoundaryWallPosition(_loopEntrance, _loopOut);
         GameObject sealWall = SpawnThemedWall("LoopSeal", openingCentre, BoundaryWallRotation(_loopOut), cellSize + wallThickness, wallHeight, wallThickness, root).gameObject;
         sealWall.SetActive(false);
 
+        // The anomaly pieces, in the second leg for a lap walked forward and twinned at the same places in the first for one walked back.
         Vector2Int bloodCell = chain[LoopBloodIndex];
         PropPiece blood = PlaceBloodPool(CellCenter(bloodCell.x, bloodCell.y), bloodCell, LoopSalt, root, "Decal_LoopBlood");
         if (blood != null) blood.gameObject.SetActive(false);
@@ -328,10 +342,17 @@ public partial class MazeGenerator
 
         GameObject locker = BuildLoopLocker(legB, root);
         GameObject handprint = BuildLoopHandprint(chain[LoopSecondLegIndex], legB, root);
-        TMP_Text counter = BuildLoopCounter(legA, root);
+        GameObject bloodReverse = TwinInLeg(blood != null ? blood.gameObject : null, legB, legA, root);
+        GameObject lockerReverse = TwinInLeg(locker, legB, legA, root);
+        GameObject handprintReverse = TwinInLeg(handprint, legB, legA, root);
+
+        // The count and the rules on both legs' walls, and both faces of both hanging signs, so each leg reads the same walked either way.
+        TMP_Text[] counters = { BuildLoopCounter(legA, root), BuildLoopCounter(legB, root) };
         BuildLoopNotice(legA, root);
-        TMP_Text verdictA = BuildLoopSign(legA, root, out TMP_Text countA);
-        TMP_Text verdictB = BuildLoopSign(legB, root, out TMP_Text countB);
+        BuildLoopNotice(legB, root);
+        List<TMP_Text> verdicts = new List<TMP_Text>(), counts = new List<TMP_Text>();
+        BuildLoopSign(legA, root, verdicts, counts);
+        BuildLoopSign(legB, root, verdicts, counts);
 
         Vector3 backward = -outward;
         LoopCorridor.Setup setup = new LoopCorridor.Setup
@@ -342,8 +363,8 @@ public partial class MazeGenerator
             legLength = (LoopLegCells + 1) * cellSize,
             legHalfWidth = (cellSize - wallThickness) * 0.5f,
             trapDistance = LoopLegCells * cellSize,
-            returnDistance = loopReturnCells * cellSize,
-            turnBackDistance = loopTurnBackStartCells * cellSize,
+            // The trigger is (LoopLegCells + 0.5 - loopTriggerCells) cells short of the end cell's centre; the return line is as far past the vestibule's.
+            returnDistance = Mathf.Max(LoopLegCells - loopTriggerCells, 0.3f) * cellSize,
             cornerPathDistance = (LoopLegCells + 0.5f) * cellSize,
             footprint = LoopBounds(chain),
             exitPosition = CellCenter(_loopEntrance.x, _loopEntrance.y),
@@ -353,13 +374,19 @@ public partial class MazeGenerator
             blood = blood != null ? blood.gameObject : null,
             locker = locker,
             handprint = handprint,
-            counter = counter,
-            signVerdicts = verdictA != null ? new[] { verdictA, verdictB } : null,
-            signCounts = verdictA != null ? new[] { countA, countB } : null,
+            bloodReverse = bloodReverse,
+            lockerReverse = lockerReverse,
+            handprintReverse = handprintReverse,
+            counters = counters,
+            signVerdicts = verdicts.Count > 0 ? verdicts.ToArray() : null,
+            signCounts = counts.Count > 0 ? counts.ToArray() : null,
             sealWall = sealWall,
             sealPoint = openingCentre + Vector3.up * LoopSealPointHeight,
             figurePosition = legA.position + legA.forward * (LoopFigureCells * cellSize),
             figureForward = outward,
+            // Walked back, the corner ahead is the mouth of the corner seen from the second leg, as far from the lander as the forward one.
+            figurePositionReverse = legB.position + legB.forward * ((LoopFigureCells - LoopLegCells) * cellSize),
+            figureForwardReverse = -turn,
             terror = terror,
             entranceCell = _loopEntrance,
             tuning = new LoopCorridor.Tuning
@@ -379,10 +406,11 @@ public partial class MazeGenerator
             puzzle = new LoopCorridor.PuzzleTuning
             {
                 targetCount = loopTargetCount,
+                rewardItems = loopRewardItems,
+                rewardRefillsTorch = loopRewardRefillsTorch,
                 minAnomalies = loopMinAnomalies,
                 anomalyChance = loopAnomalyChance,
                 ruleSeconds = loopRuleSeconds,
-                turnBackSeconds = loopTurnBackSeconds,
                 chimeVolume = loopChimeVolume,
                 thudVolume = loopThudVolume,
                 redLamp = loopRedLampColor,
@@ -442,8 +470,9 @@ public partial class MazeGenerator
             for (int dir = 0; dir < 4; dir++)
             {
                 Vector2Int next = Neighbour(chain[i], dir);
-                bool continues = (i > 0 && next == chain[i - 1]) || (i + 1 < chain.Count && next == chain[i + 1]) || (i == 0 && next == _loopEntrance);
-                if (!continues) edges.Add(LoopEdgeKey(chain[i], dir));
+                bool continues = (i > 0 && next == chain[i - 1]) || (i + 1 < chain.Count && next == chain[i + 1]) || (i == LoopVestibuleIndex && next == _loopEntrance);
+                Vector3Int edge = LoopEdgeKey(chain[i], dir);
+                if (!continues && !IsMazeBoundaryEdge(edge)) edges.Add(edge); // the vestibule's stub runs along the maze's outer wall, which is already there
             }
         }
 
@@ -487,6 +516,14 @@ public partial class MazeGenerator
         }
     }
 
+    /// <summary>True for an edge (as <see cref="LoopEdgeKey"/>) of the maze's own outer wall: BuildThemedGeometry builds those.</summary>
+    private bool IsMazeBoundaryEdge(Vector3Int edge)
+    {
+        return edge.z == 0
+            ? (edge.y == 0 || edge.y == height) && edge.x >= 0 && edge.x < width
+            : (edge.x == 0 || edge.x == width) && edge.y >= 0 && edge.y < height;
+    }
+
     private Vector3 LoopEdgePosition(Vector3Int edge)
     {
         return edge.z == 0
@@ -520,6 +557,14 @@ public partial class MazeGenerator
         float wallOffset = cellSize * 0.5f - wallThickness * 0.5f - LoopLampWallGap;
         Vector3 position = leg.position + leg.forward * (cells * cellSize) + lateral * wallOffset + Vector3.up * lampHeight;
         return CreateThemedLamp(lampName, position, Quaternion.LookRotation(-lateral, Vector3.up), parent, false, _loopRng.Next(1000), false);
+    }
+
+    /// <summary>A lamp at the same place and turn in leg `to` as `source` has in leg `from` (as <see cref="TwinInLeg"/>, but a working lamp).</summary>
+    private WallLamp TwinLampInLeg(WallLamp source, Transform from, Transform to, string lampName, Transform parent)
+    {
+        Vector3 position = to.TransformPoint(from.InverseTransformPoint(source.transform.position));
+        Quaternion rotation = to.rotation * Quaternion.Inverse(from.rotation) * source.transform.rotation;
+        return CreateThemedLamp(lampName, position, rotation, parent, false, _loopRng.Next(1000), false);
     }
 
     /// <summary>
@@ -628,14 +673,14 @@ public partial class MazeGenerator
     }
 
     /// <summary>
-    /// A light-box sign hanging from the ceiling over the leg, facing a player walking toward the corner: the verdict on the last decision
-    /// (empty until the first), the count, and the rule in two lines. Its panel glows on its own (no Light). One per leg, built the same, so the
-    /// seamless cut shows the same sign in the same place. Returns the verdict line (null without a panel material), the count line in `count`.
+    /// A light-box sign hanging from the ceiling over the leg: the verdict on the last decision (empty until the first), the count, and the rule
+    /// in two lines, on both faces so a player walking either way reads it. Its panel glows on its own (no Light). One per leg, built the same,
+    /// so the seamless cuts show the same sign in the same place. Adds each face's verdict and count lines to the lists (nothing without a panel
+    /// material).
     /// </summary>
-    private TMP_Text BuildLoopSign(Transform leg, Transform parent, out TMP_Text count)
+    private void BuildLoopSign(Transform leg, Transform parent, List<TMP_Text> verdicts, List<TMP_Text> counts)
     {
-        count = null;
-        if (loopSignPanel == null) return null;
+        if (loopSignPanel == null) return;
 
         const float width = 1.5f, height = 0.8f, depth = 0.06f;
         float bottom = Mathf.Min(2.1f, wallHeight - height - 0.25f);
@@ -656,13 +701,36 @@ public partial class MazeGenerator
                 SignBox(holder.transform, "Chain", new Vector3(side * width * 0.38f, height * 0.5f + 0.04f + chain * 0.5f, 0f), new Vector3(0.02f, chain, 0.02f), frame);
         }
 
-        // The face toward the player: text is read from behind its forward, so its forward is the leg's (away from the player).
-        float face = -depth * 0.5f - 0.004f;
-        TMP_Text verdict = SignLine(holder.transform, "Verdict", new Vector3(0f, 0.25f, face), new Vector2(width - 0.12f, 0.2f), 1.6f, "");
-        count = SignLine(holder.transform, "Count", new Vector3(0f, 0.04f, face), new Vector2(width - 0.12f, 0.24f), 2.4f, $"0 / {loopTargetCount}");
-        SignLine(holder.transform, "Rule", new Vector3(0f, -0.24f, face), new Vector2(width - 0.12f, 0.26f), 1.0f,
-            L10n.T("world.loop.continue") + "\n" + L10n.T("world.loop.turn"));
-        return verdict;
+        // Text is read from behind its forward: the face toward a player walking the leg forward has the leg's forward, the back face the opposite.
+        foreach (bool back in new[] { false, true })
+        {
+            Transform face = new GameObject(back ? "BackFace" : "FrontFace").transform;
+            face.SetParent(holder.transform, false);
+            face.localPosition = new Vector3(0f, 0f, -depth * 0.5f - 0.004f);
+            if (back)
+            {
+                face.localPosition = -face.localPosition;
+                face.localRotation = Quaternion.Euler(0f, 180f, 0f);
+            }
+
+            verdicts.Add(SignLine(face, "Verdict", new Vector3(0f, 0.25f, 0f), new Vector2(width - 0.12f, 0.2f), 1.6f, ""));
+            counts.Add(SignLine(face, "Count", new Vector3(0f, 0.04f, 0f), new Vector2(width - 0.12f, 0.24f), 2.4f, $"0 / {loopTargetCount}"));
+            SignLine(face, "Rule", new Vector3(0f, -0.24f, 0f), new Vector2(width - 0.12f, 0.26f), 1.0f,
+                L10n.T("world.loop.continue") + "\n" + L10n.T("world.loop.turn"));
+        }
+    }
+
+    /// <summary>A copy of `source` (an inactive anomaly piece) at the same place and turn in leg `to` as it has in leg `from`. Null for null.</summary>
+    private static GameObject TwinInLeg(GameObject source, Transform from, Transform to, Transform parent)
+    {
+        if (source == null) return null;
+
+        Vector3 position = to.TransformPoint(from.InverseTransformPoint(source.transform.position));
+        Quaternion rotation = to.rotation * Quaternion.Inverse(from.rotation) * source.transform.rotation;
+        GameObject twin = Instantiate(source, position, rotation, parent);
+        twin.name = source.name + "_Reverse";
+        twin.SetActive(false);
+        return twin;
     }
 
     private void SignBox(Transform parent, string name, Vector3 local, Vector3 size, Material material)
@@ -697,11 +765,11 @@ public partial class MazeGenerator
         return line;
     }
 
-    /// <summary>Hands the corridor the player's controller, camera, torch, the sound it ducks, the hunter whose body the Visitor copies, the outcome that ends the run, the HUD and the floor map, once SetUpAtmosphere has them.</summary>
+    /// <summary>Hands the corridor the player's controller, camera, torch, the sound it ducks, the hunter whose body the Visitor copies, the outcome that ends the run, the HUD, the floor map and the throw controller (the reward's bottles), once SetUpAtmosphere has them.</summary>
     private void BindLoop(Transform player, ThirdPersonController controller, Camera camera, Flashlight flashlight, HorrorAudioDirector director, MazeAmbience ambience,
-        GameOutcome outcome, PlayerHud hud, FloorMapUi map)
+        GameOutcome outcome, PlayerHud hud, FloorMapUi map, ThrowController throws)
     {
-        if (_loop != null) _loop.Bind(player, controller, camera, flashlight, director, ambience, StalkerTemplate, aiFollower, outcome, hud, map);
+        if (_loop != null) _loop.Bind(player, controller, camera, flashlight, director, ambience, StalkerTemplate, aiFollower, outcome, hud, map, throws);
     }
 
     // ---------------------------------------------------------------- debug map extras

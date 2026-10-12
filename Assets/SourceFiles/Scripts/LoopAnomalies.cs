@@ -4,16 +4,20 @@ using UnityEngine;
 /// F106: one thing that can be wrong in the looping corridor. At most one is active per lap; LoopCorridor applies it at the cut that starts
 /// the lap, so the player never sees it appear, and reverts it at the next cut. Each is built from pieces MazeGenerator.BuildLoopCorridor made
 /// (inactive objects, lamps), so applying one costs nothing. They only touch what is behind the landing point or round the corner.
+///
+/// The corridor can be walked both ways (12 Oct 2026): a lap walked forward lands in the first leg and shows its anomaly in the second; a lap
+/// walked in reverse lands in the second leg and shows it in the first. The pieces that sit in a leg are built twice, one per leg at the same
+/// place along it, and `reverse` picks the one round the corner ahead.
 /// </summary>
 public abstract class LoopAnomaly
 {
     /// <summary>For the [Terror] log.</summary>
     public abstract string Name { get; }
 
-    /// <summary>Puts the anomaly in the corridor. Called once, at the cut that starts the lap.</summary>
-    public abstract void Apply();
+    /// <summary>Puts the anomaly in the corridor. Called once, at the cut that starts the lap; `reverse` is the way that lap is walked.</summary>
+    public abstract void Apply(bool reverse);
 
-    /// <summary>Takes it out again. Safe to call when it was never applied.</summary>
+    /// <summary>Takes it out again (both legs' pieces). Safe to call when it was never applied.</summary>
     public abstract void Revert();
 
     /// <summary>Called every frame while the player is inside and the anomaly is active, for those that move or change over time.</summary>
@@ -23,52 +27,69 @@ public abstract class LoopAnomaly
 /// <summary>Anomaly 1: one lamp burns red.</summary>
 public sealed class LampTintAnomaly : LoopAnomaly
 {
-    private readonly WallLamp _lamp;
+    private readonly WallLamp _forward, _reverse;
     private readonly Color _color;
 
-    public LampTintAnomaly(WallLamp lamp, Color color)
+    public LampTintAnomaly(WallLamp forward, WallLamp reverse, Color color)
     {
-        _lamp = lamp;
+        _forward = forward;
+        _reverse = reverse;
         _color = color;
     }
 
     public override string Name => "a red lamp";
-    public override void Apply() => _lamp.SetTint(_color);
-    public override void Revert() => _lamp.ClearTint();
+    public override void Apply(bool reverse) => (reverse ? _reverse : _forward).SetTint(_color);
+
+    public override void Revert()
+    {
+        _forward.ClearTint();
+        _reverse.ClearTint();
+    }
 }
 
 /// <summary>Anomaly 2: one lamp is dead.</summary>
 public sealed class LampDeadAnomaly : LoopAnomaly
 {
-    private readonly WallLamp _lamp;
+    private readonly WallLamp _forward, _reverse;
 
-    public LampDeadAnomaly(WallLamp lamp)
+    public LampDeadAnomaly(WallLamp forward, WallLamp reverse)
     {
-        _lamp = lamp;
+        _forward = forward;
+        _reverse = reverse;
     }
 
     public override string Name => "a dead lamp";
-    public override void Apply() => _lamp.SetPowered(false);
-    public override void Revert() => _lamp.SetPowered(true);
+    public override void Apply(bool reverse) => (reverse ? _reverse : _forward).SetPowered(false);
+
+    public override void Revert()
+    {
+        _forward.SetPowered(true);
+        _reverse.SetPowered(true);
+    }
 }
 
 /// <summary>Anomalies 3, 4 and 8: something built inactive at corridor-build time (the blood on the floor, the locker that was not there, the handprint) is switched on.</summary>
 public sealed class ShowObjectAnomaly : LoopAnomaly
 {
-    private readonly GameObject _object;
+    private readonly GameObject _forward, _reverse;
     private readonly string _name;
 
-    public ShowObjectAnomaly(GameObject target, string anomalyName)
+    public ShowObjectAnomaly(GameObject forward, GameObject reverse, string anomalyName)
     {
-        _object = target;
+        _forward = forward;
+        _reverse = reverse;
         _name = anomalyName;
     }
 
     public override string Name => _name;
-    public override void Apply() => _object.SetActive(true);
-    public override void Revert() => _object.SetActive(false);
-}
+    public override void Apply(bool reverse) => (reverse ? _reverse : _forward).SetActive(true);
 
+    public override void Revert()
+    {
+        _forward.SetActive(false);
+        _reverse.SetActive(false);
+    }
+}
 /// <summary>Anomaly 7: every corridor lamp flickers, in bursts of blinks.</summary>
 public sealed class FlickerAnomaly : LoopAnomaly
 {
@@ -87,7 +108,7 @@ public sealed class FlickerAnomaly : LoopAnomaly
     }
 
     public override string Name => "every lamp flickering";
-    public override void Apply() => _next = Time.time;
+    public override void Apply(bool reverse) => _next = Time.time;
     public override void Revert() => _next = float.MaxValue;
 
     public override void Tick()
@@ -104,7 +125,7 @@ public sealed class FlickerAnomaly : LoopAnomaly
     }
 }
 
-/// <summary>Anomaly 5: someone stands at the corner with their back to you. Gone the moment the beam reaches it or you walk up to it; it still counts as the lap's anomaly.</summary>
+/// <summary>Anomaly 5: someone stands at the corner ahead with their back to you. Gone the moment the beam reaches it or you walk up to it; it still counts as the lap's anomaly.</summary>
 public sealed class FigureAnomaly : LoopAnomaly
 {
     private readonly LoopCorridor _owner;
@@ -113,6 +134,7 @@ public sealed class FigureAnomaly : LoopAnomaly
     private bool _pending;
     private bool _shown;
     private float _showAt;
+    private Vector3 _position, _forward; // where this lap's figure stands (the corner ahead of the way the lap is walked) and the way it faces
 
     public FigureAnomaly(LoopCorridor owner, Stalker template)
     {
@@ -122,9 +144,11 @@ public sealed class FigureAnomaly : LoopAnomaly
 
     public override string Name => "someone at the corner";
 
-    public override void Apply()
+    public override void Apply(bool reverse)
     {
         _pending = true;
+        _position = reverse ? _owner.Config.figurePositionReverse : _owner.Config.figurePosition;
+        _forward = reverse ? _owner.Config.figureForwardReverse : _owner.Config.figureForward;
         _showAt = Time.time + _owner.Config.tuning.figureDelay;
     }
 
@@ -140,8 +164,8 @@ public sealed class FigureAnomaly : LoopAnomaly
         if (!_shown) return;
 
         LoopCorridor.Setup setup = _owner.Config;
-        Vector3 chest = setup.figurePosition + Vector3.up * setup.tuning.figureTestHeight;
-        bool close = Vector3.Distance(_owner.PlayerTransform.position, setup.figurePosition) < setup.tuning.figureVanishDistance;
+        Vector3 chest = _position + Vector3.up * setup.tuning.figureTestHeight;
+        bool close = Vector3.Distance(_owner.PlayerTransform.position, _position) < setup.tuning.figureVanishDistance;
         if (close || BeamReaches(chest)) Hide();
     }
 
@@ -151,7 +175,7 @@ public sealed class FigureAnomaly : LoopAnomaly
         if (_body == null) _body = PhantomBody.TryBuild(_template, _owner.transform);
         if (_body == null) return;
 
-        _body.Show(_owner.Config.figurePosition, _owner.Config.figureForward);
+        _body.Show(_position, _forward);
         _body.Freeze(AIFollower.Pose.Idle);
         _shown = true;
     }
@@ -194,7 +218,7 @@ public sealed class FootstepsAnomaly : LoopAnomaly
 
     public override string Name => "footsteps behind you";
 
-    public override void Apply()
+    public override void Apply(bool reverse)
     {
         LoopCorridor.PuzzleTuning puzzle = _owner.Config.puzzle;
         if (_source == null)

@@ -275,6 +275,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331699516899525
+  - m_Id: 791730481696768
+    m_Key: sub.loop.offer
+    m_Metadata:
+      m_Items:
+      - rid: 4707331721657843863
+  - m_Id: 791730569777152
+    m_Key: sub.loop.offer_reward
+    m_Metadata:
+      m_Items:
+      - rid: 4707331721657843864
+  - m_Id: 791730569777153
+    m_Key: sub.loop.torch_full
+    m_Metadata:
+      m_Items:
+      - rid: 4707331721657843865
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -494,3 +509,15 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Floor intro banner objective part on a key-hunt floor whose exit is the gates. {n} = keys to find (3)
+    - rid: 4707331721657843863
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'World text the first time the player steps into the looping corridor, before its corner seals it (shown 4 s): it is an optional side path, and past the corner there is no way back. ALL CAPS like IT HEARD YOU'
+    - rid: 4707331721657843864
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'World text queued right after sub.loop.offer (shown 4 s): what solving the looping corridor gives. {n} = right decisions in a row needed (3). ALL CAPS like IT HEARD YOU'
+    - rid: 4707331721657843865
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: "One entry in the list of supplies the looping corridor gives when solved, shown as FOUND: <this>  \xB7  SPARE BATTERY  \xB7  ... (ALL CAPS, ~16 characters)"

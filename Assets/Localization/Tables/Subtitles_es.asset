@@ -238,6 +238,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763196
+  - m_Id: 791730481696768
+    m_Localized: "UN CAMINO APARTE. NO EST\xC1S OBLIGADO. PASADA LA ESQUINA NO HAY VUELTA ATR\xC1S."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 791730569777152
+    m_Localized: 'ACIERTA {n} VECES SEGUIDAS: TODO EL MAPA, LA LINTERNA LLENA Y PROVISIONES.'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763196
+  - m_Id: 791730569777153
+    m_Localized: LINTERNA LLENA
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -257,3 +270,4 @@ MonoBehaviour:
         - id: 7993049387035
         - id: 7993049387037
         - id: 441658820694018
+        - id: 791730569777152

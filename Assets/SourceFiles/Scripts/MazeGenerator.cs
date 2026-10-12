@@ -4799,7 +4799,7 @@ public partial class MazeGenerator : MonoBehaviour
         // F106: the floor map the loop puzzle rewards (instance state, so a reload locks it again); configured once the pause menu exists, below.
         FloorMapUi floorMap = FindAnyObjectByType<FloorMapUi>();
         if (floorMap == null) floorMap = gameObject.AddComponent<FloorMapUi>();
-        BindLoop(player, player != null ? player.GetComponent<ThirdPersonController>() : null, camera, flashlight, director, GetComponent<MazeAmbience>(), outcome, hud, floorMap); // F105 C4, F106
+        BindLoop(player, player != null ? player.GetComponent<ThirdPersonController>() : null, camera, flashlight, director, GetComponent<MazeAmbience>(), outcome, hud, floorMap, throwController); // F105 C4, F106
 
         // F75: the second creature (see EntityRoster). Built earlier in Awake
         // (BuildStalker, +16), before the player/camera/flashlight/hunter/HUD/outcome existed -

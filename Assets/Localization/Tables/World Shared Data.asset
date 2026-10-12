@@ -428,7 +428,7 @@ MonoBehaviour:
     - rid: 4707331695923429577
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: Printed rules notice taped to the wall at the start of the looping corridor (world text, 6 short lines, ALL CAPS, at most ~28 characters a line). {n} = how many right decisions in a row free the player (6)
+        m_CommentText: Printed rules notice taped to the wall at the start of the looping corridor (world text, 6 short lines, ALL CAPS, at most ~28 characters a line). {n} = how many right decisions in a row free the player (3)
     - rid: 4707331695923429610
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:

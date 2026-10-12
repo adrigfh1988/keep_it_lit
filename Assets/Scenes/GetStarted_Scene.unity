@@ -54016,7 +54016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1afb62f2cead40678b5a18f19638040f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugDescent: 1
+  debugDescent: 0
   itemCacheMinStartSteps: 4
   debugEntities: 0
   debugLivingBody: 0
@@ -54055,12 +54055,11 @@ MonoBehaviour:
   loopFigureBeamAngle: 0.6
   loopFlickerGap: {x: 0.8, y: 2.5}
   loopSealHideDistance: 14
-  loopTargetCount: 6
+  loopTargetCount: 3
+  loopRewardItems: 00000000010000000900000002000000i
+  loopRewardRefillsTorch: 1
   loopAnomalyChance: 0.5
   loopMinAnomalies: 3
-  loopReturnCells: 1
-  loopTurnBackStartCells: 0.5
-  loopTurnBackSeconds: 0.35
   loopRuleSeconds: 4
   loopChimeVolume: 0.35
   loopThudVolume: 0.8
@@ -54140,7 +54139,7 @@ MonoBehaviour:
   aiFollower: {fileID: 461847994690786}
   disablePlayerJump: 1
   useFloorProfile: 1
-  debugFloor: 18
+  debugFloor: 0
   lockerCount: 10
   lockerWidth: 0.9
   lockerDepth: 0.6
@@ -54151,7 +54150,7 @@ MonoBehaviour:
   debugStartInHub: 0
   debugStartInFinale: 0
   debugFinaleAllFiles: 0
-  debugStartInMaze: 1
+  debugStartInMaze: 0
   creatureSpeechBubbles: 0
   superEasyMode: 0
   debugForceTouchControls: 0

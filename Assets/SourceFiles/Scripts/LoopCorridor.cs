@@ -6,16 +6,21 @@ using UnityEngine;
 /// <summary>
 /// F105 C4 + F106: the looping corridor (P.T.), the runtime half. MazeGenerator.BuildLoopCorridor builds the geometry outside the maze (post-bake,
 /// so the hunter's NavMesh never reaches it) and hands over <see cref="Setup"/>; SetUpAtmosphere then binds the player. The corridor is an L: a
-/// first leg out from an opening in the maze's outer wall, a corner, a second leg whose end is built exactly like the first leg's. Crossing the
-/// trigger in the second leg carries the player to the same place in the first, turned by the corner's angle, so nothing in front of them changes
-/// at the cut.
+/// vestibule behind the opening in the maze's outer wall, a first leg, a corner, a second leg whose end is built exactly like the first leg's
+/// corner. Crossing the trigger in the second leg carries the player to the same place in the first, turned by the corner's angle, so nothing in
+/// front of them changes at the cut.
+///
+/// It can be walked both ways (12 Oct 2026). Once the opening is walled up the vestibule reads, from the first leg, exactly as the corner reads
+/// from the second (a far wall, a mouth on the same side), so walking back down the first leg past the return line carries the player to the same
+/// place in the second leg, walking back - the same seamless cut in reverse. No blackout, no half turn: turning back is just walking the other way.
 ///
 /// F106 makes it a puzzle: spot the anomaly. Lap 1 is normal and the opening behind the player is still real until they first reach the corner;
-/// there it seals and the rule is shown. From then on each lap is normal or has exactly one <see cref="LoopAnomaly"/>, applied at the cut. Keep
-/// walking through the trigger on a normal lap, or turn back and cross the return line on an anomalous one: right adds 1 to the count, wrong resets
-/// it and brings the <see cref="LoopVisitor"/> closer. Reaching the target count throws the player out into the maze with the floor map; the Visitor
-/// reaching them is a real death (or a Second Wind, which also throws them out, without the map). With too few anomalies the old fixed passes
-/// run instead (a lamp dies, blood and a flicker, a robot at the corner, then out), with no seal and no Visitor.
+/// there it seals and the rule is shown. From then on each lap is normal or has exactly one <see cref="LoopAnomaly"/>, applied at the cut, in the
+/// leg round the corner ahead of the way the lap is walked. Keep walking the way you were going on a normal lap, or turn round and walk the other
+/// way on an anomalous one: right adds 1 to the count, wrong resets it and brings the <see cref="LoopVisitor"/> closer. Reaching the target count
+/// throws the player out into the maze with the floor map and supplies; the Visitor reaching them is a real death (or a Second Wind, which also
+/// throws them out, without the map). With too few anomalies the old fixed passes run instead (a lamp dies, blood and a flicker, a robot at the
+/// corner, then out), with no seal and no Visitor.
 ///
 /// Gameplay-inert otherwise: no hunter, star, key or switch is ever in it, and the NavMesh agent cannot enter. <see cref="UsedThisCampaign"/> is a
 /// campaign-scoped static: set when a floor that had a loop is cleared (GameOutcome.FloorCleared), reset at SubsystemRegistration and in
@@ -26,11 +31,11 @@ public class LoopCorridor : MonoBehaviour
     /// <summary>Everything MazeGenerator.BuildLoopCorridor builds, plus where and when things happen.</summary>
     public struct Setup
     {
-        /// <summary>Frame at the start of the first leg: origin on the floor in the opening's plane, forward along the leg.</summary>
+        /// <summary>Frame at the start of the first leg: origin on the floor where it leaves the vestibule, forward along the leg.</summary>
         public Transform legA;
         /// <summary>The same frame for the second leg (origin where it leaves the corner), turned by the corner's angle.</summary>
         public Transform legB;
-        /// <summary>Distance along the second leg at which the player is carried back (m).</summary>
+        /// <summary>Distance along the second leg at which a player walking forward is carried back to the first (m).</summary>
         public float triggerDistance;
         /// <summary>Length of each leg including the cell at its end (m).</summary>
         public float legLength;
@@ -38,10 +43,11 @@ public class LoopCorridor : MonoBehaviour
         public float legHalfWidth;
         /// <summary>F106: along the first leg, where the corner cell begins: reaching it closes the trap (m).</summary>
         public float trapDistance;
-        /// <summary>F106: along the first leg, the return line a player turning back crosses, walking toward the opening (m).</summary>
+        /// <summary>
+        /// Along the first leg, the return line: a player walking back toward the vestibule who crosses it is carried to the same place in the
+        /// second leg. As far from the vestibule's centre as the trigger is from the end cell's, so both cuts hide the same amount (m).
+        /// </summary>
         public float returnDistance;
-        /// <summary>F106: along the first leg, where a player who turned back starts, facing inward (m).</summary>
-        public float turnBackDistance;
         /// <summary>F106: the player's distance along the whole path (first leg, then the second) at the centre of the corner cell (m).</summary>
         public float cornerPathDistance;
         /// <summary>The whole corridor, world space: being inside it ducks the sound and counts as "in the loop".</summary>
@@ -49,22 +55,27 @@ public class LoopCorridor : MonoBehaviour
         /// <summary>Where leaving puts the player: the maze's entrance cell centre, facing into the maze.</summary>
         public Vector3 exitPosition;
         public float exitYaw;
-        /// <summary>The first leg's lamps in order (rear, front). The second leg's twins are in <see cref="mirrorLamps"/>.</summary>
+        /// <summary>The first leg's lamps in order (rear, front, then the front one's twin in the vestibule's stub). The second leg's are in <see cref="mirrorLamps"/> (rear, front).</summary>
         public WallLamp[] lamps;
         public WallLamp[] mirrorLamps;
-        /// <summary>Inactive until an anomaly needs them: blood on the floor, a locker standing open against the second leg's wall, a handprint on it.</summary>
-        public GameObject blood;
-        public GameObject locker;
-        public GameObject handprint;
-        /// <summary>F106: the chalk numeral on the first leg's wall that shows the count. Inactive until the trap closes.</summary>
-        public TMP_Text counter;
-        public TMP_Text[] signVerdicts, signCounts; // the hanging light-box signs, one per leg so the cut stays seamless (empty = none)
+        /// <summary>
+        /// Inactive until an anomaly needs them: blood on the floor, a locker standing open against the wall, a handprint on it - in the second
+        /// leg for a lap walked forward, and their twins at the same places in the first leg for a lap walked in reverse.
+        /// </summary>
+        public GameObject blood, locker, handprint;
+        public GameObject bloodReverse, lockerReverse, handprintReverse;
+        /// <summary>F106: the chalk numerals that show the count, one on each leg's wall. Inactive until the trap closes.</summary>
+        public TMP_Text[] counters;
+        public TMP_Text[] signVerdicts, signCounts; // the hanging light-box signs, one per leg and both faces so the cuts stay seamless (empty = none)
         /// <summary>Inactive until the opening is walled up.</summary>
         public GameObject sealWall;
         public Vector3 sealPoint;
-        /// <summary>The robot's spot: the mouth of the corner, and the way it faces (away from the player). Its body comes from the template handed to <see cref="Bind"/>.</summary>
-        public Vector3 figurePosition;
-        public Vector3 figureForward;
+        /// <summary>
+        /// The robot's spot: the mouth of the corner ahead, and the way it faces (away from the player) - the first leg's end for a lap walked
+        /// forward, the second leg's start for one walked in reverse. Its body comes from the template handed to <see cref="Bind"/>.
+        /// </summary>
+        public Vector3 figurePosition, figureForward;
+        public Vector3 figurePositionReverse, figureForwardReverse;
         public TerrorSettings terror;
         public Vector2Int entranceCell;
         public Tuning tuning;
@@ -84,7 +95,9 @@ public class LoopCorridor : MonoBehaviour
     public struct PuzzleTuning
     {
         public int targetCount, minAnomalies;
-        public float anomalyChance, ruleSeconds, turnBackSeconds, chimeVolume, thudVolume;
+        public ShopItem[] rewardItems;
+        public bool rewardRefillsTorch;
+        public float anomalyChance, ruleSeconds, chimeVolume, thudVolume;
         public Color redLamp;
         public float footstepsBehind, footstepsSeconds, footstepsStride, footstepsVolume, footstepsMaxDistance;
         public Vector2 footstepsPitch;
@@ -96,6 +109,7 @@ public class LoopCorridor : MonoBehaviour
     private const float BuzzMinDistance = 1.5f;
     private const float SealLookDot = 0.3f;
     private const int ScriptedLaps = 4; // the fallback runs C4's four passes: the fourth crossing leaves
+    private const string Separator = "  ·  "; // between the supplies in the reward line, as the DESCENT cache lines read
 
     private static LoopCorridor s_current;
 
@@ -110,6 +124,7 @@ public class LoopCorridor : MonoBehaviour
     private GameOutcome _outcome;
     private PlayerHud _hud;
     private FloorMapUi _map;
+    private ThrowController _throws;
     private AudioSource[] _buzz;
     private WallLamp[] _lamps;
     private LoopVisitor _visitor;
@@ -121,6 +136,8 @@ public class LoopCorridor : MonoBehaviour
     private bool _sealPending;
     private bool _trapped;
     private bool _scripted;
+    private bool _offerShown;
+    private bool _reverse; // the way the current lap is walked: false = first leg, corner, second leg; true = the other way
     private int _lap = 1;
     private int _count;
     private float _pathPosition;
@@ -153,6 +170,8 @@ public class LoopCorridor : MonoBehaviour
     internal Transform PlayerTransform => _player;
     internal Transform CameraTransform => _camera;
     internal Flashlight Torch => _flashlight;
+    /// <summary>True while the current lap is walked back (second leg, corner, first leg): "behind the player" is then further along the path.</summary>
+    internal bool IsReverse => _reverse;
 
     /// <summary>Called from GameOutcome.FloorCleared: the floor that was just cleared counts as the campaign's one loop, if it had one.</summary>
     public static void CommitFloor()
@@ -199,12 +218,13 @@ public class LoopCorridor : MonoBehaviour
 
     /// <summary>
     /// Hands over the player's components, the sound that is ducked inside, the InteractableKit's Stalker template (the robot at the corner), the
-    /// hunter whose body the Visitor copies, the outcome that ends the run, the HUD and the floor map the puzzle unlocks. Any may be null; that
-    /// part is then skipped (no outcome or no hunter body: no Visitor; no template: no robot).
+    /// hunter whose body the Visitor copies, the outcome that ends the run, the HUD, the floor map the puzzle unlocks and the throw controller
+    /// the reward's bottles go to. Any may be null; that part is then skipped (no outcome or no hunter body: no Visitor; no template: no robot).
     /// </summary>
     public void Bind(Transform player, ThirdPersonController controller, Camera camera, Flashlight flashlight, HorrorAudioDirector audio, MazeAmbience ambience,
-        Stalker figureTemplate, AIFollower hunter, GameOutcome outcome, PlayerHud hud, FloorMapUi map)
+        Stalker figureTemplate, AIFollower hunter, GameOutcome outcome, PlayerHud hud, FloorMapUi map, ThrowController throws)
     {
+        _throws = throws;
         _player = player;
         _body = player != null ? player.GetComponent<CharacterController>() : null;
         _controller = controller;
@@ -231,12 +251,12 @@ public class LoopCorridor : MonoBehaviour
     private void BuildAnomalies(Stalker figureTemplate)
     {
         _pool.Clear();
-        WallLamp behind = _setup.mirrorLamps[0]; // behind the landing point at the cut: never seen to change
-        _pool.Add(new LampTintAnomaly(behind, _setup.puzzle.redLamp));
-        _pool.Add(new LampDeadAnomaly(behind));
-        AddObjectAnomaly(_setup.blood, "blood on the floor");
-        AddObjectAnomaly(_setup.locker, "a locker that was not there");
-        AddObjectAnomaly(_setup.handprint, "a handprint on the wall");
+        // Each leg's rear lamp: round the corner from the landing point of a lap walked that way, so never seen to change.
+        _pool.Add(new LampTintAnomaly(_setup.mirrorLamps[0], _setup.lamps[0], _setup.puzzle.redLamp));
+        _pool.Add(new LampDeadAnomaly(_setup.mirrorLamps[0], _setup.lamps[0]));
+        AddObjectAnomaly(_setup.blood, _setup.bloodReverse, "blood on the floor");
+        AddObjectAnomaly(_setup.locker, _setup.lockerReverse, "a locker that was not there");
+        AddObjectAnomaly(_setup.handprint, _setup.handprintReverse, "a handprint on the wall");
         _pool.Add(new FlickerAnomaly(_lamps, _setup.tuning.flickerGap));
 
         if (figureTemplate != null) _pool.Add(new FigureAnomaly(this, figureTemplate));
@@ -250,9 +270,9 @@ public class LoopCorridor : MonoBehaviour
         if (_scripted) _setup.terror.Log($"Loop corridor: only {_pool.Count} anomalies are available (need {_setup.puzzle.minAnomalies}), so the old fixed passes run", this);
     }
 
-    private void AddObjectAnomaly(GameObject target, string anomalyName)
+    private void AddObjectAnomaly(GameObject forward, GameObject reverse, string anomalyName)
     {
-        if (target != null) _pool.Add(new ShowObjectAnomaly(target, anomalyName));
+        if (forward != null && reverse != null) _pool.Add(new ShowObjectAnomaly(forward, reverse, anomalyName));
         else _setup.terror.Log($"Loop corridor: no {anomalyName} - the theme did not provide it", this);
     }
 
@@ -332,13 +352,28 @@ public class LoopCorridor : MonoBehaviour
 
         if (inside) _setup.terror.Log($"Loop corridor at {_setup.entranceCell}, lap {_lap}", this);
         else if (_active != null) _active.Revert();
+        if (inside && !_trapped && !_scripted) ShowOffer();
+    }
+
+    /// <summary>
+    /// The loop is a side path: the first time the player steps in, before the corner commits them, they are told it is optional, that the
+    /// corner closes the way, and what solving it gives. Walking back out before the corner costs nothing.
+    /// </summary>
+    private void ShowOffer()
+    {
+        if (_offerShown || _hud == null) return;
+
+        _offerShown = true;
+        _hud.ShowSubtitle(L10n.T("sub.loop.offer"), _setup.puzzle.ruleSeconds);
+        _hud.QueueSubtitle(L10n.T("sub.loop.offer_reward", ("n", _setup.puzzle.targetCount)), _setup.puzzle.ruleSeconds);
     }
 
     // ---------------------------------------------------------------- crossings
 
     /// <summary>
-    /// Where the player is on the two legs. Reaching the first leg's corner closes the trap; crossing the trigger plane in the second leg, walking
-    /// forward, is "keep walking"; crossing the return line in the first leg, walking toward the opening, is "turn back".
+    /// Where the player is on the two legs. Reaching the first leg's corner closes the trap; crossing the trigger plane in the second leg walking
+    /// forward, or (once trapped) the return line in the first leg walking back toward the vestibule, ends a lap. Which of the two is "keep
+    /// walking" and which is "turn back" depends on the way the lap was being walked.
     /// </summary>
     private void TickCrossing()
     {
@@ -356,11 +391,11 @@ public class LoopCorridor : MonoBehaviour
         bool crossed = inB && _previousTrigger >= 0f && _previousTrigger < _setup.triggerDistance && onB.z >= _setup.triggerDistance;
         _previousTrigger = inB && !crossed ? onB.z : -1f;
 
-        bool turnedBack = _trapped && inA && _previousReturn > _setup.returnDistance && onA.z <= _setup.returnDistance;
-        _previousReturn = inA && !turnedBack ? onA.z : -1f;
+        bool returned = _trapped && inA && _previousReturn > _setup.returnDistance && onA.z <= _setup.returnDistance;
+        _previousReturn = inA && !returned ? onA.z : -1f;
 
         if (crossed) Cross();
-        else if (turnedBack) Decide(true);
+        else if (returned) Decide(true);
     }
 
     private void Cross()
@@ -396,9 +431,9 @@ public class LoopCorridor : MonoBehaviour
         _setup.sealWall.SetActive(true);
         IsSealed = true;
         _sealPending = false;
-        if (_setup.counter != null)
+        if (_setup.counters != null)
         {
-            _setup.counter.gameObject.SetActive(true);
+            foreach (TMP_Text counter in _setup.counters) if (counter != null) counter.gameObject.SetActive(true);
             ShowCount();
         }
 
@@ -413,11 +448,13 @@ public class LoopCorridor : MonoBehaviour
     }
 
     /// <summary>
-    /// One decision: on a lap with an anomaly turning back is right, on a normal lap keeping walking is. Right adds one to the count and may free the
-    /// player; wrong resets the count and brings the Visitor closer.
+    /// One decision, `backward` being the way the lap was ended (the return line, walking back) - turning back is ending it the other way from
+    /// the way it was walked. On a lap with an anomaly turning back is right, on a normal lap keeping walking is. Right adds one to the count and
+    /// may free the player; wrong resets the count and brings the Visitor closer.
     /// </summary>
-    private void Decide(bool turnedBack)
+    private void Decide(bool backward)
     {
+        bool turnedBack = backward != _reverse;
         bool anomalous = _active != null;
         bool correct = turnedBack == anomalous;
         _count = correct ? _count + 1 : 0;
@@ -435,10 +472,13 @@ public class LoopCorridor : MonoBehaviour
             return;
         }
 
-        NextLap(turnedBack);
+        NextLap(backward);
     }
 
-    /// <summary>The count is reached: the Visitor stops, the floor map is the reward and the player is let out into the maze. The opening stays walled.</summary>
+    /// <summary>
+    /// The count is reached: the Visitor stops, the player gets the whole floor map and the supplies (<see cref="GrantSupplies"/>) and is let out
+    /// into the maze. The opening stays walled.
+    /// </summary>
     private void Free()
     {
         _setup.terror.Log($"Loop corridor at {_setup.entranceCell}: freed on lap {_lap}, the floor map is unlocked", this);
@@ -447,32 +487,80 @@ public class LoopCorridor : MonoBehaviour
             _map.Unlock();
             _map.RevealAll(); // F110: the reward is the whole layout, no plan needed
         }
-        if (_hud != null) _hud.ShowSubtitle(L10n.T("sub.loop.reward"), 3.5f);
+
+        string supplies = GrantSupplies();
+        if (_hud != null)
+        {
+            _hud.ShowSubtitle(L10n.T("sub.loop.reward"), 3.5f);
+            if (supplies.Length > 0) _hud.QueueSubtitle(L10n.T("hud.descent.found", ("item", supplies)), 4f);
+        }
         LeaveToMaze();
         Retire();
+    }
+
+    /// <summary>
+    /// The rest of the reward: a full torch and each of the tuned items the player has room for (a full hand skips that one, so a Retry cannot
+    /// stack them past their caps). Returns the names of what was given, for the subtitle.
+    /// </summary>
+    private string GrantSupplies()
+    {
+        List<string> given = new List<string>();
+        if (_setup.puzzle.rewardRefillsTorch && _flashlight != null)
+        {
+            _flashlight.Refill();
+            given.Add(L10n.T("sub.loop.torch_full"));
+        }
+
+        if (_setup.puzzle.rewardItems == null) return string.Join(Separator, given);
+
+        foreach (ShopItem item in _setup.puzzle.rewardItems)
+        {
+            switch (item)
+            {
+                case ShopItem.SpareBattery:
+                case ShopItem.StarCompass:
+                case ShopItem.SecondWind: // straight to the inventory: DescentLoot's Second Wind spacing is a DESCENT rule
+                    if (!PlayerInventory.CanHoldMore(item)) continue;
+                    PlayerInventory.Grant(item);
+                    break;
+                case ShopItem.FloorPlan:
+                    continue; // the whole map is already revealed
+                default:
+                    if (!DescentLoot.Fits(item, _throws, _flashlight, DescentRun.Depth)) continue;
+                    DescentLoot.Grant(item, _throws, _flashlight, DescentRun.Depth);
+                    break;
+            }
+
+            given.Add(ShopCatalogue.Get(item)?.Name ?? item.ToString());
+        }
+
+        _setup.terror.Log($"Loop corridor reward: {string.Join(", ", given)}", this);
+        return string.Join(Separator, given);
     }
 
     // ---------------------------------------------------------------- laps
 
     /// <summary>
-    /// The cut that starts the next lap: the old anomaly goes, the new one (or none) is rolled, and the player is moved - to the same place in the
-    /// first leg when they kept walking, or to the start of it, with the lamps and torch blinking out, when they turned back.
+    /// The cut that starts the next lap: the old anomaly goes, the new one (or none) is rolled, and the player is moved to the same place in the
+    /// other leg - the first when the lap ended walking forward, the second when it ended walking back. `backward` becomes the way the new lap
+    /// is walked, and its anomaly goes in the leg round the corner ahead.
     /// </summary>
-    private void NextLap(bool turnedBack)
+    private void NextLap(bool backward)
     {
         if (_active != null) _active.Revert();
         _lap++;
         _active = _scripted ? ScriptedAnomaly() : RollAnomaly();
         _lastLap = _active;
+        _reverse = backward;
 
-        if (turnedBack) TurnBackCut();
+        if (backward) ReverseCut();
         else LapCut();
 
-        if (_active != null) _active.Apply();
+        if (_active != null) _active.Apply(_reverse);
         _previousTrigger = -1f;
         _previousReturn = -1f;
         string distance = _visitor != null && _trapped ? $", the Visitor {_visitor.Distance:0.0} m behind" : "";
-        _setup.terror.Log($"Loop corridor lap {_lap}: {(_active != null ? _active.Name : "nothing wrong")}{distance}", this);
+        _setup.terror.Log($"Loop corridor lap {_lap} ({(_reverse ? "walked back" : "walked forward")}): {(_active != null ? _active.Name : "nothing wrong")}{distance}", this);
     }
 
     /// <summary>With the anomaly chance, one from the pool that is not the one the lap before had.</summary>
@@ -491,7 +579,7 @@ public class LoopCorridor : MonoBehaviour
         return _pool.Count > 0 ? _pool[(_lap - 2) % _pool.Count] : null;
     }
 
-    /// <summary>The seamless cut: the same place in the first leg, turned by the corner's angle.</summary>
+    /// <summary>The seamless cut, walking forward: the same place in the first leg, turned by the corner's angle.</summary>
     private void LapCut()
     {
         Vector3 local = _setup.legB.InverseTransformPoint(_player.position);
@@ -499,18 +587,14 @@ public class LoopCorridor : MonoBehaviour
         MovePlayer(_setup.legA.TransformPoint(local), turn);
     }
 
-    /// <summary>The one cut that cannot be hidden by symmetry: a half turn. The corridor's lamps and the torch go out for a moment while the player is put back at the start of the first leg, facing in.</summary>
-    private void TurnBackCut()
+    /// <summary>The same cut walking back: the same place in the second leg, turned the other way. The sealed vestibule ahead reads as the corner.</summary>
+    private void ReverseCut()
     {
-        foreach (WallLamp lamp in _lamps) lamp.Blink(_setup.puzzle.turnBackSeconds);
-        if (_flashlight != null) _flashlight.Blackout(_setup.puzzle.turnBackSeconds);
-
-        Vector3 start = _setup.legA.InverseTransformPoint(_player.position);
-        start.x = 0f;
-        start.z = _setup.turnBackDistance;
-        float cameraYaw = _camera != null ? _camera.eulerAngles.y : _player.eulerAngles.y;
-        MovePlayer(_setup.legA.TransformPoint(start), Mathf.DeltaAngle(cameraYaw, _setup.legA.eulerAngles.y));
+        Vector3 local = _setup.legA.InverseTransformPoint(_player.position);
+        float turn = _setup.legB.eulerAngles.y - _setup.legA.eulerAngles.y;
+        MovePlayer(_setup.legB.TransformPoint(local), turn);
     }
+
 
     /// <summary>Puts the player in the maze's entrance cell, facing into the maze.</summary>
     private void LeaveToMaze()
@@ -564,7 +648,7 @@ public class LoopCorridor : MonoBehaviour
     private void ShowCount()
     {
         string count = $"{_count} / {_setup.puzzle.targetCount}";
-        if (_setup.counter != null) _setup.counter.text = count;
+        if (_setup.counters != null) foreach (TMP_Text counter in _setup.counters) if (counter != null) counter.text = count;
         if (_setup.signCounts != null) foreach (TMP_Text sign in _setup.signCounts) if (sign != null) sign.text = count;
     }
 
