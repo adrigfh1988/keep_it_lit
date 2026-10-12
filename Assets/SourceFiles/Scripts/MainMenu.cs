@@ -30,6 +30,8 @@ public class MainMenu : MonoBehaviour
 
     private GameObject _titleScreen;
     private GameObject _rulesScreen;
+    private GameObject _creditsScreen;
+    private ScrollRect _creditsScroll;
     private TextMeshProUGUI _controlText;
     private TextMeshProUGUI _rulesBody;
     private Texture2D _generatedCover;
@@ -77,6 +79,12 @@ public class MainMenu : MonoBehaviour
     {
         // Start rather than Awake: StarterAssetsInputs.Awake forces the cursor hidden, and the
         // scene's own components need to have finished initialising before the UI goes over them.
+        if (!_versionLogged)
+        {
+            _versionLogged = true;
+            Debug.Log($"KEEP IT LIT v{Application.version} (Unity {Application.unityVersion}, {Application.platform})");
+        }
+
         RuntimeUi.EnsureEventSystem();
 
         Canvas canvas = RuntimeUi.ResolveCanvas();
@@ -165,6 +173,8 @@ public class MainMenu : MonoBehaviour
         }
 
         if (!_menuOpen) return;
+
+        if (_creditsScreen != null && _creditsScreen.activeSelf) UpdateCredits();
 
         // Held every frame rather than set once: StarterAssetsInputs re-locks the cursor on every
         // focus change, so a single assignment loses the moment the window is alt-tabbed.
@@ -316,11 +326,159 @@ public class MainMenu : MonoBehaviour
         RuntimeUi.BindButton(settings, "ui.menu.settings");
         settings.onClick.AddListener(SettingsMenu.Show);
 
+        // The last row holds CREDITS and EXIT side by side (EXIT does not exist on the web, where CREDITS then takes the whole row).
+        bool canQuit = GameFlow.CanQuit;
+        Button credits = RuntimeUi.CreateButton(_titleScreen.transform, L10n.T("ui.menu.credits"),
+            new Vector2(canQuit ? -110f : 0f, 60f), new Vector2(canQuit ? 200f : 420f, 86f), canQuit ? 32f : 40f, buttonIdle, buttonHover, Color.white);
+        RuntimeUi.BindButton(credits, "ui.menu.credits");
+        credits.onClick.AddListener(ShowCredits);
+
         Button exit = RuntimeUi.CreateButton(_titleScreen.transform, L10n.T("ui.menu.exit"),
-            new Vector2(0f, 60f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+            new Vector2(110f, 60f), new Vector2(200f, 86f), 32f, buttonIdle, buttonHover, Color.white);
         RuntimeUi.BindButton(exit, "ui.menu.exit");
         exit.onClick.AddListener(GameFlow.Quit);
-        exit.gameObject.SetActive(GameFlow.CanQuit);
+        exit.gameObject.SetActive(canQuit);
+
+        // Version: small and dim in the bottom-left corner (the touch controls only exist during a run, and nothing else on the title sits there).
+        TextMeshProUGUI version = RuntimeUi.CreateText(_titleScreen.transform, "Version", VersionLabel(), 26f, new Color(0.6f, 0.6f, 0.64f, 0.7f));
+        version.alignment = TextAlignmentOptions.BottomLeft;
+        RectTransform vr = version.rectTransform;
+        vr.anchorMin = vr.anchorMax = vr.pivot = Vector2.zero;
+        vr.anchoredPosition = new Vector2(28f, 20f);
+        vr.sizeDelta = new Vector2(400f, 40f);
+    }
+
+    /// <summary>"v1.0.0": <c>Application.version</c> is PlayerSettings.bundleVersion in a build.</summary>
+    public static string VersionLabel() => "v" + Application.version;
+
+    private static bool _versionLogged;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetVersionLog() => _versionLogged = false;
+
+    // ---------------------------------------------------------------- credits
+
+    /// <summary>The CREDITS button: opens the scrolling credits panel over the title screen (the data is <see cref="CreditsList"/>).</summary>
+    private void ShowCredits()
+    {
+        TouchInput.Poll();
+        if (_creditsScreen == null) BuildCreditsScreen(_titleScreen.transform.parent);
+        _creditsScreen.transform.SetAsLastSibling();
+        _creditsScroll.verticalNormalizedPosition = 1f;
+        _titleScreen.SetActive(false);
+        _creditsScreen.SetActive(true);
+    }
+
+    private void CloseCredits()
+    {
+        _creditsScreen.SetActive(false);
+        _titleScreen.SetActive(true);
+    }
+
+    /// <summary>The credits panel: heading, the "made by" line, a scrollable list built from <see cref="CreditsList"/>, BACK and the version.</summary>
+    private void BuildCreditsScreen(Transform canvas)
+    {
+        _creditsScreen = RuntimeUi.CreatePanel(canvas, "CreditsScreen", new Color(0.02f, 0.02f, 0.03f, 0.97f));
+        Transform root = _creditsScreen.transform;
+
+        TextMeshProUGUI heading = RuntimeUi.CreateText(root, "Heading", L10n.T("ui.credits.title"), 76f, accent);
+        RuntimeUi.Bind(heading, "ui.credits.title", 0.6f);
+        heading.fontStyle = FontStyles.Bold;
+        heading.characterSpacing = 10f;
+        RuntimeUi.Place(heading.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -110f), new Vector2(1400f, 100f));
+
+        TextMeshProUGUI madeBy = RuntimeUi.CreateText(root, "MadeBy", gameTitle + "  -  " + CreditsList.DeveloperName, 34f, new Color(0.88f, 0.88f, 0.9f));
+        RuntimeUi.AutoFit(madeBy, 0.6f);
+        RuntimeUi.Place(madeBy.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -190f), new Vector2(1400f, 50f));
+
+        // Scroll view: a masked viewport (its transparent Image catches drags/taps for touch) over a vertical stack that sizes itself to its text.
+        GameObject viewport = new GameObject("Viewport");
+        viewport.transform.SetParent(root, false);
+        viewport.layer = root.gameObject.layer;
+        Image hit = viewport.AddComponent<Image>();
+        hit.color = new Color(0f, 0f, 0f, 0f);
+        viewport.AddComponent<RectMask2D>();
+        RuntimeUi.Place(hit.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0f, -45f), new Vector2(1400f, 690f));
+
+        GameObject content = new GameObject("Content", typeof(RectTransform));
+        content.transform.SetParent(viewport.transform, false);
+        content.layer = root.gameObject.layer;
+        RectTransform contentRect = (RectTransform)content.transform;
+        contentRect.anchorMin = new Vector2(0f, 1f);
+        contentRect.anchorMax = new Vector2(1f, 1f);
+        contentRect.pivot = new Vector2(0.5f, 1f);
+        contentRect.anchoredPosition = Vector2.zero;
+        contentRect.sizeDelta = Vector2.zero;
+        VerticalLayoutGroup stack = content.AddComponent<VerticalLayoutGroup>();
+        stack.spacing = 10f;
+        stack.padding = new RectOffset(30, 30, 10, 30);
+        stack.childAlignment = TextAnchor.UpperCenter;
+        stack.childControlWidth = true;
+        stack.childControlHeight = true;
+        stack.childForceExpandWidth = true;
+        stack.childForceExpandHeight = false;
+        content.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+        foreach (CreditsList.Section section in CreditsList.Sections)
+        {
+            TextMeshProUGUI head = RuntimeUi.CreateText(content.transform, "Heading", L10n.T(section.HeadingKey), 42f, accent);
+            RuntimeUi.Bind(head, section.HeadingKey);
+            head.fontStyle = FontStyles.Bold;
+            head.characterSpacing = 6f;
+            head.margin = new Vector4(0f, 22f, 0f, 4f);
+
+            foreach (string line in section.Lines)
+            {
+                TextMeshProUGUI entry = RuntimeUi.CreateText(content.transform, "Line", line, 30f, new Color(0.82f, 0.82f, 0.86f));
+                entry.textWrappingMode = TextWrappingModes.Normal;
+            }
+        }
+
+        TextMeshProUGUI version = RuntimeUi.CreateText(content.transform, "Version", VersionLabel(), 26f, new Color(0.6f, 0.6f, 0.64f, 0.8f));
+        version.margin = new Vector4(0f, 30f, 0f, 0f);
+
+        _creditsScroll = viewport.AddComponent<ScrollRect>();
+        _creditsScroll.viewport = hit.rectTransform;
+        _creditsScroll.content = contentRect;
+        _creditsScroll.horizontal = false;
+        _creditsScroll.vertical = true;
+        _creditsScroll.movementType = ScrollRect.MovementType.Clamped;
+        _creditsScroll.scrollSensitivity = 45f;
+
+        Button back = RuntimeUi.CreateButton(root, L10n.T("ui.common.back"),
+            new Vector2(0f, 40f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+        RuntimeUi.BindButton(back, "ui.common.back");
+        back.onClick.AddListener(CloseCredits);
+    }
+
+    /// <summary>Escape / gamepad B / the touch pause button close the credits; arrow keys and the right stick scroll them.</summary>
+    private void UpdateCredits()
+    {
+        bool back = TouchInput.Pressed(TouchInput.TouchAction.Pause);
+        float scroll = 0f;
+#if ENABLE_INPUT_SYSTEM
+        if (UnityEngine.InputSystem.Keyboard.current != null)
+        {
+            var kb = UnityEngine.InputSystem.Keyboard.current;
+            if (kb.escapeKey.wasPressedThisFrame) back = true;
+            if (kb.downArrowKey.isPressed) scroll -= 1f;
+            if (kb.upArrowKey.isPressed) scroll += 1f;
+        }
+        if (UnityEngine.InputSystem.Gamepad.current != null)
+        {
+            var pad = UnityEngine.InputSystem.Gamepad.current;
+            if (pad.buttonEast.wasPressedThisFrame) back = true;
+            scroll += pad.rightStick.ReadValue().y;
+        }
+#endif
+        if (back) { CloseCredits(); return; }
+        if (Mathf.Abs(scroll) > 0.05f)
+        {
+            // Unscaled: the title screen runs at timeScale 0. 900 px of content per second at full deflection.
+            RectTransform content = _creditsScroll.content;
+            float range = Mathf.Max(1f, content.rect.height - ((RectTransform)_creditsScroll.viewport).rect.height);
+            _creditsScroll.verticalNormalizedPosition = Mathf.Clamp01(_creditsScroll.verticalNormalizedPosition + scroll * 900f * Time.unscaledDeltaTime / range);
+        }
     }
 
 

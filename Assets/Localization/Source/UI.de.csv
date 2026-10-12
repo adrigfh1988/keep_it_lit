@@ -166,3 +166,11 @@ ui.descent.end.seed,SEED {seed}
 ui.descent.end.best,TIEFSTER WERT: EBENE -{n}
 ui.descent.end.new_best,DIE STERNE REICHEN TIEFER ALS BEIM LETZTEN MAL.
 ui.descent.end.close,KEINE ENTLASSUNG.
+ui.menu.credits,CREDITS
+ui.credits.title,CREDITS
+ui.credits.music,MUSIK
+ui.credits.sound,SOUND
+ui.credits.art,GRAFIK
+ui.credits.characters,FIGUREN UND ANIMATION
+ui.credits.fonts,SCHRIFTARTEN
+ui.credits.unity,UNITY

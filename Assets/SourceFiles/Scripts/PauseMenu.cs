@@ -117,7 +117,9 @@ public class PauseMenu : MonoBehaviour
         if (AsylumHub.Active != null && AsylumHub.Active.IsTransitioning) return false; // F92: not mid arrival or mid walk through a wing door
         if (_menu != null && _menu.IsOpen) return false;
         if (GameOutcome.IsOver) return false;
-        if (_outcome != null && _outcome.IsEnding) return false;
+        // F93: the finale walk back through the asylum runs "ending" until an ending is chosen, but it is free play, so it can pause; the
+        // two ending cutscenes block it through IsTransitioning above.
+        if (_outcome != null && _outcome.IsEnding && !(HubState.IsFinale && GameFlow.IsInHub)) return false;
         // The Esc that closes the shop panel must not also open the pause menu in the same frame -
         // Update order between the two components is not defined.
         if (_shopMenu != null && (_shopMenu.IsOpen || _shopMenu.ClosedThisFrame)) return false;

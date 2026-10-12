@@ -845,6 +845,46 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331692992135351
+  - m_Id: 827458641104896
+    m_Key: ui.menu.credits
+    m_Metadata:
+      m_Items:
+      - rid: 4707331721657843949
+  - m_Id: 827458737573888
+    m_Key: ui.credits.title
+    m_Metadata:
+      m_Items:
+      - rid: 4707331721657843950
+  - m_Id: 827458737573889
+    m_Key: ui.credits.music
+    m_Metadata:
+      m_Items:
+      - rid: 4707331721657843951
+  - m_Id: 827458737573890
+    m_Key: ui.credits.sound
+    m_Metadata:
+      m_Items:
+      - rid: 4707331721657843952
+  - m_Id: 827458737573891
+    m_Key: ui.credits.art
+    m_Metadata:
+      m_Items:
+      - rid: 4707331721657843953
+  - m_Id: 827458737573892
+    m_Key: ui.credits.characters
+    m_Metadata:
+      m_Items:
+      - rid: 4707331721657843954
+  - m_Id: 827458737573893
+    m_Key: ui.credits.fonts
+    m_Metadata:
+      m_Items:
+      - rid: 4707331721657843955
+  - m_Id: 827458737573894
+    m_Key: ui.credits.unity
+    m_Metadata:
+      m_Items:
+      - rid: 4707331721657843956
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -1520,3 +1560,35 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: What the hunter does now that it learned you sprint a lot. Same places and limits as ui.hunter.effect.lockers
+    - rid: 4707331721657843949
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Title screen: open the credits panel (200 x 86 button, 40 pt, auto-size)'
+    - rid: 4707331721657843950
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Credits panel heading (76 pt, one line, 1400 px)
+    - rid: 4707331721657843951
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Credits section heading: music (40 pt, one line)'
+    - rid: 4707331721657843952
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Credits section heading: sound effects (40 pt, one line)'
+    - rid: 4707331721657843953
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Credits section heading: art and environments (40 pt, one line)'
+    - rid: 4707331721657843954
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Credits section heading: characters and animation (40 pt, one line)'
+    - rid: 4707331721657843955
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Credits section heading: fonts (40 pt, one line)'
+    - rid: 4707331721657843956
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Credits section heading: Unity Technologies (40 pt, one line)'

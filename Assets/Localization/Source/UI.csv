@@ -166,3 +166,11 @@ ui.descent.end.seed,"DESCENT end screen: the seed of the level you died on (30 p
 ui.descent.end.best,"DESCENT end screen: the record (36 pt green, one line). {n} = deepest level ever reached, shown as -n",DEEPEST ON RECORD: LEVEL -{n}
 ui.descent.end.new_best,"DESCENT end screen: shown only when this run beat the record (36 pt amber, one line)",THE STARS GO DEEPER THAN LAST TIME.
 ui.descent.end.close,"DESCENT end screen: closing line (44 pt red, one line)",NO DISCHARGE.
+ui.menu.credits,"Title screen: open the credits panel (200 x 86 button, 40 pt, auto-size)",CREDITS
+ui.credits.title,"Credits panel heading (76 pt, one line, 1400 px)",CREDITS
+ui.credits.music,"Credits section heading: music (40 pt, one line)",MUSIC
+ui.credits.sound,"Credits section heading: sound effects (40 pt, one line)",SOUND
+ui.credits.art,"Credits section heading: art and environments (40 pt, one line)",ART
+ui.credits.characters,"Credits section heading: characters and animation (40 pt, one line)",CHARACTERS AND ANIMATION
+ui.credits.fonts,"Credits section heading: fonts (40 pt, one line)",FONTS
+ui.credits.unity,"Credits section heading: Unity Technologies (40 pt, one line)",UNITY

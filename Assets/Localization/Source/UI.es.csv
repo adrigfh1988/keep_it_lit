@@ -166,3 +166,11 @@ ui.descent.end.seed,SEMILLA {seed}
 ui.descent.end.best,MÁS PROFUNDO REGISTRADO: NIVEL -{n}
 ui.descent.end.new_best,LAS ESTRELLAS LLEGAN MÁS HONDO QUE LA VEZ ANTERIOR.
 ui.descent.end.close,SIN ALTA MÉDICA.
+ui.menu.credits,CRÉDITOS
+ui.credits.title,CRÉDITOS
+ui.credits.music,MÚSICA
+ui.credits.sound,SONIDO
+ui.credits.art,ARTE
+ui.credits.characters,PERSONAJES Y ANIMACIÓN
+ui.credits.fonts,TIPOGRAFÍAS
+ui.credits.unity,UNITY

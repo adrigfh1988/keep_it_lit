@@ -982,7 +982,7 @@ MonoBehaviour:
     - line: '|   cloudProjectId: de456c88-69c5-4469-9471-5db925e553ff'
     - line: '|   framebufferDepthMemorylessMode: 0'
     - line: '|   qualitySettingsNames: []'
-    - line: '|   projectName: keep_it_lit'
+    - line: '|   projectName: Keep It Lit'
     - line: '|   organizationId: adrianfloresh'
     - line: '|   cloudEnabled: 0'
     - line: '|   legacyClampBlendShapeWeights: 0'

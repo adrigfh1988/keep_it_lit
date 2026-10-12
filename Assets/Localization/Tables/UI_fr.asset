@@ -718,6 +718,38 @@ MonoBehaviour:
     m_Localized: "\xC7A VOUS ENTEND COURIR DE PLUS LOIN"
     m_Metadata:
       m_Items: []
+  - m_Id: 827458641104896
+    m_Localized: "CR\xC9DITS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 827458737573888
+    m_Localized: "CR\xC9DITS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 827458737573889
+    m_Localized: MUSIQUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 827458737573890
+    m_Localized: SON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 827458737573891
+    m_Localized: ART
+    m_Metadata:
+      m_Items: []
+  - m_Id: 827458737573892
+    m_Localized: PERSONNAGES ET ANIMATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 827458737573893
+    m_Localized: POLICES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 827458737573894
+    m_Localized: UNITY
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

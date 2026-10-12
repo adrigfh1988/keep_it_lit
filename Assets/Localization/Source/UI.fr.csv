@@ -166,3 +166,11 @@ ui.descent.end.seed,GRAINE {seed}
 ui.descent.end.best,PLUS PROFOND ENREGISTRÉ: NIVEAU -{n}
 ui.descent.end.new_best,LES ÉTOILES VONT PLUS BAS QUE LA DERNIÈRE FOIS.
 ui.descent.end.close,PAS DE SORTIE AUTORISÉE.
+ui.menu.credits,CRÉDITS
+ui.credits.title,CRÉDITS
+ui.credits.music,MUSIQUE
+ui.credits.sound,SON
+ui.credits.art,ART
+ui.credits.characters,PERSONNAGES ET ANIMATION
+ui.credits.fonts,POLICES
+ui.credits.unity,UNITY

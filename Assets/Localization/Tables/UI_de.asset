@@ -720,6 +720,38 @@ MonoBehaviour:
     m_Localized: "ES H\xD6RT DICH AUS GR\xD6SSERER ENTFERNUNG RENNEN"
     m_Metadata:
       m_Items: []
+  - m_Id: 827458641104896
+    m_Localized: CREDITS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 827458737573888
+    m_Localized: CREDITS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 827458737573889
+    m_Localized: MUSIK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 827458737573890
+    m_Localized: SOUND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 827458737573891
+    m_Localized: GRAFIK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 827458737573892
+    m_Localized: FIGUREN UND ANIMATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 827458737573893
+    m_Localized: SCHRIFTARTEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 827458737573894
+    m_Localized: UNITY
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
