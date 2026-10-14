@@ -235,9 +235,10 @@ public static partial class AsylumHubBuilder
         Transform deskPoint = hub.points != null ? hub.points.Find("Director_Desk") : null;
         Vector3 deskPos = deskPoint != null ? deskPoint.position : hub.transform.position;
         float floorY = deskPos.y - 0.05f;
-        // By the desk, on the side the player comes from, a few steps away from where they arrive.
-        Vector3 around = new Vector3(106.6f, floorY, -58.6f);
-        if (!FreeSpotNear(around, 0f, 2.4f, floorY, deskPos, out Vector3 spot)) { Debug.LogWarning("Asylum story layer: no free spot for the Director near his desk."); spot = around; }
+        // F115: behind his desk (north of it), beside his chair, facing the room - derived from the desk, so a rebuild puts him there again.
+        Transform deskT = FindBuilding("TableOffice (1)");
+        Vector3 spot = deskT != null ? DirectorSpotFor(RendBounds(deskT.gameObject), FloorLevel) : new Vector3(106.6f, floorY, -58.6f);
+        if (deskT == null) Debug.LogWarning("Asylum story layer: the Director's desk (TableOffice (1)) was not found; the Director stands at the old spot.");
 
         Transform holder = Group(finale, "Director");
         GameObject body = (GameObject)PrefabUtility.InstantiatePrefab(model, holder);

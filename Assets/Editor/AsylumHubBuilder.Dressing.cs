@@ -41,7 +41,7 @@ public static partial class AsylumHubBuilder
         new RoomDef("Morgue", 1.15f, 124.8f, 131.3f, -57.2f, -46.6f),
         new RoomDef("MachineRoom", 0.07f, 106.4f, 114.2f, -56f, -45.2f),
         new RoomDef("Surgery", 8.82f, 93.3f, 102.4f, -63.8f, -56.9f),
-        new RoomDef("Office", 8.82f, 103.3f, 111.6f, -63.8f, -56.0f),
+        new RoomDef("Office", 8.82f, 103.3f, 117.6f, -63.8f, -56.0f), // F115: the office and the lounge where the staff kitchen was
         new RoomDef("DayRoom", 5.0f, 114.8f, 129.3f, -81.8f, -63.9f),
         new RoomDef("OfficeA", 5.0f, 83.9f, 92.9f, -63.8f, -56.9f),
         new RoomDef("Bedroom", 8.82f, 71.8f, 86.6f, -82f, -64f),

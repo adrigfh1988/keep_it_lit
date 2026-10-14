@@ -58,6 +58,7 @@ public static partial class AsylumHubBuilder
         missing.AddRange(G7Missing(life));
         missing.AddRange(G8Missing(hub));
         missing.AddRange(G9Missing(hub));
+        missing.AddRange(G10Missing(hub));
         return missing;
     }
 
@@ -112,7 +113,9 @@ public static partial class AsylumHubBuilder
         AddG4(hub, life, report);
         AddG8(hub, report);
         AddG9(hub, report);
-        _rebakeNeeded = before != life.childCount;
+        _suiteChanged = false;
+        AddG10(hub, report);
+        _rebakeNeeded = before != life.childCount || _suiteChanged;
         // The hub NavMesh last: it is baked from the colliders in place. Skipped when it already exists.
         if (hub.transform.Find(HubNavMesh.NavigationName) == null) report.AppendLine("navmesh: " + HubNavMesh.Bake(hub));
         else if (_rebakeNeeded) report.AppendLine("navmesh rebake: " + HubNavMesh.Bake(hub));

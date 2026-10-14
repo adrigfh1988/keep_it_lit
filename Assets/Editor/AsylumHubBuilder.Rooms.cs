@@ -184,6 +184,7 @@ public static partial class AsylumHubBuilder
 
     private static void Office(DressRoomCtx r)
     {
+        if (r != null) return; // F115: the Director's office is furnished by AddG10 (AsylumHubBuilder.DirectorSuite*.cs); a regenerate must not put the clutter back
         Frame a = FindArea(r, 3.4f, 2.4f, true);
         InFrame(r, a, "Carpet", 0f, 1.4f, 0f, 1f, false, false);
         Placed desk = InFrame(r, a, "TableOffice", 0f, 0.65f, 0f, 1f, true);

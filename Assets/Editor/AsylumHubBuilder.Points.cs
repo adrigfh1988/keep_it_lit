@@ -39,11 +39,22 @@ public static partial class AsylumHubBuilder
 
     private static void Hook(AsylumHub hub, string pointName, string room)
     {
+        if (pointName == "Director_Desk" && TryDirectorDeskPoint(out Vector3 deskPoint)) { Point(hub.points, pointName, deskPoint, 0f); return; }
         Bounds b = RoomBounds(_building, room, 0f);
         if (b.size == Vector3.zero) return;
         Vector3 p = b.center;
         FloorAt(p, b.min.y + 1.5f, out float y);
         Point(hub.points, pointName, new Vector3(p.x, y + 0.05f, p.z), 0f);
+    }
+
+    /// <summary>F115: the Director_Desk point derives from the desk (visitor side, 2.5 m from its front edge, facing it), not from the room centre.</summary>
+    private static bool TryDirectorDeskPoint(out Vector3 point)
+    {
+        point = default;
+        Transform desk = _building != null ? _building.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "TableOffice (1)") : null;
+        if (desk == null) return false;
+        point = DeskPointFor(RendBounds(desk.gameObject), FloorLevel);
+        return true;
     }
 
     /// <summary>Highest collider surface under `from` within 4 m, ignoring nothing but triggers.</summary>

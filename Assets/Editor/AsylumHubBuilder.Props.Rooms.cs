@@ -221,6 +221,7 @@ public static partial class AsylumHubBuilder
 
     private static void RoomDirector(DressRoomCtx r)
     {
+        if (r != null) return; // F115: the Director's office is furnished by AddG10 (AsylumHubBuilder.DirectorSuite*.cs)
         WallHang(r, "alch:Alch_Painting4", 1.8f);
         WallItem(r, "Cupboard", 2.1f, 0.65f);
         Frame f = FindArea(r, 3.0f, 2.2f, false);

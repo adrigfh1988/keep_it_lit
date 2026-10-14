@@ -69,7 +69,8 @@ public class HubFinale : MonoBehaviour
         }
 
         // The desk lamp: the nearest light to the desk, as it was.
-        Light lamp = Nearest(all, deskPos, null, 9f);
+        // F115: never a wing beacon (they are switched off below) - the office fill light over the desk is what is meant.
+        Light lamp = Nearest(all, deskPos, exempt, 9f);
         HashSet<Light> keep = new HashSet<Light>();
         if (lamp != null) keep.Add(lamp);
 

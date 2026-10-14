@@ -61,6 +61,7 @@ public static partial class AsylumHubBuilder
             }
             case "Office":
             {
+                if (r != null) break; // F115: the Director's office is furnished by AddG10; a regenerate must not put the projector tableau back
                 Placed to = Existing(r, "TableOffice (1)");
                 On(r, to, "m:desk_lamp", 0.55f, -0.2f, 150f, 1.2f);
                 On(r, to, "m:notebook", 0.2f, 0.45f, 20f, 1f);
