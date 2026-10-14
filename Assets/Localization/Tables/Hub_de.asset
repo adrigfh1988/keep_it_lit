@@ -711,6 +711,29 @@ MonoBehaviour:
     m_Localized: DU WACHST AM AUFZUG AUF. ES IST NOCH HIER UNTEN.
     m_Metadata:
       m_Items: []
+  - m_Id: 1534062728048640
+    m_Localized: DURCHSUCHEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1534062807740416
+    m_Localized: DURCHSUCHT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1534062807740417
+    m_Localized: 'GEFUNDEN: {item}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763208
+  - m_Id: 1534062811934720
+    m_Localized: "GEFUNDEN: {item}  \xB7  WIRKT AUF DER N\xC4CHSTEN ETAGE"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763208
+  - m_Id: 1534062811934721
+    m_Localized: '{n} {currency} GEFUNDEN'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763208
   references:
     version: 2
     RefIds:
@@ -743,3 +766,6 @@ MonoBehaviour:
         - id: 392073355
         - id: 392073362
         - id: 392073374
+        - id: 1534062807740417
+        - id: 1534062811934720
+        - id: 1534062811934721

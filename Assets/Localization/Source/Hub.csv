@@ -168,3 +168,8 @@ hub.stars.first,"Subtitle (4.5 s, queued) the first time the player walks up to 
 hub.liftchase.run,"Subtitle (3.5 s) on floor 2 when the player steps out of the jammed lift: the pursuer is on the basement stairs and the only way on is the Boiler Room wing door. ALL CAPS. ""IT"" = the pursuer",IT IS ON THE STAIRS. RUN TO THE BOILER ROOM.
 hub.liftchase.again,"Subtitle (3.5 s) when the floor-2 pursuer comes down the stairs again after a catch. ALL CAPS. ""IT"" = the pursuer",IT IS COMING BACK DOWN. THE BOILER ROOM.
 hub.liftchase.wake,"Subtitle (3.2 s) after a catch on floor 2: the player wakes at the lift doors in the basement, not upstairs. ALL CAPS. ""IT"" = the pursuer",YOU WAKE BY THE LIFT. IT IS STILL DOWN HERE.
+hub.cache.search,"Prompt after the E key cap (hold E) on a searchable spot in a hub room: a mirror cabinet, a cistern, the fridge, a case, a drawer, a mattress. ALL CAPS, one or two words",SEARCH
+hub.cache.searched,"Prompt on a hub room find that has already been searched. Not normally shown (a searched spot is not offered again). ALL CAPS",SEARCHED
+hub.cache.found,"Subtitle (3 s) after searching a hub room find: an item the player can use now. {item} = the item's shop name. ALL CAPS label",FOUND: {item}
+hub.cache.found_next,"Subtitle (3 s) after searching a hub room find: a perk that applies on the next floor. {item} = the item's shop name",FOUND: {item}  ·  IT WORKS ON THE NEXT FLOOR
+hub.cache.found_shards,"Subtitle (3 s) after searching a hub room find that held shards. {n} = the amount, {currency} = the shards currency (see shop.currency), ALL CAPS",FOUND {n} {currency}

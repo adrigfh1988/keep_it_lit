@@ -168,3 +168,8 @@ hub.stars.first,QUELQU'UN A DESSINÉ DES ÉTOILES SUR LE MUR. ELLES BRILLENT ENC
 hub.liftchase.run,ÇA DESCEND L'ESCALIER. COURS À LA CHAUFFERIE.
 hub.liftchase.again,ÇA REDESCEND. LA CHAUFFERIE.
 hub.liftchase.wake,TU TE RÉVEILLES PRÈS DE L'ASCENSEUR. ÇA EST TOUJOURS EN BAS.
+hub.cache.search,FOUILLER
+hub.cache.searched,FOUILLÉ
+hub.cache.found,TROUVÉ: {item}
+hub.cache.found_next,TROUVÉ: {item}  ·  FONCTIONNE À L'ÉTAGE SUIVANT
+hub.cache.found_shards,TROUVÉ {n} {currency}

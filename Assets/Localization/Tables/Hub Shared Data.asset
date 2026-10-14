@@ -850,6 +850,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331767211393312
+  - m_Id: 1534062728048640
+    m_Key: hub.cache.search
+    m_Metadata:
+      m_Items:
+      - rid: 4707331767211393342
+  - m_Id: 1534062807740416
+    m_Key: hub.cache.searched
+    m_Metadata:
+      m_Items:
+      - rid: 4707331767211393343
+  - m_Id: 1534062807740417
+    m_Key: hub.cache.found
+    m_Metadata:
+      m_Items:
+      - rid: 4707331767211393344
+  - m_Id: 1534062811934720
+    m_Key: hub.cache.found_next
+    m_Metadata:
+      m_Items:
+      - rid: 4707331767211393345
+  - m_Id: 1534062811934721
+    m_Key: hub.cache.found_shards
+    m_Metadata:
+      m_Items:
+      - rid: 4707331767211393346
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -1529,3 +1554,23 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: 'Subtitle (3.2 s) after a catch on floor 2: the player wakes at the lift doors in the basement, not upstairs. ALL CAPS. "IT" = the pursuer'
+    - rid: 4707331767211393342
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Prompt after the E key cap (hold E) on a searchable spot in a hub room: a mirror cabinet, a cistern, the fridge, a case, a drawer, a mattress. ALL CAPS, one or two words'
+    - rid: 4707331767211393343
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Prompt on a hub room find that has already been searched. Not normally shown (a searched spot is not offered again). ALL CAPS
+    - rid: 4707331767211393344
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (3 s) after searching a hub room find: an item the player can use now. {item} = the item''s shop name. ALL CAPS label'
+    - rid: 4707331767211393345
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (3 s) after searching a hub room find: a perk that applies on the next floor. {item} = the item''s shop name'
+    - rid: 4707331767211393346
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (3 s) after searching a hub room find that held shards. {n} = the amount, {currency} = the shards currency (see shop.currency), ALL CAPS

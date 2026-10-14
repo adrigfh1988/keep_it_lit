@@ -168,3 +168,8 @@ hub.stars.first,ALGUIEN HA DIBUJADO ESTRELLAS EN LA PARED. TODAVÍA BRILLAN.
 hub.liftchase.run,ESTÁ EN LA ESCALERA. CORRE A LA SALA DE CALDERAS.
 hub.liftchase.again,VUELVE A BAJAR. LA SALA DE CALDERAS.
 hub.liftchase.wake,DESPIERTAS JUNTO AL ASCENSOR. SIGUE AQUÍ ABAJO.
+hub.cache.search,REGISTRAR
+hub.cache.searched,REGISTRADO
+hub.cache.found,ENCONTRADO: {item}
+hub.cache.found_next,ENCONTRADO: {item}  ·  FUNCIONA EN LA SIGUIENTE PLANTA
+hub.cache.found_shards,ENCONTRADOS {n} {currency}

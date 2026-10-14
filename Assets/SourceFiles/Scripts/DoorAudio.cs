@@ -129,6 +129,100 @@ public static class DoorAudio
         return clip;
     }
 
+
+    /// <summary>
+    /// F114: rummaging through a cabinet or drawer - four short dull clunks at irregular 0.1-0.25 s spacing mixed into one 0.9 s clip, each a
+    /// decaying low tone (300-700 Hz) with a bit of noise. Deterministic seed.
+    /// </summary>
+    public static AudioClip BuildRummageClip()
+    {
+        const int sampleRate = 44100;
+        const float duration = 0.9f;
+        int sampleCount = Mathf.CeilToInt(sampleRate * duration);
+        float[] samples = new float[sampleCount];
+        System.Random rng = new System.Random(114);
+
+        float start = 0.02f;
+        for (int hit = 0; hit < 4; hit++)
+        {
+            float frequency = 300f + (float)rng.NextDouble() * 400f;
+            int first = Mathf.CeilToInt(start * sampleRate);
+            for (int i = first; i < sampleCount; i++)
+            {
+                float t = (i - first) / (float)sampleRate;
+                if (t > 0.12f) break;
+                float envelope = Mathf.Exp(-t / 0.03f) * Mathf.Clamp01(t / 0.002f);
+                float noise = (float)(rng.NextDouble() * 2.0 - 1.0);
+                samples[i] += Mathf.Lerp(Mathf.Sin(2f * Mathf.PI * frequency * t), noise, 0.7f) * envelope * 0.7f;
+            }
+            start += 0.1f + (float)rng.NextDouble() * 0.15f;
+        }
+
+        Normalise(samples, 0.8f);
+        AudioClip clip = AudioClip.Create("Rummage", sampleCount, 1, sampleRate, false);
+        clip.SetData(samples, 0);
+        return clip;
+    }
+
+    /// <summary>F114: a chair dragged on the floor - 0.4 s of band-passed noise around 900 Hz with a 30 Hz stick-slip amplitude wobble.</summary>
+    public static AudioClip BuildScrapeClip()
+    {
+        const int sampleRate = 22050;
+        const float duration = 0.4f;
+        int sampleCount = Mathf.CeilToInt(sampleRate * duration);
+        float[] samples = new float[sampleCount];
+        System.Random rng = new System.Random(1141);
+        float lowA = 0f, lowB = 0f;
+
+        for (int i = 0; i < sampleCount; i++)
+        {
+            float t = i / (float)sampleRate;
+            float noise = (float)(rng.NextDouble() * 2.0 - 1.0);
+            lowA += (noise - lowA) * 0.35f; // low-pass ~ 1.8 kHz
+            lowB += (noise - lowB) * 0.06f; // low-pass ~ 300 Hz, subtracted: a crude band-pass
+            float band = lowA - lowB;
+            float stick = 0.35f + 0.65f * Mathf.Abs(Mathf.Sin(Mathf.PI * 30f * t + 0.8f * Mathf.Sin(2f * Mathf.PI * 4f * t)));
+            float envelope = Mathf.Clamp01(t / 0.03f) * Mathf.Clamp01((duration - t) / 0.12f);
+            samples[i] = band * stick * envelope;
+        }
+
+        Normalise(samples, 0.7f);
+        AudioClip clip = AudioClip.Create("ChairScrape", sampleCount, 1, sampleRate, false);
+        clip.SetData(samples, 0);
+        return clip;
+    }
+
+    /// <summary>F114: the hiss of a television with no signal - 2 s of high-passed white noise, faded in and out at the ends so it loops without a click.</summary>
+    public static AudioClip BuildStaticHissClip()
+    {
+        const int sampleRate = 22050;
+        const float duration = 2f;
+        int sampleCount = Mathf.CeilToInt(sampleRate * duration);
+        float[] samples = new float[sampleCount];
+        System.Random rng = new System.Random(1142);
+        float low = 0f;
+
+        for (int i = 0; i < sampleCount; i++)
+        {
+            float noise = (float)(rng.NextDouble() * 2.0 - 1.0);
+            low += (noise - low) * 0.12f;
+            samples[i] = noise - low; // high-pass: the noise minus its low-passed self
+        }
+
+        int fade = sampleRate / 20;
+        for (int i = 0; i < fade; i++)
+        {
+            float g = i / (float)fade;
+            samples[i] *= g;
+            samples[sampleCount - 1 - i] *= g;
+        }
+
+        Normalise(samples, 0.6f);
+        AudioClip clip = AudioClip.Create("TvStaticHiss", sampleCount, 1, sampleRate, false);
+        clip.SetData(samples, 0);
+        return clip;
+    }
+
     /// <summary>A copy of `source` through a one-pole low-pass (`alpha` 0.02 = very dull, 1 = untouched): a sound heard through walls.</summary>
     public static AudioClip Muffle(AudioClip source, float alpha)
     {

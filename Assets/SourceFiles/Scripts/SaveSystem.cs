@@ -43,6 +43,9 @@ public class SaveData
 
     // F105 C4 LoopCorridor.UsedThisCampaign: the looping corridor has already appeared on a cleared floor. Missing in an older save (false = it may still appear), so no Version bump.
     public bool loopCorridorUsed;
+
+    // F114 HubCaches.SearchedMask: bit n = hub room find n has been searched this campaign. Missing in an older save (0 = nothing searched), so no Version bump.
+    public int hubCachesSearched;
 }
 
 /// <summary>
@@ -163,6 +166,7 @@ public static class SaveSystem
             ContractState.CaptureTo(d);
             HunterMemory.CaptureTo(d);
             LoopCorridor.CaptureTo(d);
+            HubCaches.CaptureTo(d);
 
             Store.Write(JsonUtility.ToJson(d));
         }
@@ -200,6 +204,7 @@ public static class SaveSystem
         ContractState.RestoreFrom(d);
         HunterMemory.RestoreFrom(d);
         LoopCorridor.RestoreFrom(d);
+        HubCaches.RestoreFrom(d);
 
         GameFlow.CurrentFloor = d.floor;
         CopyRolledObjectives(d);

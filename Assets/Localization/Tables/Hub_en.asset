@@ -711,6 +711,29 @@ MonoBehaviour:
     m_Localized: YOU WAKE BY THE LIFT. IT IS STILL DOWN HERE.
     m_Metadata:
       m_Items: []
+  - m_Id: 1534062728048640
+    m_Localized: SEARCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1534062807740416
+    m_Localized: SEARCHED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1534062807740417
+    m_Localized: 'FOUND: {item}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 1534062811934720
+    m_Localized: "FOUND: {item}  \xB7  IT WORKS ON THE NEXT FLOOR"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 1534062811934721
+    m_Localized: FOUND {n} {currency}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
   references:
     version: 2
     RefIds:
@@ -743,3 +766,6 @@ MonoBehaviour:
         - id: 392073355
         - id: 392073362
         - id: 392073374
+        - id: 1534062807740417
+        - id: 1534062811934720
+        - id: 1534062811934721

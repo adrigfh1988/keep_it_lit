@@ -711,6 +711,29 @@ MonoBehaviour:
     m_Localized: "DESPIERTAS JUNTO AL ASCENSOR. SIGUE AQU\xCD ABAJO."
     m_Metadata:
       m_Items: []
+  - m_Id: 1534062728048640
+    m_Localized: REGISTRAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1534062807740416
+    m_Localized: REGISTRADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1534062807740417
+    m_Localized: 'ENCONTRADO: {item}'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763214
+  - m_Id: 1534062811934720
+    m_Localized: "ENCONTRADO: {item}  \xB7  FUNCIONA EN LA SIGUIENTE PLANTA"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763214
+  - m_Id: 1534062811934721
+    m_Localized: ENCONTRADOS {n} {currency}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763214
   references:
     version: 2
     RefIds:
@@ -743,3 +766,6 @@ MonoBehaviour:
         - id: 392073355
         - id: 392073362
         - id: 392073374
+        - id: 1534062807740417
+        - id: 1534062811934720
+        - id: 1534062811934721

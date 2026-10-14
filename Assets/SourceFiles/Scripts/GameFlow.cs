@@ -139,6 +139,7 @@ public static class GameFlow
         ContractState.ResetCampaign();
         HunterMemory.ResetCampaign(); // F105 C6
         LoopCorridor.ResetCampaign(); // F105 C4
+        HubCaches.ResetCampaign(); // F114
         System.Array.Clear(RolledObjectives, 0, RolledObjectives.Length);
         Reload();
     }

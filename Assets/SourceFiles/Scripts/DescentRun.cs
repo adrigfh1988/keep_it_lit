@@ -56,6 +56,7 @@ public static class DescentRun
         ContractState.ResetCampaign();
         HunterMemory.ResetCampaign();
         LoopCorridor.ResetCampaign();
+        HubCaches.ResetCampaign(); // F114
         System.Array.Clear(GameFlow.RolledObjectives, 0, GameFlow.RolledObjectives.Length);
     }
 

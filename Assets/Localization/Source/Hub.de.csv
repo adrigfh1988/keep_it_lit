@@ -168,3 +168,8 @@ hub.stars.first,JEMAND HAT STERNE AN DIE WAND GEMALT. SIE LEUCHTEN NOCH.
 hub.liftchase.run,ES IST AUF DER TREPPE. LAUF ZUM KESSELRAUM.
 hub.liftchase.again,ES KOMMT WIEDER RUNTER. DER KESSELRAUM.
 hub.liftchase.wake,DU WACHST AM AUFZUG AUF. ES IST NOCH HIER UNTEN.
+hub.cache.search,DURCHSUCHEN
+hub.cache.searched,DURCHSUCHT
+hub.cache.found,GEFUNDEN: {item}
+hub.cache.found_next,GEFUNDEN: {item}  ·  WIRKT AUF DER NÄCHSTEN ETAGE
+hub.cache.found_shards,{n} {currency} GEFUNDEN
