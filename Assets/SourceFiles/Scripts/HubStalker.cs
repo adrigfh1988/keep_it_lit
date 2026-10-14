@@ -10,7 +10,7 @@ using UnityEngine.AI;
 /// after the player. It never touches GameOutcome: a catch (about 1.1 m with sight) is a blackout, a sting and "You wake at the door."
 /// at the hub arrival, after which it resets. It ignores a hidden player (a locker), sees 60 degrees / 12 m (18 m with the focused torch
 /// on), hears sprinting within 8 m, loses sight after 4 s, searches the last seen spot for 6 s and goes back to patrolling. Chase speed is
-/// the player's walk speed x 1.15 (a sprint escapes it) and drops 15 % after two catches in one visit. The body lives under
+/// the player's walk speed x 1.15 (a sprint escapes it) and drops 15 % after two catches in one visit (F113: floor 2's lift chase uses it too, with its own run speed and wake line). The body lives under
 /// AsylumHub/Life/Pursuer (inactive by default); the NavMeshAgent uses the "Hub" agent type.
 /// </summary>
 public class HubStalker : MonoBehaviour
@@ -40,6 +40,10 @@ public class HubStalker : MonoBehaviour
 
     [Tooltip("The chase never loses track of the player (the floor-4 stair chase); a hidden player still breaks it.")]
     public bool relentless;
+    /// <summary>F113: a set piece sets a chase speed (m/s) of its own (the floor-2 lift chase runs); 0 = the player walk speed x chaseMultiplier. A set piece clears it when it ends.</summary>
+    [System.NonSerialized] public float chaseSpeedOverride;
+    /// <summary>F113: Hub string key of the line shown after a catch instead of the default "you wake at the door"; null = the default.</summary>
+    [System.NonSerialized] public string catchLineKey;
 
     public Mode CurrentMode { get; private set; } = Mode.Idle;
     public int Catches { get; private set; }
@@ -230,6 +234,12 @@ public class HubStalker : MonoBehaviour
 
     public void ResetCatches() => Catches = 0;
 
+    /// <summary>F113: like <see cref="ForceChase()"/>, with `onReset` run after each catch instead of the default respawn.</summary>
+    public void ForceChase(System.Action onReset) { _onReset = onReset; _hasRoute = false; ForceChase(); }
+
+    /// <summary>F113: drops the per-catch callback a set piece installed (the piece is ending).</summary>
+    public void ClearOnReset() => _onReset = null;
+
     /// <summary>Goes straight to the scream and the chase (a set piece wants it on the player now).</summary>
     public void ForceChase() { EnsureAgent(); if (_agent.isOnNavMesh) Spot(); }
 
@@ -245,7 +255,7 @@ public class HubStalker : MonoBehaviour
     {
         CurrentMode = Mode.Chase;
         _agent.isStopped = false;
-        _agent.speed = PlayerWalkSpeed * chaseMultiplier * (Catches >= 2 ? 0.85f : 1f);
+        _agent.speed = (chaseSpeedOverride > 0f ? chaseSpeedOverride : PlayerWalkSpeed * chaseMultiplier) * (Catches >= 2 ? 0.85f : 1f);
         _lastSeen = Time.time;
     }
 
@@ -316,7 +326,7 @@ public class HubStalker : MonoBehaviour
                 break;
 
             case Mode.Chase:
-                _agent.speed = PlayerWalkSpeed * chaseMultiplier * (Catches >= 2 ? 0.85f : 1f);
+                _agent.speed = (chaseSpeedOverride > 0f ? chaseSpeedOverride : PlayerWalkSpeed * chaseMultiplier) * (Catches >= 2 ? 0.85f : 1f);
                 bool hiddenNow = hub.Stealth != null && hub.Stealth.Hidden;
                 bool sees = relentless ? !hiddenNow : CanSee() || CanHear();
                 if (sees)
@@ -373,7 +383,7 @@ public class HubStalker : MonoBehaviour
         if (Mathf.Abs(to.y) > 1.4f || new Vector3(to.x, 0f, to.z).magnitude > catchDistance) return;
         if (hub.Stealth != null && hub.Stealth.Hidden) return;
         if (!Clear(transform.position + Vector3.up * 1.2f, hub.Player.position + Vector3.up * 1.1f, hub.Player)) return;
-        if (!hub.BeginCatch(ResetAfterCatch)) return;
+        if (!hub.BeginCatch(ResetAfterCatch, string.IsNullOrEmpty(catchLineKey) ? null : L10n.T(catchLineKey))) return;
         CurrentMode = Mode.Catching;
         _agent.isStopped = true;
         FaceTowards(hub.Player.position);

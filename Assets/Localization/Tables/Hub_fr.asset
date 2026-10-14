@@ -699,6 +699,18 @@ MonoBehaviour:
     m_Localized: "\xC7A S'EST R\xC9VEILL\xC9. VITE, \xC0 LA CHIRURGIE."
     m_Metadata:
       m_Items: []
+  - m_Id: 1521207307923456
+    m_Localized: "\xC7A DESCEND L'ESCALIER. COURS \xC0 LA CHAUFFERIE."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1521207379226624
+    m_Localized: "\xC7A REDESCEND. LA CHAUFFERIE."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1521207379226625
+    m_Localized: "TU TE R\xC9VEILLES PR\xC8S DE L'ASCENSEUR. \xC7A EST TOUJOURS EN BAS."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

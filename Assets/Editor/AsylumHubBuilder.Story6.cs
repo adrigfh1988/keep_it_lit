@@ -1,26 +1,122 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
 /// <summary>
-/// F93 fix: every doorway the player is shown opening must read as an opening into darkness, never as the wall behind it. Build-missing-only,
-/// called by AddStoryLayer (so Check Project flags it and Build Missing Pieces adds it; the hub prefab is never regenerated):
-///  - <c>DoorVoid</c> under each wing door: an unlit black quad in the frame, 3 cm in front of the wall, behind the leaf (AsylumHub.WalkInRoutine
-///    stops the camera 0.3 m out so the quad is always past the 0.2 m near plane);
+/// F93 fix + F112: every doorway the player is shown opening must read as an opening into darkness (the main doors: into daylight), never as
+/// the wall behind it. Build-missing-only, called by AddStoryLayer (so Check Project flags it and Build Missing Pieces adds it; the hub prefab
+/// is never regenerated). Per walk-through door - the five wing doors, the SHOP door and the finale's main doors (HubExitDoor) - it adds:
+///  - a <see cref="DoorPassage"/> (the leaf hinges, the void, the draft, the pass colour; the main doors' leaf gets its hinge here);
+///  - <c>DoorVoid</c>: an unlit quad sized to the closed leaves (+4 cm each side and on top) and placed 1.5 cm in front of the wall face found
+///    by a raycast with the leaf colliders off (AsylumHub.DoorWalk stops the camera 0.3 m out so the quad is always past the 0.2 m near plane);
+///  - <c>DoorDraft</c>: the dust a door pushes out when it opens.
+/// And, separate from the doors:
 ///  - the lift car's mesh without its two half-shut door leaves (they were part of the one car mesh and read as a wall behind the shaft door);
 ///    the car is then open at the front: the shaft door opens onto the car interior, and from inside the car onto the hall.
 /// </summary>
 public static partial class AsylumHubBuilder
 {
     private const string VoidName = "DoorVoid";
+    private const string DraftName = "DoorDraft";
     private const string OpenCarMeshPath = "Assets/SourceFiles/Meshes/Asylum/Elevator_Open.asset";
+    private static readonly Color DaylightColour = new Color(0.78f, 0.82f, 0.86f);
+
+    /// <summary>One walk-through door of the hub (F112).</summary>
+    private sealed class PassageDoor
+    {
+        public string Name;
+        public Transform Door;
+        public Transform[] Hinges;      // null while the main doors' hinge does not exist yet
+        public Transform Leaf;          // the main doors' MainDoor mesh (hinge made from it)
+        public bool Daylight;
+    }
+
+    private static List<PassageDoor> PassageDoors(AsylumHub hub)
+    {
+        List<PassageDoor> doors = new List<PassageDoor>();
+        if (hub.wingDoors != null)
+        {
+            foreach (WingDoor w in hub.wingDoors)
+            {
+                if (w == null || w.leafHinge == null) continue;
+                doors.Add(new PassageDoor { Name = w.name, Door = w.transform, Hinges = new[] { w.leafHinge, w.leafHingeB }.Where(h => h != null).ToArray() });
+            }
+        }
+        if (hub.shopDoor != null && hub.shopDoor.leafHinge != null)
+        {
+            ShopDoor s = hub.shopDoor;
+            doors.Add(new PassageDoor { Name = s.name, Door = s.transform, Hinges = new[] { s.leafHinge, s.leafHingeB }.Where(h => h != null).ToArray() });
+        }
+        HubExitDoor exit = hub.GetComponentInChildren<HubExitDoor>(true);
+        if (exit != null)
+        {
+            Transform leaf = new SerializedObject(exit).FindProperty("leaf").objectReferenceValue as Transform;
+            if (leaf != null)
+            {
+                Transform[] hinges = leaf.parent != null && leaf.parent.name == "DoorHinge" ? new[] { leaf.parent } : null;
+                doors.Add(new PassageDoor { Name = exit.name, Door = exit.transform, Leaf = leaf, Hinges = hinges, Daylight = true });
+            }
+        }
+        return doors;
+    }
+
+    /// <summary>The closed leaves' union bounds, the door's flat Into (hall to door) and its width axis.</summary>
+    private static Bounds LeafBounds(PassageDoor d)
+    {
+        Bounds b = new Bounds(d.Door.position, Vector3.zero);
+        bool any = false;
+        foreach (Transform hinge in d.Hinges)
+        {
+            foreach (Renderer r in hinge.GetComponentsInChildren<Renderer>(true))
+            {
+                if (!any) { b = r.bounds; any = true; }
+                else b.Encapsulate(r.bounds);
+            }
+        }
+        return b;
+    }
+
+    private static Vector3 IntoOf(PassageDoor d)
+    {
+        Vector3 into = -d.Door.forward;
+        into.y = 0f;
+        return into.normalized;
+    }
+
+    /// <summary>Width (along the door's right) and height of the void a door needs: the closed leaves plus 4 cm on each side and on top, the bottom sunk 3 cm into the floor.</summary>
+    private static void VoidSize(PassageDoor d, out float width, out float height, out float bottom, out float lateralCentre)
+    {
+        Bounds b = LeafBounds(d);
+        Vector3 right = Vector3.Cross(Vector3.up, IntoOf(d));
+        float lo = float.MaxValue, hi = float.MinValue;
+        for (int c = 0; c < 8; c++)
+        {
+            Vector3 corner = new Vector3((c & 1) == 0 ? b.min.x : b.max.x, (c & 2) == 0 ? b.min.y : b.max.y, (c & 4) == 0 ? b.min.z : b.max.z);
+            float along = Vector3.Dot(corner, right);
+            lo = Mathf.Min(lo, along);
+            hi = Mathf.Max(hi, along);
+        }
+        width = hi - lo + 0.08f;
+        lateralCentre = 0.5f * (lo + hi);
+        bottom = b.min.y - 0.03f; // sunk 3 cm into the floor: a flush edge showed a lit line under the void
+        height = b.max.y + 0.04f - bottom;
+    }
 
     private static List<string> G8Missing(AsylumHub hub)
     {
         List<string> missing = new List<string>();
-        if (hub.wingDoors != null)
+        foreach (PassageDoor d in PassageDoors(hub))
         {
-            foreach (WingDoor w in hub.wingDoors) if (w != null && w.transform.Find(VoidName) == null) missing.Add($"{w.name}/{VoidName}");
+            DoorPassage passage = d.Door.GetComponent<DoorPassage>();
+            if (passage == null || !passage.IsComplete) missing.Add($"{d.Name}/DoorPassage");
+            if (d.Hinges != null && d.Hinges.Length > 0 && hub.ContentActive)
+            {
+                Transform v = d.Door.Find(VoidName);
+                VoidSize(d, out float w, out float h, out _, out _);
+                if (v == null || Mathf.Abs(v.localScale.x - w) > 0.01f || Mathf.Abs(v.localScale.y - h) > 0.01f) missing.Add($"{d.Name}/{VoidName} size");
+            }
+            if (d.Door.Find(DraftName) == null) missing.Add($"{d.Name}/{DraftName}");
         }
         LiftSetPiece lift = hub.GetComponentInChildren<LiftSetPiece>(true);
         MeshFilter car = lift != null ? CarFilter(lift) : null;
@@ -36,28 +132,38 @@ public static partial class AsylumHubBuilder
         return car != null ? car.GetComponent<MeshFilter>() : null;
     }
 
+    /// <summary>
+    /// The main doors' MainDoor leaf belongs to the hub prefab (a child of the pack's HallDownstair mesh), and a scene instance may not
+    /// reparent a child that comes from its prefab - so the hinge is hung in the prefab asset itself (the leaf goes under a new DoorHinge),
+    /// and the instance picks it up on the refresh. No-op when the leaf already hangs under a hinge.
+    /// </summary>
+    private static void EnsureMainDoorHinge(AsylumHub hub)
+    {
+        HubExitDoor exit = hub.GetComponentInChildren<HubExitDoor>(true);
+        Transform leaf = exit != null ? new SerializedObject(exit).FindProperty("leaf").objectReferenceValue as Transform : null;
+        if (leaf == null || (leaf.parent != null && leaf.parent.name == "DoorHinge")) return;
+
+        string leafPath = AnimationUtility.CalculateTransformPath(leaf, hub.transform);
+        string buildingPath = AnimationUtility.CalculateTransformPath(hub.building, hub.transform);
+        GameObject contents = PrefabUtility.LoadPrefabContents(PrefabPath);
+        try
+        {
+            Transform l = contents.transform.Find(leafPath);
+            Transform room = contents.transform.Find(buildingPath);
+            if (l == null || room == null) { Debug.LogError($"Asylum doors: the main doors' leaf ({leafPath}) was not found in {PrefabPath}."); return; }
+            foreach (Transform t in l.GetComponentsInChildren<Transform>(true)) GameObjectUtility.SetStaticEditorFlags(t.gameObject, 0);
+            Transform hinge = ShopRoom.CreateDoorHinge(room, l);
+            if (hinge == null) { Debug.LogError("Asylum doors: the main doors' leaf has no renderer; no hinge."); return; }
+            PrefabUtility.SaveAsPrefabAsset(contents, PrefabPath);
+        }
+        finally { PrefabUtility.UnloadPrefabContents(contents); }
+        AssetDatabase.Refresh();
+    }
+
     private static void AddG8(AsylumHub hub, System.Text.StringBuilder report)
     {
-        Material black = VoidMaterial();
-        foreach (WingDoor w in hub.wingDoors)
-        {
-            if (w == null || w.transform.Find(VoidName) != null) continue;
-            GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
-            quad.name = VoidName;
-            Object.DestroyImmediate(quad.GetComponent<Collider>());
-            quad.transform.SetParent(w.transform, false);
-            bool dbl = w.leafHingeB != null;
-            float width = dbl ? 1.96f : 1.12f, height = 2.16f;
-            quad.transform.localPosition = new Vector3(0f, height * 0.5f, 0.03f); // the wall face is at z = 0, the leaf closed at z >= 0.08
-            quad.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);        // a Quad shows its face to -Z; the hall is on +Z
-            quad.transform.localScale = new Vector3(width, height, 1f);
-            MeshRenderer r = quad.GetComponent<MeshRenderer>();
-            r.sharedMaterial = black;
-            r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            r.receiveShadows = false;
-            GameObjectUtility.SetStaticEditorFlags(quad, 0);
-            report.AppendLine($"{w.name}: black void {width:F2} x {height:F2}");
-        }
+        EnsureMainDoorHinge(hub);
+        foreach (PassageDoor d in PassageDoors(hub)) AddPassage(hub, d, report);
 
         LiftSetPiece lift = hub.GetComponentInChildren<LiftSetPiece>(true);
         MeshFilter car = lift != null ? CarFilter(lift) : null;
@@ -65,6 +171,185 @@ public static partial class AsylumHubBuilder
         MeshFilter shaft = car != null && car.transform.parent != null ? car.transform.parent.GetComponent<MeshFilter>() : null;
         Transform basementDoor = lift != null ? new SerializedObject(lift).FindProperty("basementDoor").objectReferenceValue as Transform : null;
         if (shaft != null && basementDoor != null && shaft.sharedMesh != null && shaft.sharedMesh.name != OpenShaftMeshName) report.AppendLine(OpenTheShaft(shaft, basementDoor));
+    }
+
+    /// <summary>F112: hinge (main doors), void fitted to the leaves and the wall, draft and the DoorPassage component for one door. Idempotent.</summary>
+    private static void AddPassage(AsylumHub hub, PassageDoor d, System.Text.StringBuilder report)
+    {
+        // 1. Hinges. The main doors' hinge is made in the prefab asset by EnsureMainDoorHinge (it used to be made at runtime by HubExitDoor).
+        if (d.Hinges == null || d.Hinges.Length == 0)
+        {
+            Debug.LogError($"Asylum doors: {d.Name} has no leaf hinge yet (the prefab refresh may still be pending): run KEEP IT LIT > Build Missing Pieces again.");
+            return;
+        }
+        Physics.SyncTransforms();
+        // 2. The void: fitted to the closed leaves, 1.5 cm in front of the wall face behind them.
+        Bounds leaf = LeafBounds(d);
+        Vector3 into = IntoOf(d);
+        VoidSize(d, out float width, out float height, out float bottom, out float lateral);
+        Vector3 right = Vector3.Cross(Vector3.up, into);
+        Vector3 doorwayMid = new Vector3(leaf.center.x, bottom + 1.1f, leaf.center.z);
+        Vector3 origin = doorwayMid - into * 1.0f;
+
+        List<Collider> off = new List<Collider>();
+        foreach (Transform hinge in d.Hinges)
+        {
+            foreach (Collider c in hinge.GetComponentsInChildren<Collider>(true)) if (c.enabled) { c.enabled = false; off.Add(c); }
+        }
+        Physics.SyncTransforms();
+        RaycastHit wall = default;
+        bool found = false;
+        try
+        {
+            RaycastHit[] hits = Physics.RaycastAll(origin, into, 4f, ~0, QueryTriggerInteraction.Ignore).OrderBy(h => h.distance).ToArray();
+            foreach (RaycastHit h in hits)
+            {
+                if (h.collider.transform.IsChildOf(d.Door)) continue;
+                wall = h;
+                found = true;
+                break;
+            }
+        }
+        finally
+        {
+            foreach (Collider c in off) c.enabled = true;
+            Physics.SyncTransforms();
+        }
+
+        // The leaves are thick slabs that sit flush on the wall (their back face is within a few cm of it, sometimes inside it), so the void
+        // cannot be required to sit behind the leaf's BACK face: it only has to be hidden by the closed leaf (behind its FRONT face) and in
+        // front of the wall. It shows the moment the leaf swings away.
+        float leafBack = float.MinValue, leafFront = float.MaxValue;
+        for (int c = 0; c < 8; c++)
+        {
+            Vector3 corner = new Vector3((c & 1) == 0 ? leaf.min.x : leaf.max.x, (c & 2) == 0 ? leaf.min.y : leaf.max.y, (c & 4) == 0 ? leaf.min.z : leaf.max.z);
+            float along = Vector3.Dot(corner, into);
+            leafBack = Mathf.Max(leafBack, along);
+            leafFront = Mathf.Min(leafFront, along);
+        }
+        // No collider wall behind it (the main doors stand in a real doorway, open to the outside): the void goes in the middle of the leaf slab,
+        // 4 cm or more behind the hall face of the wall that frames it, so only the opening shows it.
+        string wallName = found ? wall.collider.name : "open air";
+        float wallS = found ? Vector3.Dot(wall.point, into) : 0.5f * (leafFront + leafBack) + 0.015f;
+        float voidS = wallS - 0.015f;
+        if (voidS < leafFront + 0.01f) voidS = wallS - 0.005f;
+        if (voidS < leafFront + 0.01f)
+        {
+            Debug.LogError($"Asylum doors: {d.Name}: the wall face ({wallName}) is only {(wallS - leafFront) * 100f:F1} cm behind the closed leaf's front face; no room for a void. Skipped.");
+            return;
+        }
+        float gap = wallS - voidS;
+        Vector3 pos = right * lateral + into * voidS; // the three axes are orthonormal
+        pos.y = bottom + height * 0.5f;
+
+        Transform voidT = d.Door.Find(VoidName);
+        MeshRenderer voidRenderer;
+        if (voidT == null)
+        {
+            GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            quad.name = VoidName;
+            Object.DestroyImmediate(quad.GetComponent<Collider>());
+            quad.transform.SetParent(d.Door, true);
+            voidT = quad.transform;
+            voidRenderer = quad.GetComponent<MeshRenderer>();
+            voidRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            voidRenderer.receiveShadows = false;
+            GameObjectUtility.SetStaticEditorFlags(quad, 0);
+        }
+        else voidRenderer = voidT.GetComponent<MeshRenderer>();
+        voidT.position = pos;
+        voidT.rotation = Quaternion.LookRotation(into, Vector3.up); // a Quad shows its face to -Z; the hall is behind this rotation's -Z
+        Vector3 parentScale = d.Door.lossyScale;
+        voidT.localScale = new Vector3(width / Mathf.Max(parentScale.x, 0.0001f), height / Mathf.Max(parentScale.y, 0.0001f), 1f);
+        voidRenderer.sharedMaterial = d.Daylight ? DaylightVoidMaterial() : VoidMaterial();
+        EditorUtility.SetDirty(voidT);
+
+        // 3. The draft.
+        ParticleSystem draft = BuildDraft(hub, d, pos, into, width, height);
+
+        // 4. The component.
+        DoorPassage passage = d.Door.GetComponent<DoorPassage>();
+        if (passage == null) passage = d.Door.gameObject.AddComponent<DoorPassage>();
+        SerializedObject so = new SerializedObject(passage);
+        SerializedProperty hingeProp = so.FindProperty("hinges");
+        hingeProp.arraySize = d.Hinges.Length;
+        for (int i = 0; i < d.Hinges.Length; i++) hingeProp.GetArrayElementAtIndex(i).objectReferenceValue = d.Hinges[i];
+        so.FindProperty("voidRenderer").objectReferenceValue = voidRenderer;
+        so.FindProperty("draft").objectReferenceValue = draft;
+        so.FindProperty("passColour").colorValue = d.Daylight ? DaylightColour : Color.black;
+        so.FindProperty("openAngle").floatValue = 86f;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        PrefabUtility.RecordPrefabInstancePropertyModifications(passage);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(d.Door);
+        report.AppendLine($"{d.Name}: passage, void {width:F2} x {height:F2} at {gap:F3} m from the wall ({wallName}), void {(voidS - leafBack) * 100f:F1} cm behind the leaf back face (negative = inside the leaf slab){(draft != null ? ", draft" : "")}");
+    }
+
+    /// <summary>The dust a door pushes out when it opens (child DoorDraft, not looping, not playing on awake). Null when the lift's dust material cannot be found.</summary>
+    private static ParticleSystem BuildDraft(AsylumHub hub, PassageDoor d, Vector3 voidPosition, Vector3 into, float width, float height)
+    {
+        Transform existing = d.Door.Find(DraftName);
+        ParticleSystem ps = existing != null ? existing.GetComponent<ParticleSystem>() : null;
+        if (ps != null) return ps;
+
+        LiftSetPiece lift = hub.GetComponentInChildren<LiftSetPiece>(true);
+        ParticleSystem dust = lift != null ? new SerializedObject(lift).FindProperty("ceilingDust").objectReferenceValue as ParticleSystem : null;
+        Material material = dust != null ? dust.GetComponent<ParticleSystemRenderer>().sharedMaterial : null;
+        if (material == null) { Debug.LogError($"Asylum doors: {d.Name}: the lift's ceilingDust material was not found; no draft particles (the door still works)."); return null; }
+
+        GameObject go = new GameObject(DraftName);
+        go.transform.SetParent(d.Door, true);
+        go.transform.position = voidPosition - into * 0.05f;
+        go.transform.rotation = Quaternion.LookRotation(-into, Vector3.up); // +Z toward the hall
+        ps = go.AddComponent<ParticleSystem>();
+        ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+        ParticleSystem.MainModule main = ps.main;
+        main.duration = 1.2f;
+        main.loop = false;
+        main.playOnAwake = false;
+        main.maxParticles = 60;
+        main.startLifetime = new ParticleSystem.MinMaxCurve(1.6f, 2.4f);
+        main.startSpeed = new ParticleSystem.MinMaxCurve(0.25f, 0.6f);
+        main.startSize = new ParticleSystem.MinMaxCurve(0.015f, 0.04f);
+        main.startColor = d.Daylight ? new Color(0.9f, 0.92f, 0.95f, 0.25f) : new Color(0.75f, 0.75f, 0.78f, 0.35f);
+        main.gravityModifier = -0.02f;
+        main.simulationSpace = ParticleSystemSimulationSpace.World;
+
+        ParticleSystem.EmissionModule emission = ps.emission;
+        emission.rateOverTime = 18f;
+        emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 28) });
+
+        ParticleSystem.ShapeModule shape = ps.shape;
+        shape.enabled = true;
+        shape.shapeType = ParticleSystemShapeType.Box;
+        shape.position = new Vector3(0f, 0f, 0.06f);
+        shape.scale = new Vector3(width, height, 0.05f);
+
+        ParticleSystem.ColorOverLifetimeModule fade = ps.colorOverLifetime;
+        fade.enabled = true;
+        Gradient gradient = new Gradient();
+        gradient.SetKeys(new[] { new GradientColorKey(Color.white, 0f), new GradientColorKey(Color.white, 1f) },
+                         new[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(0f, 1f) });
+        fade.color = gradient;
+
+        ParticleSystemRenderer renderer = go.GetComponent<ParticleSystemRenderer>();
+        renderer.sharedMaterial = material;
+        renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        renderer.receiveShadows = false;
+        ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        return ps;
+    }
+
+    private static Material DaylightVoidMaterial()
+    {
+        EnsureFolderPath(MaterialFolder);
+        string path = MaterialFolder + "/Asylum_DoorVoidDaylight.mat";
+        Material m = AssetDatabase.LoadAssetAtPath<Material>(path);
+        if (m != null) return m;
+        m = new Material(Shader.Find("Universal Render Pipeline/Unlit")) { name = "Asylum_DoorVoidDaylight" };
+        m.SetColor("_BaseColor", DaylightColour);
+        AssetDatabase.CreateAsset(m, path);
+        return m;
     }
 
     private const string OpenShaftMeshName = "Elevator_Wall_Open";

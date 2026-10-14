@@ -699,6 +699,18 @@ MonoBehaviour:
     m_Localized: "EST\xC1 DESPIERTO. CORRE A CIRUG\xCDA."
     m_Metadata:
       m_Items: []
+  - m_Id: 1521207307923456
+    m_Localized: "EST\xC1 EN LA ESCALERA. CORRE A LA SALA DE CALDERAS."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1521207379226624
+    m_Localized: VUELVE A BAJAR. LA SALA DE CALDERAS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1521207379226625
+    m_Localized: "DESPIERTAS JUNTO AL ASCENSOR. SIGUE AQU\xCD ABAJO."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -165,3 +165,6 @@ hub.flood.knocks,Subtitle (3.5 s) in the basement hall on floor 3: Tomas knocks 
 hub.chase.stops,Subtitle (2.6 s) when the floor-4 chase ends at the surgery door,IT STOPS AT THE DOOR
 hub.chase.run,"Subtitle (3 s) when the floor-4 chase starts: the pursuer rises at the basement stairs and the player must run to the Surgery wing door upstairs, where it stops (see hub.chase.stops). ALL CAPS. ""IT"" = the pursuer",IT IS AWAKE. RUN TO THE SURGERY.
 hub.stars.first,"Subtitle (4.5 s, queued) the first time the player walks up to a chalk star on the wall (floor 2)",SOMEONE HAS DRAWN STARS ON THE WALL. THEY STILL GLOW.
+hub.liftchase.run,"Subtitle (3.5 s) on floor 2 when the player steps out of the jammed lift: the pursuer is on the basement stairs and the only way on is the Boiler Room wing door. ALL CAPS. ""IT"" = the pursuer",IT IS ON THE STAIRS. RUN TO THE BOILER ROOM.
+hub.liftchase.again,"Subtitle (3.5 s) when the floor-2 pursuer comes down the stairs again after a catch. ALL CAPS. ""IT"" = the pursuer",IT IS COMING BACK DOWN. THE BOILER ROOM.
+hub.liftchase.wake,"Subtitle (3.2 s) after a catch on floor 2: the player wakes at the lift doors in the basement, not upstairs. ALL CAPS. ""IT"" = the pursuer",YOU WAKE BY THE LIFT. IT IS STILL DOWN HERE.

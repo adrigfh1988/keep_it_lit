@@ -73,6 +73,13 @@ public class LiftSetPiece : HubSetPiece
     private readonly List<Light> _carLights = new List<Light>();
     private float _flickerUntil;
 
+    /// <summary>F113: the jammed car has dropped to the bottom (raised right before the "doors stuck" line). Floor 2's lift chase listens.</summary>
+    public event System.Action Landed;
+    /// <summary>F113: the doors were forced and the player has been walked out and is free. Floor 2's lift chase listens.</summary>
+    public event System.Action WalkedOut;
+    /// <summary>F113: set by the lift chase while it runs: <see cref="Pry"/> then leaves the panic track playing (the chase owns it) instead of fading it out.</summary>
+    [System.NonSerialized] public bool HoldPanicMusic;
+
     public bool IsComplete => car != null && groundDoor != null && basementDoor != null && gate != null && callPoint != null && pryPoint != null;
 
     // ---------------------------------------------------------------- IInteractable plumbing (LiftPoint)
@@ -417,6 +424,7 @@ public class LiftSetPiece : HubSetPiece
         if (hub.Torch != null) hub.Torch.Stutter(1.4f);
         if (redLight != null) redLight.intensity = 1.8f;
 
+        Landed?.Invoke();
         // 6. the doors are stuck: force them (hold E)
         hub.SubtitleLine(L10n.T("hub.lift.doors_stuck", ("key", TouchInput.Key("E", L10n.T("ui.key.use")))), 4f);
         _arrived = true;
@@ -434,7 +442,9 @@ public class LiftSetPiece : HubSetPiece
         if (redLight != null) redLight.enabled = true; // it stays red down here
         yield return WalkOut();
         Finish(Hub);
-        SetPanicMusic(false, 3f); // stepped out: the track fades away over 3 s, the hub music comes back
+        if (HoldPanicMusic) _panic = false; // F113: the lift chase owns the track now (same clip, no gap); ResetState must not cut it
+        else SetPanicMusic(false, 3f); // stepped out: the track fades away over 3 s, the hub music comes back
+        WalkedOut?.Invoke();
     }
 
     /// <summary>The car's own door leaves are part of its mesh and stay half shut, so the player is eased out through the opened shaft door.</summary>

@@ -699,6 +699,18 @@ MonoBehaviour:
     m_Localized: ES IST WACH. LAUF ZUR CHIRURGIE.
     m_Metadata:
       m_Items: []
+  - m_Id: 1521207307923456
+    m_Localized: ES IST AUF DER TREPPE. LAUF ZUM KESSELRAUM.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1521207379226624
+    m_Localized: ES KOMMT WIEDER RUNTER. DER KESSELRAUM.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1521207379226625
+    m_Localized: DU WACHST AM AUFZUG AUF. ES IST NOCH HIER UNTEN.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

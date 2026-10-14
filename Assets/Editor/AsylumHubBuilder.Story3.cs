@@ -15,7 +15,7 @@ public static partial class AsylumHubBuilder
     private static List<string> G5Missing(Transform life)
     {
         List<string> missing = new List<string>();
-        foreach (string n in new[] { "LiftSet", "FloodSet", "ChaseSet" })
+        foreach (string n in new[] { "LiftSet", "FloodSet", "ChaseSet", "LiftChaseSet" })
         {
             if (life == null || life.Find(n) == null) missing.Add("Life/" + n);
         }
@@ -28,6 +28,7 @@ public static partial class AsylumHubBuilder
         if (life.Find("LiftSet") == null) BuildLiftSet(hub, life, report);
         if (life.Find("FloodSet") == null) BuildFloodSet(hub, life, report);
         if (life.Find("ChaseSet") == null && pursuer != null) BuildChaseSet(hub, life, pursuer, report);
+        if (life.Find("LiftChaseSet") == null && pursuer != null) BuildLiftChaseSet(hub, life, pursuer, report);
     }
 
     private static Transform FindBuilding(string name) => _building.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == name);
@@ -237,5 +238,53 @@ public static partial class AsylumHubBuilder
         so.FindProperty("endZone").objectReferenceValue = ez;
         so.ApplyModifiedPropertiesWithoutUndo();
         report.AppendLine($"ChaseSet: rise spot {rise}, top zone {top.transform.position}, surgery zone {end.transform.position}");
+    }
+
+    // ---------------------------------------------------------------- lift chase (F113)
+
+    /// <summary>
+    /// F113: floor 2's lift chase. The pursuer stands on the basement stairs BELOW the chained gate (the gate has a collider but no NavMeshObstacle,
+    /// so an agent above it would walk straight through), the steps are heard at three points down the flight, and a caught player wakes at the
+    /// lift exit facing the Boiler Room. Needs the LiftSet (built first) and the Pursuer.
+    /// </summary>
+    private static void BuildLiftChaseSet(AsylumHub hub, Transform life, Transform pursuer, System.Text.StringBuilder report)
+    {
+        Transform liftSet = life.Find("LiftSet");
+        LiftSetPiece lift = liftSet != null ? liftSet.GetComponent<LiftSetPiece>() : null;
+        if (lift == null) { Debug.LogError("Asylum story layer: LiftChaseSet needs Life/LiftSet; it is not built."); return; }
+
+        Vector3 spawnWanted = new Vector3(117.2f, 3.2f, -60.0f);
+        if (!SampleHub(spawnWanted, 1.5f, out Vector3 spawn)) { Debug.LogError($"Asylum story layer: LiftChaseSet: no Hub navmesh near the stair spawn {spawnWanted}."); return; }
+        if (spawn.y >= 4.6f) { Debug.LogError($"Asylum story layer: LiftChaseSet: the stair spawn {spawn} is not below the chained gate (y must be < 4.6)."); return; }
+
+        SerializedObject liftSo = new SerializedObject(lift);
+        Transform car = liftSo.FindProperty("car").objectReferenceValue as Transform;
+        Transform basementDoor = liftSo.FindProperty("basementDoor").objectReferenceValue as Transform;
+        if (car == null || basementDoor == null) { Debug.LogError("Asylum story layer: LiftChaseSet: the lift has no car or basement door."); return; }
+
+        Transform set = Group(life, "LiftChaseSet");
+        Transform stairSpawn = Point(set, "StairSpawn", spawn, 180f); // faces -Z, down the stairs
+        Transform[] sounds =
+        {
+            Point(set, "StairSound0", new Vector3(117.2f, 4.4f, -57.6f), 0f),
+            Point(set, "StairSound1", new Vector3(117.2f, 3.0f, -60.8f), 0f),
+            Point(set, "StairSound2", new Vector3(117.2f, 1.6f, -63.8f), 0f),
+        };
+        Vector3 wakeWanted = new Vector3(car.position.x, basementDoor.position.y + 0.1f, basementDoor.position.z - 1.7f); // LiftSetPiece.WalkOut's target
+        Vector3 wake = SampleHub(wakeWanted, 1f, out Vector3 wakeOnMesh) ? wakeOnMesh : wakeWanted;
+        Transform wakePoint = Point(set, "WakePoint", wake, 270f); // faces -X, west, toward the Boiler Room
+
+        LiftChaseSetPiece piece = set.gameObject.AddComponent<LiftChaseSetPiece>();
+        piece.floor = 2;
+        SerializedObject so = new SerializedObject(piece);
+        so.FindProperty("lift").objectReferenceValue = lift;
+        so.FindProperty("pursuer").objectReferenceValue = pursuer.GetComponent<HubStalker>();
+        so.FindProperty("stairSpawn").objectReferenceValue = stairSpawn;
+        so.FindProperty("wakePoint").objectReferenceValue = wakePoint;
+        SerializedProperty list = so.FindProperty("stairSounds");
+        list.arraySize = sounds.Length;
+        for (int i = 0; i < sounds.Length; i++) list.GetArrayElementAtIndex(i).objectReferenceValue = sounds[i];
+        so.ApplyModifiedPropertiesWithoutUndo();
+        report.AppendLine($"LiftChaseSet: stair spawn {spawn}, wake {wake}");
     }
 }

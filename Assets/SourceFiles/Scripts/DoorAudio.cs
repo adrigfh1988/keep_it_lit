@@ -100,6 +100,35 @@ public static class DoorAudio
         return clip;
     }
 
+    /// <summary>
+    /// F112: cold air out of an opened doorway - low-passed white noise, a 0.12 s attack and an exponential fade, the filter opening a little
+    /// over the first 0.4 s (a rising tilt). Deliberately a soft whoosh and not a creak: the hinge creak was removed from the door walk on purpose.
+    /// </summary>
+    public static AudioClip BuildDraftClip()
+    {
+        const int sampleRate = 22050;
+        const float duration = 1.4f;
+        int sampleCount = Mathf.CeilToInt(sampleRate * duration);
+        float[] samples = new float[sampleCount];
+        System.Random rng = new System.Random(2112);
+        float low = 0f;
+
+        for (int i = 0; i < sampleCount; i++)
+        {
+            float t = i / (float)sampleRate;
+            float alpha = Mathf.Lerp(0.02f, 0.06f, Mathf.Clamp01(t / 0.4f));
+            float noise = (float)(rng.NextDouble() * 2.0 - 1.0);
+            low += (noise - low) * alpha;
+            float envelope = t < 0.12f ? t / 0.12f : Mathf.Exp(-(t - 0.12f) / 0.4f);
+            samples[i] = low * envelope;
+        }
+
+        Normalise(samples, 0.5f);
+        AudioClip clip = AudioClip.Create("DoorDraft", sampleCount, 1, sampleRate, false);
+        clip.SetData(samples, 0);
+        return clip;
+    }
+
     /// <summary>A copy of `source` through a one-pole low-pass (`alpha` 0.02 = very dull, 1 = untouched): a sound heard through walls.</summary>
     public static AudioClip Muffle(AudioClip source, float alpha)
     {

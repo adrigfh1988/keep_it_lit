@@ -311,11 +311,23 @@ public class ShopRoom : MonoBehaviour
             foreach (Renderer r in hidden) if (r != null) r.enabled = true;
         }
 
-        GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.35f, 60f, 0.5f), _doorwayCentre, 0.8f);
         // Whichever way the swing carries the leaf's centre out of the room.
         Vector3 leafOffset = _doorwayCentre - doorHinge.position;
         float angle = Vector3.Dot(Quaternion.AngleAxis(doorOpenAngle, doorHinge.up) * leafOffset - leafOffset, outward) >= 0f ? doorOpenAngle : -doorOpenAngle;
         Quaternion opened = _hingeClosed * Quaternion.Euler(0f, angle, 0f);
+
+        // 0. F112: the shared latch and a held crack (8 % of the swing), as at every other door.
+        DoorPassageFx.Latch(_doorwayCentre);
+        doorHinge.localRotation = Quaternion.Slerp(_hingeClosed, opened, 0.08f);
+        float hold = 0f;
+        while (hold < 0.25f)
+        {
+            if (GameOutcome.IsOver) { RestoreView(); yield break; }
+            hold += Time.deltaTime;
+            if (controller != null) controller.LookAt(Look(_player.position), 1f - Mathf.Exp(-8f * Time.deltaTime));
+            yield return null;
+        }
+        DoorPassageFx.Draft(_doorwayCentre, null); // sound only: no particles in the shop
 
         // 1. The door swings open while the player steps up to it.
         float t = 0f;
@@ -325,7 +337,7 @@ public class ShopRoom : MonoBehaviour
 
             t += Time.deltaTime;
             float k = Mathf.SmoothStep(0f, 1f, t / doorOpenSeconds);
-            doorHinge.localRotation = Quaternion.Slerp(_hingeClosed, opened, k);
+            doorHinge.localRotation = Quaternion.Slerp(_hingeClosed, opened, Mathf.Lerp(0.08f, 1f, k));
             MovePlayer(characterController, Vector3.Lerp(start, threshold, k));
             if (controller != null) controller.LookAt(Look(_player.position), 1f - Mathf.Exp(-8f * Time.deltaTime));
             yield return null;
@@ -333,15 +345,15 @@ public class ShopRoom : MonoBehaviour
         doorHinge.localRotation = opened;
 
         // 2. Through the doorway into the dark; the room's hum and the light go together.
-        Canvas canvas = RuntimeUi.ResolveCanvas();
-        Image blackout = canvas != null ? RuntimeUi.CreatePanel(canvas.transform, "Blackout", new Color(0f, 0f, 0f, 0f)).GetComponent<Image>() : null;
-        if (blackout != null) blackout.transform.SetAsLastSibling();
+        // F112: the screen irises closed onto the doorway; the Blackout panel (what LeaveToHub hands over and destroys) is made at alpha 1 at the end.
+        ScreenIris iris = ScreenIris.Show(Color.black);
+        Image blackout = null;
         float humStart = _hum != null ? _hum.volume : 0f;
 
         t = 0f;
         while (t < doorWalkSeconds)
         {
-            if (GameOutcome.IsOver) { RestoreView(); yield break; }
+            if (GameOutcome.IsOver) { RestoreView(); if (iris != null) iris.Hide(); yield break; }
 
             t += Time.deltaTime;
             float k = Mathf.Clamp01(t / doorWalkSeconds);
@@ -349,11 +361,17 @@ public class ShopRoom : MonoBehaviour
             MovePlayer(characterController, Vector3.Lerp(threshold, stop, 1f - (1f - k) * (1f - k)));
             if (controller != null) controller.LookAt(Look(_player.position), 1f - Mathf.Exp(-8f * Time.deltaTime));
             float fade = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01((k - 0.1f) / 0.9f));
-            if (blackout != null) blackout.color = new Color(0f, 0f, 0f, fade);
+            if (iris != null) iris.SetClosure(fade);
             if (_hum != null) _hum.volume = humStart * (1f - fade);
             yield return null;
         }
-        if (blackout != null) blackout.color = Color.black;
+        Canvas canvas = RuntimeUi.ResolveCanvas();
+        if (canvas != null)
+        {
+            blackout = RuntimeUi.CreatePanel(canvas.transform, "Blackout", Color.black).GetComponent<Image>();
+            blackout.transform.SetAsLastSibling();
+        }
+        if (iris != null) iris.Hide();
 
         RestoreView();
         if (_hum != null) _hum.Stop();

@@ -457,14 +457,12 @@ public class AsylumHub : MonoBehaviour
         IsTransitioning = true;
         if (_hint != null) { StopCoroutine(_hint); _hint = null; }
 
-        Transform[] hinges = door.leafHingeB != null ? new[] { door.leafHinge, door.leafHingeB } : new[] { door.leafHinge };
-        Quaternion[] closed = new Quaternion[hinges.Length];
-        for (int i = 0; i < hinges.Length; i++) closed[i] = hinges[i].localRotation;
-        yield return DoorWalk(door.transform, hinges);
+        DoorPassage passage = door.GetComponent<DoorPassage>();
+        yield return DoorWalk(door.transform);
 
         // ---- at black: the hub goes away and floor n begins exactly as it always did
         OnLeaveHub?.Invoke();
-        for (int i = 0; i < hinges.Length; i++) hinges[i].localRotation = closed[i];
+        if (passage != null) passage.ResetClosed();
         RestoreAtmosphere();
         SetContentActive(false);
 
@@ -489,67 +487,157 @@ public class AsylumHub : MonoBehaviour
         IsTransitioning = false;
         GameFlow.BeginRun(); // FloorIntroBanner, the hunter, the dread directors and the floor's music all wake on this
 
-        yield return Fade(1f, 0f, 0.7f);
+        yield return IrisOpen(0.8f);
         if (_blackoutRoot != null) _blackoutRoot.SetActive(false);
     }
 
     /// <summary>
-    /// The walk through a door, shared by the wing doors and the SHOP door: freeze, swing the leaf (both leaves of a double door) away
-    /// from the player, ease up to the doorway looking through it and fade to black as they reach it. Returns at full black with the
-    /// player still frozen and the leaves open; the caller decides what comes next and closes the leaves.
+    /// F112: the way back from a door walk - the black the walk ended on becomes a closed iris in the same frame and opens onto the
+    /// destination. Falls back to a plain fade when the scene has no canvas for the iris.
     /// </summary>
-    private IEnumerator DoorWalk(Transform door, Transform[] hinges)
+    private IEnumerator IrisOpen(float seconds)
+    {
+        ScreenIris iris = ScreenIris.Show(Color.black);
+        if (iris == null) { yield return Fade(1f, 0f, seconds); yield break; }
+        iris.SetClosure(1f);
+        _overlayColor = Color.black;
+        SetBlackout(0f);
+        float t = 0f;
+        while (t < seconds)
+        {
+            t += Time.unscaledDeltaTime;
+            iris.SetClosure(1f - Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t / seconds)));
+            yield return null;
+        }
+        iris.Hide();
+    }
+
+    /// <summary>
+    /// F112: the one walk through a door in the hub, shared by the wing doors, the SHOP door and (through <see cref="PassThrough"/>) the finale's
+    /// main doors. Stand back out of the leaves' sweep, latch, a held crack, the leaves swing TOWARD the hall with a cold draft, step up to
+    /// the doorway and walk in while the screen irises closed onto it. Returns at full black with the player still frozen and the leaves
+    /// open; the caller decides what comes next and closes them (<see cref="DoorPassage.ResetClosed"/>). A door without a complete
+    /// DoorPassage logs an error and walks in without the swing (the player is never stranded).
+    /// </summary>
+    private IEnumerator DoorWalk(Transform door)
     {
         PlayerLock.Freeze(_player, true);
         if (_hud != null) { _hud.SetPrompt(null); _hud.SetFocusPrompt(null); }
 
-        // Into the door = the way the arrival point does not face.
-        Vector3 into = -door.forward;
-        into.y = 0f;
-        into = into.sqrMagnitude > 0.0001f ? into.normalized : Vector3.forward;
-        Vector3 doorway = new Vector3(door.position.x, _player.position.y, door.position.z);
+        DoorPassage p = door.GetComponent<DoorPassage>();
+        bool swing = p != null && p.IsComplete;
+        if (!swing) Debug.LogError($"AsylumHub: {door.name} has no complete DoorPassage; walking in without the swing. Run KEEP IT LIT > Build Missing Pieces.", door);
+
+        Vector3 into;
+        Vector3 doorway;
+        float standOff;
+        if (swing)
+        {
+            p.ResetClosed();
+            into = p.Into;
+            doorway = p.Doorway(_player.position.y);
+            standOff = p.StandOff;
+            _overlayColor = p.passColour;
+        }
+        else
+        {
+            into = -door.forward;
+            into.y = 0f;
+            into = into.sqrMagnitude > 0.0001f ? into.normalized : Vector3.forward;
+            doorway = new Vector3(door.position.x, _player.position.y, door.position.z);
+            standOff = 1f;
+            _overlayColor = Color.black;
+        }
+        Vector3 right = Vector3.Cross(Vector3.up, into);
         Vector3 start = _player.position;
+        Vector3 stand = doorway - into * standOff;
         Vector3 threshold = doorway - into * 0.9f;
         Vector3 stop = doorway - into * Mathf.Max(doorStopDistance, 0.3f); // the camera near plane is 0.2 m: stay far enough back for the door void to be in front of it
         Vector3 Look(Vector3 from) => from + into * 4f + Vector3.up * 1.4f;
+        void Face() { if (_controller != null) _controller.LookAt(Look(_player.position), 1f - Mathf.Exp(-8f * Time.deltaTime)); }
 
         // Silent on purpose: the synthesized hinge creak that used to play here read as a weird noise on every way into a maze.
 
-        // The leaves open away from the player, so a leaf never sweeps through them.
-        Quaternion[] closed = new Quaternion[hinges.Length];
-        Quaternion[] opened = new Quaternion[hinges.Length];
-        for (int i = 0; i < hinges.Length; i++)
+        // 0. Stand back: out of the sweep of the leaves, on the door's axis.
+        if (swing)
         {
-            closed[i] = hinges[i].localRotation;
-            opened[i] = closed[i] * Quaternion.Euler(0f, SwingSign(hinges[i], into) * doorOpenAngle, 0f);
+            Vector3 flat = new Vector3(start.x - doorway.x, 0f, start.z - doorway.z);
+            bool tooClose = flat.magnitude < standOff;
+            bool offAxis = Mathf.Abs(Vector3.Dot(flat, right)) > 0.6f;
+            if (tooClose || offAxis)
+            {
+                float t0 = 0f;
+                while (t0 < 0.45f)
+                {
+                    t0 += Time.deltaTime;
+                    MovePlayer(Vector3.Lerp(start, stand, Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t0 / 0.45f))));
+                    Face();
+                    yield return null;
+                }
+                MovePlayer(stand);
+            }
+            else stand = start;
+            threshold = new Vector3(threshold.x, stand.y, threshold.z);
+            stop = new Vector3(stop.x, stand.y, stop.z);
+
+            // 1. Latch and a held crack.
+            DoorPassageFx.Latch(doorway + Vector3.up * 1f);
+            float t1 = 0f;
+            while (t1 < 0.3f)
+            {
+                t1 += Time.deltaTime;
+                p.SetOpen(0.08f * Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t1 / 0.1f)));
+                Face();
+                yield return null;
+            }
+
+            // 2. The swing, toward the hall, with a cold draft.
+            DoorPassageFx.Draft(doorway + Vector3.up * 1.2f, p.draft);
+            if (_flashlight != null) _flashlight.Stutter(0.35f);
+            float t2 = 0f;
+            while (t2 < doorOpenSeconds)
+            {
+                t2 += Time.deltaTime;
+                p.SetOpen(Mathf.Lerp(0.08f, 1f, Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t2 / doorOpenSeconds))));
+                Face();
+                yield return null;
+            }
+            p.SetOpen(1f);
         }
 
-        float t = 0f;
-        while (t < doorOpenSeconds)
+        // 3. Step up to the threshold, looking through the door.
+        Vector3 from3 = _player.position;
+        float t3 = 0f;
+        while (t3 < 0.6f)
         {
-            t += Time.deltaTime;
-            float k = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t / doorOpenSeconds));
-            for (int i = 0; i < hinges.Length; i++) hinges[i].localRotation = Quaternion.Slerp(closed[i], opened[i], k);
-            MovePlayer(Vector3.Lerp(start, threshold, k));
-            if (_controller != null) _controller.LookAt(Look(_player.position), 1f - Mathf.Exp(-8f * Time.deltaTime));
+            t3 += Time.deltaTime;
+            MovePlayer(Vector3.Lerp(from3, threshold, Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t3 / 0.6f))));
+            Face();
             yield return null;
         }
-        for (int i = 0; i < hinges.Length; i++) hinges[i].localRotation = opened[i];
 
+        // 4. Walk in while the iris closes on the doorway.
         EnsureBlackout();
         SetBlackout(0f);
-        t = 0f;
+        ScreenIris iris = ScreenIris.Show(_overlayColor);
+        float t = 0f;
         while (t < doorWalkSeconds)
         {
             t += Time.deltaTime;
             float k = Mathf.Clamp01(t / doorWalkSeconds);
             MovePlayer(Vector3.Lerp(threshold, stop, 1f - (1f - k) * (1f - k)));
-            if (_controller != null) _controller.LookAt(Look(_player.position), 1f - Mathf.Exp(-8f * Time.deltaTime));
-            SetBlackout(Mathf.SmoothStep(0f, 1f, Mathf.Clamp01((k - 0.1f) / 0.9f)));
+            Face();
+            float closure = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01((k - 0.05f) / 0.95f));
+            if (iris != null) iris.SetClosure(closure);
+            else SetBlackout(closure);
             yield return null;
         }
         SetBlackout(1f);
+        if (iris != null) iris.Hide();
     }
+
+    /// <summary>F112: the finale's main doors use the hub's door walk too (HubExitDoor.WalkOut). Same contract: returns at full black, leaves open.</summary>
+    public IEnumerator PassThrough(Transform door) => DoorWalk(door);
 
     // ---------------------------------------------------------------- the SHOP door (F94)
 
@@ -588,14 +676,12 @@ public class AsylumHub : MonoBehaviour
         IsTransitioning = true;
         if (_hint != null) { StopCoroutine(_hint); _hint = null; }
 
-        Transform[] hinges = door.leafHingeB != null ? new[] { door.leafHinge, door.leafHingeB } : new[] { door.leafHinge };
-        Quaternion[] closed = new Quaternion[hinges.Length];
-        for (int i = 0; i < hinges.Length; i++) closed[i] = hinges[i].localRotation;
-        yield return DoorWalk(door.transform, hinges);
+        DoorPassage passage = door.GetComponent<DoorPassage>();
+        yield return DoorWalk(door.transform);
 
         // ---- at black: the hub goes away and the shop room takes over. _returnPosition/_returnYaw (the maze start) stay as they were.
         OnLeaveHub?.Invoke();
-        for (int i = 0; i < hinges.Length; i++) hinges[i].localRotation = closed[i];
+        if (passage != null) passage.ResetClosed();
         RestoreAtmosphere();
         SetContentActive(false);
 
@@ -613,7 +699,7 @@ public class AsylumHub : MonoBehaviour
         Leaving = false;
         IsTransitioning = false;
 
-        yield return Fade(1f, 0f, 0.7f);
+        yield return IrisOpen(0.8f);
         if (_blackoutRoot != null) _blackoutRoot.SetActive(false);
     }
 
@@ -627,19 +713,6 @@ public class AsylumHub : MonoBehaviour
         if (shopDoor == null) { GameFlow.NextFloor(); return; }
         StartCoroutine(EnterRoutine(shopDoor.arrivalPoint, GameFlow.CurrentFloor, false)); // sets IsInHub synchronously
         GameFlow.IsInShop = false;
-    }
-
-    /// <summary>+1 or -1: the sign of the swing that carries the leaf's centre further along `into` (away from the player).</summary>
-    private static float SwingSign(Transform hinge, Vector3 into)
-    {
-        Renderer[] renderers = hinge.GetComponentsInChildren<Renderer>(true);
-        if (renderers.Length == 0) return 1f;
-        Bounds b = renderers[0].bounds;
-        foreach (Renderer r in renderers) b.Encapsulate(r.bounds);
-        Vector3 offset = b.center - hinge.position;
-        float plus = Vector3.Dot(Quaternion.AngleAxis(90f, hinge.up) * offset - offset, into);
-        float minus = Vector3.Dot(Quaternion.AngleAxis(-90f, hinge.up) * offset - offset, into);
-        return plus >= minus ? 1f : -1f;
     }
 
     // ---------------------------------------------------------------- atmosphere (D9)

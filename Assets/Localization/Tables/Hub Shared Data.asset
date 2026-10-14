@@ -835,6 +835,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331677479764380
+  - m_Id: 1521207307923456
+    m_Key: hub.liftchase.run
+    m_Metadata:
+      m_Items:
+      - rid: 4707331767211393310
+  - m_Id: 1521207379226624
+    m_Key: hub.liftchase.again
+    m_Metadata:
+      m_Items:
+      - rid: 4707331767211393311
+  - m_Id: 1521207379226625
+    m_Key: hub.liftchase.wake
+    m_Metadata:
+      m_Items:
+      - rid: 4707331767211393312
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -1502,3 +1517,15 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: 'Subtitle (3 s) when the floor-4 chase starts: the pursuer rises at the basement stairs and the player must run to the Surgery wing door upstairs, where it stops (see hub.chase.stops). ALL CAPS. "IT" = the pursuer'
+    - rid: 4707331767211393310
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (3.5 s) on floor 2 when the player steps out of the jammed lift: the pursuer is on the basement stairs and the only way on is the Boiler Room wing door. ALL CAPS. "IT" = the pursuer'
+    - rid: 4707331767211393311
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (3.5 s) when the floor-2 pursuer comes down the stairs again after a catch. ALL CAPS. "IT" = the pursuer
+    - rid: 4707331767211393312
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (3.2 s) after a catch on floor 2: the player wakes at the lift doors in the basement, not upstairs. ALL CAPS. "IT" = the pursuer'
