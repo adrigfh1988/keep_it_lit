@@ -24,6 +24,7 @@ world.intake.stay_in_bed,BLEIB IM BETT
 world.shop.contracts,AUFTRÄGE
 world.shop.shards_accepted,SPLITTER ANGENOMMEN
 world.shop.name,APOTHEKE
+world.shop.commissary,KANTINE
 world.intake.admissions,AUFNAHME
 world.intake.observation,BEOBACHTUNG
 world.ghost.no_visitors,KEIN BESUCH
@@ -37,7 +38,6 @@ world.room.OfficeA,ARCHIV
 world.room.Gatehouse,SCHWESTERNZIMMER
 world.room.GuardRoom,WACHRAUM
 world.room.VisitRoom,BESUCHSRAUM
-world.room.Stock,LAGERRAUM
 world.room.KitchenStock,VORRATSKAMMER
 world.room.DiningRoom,SPEISESAAL
 world.room.KitchenA,KÜCHE

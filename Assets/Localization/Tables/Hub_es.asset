@@ -546,12 +546,8 @@ MonoBehaviour:
     m_Localized: "EL VEST\xCDBULO DE LA PLANTA BAJA"
     m_Metadata:
       m_Items: []
-  - m_Id: 392073342
-    m_Localized: ENTRAR EN LA TIENDA
-    m_Metadata:
-      m_Items: []
   - m_Id: 392073343
-    m_Localized: "TIENDA \xB7 CERRADA"
+    m_Localized: "ECONOMATO \xB7 CERRADO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073344
@@ -559,7 +555,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 392073345
-    m_Localized: "TIENDA\n<size=60%>EL VENDEDOR  \xB7  {status}</size>"
+    m_Localized: 'ECONOMATO
+
+      <size=60%>{status}</size>'
     m_Metadata:
       m_Items:
       - rid: 4707331672703763214
@@ -572,11 +570,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 392073348
-    m_Localized: "LA TIENDA EST\xC1 ABIERTA"
+    m_Localized: "EL ECONOMATO EST\xC1 ABIERTO"
     m_Metadata:
       m_Items: []
   - m_Id: 392073349
-    m_Localized: "LA TIENDA EST\xC1 ABIERTA \xB7 {room}"
+    m_Localized: "EL ECONOMATO EST\xC1 ABIERTO \xB7 {room}"
     m_Metadata:
       m_Items:
       - rid: 4707331672703763214

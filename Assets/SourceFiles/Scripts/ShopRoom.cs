@@ -151,7 +151,7 @@ public class ShopRoom : MonoBehaviour
         if (doorSign != null)
         {
             if (!doorSign.enableAutoSizing) RuntimeUi.AutoFit(doorSign, 0.6f); // D14
-            doorSign.text = GameFlow.ShopFromHub ? L10n.T("hud.asylum") : L10n.T("hud.floor", ("floor", GameFlow.ShopNextFloor));
+            doorSign.text = L10n.T("hud.floor", ("floor", GameFlow.ShopNextFloor));
         }
     }
 
@@ -223,20 +223,29 @@ public class ShopRoom : MonoBehaviour
 
     private void UpdateHeadTracking()
     {
-        if (_player == null) return;
+        _headYawOffset = TrackHead(headPivot, _headAnimator, _headBaseRotation, _headBaseYaw, _headYawOffset, _player, headTurnSpeed, headYawLimit);
+    }
 
-        Vector3 toPlayer = _player.position - headPivot.position;
+    /// <summary>
+    /// F116: the salesman's head turn, shared with HubShop (the Commissary). Turns `headPivot` toward `player` within `yawLimit` of `baseYaw` (world yaws, so the
+    /// room can be rotated in the Editor) and returns the new smoothed offset. An animated bone was just reset by the Animator, so it turns on top of its
+    /// current pose; a plain pivot turns from where it was authored (`baseRotation`).
+    /// </summary>
+    internal static float TrackHead(Transform headPivot, Animator headAnimator, Quaternion baseRotation, float baseYaw, float yawOffset, Transform player, float turnSpeed, float yawLimit)
+    {
+        if (player == null || headPivot == null) return yawOffset;
+
+        Vector3 toPlayer = player.position - headPivot.position;
         toPlayer.y = 0f;
-        if (toPlayer.sqrMagnitude < 0.0001f) return;
+        if (toPlayer.sqrMagnitude < 0.0001f) return yawOffset;
 
-        // World yaws throughout, so the room can be rotated or the salesman turned in the Editor.
         float wantedYaw = Mathf.Atan2(toPlayer.x, toPlayer.z) * Mathf.Rad2Deg;
-        float delta = Mathf.Clamp(Mathf.DeltaAngle(_headBaseYaw, wantedYaw), -headYawLimit, headYawLimit);
-        _headYawOffset = Mathf.MoveTowards(_headYawOffset, delta, headTurnSpeed * Time.deltaTime);
+        float delta = Mathf.Clamp(Mathf.DeltaAngle(baseYaw, wantedYaw), -yawLimit, yawLimit);
+        yawOffset = Mathf.MoveTowards(yawOffset, delta, turnSpeed * Time.deltaTime);
 
-        // An animated bone was just reset by the Animator; a plain pivot turns from where it was authored.
-        Quaternion pose = _headAnimator != null ? headPivot.rotation : _headBaseRotation;
-        headPivot.rotation = Quaternion.AngleAxis(_headYawOffset, Vector3.up) * pose;
+        Quaternion pose = headAnimator != null ? headPivot.rotation : baseRotation;
+        headPivot.rotation = Quaternion.AngleAxis(yawOffset, Vector3.up) * pose;
+        return yawOffset;
     }
 
     private void UpdateSignWaver()
@@ -345,7 +354,7 @@ public class ShopRoom : MonoBehaviour
         doorHinge.localRotation = opened;
 
         // 2. Through the doorway into the dark; the room's hum and the light go together.
-        // F112: the screen irises closed onto the doorway; the Blackout panel (what LeaveToHub hands over and destroys) is made at alpha 1 at the end.
+        // F112: the screen irises closed onto the doorway; the Blackout panel is made at alpha 1 at the end and stays up until the next floor loads.
         ScreenIris iris = ScreenIris.Show(Color.black);
         Image blackout = null;
         float humStart = _hum != null ? _hum.volume : 0f;
@@ -375,33 +384,7 @@ public class ShopRoom : MonoBehaviour
 
         RestoreView();
         if (_hum != null) _hum.Stop();
-        if (LeaveToHub(blackout)) yield break;
         GameFlow.NextFloor();
-    }
-
-    /// <summary>
-    /// F94: when the shop was reached through the hub's SHOP door, its exit goes back to the hospital (not on to the next floor) and the
-    /// room is reset for a later visit. Returns false in the old flow (and for a legacy shop save), where the exit is GameFlow.NextFloor().
-    /// </summary>
-    private bool LeaveToHub(Image blackout)
-    {
-        if (!GameFlow.ShopFromHub) return false;
-
-        _open = false;
-        if (_hum != null) _hum.Stop();
-        if (doorHinge != null) doorHinge.localRotation = _hingeClosed;
-
-        AsylumHub hub = AsylumHub.Active;
-        if (hub != null && hub.CanVisitShop) hub.ReturnFromShop();
-        else
-        {
-            // The hub went away mid-visit (cannot normally happen): reload the floor we were about to play, do not skip one.
-            GameFlow.ShopFromHub = false;
-            GameFlow.Restart(false, 0, true);
-        }
-        // The hub has made its own black by now (EnterRoutine sets it before its first yield); this panel can go.
-        if (blackout != null) Destroy(blackout.gameObject);
-        return true;
     }
 
     /// <summary>A CharacterController overrides transform writes unless it is switched off around them.</summary>
@@ -478,7 +461,7 @@ public class ShopRoom : MonoBehaviour
     private IEnumerator DescendRoutine()
     {
         _open = false;
-        if (!GameFlow.ShopFromHub) GameFlow.IsInShop = false; // from the hub, ReturnFromShop clears it after the hub is entered
+        GameFlow.IsInShop = false;
         PlayerLock.Freeze(_player, true);
         if (_hud != null) _hud.SetPrompt(null);
         if (_hum != null) _hum.Stop();
@@ -498,12 +481,11 @@ public class ShopRoom : MonoBehaviour
             yield return null;
         }
 
-        if (LeaveToHub(blackout)) yield break;
         GameFlow.NextFloor();
     }
 
-    /// <summary>S9: the contract result line (a Subtitles key) if one is waiting, else the floor's greeting.</summary>
-    private static string GreetingText()
+    /// <summary>S9: the contract result line (a Subtitles key) if one is waiting, else the floor's greeting. F116: HubShop uses it too.</summary>
+    internal static string GreetingText()
     {
         string key = ContractState.TakeSalesmanLine();
         return L10n.T(string.IsNullOrEmpty(key) ? GreetingKeyFor(GameFlow.ShopClearedFloor) : key);

@@ -4913,7 +4913,7 @@ public partial class MazeGenerator : MonoBehaviour
         {
             Debug.LogError("MazeGenerator: there is no AsylumHub in the scene, so the run goes straight from the Intake and the shop into the mazes. Run KEEP IT LIT > Build Missing Pieces in the Editor (it places Assets/Prefabs/AsylumHub.prefab), then save the scene.", this);
         }
-        if (asylum != null) asylum.Configure(player, camera, hud, flashlight, PickBaseMusic(), loreReader, panicClip, shop, UsedSeed);
+        if (asylum != null) asylum.Configure(player, camera, hud, flashlight, PickBaseMusic(), loreReader, panicClip, shopMenu, UsedSeed);
 
         MazeEscape escape = null;
         if (escapeSequence)

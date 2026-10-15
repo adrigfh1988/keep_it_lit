@@ -546,12 +546,8 @@ MonoBehaviour:
     m_Localized: THE GROUND FLOOR HALL
     m_Metadata:
       m_Items: []
-  - m_Id: 392073342
-    m_Localized: ENTER SHOP
-    m_Metadata:
-      m_Items: []
   - m_Id: 392073343
-    m_Localized: "SHOP \xB7 CLOSED"
+    m_Localized: "COMMISSARY \xB7 CLOSED"
     m_Metadata:
       m_Items: []
   - m_Id: 392073344
@@ -559,7 +555,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 392073345
-    m_Localized: "SHOP\n<size=60%>THE SALESMAN  \xB7  {status}</size>"
+    m_Localized: 'COMMISSARY
+
+      <size=60%>{status}</size>'
     m_Metadata:
       m_Items:
       - rid: 4707331672703762543
@@ -572,11 +570,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 392073348
-    m_Localized: THE SHOP IS OPEN
+    m_Localized: THE COMMISSARY IS OPEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073349
-    m_Localized: "THE SHOP IS OPEN \xB7 {room}"
+    m_Localized: "THE COMMISSARY IS OPEN \xB7 {room}"
     m_Metadata:
       m_Items:
       - rid: 4707331672703762543

@@ -2,8 +2,8 @@ using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// F112: one walk-through door of the asylum (a wing door, the SHOP door, the finale's main doors). Lives on the same GameObject as its
-/// <see cref="WingDoor"/> / <see cref="ShopDoor"/> / <see cref="HubExitDoor"/> and holds what the shared walk (AsylumHub.DoorWalk) needs: the
+/// F112: one walk-through door of the asylum (a wing door, the finale's main doors). Lives on the same GameObject as its
+/// <see cref="WingDoor"/> / <see cref="HubExitDoor"/> and holds what the shared walk (AsylumHub.DoorWalk) needs: the
 /// leaf hinges, the unlit void that fills the opening behind the leaves, the draft of cold air and the swing itself. The leaves swing
 /// TOWARD the hall (pulled open, never into the wall behind them) after the walk has eased the player back out of their sweep.
 /// It never moves the player.

@@ -546,12 +546,8 @@ MonoBehaviour:
     m_Localized: "LE HALL DU REZ-DE-CHAUSS\xC9E"
     m_Metadata:
       m_Items: []
-  - m_Id: 392073342
-    m_Localized: ENTRER DANS LA BOUTIQUE
-    m_Metadata:
-      m_Items: []
   - m_Id: 392073343
-    m_Localized: "BOUTIQUE \xB7 FERM\xC9E"
+    m_Localized: "\xC9CONOMAT \xB7 FERM\xC9"
     m_Metadata:
       m_Items: []
   - m_Id: 392073344
@@ -559,7 +555,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 392073345
-    m_Localized: "BOUTIQUE\n<size=60%>LE MARCHAND  \xB7  {status}</size>"
+    m_Localized: "\xC9CONOMAT\n<size=60%>{status}</size>"
     m_Metadata:
       m_Items:
       - rid: 4707331672703763192
@@ -572,11 +568,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 392073348
-    m_Localized: LA BOUTIQUE EST OUVERTE
+    m_Localized: "L'\xC9CONOMAT EST OUVERT"
     m_Metadata:
       m_Items: []
   - m_Id: 392073349
-    m_Localized: "LA BOUTIQUE EST OUVERTE \xB7 {room}"
+    m_Localized: "L'\xC9CONOMAT EST OUVERT \xB7 {room}"
     m_Metadata:
       m_Items:
       - rid: 4707331672703763192

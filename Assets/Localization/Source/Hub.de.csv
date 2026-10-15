@@ -127,15 +127,14 @@ hub.not_now,NICHT JETZT
 hub.catch.wake,Du erwachst an der Tür.
 hub.finale.office,DAS DIREKTORENBÜRO
 hub.shopdoor.room,DIE ERDGESCHOSSHALLE
-hub.shopdoor.enter,LADEN BETRETEN
-hub.shopdoor.closed,LADEN · GESCHLOSSEN
+hub.shopdoor.closed,KANTINE · GESCHLOSSEN
 hub.shopdoor.closed_line,GESCHLOSSEN · KOMM MIT SPLITTERN WIEDER
-hub.shopdoor.plaque,"LADEN
-<size=60%>DER HÄNDLER  ·  {status}</size>"
+hub.shopdoor.plaque,"KANTINE
+<size=60%>{status}</size>"
 hub.shopdoor.status_open,OFFEN
 hub.shopdoor.status_closed,GESCHLOSSEN
-hub.shopdoor.open_line,DER LADEN IST OFFEN
-hub.shopdoor.open_line_room,DER LADEN IST OFFEN · {room}
+hub.shopdoor.open_line,DIE KANTINE IST OFFEN
+hub.shopdoor.open_line_room,DIE KANTINE IST OFFEN · {room}
 hub.examine.tally.prompt,UNTERSUCHEN
 hub.examine.barricade.prompt,UNTERSUCHEN
 hub.examine.room4.prompt,UNTERSUCHEN

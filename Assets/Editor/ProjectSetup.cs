@@ -226,10 +226,10 @@ public static class ProjectSetup
         },
         new Piece
         {
-            Name = "Asylum shop door (F94: the SHOP door between the hub and the shop)",
-            FixMenu = "Build Missing Pieces (adds the SHOP door to the scene hub on a prop-free wall and applies it to the prefab)",
-            Problem = AsylumHubBuilder.ShopDoorProblem,
-            Build = AsylumHubBuilder.AddShopDoor
+            Name = "Asylum shop (F116: the Commissary, the shop as a room of the hub)",
+            FixMenu = "Build Missing Pieces (redecorates the hub storeroom into the Commissary and applies it to the prefab; the old shop door is removed)",
+            Problem = AsylumHubBuilder.ShopProblem,
+            Build = AsylumHubBuilder.BuildShop
         },
         new Piece
         {
@@ -304,7 +304,7 @@ public static class ProjectSetup
         new Piece
         {
             Name = "Asylum wayfinding stars (F100: Patient 7's chalk stars on the way to the next key)",
-            FixMenu = "Build Missing Pieces (adds the star pool and the SHOP door star to the scene hub and applies them to the prefab)",
+            FixMenu = "Build Missing Pieces (adds the star pool and the Commissary door star to the scene hub and applies them to the prefab)",
             Problem = AsylumHubBuilder.StarsProblem,
             Build = AsylumHubBuilder.StarsRepair
         },

@@ -123,19 +123,18 @@ hub.npc.marta,Speaker name: the child in the classroom. Name kept,MARTA
 hub.npc.weiss,Speaker name: the doctor in the exam room. Name kept,DR. WEISS
 hub.npc.clerk,Speaker name: the clerk typing at the records desk,THE CLERK
 hub.npc.talk_to,"Interaction prompt on a person in the asylum. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). {name} = the speaker name above (already capitalised, with its title)",TALK TO {name}
-hub.not_now,Subtitle (1.6 s) when a person or the shop door refuses because something is hunting the player,NOT NOW
+hub.not_now,Subtitle (1.6 s) when a person or the Commissary counter refuses because something is hunting the player,NOT NOW
 hub.catch.wake,Subtitle (3.2 s) after the hub pursuer catches the player: they wake at the door they came in by. Sentence case,You wake at the door.
 hub.finale.office,Subtitle (4 s) on arriving at the Director's office in the finale,THE DIRECTOR'S OFFICE
-hub.shopdoor.room,"Where the SHOP door is, after ""THE SHOP IS OPEN · "". A noun phrase with its article, ALL CAPS",THE GROUND FLOOR HALL
-hub.shopdoor.enter,"Interaction prompt at the open SHOP door. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size)",ENTER SHOP
-hub.shopdoor.closed,Interaction prompt at the SHOP door while it is closed (before a floor has been cleared),SHOP · CLOSED
-hub.shopdoor.closed_line,Subtitle (2.2 s) when E is pressed at the closed SHOP door,CLOSED · COME BACK WITH SHARDS
-hub.shopdoor.plaque,"World-space sign over the SHOP door. Two lines: SHOP big, then the salesman and {status} at 60 % size. Keep the <size=60%> tag and the line break","SHOP
-<size=60%>THE SALESMAN  ·  {status}</size>"
-hub.shopdoor.status_open,Status word on the SHOP door plaque (second line),OPEN
-hub.shopdoor.status_closed,Status word on the SHOP door plaque (second line),CLOSED
-hub.shopdoor.open_line,"Arrival subtitle (4 s, queued behind the first line): the SHOP door is worth a visit (used when the door has no room name)",THE SHOP IS OPEN
-hub.shopdoor.open_line_room,"Arrival subtitle (4 s, queued): the SHOP door is worth a visit. {room} = hub.shopdoor.room",THE SHOP IS OPEN · {room}
+hub.shopdoor.room,"Where the Commissary (shop) door is, after ""THE COMMISSARY IS OPEN · "". A noun phrase with its article, ALL CAPS",THE GROUND FLOOR HALL
+hub.shopdoor.closed,Interaction prompt at the Commissary door while it is shut (before a floor has been cleared),COMMISSARY · CLOSED
+hub.shopdoor.closed_line,Subtitle (2.2 s) when E is pressed at the shut Commissary door,CLOSED · COME BACK WITH SHARDS
+hub.shopdoor.plaque,"World-space brass plaque over the Commissary door. Two lines: the shop name big, then {status} at 60 % size. Keep the <size=60%> tag and the line break","COMMISSARY
+<size=60%>{status}</size>"
+hub.shopdoor.status_open,Status word on the Commissary door plaque (second line),OPEN
+hub.shopdoor.status_closed,Status word on the Commissary door plaque (second line),CLOSED
+hub.shopdoor.open_line,"Arrival subtitle (4 s, queued behind the first line): the Commissary is worth a visit (used when the door has no room name)",THE COMMISSARY IS OPEN
+hub.shopdoor.open_line_room,"Arrival subtitle (4 s, queued): the Commissary is worth a visit. {room} = hub.shopdoor.room",THE COMMISSARY IS OPEN · {room}
 hub.examine.tally.prompt,"Interaction prompt on the tally marks on the wall (examine, subtitle follows). Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Readable cards use hud.prompt.read / hud.prompt.close instead",EXAMINE
 hub.examine.barricade.prompt,"Interaction prompt on the barricade. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Readable cards use hud.prompt.read / hud.prompt.close instead",EXAMINE
 hub.examine.room4.prompt,"Interaction prompt on the door of Room 4. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Readable cards use hud.prompt.read / hud.prompt.close instead",EXAMINE

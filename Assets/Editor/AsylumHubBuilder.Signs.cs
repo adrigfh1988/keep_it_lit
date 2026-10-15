@@ -32,7 +32,6 @@ public static partial class AsylumHubBuilder
         new PlateSpec { room = "Gatehouse", text = "NURSE STATION", key = "world.room.Gatehouse" },
         new PlateSpec { room = "GuardRoom", text = "GUARD ROOM", key = "world.room.GuardRoom" },
         new PlateSpec { room = "VisitRoom", text = "VISITING ROOM", key = "world.room.VisitRoom" },
-        new PlateSpec { room = "Stock", text = "STORE ROOM", key = "world.room.Stock" },
         new PlateSpec { room = "KitchenStock", text = "PANTRY", key = "world.room.KitchenStock" },
         new PlateSpec { room = "DiningRoom", text = "DINING HALL", key = "world.room.DiningRoom" },
         new PlateSpec { room = "KitchenA", text = "KITCHEN", key = "world.room.KitchenA" },
@@ -81,7 +80,7 @@ public static partial class AsylumHubBuilder
         Transform dressing = hub.transform.Find("Dressing");
         List<Vector3> plaques = new List<Vector3>();
         foreach (WingDoor w in hub.GetComponentsInChildren<WingDoor>(true)) if (w.plaque != null) plaques.Add(w.plaque.transform.position);
-        foreach (ShopDoor s in hub.GetComponentsInChildren<ShopDoor>(true)) if (s.plaque != null) plaques.Add(s.plaque.transform.position);
+        if (hub.shop != null && hub.shop.doorPlaque != null) plaques.Add(hub.shop.doorPlaque.transform.position);
 
         int placedTotal = 0;
         foreach (PlateSpec spec in PlateSpecs)

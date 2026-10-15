@@ -650,11 +650,6 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703762775
-  - m_Id: 392073342
-    m_Key: hub.shopdoor.enter
-    m_Metadata:
-      m_Items:
-      - rid: 4707331672703762776
   - m_Id: 392073343
     m_Key: hub.shopdoor.closed
     m_Metadata:
@@ -1381,7 +1376,7 @@ MonoBehaviour:
     - rid: 4707331672703762772
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: Subtitle (1.6 s) when a person or the shop door refuses because something is hunting the player
+        m_CommentText: Subtitle (1.6 s) when a person or the Commissary counter refuses because something is hunting the player
     - rid: 4707331672703762773
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
@@ -1393,39 +1388,35 @@ MonoBehaviour:
     - rid: 4707331672703762775
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: "Where the SHOP door is, after \"THE SHOP IS OPEN \xB7 \". A noun phrase with its article, ALL CAPS"
-    - rid: 4707331672703762776
-      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
-      data:
-        m_CommentText: Interaction prompt at the open SHOP door. Shown as "E  <text>" (34 pt, 600 x 50, auto-size)
+        m_CommentText: "Where the Commissary (shop) door is, after \"THE COMMISSARY IS OPEN \xB7 \". A noun phrase with its article, ALL CAPS"
     - rid: 4707331672703762777
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: Interaction prompt at the SHOP door while it is closed (before a floor has been cleared)
+        m_CommentText: Interaction prompt at the Commissary door while it is shut (before a floor has been cleared)
     - rid: 4707331672703762778
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: Subtitle (2.2 s) when E is pressed at the closed SHOP door
+        m_CommentText: Subtitle (2.2 s) when E is pressed at the shut Commissary door
     - rid: 4707331672703762779
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: 'World-space sign over the SHOP door. Two lines: SHOP big, then the salesman and {status} at 60 % size. Keep the <size=60%> tag and the line break'
+        m_CommentText: 'World-space brass plaque over the Commissary door. Two lines: the shop name big, then {status} at 60 % size. Keep the <size=60%> tag and the line break'
     - rid: 4707331672703762780
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: Status word on the SHOP door plaque (second line)
+        m_CommentText: Status word on the Commissary door plaque (second line)
     - rid: 4707331672703762781
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: Status word on the SHOP door plaque (second line)
+        m_CommentText: Status word on the Commissary door plaque (second line)
     - rid: 4707331672703762782
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: 'Arrival subtitle (4 s, queued behind the first line): the SHOP door is worth a visit (used when the door has no room name)'
+        m_CommentText: 'Arrival subtitle (4 s, queued behind the first line): the Commissary is worth a visit (used when the door has no room name)'
     - rid: 4707331672703762783
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: 'Arrival subtitle (4 s, queued): the SHOP door is worth a visit. {room} = hub.shopdoor.room'
+        m_CommentText: 'Arrival subtitle (4 s, queued): the Commissary is worth a visit. {room} = hub.shopdoor.room'
     - rid: 4707331672703762784
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:

@@ -24,6 +24,7 @@ world.intake.stay_in_bed,"World sign at the foot of the Intake bed, visible only
 world.shop.contracts,"World sign above the contract board in the shop (one line, ALL CAPS, ~10 characters)",CONTRACTS
 world.shop.shards_accepted,"World sign on the shop counter (one line, ALL CAPS, ~18 characters). Shards = the currency (see shop.currency)",SHARDS ACCEPTED
 world.shop.name,"Name board hanging over the shop counter (3D text on a wooden board, one line, ALL CAPS, ~12 characters). The shop is an old-fashioned apothecary run by the salesman",APOTHECARY
+world.shop.commissary,"Name board hanging over the Commissary counter in the asylum (3D text on a wooden board, one line, ALL CAPS, ~12 characters). The shop is the asylum's old patients' store, run by the salesman",COMMISSARY
 world.intake.admissions,"Name plate over the exit of the Intake's first room, enamel plate (3D text, one line, ALL CAPS, ~12 characters). The room where the patient is admitted",ADMISSIONS
 world.intake.observation,"Name plate over the entrance of the Intake's last room, enamel plate (3D text, one line, ALL CAPS, ~12 characters). The room where patients are watched",OBSERVATION
 world.ghost.no_visitors,"Faint older paint behind the 'stay in your bed' wall warning in the Intake: what the wall used to say before it was painted over (3D text at ~16 % opacity, one line, ALL CAPS, ~12 characters)",NO VISITORS
@@ -37,7 +38,6 @@ world.room.OfficeA,"Name plate over the records room door in the asylum, where t
 world.room.Gatehouse,"Name plate over the nurse station door in the asylum (one line, ALL CAPS, ~18 characters). Must match the NURSE STATION of hub.mission.1.where",NURSE STATION
 world.room.GuardRoom,"Name plate over the guards' room door in the asylum (one line, ALL CAPS, ~18 characters)",GUARD ROOM
 world.room.VisitRoom,"Name plate over the visiting room door in the asylum, where relatives met patients (one line, ALL CAPS, ~18 characters)",VISITING ROOM
-world.room.Stock,"Name plate over the store room door in the asylum (one line, ALL CAPS, ~18 characters)",STORE ROOM
 world.room.KitchenStock,"Name plate over the pantry door next to the kitchen in the asylum (one line, ALL CAPS, ~18 characters)",PANTRY
 world.room.DiningRoom,"Name plate over the dining hall door in the asylum (one line, ALL CAPS, ~18 characters)",DINING HALL
 world.room.KitchenA,"Name plate over the kitchen door in the asylum (one line, ALL CAPS, ~18 characters). Must match the KITCHEN of hub.mission.2.where",KITCHEN

@@ -71,16 +71,16 @@ public static partial class AsylumHubBuilder
             }
             if (door.arrivalPoint != null && !ClearanceFree(door.arrivalPoint)) blocked.Add($"floor {door.floor} by {LastBlocker}");
         }
-        if (hub.shopDoor != null && hub.shopDoor.arrivalPoint != null && !ClearanceFree(hub.shopDoor.arrivalPoint)) blocked.Add($"shop by {LastBlocker}");
-        if (hub.shopDoor != null && hub.shopDoor.leafHinge != null)
+        if (hub.shop != null && hub.shop.doorHinge != null)
         {
-            foreach (Transform t in hub.shopDoor.leafHinge.GetComponentsInChildren<Transform>(true))
+            foreach (Transform t in hub.shop.doorHinge.GetComponentsInChildren<Transform>(true))
             {
                 if (GameObjectUtility.GetStaticEditorFlags(t.gameObject) != 0) { staticLeaves++; break; }
             }
         }
         int wired = hub.wingDoors.Count(d => d != null);
         sb.AppendLine($"  wing doors: {wired} / 5 {(wired == 5 ? "OK" : "MISSING")}");
+        if (hub.shop != null) sb.AppendLine($"  commissary (F116): {(hub.shop.IsComplete ? "OK" : "INCOMPLETE")}");
         sb.AppendLine($"  static moving leaves: {staticLeaves} {(staticLeaves == 0 ? "OK" : "FIX")}");
         sb.AppendLine(blocked.Count == 0 ? "  door clearance: OK" : "  door clearance blocked at: " + string.Join(", ", blocked));
 
@@ -104,7 +104,7 @@ public static partial class AsylumHubBuilder
         Collider[] hits = Physics.OverlapBox(centre, new Vector3(0.75f, 1.15f, 0.625f), arrival.rotation, ~0, QueryTriggerInteraction.Ignore);
         foreach (Collider c in hits)
         {
-            if (c.GetComponentInParent<WingDoor>() != null || c.GetComponentInParent<ShopDoor>() != null) continue; // the door own leaf / frame
+            if (c.GetComponentInParent<WingDoor>() != null) continue; // the door own leaf / frame
             LastBlocker = c.name + " (" + c.transform.parent?.name + ")";
             return false;
         }

@@ -546,12 +546,8 @@ MonoBehaviour:
     m_Localized: DIE ERDGESCHOSSHALLE
     m_Metadata:
       m_Items: []
-  - m_Id: 392073342
-    m_Localized: LADEN BETRETEN
-    m_Metadata:
-      m_Items: []
   - m_Id: 392073343
-    m_Localized: "LADEN \xB7 GESCHLOSSEN"
+    m_Localized: "KANTINE \xB7 GESCHLOSSEN"
     m_Metadata:
       m_Items: []
   - m_Id: 392073344
@@ -559,7 +555,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 392073345
-    m_Localized: "LADEN\n<size=60%>DER H\xC4NDLER  \xB7  {status}</size>"
+    m_Localized: 'KANTINE
+
+      <size=60%>{status}</size>'
     m_Metadata:
       m_Items:
       - rid: 4707331672703763208
@@ -572,11 +570,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 392073348
-    m_Localized: DER LADEN IST OFFEN
+    m_Localized: DIE KANTINE IST OFFEN
     m_Metadata:
       m_Items: []
   - m_Id: 392073349
-    m_Localized: "DER LADEN IST OFFEN \xB7 {room}"
+    m_Localized: "DIE KANTINE IST OFFEN \xB7 {room}"
     m_Metadata:
       m_Items:
       - rid: 4707331672703763208

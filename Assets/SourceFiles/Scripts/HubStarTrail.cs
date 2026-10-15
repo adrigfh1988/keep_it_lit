@@ -7,20 +7,19 @@ using UnityEngine.AI;
 /// <summary>
 /// F100 (layer 2): Patient 7's stars. After each floor, fresh chalk stars lead from the arrival point to whoever holds the next key
 /// (floors 2-4: the mission's giver; floor 5: the records room, then the Director's door), and once the key is in hand the trail is
-/// drawn again to the wing door. One star is scratched on the SHOP door while the shop is open. Nobody comments on them except one
+/// drawn again to the wing door. One star is scratched beside the Commissary door while the shop is open. Nobody comments on them except one
 /// subtitle the first time the player walks up to one (floor 2).
 ///
 /// The stars are a pool of inactive wall quads (AsylumHub/Life/Wayfinding/Stars) lit only by their own faint emission - no Light. The path is
 /// the hub NavMesh path ("Hub" agent type) from the arrival point to the target; every few metres a star is put on the nearest plain
 /// building wall beside the path, 1.1-1.7 m up, its tail along the direction of travel. Everything about a star (side, height, variant,
-/// roll, doubling) comes from a hash of (floor, index): no rng stream. Lives under Life, so it exists only while the hub is up; a shop
-/// round trip (AsylumHub.IsShopReturn) leaves the trail exactly as it was, a floor change or a re-entry draws it afresh.
+/// roll, doubling) comes from a hash of (floor, index): no rng stream. Lives under Life, so it exists only while the hub is up; a floor change or a re-entry draws it afresh.
 /// </summary>
 public class HubStarTrail : MonoBehaviour
 {
     [Tooltip("The pool of wall quads (inactive in the prefab). Built by KEEP IT LIT > Build Missing Pieces.")]
     [SerializeField] private Renderer[] pool = new Renderer[0];
-    [Tooltip("The star scratched on the SHOP door's leaf.")]
+    [Tooltip("The star scratched on the wall beside the Commissary (shop) door, in the hall.")]
     [SerializeField] private Renderer shopStar;
     /// <summary>A star's size on the wall (m) on floor 2 at 2.5 m from the path; later floors and farther walls scale it up.</summary>
     private const float baseSize = 0.4f;
@@ -82,7 +81,7 @@ public class HubStarTrail : MonoBehaviour
         AsylumHub hub = Hub;
         if (hub == null || !IsComplete) return;
         bool wanted = !HubState.IsFinale && floor >= 2 && floor <= 5;
-        SetShopStar(wanted && hub.shopDoor != null && hub.shopDoor.IsOpen);
+        SetShopStar(wanted && hub.shop != null && hub.shop.IsOpen);
         if (!wanted)
         {
             if (_routine != null) { StopCoroutine(_routine); _routine = null; }
@@ -91,12 +90,6 @@ public class HubStarTrail : MonoBehaviour
             return;
         }
 
-        // Back from the shop: the trail is as the player left it.
-        if (hub.IsShopReturn && _builtFloor == floor && _routine == null)
-        {
-            foreach (int i in _live) { pool[i].gameObject.SetActive(true); Paint(i, 1f); }
-            return;
-        }
         if (_routine != null) StopCoroutine(_routine);
         ClearAll();
         _builtFloor = -1;
@@ -332,7 +325,7 @@ public class HubStarTrail : MonoBehaviour
     private static bool NearDoor(AsylumHub hub, Vector3 p)
     {
         foreach (WingDoor d in hub.wingDoors) if (d != null && Flat(d.transform.position - p) < 1.5f) return true;
-        return hub.shopDoor != null && Flat(hub.shopDoor.transform.position - p) < 1.5f;
+        return hub.shop != null && hub.shop.IsComplete && Flat(hub.shop.DoorPosition - p) < 1.5f;
     }
 
     private static float Flat(Vector3 v) { v.y = 0f; return v.magnitude; }
@@ -398,7 +391,7 @@ public class HubStarTrail : MonoBehaviour
         _live.Clear();
     }
 
-    /// <summary>The SHOP door's own star: on while the shop can be entered. Same chalk, a fixed variant, never fades.</summary>
+    /// <summary>The Commissary door's own star: on while the shop is open. Same chalk, a fixed variant, never fades.</summary>
     private void SetShopStar(bool on)
     {
         if (shopStar == null) return;

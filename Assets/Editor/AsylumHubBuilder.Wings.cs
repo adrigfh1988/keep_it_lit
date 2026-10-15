@@ -145,7 +145,7 @@ public static partial class AsylumHubBuilder
     }
 
     /// <summary>
-    /// The shared body of every hub door (wing doors, the SHOP door): the pack door with a hinge per leaf, a plaque plate and text, a
+    /// The shared body of every hub door (wing doors): the pack door with a hinge per leaf, a plaque plate and text, a
     /// beacon, an arrival point 1.5 m in front and the interaction trigger, flush against `spot`. The caller adds its component.
     /// </summary>
     private static DoorShell BuildDoorShell(AsylumHub hub, string rootName, string doorPrefab, bool isDouble, string plaqueText,

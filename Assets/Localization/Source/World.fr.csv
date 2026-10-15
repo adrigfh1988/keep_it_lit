@@ -24,6 +24,7 @@ world.intake.stay_in_bed,RESTEZ AU LIT
 world.shop.contracts,CONTRATS
 world.shop.shards_accepted,ÉCLATS ACCEPTÉS
 world.shop.name,APOTHICAIRERIE
+world.shop.commissary,ÉCONOMAT
 world.intake.admissions,ADMISSION
 world.intake.observation,OBSERVATION
 world.ghost.no_visitors,PAS DE VISITES
@@ -37,7 +38,6 @@ world.room.OfficeA,SALLE DES ARCHIVES
 world.room.Gatehouse,POSTE DE SOINS
 world.room.GuardRoom,CORPS DE GARDE
 world.room.VisitRoom,PARLOIR
-world.room.Stock,RÉSERVE
 world.room.KitchenStock,GARDE-MANGER
 world.room.DiningRoom,RÉFECTOIRE
 world.room.KitchenA,CUISINE

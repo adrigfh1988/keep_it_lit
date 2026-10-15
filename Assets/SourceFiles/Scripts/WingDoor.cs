@@ -186,7 +186,7 @@ public class WingDoor : MonoBehaviour, IInteractable
         }
     }
 
-    /// <summary>S9 (D14): a longer translation shrinks (down to 65 %) on one line instead of wrapping off the plate. Shared with ShopDoor.</summary>
+    /// <summary>S9 (D14): a longer translation shrinks (down to 65 %) on one line instead of wrapping off the plate. Shared with HubShop.</summary>
     internal static void FitPlaque(TMP_Text t)
     {
         if (t == null) return;

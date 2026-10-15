@@ -9,7 +9,7 @@ hud.contract.progress_time,"Contract HUD line, Don't dawdle: {time} = m:ss left"
 hud.torch,"HUD torch battery label bottom-left (20 pt, one line, 220 px, auto-size)",TORCH
 hud.torch_dead,"HUD torch battery label when the battery is empty (20 pt, 220 px, auto-size)",TORCH DEAD
 hud.floor,"HUD floor label top-left under the star counter (26 pt, letter-spaced, 320 px, auto-size) and the shop door sign. {floor} = floor number",FLOOR {floor}
-hud.asylum,"HUD floor label while in the hospital hub; also the shop door sign when the shop is entered from the hub (26 pt, 320 px)",ASYLUM
+hud.asylum,"HUD floor label while in the hospital hub (26 pt, 320 px)",ASYLUM
 hud.shards,"HUD shard counter top-left (26 pt, letter-spaced, 320 px, auto-size). {currency} = currency name, {shards} = balance",{currency}  {shards}
 hud.second_wind,"HUD label shown while a Second Wind is held (22 pt, bottom-right, 360 px)",SECOND WIND
 hud.slot.battery,"HUD consumable slot, bottom-right (24 pt, 360 px, auto-size). {key} = 1 on keyboard or TAP on touch (do not translate the key), {count} = batteries held",{key}   BATTERY  x{count}

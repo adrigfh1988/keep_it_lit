@@ -371,10 +371,14 @@ public static partial class AsylumHubBuilder
             if (lockers != null) foreach (Transform locker in lockers) { Transform front = locker.Find("FrontAnchor"); if (front != null) Add(front.position); }
             foreach (HubPatient patient in hub.life.GetComponentsInChildren<HubPatient>(true)) if (patient.body != null) Add(patient.body.position);
         }
-        if (hub.shopDoor != null && hub.shopDoor.arrivalPoint != null && hub.mainEntrance != null)
+        if (hub.shop != null && hub.shop.doorHinge != null && hub.shop.roomZone != null && hub.mainEntrance != null)
         {
-            Add(hub.shopDoor.arrivalPoint.position);
-            Lane(hub.mainEntrance.position, hub.shopDoor.arrivalPoint.position);
+            // F116: the hall side of the Commissary door, 1.5 m out from the wall (away from the room)
+            Vector3 away = ShopHallDirection(hub.shop);
+            Bounds shopFrame = ShopFrameBounds(hub.shop);
+            Vector3 hallSide = new Vector3(shopFrame.center.x, ShopFloorY, shopFrame.center.z) + away * 1.5f;
+            Add(hallSide);
+            Lane(hub.mainEntrance.position, hallSide);
         }
         // every pack door: the approach on both sides (a 2.4 m deep, door-wide strip) stays open, so no room is walled off from its hall by furniture
         if (hub.building != null)

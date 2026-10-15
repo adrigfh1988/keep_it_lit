@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// F100 (layer 2): Patient 7's chalk stars, added to the hand-edited hub prefab without regenerating it (build-missing-only). A drawn
 /// 2 x 2 sheet of rough five-point stars with a short tail along +X, one transparent URP Lit material with a faint emission of its own
-/// (no Light anywhere), a pool of inactive wall quads under Life/Wayfinding/Stars and one star on the SHOP door's leaf, all wired into a
+/// (no Light anywhere), a pool of inactive wall quads under Life/Wayfinding/Stars and one star on the hall wall beside the Commissary door, all wired into a
 /// <see cref="HubStarTrail"/>. Spec: plannings/hub-wayfinding-plan.md.
 /// </summary>
 public static partial class AsylumHubBuilder
@@ -33,7 +33,7 @@ public static partial class AsylumHubBuilder
         HubStarTrail trail = way != null ? way.GetComponent<HubStarTrail>() : null;
         if (hub.life == null) missing.Add("Life");
         else if (trail == null) missing.Add("Life/Wayfinding (HubStarTrail)");
-        else if (!trail.IsComplete) missing.Add("the star pool or the SHOP door star");
+        else if (!trail.IsComplete) missing.Add("the star pool or the Commissary door star");
         return missing.Count == 0 ? null : "missing: " + string.Join(", ", missing);
     }
 
@@ -62,12 +62,12 @@ public static partial class AsylumHubBuilder
         }
 
         Renderer shop = null;
-        if (hub.shopDoor != null && hub.shopDoor.leafHinge != null)
+        if (hub.shop != null && hub.shop.IsComplete)
         {
-            Transform found = hub.shopDoor.leafHinge.Find("ShopStar");
+            Transform found = hub.shop.transform.Find("ShopStar");
             shop = found != null ? found.GetComponent<Renderer>() : PlaceShopStar(hub, material);
         }
-        else Debug.LogWarning("Hub stars: the hub has no SHOP door yet; its star is added on the next run once it exists.");
+        else Debug.LogWarning("Hub stars: the hub has no Commissary yet; its star is added on the next run once it exists.");
 
         SerializedObject so = new SerializedObject(trail);
         SerializedProperty arr = so.FindProperty("pool");
@@ -77,7 +77,7 @@ public static partial class AsylumHubBuilder
         so.ApplyModifiedPropertiesWithoutUndo();
         PrefabUtility.RecordPrefabInstancePropertyModifications(trail);
 
-        Debug.Log($"Hub stars: pool of {pool.Count}, shop door star {(shop != null ? "on the leaf at " + shop.transform.position.ToString("F2") : "MISSING")}.");
+        Debug.Log($"Hub stars: pool of {pool.Count}, Commissary door star {(shop != null ? "on the wall at " + shop.transform.position.ToString("F2") : "MISSING")}.");
         if (!wasActive) hub.SetContentActive(false);
         EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
         ApplyHubToPrefab(hub);
@@ -100,21 +100,29 @@ public static partial class AsylumHubBuilder
         return r;
     }
 
-    /// <summary>One star on the SHOP door's face: found by a ray from the arrival point to the door, parented to the leaf so it swings with it.</summary>
-    private static Renderer PlaceShopStar(AsylumHub hub, Material material)
+    /// <summary>One star on the hall wall beside the Commissary door (1.4 m up): found by a ray from the hall to the wall, parented to AsylumHub/Shop so it exists with the hub content.</summary>
+    internal static Renderer PlaceShopStar(AsylumHub hub, Material material)
     {
-        ShopDoor door = hub.shopDoor;
-        Vector3 from = door.arrivalPoint.position + Vector3.up * 1.4f;
-        Vector3 to = door.transform.position + Vector3.up * 1.4f;
-        Vector3 dir = (to - from).normalized;
-        Vector3 point = to; Vector3 normal = -dir;
-        // The door has no solid collider of its own on every hub; a hit on the wall right behind it is still the plane the leaf hangs in.
-        RaycastHit[] hits = Physics.RaycastAll(from, dir, Vector3.Distance(from, to) + 0.6f, ~0, QueryTriggerInteraction.Ignore).OrderBy(h => h.distance).ToArray();
-        if (hits.Length > 0) { point = hits[0].point; normal = hits[0].normal; normal.y = 0f; normal.Normalize(); }
-        Renderer r = MakeQuad(door.leafHinge, "ShopStar", material);
+        HubShop shop = hub.shop;
+        Vector3 away = ShopHallDirection(shop); // into the hall
+        Vector3 across = Vector3.Cross(Vector3.up, away); // the door's width axis
+        Bounds frameB = ShopFrameBounds(shop);
+        Vector3 doorCentre = new Vector3(frameB.center.x, ShopFloorY, frameB.center.z);
+        Vector3 point = doorCentre + Vector3.up * 1.4f; Vector3 normal = away;
+        // 1.4 m to one side of the door (east first, then west), 1.4 m up; whichever the wall is flat and clear on
+        foreach (float side in new[] { -1.4f, 1.4f })
+        {
+            Vector3 from = doorCentre + across * side + away * 1.5f + Vector3.up * 1.4f;
+            if (Physics.Raycast(from, -away, out RaycastHit hit, 3f, ~0, QueryTriggerInteraction.Ignore) && Mathf.Abs(hit.normal.y) < 0.2f)
+            {
+                point = hit.point; normal = hit.normal; normal.y = 0f; normal.Normalize();
+                break;
+            }
+        }
+        Renderer r = MakeQuad(shop.transform, "ShopStar", material);
         r.transform.SetPositionAndRotation(point + normal * 0.03f, Quaternion.LookRotation(-normal, Vector3.up));
         r.transform.localScale = Vector3.one * 0.3f;
-        r.gameObject.SetActive(true); // HubStarTrail switches it with the shop door
+        r.gameObject.SetActive(true); // HubStarTrail switches it with the shop
         return r;
     }
 

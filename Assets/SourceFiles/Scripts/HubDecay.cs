@@ -200,6 +200,7 @@ public class HubDecay : MonoBehaviour
 
         HashSet<Light> exempt = new HashSet<Light>();
         foreach (WingDoor door in hub.wingDoors) if (door != null && door.beacon != null) exempt.Add(door.beacon);
+        if (hub.shop != null && hub.shop.lamps != null) foreach (Light l in hub.shop.lamps) if (l != null) exempt.Add(l); // F116: the Commissary switches its own lamps (lit while open, dark while shut) and is the one safe, warm room: decay never blinks them
 
         foreach (Light l in hub.GetComponentsInChildren<Light>(true))
         {

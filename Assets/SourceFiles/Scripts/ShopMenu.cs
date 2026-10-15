@@ -489,13 +489,13 @@ public class ShopMenu : MonoBehaviour
     }
 
     /// <summary>
-    /// F83/F94: the save every purchase and contract change writes. In the old flow (AdvanceFloor has not run yet) it is a shop save of
-    /// the cleared floor; in the hub shop CurrentFloor is already the floor about to be played, so it is that floor's start save
+    /// F83/F116: the save every purchase and contract change writes. In the old shop room (the fallback, GameFlow.IsInShop; AdvanceFloor has not run yet) it is a shop save of
+    /// the cleared floor; in the hub's Commissary CurrentFloor is already the floor about to be played, so it is that floor's start save
     /// (CONTINUE then lands in the hub).
     /// </summary>
     private static void WriteShopCheckpoint()
     {
-        SaveSystem.WriteCheckpoint(GameFlow.CurrentFloor, !GameFlow.ShopFromHub);
+        SaveSystem.WriteCheckpoint(GameFlow.CurrentFloor, GameFlow.IsInShop);
     }
 
     private void PlayTick()

@@ -40,9 +40,9 @@ public class AsylumHub : MonoBehaviour
     [Tooltip("Testing: > 0 forces HubState.Floor (and so the open wing and the patients) to this floor. 0 = off.")]
     public int debugFloor;
 
-    [Header("Shop door (F94, optional - not part of IsComplete)")]
-    [Tooltip("AsylumHub/Wings/ShopDoor: the way into the shop room between floors. A hub without it still works; clearing a maze then goes to the shop directly, as before.")]
-    public ShopDoor shopDoor;
+    [Header("Shop (F116, optional - not part of IsComplete)")]
+    [Tooltip("AsylumHub/Shop: the Commissary, the shop as a room of the asylum (the ground-floor storeroom). A hub without it still works; clearing a maze then goes to the old shop room directly, as before.")]
+    public HubShop shop;
 
     [Header("Points (always active)")]
     public Transform points;
@@ -72,9 +72,6 @@ public class AsylumHub : MonoBehaviour
 
     /// <summary>True from the moment a wing door is used until the maze takes over: the ambience fades out and pausing is off.</summary>
     public bool Leaving { get; private set; }
-
-    /// <summary>F100: this arrival is the way back from the SHOP door, not a new floor: the star trail and the arrival lines stay as they were.</summary>
-    public bool IsShopReturn { get; private set; }
 
     /// <summary>True during the arrival and the walk-in (the player is held by a scripted move): PauseMenu does not open.</summary>
     public bool IsTransitioning { get; private set; }
@@ -106,10 +103,10 @@ public class AsylumHub : MonoBehaviour
     /// <summary>Complete and handed the player systems by MazeGenerator.SetUpAtmosphere: the run may go through it.</summary>
     public bool CanEnter => IsComplete && _configured;
 
-    /// <summary>F94: the hub can host the shop - usable, with a complete SHOP door, and the scene's shop room handed over. Deliberately not part of <see cref="IsComplete"/>.</summary>
-    public bool CanVisitShop => CanEnter && shopDoor != null && shopDoor.IsComplete && _shop != null && _shop.IsComplete;
+    /// <summary>F94/F116: the hub can host the shop - usable, with a complete Commissary and the shop menu handed over. Deliberately not part of <see cref="IsComplete"/>.</summary>
+    public bool CanVisitShop => CanEnter && shop != null && shop.IsComplete && _shopMenu != null;
 
-    /// <summary>F94: true when clearing floors 1-4 goes to the hub (and its SHOP door) instead of straight into the shop. The one place that decides it.</summary>
+    /// <summary>F94/F116: true when clearing floors 1-4 goes to the hub (and its Commissary) instead of straight into the old shop room. The one place that decides it.</summary>
     public static bool ShopInHub => Active != null && Active.CanVisitShop;
 
     private bool AllWingsWired()
@@ -134,7 +131,7 @@ public class AsylumHub : MonoBehaviour
     private PlayerStealthState _stealth;
     private PlayerInteractor _interactor;
 
-    private ShopRoom _shop;
+    private ShopMenu _shopMenu;
     private int _mazeSeed;
 
     private Vector3 _returnPosition;
@@ -169,9 +166,10 @@ public class AsylumHub : MonoBehaviour
     }
 
     /// <summary>Called by MazeGenerator.SetUpAtmosphere once the player systems exist. `music` is the floor's base music, played at a whisper in the hub.</summary>
-    public void Configure(Transform player, Camera camera, PlayerHud hud, Flashlight flashlight, AudioClip music = null, LoreReadingUi reader = null, AudioClip urgent = null, ShopRoom shop = null, int mazeSeed = 0)
+    public void Configure(Transform player, Camera camera, PlayerHud hud, Flashlight flashlight, AudioClip music = null, LoreReadingUi reader = null, AudioClip urgent = null, ShopMenu shopMenu = null, int mazeSeed = 0)
     {
-        _shop = shop;
+        _shopMenu = shopMenu;
+        if (shop != null) shop.Configure(shopMenu);
         _mazeSeed = mazeSeed;
         if (GetComponent<HubObjectiveCard>() == null) gameObject.AddComponent<HubObjectiveCard>(); // the hub's objective card (built lazily)
         _reader = reader;
@@ -200,6 +198,7 @@ public class AsylumHub : MonoBehaviour
         if (lights != null) lights.gameObject.SetActive(active);
         if (wings != null) wings.gameObject.SetActive(active);
         if (life != null) life.gameObject.SetActive(active);
+        if (shop != null) shop.gameObject.SetActive(active); // F116: the Commissary is hub content too
     }
 
     /// <summary>S2: every fog emitter under Dressing/Fog follows the Fog setting (a FogScale is added on first activation and applies on its own enable).</summary>
@@ -312,7 +311,7 @@ public class AsylumHub : MonoBehaviour
         _returnPosition = _player.position;
         _returnYaw = _player.eulerAngles.y;
     }
-    private IEnumerator EnterRoutine(Transform arrival, int floor, bool announce = true)
+    private IEnumerator EnterRoutine(Transform arrival, int floor)
     {
         _overlayColor = Color.black;
         if (_ambience != null) _ambience.Unmute();
@@ -327,7 +326,7 @@ public class AsylumHub : MonoBehaviour
         ApplyHubAtmosphere();
         SetContentActive(true);
         foreach (WingDoor door in wingDoors) door.Refresh();
-        if (shopDoor != null) shopDoor.Refresh();
+        if (shop != null) shop.Refresh();
 
         ArrivalPosition = arrival.position;
         ArrivalYaw = arrival.eulerAngles.y;
@@ -346,7 +345,6 @@ public class AsylumHub : MonoBehaviour
             _flashlight.SetOn(true);
         }
 
-        IsShopReturn = !announce;
         OnEnterHub?.Invoke(floor);
 
         yield return Fade(1f, 0f, fadeInSeconds);
@@ -359,15 +357,14 @@ public class AsylumHub : MonoBehaviour
             yield break;
         }
         WingDoor next = wingDoors[Mathf.Clamp(floor, 1, wingDoors.Length) - 1];
-        // F94: coming back from the shop is not an arrival - no line, no fresh hint loop beyond the usual one.
-        if (_hud != null && next != null && announce)
+        if (_hud != null && next != null)
         {
             _hud.ShowSubtitle(ArrivalText(next, floor), 5f);
-            // F100: the shop gets its one mention, queued behind the first line (~6 s in), only when the slip would have offered it.
-            if (!_shopLineShown && !_shopVisited && ShopWorthAVisit(floor - 1) && shopDoor != null)
+            // F100/F116: the Commissary gets its one mention, queued behind the first line (~6 s in), only when the slip would have offered it.
+            if (!_shopLineShown && !_shopVisited && ShopWorthAVisit(floor - 1))
             {
                 _shopLineShown = true;
-                string room = shopDoor.RoomName;
+                string room = L10n.Has("hub.shopdoor.room") ? L10n.T("hub.shopdoor.room") : null; // where the door is
                 _hud.QueueSubtitle(string.IsNullOrEmpty(room) ? L10n.T("hub.shopdoor.open_line") : L10n.T("hub.shopdoor.open_line_room", ("room", room)), 4f);
             }
         }
@@ -418,12 +415,12 @@ public class AsylumHub : MonoBehaviour
     }
 
     /// <summary>
-    /// F100: the readmission slip and the arrival both offer the shop only when it is worth the walk: the SHOP door will be open for the next
+    /// F100: the readmission slip and the arrival both offer the shop only when it is worth the walk: the Commissary will be open for the next
     /// floor and the wallet holds at least the cheapest thing that can still be bought (at the prices of `clearedFloor`, the floor just cleared).
     /// </summary>
     public static bool ShopWorthAVisit(int clearedFloor)
     {
-        if (!ShopInHub || clearedFloor < 1 || !ShopDoor.OpenFor(clearedFloor + 1)) return false;
+        if (!ShopInHub || clearedFloor < 1 || !HubShop.OpenFor(clearedFloor + 1)) return false;
         int cheapest = ShopCatalogue.CheapestOpenPrice(clearedFloor);
         return cheapest >= 0 && PlayerWallet.Shards >= cheapest;
     }
@@ -513,7 +510,7 @@ public class AsylumHub : MonoBehaviour
     }
 
     /// <summary>
-    /// F112: the one walk through a door in the hub, shared by the wing doors, the SHOP door and (through <see cref="PassThrough"/>) the finale's
+    /// F112: the one walk through a door in the hub, shared by the wing doors and (through <see cref="PassThrough"/>) the finale's
     /// main doors. Stand back out of the leaves' sweep, latch, a held crack, the leaves swing TOWARD the hall with a cold draft, step up to
     /// the doorway and walk in while the screen irises closed onto it. Returns at full black with the player still frozen and the leaves
     /// open; the caller decides what comes next and closes them (<see cref="DoorPassage.ResetClosed"/>). A door without a complete
@@ -639,25 +636,12 @@ public class AsylumHub : MonoBehaviour
     /// <summary>F112: the finale's main doors use the hub's door walk too (HubExitDoor.WalkOut). Same contract: returns at full black, leaves open.</summary>
     public IEnumerator PassThrough(Transform door) => DoorWalk(door);
 
-    // ---------------------------------------------------------------- the SHOP door (F94)
+    // ---------------------------------------------------------------- the Commissary (F94, F116)
 
-    /// <summary>
-    /// E at an open SHOP door: the same walk-in as a wing door, but at black the player lands in the shop room (lit, no run, no torch)
-    /// instead of a maze. The shop's own door brings them back through <see cref="ReturnFromShop"/>. Refused while a hub pursuer is after
-    /// the player - the shop is not an escape hatch.
-    /// </summary>
-    public void EnterShop(ShopDoor door)
-    {
-        if (door == null || Leaving || IsTransitioning || !CanVisitShop || !door.IsOpen) return;
-        if (PursuerAfterPlayer())
-        {
-            if (_hud != null) _hud.ShowSubtitle(L10n.T("hub.not_now"), 1.6f);
-            return;
-        }
-        StartCoroutine(ShopWalkInRoutine(door));
-    }
+    /// <summary>F100/F116: the player has been inside the Commissary - the arrival line that mentions it is not repeated.</summary>
+    public void MarkShopVisited() { _shopVisited = true; }
 
-    /// <summary>True while a hub pursuer is spotting, chasing or catching the player (the shop door and the dialogue panel refuse then).</summary>
+    /// <summary>True while a hub pursuer is spotting, chasing or catching the player (the Commissary counter and the dialogue panel refuse then).</summary>
     public bool PursuerAfterPlayer()
     {
         if (life == null) return false;
@@ -668,51 +652,6 @@ public class AsylumHub : MonoBehaviour
             if (mode == HubStalker.Mode.Spotted || mode == HubStalker.Mode.Chase || mode == HubStalker.Mode.Catching) return true;
         }
         return false;
-    }
-
-    private IEnumerator ShopWalkInRoutine(ShopDoor door)
-    {
-        Leaving = true;
-        IsTransitioning = true;
-        if (_hint != null) { StopCoroutine(_hint); _hint = null; }
-
-        DoorPassage passage = door.GetComponent<DoorPassage>();
-        yield return DoorWalk(door.transform);
-
-        // ---- at black: the hub goes away and the shop room takes over. _returnPosition/_returnYaw (the maze start) stay as they were.
-        OnLeaveHub?.Invoke();
-        if (passage != null) passage.ResetClosed();
-        RestoreAtmosphere();
-        SetContentActive(false);
-
-        _shopVisited = true; // F100: the arrival line that mentions the shop is not repeated after a visit
-        GameFlow.ShopFromHub = true; // before ArrivePlayer: the door sign and the shop's floor reads depend on it
-        _shop.ArrivePlayer(_player);
-        // IsInShop before IsInHub clears: never a frame that is neither.
-        GameFlow.IsInShop = true;
-        GameFlow.IsInHub = false;
-        if (_flashlight != null) { _flashlight.SetOn(false); _flashlight.InputEnabled = false; }
-        _shop.Open();
-        if (_controller != null) _controller.MovementLocked = false;
-        PlayerLock.Freeze(_player, false);
-        PlayerLock.SetCursorFree(false);
-        Leaving = false;
-        IsTransitioning = false;
-
-        yield return IrisOpen(0.8f);
-        if (_blackoutRoot != null) _blackoutRoot.SetActive(false);
-    }
-
-    /// <summary>
-    /// ShopRoom's exit when the shop was reached from the hub: back into the hospital, arriving at the SHOP door. The caller destroys its
-    /// own blackout panel after this (the hub makes its own black synchronously before its first yield).
-    /// </summary>
-    public void ReturnFromShop()
-    {
-        GameFlow.ShopFromHub = false;
-        if (shopDoor == null) { GameFlow.NextFloor(); return; }
-        StartCoroutine(EnterRoutine(shopDoor.arrivalPoint, GameFlow.CurrentFloor, false)); // sets IsInHub synchronously
-        GameFlow.IsInShop = false;
     }
 
     // ---------------------------------------------------------------- atmosphere (D9)

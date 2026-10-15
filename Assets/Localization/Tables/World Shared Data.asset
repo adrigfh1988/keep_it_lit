@@ -165,11 +165,6 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331692992135934
-  - m_Id: 356817487958029
-    m_Key: world.room.Stock
-    m_Metadata:
-      m_Items:
-      - rid: 4707331692992135935
   - m_Id: 356817487958030
     m_Key: world.room.KitchenStock
     m_Metadata:
@@ -250,6 +245,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331695923429614
+  - m_Id: 1770796355153920
+    m_Key: world.shop.commissary
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202097896
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -381,10 +381,6 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Name plate over the visiting room door in the asylum, where relatives met patients (one line, ALL CAPS, ~18 characters)
-    - rid: 4707331692992135935
-      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
-      data:
-        m_CommentText: Name plate over the store room door in the asylum (one line, ALL CAPS, ~18 characters)
     - rid: 4707331692992135936
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
@@ -449,3 +445,7 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: 'Hanging light-box sign in the looping corridor, lowest line: the rule for a lap with something different (ALL CAPS, ~32 characters)'
+    - rid: 4707331782202097896
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name board hanging over the Commissary counter in the asylum (3D text on a wooden board, one line, ALL CAPS, ~12 characters). The shop is the asylum's old patients' store, run by the salesman

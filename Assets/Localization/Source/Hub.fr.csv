@@ -127,15 +127,14 @@ hub.not_now,PAS MAINTENANT
 hub.catch.wake,Vous vous réveillez devant la porte.
 hub.finale.office,LE BUREAU DU DIRECTEUR
 hub.shopdoor.room,LE HALL DU REZ-DE-CHAUSSÉE
-hub.shopdoor.enter,ENTRER DANS LA BOUTIQUE
-hub.shopdoor.closed,BOUTIQUE · FERMÉE
+hub.shopdoor.closed,ÉCONOMAT · FERMÉ
 hub.shopdoor.closed_line,FERMÉE · REVENEZ AVEC DES ÉCLATS
-hub.shopdoor.plaque,"BOUTIQUE
-<size=60%>LE MARCHAND  ·  {status}</size>"
+hub.shopdoor.plaque,"ÉCONOMAT
+<size=60%>{status}</size>"
 hub.shopdoor.status_open,OUVERTE
 hub.shopdoor.status_closed,FERMÉE
-hub.shopdoor.open_line,LA BOUTIQUE EST OUVERTE
-hub.shopdoor.open_line_room,LA BOUTIQUE EST OUVERTE · {room}
+hub.shopdoor.open_line,L'ÉCONOMAT EST OUVERT
+hub.shopdoor.open_line_room,L'ÉCONOMAT EST OUVERT · {room}
 hub.examine.tally.prompt,EXAMINER
 hub.examine.barricade.prompt,EXAMINER
 hub.examine.room4.prompt,EXAMINER

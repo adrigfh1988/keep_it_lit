@@ -364,7 +364,7 @@ MonoBehaviour:
     - rid: 4707331669776663357
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: HUD floor label while in the hospital hub; also the shop door sign when the shop is entered from the hub (26 pt, 320 px)
+        m_CommentText: HUD floor label while in the hospital hub (26 pt, 320 px)
     - rid: 4707331669776663358
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:

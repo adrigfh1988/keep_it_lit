@@ -24,6 +24,7 @@ world.intake.stay_in_bed,QUÉDATE EN LA CAMA
 world.shop.contracts,CONTRATOS
 world.shop.shards_accepted,SE ACEPTAN FRAGMENTOS
 world.shop.name,BOTICA
+world.shop.commissary,ECONOMATO
 world.intake.admissions,ADMISIÓN
 world.intake.observation,OBSERVACIÓN
 world.ghost.no_visitors,SIN VISITAS
@@ -37,7 +38,6 @@ world.room.OfficeA,ARCHIVO
 world.room.Gatehouse,PUESTO DE ENFERMERÍA
 world.room.GuardRoom,SALA DE GUARDIA
 world.room.VisitRoom,SALA DE VISITAS
-world.room.Stock,ALMACÉN
 world.room.KitchenStock,DESPENSA
 world.room.DiningRoom,COMEDOR
 world.room.KitchenA,COCINA

@@ -127,15 +127,14 @@ hub.not_now,AHORA NO
 hub.catch.wake,Despiertas junto a la puerta.
 hub.finale.office,EL DESPACHO DEL DIRECTOR
 hub.shopdoor.room,EL VESTÍBULO DE LA PLANTA BAJA
-hub.shopdoor.enter,ENTRAR EN LA TIENDA
-hub.shopdoor.closed,TIENDA · CERRADA
+hub.shopdoor.closed,ECONOMATO · CERRADO
 hub.shopdoor.closed_line,CERRADA · VUELVE CON FRAGMENTOS
-hub.shopdoor.plaque,"TIENDA
-<size=60%>EL VENDEDOR  ·  {status}</size>"
+hub.shopdoor.plaque,"ECONOMATO
+<size=60%>{status}</size>"
 hub.shopdoor.status_open,ABIERTO
 hub.shopdoor.status_closed,CERRADO
-hub.shopdoor.open_line,LA TIENDA ESTÁ ABIERTA
-hub.shopdoor.open_line_room,LA TIENDA ESTÁ ABIERTA · {room}
+hub.shopdoor.open_line,EL ECONOMATO ESTÁ ABIERTO
+hub.shopdoor.open_line_room,EL ECONOMATO ESTÁ ABIERTO · {room}
 hub.examine.tally.prompt,EXAMINAR
 hub.examine.barricade.prompt,EXAMINAR
 hub.examine.room4.prompt,EXAMINAR

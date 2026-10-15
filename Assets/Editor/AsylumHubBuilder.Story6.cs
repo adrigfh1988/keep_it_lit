@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// F93 fix + F112: every doorway the player is shown opening must read as an opening into darkness (the main doors: into daylight), never as
 /// the wall behind it. Build-missing-only, called by AddStoryLayer (so Check Project flags it and Build Missing Pieces adds it; the hub prefab
-/// is never regenerated). Per walk-through door - the five wing doors, the SHOP door and the finale's main doors (HubExitDoor) - it adds:
+/// is never regenerated). Per walk-through door - the five wing doors and the finale's main doors (HubExitDoor) - it adds:
 ///  - a <see cref="DoorPassage"/> (the leaf hinges, the void, the draft, the pass colour; the main doors' leaf gets its hinge here);
 ///  - <c>DoorVoid</c>: an unlit quad sized to the closed leaves (+4 cm each side and on top) and placed 1.5 cm in front of the wall face found
 ///    by a raycast with the leaf colliders off (AsylumHub.DoorWalk stops the camera 0.3 m out so the quad is always past the 0.2 m near plane);
@@ -42,11 +42,6 @@ public static partial class AsylumHubBuilder
                 if (w == null || w.leafHinge == null) continue;
                 doors.Add(new PassageDoor { Name = w.name, Door = w.transform, Hinges = new[] { w.leafHinge, w.leafHingeB }.Where(h => h != null).ToArray() });
             }
-        }
-        if (hub.shopDoor != null && hub.shopDoor.leafHinge != null)
-        {
-            ShopDoor s = hub.shopDoor;
-            doors.Add(new PassageDoor { Name = s.name, Door = s.transform, Hinges = new[] { s.leafHinge, s.leafHingeB }.Where(h => h != null).ToArray() });
         }
         HubExitDoor exit = hub.GetComponentInChildren<HubExitDoor>(true);
         if (exit != null)

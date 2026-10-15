@@ -275,7 +275,7 @@ public partial class GameOutcome : MonoBehaviour
             return;
         }
 
-        if (GameFlow.CurrentFloor >= FloorProfile.FinalFloor || _shop == null)
+        if (GameFlow.CurrentFloor >= FloorProfile.FinalFloor || (_shop == null && !AsylumHub.ShopInHub))
         {
             // F93 (E10): the last floor ends in the Director's office when the asylum can host it; anything missing = the old plain win.
             if (GameFlow.CurrentFloor >= FloorProfile.FinalFloor && AsylumHub.Active != null && AsylumHub.Active.CanFinale)
@@ -312,7 +312,7 @@ public partial class GameOutcome : MonoBehaviour
         if (blackout != null) yield return Fade(blackout, 0f, 1f, 0.6f);
         else yield return new WaitForSeconds(0.6f); // the player is falling onto the platform meanwhile
 
-        // F94: when the asylum can host the shop, the player goes to the hub instead (the SHOP door is there); the ledger is over black.
+        // F94: when the asylum can host the shop, the player goes to the hub instead (the Commissary is there); the ledger is over black.
         bool viaHub = AsylumHub.ShopInHub;
         if (!viaHub) _shop.ArrivePlayer(_player);
 
