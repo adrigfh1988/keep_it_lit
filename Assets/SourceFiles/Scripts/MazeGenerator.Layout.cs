@@ -570,28 +570,8 @@ public partial class MazeGenerator
     {
         ReachabilityReport report = new ReachabilityReport { Doors = _doors.Count };
 
-        HashSet<(Vector2Int, int)> locked = new HashSet<(Vector2Int, int)>();
-        foreach (MazeDoor door in _doors)
-        {
-            if (door != null && !door.IsUnlocked) LockPassage(locked, door, true);
-        }
-
-        HashSet<Vector2Int> reached = FloodFrom(Vector2Int.zero, locked);
-        report.CellsBeforeButtons = reached.Count;
-        for (bool changed = true; changed;)
-        {
-            changed = false;
-            foreach (WallButton button in _buttons)
-            {
-                if (button == null || button.Door == null || !TryWorldToCell(button.transform.position, out Vector2Int cell) || !reached.Contains(cell)) continue;
-
-                int hops = 0;
-                for (MazeDoor door = button.Door; door != null && hops++ <= _doors.Count; door = door.LinkedDoor) changed |= LockPassage(locked, door, false);
-            }
-
-            if (changed) reached = FloodFrom(Vector2Int.zero, locked);
-        }
-
+        HashSet<Vector2Int> reached = FloodWithButtons(out int cellsBeforeButtons);
+        report.CellsBeforeButtons = cellsBeforeButtons;
         report.CellsReached = reached.Count;
 
         // NavMesh leg setup.
@@ -656,6 +636,44 @@ public partial class MazeGenerator
 
         return report;
     }
+
+    /// <summary>
+    /// The grid flood of <see cref="CheckReachability"/>: from the start with every locked door a wall; any reached button unlocks its door (and the
+    /// chain behind it) and the fill runs again, until nothing changes. <paramref name="cellsBeforeButtons"/> is the first pass.
+    /// </summary>
+    private HashSet<Vector2Int> FloodWithButtons(out int cellsBeforeButtons)
+    {
+        HashSet<(Vector2Int, int)> locked = new HashSet<(Vector2Int, int)>();
+        foreach (MazeDoor door in _doors)
+        {
+            if (door != null && !door.IsUnlocked) LockPassage(locked, door, true);
+        }
+
+        HashSet<Vector2Int> reached = FloodFrom(Vector2Int.zero, locked);
+        cellsBeforeButtons = reached.Count;
+        for (bool changed = true; changed;)
+        {
+            changed = false;
+            foreach (WallButton button in _buttons)
+            {
+                if (button == null || button.Door == null || !TryWorldToCell(button.transform.position, out Vector2Int cell) || !reached.Contains(cell)) continue;
+
+                int hops = 0;
+                for (MazeDoor door = button.Door; door != null && hops++ <= _doors.Count; door = door.LinkedDoor) changed |= LockPassage(locked, door, false);
+            }
+
+            if (changed) reached = FloodFrom(Vector2Int.zero, locked);
+        }
+
+        return reached;
+    }
+
+    /// <summary>
+    /// Soft-lock guard for door placement: with every door placed so far (each one locked until its button is reached), is every cell of the maze
+    /// still reachable from the start? Each locked door set is validated alone by its placer, so two sets that are fine apart can still lock each
+    /// other away from their buttons (floor 5, seed 505); the placers call this right after a set button lands and roll the set back on false.
+    /// </summary>
+    private bool DoorsStayCompletable() => FloodWithButtons(out _).Count == width * height;
 
     /// <summary>Open-passage BFS tree from <paramref name="from"/> (child cell to parent cell), every door treated as open.</summary>
     private Dictionary<Vector2Int, Vector2Int> BfsParents(Vector2Int from)

@@ -3125,7 +3125,13 @@ public partial class MazeGenerator : MonoBehaviour
             if (button == null)
             {
                 Debug.LogWarning($"MazeGenerator: security door at {candidate.passage.CellA}/{candidate.passage.CellB} has no room for a button; skipping it.", this);
-                Destroy(door.gameObject);
+                DiscardDoor(door);
+                continue;
+            }
+            if (!DoorsStayCompletable())
+            {
+                // Soft-lock guard: this door set plus the ones already placed must leave every cell reachable (a button behind its own door chain would never open).
+                RollbackDoorSet(new[] { door }, button, usedCells);
                 continue;
             }
 
@@ -3179,7 +3185,12 @@ public partial class MazeGenerator : MonoBehaviour
                 WallButton button = PlaceButtonFor(doors[0], startSide, firstOutside, rng, usedCells);
                 if (button == null)
                 {
-                    foreach (MazeDoor door in doors) Destroy(door.gameObject);
+                    foreach (MazeDoor door in doors) DiscardDoor(door);
+                    continue;
+                }
+                if (!DoorsStayCompletable())
+                {
+                    RollbackDoorSet(doors, button, usedCells);
                     continue;
                 }
 
@@ -3248,7 +3259,12 @@ public partial class MazeGenerator : MonoBehaviour
             if (button == null)
             {
                 Debug.LogWarning($"MazeGenerator: vault at {vaultCell} has no room for a button; skipping it.", this);
-                Destroy(door.gameObject);
+                DiscardDoor(door);
+                continue;
+            }
+            if (!DoorsStayCompletable())
+            {
+                RollbackDoorSet(new[] { door }, button, usedCells);
                 continue;
             }
 
@@ -3309,8 +3325,13 @@ public partial class MazeGenerator : MonoBehaviour
                 WallButton button = PlaceButtonFor(doorA, startSide, outsideA, rng, usedCells);
                 if (button == null)
                 {
-                    Destroy(doorA.gameObject);
-                    Destroy(doorB.gameObject);
+                    DiscardDoor(doorA);
+                    DiscardDoor(doorB);
+                    continue;
+                }
+                if (!DoorsStayCompletable())
+                {
+                    RollbackDoorSet(new[] { doorA, doorB }, button, usedCells);
                     continue;
                 }
 
@@ -3328,6 +3349,36 @@ public partial class MazeGenerator : MonoBehaviour
         {
             Debug.LogWarning($"MazeGenerator: only {placed} of {want} vaults fit in this maze.", this);
         }
+    }
+
+    /// <summary>The cell PlaceButtonFor put its last button on, so RollbackDoorSet can take it back.</summary>
+    private Vector2Int _lastButtonCell;
+
+    /// <summary>Removes a door that never made it (no button / failed the completability check): out of the registries, its lintel and the object itself.</summary>
+    private void DiscardDoor(MazeDoor door)
+    {
+        _doors.Remove(door);
+        _doorPassages.Remove(door);
+        Transform lintel = _mazeRoot != null ? _mazeRoot.Find("Lintel_" + door.name) : null;
+        if (lintel != null) Destroy(lintel.gameObject);
+        Destroy(door.gameObject);
+    }
+
+    /// <summary>Undoes a door set and its just-placed button (PlaceButtonFor's last pick): registries, prop wall, used cell, objects.</summary>
+    private void RollbackDoorSet(IEnumerable<MazeDoor> doors, WallButton button, HashSet<Vector2Int> usedCells)
+    {
+        if (button != null)
+        {
+            _buttons.Remove(button);
+            if (_propWalls.TryGetValue(_lastButtonCell, out List<Vector3> taken) && taken.Count > 0)
+            {
+                taken.RemoveAt(taken.Count - 1);
+                if (taken.Count == 0) _propWalls.Remove(_lastButtonCell);
+            }
+            usedCells.Remove(_lastButtonCell);
+            Destroy(button.gameObject);
+        }
+        foreach (MazeDoor door in doors) DiscardDoor(door);
     }
 
     /// <summary>Cells reachable from `from` through open passages without ever entering `avoid`.</summary>
@@ -3475,6 +3526,7 @@ public partial class MazeGenerator : MonoBehaviour
         }
         takenList.Add(chosenDir);
         usedCells.Add(chosen.cell);
+        _lastButtonCell = chosen.cell;
 
         return button;
     }
