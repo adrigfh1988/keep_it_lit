@@ -24,6 +24,9 @@ public class MazeDoor : MonoBehaviour, IInteractable
     [Header("Template wiring (InteractableKit.shutterDoor)")]
     [Tooltip("Slides up to open. Authored as a 1x1 unit panel at local position/scale (0,0,0)/(1,1,depth) - Configure scales X to the opening width and Y to the door height, then keeps it floor-anchored.")]
     [SerializeField] private Transform panel;
+
+    /// <summary>F123: the sliding panel, so a late door can carry its chalk number up and down with it.</summary>
+    public Transform Panel => panel;
     [Tooltip("Recolours to say locked/timed/open/manual. Either may be left unassigned.")]
     [SerializeField] private Renderer statusLightRenderer;
     [SerializeField] private Light statusLight;

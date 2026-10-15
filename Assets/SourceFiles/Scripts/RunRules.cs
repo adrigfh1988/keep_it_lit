@@ -65,60 +65,51 @@ public static class RunRules
         BatteryStartFraction = 1f;
         BatteryRechargeMultiplier = 1f;
 
+        // F122: the rolled rule is exactly what it always was (none on floor 1); the Oaths' forced rules stack on top of it through _active.
         if (floor < 2)
         {
             Current = Rule.None;
-            return;
         }
-
-        int hash = HashSeedFloor(usedSeed, floor);
-        int index = ((hash % Pool.Length) + Pool.Length) % Pool.Length;
-        Current = Pool[index];
-
-        switch (Current)
+        else
         {
-            case Rule.DyingGrid:
-                break;
-            case Rule.KeenEars:
-                ShardPayoutMultiplier = 1.5f;
-                break;
-            case Rule.HeavyFog:
-                break;
-            case Rule.WeakBattery:
-                BatteryStartFraction = 0.55f;
-                BatteryRechargeMultiplier = 1.5f;
-                break;
-            case Rule.Restless:
-                break;
-            case Rule.GlassFloors:
-                NoisyPatchMultiplier = 2f;
-                break;
-            case Rule.RichVeins:
-                break;
+            int hash = HashSeedFloor(usedSeed, floor);
+            int index = ((hash % Pool.Length) + Pool.Length) % Pool.Length;
+            Current = Pool[index];
         }
+
+        _active = (Current == Rule.None ? 0 : 1 << (int)Current) | CampaignRules.ForcedRuleMask;
+
+        // Each active rule once (a forced rule equal to the rolled one changes nothing a second time).
+        if (Has(Rule.KeenEars)) ShardPayoutMultiplier = 1.5f;
+        if (Has(Rule.WeakBattery))
+        {
+            BatteryStartFraction = 0.55f;
+            BatteryRechargeMultiplier = 1.5f;
+        }
+        if (Has(Rule.GlassFloors)) NoisyPatchMultiplier = 2f;
     }
+
+    /// <summary>F122: whether a rule is in force this floor - the rolled one, or one an Oath forces. Readers use this instead of comparing <see cref="Current"/>.</summary>
+    public static bool Has(Rule rule) => rule != Rule.None && (_active & (1 << (int)rule)) != 0;
+
+    private static int _active;
 
     /// <summary>Mutates fields FloorProfile already exposes. Everything else above is read directly by whichever system needs it.</summary>
     public static void ApplyToProfile(FloorProfile p)
     {
         if (p == null) return;
 
-        switch (Current)
+        if (Has(Rule.KeenEars)) p.HearingScale *= 1.35f;
+        if (Has(Rule.HeavyFog))
         {
-            case Rule.KeenEars:
-                p.HearingScale *= 1.35f;
-                break;
-            case Rule.HeavyFog:
-                p.FogDensity *= 1.6f;
-                p.ViewDistance *= 0.75f;
-                break;
-            case Rule.Restless:
-                p.PhantomInterval *= 0.6f; // relocation interval itself is scaled on DreadDirector directly - see SetHardMinimumCooldownMultiplier
-                break;
-            case Rule.RichVeins:
-                p.ShardCount = Mathf.RoundToInt(p.ShardCount * 2f);
-                p.WalkSpeed *= 1.1f;
-                break;
+            p.FogDensity *= 1.6f;
+            p.ViewDistance *= 0.75f;
+        }
+        if (Has(Rule.Restless)) p.PhantomInterval *= 0.6f; // relocation interval itself is scaled on DreadDirector directly - see SetHardMinimumCooldownMultiplier
+        if (Has(Rule.RichVeins))
+        {
+            p.ShardCount = Mathf.RoundToInt(p.ShardCount * 2f);
+            p.WalkSpeed *= 1.1f;
         }
     }
 
@@ -140,6 +131,7 @@ public static class RunRules
     public static void ResetCampaign()
     {
         Current = Rule.None;
+        _active = 0; // F122
         NoisyPatchMultiplier = 1f;
         ShardPayoutMultiplier = 1f;
         BatteryStartFraction = 1f;

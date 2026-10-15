@@ -240,8 +240,8 @@ MonoBehaviour:
     m_Localized: COMMENCER
     m_Metadata:
       m_Items: []
-  - m_Id: 22165078315025
-    m_Localized: "<b>WASD</b>  se d\xE9placer   <b>SHIFT</b>  sprinter   <b>SOURIS</b>  regarder   <b>F</b>  lampe   <b>E</b>  se cacher / parler\n<b>1</b>  pile de rechange   <b>2</b>  boussole stellaire   <b>ESC</b>  pause"
+  - m_Id: 1867415029280768
+    m_Localized: SOURIS
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315026
@@ -286,7 +286,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315036
-    m_Localized: "La trappe s'est referm\xE9e derri\xE8re vous. Ici, en bas, quelque chose est ouvert."
+    m_Localized: "La trappe s'est referm\xE9e derri\xE8re vous. Quelqu'un a laiss\xE9 une lumi\xE8re allum\xE9e."
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315037
@@ -341,7 +341,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315048
-    m_Localized: "La trappe s'est referm\xE9e derri\xE8re vous. Il fait plus sombre ici."
+    m_Localized: "La trappe s'est referm\xE9e derri\xE8re vous. \xC9trangement, le chemin vers le bas ram\xE8ne en haut."
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315049
@@ -750,6 +750,779 @@ MonoBehaviour:
     m_Localized: UNITY
     m_Metadata:
       m_Items: []
+  - m_Id: 1857900619755520
+    m_Localized: "R\xC9DUIRE LES CLIGNOTEMENTS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252992
+    m_Localized: "AVERTISSEMENT PHOTOSENSIBILIT\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252993
+    m_Localized: "Ce jeu contient des lumi\xE8res clignotantes, des obscurit\xE9s soudaines et des motifs susceptibles de provoquer des crises chez les personnes atteintes d'\xE9pilepsie photosensible. Si vous ou un membre de votre famille avez d\xE9j\xE0 fait une crise, consultez un m\xE9decin avant de jouer. Arr\xEAtez imm\xE9diatement si vous ressentez des vertiges, une vision floue, des tics oculaires ou musculaires, ou une d\xE9sorientation. Vous pouvez activer R\xC9DUIRE LES CLIGNOTEMENTS ici ou dans PARAM\xC8TRES > G\xC9N\xC9RAL \xE0 tout moment."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252994
+    m_Localized: "SAUVEGARDE NON CHARG\xC9E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252995
+    m_Localized: "Votre partie sauvegard\xE9e a \xE9t\xE9 cr\xE9\xE9e par une version plus r\xE9cente du jeu. Elle a \xE9t\xE9 mise de c\xF4t\xE9, pas supprim\xE9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252996
+    m_Localized: "Votre partie sauvegard\xE9e n'a pas pu \xEAtre lue et a \xE9t\xE9 mise de c\xF4t\xE9. Une nouvelle campagne va commencer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778240
+    m_Localized: CLIC GAUCHE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778241
+    m_Localized: CLIC DROIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778242
+    m_Localized: CLIC MOLETTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778243
+    m_Localized: STICK G.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778244
+    m_Localized: STICK D.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778245
+    m_Localized: CROIX HAUT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778246
+    m_Localized: CROIX BAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778247
+    m_Localized: CROIX GAUCHE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778248
+    m_Localized: CROIX DROITE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778249
+    m_Localized: CROIX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778250
+    m_Localized: ROND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778251
+    m_Localized: "CARR\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778252
+    m_Localized: TRIANGLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778253
+    m_Localized: VIEW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778254
+    m_Localized: MENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778255
+    m_Localized: OPTIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778256
+    m_Localized: CREATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778257
+    m_Localized: ---
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972544
+    m_Localized: "{move}  se d\xE9placer   {sprint}  sprinter   {look}  regarder   {torch}  lampe   {focus}  faisceau focalis\xE9\n{interact}  se cacher / parler   {throw}  lancer   {item1}  pile de rechange   {item2}  boussole stellaire\n{map}  plan d'\xE9tage   {pause}  pause"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 1867415108972545
+    m_Localized: REMAPPER LES COMMANDES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972546
+    m_Localized: REMAPPER LES COMMANDES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972547
+    m_Localized: CLAVIER / SOURIS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972548
+    m_Localized: MANETTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972549
+    m_Localized: "APPUYEZ SUR UNE TOUCHE OU UN BOUTON  \xB7  {cancel} POUR ANNULER"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 1867415108972550
+    m_Localized: "\xC9CHANG\xC9 AVEC {action}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 1867415108972551
+    m_Localized: "TOUT R\xC9INITIALISER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972552
+    m_Localized: AVANCER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972553
+    m_Localized: RECULER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972554
+    m_Localized: GAUCHE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972555
+    m_Localized: DROITE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972556
+    m_Localized: SPRINTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972557
+    m_Localized: LAMPE ON / OFF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972558
+    m_Localized: "FAISCEAU FOCALIS\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972559
+    m_Localized: INTERAGIR / SE CACHER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972560
+    m_Localized: LANCER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972561
+    m_Localized: PILE DE RECHANGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972562
+    m_Localized: BOUSSOLE STELLAIRE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972563
+    m_Localized: "PLAN D'\xC9TAGE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058210336768
+    m_Localized: MICROPHONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834240
+    m_Localized: "P\xC9RIPH\xC9RIQUE MICRO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834241
+    m_Localized: "AUCUN MICRO TROUV\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834242
+    m_Localized: ENTENDU AU-DESSUS DE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834243
+    m_Localized: TON NIVEAU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834244
+    m_Localized: "D\xC9SACTIV\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834245
+    m_Localized: "\xC9COUTE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834246
+    m_Localized: "AUCUN SIGNAL - V\xC9RIFIE LA CONFIDENTIALIT\xC9 DU MICRO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834247
+    m_Localized: "AUCUN P\xC9RIPH\xC9RIQUE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834248
+    m_Localized: "Utilis\xE9 uniquement pendant que tu joues, pour que le chasseur t'entende. Rien n'est enregistr\xE9, sauvegard\xE9 ni envoy\xE9. Casque recommand\xE9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834249
+    m_Localized: "\xC7a t'a trouv\xE9 dans le noir, loin de ta lumi\xE8re."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834250
+    m_Localized: CAM {n}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 1883058285834251
+    m_Localized: REC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834252
+    m_Localized: C'EST VENU POUR TOI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834253
+    m_Localized: "C'\xC9TAIT DERRI\xC8RE TOI DEPUIS LE D\xC9BUT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834254
+    m_Localized: VOIX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834255
+    m_Localized: "\xC7A T'ENTEND DE PLUS LOIN, M\xCAME DANS UN CASIER."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1888333877211136
+    m_Localized: "\xC7a t'a suivi. Il n'y a plus d'endroit s\xFBr."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1888333877211137
+    m_Localized: "L'ASILE \xB7 \xC9TAGE {floor}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 1896792261652480
+    m_Localized: DOSSIER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652481
+    m_Localized: NOUVELLE ADMISSION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652482
+    m_Localized: COMMENCER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652483
+    m_Localized: AIDES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652484
+    m_Localized: KIT D'ADMISSION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652485
+    m_Localized: KIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652486
+    m_Localized: "LAMPE DE D\xC9PART"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652487
+    m_Localized: "La couleur du faisceau au d\xE9part. Les couleurs gagn\xE9es ne sont jamais vendues."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652488
+    m_Localized: "LES PARTIES ASSIST\xC9ES D\xC9BLOQUENT QUAND M\xCAME DES CHOSES, MAIS SANS RECORDS NI SERMENTS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652489
+    m_Localized: SERMENTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652490
+    m_Localized: SERMENTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652491
+    m_Localized: "TERMIN\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652492
+    m_Localized: "Des v\u0153ux cumulables. Chaque Serment durcit l'asile et rapporte plus d'\xE9clats."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652493
+    m_Localized: EXIGE UNE PARTIE SANS AIDES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652494
+    m_Localized: "SERMENT {rank}  \xB7  \xC9CLATS \xD7{mult}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 1896792261652495
+    m_Localized: STANDARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652496
+    m_Localized: "Le jeu tel qu'il a \xE9t\xE9 con\xE7u."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652497
+    m_Localized: HISTOIRE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652498
+    m_Localized: "Comptes \xE0 rebours plus longs, lampe plus douce, chasseur plus lent, indices honn\xEAtes, couloirs plus clairs. Tout se d\xE9bloque quand m\xEAme."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652499
+    m_Localized: CAUCHEMAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652500
+    m_Localized: "Comptes \xE0 rebours plus courts, chasseur plus aff\xFBt\xE9, lampe plus gourmande. \xC9clats \xD71,25 et rang de Serment +2."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652501
+    m_Localized: "COMPTE \xC0 REBOURS PLUS LONG"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652502
+    m_Localized: "Le compte \xE0 rebours de l'\xE9vasion dure une moiti\xE9 de plus."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652503
+    m_Localized: LAMPE DOUCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652504
+    m_Localized: La pile se vide moins vite et se recharge plus vite.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652505
+    m_Localized: CHASSEUR PLUS LENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652506
+    m_Localized: "Il met plus de temps \xE0 s'engager dans une poursuite, court moins vite et entend moins."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652507
+    m_Localized: "INDICES HONN\xCATES"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652508
+    m_Localized: "Pas de faux sons, pas de faux fant\xF4mes, pas de pannes de lampe, et les yeux du chasseur se voient toujours."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652509
+    m_Localized: COULOIRS PLUS CLAIRS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652510
+    m_Localized: "Plus de lumi\xE8re ambiante, brouillard plus fin, lampes plus fortes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652511
+    m_Localized: LAMPE STABLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652512
+    m_Localized: "La lampe ne se balance plus et ne tra\xEEne plus derri\xE8re la vue. N'affecte pas les records."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652513
+    m_Localized: PAS DE REPLAY DE MORT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652514
+    m_Localized: "L'\xE9cran de fin saute le replay granuleux de la capture. N'affecte pas les records."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652515
+    m_Localized: VIEILLE PILE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652516
+    m_Localized: "La lampe commence chaque \xE9tage \xE0 moiti\xE9 charg\xE9e et se recharge lentement, \xE9tage 1 compris."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652517
+    m_Localized: IL N'ATTEND PAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652518
+    m_Localized: "D\xE8s l'\xE9tage 1 le chasseur suit le pas d'un marcheur, s'engage plus t\xF4t et ses yeux sont \xE9teints."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652519
+    m_Localized: "CASIERS SOUD\xC9S"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652520
+    m_Localized: "Tous les casiers des labyrinthes sont soud\xE9s. Aucune cachette, et le chasseur ne les v\xE9rifie jamais."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652521
+    m_Localized: "STAN SE R\xC9VEILLE T\xD4T"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652522
+    m_Localized: "Stan marche d\xE8s l'\xE9tage 2 au lieu de l'\xE9tage 4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652523
+    m_Localized: PAS DE SECONDE CHANCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652524
+    m_Localized: "Aucun Second Souffle nulle part, et la premi\xE8re capture d'un \xE9tage n'est plus une bousculade : toute capture tue."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652525
+    m_Localized: "R\xC9SEAU D\xC9FAILLANT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652526
+    m_Localized: "Couloirs plus sombres, lampes plus faibles et plus espac\xE9es."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652527
+    m_Localized: "M\xC8CHE COURTE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652528
+    m_Localized: "Le compte \xE0 rebours de l'\xE9vasion est plus court d'un quart."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652529
+    m_Localized: IL ENTEND TOUT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652530
+    m_Localized: "Chaque \xE9tage porte la r\xE8gle Ou\xEFe Fine : le chasseur entend bien plus."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652531
+    m_Localized: LES PORTES NE TIENNENT PAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652532
+    m_Localized: "L'asile est viol\xE9 \xE0 chaque visite du hall apr\xE8s l'\xE9tage 4, pas une seule fois."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652533
+    m_Localized: DOTATION STANDARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652534
+    m_Localized: Rien de plus. Juste la lampe.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652535
+    m_Localized: "R\xC9CUP\xC9RATEUR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652536
+    m_Localized: "Commencez avec une Pile de rechange et une Boussole d'\xE9toiles."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652537
+    m_Localized: COUREUR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652538
+    m_Localized: "L'\xE9tage 1 commence avec un Tonique d'endurance et des Chaussures silencieuses d\xE9j\xE0 actifs."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652539
+    m_Localized: CARTOGRAPHE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652540
+    m_Localized: "Commencez avec un Plan d'\xE9tage."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652541
+    m_Localized: SERMENT {rank}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 1896792261652542
+    m_Localized: "ASSIST\xC9E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652543
+    m_Localized: "SERMENT {rank}  \xD7{mult}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 1896792261652544
+    m_Localized: NOTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652545
+    m_Localized: NOUVEAU RECORD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652546
+    m_Localized: BONUS NOTE {grade}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 1896792261652547
+    m_Localized: "DOSSIER DU PATIENT \xB7 {n} NOUVEAU(X)"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 1896792261652548
+    m_Localized: NOTES  {grades}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 1896792261652549
+    m_Localized: "RENI\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652550
+    m_Localized: DOSSIER DU PATIENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652551
+    m_Localized: DOSSIER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652552
+    m_Localized: "D\xC9BLOCAGES"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652553
+    m_Localized: CODEX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652554
+    m_Localized: AIDES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652555
+    m_Localized: AUCUNE ADMISSION AU DOSSIER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652556
+    m_Localized: "PARTIES COMMENC\xC9ES"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652557
+    m_Localized: "PARTIES TERMIN\xC9ES"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652558
+    m_Localized: FINS VUES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652559
+    m_Localized: "MEILLEUR SERMENT \xB7 SORTIE AUTORIS\xC9E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652560
+    m_Localized: "MEILLEUR SERMENT \xB7 LIGHTS OUT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652561
+    m_Localized: "\xC9CLATS GAGN\xC9S"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652562
+    m_Localized: DESCENTE LA PLUS PROFONDE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652563
+    m_Localized: "MEILLEURS \xC9TAGES"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652564
+    m_Localized: "\xC9TAGE {floor}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 1896792261652565
+    m_Localized: SERMENT {rank}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763199
+  - m_Id: 1896792261652566
+    m_Localized: NOUVEAU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652567
+    m_Localized: "D\xC9BLOQU\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652568
+    m_Localized: "Pas encore rencontr\xE9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652569
+    m_Localized: CE QU'IL A APPRIS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652570
+    m_Localized: LES CHANGEMENTS S'APPLIQUENT AU PROCHAIN LABYRINTHE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652571
+    m_Localized: "ACTIVER UNE AIDE MARQUE CETTE PARTIE COMME ASSIST\xC9E POUR DE BON."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652572
+    m_Localized: CODEX ET DOSSIER EN PAUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652573
+    m_Localized: "TERMINEZ UN \xC9TAGE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652574
+    m_Localized: "KIT : R\xC9CUP\xC9RATEUR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652575
+    m_Localized: "TERMINEZ L'\xC9TAGE 2"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652576
+    m_Localized: "CARTE DE BOUTIQUE : ST\xC9THOSCOPE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652577
+    m_Localized: "TERMINEZ L'\xC9TAGE 4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652578
+    m_Localized: 'CONTRAT : INVISIBLE'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652579
+    m_Localized: "TERMINEZ L'\xC9TAGE 4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652580
+    m_Localized: "L'\xC9CHELLE DES SERMENTS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652581
+    m_Localized: ATTEIGNEZ UNE FIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652582
+    m_Localized: 'COULEUR DE LAMPE : OS'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652583
+    m_Localized: ATTEIGNEZ UNE FIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652584
+    m_Localized: 'KIT : COUREUR'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652585
+    m_Localized: TERMINEZ 2 PARTIES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652586
+    m_Localized: 'CARTE DE BOUTIQUE : LAMPE DE L''ARCHIVISTE'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652587
+    m_Localized: VOYEZ LES DEUX FINS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652588
+    m_Localized: 'CARTE DE BOUTIQUE : DYNAMO'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652589
+    m_Localized: "GAGNEZ 1500 \xC9CLATS AU TOTAL"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652590
+    m_Localized: 'KIT : CARTOGRAPHE'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652591
+    m_Localized: TERMINEZ 3 PARTIES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652592
+    m_Localized: 'CONTRATS : LES MAINS DANS LES POCHES, DE JUSTESSE'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652593
+    m_Localized: "OBTENEZ UNE NOTE S SUR UN \xC9TAGE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652594
+    m_Localized: 'COULEUR DE LAMPE : ROUGE SERMENT'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652595
+    m_Localized: ATTEIGNEZ UNE FIN AU RANG DE SERMENT 5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652596
+    m_Localized: 'COULEUR DE LAMPE : VERT DE SALLE'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652597
+    m_Localized: RENCONTREZ TOUT DANS LE CODEX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641792
+    m_Localized: REVENU DU PAVILLON A. UNE PORTE DE PLUS QU'HIER.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641793
+    m_Localized: REVENU DE LA CHAUFFERIE. DEUX COUPS. RAS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641794
+    m_Localized: "REVENU DE LA CHAMBRE FROIDE. UN TIROIR EST REST\xC9 OUVERT."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641795
+    m_Localized: "REVENU DU BLOC OP\xC9RATOIRE. DOSE NON ENREGISTR\xC9E."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641796
+    m_Localized: "Hilde a compt\xE9 une porte de plus ce soir. C'\xE9tait la v\xF4tre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641797
+    m_Localized: Trois coups. Puis rien.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641798
+    m_Localized: "Un tiroir est pr\xEAt. Il porte votre num\xE9ro."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641799
+    m_Localized: La chambre 4 n'est plus vide.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641800
+    m_Localized: Le Greffier a fini de taper votre dossier.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -793,3 +1566,16 @@ MonoBehaviour:
         - id: 193175966617612
         - id: 193175966617617
         - id: 193175966617618
+        - id: 1867415108972544
+        - id: 1867415108972549
+        - id: 1867415108972550
+        - id: 1883058285834250
+        - id: 1888333877211137
+        - id: 1896792261652494
+        - id: 1896792261652541
+        - id: 1896792261652543
+        - id: 1896792261652546
+        - id: 1896792261652547
+        - id: 1896792261652548
+        - id: 1896792261652564
+        - id: 1896792261652565

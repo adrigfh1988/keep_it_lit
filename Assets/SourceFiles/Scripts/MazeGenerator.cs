@@ -327,6 +327,12 @@ public partial class MazeGenerator : MonoBehaviour
 
     private float FloorTop => origin.y + 0.02f;
 
+    /// <summary>F120: this floor's wall height (m), for the death replay camera.</summary>
+    public float WallHeight => wallHeight;
+
+    /// <summary>F120: world Y of the floor top.</summary>
+    public float FloorTopY => FloorTop;
+
     /// <summary>Floor-level world centre of one cell.</summary>
     public Vector3 CellCenter(int x, int z)
     {
@@ -443,6 +449,11 @@ public partial class MazeGenerator : MonoBehaviour
         // F107 B3: the Inspector entry into a descent at depth debugFloor (fresh starts only, so a reload keeps the run going).
         if (debugDescent && debugStartInMaze && !debugStartInShop && freshStart && debugFloor > 0 && !GameFlow.IsDescent) BeginDebugDescent();
 
+        // F122: the campaign rules. A CLONE of the serialized terror settings when an assist / Oath / card changes any (the same reference otherwise);
+        // before ApplyFloorProfile so its narrowBeam read, and every ApplyTerror downstream, see the clone. Also derives HubBreach.Mode / HunterGrab.DisabledByRules.
+        terror = CampaignRules.ApplyTerror(terror);
+        CampaignRules.ApplyRunSwitches();
+
         ApplyFloorProfile(freshStart, usedSeed);
         ResolveTheme();
 
@@ -478,6 +489,7 @@ public partial class MazeGenerator : MonoBehaviour
         BuildSqueeze(); // F105 C3: after the set pieces' reset of _setPieceCells, which it adds its cells to; before the bake, so the inserts carve it
         ReserveLoopEntrance(); // F105 C4: after BuildSetPieces for the same reason
         ReserveGates(); // F111: the gates' cells likewise
+        BuildMorgueDrawers(new System.Random(usedSeed + NightmareSalt)); // F123 floor 3: the drawer banks reserve their WALL here, before the props pick walls and before the bake carves them
 
         // +4 is the RNG offset props own (+0 carve, +1 stars, +2 lamps, +3 lockers, +5 shards). One
         // instance is threaded through both prop passes below so the stream stays continuous across the
@@ -544,6 +556,9 @@ public partial class MazeGenerator : MonoBehaviour
 
         // F93, post-BuildLoreNotes: the floor's patient case file (+19, its own System.Random; +17 is the exit gates' roll, +18 BuildKeys).
         if (!GameFlow.IsDescent) BuildPatientFile(new System.Random(usedSeed + 19)); // F107: nor a case file
+
+        // F123, post-BuildPatientFile (lamps, doors, fuses, keys and notes are final): floor 4's ampoules or floor 5's house rules (+27, the same stream as floor 3's drawers).
+        BuildNightmarePostBake(usedSeed);
 
         SpawnShards(usedSeed);
         PlacePlayer();
@@ -659,6 +674,7 @@ public partial class MazeGenerator : MonoBehaviour
     private void ApplyFloorProfile(bool freshStart, int usedSeed)
     {
         _profile = null;
+        CampaignRules.BuiltSignature = CampaignRules.Signature(); // F122: what this scene was built with (the new-campaign screen compares)
 
         // F107 B3: a descent level keeps its story-floor lookups in range by pinning CurrentFloor to min(depth, FinalFloor), and lives far from
         // every authored piece. Set before RunRules.Resolve so a level's rule hashes the real depth.
@@ -691,6 +707,7 @@ public partial class MazeGenerator : MonoBehaviour
         // fields it touches and why that is enough (AIFollower.ApplyDifficulty and SpawnShards both read
         // the mutated profile later in this same Awake).
         RunRules.ApplyToProfile(_profile);
+        CampaignRules.ApplyToProfile(_profile); // F122: preset, assists, Oaths (a no-op for plain STANDARD and in a descent)
         // F105 C9: runs before SetUpAtmosphere, so the flag is read here directly rather than through ApplyTerror.
         if (terror.narrowBeam) _profile.FogDensity *= narrowBeamFogScale;
 
@@ -714,6 +731,7 @@ public partial class MazeGenerator : MonoBehaviour
             ? string.Join(", ", PlayerInventory.ActiveModifiers)
             : "none";
         Debug.Log($"MazeGenerator: {_profile}, modifiers: {modifiers}", this);
+        if (!CampaignRules.IsPlain) Debug.Log($"MazeGenerator: campaign rules {CampaignRules.Signature()} (preset {CampaignRules.Preset}, assists {CampaignRules.Assists}, oaths {CampaignRules.Oaths}, kit {CampaignRules.Kit}), escape {_profile.EscapeSeconds:0.#} s / gates {_profile.GateEscapeSeconds:0.#} s, forced rules {RunRules.Current}/{CampaignRules.ForcedRuleMask}", this);
     }
 
     private void OnDestroy()
@@ -3526,7 +3544,7 @@ public partial class MazeGenerator : MonoBehaviour
             pickup.gameObject.SetActive(true);
             pickup.name = $"BatteryCell_{vaultCell.x}_{vaultCell.y}";
 
-            bool grantsSecondWind = rng.NextDouble() < 0.2 && PlayerInventory.Count(ShopItem.SecondWind) == 0;
+            bool grantsSecondWind = rng.NextDouble() < 0.2 && PlayerInventory.CanHoldMore(ShopItem.SecondWind); // F122: the draw first, as always; NO SECOND CHANCES makes CanHoldMore false
             pickup.SetGrantsSecondWind(grantsSecondWind);
             _batteryPickups.Add(pickup);
         }
@@ -4504,6 +4522,7 @@ public partial class MazeGenerator : MonoBehaviour
             hidingFronts.Add(locker.FrontPosition);
         }
         aiFollower.SetHidingSpots(hidingFronts);
+        ApplyWeldedLockers(aiFollower); // F122: WELDED LOCKERS (MazeGenerator.Campaign.cs)
         aiFollower.SetAmbushProvider(this);
 
         AIPresence presence = aiFollower.GetComponent<AIPresence>();
@@ -4742,6 +4761,7 @@ public partial class MazeGenerator : MonoBehaviour
         LoreReadingUi loreReader = FindAnyObjectByType<LoreReadingUi>();
         if (loreReader == null) loreReader = gameObject.AddComponent<LoreReadingUi>();
         loreReader.Configure(aiFollower);
+        ApplyArchivistLamp(); // F122
         foreach (LoreNote note in _loreNotes)
         {
             note.Bind(loreReader, hud);
@@ -4768,16 +4788,21 @@ public partial class MazeGenerator : MonoBehaviour
 
         // F74 WeakBattery run rule: applied once here, right after the flashlight exists and before the
         // player has had a chance to touch it.
-        if (flashlight != null && RunRules.Current == RunRules.Rule.WeakBattery)
+        // F122: the recharge multiplier now COMPOSES (WeakBattery x difficulty x the Dynamo card) instead of one rule overwriting it, and the
+        // drain multiplier is new. With nothing active these are the very same calls as before (no call at all for a factor of 1).
+        if (flashlight != null)
         {
-            flashlight.SetStartFraction(RunRules.BatteryStartFraction);
-            flashlight.SetRechargeMultiplier(RunRules.BatteryRechargeMultiplier);
+            if (RunRules.Has(RunRules.Rule.WeakBattery)) flashlight.SetStartFraction(RunRules.BatteryStartFraction);
+            float recharge = (RunRules.Has(RunRules.Rule.WeakBattery) ? RunRules.BatteryRechargeMultiplier : 1f)
+                * CampaignRules.RechargeScale * (PlayerInventory.HasActive(ShopItem.Dynamo) ? 1.75f : 1f);
+            if (!Mathf.Approximately(recharge, 1f)) flashlight.SetRechargeMultiplier(recharge);
+            if (!Mathf.Approximately(CampaignRules.DrainScale, 1f)) flashlight.SetDrainMultiplier(CampaignRules.DrainScale);
         }
 
         // F74 DyingGrid run rule: a random still-powered lamp loses power every minute, for the rest of
         // the floor. Lives on this component (not DreadDirector) since it is a plain interval effect,
         // not something that keys off star progress.
-        if (RunRules.Current == RunRules.Rule.DyingGrid) StartCoroutine(DyingGridRoutine());
+        if (RunRules.Has(RunRules.Rule.DyingGrid)) StartCoroutine(DyingGridRoutine());
 
         // F73: lets the hunter notice the torch beam itself, not just what it lights up.
         aiFollower?.BindTorch(flashlight);
@@ -4836,7 +4861,7 @@ public partial class MazeGenerator : MonoBehaviour
         aiFollower?.ApplyTerror(terror); // F103 A7
         // F74 Restless run rule: relocations can chain tighter. PhantomInterval's own x0.6 is already
         // folded into _profile by RunRules.ApplyToProfile, read by PhantomDirector.Configure below.
-        if (RunRules.Current == RunRules.Rule.Restless) dread.SetHardMinimumCooldownMultiplier(0.7f);
+        if (RunRules.Has(RunRules.Rule.Restless)) dread.SetHardMinimumCooldownMultiplier(0.7f);
 
         PhantomDirector phantoms = FindAnyObjectByType<PhantomDirector>();
         if (phantoms == null) phantoms = gameObject.AddComponent<PhantomDirector>();
@@ -4845,9 +4870,10 @@ public partial class MazeGenerator : MonoBehaviour
         phantoms.ApplyTerror(terror); // F103 A2
 
         // F104 B1: the hidden fear value. Wired after the directors it feeds exist; with the flag off the readers fall back to their old behaviour.
+        DreadMeter dreadMeter = null; // hoisted (F123): the wing nightmares below read it
         if (aiFollower != null && player != null)
         {
-            DreadMeter dreadMeter = FindAnyObjectByType<DreadMeter>();
+            dreadMeter = FindAnyObjectByType<DreadMeter>();
             if (dreadMeter == null) dreadMeter = gameObject.AddComponent<DreadMeter>();
             dreadMeter.Configure(aiFollower, player, stealth, stamina, flashlight, this, outcome);
             dreadMeter.ApplyTerror(terror);
@@ -4860,12 +4886,23 @@ public partial class MazeGenerator : MonoBehaviour
         }
 
         // F104 B9/B10: displacement and lying landmarks - dressing quietly changes while unobserved.
+        WorldShiftDirector worldShift = null; // hoisted (F123)
         if (player != null && camera != null)
         {
-            WorldShiftDirector worldShift = FindAnyObjectByType<WorldShiftDirector>();
+            worldShift = FindAnyObjectByType<WorldShiftDirector>();
             if (worldShift == null) worldShift = gameObject.AddComponent<WorldShiftDirector>();
             worldShift.Configure(this, player, camera, aiFollower, outcome);
             worldShift.ApplyTerror(terror);
+        }
+
+        // F123: each story floor is its wing patient's nightmare. A DESCENT gets floor 0, i.e. nothing (and no banks, ampoules or notices were built).
+        if (player != null && camera != null)
+        {
+            WingNightmareDirector nightmares = FindAnyObjectByType<WingNightmareDirector>();
+            if (nightmares == null) nightmares = gameObject.AddComponent<WingNightmareDirector>();
+            nightmares.Configure(this, _profile != null ? _profile.Floor : 0, player, camera, aiFollower, stealth, stamina, throwController, hud, director, dreadMeter, worldShift, outcome);
+            nightmares.ApplyTerror(terror);
+            BindNightmares(nightmares, hud, dreadMeter);
         }
 
         // Tier 4: the room between floors. Unlike everything else here it is authored in the scene
@@ -4964,15 +5001,40 @@ public partial class MazeGenerator : MonoBehaviour
         if (contracts != null) contracts.Configure(player, stealth, flashlight, aiFollower, hud, menu);
         outcome.BindContracts(contracts);
 
+        // F120: the microphone (opt-in, desktop only). An instance component on the player; HabitTracker reads its HeardThisFloor.
+        PlayerVoice voice = player != null ? player.GetComponent<PlayerVoice>() : null;
+        if (voice == null && player != null) voice = player.gameObject.AddComponent<PlayerVoice>();
+        if (voice != null) voice.Configure(player, stealth, aiFollower, outcome, terror);
+        hud?.BindVoice(voice);
+
         // F105 C6: counts the player's habits and, at floor clear, teaches the hunter (an instance component like ContractTracker).
         HabitTracker habits = player != null ? player.GetComponent<HabitTracker>() : null;
         if (habits == null && player != null) habits = player.gameObject.AddComponent<HabitTracker>();
         if (habits != null) habits.Configure(stealth, flashlight, stamina, throwController, hud, terror);
         outcome.BindHabits(habits);
 
+        // F120: the survivable grab (first hunter catch per floor is a shove). An instance component, so a reload gives a fresh "unused".
+        HunterGrab grab = FindAnyObjectByType<HunterGrab>();
+        if (grab == null) grab = gameObject.AddComponent<HunterGrab>();
+        grab.Configure(player, player != null ? player.GetComponent<StarterAssets.ThirdPersonController>() : null, stamina, flashlight, aiFollower, hud,
+            (interactableKit != null ? interactableKit : FindAnyObjectByType<InteractableKit>(FindObjectsInactive.Include))?.DroppedTorch, terror);
+        outcome.BindGrab(grab);
+
+        // F120: the death replay's ring buffer (20 Hz, ~8.5 s). Records only while a run is active; the view exists only on the end screen.
+        DeathReplayRecorder replay = FindAnyObjectByType<DeathReplayRecorder>();
+        if (replay == null) replay = gameObject.AddComponent<DeathReplayRecorder>();
+        replay.Configure(player, aiFollower, flashlight, stealth, player != null ? player.Find("PlayerCameraRoot") : null);
+        outcome.BindReplay(replay, terror);
+
         ConsumableController items = FindAnyObjectByType<ConsumableController>();
         if (items == null) items = gameObject.AddComponent<ConsumableController>();
         items.Configure(player, flashlight, stealth, this, hud, escape, outcome, menu, pause);
+
+        // F122: counts the attempt (chases, Stan, spare batteries, Second Winds) and grades the floor at its clear.
+        FloorGradeTracker gradeTracker = GetComponent<FloorGradeTracker>();
+        if (gradeTracker == null) gradeTracker = gameObject.AddComponent<FloorGradeTracker>();
+        gradeTracker.Configure(this, aiFollower, items, grab);
+        outcome.BindGrades(gradeTracker);
 
         // F76: the on-screen controls for the Web build on a tablet, and the mobile render-scale/shadow
         // trim. Built last of the two, once every system it drives (interactor, throwController, hud,
@@ -5023,6 +5085,7 @@ public partial class MazeGenerator : MonoBehaviour
             // S9: the look's name is a Shop-table key by the profile's theme number (D10); the scene's serialized name is the English fallback.
             string themeKey = _profile != null ? "shop.theme." + _profile.ThemeIndex : null;
             string themeName = themeKey != null && L10n.Has(themeKey) ? L10n.T(themeKey) : _theme.DisplayName.ToUpperInvariant();
+            themeName = WingNightmares.BannerName(floor) ?? themeName; // F123: the wing's own name on a story floor (DESCENT returned above)
             return L10n.T("sub.banner.floor_theme", ("floor", floor), ("theme", themeName));
         }
         return L10n.T("sub.banner.floor", ("floor", floor));
@@ -5043,8 +5106,9 @@ public partial class MazeGenerator : MonoBehaviour
     /// <summary>F74 FloorIntroBanner rule line. Empty on floor 1 or when RunRules picked nothing.</summary>
     private static string RuleLineText()
     {
-        if (RunRules.Current == RunRules.Rule.None) return "";
-        return L10n.T("sub.banner.rule", ("name", RunRules.Name), ("description", RunRules.Description));
+        string oaths = OathBannerText(); // F122
+        string rule = RunRules.Current == RunRules.Rule.None ? "" : L10n.T("sub.banner.rule", ("name", RunRules.Name), ("description", RunRules.Description));
+        return rule.Length == 0 ? oaths : oaths.Length == 0 ? rule : rule + " · " + oaths;
     }
 
     // ---------------------------------------------------------------- helpers
@@ -5149,6 +5213,7 @@ public partial class MazeGenerator : MonoBehaviour
         AddLayoutMarks(marks); // F105 C2/C3: r / g / q, only on a cell with no other mark
         AddLoopMark(marks); // F105 C4: L
         AddEntityMarks(marks); // F107 D: l t b d
+        AddNightmareMarks(marks); // F123: m a h
 
         System.Text.StringBuilder sb = new System.Text.StringBuilder();
         sb.Append($"Maze seed {UsedSeed}, floor {GameFlow.CurrentFloor}, {width}x{height}, north up, start S = (0,0) bottom-left.\n");
@@ -5178,6 +5243,7 @@ public partial class MazeGenerator : MonoBehaviour
         AppendLoopLegend(sb);
         AppendGateLegend(sb); // F111
         AppendEntityLegend(sb); // F107 D
+        AppendNightmareLegend(sb); // F123
         return sb.ToString();
     }
 

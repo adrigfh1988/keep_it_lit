@@ -250,6 +250,26 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331782202097896
+  - m_Id: 1871577460764672
+    m_Key: world.nightmare.drawer.elias
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957371
+  - m_Id: 1871577532067840
+    m_Key: world.nightmare.drawer.yours
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957372
+  - m_Id: 1871577532067841
+    m_Key: world.nightmare.toetag
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957373
+  - m_Id: 1871577532067842
+    m_Key: world.nightmare.director.rules
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957374
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -449,3 +469,19 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Name board hanging over the Commissary counter in the asylum (3D text on a wooden board, one line, ALL CAPS, ~12 characters). The shop is the asylum's old patients' store, run by the salesman
+    - rid: 4707331789613957371
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Tag on morgue drawer five, floor 3 (world text on a small card, about 12 characters; the name is not translated)
+    - rid: 4707331789613957372
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Tag on the drawer that carries the player's own number, floor 3 (world text, ALL CAPS). {mark} = the redaction glyph, or 7 once the truth is known
+    - rid: 4707331789613957373
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: The toe tag lying on the tray of drawer five, floor 3 (world text, 3 short lines, ALL CAPS, at most ~22 characters a line)
+    - rid: 4707331789613957374
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Printed notice taped to the maze wall on floor 5 (world text, 6 short lines, ALL CAPS, at most ~32 characters a line; keep the line breaks)

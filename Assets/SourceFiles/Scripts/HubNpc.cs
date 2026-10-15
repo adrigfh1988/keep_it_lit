@@ -77,6 +77,7 @@ public class HubNpc : MonoBehaviour, IInteractable
     /// <summary>The floors this person is in the hospital: the staff and patients of floors 1-4; the Clerk always.</summary>
     public static bool PresentOn(Who who, int floor, bool finale)
     {
+        if (HubBreach.NpcsGone) return false; // F121: the breach emptied the asylum (the Clerk too)
         if (who == Who.Clerk) return true;
         return !finale && floor <= 4;
     }

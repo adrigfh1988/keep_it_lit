@@ -57,6 +57,8 @@ public static class DescentRun
         HunterMemory.ResetCampaign();
         LoopCorridor.ResetCampaign();
         HubCaches.ResetCampaign(); // F114
+        HubState.ResetCampaign(); // F117
+        CampaignRules.ResetCampaign(); // F122: a descent stays outside presets, Oaths and grades
         System.Array.Clear(GameFlow.RolledObjectives, 0, GameFlow.RolledObjectives.Length);
     }
 

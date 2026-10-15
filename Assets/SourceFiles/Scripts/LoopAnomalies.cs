@@ -117,6 +117,8 @@ public sealed class FlickerAnomaly : LoopAnomaly
 
         foreach (WallLamp lamp in _lamps)
         {
+            // F118: with Reduce flashing on, one longer blink per tick; WallLamp's smoothing turns it into a slow synchronised dim pulse (still the puzzle's cue).
+            if (FlashSafety.On) { lamp.Blink(0.6f); continue; }
             lamp.Blink(BlinkFirst);
             lamp.Blink(BlinkSecond, BlinkGap);
         }

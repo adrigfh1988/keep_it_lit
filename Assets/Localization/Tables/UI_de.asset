@@ -240,10 +240,8 @@ MonoBehaviour:
     m_Localized: STARTEN
     m_Metadata:
       m_Items: []
-  - m_Id: 22165078315025
-    m_Localized: '<b>WASD</b>  bewegen   <b>SHIFT</b>  sprinten   <b>MAUS</b>  umsehen   <b>F</b>  Lampe   <b>E</b>  verstecken / sprechen
-
-      <b>1</b>  Ersatzbatterie   <b>2</b>  Sternenkompass   <b>ESC</b>  Pause'
+  - m_Id: 1867415029280768
+    m_Localized: MAUS
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315026
@@ -288,7 +286,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315036
-    m_Localized: Die Luke hat sich hinter dir geschlossen. Etwas hier unten steht offen.
+    m_Localized: Die Luke hat sich hinter dir geschlossen. Jemand hat ein Licht angelassen.
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315037
@@ -343,7 +341,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315048
-    m_Localized: Die Luke hat sich hinter dir geschlossen. Hier unten ist es dunkler.
+    m_Localized: "Die Luke hat sich hinter dir geschlossen. Irgendwie f\xFChrt der Weg nach unten wieder hinauf."
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315049
@@ -752,6 +750,783 @@ MonoBehaviour:
     m_Localized: UNITY
     m_Metadata:
       m_Items: []
+  - m_Id: 1857900619755520
+    m_Localized: FLACKERN REDUZIEREN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252992
+    m_Localized: 'WARNUNG: LICHTEMPFINDLICHKEIT'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252993
+    m_Localized: "Dieses Spiel enth\xE4lt flackernde Lichter, pl\xF6tzliche Dunkelheit und Muster, die bei Menschen mit photosensibler Epilepsie Anf\xE4lle ausl\xF6sen k\xF6nnen. Wenn Sie oder ein Familienmitglied schon einmal einen Anfall hatten, sprechen Sie vor dem Spielen mit einem Arzt. H\xF6ren Sie sofort auf, wenn Ihnen schwindelig wird, Sie verschwommen sehen, Augen- oder Muskelzucken bemerken oder sich desorientiert f\xFChlen. Sie k\xF6nnen FLACKERN REDUZIEREN hier oder jederzeit unter EINSTELLUNGEN > ALLGEMEIN einschalten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252994
+    m_Localized: SPEICHERSTAND NICHT GELADEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252995
+    m_Localized: "Dein gespeicherter Lauf stammt aus einer neueren Version des Spiels. Er wurde beiseitegelegt, nicht gel\xF6scht."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252996
+    m_Localized: Dein gespeicherter Lauf konnte nicht gelesen werden und wurde beiseitegelegt. Eine neue Kampagne beginnt von vorn.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778240
+    m_Localized: LINKSKLICK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778241
+    m_Localized: RECHTSKLICK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778242
+    m_Localized: MITTELKLICK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778243
+    m_Localized: L-STICK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778244
+    m_Localized: R-STICK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778245
+    m_Localized: STEUERKREUZ OBEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778246
+    m_Localized: STEUERKREUZ UNTEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778247
+    m_Localized: STEUERKREUZ LINKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778248
+    m_Localized: STEUERKREUZ RECHTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778249
+    m_Localized: KREUZ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778250
+    m_Localized: KREIS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778251
+    m_Localized: QUADRAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778252
+    m_Localized: DREIECK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778253
+    m_Localized: VIEW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778254
+    m_Localized: MENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778255
+    m_Localized: OPTIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778256
+    m_Localized: CREATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778257
+    m_Localized: ---
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972544
+    m_Localized: '{move}  bewegen   {sprint}  sprinten   {look}  umsehen   {torch}  Lampe   {focus}  Fokusstrahl
+
+      {interact}  verstecken / sprechen   {throw}  werfen   {item1}  Ersatzbatterie   {item2}  Sternenkompass
+
+      {map}  Grundriss   {pause}  Pause'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 1867415108972545
+    m_Localized: TASTEN BELEGEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972546
+    m_Localized: TASTEN BELEGEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972547
+    m_Localized: TASTATUR / MAUS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972548
+    m_Localized: GAMEPAD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972549
+    m_Localized: "TASTE ODER KNOPF DR\xDCCKEN  \xB7  {cancel} ZUM ABBRECHEN"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 1867415108972550
+    m_Localized: GETAUSCHT MIT {action}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 1867415108972551
+    m_Localized: "ALLE ZUR\xDCCKSETZEN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972552
+    m_Localized: "VORW\xC4RTS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972553
+    m_Localized: "R\xDCCKW\xC4RTS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972554
+    m_Localized: LINKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972555
+    m_Localized: RECHTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972556
+    m_Localized: SPRINTEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972557
+    m_Localized: LAMPE AN / AUS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972558
+    m_Localized: FOKUSSTRAHL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972559
+    m_Localized: INTERAGIEREN / VERSTECKEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972560
+    m_Localized: WERFEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972561
+    m_Localized: ERSATZBATTERIE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972562
+    m_Localized: STERNENKOMPASS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972563
+    m_Localized: GRUNDRISS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058210336768
+    m_Localized: MIKROFON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834240
+    m_Localized: "MIKROFON-GER\xC4T"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834241
+    m_Localized: KEIN MIKROFON GEFUNDEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834242
+    m_Localized: "GEH\xD6RT AB"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834243
+    m_Localized: DEIN PEGEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834244
+    m_Localized: AUS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834245
+    m_Localized: "H\xD6RT ZU"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834246
+    m_Localized: "KEIN SIGNAL - MIKROFON-DATENSCHUTZ PR\xDCFEN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834247
+    m_Localized: "KEIN GER\xC4T"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834248
+    m_Localized: "Wird nur w\xE4hrend des Spiels verwendet, damit der J\xE4ger dich h\xF6rt. Nichts wird aufgenommen, gespeichert oder gesendet. Kopfh\xF6rer empfohlen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834249
+    m_Localized: Es hat dich im Dunkeln gefunden, fern von deinem Licht.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834250
+    m_Localized: KAM {n}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 1883058285834251
+    m_Localized: REC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834252
+    m_Localized: "ES KAM F\xDCR DICH"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834253
+    m_Localized: ES WAR DIE GANZE ZEIT HINTER DIR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834254
+    m_Localized: STIMME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834255
+    m_Localized: "ES H\xD6RT DICH AUS GR\xD6SSERER ENTFERNUNG, SOGAR IM SPIND."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1888333877211136
+    m_Localized: Es ist dir gefolgt. Es gibt keinen sicheren Raum.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1888333877211137
+    m_Localized: "DIE ANSTALT \xB7 ETAGE {floor}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 1896792261652480
+    m_Localized: AKTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652481
+    m_Localized: NEUAUFNAHME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652482
+    m_Localized: BEGINNEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652483
+    m_Localized: HILFEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652484
+    m_Localized: AUFNAHME-SET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652485
+    m_Localized: SET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652486
+    m_Localized: START-LAMPE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652487
+    m_Localized: Die Strahlfarbe, mit der du beginnst. Verdiente Farben werden nie verkauft.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652488
+    m_Localized: "UNTERST\xDCTZTE KAMPAGNEN SCHALTEN TROTZDEM FREI, Z\xC4HLEN ABER NICHT F\xDCR REKORDE ODER EIDE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652489
+    m_Localized: EIDE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652490
+    m_Localized: EIDE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652491
+    m_Localized: FERTIG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652492
+    m_Localized: "Stapelbare Gel\xFCbde. Jeder Eid macht die Anstalt h\xE4rter und zahlt mehr Splitter."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652493
+    m_Localized: BRAUCHT EINE KAMPAGNE OHNE HILFEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652494
+    m_Localized: "EID {rank}  \xB7  SPLITTER \xD7{mult}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 1896792261652495
+    m_Localized: STANDARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652496
+    m_Localized: Das Spiel, wie es gedacht war.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652497
+    m_Localized: GESCHICHTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652498
+    m_Localized: "L\xE4ngere Countdowns, sanftere Lampe, langsamerer J\xE4ger, ehrliche Hinweise, hellere G\xE4nge. Alles wird trotzdem freigeschaltet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652499
+    m_Localized: ALBTRAUM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652500
+    m_Localized: "K\xFCrzere Countdowns, ein sch\xE4rferer J\xE4ger, eine hungrigere Lampe. Splitter \xD71,25 und Eid-Rang +2."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652501
+    m_Localized: "L\xC4NGERER COUNTDOWN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652502
+    m_Localized: "Der Fluchtcountdown dauert die H\xE4lfte l\xE4nger."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652503
+    m_Localized: SANFTE LAMPE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652504
+    m_Localized: "Die Batterie entl\xE4dt sich langsamer und l\xE4dt schneller auf."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652505
+    m_Localized: "LANGSAMERER J\xC4GER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652506
+    m_Localized: "Er legt sich sp\xE4ter auf eine Verfolgung fest, l\xE4uft langsamer und h\xF6rt weniger."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652507
+    m_Localized: EHRLICHE HINWEISE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652508
+    m_Localized: "Keine l\xFCgenden Ger\xE4usche, keine falschen Phantome, keine Lampenausf\xE4lle, und die Augen des J\xE4gers sind immer sichtbar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652509
+    m_Localized: "HELLERE G\xC4NGE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652510
+    m_Localized: "Mehr Umgebungslicht, d\xFCnnerer Nebel, st\xE4rkere Lampen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652511
+    m_Localized: RUHIGE LAMPE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652512
+    m_Localized: Die Lampe schwankt nicht mehr und hinkt der Sicht nicht hinterher. Beeinflusst keine Rekorde.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652513
+    m_Localized: KEIN TODES-REPLAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652514
+    m_Localized: "Der Endbildschirm zeigt die grobk\xF6rnige Wiederholung des Fangs nicht. Beeinflusst keine Rekorde."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652515
+    m_Localized: ALTE BATTERIE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652516
+    m_Localized: "Die Lampe startet jede Etage halb geladen und l\xE4dt langsam auf, auch in Etage 1."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652517
+    m_Localized: ES WARTET NICHT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652518
+    m_Localized: "Schon ab Etage 1 h\xE4lt der J\xE4ger mit Gehenden mit, legt sich fr\xFCher fest und seine Augen sind dunkel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652519
+    m_Localized: VERSCHWEISSTE SPINDE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652520
+    m_Localized: "Jeder Spind in den Labyrinthen ist zugeschwei\xDFt. Kein Versteck, und der J\xE4ger pr\xFCft sie nie."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652521
+    m_Localized: "STAN ERWACHT FR\xDCH"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652522
+    m_Localized: Stan geht schon ab Etage 2 statt ab Etage 4.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652523
+    m_Localized: KEINE ZWEITE CHANCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652524
+    m_Localized: "Nirgends ein zweiter Atem, und der erste Fang einer Etage ist kein Sto\xDF mehr: jeder Fang t\xF6tet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652525
+    m_Localized: MARODES NETZ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652526
+    m_Localized: "Dunklere G\xE4nge, schw\xE4chere Lampen, weiter auseinander."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652527
+    m_Localized: KURZE LUNTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652528
+    m_Localized: "Der Fluchtcountdown ist ein Viertel k\xFCrzer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652529
+    m_Localized: "ES H\xD6RT ALLES"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652530
+    m_Localized: "Jede Etage tr\xE4gt die Regel Feines Geh\xF6r: der J\xE4ger h\xF6rt viel mehr."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652531
+    m_Localized: "DIE T\xDCREN HALTEN NICHT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652532
+    m_Localized: Die Anstalt wird bei jedem Besuch nach Etage 4 durchbrochen, nicht nur einmal.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652533
+    m_Localized: STANDARDAUSSTATTUNG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652534
+    m_Localized: Nichts extra. Nur die Lampe.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652535
+    m_Localized: "PL\xDCNDERER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652536
+    m_Localized: Du startest mit einer Ersatzbatterie und einem Sternkompass.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652537
+    m_Localized: "L\xC4UFER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652538
+    m_Localized: Etage 1 beginnt mit einem Ausdauertonikum und Leisen Schuhen, schon wirksam.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652539
+    m_Localized: KARTOGRAF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652540
+    m_Localized: Du startest mit einem Grundriss.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652541
+    m_Localized: EID {rank}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 1896792261652542
+    m_Localized: "UNTERST\xDCTZT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652543
+    m_Localized: "EID {rank}  \xD7{mult}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 1896792261652544
+    m_Localized: NOTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652545
+    m_Localized: NEUER REKORD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652546
+    m_Localized: BONUS NOTE {grade}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 1896792261652547
+    m_Localized: "PATIENTENAKTE \xB7 {n} NEU"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 1896792261652548
+    m_Localized: NOTEN  {grades}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 1896792261652549
+    m_Localized: ABGESCHWOREN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652550
+    m_Localized: PATIENTENAKTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652551
+    m_Localized: AKTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652552
+    m_Localized: FREISCHALTUNGEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652553
+    m_Localized: KODEX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652554
+    m_Localized: HILFEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652555
+    m_Localized: KEINE AUFNAHMEN VERZEICHNET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652556
+    m_Localized: BEGONNENE KAMPAGNEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652557
+    m_Localized: BEENDETE KAMPAGNEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652558
+    m_Localized: GESEHENE ENDEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652559
+    m_Localized: "BESTER EID \xB7 ENTLASSEN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652560
+    m_Localized: "BESTER EID \xB7 LIGHTS OUT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652561
+    m_Localized: VERDIENTE SPLITTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652562
+    m_Localized: TIEFSTER ABSTIEG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652563
+    m_Localized: BESTE ETAGEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652564
+    m_Localized: ETAGE {floor}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 1896792261652565
+    m_Localized: EID {rank}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763203
+  - m_Id: 1896792261652566
+    m_Localized: NEU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652567
+    m_Localized: FREIGESCHALTET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652568
+    m_Localized: Noch nicht begegnet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652569
+    m_Localized: WAS ER GELERNT HAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652570
+    m_Localized: "\xC4NDERUNGEN GELTEN F\xDCR DAS N\xC4CHSTE LABYRINTH."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652571
+    m_Localized: "JEDE AKTIVIERTE HILFE MARKIERT DIESE KAMPAGNE DAUERHAFT ALS UNTERST\xDCTZT."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652572
+    m_Localized: "KODEX UND AKTE IM PAUSEMEN\xDC"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652573
+    m_Localized: SCHLIESSE EINE ETAGE AB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652574
+    m_Localized: "SET: PL\xDCNDERER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652575
+    m_Localized: SCHLIESSE ETAGE 2 AB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652576
+    m_Localized: 'LADENKARTE: STETHOSKOP'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652577
+    m_Localized: SCHLIESSE ETAGE 4 AB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652578
+    m_Localized: 'AUFTRAG: UNGESEHEN'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652579
+    m_Localized: SCHLIESSE ETAGE 4 AB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652580
+    m_Localized: DIE EIDLEITER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652581
+    m_Localized: ERREICHE EIN ENDE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652582
+    m_Localized: 'LAMPENFARBE: KNOCHEN'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652583
+    m_Localized: ERREICHE EIN ENDE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652584
+    m_Localized: "SET: L\xC4UFER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652585
+    m_Localized: BEENDE 2 KAMPAGNEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652586
+    m_Localized: 'LADENKARTE: LAMPE DES ARCHIVARS'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652587
+    m_Localized: SIEH BEIDE ENDEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652588
+    m_Localized: 'LADENKARTE: DYNAMO'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652589
+    m_Localized: VERDIENE INSGESAMT 1500 SPLITTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652590
+    m_Localized: 'SET: KARTOGRAF'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652591
+    m_Localized: BEENDE 3 KAMPAGNEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652592
+    m_Localized: "AUFTR\xC4GE: H\xC4NDE WEG, KNAPP GENUG"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652593
+    m_Localized: ERREICHE EINE NOTE S AUF EINER ETAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652594
+    m_Localized: 'LAMPENFARBE: EIDROT'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652595
+    m_Localized: ERREICHE EIN ENDE MIT EID-RANG 5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652596
+    m_Localized: "LAMPENFARBE: STATIONSGR\xDCN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652597
+    m_Localized: BEGEGNE ALLEM IM KODEX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641792
+    m_Localized: "ZUR\xDCCK VON STATION A. EINE T\xDCR MEHR ALS GESTERN."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641793
+    m_Localized: "ZUR\xDCCK AUS DEM KESSELRAUM. ZWEIMAL KLOPFEN. ALLES RUHIG."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641794
+    m_Localized: "ZUR\xDCCK AUS DER K\xDCHLKAMMER. EIN FACH BLIEB OFFEN."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641795
+    m_Localized: "ZUR\xDCCK AUS DEM OPERATIONSSAAL. DOSIS NICHT VERMERKT."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641796
+    m_Localized: "Hilde hat heute Nacht eine T\xFCr mehr gez\xE4hlt. Es war deine."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641797
+    m_Localized: Dreimal Klopfen. Dann nichts.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641798
+    m_Localized: "Ein Fach ist bereit. Es tr\xE4gt deine Nummer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641799
+    m_Localized: Raum 4 ist nicht mehr leer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641800
+    m_Localized: Der Schreiber hat deine Akte fertig getippt.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -795,3 +1570,16 @@ MonoBehaviour:
         - id: 193175966617612
         - id: 193175966617617
         - id: 193175966617618
+        - id: 1867415108972544
+        - id: 1867415108972549
+        - id: 1867415108972550
+        - id: 1883058285834250
+        - id: 1888333877211137
+        - id: 1896792261652494
+        - id: 1896792261652541
+        - id: 1896792261652543
+        - id: 1896792261652546
+        - id: 1896792261652547
+        - id: 1896792261652548
+        - id: 1896792261652564
+        - id: 1896792261652565

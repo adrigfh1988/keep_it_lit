@@ -4,7 +4,6 @@ using StarterAssets;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public enum LoseReason
@@ -47,6 +46,7 @@ public partial class GameOutcome : MonoBehaviour
     // F106: where CaptureSequence eases the camera when something other than the hunter caught the player (the loop corridor's Visitor).
     private Vector3 _captureLookAt;
     private bool _hasCaptureLookAt;
+    private bool _caughtByHunter; // F120: set in HandleCaught right before a hunter death
 
     // F32/F37: the room between floors. May all stay null (escapeSequence off, or BindShop never called).
     private ShopRoom _shop;
@@ -56,6 +56,7 @@ public partial class GameOutcome : MonoBehaviour
     private ContractTracker _contracts;
     private HabitTracker _habits;
     private bool _showingLedger;
+    private GameObject _endRoot;          // F119: the win / lose / DESCENT end screen panel (MenuFocus keeps a gamepad on its buttons)
     private bool _continuePressed;
 
     // Kept only so ShowEndScreen can report the number after the fact.
@@ -129,6 +130,8 @@ public partial class GameOutcome : MonoBehaviour
         // Held every frame, for the same reason as the title screen: focus changes re-lock the cursor
         if (IsOver || _showingLedger) PlayerLock.SetCursorFree(true);
         PollLedgerInput();
+        // F119: not the ledger (its CONTINUE is also read directly, so a pre-selected button would double-fire), and not while the DESCENT slip is still typing.
+        if (IsOver && _endRoot != null && !_typing) MenuFocus.Keep(_endRoot, null);
     }
 
     private void HandleProgress(int collected, int total)
@@ -141,15 +144,21 @@ public partial class GameOutcome : MonoBehaviour
     {
         if (IsOver || IsEnding) return;
 
+        // F120: the first catch on a floor is a shove (torch knocked away, hunter stunned, you limp). Before Second Wind: a Second Wind is never spent while the free grab is available.
+        if (TryGrab()) return;
+
         // F36 Second Wind: a release, not an invulnerability. Consumed automatically, once.
         if (PlayerInventory.Count(ShopItem.SecondWind) > 0 && _follower != null && _maze != null)
         {
             PlayerInventory.TryConsume(ShopItem.SecondWind);
+            if (_grades != null) _grades.NoteSecondWind(); // F122
             StartCoroutine(SecondWindSequence(ReleaseHunter, "sub.second_wind.release"));
             return;
         }
 
         DescentRun.Cause = DescentCause.Hunter; // F107
+        _caughtByHunter = true; // F120: the death replay is for the hunter only
+        if (_replay != null) _replay.Freeze();
         Lose(LoseReason.Caught);
     }
 
@@ -180,6 +189,7 @@ public partial class GameOutcome : MonoBehaviour
 
         if (PlayerInventory.TryConsume(ShopItem.SecondWind))
         {
+            if (_grades != null) _grades.NoteSecondWind(); // F122
             StartCoroutine(SecondWindSequence(onSecondWind, secondWindLineKey));
             return;
         }
@@ -232,7 +242,7 @@ public partial class GameOutcome : MonoBehaviour
         letGo?.Invoke();
 
         if (_stealth != null) _stealth.LastExposed = false;
-        if (_audio != null) _audio.ResumeBed();
+        if (_audio != null && !_hubCatch) _audio.ResumeBed(); // F121: a hub catch must not start the maze's drone
         if (_flashlight != null)
         {
             _flashlight.SetOn(torchWasOn);
@@ -253,6 +263,7 @@ public partial class GameOutcome : MonoBehaviour
         PlayerLock.Freeze(_player, false);
         if (_flashlight != null) _flashlight.InputEnabled = true;
         IsEnding = false;
+        _hubCatch = false;
 
         if (_hud != null) _hud.ShowSubtitle(L10n.T(releaseLineKey), 3.2f);
     }
@@ -265,6 +276,7 @@ public partial class GameOutcome : MonoBehaviour
         if (IsOver || IsEnding) return;
 
         // F105 C6: the floor was cleared, so what the player leaned on this floor is learned (before the shop checkpoint / the finale).
+        EndGrabForTransition(); // F120: a dropped torch / limp must not follow the player into the hub or the shop
         if (_habits != null) _habits.CommitLearning();
         LoopCorridor.CommitFloor(); // F105 C4: a loop on this floor counts as the campaign's one
 
@@ -317,11 +329,13 @@ public partial class GameOutcome : MonoBehaviour
         if (!viaHub) _shop.ArrivePlayer(_player);
 
         Payout payout = PlayerWallet.ComputeFloorClear(GameFlow.CurrentFloor, _collected, secondsLeft);
+        ScoreFloorClear(payout, secondsLeft); // F122: the Oath line, the grade (+ its bonus for an Oath campaign), the record
         // F87: the taken contract is decided and paid in this same payout; then the shop's board gets its two offers for the next floor
         // (rolled before the checkpoint below, so a shop resume shows the same pair).
-        if (_contracts != null) _contracts.AppendTo(payout);
+        if (_contracts != null) _contracts.AppendTo(payout, secondsLeft);
         ContractState.RollOffers(_seed, GameFlow.CurrentFloor);
         PlayerWallet.Deposit(payout);
+        PatientRecord.CommitShards(); // F122
         // F83: shop-arrival checkpoint, with the payout banked. Resumes straight into the shop.
         // F94: not via the hub - NextFloor writes the floor-start checkpoint with the deposited wallet.
         if (!viaHub) SaveSystem.WriteCheckpoint(GameFlow.CurrentFloor, true);
@@ -427,9 +441,8 @@ public partial class GameOutcome : MonoBehaviour
 
         if (slip)
         {
-            // The number stays redacted until the Director's file (105) has been read. U+2587 may be missing from the font: '#' then.
-            string redacted = title.font != null && title.font.HasCharacter('▇', true, true) ? "▇" : "#";
-            string patient = HubState.HasTruth ? "7" : redacted;
+            // The number stays redacted until the Director's file (105) has been read. U+2587 may be missing from the font: '#' then (F123: one answer for every surface).
+            string patient = WingNightmares.PatientMark();
             TextMeshProUGUI heading = RuntimeUi.CreateText(root, "Heading", L10n.T("ui.ledger.slip_heading", ("admission", 14 + cleared), ("patient", patient)), 30f, Amber);
             RuntimeUi.AutoFit(heading, 0.7f);
             heading.characterSpacing = 4f;
@@ -438,7 +451,7 @@ public partial class GameOutcome : MonoBehaviour
         }
 
         TextMeshProUGUI subtitle = RuntimeUi.CreateText(root, "Subtitle",
-            slip ? L10n.T("ui.ledger.slip_subtitle") : L10n.T("ui.ledger.subtitle"), 34f, Grey);
+            slip ? WingNightmares.SlipSubtitle(cleared) : L10n.T("ui.ledger.subtitle"), 34f, Grey); // F123: the Clerk types the wing's own line
         RuntimeUi.AutoFit(subtitle, 0.7f);
         RuntimeUi.Place(subtitle.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, slip ? -285f : -280f), new Vector2(1400f, 50f));
         if (slip) _ledgerTexts.Add(subtitle);
@@ -502,6 +515,7 @@ public partial class GameOutcome : MonoBehaviour
         continueButton.onClick.AddListener(OnLedgerContinue);
         RuntimeUi.BindButton(continueButton, "ui.common.continue");
 
+        AddLedgerExtras(root, slip); // F122: campaign tag, record note, grade stamp
         return root;
     }
 
@@ -525,13 +539,11 @@ public partial class GameOutcome : MonoBehaviour
     private void PollLedgerInput()
     {
         if (!_slipLedger || !_showingLedger) return;
-        bool press = TouchInput.Pressed(TouchInput.TouchAction.Interact);
-        if (Keyboard.current != null && (Keyboard.current.eKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame || Keyboard.current.spaceKey.wasPressedThisFrame)) press = true;
-        if (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame) press = true;
+        // F119: continue = Interact (E / pad X / touch) or MenuSubmit (Enter, Space / pad A); MenuTap = left mouse or a touchscreen press (read same-frame, as before).
+        bool press = GameInput.Pressed(GameAction.Interact) || GameInput.Pressed(GameAction.MenuSubmit);
         if (press) { OnLedgerContinue(); return; }
         // A click or a tap anywhere finishes the typing (the CONTINUE button itself acts on release, so it never double-fires with this).
-        bool tap = (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame) ||
-                   (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.wasPressedThisFrame);
+        bool tap = GameInput.Pressed(GameAction.MenuTap);
         if (tap && _typing) _skipTyping = true;
     }
 
@@ -623,8 +635,10 @@ public partial class GameOutcome : MonoBehaviour
         _runTime = Time.time - GameFlow.RunStartTime;
         float secondsLeft = _escape != null ? _escape.TimeLeft : 0f;
         _floorPayout = PlayerWallet.ComputeFloorClear(GameFlow.CurrentFloor, _collected, secondsLeft);
-        if (_contracts != null) _contracts.AppendTo(_floorPayout);
+        ScoreFloorClear(_floorPayout, secondsLeft); // F122
+        if (_contracts != null) _contracts.AppendTo(_floorPayout, secondsLeft);
         PlayerWallet.Deposit(_floorPayout);
+        PatientRecord.CommitShards(); // F122
 
         EndTheHunt();
         if (_escape != null) _escape.Stop();
@@ -664,6 +678,7 @@ public partial class GameOutcome : MonoBehaviour
         PlayerLock.Freeze(_player, true);
         if (_flashlight != null) _flashlight.InputEnabled = false;
         bool a = ending == FinaleEnding.Discharged;
+        NoteEndingReached(a); // F122
         string endKey = a ? "lore.ending.discharged" : "lore.ending.lights_out"; // S9: the two ending texts live in the Lore table
         ShowEndScreen(true, LoseReason.Caught, false, L10n.T(endKey + ".title"), L10n.T(endKey + ".body"));
     }
@@ -685,10 +700,12 @@ public partial class GameOutcome : MonoBehaviour
 
         float secondsLeft = _escape != null ? _escape.TimeLeft : 0f;
         _floorPayout = PlayerWallet.ComputeFloorClear(GameFlow.CurrentFloor, _collected, secondsLeft);
-        if (_contracts != null) _contracts.AppendTo(_floorPayout); // F87: floor 5 pays its contract on the win screen
+        ScoreFloorClear(_floorPayout, secondsLeft); // F122
+        if (_contracts != null) _contracts.AppendTo(_floorPayout, secondsLeft); // F87: floor 5 pays its contract on the win screen
         PlayerWallet.Deposit(_floorPayout);
+        PatientRecord.CommitShards(); // F122
         // F83: the campaign is over. Guarded on the final floor so the no-shop fallback (a plain Win on floors 1-4) keeps its save.
-        if (GameFlow.CurrentFloor >= FloorProfile.FinalFloor) SaveSystem.Delete();
+        if (GameFlow.CurrentFloor >= FloorProfile.FinalFloor) { SaveSystem.Delete(); NoteEndingReached(true); } // F122: the plain no-hub final Win is ending A
 
         EndTheHunt();
         if (_escape != null) _escape.Stop();
@@ -701,6 +718,7 @@ public partial class GameOutcome : MonoBehaviour
     public void Lose(LoseReason reason)
     {
         if (IsOver || IsEnding) return;
+        CountDeath(); // F122: a death on this floor caps its grade (a hub death does not count)
 
         if (reason == LoseReason.Caught)
         {
@@ -754,8 +772,9 @@ public partial class GameOutcome : MonoBehaviour
 
             while (flicker < FlickerTimes.Length && elapsed >= FlickerTimes[flicker])
             {
-                // Even entries switch it off, odd ones back on; the last (index 6) leaves it off
-                if (_flashlight != null) _flashlight.SetOn(flicker % 2 == 1);
+                // Even entries switch it off, odd ones back on; the last (index 6) leaves it off.
+                // F118: with Reduce flashing on only the first beat happens - the torch goes off once and stays off.
+                if (_flashlight != null && (!FlashSafety.On || flicker == 0)) _flashlight.SetOn(flicker % 2 == 1);
                 flicker++;
             }
 
@@ -786,7 +805,7 @@ public partial class GameOutcome : MonoBehaviour
         IsOver = true;
         IsEnding = false;
 
-        BankConsolation();
+        if (!_hubDeath) BankConsolation(); // F121: nothing was earned in the hub
 
         yield return new WaitForSeconds(0.2f);
 
@@ -834,10 +853,18 @@ public partial class GameOutcome : MonoBehaviour
             return;
         }
 
+        if (!won)
+        {
+            // F122: a lost story run still tells the record what it met and banks its shards (consolation was banked just before).
+            NoteMetThisLevel();
+            PatientRecord.CommitShards();
+        }
+
         Canvas canvas = RuntimeUi.ResolveCanvas();
         if (canvas == null) return;
 
         Transform root = RuntimeUi.CreatePanel(canvas.transform, "EndScreen", new Color(0f, 0f, 0f, 0.85f)).transform;
+        _endRoot = root.gameObject;
 
         string title;
         string subtitle;
@@ -860,6 +887,14 @@ public partial class GameOutcome : MonoBehaviour
             {
                 subtitle = L10n.T("ui.end.caught_hidden");
             }
+            else if (_hubDeath)
+            {
+                subtitle = L10n.T("ui.end.caught_hub"); // F121: it followed you up
+            }
+            else if (_flashlight != null && _flashlight.IsDropped)
+            {
+                subtitle = L10n.T("ui.end.caught_dropped"); // F120: killed while the torch lay on the floor
+            }
             else
             {
                 subtitle = torchWasOn ? L10n.T("ui.end.caught_torch") : L10n.T("ui.end.caught_silent");
@@ -879,18 +914,24 @@ public partial class GameOutcome : MonoBehaviour
             subtitle = L10n.T("ui.end.out_of_time_body", ("stars", _collected), ("metres", metres));
         }
 
+        // F123: a loss on a story floor adds that wing's own line under the (diagnostic) cause line. Not for a hub death or the finale's bodyOverride.
+        string wingLine = !won && !_hubDeath && bodyOverride == null ? WingNightmares.LossLine(GameFlow.CurrentFloor) : null;
+        if (wingLine != null) subtitle += "\n" + wingLine;
+
         TextMeshProUGUI titleText = RuntimeUi.CreateText(root, "Title", title, 96f, titleColor);
         titleText.fontStyle = FontStyles.Bold;
         RuntimeUi.AutoFit(titleText, 0.6f);
         RuntimeUi.Place(titleText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -200f), new Vector2(1600f, 140f));
 
-        bool longBody = bodyOverride != null;
+        bool longBody = bodyOverride != null || wingLine != null;
         TextMeshProUGUI subText = RuntimeUi.CreateText(root, "Subtitle", subtitle, longBody ? 32f : 36f, Grey);
         if (longBody) subText.textWrappingMode = TextWrappingModes.Normal;
         RuntimeUi.AutoFit(subText, 0.7f);
         RuntimeUi.Place(subText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, longBody ? -385f : -300f), new Vector2(longBody ? 1300f : 1600f, longBody ? 200f : 60f));
 
-        string stats = L10n.T("ui.end.stats", ("floor", GameFlow.CurrentFloor), ("collected", _collected), ("total", _total), ("time", MazeEscape.FormatTime(_runTime)), ("seed", _seed));
+        string stats = _hubDeath
+            ? L10n.T("ui.end.stats_hub", ("floor", GameFlow.CurrentFloor)) // F121: no stars or time to report from the hub
+            : L10n.T("ui.end.stats", ("floor", GameFlow.CurrentFloor), ("collected", _collected), ("total", _total), ("time", MazeEscape.FormatTime(_runTime)), ("seed", _seed));
         TextMeshProUGUI statsText = RuntimeUi.CreateText(root, "Stats", stats, 32f, Grey);
         statsText.characterSpacing = 4f;
         RuntimeUi.AutoFit(statsText, 0.65f);
@@ -920,6 +961,7 @@ public partial class GameOutcome : MonoBehaviour
             RuntimeUi.AutoFit(stats2Text, 0.65f);
             RuntimeUi.Place(stats2Text.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, longBody ? -590f : -430f), new Vector2(1600f, 50f));
         }
+        AddEndScreenExtras(root, won, isFinalWin, longBody); // F122: campaign tag, record note, and on a won final floor the grade stamp + GRADES line
 
         // Wider than the title screen's buttons: "TRY THIS MAZE AGAIN" does not fit in 420 at 40 pt
         Vector2 size = new Vector2(560f, 86f);
@@ -935,12 +977,12 @@ public partial class GameOutcome : MonoBehaviour
 
         Button again = RuntimeUi.CreateButton(root, L10n.T(won ? "ui.end.replay" : "ui.end.retry"),
             new Vector2(0f, 330f), size, 38f, ButtonIdle, ButtonHover, Color.white);
-        again.onClick.AddListener(() => GameFlow.Restart(true, _seed));
+        again.onClick.AddListener(() => { if (_hubDeath) RetryAfterHubDeath(true); else GameFlow.Restart(true, _seed); });
         RuntimeUi.BindButton(again, won ? "ui.end.replay" : "ui.end.retry");
 
         Button fresh = RuntimeUi.CreateButton(root, L10n.T("ui.end.new_maze"),
             new Vector2(0f, 220f), size, 38f, ButtonIdle, ButtonHover, Color.white);
-        fresh.onClick.AddListener(() => GameFlow.Restart(false, _seed));
+        fresh.onClick.AddListener(() => { if (_hubDeath) RetryAfterHubDeath(false); else GameFlow.Restart(false, _seed); });
         RuntimeUi.BindButton(fresh, "ui.end.new_maze");
 
         Button menu = RuntimeUi.CreateButton(root, L10n.T("ui.end.main_menu"),
@@ -948,6 +990,7 @@ public partial class GameOutcome : MonoBehaviour
         menu.onClick.AddListener(GameFlow.ReturnToMenu);
         RuntimeUi.BindButton(menu, "ui.end.main_menu");
 
+        if (!won && reason == LoseReason.Caught) TryShowReplay(root, false); // F120
         PlayerLock.SetCursorFree(true);
     }
 }

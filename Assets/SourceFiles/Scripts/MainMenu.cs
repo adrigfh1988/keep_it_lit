@@ -33,6 +33,7 @@ public class MainMenu : MonoBehaviour
     private GameObject _creditsScreen;
     private ScrollRect _creditsScroll;
     private TextMeshProUGUI _controlText;
+    private int _sheetVersion = -1;
     private TextMeshProUGUI _rulesBody;
     private Texture2D _generatedCover;
     private Sprite _generatedSprite;
@@ -96,6 +97,14 @@ public class MainMenu : MonoBehaviour
 
         PlayerLock.Freeze(_player, true);
 
+        // F122: the new-campaign screen chose rules that change how floor 1 is built, so the scene was rebuilt; begin that campaign now (no title flash).
+        if (GameFlow.BeginCampaignOnLoad)
+        {
+            GameFlow.BeginCampaignOnLoad = false;
+            BeginNewCampaign();
+            return;
+        }
+
         // A retry goes straight into the game. Through StartGame rather than by hiding the screens:
         // it is what unfreezes the player, relocks the cursor and undoes the zeroed clock from Awake.
         if (GameFlow.SkipMenuOnLoad)
@@ -131,6 +140,37 @@ public class MainMenu : MonoBehaviour
         }
 
         PlayMenuMusic();
+
+        // F118: title path only - the photosensitivity card first (until acknowledged), then the "your save was set aside" notice.
+        if (!PhotosensitivityNotice.Acknowledged) PhotosensitivityNotice.Show(canvas.transform, () => ShowSaveProblemIfAny(canvas.transform));
+        else ShowSaveProblemIfAny(canvas.transform);
+    }
+
+    /// <summary>F118 D8: SaveSystem.TryLoad set an unusable save aside - say so once, so a missing CONTINUE is not a mystery.</summary>
+    private void ShowSaveProblemIfAny(Transform canvas)
+    {
+        SaveSystem.LoadProblem problem = SaveSystem.ConsumeProblem();
+        if (problem == SaveSystem.LoadProblem.None) return;
+
+        GameObject panel = RuntimeUi.CreatePanel(canvas, "SaveProblem", new Color(0.02f, 0.02f, 0.03f, 1f));
+        panel.transform.SetAsLastSibling();
+
+        TextMeshProUGUI heading = RuntimeUi.CreateText(panel.transform, "Heading", L10n.T("ui.menu.save_problem_heading"), 76f, accent);
+        RuntimeUi.Bind(heading, "ui.menu.save_problem_heading", 0.6f);
+        heading.fontStyle = FontStyles.Bold;
+        heading.characterSpacing = 8f;
+        RuntimeUi.Place(heading.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -300f), new Vector2(1400f, 100f));
+
+        string key = problem == SaveSystem.LoadProblem.TooNew ? "ui.menu.save_problem_body.too_new" : "ui.menu.save_problem_body.unreadable";
+        TextMeshProUGUI body = RuntimeUi.CreateText(panel.transform, "Body", L10n.T(key), 34f, new Color(0.88f, 0.88f, 0.9f));
+        RuntimeUi.Bind(body, key, 0.6f);
+        body.textWrappingMode = TextWrappingModes.Normal;
+        RuntimeUi.Place(body.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -470f), new Vector2(1400f, 200f));
+
+        Button ok = RuntimeUi.CreateButton(panel.transform, L10n.T("ui.common.continue"), new Vector2(0f, 330f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+        RuntimeUi.BindButton(ok, "ui.common.continue");
+        ok.onClick.AddListener(() => Destroy(panel));
+        if (UnityEngine.EventSystems.EventSystem.current != null) UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(ok.gameObject);
     }
 
     /// <summary>The title music, only when the title screen is actually shown (a retry or CONTINUE skips it).</summary>
@@ -176,10 +216,54 @@ public class MainMenu : MonoBehaviour
 
         if (_creditsScreen != null && _creditsScreen.activeSelf) UpdateCredits();
 
+        // F119: the controls sheet follows the device in use (keyboard keys, gamepad buttons) and any rebind.
+        if (_rulesScreen != null && _rulesScreen.activeSelf && _controlText != null)
+        {
+            GameInput.Poll();
+            if (_sheetVersion != GameInput.Version)
+            {
+                _sheetVersion = GameInput.Version;
+                _controlText.text = ControlsText();
+            }
+        }
+
+        // F119: pad B / Esc steps back out of the controls sheet and the start-over confirmation (the on-screen BACK buttons do the same).
+        if (!SettingsMenu.BlocksPause && !NewCampaignScreen.BlocksBack && !PatientRecordMenu.BlocksBack && GameInput.Pressed(GameAction.MenuCancel))
+        {
+            if (_confirmPanel != null && _confirmPanel.activeSelf) _confirmPanel.SetActive(false);
+            else if (_rulesScreen != null && _rulesScreen.activeSelf && !_rulesStartsGame)
+            {
+                _rulesScreen.SetActive(false);
+                _titleScreen.SetActive(true);
+            }
+        }
+
+        KeepPadFocus();
+
         // Held every frame rather than set once: StarterAssetsInputs re-locks the cursor on every
         // focus change, so a single assignment loses the moment the window is alt-tabbed.
         PlayerLock.SetCursorFree(true);
     }
+
+    /// <summary>F119: with a gamepad the open screen always has a selected button (CONTINUE or START GAME on the title, BACK on the others). Left alone while Settings or
+    /// an overlay (the photosensitivity card, the save notice) owns the selection.</summary>
+    private void KeepPadFocus()
+    {
+        if (SettingsMenu.BlocksPause || NewCampaignScreen.IsOpen || PatientRecordMenu.BlocksBack) return; // F122: those screens keep their own focus
+        UnityEngine.EventSystems.EventSystem es = UnityEngine.EventSystems.EventSystem.current;
+        GameObject cur = es != null ? es.currentSelectedGameObject : null;
+        if (cur != null && cur.activeInHierarchy && !OwnsScreen(cur.transform)) return;
+
+        GameObject root = _creditsScreen != null && _creditsScreen.activeSelf ? _creditsScreen
+            : _confirmPanel != null && _confirmPanel.activeSelf ? _confirmPanel
+            : _rulesScreen != null && _rulesScreen.activeSelf ? _rulesScreen
+            : _titleScreen;
+        MenuFocus.Keep(root, root == _confirmPanel ? _confirmBack : null);
+    }
+
+    private bool OwnsScreen(Transform t) =>
+        (_titleScreen != null && t.IsChildOf(_titleScreen.transform)) || (_rulesScreen != null && t.IsChildOf(_rulesScreen.transform)) ||
+        (_creditsScreen != null && t.IsChildOf(_creditsScreen.transform));
 
     // ---------------------------------------------------------------- flow
 
@@ -240,6 +324,29 @@ public class MainMenu : MonoBehaviour
         room.Begin();
     }
 
+    /// <summary>F122: START GAME. The NEW ADMISSION screen (preset, assists, kit, Oaths); BEGIN continues in <see cref="OnCampaignChosen"/>, BACK uncovers the title.</summary>
+    private void OpenNewCampaign()
+    {
+        NewCampaignScreen.Show(OnCampaignChosen, null);
+    }
+
+    /// <summary>
+    /// F122: the choice is made (CampaignRules.Begin has run). Floor 1 was already built at the title, so unless the choice leaves the build unchanged - always true
+    /// for plain STANDARD - the scene is rebuilt once with the rules in place and the campaign begins on load (BeginCampaignOnLoad -> Start).
+    /// </summary>
+    private void OnCampaignChosen()
+    {
+        if (CampaignRules.Signature() == CampaignRules.BuiltSignature)
+        {
+            BeginNewCampaign();
+            return;
+        }
+
+        RequestFullscreenOnTouch(); // the reload throws the touch gesture away, like CONTINUE
+        GameFlow.BeginCampaignOnLoad = true;
+        GameFlow.ReloadFresh();
+    }
+
     /// <summary>The CONTROLS button: the old rules screen as a reference sheet. Its button goes back to the title.</summary>
     private void ShowControls() => ShowRules(false);
 
@@ -268,12 +375,20 @@ public class MainMenu : MonoBehaviour
     private static string RulesText() =>
         L10n.T("ui.rules.item1") + "\n\n" + L10n.T("ui.rules.item2") + "\n\n" + L10n.T("ui.rules.item3") + "\n\n" + L10n.T("ui.rules.item4");
 
+    /// <summary>F119: the keyboard / mouse or gamepad sheet - every key and button is the live binding (a rebind or a pad press shows here).</summary>
+    private static string ControlsSheet() => L10n.T("ui.controls.sheet",
+        ("move", Bold(GameAction.Move)), ("sprint", Bold(GameAction.Sprint)), ("look", Bold(GameAction.Look)), ("torch", Bold(GameAction.Torch)),
+        ("focus", Bold(GameAction.Focus)), ("interact", Bold(GameAction.Interact)), ("throw", Bold(GameAction.Throw)), ("item1", Bold(GameAction.Item1)),
+        ("item2", Bold(GameAction.Item2)), ("map", Bold(GameAction.Map)), ("pause", Bold(GameAction.Pause)));
+
+    private static string Bold(GameAction a) => "<b>" + InputGlyphs.Key(a) + "</b>";
+
     /// <summary>F76 T6: shown instead of the keyboard/mouse control line while touch is active or the
     /// platform is mobile (iPadOS Safari under-reports as desktop, so isMobilePlatform is checked too).</summary>
     private static string ControlsText()
     {
         string tip = "<size=30>" + L10n.T("ui.controls.tip") + "</size>";
-        if (!TouchInput.Active && !Application.isMobilePlatform) return L10n.T("ui.controls.keyboard") + "\n" + tip;
+        if (!TouchInput.Active && !Application.isMobilePlatform) return ControlsSheet() + "\n" + tip;
         return L10n.T("ui.controls.touch") + "\n" + tip;
     }
 
@@ -310,15 +425,28 @@ public class MainMenu : MonoBehaviour
         Button start = RuntimeUi.CreateButton(_titleScreen.transform, L10n.T("ui.menu.start_game"),
             new Vector2(0f, 460f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
         RuntimeUi.BindButton(start, "ui.menu.start_game");
-        start.onClick.AddListener(() => ConfirmThenStart(BeginNewCampaign));
+        start.onClick.AddListener(() => ConfirmThenStart(OpenNewCampaign)); // F122: the NEW ADMISSION screen first
 
         BuildDescentButton();
 
         // F86: the old rules screen, kept as a reference sheet now that START GAME opens the Intake.
+        // F122: the row is split like CREDITS / EXIT - CONTROLS | RECORD (the Patient Record, with an amber dot when something new is unlocked).
         Button controls = RuntimeUi.CreateButton(_titleScreen.transform, L10n.T("ui.menu.controls"),
-            new Vector2(0f, 260f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
+            new Vector2(-110f, 260f), new Vector2(200f, 86f), 32f, buttonIdle, buttonHover, Color.white);
         RuntimeUi.BindButton(controls, "ui.menu.controls");
         controls.onClick.AddListener(ShowControls);
+
+        Button record = RuntimeUi.CreateButton(_titleScreen.transform, L10n.T("ui.menu.record"),
+            new Vector2(110f, 260f), new Vector2(200f, 86f), 32f, buttonIdle, buttonHover, Color.white);
+        record.name = "Record Button";
+        RuntimeUi.BindButton(record, "ui.menu.record");
+        record.onClick.AddListener(() => PatientRecordMenu.Show(PatientRecordMenu.Tab.Record, false));
+        if (PatientRecord.HasNew)
+        {
+            GameObject dot = RuntimeUi.CreatePanel(record.transform, "NewDot", new Color(1f, 0.78f, 0.45f));
+            dot.GetComponent<Image>().raycastTarget = false;
+            RuntimeUi.Place((RectTransform)dot.transform, new Vector2(1f, 1f), new Vector2(-14f, -14f), new Vector2(16f, 16f));
+        }
 
         // S2: the settings screen opens over the title screen and closes back onto it.
         Button settings = RuntimeUi.CreateButton(_titleScreen.transform, L10n.T("ui.menu.settings"),
@@ -454,23 +582,9 @@ public class MainMenu : MonoBehaviour
     /// <summary>Escape / gamepad B / the touch pause button close the credits; arrow keys and the right stick scroll them.</summary>
     private void UpdateCredits()
     {
-        bool back = TouchInput.Pressed(TouchInput.TouchAction.Pause);
-        float scroll = 0f;
-#if ENABLE_INPUT_SYSTEM
-        if (UnityEngine.InputSystem.Keyboard.current != null)
-        {
-            var kb = UnityEngine.InputSystem.Keyboard.current;
-            if (kb.escapeKey.wasPressedThisFrame) back = true;
-            if (kb.downArrowKey.isPressed) scroll -= 1f;
-            if (kb.upArrowKey.isPressed) scroll += 1f;
-        }
-        if (UnityEngine.InputSystem.Gamepad.current != null)
-        {
-            var pad = UnityEngine.InputSystem.Gamepad.current;
-            if (pad.buttonEast.wasPressedThisFrame) back = true;
-            scroll += pad.rightStick.ReadValue().y;
-        }
-#endif
+        // F119: MenuCancel = Esc / pad B / touch Pause; MenuScroll = up and down arrows / right stick Y.
+        bool back = GameInput.Pressed(GameAction.MenuCancel);
+        float scroll = GameInput.Axis(GameAction.MenuScroll);
         if (back) { CloseCredits(); return; }
         if (Mathf.Abs(scroll) > 0.05f)
         {
@@ -529,6 +643,7 @@ public class MainMenu : MonoBehaviour
     // ---------------------------------------------------------------- F83: saved run
 
     private GameObject _confirmPanel;
+    private Button _confirmBack;
     private int _savedFloor;
 
     /// <summary>CONTINUE: restore the save and reload through the normal SkipMenuOnLoad path (StartGame, or the shop for a shop save).</summary>
@@ -598,6 +713,7 @@ public class MainMenu : MonoBehaviour
             new Vector2(0f, 290f), new Vector2(420f, 86f), 40f, buttonIdle, buttonHover, Color.white);
         RuntimeUi.BindButton(back, "ui.common.back");
         back.onClick.AddListener(() => _confirmPanel.SetActive(false));
+        _confirmBack = back;
 
         _confirmPanel.SetActive(false);
     }

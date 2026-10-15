@@ -4,9 +4,6 @@ using StarterAssets;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
 
 /// <summary>
 /// The lit room between floors: a counter, a salesman whose head follows the player, and a door to the
@@ -200,21 +197,15 @@ public class ShopRoom : MonoBehaviour
         if (_inCounter && shopkeeper != null) shopkeeper.Greet();
         if (_hud == null) return;
 
-        if (_inCounter) _hud.SetPromptKey("E", "hud.prompt.talk");
-        else if (_inBoard) _hud.SetPromptKey(TouchInput.Key("E", L10n.T("ui.key.use")), "hud.prompt.contracts");
-        else if (_inDoor) _hud.SetPromptKey("E", "hud.prompt.descend");
+        if (_inCounter) _hud.SetPromptKey(GameAction.Interact, "hud.prompt.talk");
+        else if (_inBoard) _hud.SetPromptKey(GameAction.Interact, "hud.prompt.contracts");
+        else if (_inDoor) _hud.SetPromptKey(GameAction.Interact, "hud.prompt.descend");
         else _hud.SetPrompt(null);
     }
 
     private void HandleInteract()
     {
-        bool pressed = false;
-#if ENABLE_INPUT_SYSTEM
-        if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame) pressed = true;
-        if (Gamepad.current != null && Gamepad.current.buttonWest.wasPressedThisFrame) pressed = true;
-#endif
-        if (TouchInput.Pressed(TouchInput.TouchAction.Interact)) pressed = true;
-        if (!pressed) return;
+        if (!GameInput.Pressed(GameAction.Interact)) return;
 
         if (_inCounter) { if (_menu != null) _menu.Open(); }
         else if (_inBoard) { if (_menu != null) _menu.OpenContracts(); }

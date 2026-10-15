@@ -75,8 +75,15 @@ public static class GameSettings
     public static float FieldOfView { get => _fov; set { _fov = Mathf.Clamp(value, MinFov, MaxFov); Store("FieldOfView", _fov); Raise(); } }
     /// <summary>S9: the chosen UI language code ("en", "es", "fr", "de"); empty = follow the system language. Not reset by any settings tab, not in SaveData.
     /// Persisting only: <see cref="L10n.SetLanguage"/> is what switches the locale.</summary>
+    /// <summary>F119: the player's rebinds as <c>GameInput.SaveOverrides()</c> JSON ("" = defaults). A machine setting like the rest; the setter only
+    /// stores it - <c>GameInput.ApplyOverrides</c> is the one place that loads it into the assets.</summary>
+    public static string InputOverrides { get => _inputOverrides; set { _inputOverrides = value ?? ""; Store("InputOverrides", _inputOverrides); } }
+    private static string _inputOverrides = "";
     public static string Language { get => _language; set { _language = value ?? ""; Store("Language", _language); Raise(); } }
     private static string _language = "";
+    /// <summary>F118: replaces every fast flicker / blink / strobe with a slow fade (see <see cref="FlashSafety"/>). Default off; a person's need, so no settings tab resets it.</summary>
+    public static bool ReduceFlashing { get => _reduceFlashing; set { _reduceFlashing = value; Store("ReduceFlashing", value ? 1 : 0); Raise(); } }
+    private static bool _reduceFlashing;
     public static float CameraShake { get => _cameraShake; set { _cameraShake = Mathf.Clamp01(value); Store("CameraShake", _cameraShake); Raise(); } }
     /// <summary>F104 B1: strength of the screen effects that grow with the DreadMeter (film grain, vignette, colour fringing, desaturation), 0..1.</summary>
     public static float EffectsIntensity { get => _effectsIntensity; set { _effectsIntensity = Mathf.Clamp01(value); Store("EffectsIntensity", _effectsIntensity); Raise(); } }
@@ -90,6 +97,21 @@ public static class GameSettings
 
     /// <summary>Window mode, resolution and frame cap mean something only on a desktop player.</summary>
     public static bool DisplayAvailable => Application.platform != RuntimePlatform.WebGLPlayer && !Application.isMobilePlatform;
+
+    // ---- F120: the microphone (opt-in, desktop only). Machine settings, not SaveData. Off by default: the privacy-safe choice. ----
+    public const float MinMicThreshold = 0.15f, MaxMicThreshold = 0.90f, DefaultMicThreshold = 0.45f;
+
+    /// <summary>F120: the hunter hears the player's voice through the microphone. Default OFF; reset to off by the AUDIO tab reset.</summary>
+    public static bool MicEnabled { get => _micEnabled; set { _micEnabled = value; Store("MicEnabled", value ? 1 : 0); Raise(); } }
+    /// <summary>F120: the chosen input device name; empty = the system default (also used when the stored device is gone).</summary>
+    public static string MicDevice { get => _micDevice; set { _micDevice = value ?? ""; Store("MicDevice", _micDevice); Raise(); } }
+    /// <summary>F120: the level (0..1 on the meter scale, about -37 dBFS at the default) above which a sound counts as a voice noise.</summary>
+    public static float MicThreshold { get => _micThreshold; set { _micThreshold = Mathf.Clamp(value, MinMicThreshold, MaxMicThreshold); Store("MicThreshold", _micThreshold); Raise(); } }
+    /// <summary>F120: false on WebGL, tablets and phones - the microphone rows never show there and nothing reads a device.</summary>
+    public static bool MicAvailable => MicInput.PlatformSupported;
+    private static bool _micEnabled;
+    private static string _micDevice = "";
+    private static float _micThreshold = DefaultMicThreshold;
 
     /// <summary>The last display request made (the Editor logs it instead of calling Screen.SetResolution): "1920x1080 FullScreenWindow".</summary>
     public static string LastDisplayRequest { get; private set; } = "";
@@ -130,6 +152,8 @@ public static class GameSettings
     private static void Load()
     {
         _language = Str("Language", "");
+        _inputOverrides = Str("InputOverrides", "");
+        _reduceFlashing = Int("ReduceFlashing", 0) != 0;
         _windowMode = (WindowModeKind)Mathf.Clamp(Int("WindowMode", 0), 0, 2);
         _resW = Mathf.Max(0, Int("ResW", 0));
         _resH = Mathf.Max(0, Int("ResH", 0));
@@ -149,6 +173,9 @@ public static class GameSettings
         _fov = Mathf.Clamp(Float("FieldOfView", DefaultFov), MinFov, MaxFov);
         _cameraShake = Mathf.Clamp01(Float("CameraShake", 1f));
         _effectsIntensity = Mathf.Clamp01(Float("EffectsIntensity", 1f));
+        _micEnabled = Int("MicEnabled", 0) != 0; // F120
+        _micDevice = Str("MicDevice", "");
+        _micThreshold = Mathf.Clamp(Float("MicThreshold", DefaultMicThreshold), MinMicThreshold, MaxMicThreshold);
     }
 
     private static int Int(string name, int fallback)
@@ -215,6 +242,9 @@ public static class GameSettings
         _master = 1f; Store("MasterVolume", 1f);
         _music = 0.8f; Store("MusicVolume", 0.8f);
         _effects = 1f; Store("EffectsVolume", 1f);
+        _micEnabled = false; Store("MicEnabled", 0); // F120: the privacy-safe default
+        _micDevice = ""; Store("MicDevice", "");
+        _micThreshold = DefaultMicThreshold; Store("MicThreshold", DefaultMicThreshold);
         ApplyAudio();
         Raise();
     }
@@ -225,6 +255,8 @@ public static class GameSettings
         _invertY = false; Store("InvertY", 0);
         TouchInput.SetMode(TouchInput.Mode.Auto);
         TouchInput.SetLookSensitivity(TouchInput.DefaultLookSensitivity);
+        InputOverrides = "";                 // F119: the CONTROLS tab RESET also clears every rebind
+        GameInput.ApplyOverrides("");
         Raise();
     }
 

@@ -232,6 +232,23 @@ MonoBehaviour:
     m_Localized: "\xBFALGO DISTINTO? DA LA VUELTA."
     m_Metadata:
       m_Items: []
+  - m_Id: 1871577460764672
+    m_Localized: "5 \xB7 E. VOGT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1871577532067840
+    m_Localized: PACIENTE {mark}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429578
+  - m_Id: 1871577532067841
+    m_Localized: "E. VOGT\nCAJ\xD3N 5\nHALLADO AL AMANECER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1871577532067842
+    m_Localized: "NORMAS DE LA CASA\n1. LOS PACIENTES CAMINAN.\n2. LOS PACIENTES NO SE ESCONDEN.\n3. LOS PACIENTES NO TIRAN COSAS.\nEL CELADOR AYUDAR\xC1.\n- EL DIRECTOR"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -241,3 +258,4 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 382911238803456
+        - id: 1871577532067840

@@ -280,6 +280,38 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763209
+  - m_Id: 1860894006439936
+    m_Localized: STIMME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860894094520320
+    m_Localized: LAUT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860894094520321
+    m_Localized: "LAMPE \xB7 AM BODEN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860894094520322
+    m_Localized: HEB DEINE LAMPE AUF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1874628175196160
+    m_Localized: ZUGESCHWEISST.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1874628183584768
+    m_Localized: ZUGESCHWEISST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879571208597504
+    m_Localized: "FACH \xD6FFNEN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879571216986112
+    m_Localized: AMPULLE NEHMEN
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

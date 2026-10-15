@@ -1,9 +1,6 @@
 using System.Collections;
 using StarterAssets;
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
 
 /// <summary>Anything the player can hide inside. Implemented by Locker; AIFollower talks only to this.</summary>
 public interface IHidingSpot
@@ -98,6 +95,10 @@ public class Locker : MonoBehaviour, IHidingSpot
     public Vector3 FrontPosition { get; private set; }
     public bool Occupied { get; private set; }
 
+    /// <summary>F122 WELDED LOCKERS: the door will not open. E rattles it (a clunk and a line) and never hides the player; the hunter is given no hiding spots to check.</summary>
+    public bool Welded { get; set; }
+    private float _nextWeldedLine;
+
     /// <summary>F107 D3: set when something already lives in this locker. E asks it instead of entering; the player is never hidden here.</summary>
     public LockerTenant Tenant { get; set; }
 
@@ -138,13 +139,7 @@ public class Locker : MonoBehaviour, IHidingSpot
     {
         if (_player == null || _stealth == null || _controller == null) return;
 
-#if ENABLE_INPUT_SYSTEM
-        bool pressed = (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
-                    || (Gamepad.current != null && Gamepad.current.buttonWest.wasPressedThisFrame);
-#else
-        bool pressed = false;
-#endif
-        pressed |= TouchInput.Pressed(TouchInput.TouchAction.Interact);
+        bool pressed = GameInput.Pressed(GameAction.Interact);
 
         if (!pressed || !(GameFlow.IsRunActive || GameFlow.IsInIntake || GameFlow.IsInHub) || GameOutcome.IsOver) return;
 
@@ -155,7 +150,8 @@ public class Locker : MonoBehaviour, IHidingSpot
         if (Occupied) Leave();
         else if (_playerInTrigger)
         {
-            if (Tenant != null) Tenant.Attempt(); // F107 D3: something is already in here
+            if (Welded) Rattle(); // F122: welded shut
+            else if (Tenant != null) Tenant.Attempt(); // F107 D3: something is already in here
             else Enter();
         }
     }
@@ -208,7 +204,7 @@ public class Locker : MonoBehaviour, IHidingSpot
         _controller.BottomClamp = -pitchRange;
         _controller.TopClamp = pitchRange;
 
-        if (_hud != null) _hud.SetPromptKey("E", "hud.prompt.leave");
+        if (_hud != null) _hud.SetPromptKey(GameAction.Interact, "hud.prompt.leave");
         GameAudio.PlayAt(GameAudio.Library.lockerDoor, transform.position, 0.7f); // F97: the door pulled shut (recorded clip only)
         StartBreathing();
         StartPresence(); // F104 B3
@@ -276,7 +272,7 @@ public class Locker : MonoBehaviour, IHidingSpot
 
         if (_hud != null)
         {
-            if (_playerInTrigger) _hud.SetPromptKey("E", "hud.prompt.hide");
+            if (_playerInTrigger) _hud.SetPromptKey(GameAction.Interact, "hud.prompt.hide");
             else _hud.SetPrompt(null);
         }
     }
@@ -322,11 +318,25 @@ public class Locker : MonoBehaviour, IHidingSpot
 
     // ---------------------------------------------------------------- F107 D3: the Tenant
 
+    /// <summary>F122: a welded locker answers E with a dull clunk and, at most every 2 s, a line.</summary>
+    private void Rattle()
+    {
+        if (_clunk == null) _clunk = DoorAudio.BuildClunkClip(0.08f, 380f, 0.5f);
+        GameAudio.ClipAtPoint(_clunk, transform.position, 0.6f);
+        if (_hud != null && Time.unscaledTime >= _nextWeldedLine)
+        {
+            _nextWeldedLine = Time.unscaledTime + 2f;
+            _hud.ShowSubtitle(L10n.T("hud.locker.welded"), 1.6f);
+        }
+    }
+
+    private AudioClip _clunk;
+
     /// <summary>F107 D3: the trigger prompt for standing at this locker: "hide", or the tenant's "it holds the door" once it has shoved the player out.</summary>
     public void RefreshPrompt()
     {
         if (_hud == null) return;
-        _hud.SetPromptKey("E", Tenant != null && Tenant.Held ? "hud.tenant.held" : "hud.prompt.hide");
+        _hud.SetPromptKey(GameAction.Interact, Welded ? "hud.prompt.welded" : Tenant != null && Tenant.Held ? "hud.tenant.held" : "hud.prompt.hide");
     }
 
     /// <summary>F107 D3: the door bursts open and slams shut again, fast (a tenant shoving the player out). Ignored while someone is hidden inside.</summary>

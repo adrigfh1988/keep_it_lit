@@ -27,12 +27,17 @@ public static class PlayerInventory
 
     public static int Count(ShopItem item) => Held.TryGetValue(item, out int n) ? n : 0;
 
-    public static int CapFor(ShopItem item) => item == ShopItem.SecondWind || item == ShopItem.FloorPlan ? 1 : ConsumableCap;
+    public static int CapFor(ShopItem item)
+    {
+        if (item == ShopItem.SecondWind) return CampaignRules.SecondWindAllowed ? 1 : 0; // F122 NO SECOND CHANCES: none, anywhere (CanHoldMore is then false for every grant site)
+        return item == ShopItem.FloorPlan ? 1 : ConsumableCap;
+    }
 
     public static bool CanHoldMore(ShopItem item) => Count(item) < CapFor(item);
 
     public static void Grant(ShopItem item)
     {
+        if (item == ShopItem.SecondWind && !CampaignRules.SecondWindAllowed) return; // F122 backstop
         Held[item] = Count(item) + 1;
     }
 

@@ -542,6 +542,12 @@ public partial class MazeGenerator
         AppendReachability(sb);
     }
 
+    /// <summary>The agent type the maze NavMesh was baked for (not the hub's "Hub" type living in the same scene).</summary>
+    public int MazeAgentTypeId
+    {
+        get { NavMeshSurface surface = ResolveNavMeshSurface(); return surface != null ? surface.agentTypeID : 0; }
+    }
+
     /// <summary>
     /// A completability check for the map: a flood fill from the start with every locked door a wall; any reached button then unlocks its door
     /// (and the chain behind it) and the fill runs again, until nothing changes. Reports every star, key, fuse box and button, and an open
@@ -549,6 +555,21 @@ public partial class MazeGenerator
     /// </summary>
     private void AppendReachability(StringBuilder sb)
     {
+        ReachabilityReport report = CheckReachability();
+        sb.Append($"reachability (locked doors are walls until their button is reached): {report.CellsBeforeButtons} of {width * height} cells before any button, {report.CellsReached} after; ");
+        sb.Append(report.Missing.Count == 0 ? $"all {report.Targets} targets reachable\n" : $"UNREACHABLE: {string.Join(", ", report.Missing)}\n");
+    }
+
+    /// <summary>
+    /// F118: two legs per target. GRID: the flood described above (locked doors are walls until their button is reached; the squeeze is open).
+    /// NAVMESH: a path from the start cell to the target cell on the maze's own NavMesh, which catches props and lockers carving a corridor shut
+    /// (doors are not in the NavMesh, so this leg ignores locks by design). A NavMesh-only failure whose grid path must cross the squeeze is
+    /// recorded in <see cref="ReachabilityReport.NavMissing"/> instead of failing. The hatch is not a target: it only exists after the last star.
+    /// </summary>
+    public ReachabilityReport CheckReachability()
+    {
+        ReachabilityReport report = new ReachabilityReport { Doors = _doors.Count };
+
         HashSet<(Vector2Int, int)> locked = new HashSet<(Vector2Int, int)>();
         foreach (MazeDoor door in _doors)
         {
@@ -556,7 +577,7 @@ public partial class MazeGenerator
         }
 
         HashSet<Vector2Int> reached = FloodFrom(Vector2Int.zero, locked);
-        int withoutButtons = reached.Count;
+        report.CellsBeforeButtons = reached.Count;
         for (bool changed = true; changed;)
         {
             changed = false;
@@ -571,24 +592,116 @@ public partial class MazeGenerator
             if (changed) reached = FloodFrom(Vector2Int.zero, locked);
         }
 
-        List<string> missing = new List<string>();
-        int targets = 0;
+        report.CellsReached = reached.Count;
+
+        // NavMesh leg setup.
+        NavMeshQueryFilter filter = new NavMeshQueryFilter { agentTypeID = MazeAgentTypeId, areaMask = NavMesh.AllAreas };
+        float snap = cellSize * 0.45f;
+        bool haveStart = NavMesh.SamplePosition(CellCenter(0, 0), out NavMeshHit startHit, snap, filter);
+        Dictionary<Vector2Int, Vector2Int> parents = null;
+
         void Check(Vector3 world, string label)
         {
-            targets++;
-            if (!TryWorldToCell(world, out Vector2Int cell) || !reached.Contains(cell)) missing.Add($"{label} {cell}");
+            report.Targets++;
+            if (!TryWorldToCell(world, out Vector2Int cell) || !reached.Contains(cell))
+            {
+                report.Missing.Add($"{label} {cell}");
+                return;
+            }
+
+            // NavMesh leg.
+            Vector3 center = CellCenter(cell.x, cell.y);
+            bool ok = false;
+            if (haveStart && NavMesh.SamplePosition(center, out NavMeshHit endHit, snap, filter))
+            {
+                NavMeshPath path = new NavMeshPath();
+                if (NavMesh.CalculatePath(startHit.position, endHit.position, filter, path) && path.status == NavMeshPathStatus.PathComplete && path.corners.Length > 0)
+                {
+                    Vector3 last = path.corners[path.corners.Length - 1];
+                    ok = Vector3.Distance(last, endHit.position) <= cellSize * 0.5f;
+                }
+            }
+
+            if (ok) return;
+
+            if (_squeezeCells.Count > 0)
+            {
+                if (parents == null) parents = BfsParents(Vector2Int.zero);
+                for (Vector2Int c = cell; parents.TryGetValue(c, out Vector2Int prev); c = prev)
+                {
+                    if (_squeezeCells.Contains(c))
+                    {
+                        report.NavMissing.Add($"{label} {cell} (through squeeze)");
+                        return;
+                    }
+                }
+            }
+
+            report.Missing.Add($"{label} {cell} [navmesh]");
         }
 
-        foreach (Transform star in _stars) if (star != null) Check(star.position, "star");
-        foreach (KeyPickup key in _keys) if (key != null && !key.IsTaken) Check(key.transform.position, "key");
-        foreach (FuseBox box in _fuseBoxes) if (box != null) Check(box.transform.position, "fuse box");
-        foreach (WallButton button in _buttons) if (button != null) Check(button.transform.position, "button");
-        MazeEscape escape = FindAnyObjectByType<MazeEscape>();
-        if (HasExitGates) foreach (Vector2Int gateCell in GateCells) Check(CellCenter(gateCell.x, gateCell.y), "exit gate"); // F111: always built, so always checked
-        else if (escape != null && escape.HatchOpen) Check(escape.HatchPosition, "hatch");
+        foreach (Transform star in _stars) if (star != null) { report.Stars++; Check(star.position, "star"); }
+        foreach (KeyPickup key in _keys) if (key != null && !key.IsTaken) { report.Keys++; Check(key.transform.position, "key"); }
+        foreach (FuseBox box in _fuseBoxes) if (box != null) { report.FuseBoxes++; Check(box.transform.position, "fuse box"); }
+        foreach (WallButton button in _buttons) if (button != null) { report.Buttons++; Check(button.transform.position, "button"); }
+        if (HasExitGates)
+        {
+            foreach (Vector2Int gateCell in GateCells) { report.GateCount++; Check(CellCenter(gateCell.x, gateCell.y), "exit gate"); } // F111: always built, so always checked
+        }
+        else
+        {
+            MazeEscape escape = FindAnyObjectByType<MazeEscape>();
+            if (escape != null && escape.HatchOpen) Check(escape.HatchPosition, "hatch");
+        }
 
-        sb.Append($"reachability (locked doors are walls until their button is reached): {withoutButtons} of {width * height} cells before any button, {reached.Count} after; ");
-        sb.Append(missing.Count == 0 ? $"all {targets} targets reachable\n" : $"UNREACHABLE: {string.Join(", ", missing)}\n");
+        return report;
+    }
+
+    /// <summary>Open-passage BFS tree from <paramref name="from"/> (child cell to parent cell), every door treated as open.</summary>
+    private Dictionary<Vector2Int, Vector2Int> BfsParents(Vector2Int from)
+    {
+        Dictionary<Vector2Int, Vector2Int> parents = new Dictionary<Vector2Int, Vector2Int>();
+        HashSet<Vector2Int> seen = new HashSet<Vector2Int> { from };
+        Queue<Vector2Int> queue = new Queue<Vector2Int>();
+        queue.Enqueue(from);
+        while (queue.Count > 0)
+        {
+            Vector2Int cell = queue.Dequeue();
+            for (int dir = 0; dir < 4; dir++)
+            {
+                if (IsWallClosed(cell.x, cell.y, dir)) continue;
+                Vector2Int next = Neighbour(cell, dir);
+                if (next.x < 0 || next.x >= width || next.y < 0 || next.y >= height || !seen.Add(next)) continue;
+                parents[next] = cell;
+                queue.Enqueue(next);
+            }
+        }
+
+        return parents;
+    }
+
+    /// <summary>F118 (benchmark route): the centre of the cell farthest from the start cell by open-passage distance.</summary>
+    public Vector3 FarthestCellCenter()
+    {
+        Dictionary<Vector2Int, int> dist = new Dictionary<Vector2Int, int> { { Vector2Int.zero, 0 } };
+        Queue<Vector2Int> queue = new Queue<Vector2Int>();
+        queue.Enqueue(Vector2Int.zero);
+        Vector2Int best = Vector2Int.zero;
+        while (queue.Count > 0)
+        {
+            Vector2Int cell = queue.Dequeue();
+            if (dist[cell] > dist[best]) best = cell;
+            for (int dir = 0; dir < 4; dir++)
+            {
+                if (IsWallClosed(cell.x, cell.y, dir)) continue;
+                Vector2Int next = Neighbour(cell, dir);
+                if (next.x < 0 || next.x >= width || next.y < 0 || next.y >= height || dist.ContainsKey(next)) continue;
+                dist[next] = dist[cell] + 1;
+                queue.Enqueue(next);
+            }
+        }
+
+        return CellCenter(best.x, best.y);
     }
 
     /// <summary>Adds (lock) or removes (unlock) both directions of a door's passage. Returns true if the set changed.</summary>

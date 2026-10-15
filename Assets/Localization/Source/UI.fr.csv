@@ -55,8 +55,6 @@ ui.rules.item2,<b>2.</b>   Une trappe s'ouvrira quelque part. Trouvez-la avant l
 ui.rules.item3,"<b>3.</b>   Quelque chose d'autre rôde ici. Si ça vous voit, <color=#DB1F17><b>courez</b></color>."
 ui.rules.item4,"<b>4.</b>   Les éclats brillent dans le noir. Entre les étages, quelqu'un vous vendra des choses en échange."
 ui.rules.start,COMMENCER
-ui.controls.keyboard,"<b>WASD</b>  se déplacer   <b>SHIFT</b>  sprinter   <b>SOURIS</b>  regarder   <b>F</b>  lampe   <b>E</b>  se cacher / parler
-<b>1</b>  pile de rechange   <b>2</b>  boussole stellaire   <b>ESC</b>  pause"
 ui.controls.touch,"<b>POUCE GAUCHE</b>  se déplacer   <b>POUCE DROIT</b>  regarder   boutons: <b>LAMPE</b>, <b>FOCALISER</b>, <b>INTERAGIR</b>, <b>LANCER</b>, <b>SPRINTER</b>"
 ui.controls.tip,"Votre lampe a trois minutes de lumière. Vos jambes, moins. Les casiers vous cachent — sauf si ça vous regardait y entrer."
 ui.pause.title,PAUSE
@@ -67,7 +65,7 @@ ui.pause.main_menu,MENU PRINCIPAL
 ui.pause.quit,QUITTER
 ui.ledger.slip_heading,RÉADMISSION  ·  ENTRÉE {admission}  ·  PATIENT {patient}
 ui.ledger.slip_subtitle,LE GREFFIER A TAPÉ VOTRE RETOUR.
-ui.ledger.subtitle,"La trappe s'est refermée derrière vous. Ici, en bas, quelque chose est ouvert."
+ui.ledger.subtitle,La trappe s'est refermée derrière vous. Quelqu'un a laissé une lumière allumée.
 ui.ledger.already_yours,déjà à vous
 ui.ledger.no_pay,non payé
 ui.ledger.payout,PAIEMENT  +{amount}
@@ -79,7 +77,7 @@ ui.ledger.contract_void,CONTRAT  {name}  ANNULÉ
 ui.end.won_final,VOUS VOILÀ DEHORS
 ui.end.floor_cleared,ÉTAGE {floor} TERMINÉ
 ui.end.won_final_body,La trappe s'est refermée derrière vous. Il n'y a plus rien en dessous.
-ui.end.floor_cleared_body,La trappe s'est refermée derrière vous. Il fait plus sombre ici.
+ui.end.floor_cleared_body,"La trappe s'est refermée derrière vous. Étrangement, le chemin vers le bas ramène en haut."
 ui.end.caught,ÇA VOUS TIENT
 ui.end.caught_hidden,Ça vous regardait vous cacher.
 ui.end.caught_torch,Ça allait plus vite dans le noir.
@@ -174,3 +172,196 @@ ui.credits.art,ART
 ui.credits.characters,PERSONNAGES ET ANIMATION
 ui.credits.fonts,POLICES
 ui.credits.unity,UNITY
+ui.settings.reduce_flashing,RÉDUIRE LES CLIGNOTEMENTS
+ui.notice.photosensitivity.heading,AVERTISSEMENT PHOTOSENSIBILITÉ
+ui.notice.photosensitivity.body,"Ce jeu contient des lumières clignotantes, des obscurités soudaines et des motifs susceptibles de provoquer des crises chez les personnes atteintes d'épilepsie photosensible. Si vous ou un membre de votre famille avez déjà fait une crise, consultez un médecin avant de jouer. Arrêtez immédiatement si vous ressentez des vertiges, une vision floue, des tics oculaires ou musculaires, ou une désorientation. Vous pouvez activer RÉDUIRE LES CLIGNOTEMENTS ici ou dans PARAMÈTRES > GÉNÉRAL à tout moment."
+ui.menu.save_problem_heading,SAUVEGARDE NON CHARGÉE
+ui.menu.save_problem_body.too_new,"Votre partie sauvegardée a été créée par une version plus récente du jeu. Elle a été mise de côté, pas supprimée."
+ui.menu.save_problem_body.unreadable,Votre partie sauvegardée n'a pas pu être lue et a été mise de côté. Une nouvelle campagne va commencer.
+ui.glyph.mouse,SOURIS
+ui.glyph.mouse_left,CLIC GAUCHE
+ui.glyph.mouse_right,CLIC DROIT
+ui.glyph.mouse_middle,CLIC MOLETTE
+ui.glyph.lstick,STICK G.
+ui.glyph.rstick,STICK D.
+ui.glyph.dpad_up,CROIX HAUT
+ui.glyph.dpad_down,CROIX BAS
+ui.glyph.dpad_left,CROIX GAUCHE
+ui.glyph.dpad_right,CROIX DROITE
+ui.glyph.ps.cross,CROIX
+ui.glyph.ps.circle,ROND
+ui.glyph.ps.square,CARRÉ
+ui.glyph.ps.triangle,TRIANGLE
+ui.glyph.view,VIEW
+ui.glyph.menu,MENU
+ui.glyph.options,OPTIONS
+ui.glyph.create,CREATE
+ui.glyph.unbound,---
+ui.controls.sheet,"{move}  se déplacer   {sprint}  sprinter   {look}  regarder   {torch}  lampe   {focus}  faisceau focalisé
+{interact}  se cacher / parler   {throw}  lancer   {item1}  pile de rechange   {item2}  boussole stellaire
+{map}  plan d'étage   {pause}  pause"
+ui.settings.remap,REMAPPER LES COMMANDES
+ui.rebind.title,REMAPPER LES COMMANDES
+ui.rebind.col.keyboard,CLAVIER / SOURIS
+ui.rebind.col.gamepad,MANETTE
+ui.rebind.listening,APPUYEZ SUR UNE TOUCHE OU UN BOUTON  ·  {cancel} POUR ANNULER
+ui.rebind.swapped,ÉCHANGÉ AVEC {action}
+ui.rebind.reset_all,TOUT RÉINITIALISER
+ui.rebind.action.move_up,AVANCER
+ui.rebind.action.move_down,RECULER
+ui.rebind.action.move_left,GAUCHE
+ui.rebind.action.move_right,DROITE
+ui.rebind.action.sprint,SPRINTER
+ui.rebind.action.torch,LAMPE ON / OFF
+ui.rebind.action.focus,FAISCEAU FOCALISÉ
+ui.rebind.action.interact,INTERAGIR / SE CACHER
+ui.rebind.action.throw,LANCER
+ui.rebind.action.item1,PILE DE RECHANGE
+ui.rebind.action.item2,BOUSSOLE STELLAIRE
+ui.rebind.action.map,PLAN D'ÉTAGE
+ui.settings.mic,MICROPHONE
+ui.settings.mic_device,PÉRIPHÉRIQUE MICRO
+ui.settings.mic_none,AUCUN MICRO TROUVÉ
+ui.settings.mic_threshold,ENTENDU AU-DESSUS DE
+ui.settings.mic_level,TON NIVEAU
+ui.settings.mic_status.off,DÉSACTIVÉ
+ui.settings.mic_status.listening,ÉCOUTE
+ui.settings.mic_status.no_signal,AUCUN SIGNAL - VÉRIFIE LA CONFIDENTIALITÉ DU MICRO
+ui.settings.mic_status.no_device,AUCUN PÉRIPHÉRIQUE
+ui.settings.mic_privacy,"Utilisé uniquement pendant que tu joues, pour que le chasseur t'entende. Rien n'est enregistré, sauvegardé ni envoyé. Casque recommandé."
+ui.end.caught_dropped,"Ça t'a trouvé dans le noir, loin de ta lumière."
+ui.replay.cam,CAM {n}
+ui.replay.rec,REC
+ui.replay.caption,C'EST VENU POUR TOI
+ui.replay.caption_behind,C'ÉTAIT DERRIÈRE TOI DEPUIS LE DÉBUT
+ui.descent.habit.voice,VOIX
+ui.hunter.effect.voice,"ÇA T'ENTEND DE PLUS LOIN, MÊME DANS UN CASIER."
+ui.end.caught_hub,Ça t'a suivi. Il n'y a plus d'endroit sûr.
+ui.end.stats_hub,L'ASILE · ÉTAGE {floor}
+ui.menu.record,DOSSIER
+ui.newcampaign.title,NOUVELLE ADMISSION
+ui.newcampaign.begin,COMMENCER
+ui.newcampaign.assists_header,AIDES
+ui.newcampaign.kit_header,KIT D'ADMISSION
+ui.newcampaign.kit,KIT
+ui.newcampaign.torch,LAMPE DE DÉPART
+ui.newcampaign.torch_hint,La couleur du faisceau au départ. Les couleurs gagnées ne sont jamais vendues.
+ui.newcampaign.assisted_note,"LES PARTIES ASSISTÉES DÉBLOQUENT QUAND MÊME DES CHOSES, MAIS SANS RECORDS NI SERMENTS"
+ui.newcampaign.oaths_button,SERMENTS
+ui.newcampaign.oaths_title,SERMENTS
+ui.newcampaign.oaths_done,TERMINÉ
+ui.newcampaign.oaths_hint,Des vœux cumulables. Chaque Serment durcit l'asile et rapporte plus d'éclats.
+ui.newcampaign.oaths_need_standard,EXIGE UNE PARTIE SANS AIDES
+ui.newcampaign.oath_summary,SERMENT {rank}  ·  ÉCLATS ×{mult}
+ui.preset.standard.name,STANDARD
+ui.preset.standard.desc,Le jeu tel qu'il a été conçu.
+ui.preset.story.name,HISTOIRE
+ui.preset.story.desc,"Comptes à rebours plus longs, lampe plus douce, chasseur plus lent, indices honnêtes, couloirs plus clairs. Tout se débloque quand même."
+ui.preset.nightmare.name,CAUCHEMAR
+ui.preset.nightmare.desc,"Comptes à rebours plus courts, chasseur plus affûté, lampe plus gourmande. Éclats ×1,25 et rang de Serment +2."
+ui.assist.longer_timer.name,COMPTE À REBOURS PLUS LONG
+ui.assist.longer_timer.desc,Le compte à rebours de l'évasion dure une moitié de plus.
+ui.assist.gentle_torch.name,LAMPE DOUCE
+ui.assist.gentle_torch.desc,La pile se vide moins vite et se recharge plus vite.
+ui.assist.slow_hunter.name,CHASSEUR PLUS LENT
+ui.assist.slow_hunter.desc,"Il met plus de temps à s'engager dans une poursuite, court moins vite et entend moins."
+ui.assist.honest_cues.name,INDICES HONNÊTES
+ui.assist.honest_cues.desc,"Pas de faux sons, pas de faux fantômes, pas de pannes de lampe, et les yeux du chasseur se voient toujours."
+ui.assist.brighter_halls.name,COULOIRS PLUS CLAIRS
+ui.assist.brighter_halls.desc,"Plus de lumière ambiante, brouillard plus fin, lampes plus fortes."
+ui.assist.steady_torch.name,LAMPE STABLE
+ui.assist.steady_torch.desc,La lampe ne se balance plus et ne traîne plus derrière la vue. N'affecte pas les records.
+ui.assist.no_replay.name,PAS DE REPLAY DE MORT
+ui.assist.no_replay.desc,L'écran de fin saute le replay granuleux de la capture. N'affecte pas les records.
+ui.oath.old_battery.name,VIEILLE PILE
+ui.oath.old_battery.desc,"La lampe commence chaque étage à moitié chargée et se recharge lentement, étage 1 compris."
+ui.oath.does_not_wait.name,IL N'ATTEND PAS
+ui.oath.does_not_wait.desc,"Dès l'étage 1 le chasseur suit le pas d'un marcheur, s'engage plus tôt et ses yeux sont éteints."
+ui.oath.welded_lockers.name,CASIERS SOUDÉS
+ui.oath.welded_lockers.desc,"Tous les casiers des labyrinthes sont soudés. Aucune cachette, et le chasseur ne les vérifie jamais."
+ui.oath.stan_early.name,STAN SE RÉVEILLE TÔT
+ui.oath.stan_early.desc,Stan marche dès l'étage 2 au lieu de l'étage 4.
+ui.oath.no_second_chances.name,PAS DE SECONDE CHANCE
+ui.oath.no_second_chances.desc,"Aucun Second Souffle nulle part, et la première capture d'un étage n'est plus une bousculade : toute capture tue."
+ui.oath.failing_grid.name,RÉSEAU DÉFAILLANT
+ui.oath.failing_grid.desc,"Couloirs plus sombres, lampes plus faibles et plus espacées."
+ui.oath.short_fuse.name,MÈCHE COURTE
+ui.oath.short_fuse.desc,Le compte à rebours de l'évasion est plus court d'un quart.
+ui.oath.hears_everything.name,IL ENTEND TOUT
+ui.oath.hears_everything.desc,Chaque étage porte la règle Ouïe Fine : le chasseur entend bien plus.
+ui.oath.doors_dont_hold.name,LES PORTES NE TIENNENT PAS
+ui.oath.doors_dont_hold.desc,"L'asile est violé à chaque visite du hall après l'étage 4, pas une seule fois."
+ui.kit.standard_issue.name,DOTATION STANDARD
+ui.kit.standard_issue.desc,Rien de plus. Juste la lampe.
+ui.kit.scavenger.name,RÉCUPÉRATEUR
+ui.kit.scavenger.desc,Commencez avec une Pile de rechange et une Boussole d'étoiles.
+ui.kit.runner.name,COUREUR
+ui.kit.runner.desc,L'étage 1 commence avec un Tonique d'endurance et des Chaussures silencieuses déjà actifs.
+ui.kit.cartographer.name,CARTOGRAPHE
+ui.kit.cartographer.desc,Commencez avec un Plan d'étage.
+ui.campaign.tag.oath,SERMENT {rank}
+ui.campaign.tag.assisted,ASSISTÉE
+ui.ledger.oath,SERMENT {rank}  ×{mult}
+ui.ledger.grade,NOTE
+ui.ledger.grade_new_best,NOUVEAU RECORD
+ui.ledger.grade_bonus,BONUS NOTE {grade}
+ui.ledger.record_new,DOSSIER DU PATIENT · {n} NOUVEAU(X)
+ui.end.grades,NOTES  {grades}
+ui.shop.forsworn,RENIÉ
+ui.record.title,DOSSIER DU PATIENT
+ui.record.tab.record,DOSSIER
+ui.record.tab.unlocks,DÉBLOCAGES
+ui.record.tab.codex,CODEX
+ui.record.tab.assists,AIDES
+ui.record.empty,AUCUNE ADMISSION AU DOSSIER
+ui.record.started,PARTIES COMMENCÉES
+ui.record.finished,PARTIES TERMINÉES
+ui.record.endings,FINS VUES
+ui.record.best_oath_a,MEILLEUR SERMENT · SORTIE AUTORISÉE
+ui.record.best_oath_b,MEILLEUR SERMENT · LIGHTS OUT
+ui.record.shards,ÉCLATS GAGNÉS
+ui.record.descent,DESCENTE LA PLUS PROFONDE
+ui.record.floors_header,MEILLEURS ÉTAGES
+ui.record.floor,ÉTAGE {floor}
+ui.record.floor_oath,SERMENT {rank}
+ui.record.new,NOUVEAU
+ui.record.unlocked,DÉBLOQUÉ
+ui.record.not_met,Pas encore rencontré.
+ui.record.habits_header,CE QU'IL A APPRIS
+ui.record.assists_next_floor,LES CHANGEMENTS S'APPLIQUENT AU PROCHAIN LABYRINTHE.
+ui.record.assists_mark,ACTIVER UNE AIDE MARQUE CETTE PARTIE COMME ASSISTÉE POUR DE BON.
+ui.record.unlock.codex.name,CODEX ET DOSSIER EN PAUSE
+ui.record.unlock.codex.cond,TERMINEZ UN ÉTAGE
+ui.record.unlock.kit_scavenger.name,KIT : RÉCUPÉRATEUR
+ui.record.unlock.kit_scavenger.cond,TERMINEZ L'ÉTAGE 2
+ui.record.unlock.card_stethoscope.name,CARTE DE BOUTIQUE : STÉTHOSCOPE
+ui.record.unlock.card_stethoscope.cond,TERMINEZ L'ÉTAGE 4
+ui.record.unlock.contract_unseen.name,CONTRAT : INVISIBLE
+ui.record.unlock.contract_unseen.cond,TERMINEZ L'ÉTAGE 4
+ui.record.unlock.oaths.name,L'ÉCHELLE DES SERMENTS
+ui.record.unlock.oaths.cond,ATTEIGNEZ UNE FIN
+ui.record.unlock.colour_bone.name,COULEUR DE LAMPE : OS
+ui.record.unlock.colour_bone.cond,ATTEIGNEZ UNE FIN
+ui.record.unlock.kit_runner.name,KIT : COUREUR
+ui.record.unlock.kit_runner.cond,TERMINEZ 2 PARTIES
+ui.record.unlock.card_archivist.name,CARTE DE BOUTIQUE : LAMPE DE L'ARCHIVISTE
+ui.record.unlock.card_archivist.cond,VOYEZ LES DEUX FINS
+ui.record.unlock.card_dynamo.name,CARTE DE BOUTIQUE : DYNAMO
+ui.record.unlock.card_dynamo.cond,GAGNEZ 1500 ÉCLATS AU TOTAL
+ui.record.unlock.kit_cartographer.name,KIT : CARTOGRAPHE
+ui.record.unlock.kit_cartographer.cond,TERMINEZ 3 PARTIES
+ui.record.unlock.contracts_skill.name,"CONTRATS : LES MAINS DANS LES POCHES, DE JUSTESSE"
+ui.record.unlock.contracts_skill.cond,OBTENEZ UNE NOTE S SUR UN ÉTAGE
+ui.record.unlock.colour_oath_red.name,COULEUR DE LAMPE : ROUGE SERMENT
+ui.record.unlock.colour_oath_red.cond,ATTEIGNEZ UNE FIN AU RANG DE SERMENT 5
+ui.record.unlock.colour_ward.name,COULEUR DE LAMPE : VERT DE SALLE
+ui.record.unlock.colour_ward.cond,RENCONTREZ TOUT DANS LE CODEX
+ui.ledger.slip_subtitle.1,REVENU DU PAVILLON A. UNE PORTE DE PLUS QU'HIER.
+ui.ledger.slip_subtitle.2,REVENU DE LA CHAUFFERIE. DEUX COUPS. RAS.
+ui.ledger.slip_subtitle.3,REVENU DE LA CHAMBRE FROIDE. UN TIROIR EST RESTÉ OUVERT.
+ui.ledger.slip_subtitle.4,REVENU DU BLOC OPÉRATOIRE. DOSE NON ENREGISTRÉE.
+ui.end.wing.1,Hilde a compté une porte de plus ce soir. C'était la vôtre.
+ui.end.wing.2,Trois coups. Puis rien.
+ui.end.wing.3,Un tiroir est prêt. Il porte votre numéro.
+ui.end.wing.4,La chambre 4 n'est plus vide.
+ui.end.wing.5,Le Greffier a fini de taper votre dossier.

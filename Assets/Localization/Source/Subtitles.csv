@@ -54,3 +54,29 @@ sub.loop.offer,"World text the first time the player steps into the looping corr
 sub.loop.offer_reward,"World text queued right after sub.loop.offer (shown 4 s): what solving the looping corridor gives. {n} = right decisions in a row needed (3). ALL CAPS like IT HEARD YOU","GET IT RIGHT {n} TIMES IN A ROW: THE WHOLE MAP, A FULL TORCH AND SUPPLIES."
 sub.loop.torch_full,"One entry in the list of supplies the looping corridor gives when solved, shown as FOUND: <this>  ·  SPARE BATTERY  ·  ... (ALL CAPS, ~16 characters)",FULL TORCH
 sub.map.used,"Subtitle (plain, about 4 s) when a Floor Plan is used: the map is on for this floor and shows only what has been walked",THE FLOOR PLAN. ONLY WHAT YOU HAVE WALKED.
+sub.grab.release,"F120 subtitle after the hunter's grab knocks the torch out of your hand (shown ~3 s, one line at the bottom). It = the hunter",It threw you off. Your torch is on the floor.
+sub.grab.warning,F120 subtitle queued after sub.grab.release (shown ~2.5 s): the next catch is final,Next time it will not let go.
+sub.grab.torch_back,F120 subtitle when you pick the dropped torch up again (1.6 s),You have the light.
+sub.hunter.learned_voice,"World text (the game speaking, not the hunter) on the hunter-lesson card (42 pt goal line, shrinks to fit): it learned the player's voice from the microphone. ALL CAPS, one short line",IT KNOWS YOUR VOICE.
+sub.banner.oaths,Floor intro banner: added to the rule line when Oaths are sworn. {rank} = Oath rank,OATH {rank}
+sub.nightmare.hilde.seen.0,"Floor 1 (Hilde): first sight of the door that appeared behind the player (shown 3 s, ALL CAPS)",THERE WAS NO DOOR HERE.
+sub.nightmare.hilde.seen.1,Floor 1: first sight of the second door that was not there (3 s),ONE MORE DOOR THAN BEFORE.
+sub.nightmare.tomas.knocks_two,"Floor 2 (Tomas): two knocks in the pipes, which means all clear (it may lie; 2.5 s)",THE PIPES KNOCK TWICE.
+sub.nightmare.tomas.knocks_three,"Floor 2: three knocks in the pipes, which means hide (it may lie; 2.5 s)",THE PIPES KNOCK THREE TIMES.
+sub.nightmare.elias.empty.0,"Floor 3 (Elias): an empty morgue drawer rolls out (pool .0-.2, 3 s, ALL CAPS)",EMPTY. THE TRAY IS COLD.
+sub.nightmare.elias.empty.1,Floor 3: an empty morgue drawer (pool),A TAG WITH NO NAME. NOBODY ON THE TRAY.
+sub.nightmare.elias.empty.2,Floor 3: an empty morgue drawer (pool),EMPTY. SOMEONE HAS MADE IT UP LIKE A BED.
+sub.nightmare.elias.five,Floor 3: drawer five (Elias Vogt's) rolls out with only his toe tag on the tray (3.5 s),"DRAWER FIVE. ONLY HIS TOE TAG, WAITING."
+sub.nightmare.elias.yours,"Floor 3: the drawer with the player's own number rolls out, their body on the tray (4 s)",THE TAG HAS YOUR NUMBER. THE TRAY IS STILL WARM.
+sub.nightmare.elias.your_things,Floor 3: follows the line above when a spare battery was granted from that drawer (4 s),YOUR THINGS ARE ON THE TRAY: A SPARE BATTERY.
+sub.nightmare.weiss.dose.0,"Floor 4 (Dr. Weiss): the first ampoule is taken, the fear goes quiet (3.5 s)","CLEAR GLASS, BLUE CAP. YOUR HEART SLOWS."
+sub.nightmare.weiss.dose.1,Floor 4: the second ampoule (hint: the heartbeat cue is gone),THE FEAR GOES QUIET. SO DOES THE WARNING.
+sub.nightmare.weiss.dose.2,Floor 4: the third ampoule (Dr. Weiss's own words),ALL THREE. NOBODY GETS A SHORT DOSE.
+sub.nightmare.weiss.wears_off,"Floor 4: the ampoule wears off, the heartbeat returns (3 s)",YOUR HEART IS BACK.
+sub.nightmare.director.welcome,"Floor 5 (the Director): the ceiling PA, 10 s into the run. Subtitle only (ALL CAPS, 120 characters at most)",GOOD EVENING. THE HOUSE RULES ARE POSTED. THANK YOU.
+sub.nightmare.director.warn.run,"Floor 5 PA: first time the player sprints. {mark} = the redaction glyph, or 7 once the truth is known","PATIENT {mark}. WALKING PACE, PLEASE."
+sub.nightmare.director.warn.hide,Floor 5 PA: first time the player hides in a locker for long. {mark} = the redaction glyph,"PATIENT {mark}. OUT OF THE CUPBOARD, PLEASE."
+sub.nightmare.director.warn.throw,Floor 5 PA: first time the player throws something. {mark} = the redaction glyph,PATIENT {mark}. WE DO NOT THROW THINGS.
+sub.nightmare.director.report.run,"Floor 5 PA: a later breach, the orderly is sent to the player. {mark} = the redaction glyph","PATIENT {mark} IS RUNNING. ORDERLY, PLEASE ASSIST."
+sub.nightmare.director.report.hide,"Floor 5 PA: a later hiding breach, the orderly is sent. {mark} = the redaction glyph","PATIENT {mark} IS HIDING. ORDERLY, PLEASE ASSIST."
+sub.nightmare.director.report.throw,"Floor 5 PA: a later throwing breach, the orderly is sent. {mark} = the redaction glyph","PATIENT {mark} IS THROWING THINGS. ORDERLY, PLEASE ASSIST."

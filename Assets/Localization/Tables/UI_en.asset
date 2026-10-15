@@ -240,10 +240,8 @@ MonoBehaviour:
     m_Localized: START
     m_Metadata:
       m_Items: []
-  - m_Id: 22165078315025
-    m_Localized: '<b>WASD</b>  move   <b>SHIFT</b>  sprint   <b>MOUSE</b>  look   <b>F</b>  flashlight   <b>E</b>  hide / talk
-
-      <b>1</b>  spare battery   <b>2</b>  star compass   <b>ESC</b>  pause'
+  - m_Id: 1867415029280768
+    m_Localized: MOUSE
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315026
@@ -288,7 +286,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315036
-    m_Localized: The hatch closed behind you. Something down here is open.
+    m_Localized: The hatch closed behind you. Someone has left a light on.
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315037
@@ -343,7 +341,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315048
-    m_Localized: The hatch closed behind you. It is darker down here.
+    m_Localized: The hatch closed behind you. Somehow, the way down leads back up.
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315049
@@ -752,6 +750,783 @@ MonoBehaviour:
     m_Localized: UNITY
     m_Metadata:
       m_Items: []
+  - m_Id: 1857900619755520
+    m_Localized: REDUCE FLASHING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252992
+    m_Localized: PHOTOSENSITIVITY WARNING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252993
+    m_Localized: This game contains flickering lights, sudden darkness and patterns that may trigger seizures in people with photosensitive epilepsy. If you or anyone in your family has had a seizure, consult a doctor before playing. Stop immediately if you feel dizzy, have blurred vision, eye or muscle twitches, or disorientation. You can turn on REDUCE FLASHING here or in SETTINGS > GENERAL at any time.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252994
+    m_Localized: SAVE NOT LOADED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252995
+    m_Localized: Your saved run was made by a newer version of the game. It has been kept aside, not deleted.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252996
+    m_Localized: Your saved run could not be read and has been set aside. A new campaign will start fresh.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778240
+    m_Localized: LMB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778241
+    m_Localized: RMB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778242
+    m_Localized: MMB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778243
+    m_Localized: L-STICK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778244
+    m_Localized: R-STICK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778245
+    m_Localized: D-PAD UP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778246
+    m_Localized: D-PAD DOWN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778247
+    m_Localized: D-PAD LEFT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778248
+    m_Localized: D-PAD RIGHT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778249
+    m_Localized: CROSS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778250
+    m_Localized: CIRCLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778251
+    m_Localized: SQUARE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778252
+    m_Localized: TRIANGLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778253
+    m_Localized: VIEW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778254
+    m_Localized: MENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778255
+    m_Localized: OPTIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778256
+    m_Localized: CREATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778257
+    m_Localized: ---
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972544
+    m_Localized: '{move}  move   {sprint}  sprint   {look}  look   {torch}  flashlight   {focus}  focus beam
+
+      {interact}  hide / talk   {throw}  throw   {item1}  spare battery   {item2}  star compass
+
+      {map}  floor plan   {pause}  pause'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 1867415108972545
+    m_Localized: REMAP CONTROLS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972546
+    m_Localized: REMAP CONTROLS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972547
+    m_Localized: KEYBOARD / MOUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972548
+    m_Localized: GAMEPAD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972549
+    m_Localized: "PRESS A KEY OR BUTTON  \xB7  {cancel} TO CANCEL"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 1867415108972550
+    m_Localized: SWAPPED WITH {action}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 1867415108972551
+    m_Localized: RESET ALL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972552
+    m_Localized: FORWARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972553
+    m_Localized: BACKWARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972554
+    m_Localized: LEFT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972555
+    m_Localized: RIGHT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972556
+    m_Localized: SPRINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972557
+    m_Localized: TORCH ON / OFF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972558
+    m_Localized: FOCUS BEAM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972559
+    m_Localized: INTERACT / HIDE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972560
+    m_Localized: THROW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972561
+    m_Localized: SPARE BATTERY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972562
+    m_Localized: STAR COMPASS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972563
+    m_Localized: FLOOR PLAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058210336768
+    m_Localized: MICROPHONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834240
+    m_Localized: MICROPHONE DEVICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834241
+    m_Localized: NO MICROPHONE FOUND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834242
+    m_Localized: HEARD ABOVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834243
+    m_Localized: YOUR LEVEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834244
+    m_Localized: OFF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834245
+    m_Localized: LISTENING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834246
+    m_Localized: NO SIGNAL - CHECK MIC PRIVACY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834247
+    m_Localized: NO DEVICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834248
+    m_Localized: Used only while you play, to let the hunter hear you. Nothing is recorded, saved or sent. Headphones recommended.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834249
+    m_Localized: It found you in the dark, away from your light.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834250
+    m_Localized: CAM {n}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 1883058285834251
+    m_Localized: REC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834252
+    m_Localized: IT CAME FOR YOU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834253
+    m_Localized: IT WAS BEHIND YOU THE WHOLE TIME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834254
+    m_Localized: VOICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834255
+    m_Localized: IT HEARS YOU FROM FURTHER AWAY, EVEN IN A LOCKER.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1888333877211136
+    m_Localized: It followed you up. There is no safe room.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1888333877211137
+    m_Localized: "THE ASYLUM \xB7 FLOOR {floor}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 1896792261652480
+    m_Localized: RECORD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652481
+    m_Localized: NEW ADMISSION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652482
+    m_Localized: BEGIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652483
+    m_Localized: ASSISTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652484
+    m_Localized: ADMISSION KIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652485
+    m_Localized: KIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652486
+    m_Localized: STARTING TORCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652487
+    m_Localized: The beam colour you start with. Earned colours are never sold.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652488
+    m_Localized: ASSISTED CAMPAIGNS STILL UNLOCK THINGS, BUT SET NO RECORDS OR OATHS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652489
+    m_Localized: OATHS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652490
+    m_Localized: OATHS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652491
+    m_Localized: DONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652492
+    m_Localized: Stackable vows. Every Oath makes the asylum harder and pays more shards.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652493
+    m_Localized: NEEDS A CAMPAIGN WITHOUT ASSISTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652494
+    m_Localized: "OATH {rank}  \xB7  SHARDS \xD7{mult}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 1896792261652495
+    m_Localized: STANDARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652496
+    m_Localized: The game as it was made.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652497
+    m_Localized: STORY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652498
+    m_Localized: Longer countdowns, a gentler torch, a slower hunter, honest cues, brighter halls. Everything still unlocks.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652499
+    m_Localized: NIGHTMARE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652500
+    m_Localized: "Shorter countdowns, a keener hunter, a hungrier torch. Shards \xD71.25 and Oath rank +2."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652501
+    m_Localized: LONGER COUNTDOWN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652502
+    m_Localized: The escape countdown lasts half as long again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652503
+    m_Localized: GENTLE TORCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652504
+    m_Localized: The battery drains slower and recharges faster.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652505
+    m_Localized: SLOWER HUNTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652506
+    m_Localized: It takes longer to commit to a chase, runs slower and hears less.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652507
+    m_Localized: HONEST CUES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652508
+    m_Localized: No lying sounds, no false phantoms, no torch failures, and the hunter's eyes always show.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652509
+    m_Localized: BRIGHTER HALLS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652510
+    m_Localized: More ambient light, thinner fog, stronger lamps.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652511
+    m_Localized: STEADY TORCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652512
+    m_Localized: The torch no longer sways or lags behind the view. Does not affect records.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652513
+    m_Localized: NO DEATH REPLAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652514
+    m_Localized: The end screen skips the grainy replay of the hunter catching you. Does not affect records.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652515
+    m_Localized: OLD BATTERY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652516
+    m_Localized: The torch starts every floor half charged and recharges slowly, floor 1 included.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652517
+    m_Localized: IT DOES NOT WAIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652518
+    m_Localized: From floor 1 the hunter keeps pace with a walker, commits sooner and its eyes are dark.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652519
+    m_Localized: WELDED LOCKERS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652520
+    m_Localized: Every locker in the mazes is welded shut. Nowhere to hide, and the hunter never checks them.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652521
+    m_Localized: STAN WAKES EARLY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652522
+    m_Localized: Stan walks from floor 2 instead of floor 4.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652523
+    m_Localized: NO SECOND CHANCES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652524
+    m_Localized: 'No Second Wind anywhere, and the first catch on a floor is no longer a shove: every catch kills.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652525
+    m_Localized: FAILING GRID
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652526
+    m_Localized: Darker halls, dimmer lamps, further apart.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652527
+    m_Localized: SHORT FUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652528
+    m_Localized: The escape countdown is a quarter shorter.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652529
+    m_Localized: IT HEARS EVERYTHING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652530
+    m_Localized: 'Every floor carries the Keen Ears rule: the hunter hears far more.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652531
+    m_Localized: THE DOORS DON'T HOLD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652532
+    m_Localized: The asylum is breached on every visit to the hub after floor 4, not just once.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652533
+    m_Localized: STANDARD ISSUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652534
+    m_Localized: Nothing extra. Just the torch.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652535
+    m_Localized: SCAVENGER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652536
+    m_Localized: Start with a Spare Battery and a Star Compass.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652537
+    m_Localized: RUNNER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652538
+    m_Localized: Floor 1 starts with a Stamina Tonic and Quiet Shoes already working.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652539
+    m_Localized: CARTOGRAPHER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652540
+    m_Localized: Start with a Floor Plan.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652541
+    m_Localized: OATH {rank}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 1896792261652542
+    m_Localized: ASSISTED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652543
+    m_Localized: "OATH {rank}  \xD7{mult}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 1896792261652544
+    m_Localized: GRADE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652545
+    m_Localized: NEW BEST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652546
+    m_Localized: GRADE {grade} BONUS
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 1896792261652547
+    m_Localized: "PATIENT RECORD \xB7 {n} NEW"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 1896792261652548
+    m_Localized: GRADES  {grades}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 1896792261652549
+    m_Localized: FORSWORN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652550
+    m_Localized: PATIENT RECORD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652551
+    m_Localized: RECORD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652552
+    m_Localized: UNLOCKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652553
+    m_Localized: CODEX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652554
+    m_Localized: ASSISTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652555
+    m_Localized: NO ADMISSIONS ON FILE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652556
+    m_Localized: CAMPAIGNS STARTED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652557
+    m_Localized: CAMPAIGNS FINISHED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652558
+    m_Localized: ENDINGS SEEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652559
+    m_Localized: "BEST OATH \xB7 DISCHARGED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652560
+    m_Localized: "BEST OATH \xB7 LIGHTS OUT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652561
+    m_Localized: SHARDS EARNED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652562
+    m_Localized: DEEPEST DESCENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652563
+    m_Localized: BEST FLOORS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652564
+    m_Localized: FLOOR {floor}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 1896792261652565
+    m_Localized: OATH {rank}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331669776663334
+  - m_Id: 1896792261652566
+    m_Localized: NEW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652567
+    m_Localized: UNLOCKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652568
+    m_Localized: Not met yet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652569
+    m_Localized: WHAT IT HAS LEARNED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652570
+    m_Localized: CHANGES TAKE EFFECT AT THE NEXT MAZE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652571
+    m_Localized: TURNING ON ANY ASSIST MARKS THIS CAMPAIGN AS ASSISTED FOR GOOD.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652572
+    m_Localized: CODEX AND PAUSE-MENU RECORD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652573
+    m_Localized: CLEAR A FLOOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652574
+    m_Localized: 'KIT: SCAVENGER'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652575
+    m_Localized: CLEAR FLOOR 2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652576
+    m_Localized: 'SHOP CARD: STETHOSCOPE'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652577
+    m_Localized: CLEAR FLOOR 4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652578
+    m_Localized: 'CONTRACT: UNSEEN'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652579
+    m_Localized: CLEAR FLOOR 4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652580
+    m_Localized: THE OATH LADDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652581
+    m_Localized: REACH ANY ENDING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652582
+    m_Localized: 'TORCH COLOUR: BONE'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652583
+    m_Localized: REACH ANY ENDING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652584
+    m_Localized: 'KIT: RUNNER'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652585
+    m_Localized: FINISH 2 CAMPAIGNS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652586
+    m_Localized: 'SHOP CARD: ARCHIVIST''S LAMP'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652587
+    m_Localized: SEE BOTH ENDINGS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652588
+    m_Localized: 'SHOP CARD: DYNAMO'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652589
+    m_Localized: EARN 1500 SHARDS IN TOTAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652590
+    m_Localized: 'KIT: CARTOGRAPHER'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652591
+    m_Localized: FINISH 3 CAMPAIGNS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652592
+    m_Localized: 'CONTRACTS: HANDS TO YOURSELF, CUT IT CLOSE'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652593
+    m_Localized: EARN A GRADE S ON ANY FLOOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652594
+    m_Localized: 'TORCH COLOUR: OATH RED'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652595
+    m_Localized: REACH AN ENDING AT OATH RANK 5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652596
+    m_Localized: 'TORCH COLOUR: WARD GREEN'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652597
+    m_Localized: MEET EVERYTHING IN THE CODEX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641792
+    m_Localized: RETURNED FROM WARD A. ONE DOOR MORE THAN YESTERDAY.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641793
+    m_Localized: RETURNED FROM THE BOILER ROOM. TWO KNOCKS. ALL CLEAR.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641794
+    m_Localized: RETURNED FROM COLD STORAGE. ONE DRAWER LEFT OPEN.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641795
+    m_Localized: RETURNED FROM THE OPERATING THEATRE. DOSE NOT RECORDED.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641796
+    m_Localized: Hilde counted one more door tonight. It was yours.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641797
+    m_Localized: Three knocks. Then nothing.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641798
+    m_Localized: They have a drawer ready. It has your number on it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641799
+    m_Localized: Room 4 is not empty any more.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641800
+    m_Localized: The Clerk has finished typing your file.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -795,3 +1570,16 @@ MonoBehaviour:
         - id: 193175966617612
         - id: 193175966617617
         - id: 193175966617618
+        - id: 1867415108972544
+        - id: 1867415108972549
+        - id: 1867415108972550
+        - id: 1883058285834250
+        - id: 1888333877211137
+        - id: 1896792261652494
+        - id: 1896792261652541
+        - id: 1896792261652543
+        - id: 1896792261652546
+        - id: 1896792261652547
+        - id: 1896792261652548
+        - id: 1896792261652564
+        - id: 1896792261652565

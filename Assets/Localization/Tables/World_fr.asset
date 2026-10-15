@@ -218,6 +218,23 @@ MonoBehaviour:
     m_Localized: "QUELQUE CHOSE A CHANG\xC9 ? DEMI-TOUR."
     m_Metadata:
       m_Items: []
+  - m_Id: 1871577460764672
+    m_Localized: "5 \xB7 E. VOGT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1871577532067840
+    m_Localized: PATIENT {mark}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429570
+  - m_Id: 1871577532067841
+    m_Localized: "E. VOGT\nTIROIR 5\nTROUV\xC9 \xC0 L'AUBE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1871577532067842
+    m_Localized: "R\xC8GLEMENT INT\xC9RIEUR\n1. LES PATIENTS MARCHENT.\n2. LES PATIENTS NE SE CACHENT PAS.\n3. LES PATIENTS NE LANCENT RIEN.\nL'AIDE-SOIGNANT INTERVIENDRA.\n- LE DIRECTEUR"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -227,3 +244,4 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 382911238803456
+        - id: 1871577532067840

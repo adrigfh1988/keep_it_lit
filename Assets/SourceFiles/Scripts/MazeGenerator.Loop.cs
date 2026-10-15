@@ -636,12 +636,23 @@ public partial class MazeGenerator
     private void BuildLoopNotice(Transform leg, Transform parent)
     {
         Vector3 towardWall = -leg.right;
-        GameObject holder = new GameObject("LoopNotice");
-        holder.transform.SetParent(parent, false);
         // Like the count: forward into the wall, the text read from the corridor side.
-        holder.transform.SetPositionAndRotation(
+        GameObject holder = BuildPaperNotice(
             leg.position + leg.forward * (loopNoticeCells * cellSize) + towardWall * (cellSize * 0.5f - wallThickness * 0.5f - LoopDecalWallGap) + Vector3.up * loopNoticeHeight,
-            Quaternion.LookRotation(towardWall, Vector3.up) * Quaternion.Euler(0f, 0f, -1.5f));
+            Quaternion.LookRotation(towardWall, Vector3.up) * Quaternion.Euler(0f, 0f, -1.5f),
+            parent, L10n.T("world.loop.rules", ("n", loopTargetCount)), new Vector2(0.95f, 0.72f), new Vector2(0.85f, 0.62f));
+        holder.name = "LoopNotice";
+    }
+
+    /// <summary>
+    /// F123: a printed paper notice (the F109 paper material, lit text, auto-sized) at a pose whose forward points INTO the wall, so the text reads from the corridor
+    /// side. Extracted unchanged from BuildLoopNotice (the loop calls it with its old numbers); floor 5's house rules use it with a taller sheet.
+    /// </summary>
+    private GameObject BuildPaperNotice(Vector3 position, Quaternion rotation, Transform parent, string content, Vector2 paperScale, Vector2 textSize)
+    {
+        GameObject holder = new GameObject("PaperNotice");
+        holder.transform.SetParent(parent, false);
+        holder.transform.SetPositionAndRotation(position, rotation);
 
         if (loopNoticePaper != null)
         {
@@ -650,7 +661,7 @@ public partial class MazeGenerator
             Destroy(paper.GetComponent<Collider>());
             paper.transform.SetParent(holder.transform, false);
             paper.transform.localPosition = new Vector3(0f, 0f, 0.006f);
-            paper.transform.localScale = new Vector3(0.95f, 0.72f, 1f);
+            paper.transform.localScale = new Vector3(paperScale.x, paperScale.y, 1f);
             Renderer r = paper.GetComponent<Renderer>();
             r.sharedMaterial = loopNoticePaper;
             r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
@@ -662,14 +673,15 @@ public partial class MazeGenerator
         TMP_FontAsset font = loopNoticeFont != null ? loopNoticeFont : RuntimeUi.ResolveFont();
         if (font != null) text.font = font;
         if (loopNoticeFont != null && loopNoticeTextMaterial != null) text.fontSharedMaterial = loopNoticeTextMaterial;
-        text.text = L10n.T("world.loop.rules", ("n", loopTargetCount));
+        text.text = content;
         text.alignment = TextAlignmentOptions.Center;
         text.color = loopNoticePaper != null ? new Color(0.1f, 0.09f, 0.08f) : new Color(0.75f, 0.72f, 0.65f);
         text.enableAutoSizing = true;
         text.fontSizeMin = 0.3f;
         text.fontSizeMax = 1.2f;
         text.lineSpacing = -10f;
-        text.rectTransform.sizeDelta = new Vector2(0.85f, 0.62f);
+        text.rectTransform.sizeDelta = textSize;
+        return holder;
     }
 
     /// <summary>

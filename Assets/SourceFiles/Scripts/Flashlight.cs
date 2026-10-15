@@ -1,8 +1,5 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
 
 /// <summary>
 /// The player's head-mounted torch, and the risk that comes with it: while it is on the AI can see
@@ -96,6 +93,7 @@ public class Flashlight : MonoBehaviour
     private float _rangeMultiplier = 1f;
     private float _rangeScale = 1f; // F105 C3: scales the whole blended range, wide and focused alike
     private float _rechargeMultiplier = 1f;
+    private float _drainMultiplier = 1f; // F122
     /// <summary>F75 Focus Lens shop item: overrides focusedDrainMultiplier when &gt;= 0; -1 means "use the serialized default".</summary>
     private float _focusedDrainMultiplierOverride = -1f;
 
@@ -177,6 +175,71 @@ public class Flashlight : MonoBehaviour
     /// <summary>True while the battery is empty. No longer permanent for the rest of the run - it clears itself once recharge (while off) brings SecondsLeft back above zero.</summary>
     public bool IsDead => SecondsLeft <= 0f;
 
+    // ---- F120: the survivable grab knocks the torch out of the player's hand --------------------------------------------------
+    // Its own state here, never "InputEnabled = false": PauseMenu, AsylumHub, Locker and MainMenu all write InputEnabled = true unconditionally.
+
+    /// <summary>F120: the torch is lying on the floor (HunterGrab / DroppedTorch). It cannot be switched on, focused or recharged until PickUp.</summary>
+    public bool IsDropped { get; private set; }
+
+    /// <summary>F120: dropped and still shining (it keeps draining the battery on the floor).</summary>
+    public bool DroppedLit => IsDropped && !IsDead;
+
+    /// <summary>F120: the head beam goes off and the torch is flagged dropped; the caller spawns the prop.</summary>
+    public void Drop()
+    {
+        IsDropped = true;
+        IsOn = false;
+        IsFocused = false;
+        FocusBlend = 0f;
+        ApplyState();
+    }
+
+    /// <summary>F120: the player picked it up again. Comes back on if it has charge.</summary>
+    public void PickUp()
+    {
+        IsDropped = false;
+        SetOn(true);
+        GameAudio.Play2D(GameAudio.Library.torchClick, 0.5f, 1f);
+    }
+
+    /// <summary>F120: a same-scene transition (the hub, the shop) while the torch is on the floor: it is back in hand, silently, and stays off.</summary>
+    public void RecoverDropped()
+    {
+        IsDropped = false;
+    }
+
+    /// <summary>F120: copies the wide beam onto another spot light (the dropped prop) so it shines the way the head beam did.</summary>
+    public void CopyBeamTo(Light target)
+    {
+        if (target == null) return;
+        target.type = LightType.Spot;
+        target.color = beamColor;
+        target.spotAngle = wideOuterAngle;
+        target.innerSpotAngle = wideInnerAngle;
+        target.intensity = wideIntensity * 0.85f;
+        target.range = wideRange * _rangeScale;
+        GameSettings.ShadowTier tier = GameSettings.Shadows;
+        target.shadows = tier == GameSettings.ShadowTier.Off ? LightShadows.None : LightShadows.Soft;
+        target.shadowStrength = 0.9f;
+        target.shadowNearPlane = 0.1f;
+        target.shadowBias = 0.05f;
+        target.shadowNormalBias = 0.35f;
+        UniversalAdditionalLightData data = target.GetUniversalAdditionalLightData();
+        if (data != null)
+        {
+            data.usePipelineSettings = false;
+            data.additionalLightsShadowResolutionTier = UniversalAdditionalLightData.AdditionalLightsShadowResolutionTierLow;
+        }
+    }
+
+    /// <summary>F120: the death replay shows where the player was looking. Touches only the light, no stealth or battery side effects.</summary>
+    public void SetReplayBeam(bool on)
+    {
+        if (_light == null) return;
+        _light.enabled = on;
+        if (on) _light.intensity = wideIntensity;
+    }
+
     /// <summary>True while the battery is low enough to stutter.</summary>
     public bool IsLow => Charge <= lowBatteryFraction;
 
@@ -184,7 +247,7 @@ public class Flashlight : MonoBehaviour
     {
         // A dead torch cannot be switched on - this is also what makes GameOutcome.CaptureSequence's
         // SetOn(true) flicker beats a no-op on a dead battery, so the sequence just plays dark.
-        IsOn = on && !IsDead;
+        IsOn = on && !IsDead && !IsDropped;
         ApplyState();
     }
 
@@ -249,6 +312,12 @@ public class Flashlight : MonoBehaviour
     public void SetRechargeMultiplier(float multiplier)
     {
         _rechargeMultiplier = Mathf.Max(0.01f, multiplier);
+    }
+
+    /// <summary>F122 difficulty: scales how fast the battery drains while the torch is on (NIGHTMARE x1.2, GENTLE TORCH x0.7). Default 1.</summary>
+    public void SetDrainMultiplier(float multiplier)
+    {
+        _drainMultiplier = Mathf.Max(0.05f, multiplier);
     }
 
     /// <summary>F76 MobilePerformance (T9): drops the shadow resolution tier on mobile web. Never called
@@ -382,26 +451,16 @@ public class Flashlight : MonoBehaviour
 
         bool hiddenGate = _stealth == null || !_stealth.Hidden;
 
-#if ENABLE_INPUT_SYSTEM
-        // Read the keys directly: the Player action map has no spare action, and rewiring PlayerInput
-        // for these is more risk than it is worth. Keyboard/Mouse/Gamepad.current are null with no
-        // matching device present. Hidden also blocks both: a locker forces InputEnabled off, but
-        // PauseMenu.Resume sets it back on, and this is the cheap second guard against light leaking
-        // out of a closed locker.
-        if (InputEnabled && !IsDead && hiddenGate &&
-            ((Keyboard.current != null && Keyboard.current.fKey.wasPressedThisFrame) || TouchInput.Pressed(TouchInput.TouchAction.Torch)))
+        // F119: through the GameInput facade (keyboard / gamepad / touch). Hidden also blocks both: a locker forces
+        // InputEnabled off, but PauseMenu.Resume sets it back on, and this is the cheap second guard against light
+        // leaking out of a closed locker.
+        if (InputEnabled && !IsDead && !IsDropped && hiddenGate && GameInput.Pressed(GameAction.Torch))
         {
             SetOn(!IsOn);
             GameAudio.Play2D(GameAudio.Library.torchClick, 0.5f, 1f); // F97: the switch click (recorded clip only)
         }
 
-        IsFocused = InputEnabled && hiddenGate &&
-            ((Mouse.current != null && Mouse.current.rightButton.isPressed) ||
-             (Gamepad.current != null && Gamepad.current.leftTrigger.isPressed) ||
-             TouchInput.Held(TouchInput.TouchAction.Focus));
-#else
-        IsFocused = false;
-#endif
+        IsFocused = InputEnabled && hiddenGate && !IsDropped && GameInput.Held(GameAction.Focus);
 
         // Scaled deltaTime, not unscaled: the blend freezes for free behind the title screen and under
         // pause, the same as the drain below.
@@ -415,9 +474,15 @@ public class Flashlight : MonoBehaviour
         if (IsOn)
         {
             float drainRate = IsFocused ? (_focusedDrainMultiplierOverride >= 0f ? _focusedDrainMultiplierOverride : focusedDrainMultiplier) : 1f;
-            SecondsLeft = Mathf.Max(0f, SecondsLeft - Time.deltaTime * drainRate);
+            SecondsLeft = Mathf.Max(0f, SecondsLeft - Time.deltaTime * drainRate * _drainMultiplier);
             _offSeconds = 0f;
             if (IsDead) SetOn(false);
+        }
+        else if (IsDropped)
+        {
+            // F120: lying on the floor, switched on: it keeps draining at the wide-beam rate and never recharges while dropped.
+            if (!IsDead) SecondsLeft = Mathf.Max(0f, SecondsLeft - Time.deltaTime);
+            _offSeconds = 0f;
         }
         else
         {
@@ -441,21 +506,33 @@ public class Flashlight : MonoBehaviour
         {
             // F103 A6: a scripted failure - dark, then (in its last blackoutStutterSeconds) sputtering back.
             bool sputtering = _blackoutRemaining <= blackoutStutterSeconds && Mathf.PerlinNoise(Time.time * 25f, 3f) > 0.5f;
-            _light.intensity = sputtering ? CurrentIntensity * 0.6f : 0f;
+            float blackoutTarget;
+            if (FlashSafety.On)
+            {
+                // F118: no 25 Hz sputter - the last blackoutStutterSeconds fade back in instead.
+                float back = _blackoutRemaining <= blackoutStutterSeconds ? 1f - _blackoutRemaining / Mathf.Max(0.01f, blackoutStutterSeconds) : 0f;
+                blackoutTarget = CurrentIntensity * 0.6f * back;
+            }
+            else blackoutTarget = sputtering ? CurrentIntensity * 0.6f : 0f;
+            _light.intensity = Drawn(blackoutTarget);
         }
         else if (IsOn)
         {
             bool stuttering = _stutterRemaining > 0f;
-            float amount = stuttering ? 0.75f
+            float amount = stuttering ? (FlashSafety.On ? 0.15f : 0.75f) // F118: a shallow dip, not a near-blackout
                 : IsLow ? Mathf.Lerp(dyingFlickerAmount, flickerAmount, Charge / lowBatteryFraction)
                 : flickerAmount;
             float flicker = amount > 0f ? 1f - amount + amount * Mathf.PerlinNoise(Time.time * flickerSpeed, 0f) : 1f;
             float dyingScale = Mathf.Lerp(dyingIntensityFraction, 1f, Mathf.Clamp01(Charge / lowBatteryFraction));
 
             float finalIntensity = CurrentIntensity * flicker * dyingScale;
-            if ((Charge < 0.05f || stuttering) && Mathf.PerlinNoise(Time.time * 3f, 7f) > 0.8f) finalIntensity = 0f;
+            if ((Charge < 0.05f || stuttering) && !FlashSafety.On && Mathf.PerlinNoise(Time.time * 3f, 7f) > 0.8f) finalIntensity = 0f; // F118: no hard zero with Reduce flashing on
 
-            _light.intensity = finalIntensity;
+            _light.intensity = Drawn(finalIntensity);
+        }
+        else
+        {
+            _shownIntensity = 0f;
         }
 
         // The beam shape follows the wide/focused blend even while off, so switching on mid-blend never
@@ -482,5 +559,15 @@ public class Flashlight : MonoBehaviour
             // F103 A6: IsOn, not IsBeamLit - a scripted failure must not make the player any harder to spot.
             _stealth.FlashlightOn = IsOn;
         }
+    }
+
+    private float _shownIntensity;
+
+    /// <summary>F118: with Reduce flashing on, the drawn torch intensity follows the computed one through a 0.2 s low-pass (IsBeamLit and every gameplay reader are untouched).</summary>
+    private float Drawn(float target)
+    {
+        if (!FlashSafety.On) { _shownIntensity = target; return target; }
+        _shownIntensity = Mathf.MoveTowards(_shownIntensity, target, Time.deltaTime / 0.2f * Mathf.Max(0.0001f, CurrentIntensity));
+        return _shownIntensity;
     }
 }

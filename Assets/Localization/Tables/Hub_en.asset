@@ -677,10 +677,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 392073374
-    m_Localized: "THE DOORS ARE STUCK \xB7 HOLD {key} TO FORCE THEM"
+    m_Localized: ' the gamepad button or USE on touch (do not translate the key)'
     m_Metadata:
-      m_Items:
-      - rid: 4707331672703762543
+      m_Items: []
   - m_Id: 392073375
     m_Localized: SOMETHING KNOCKS THREE TIMES.
     m_Metadata:
@@ -732,6 +731,153 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703762543
+  - m_Id: 1812604049158144
+    m_Localized: TODAY'S LESSON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432832
+    m_Localized: PATIENT #{n}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 1812604141432833
+    m_Localized: OBSERVE THE PATIENT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432834
+    m_Localized: LOCKERS {tally}  IT CHECKS THEM
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 1812604141432835
+    m_Localized: THROWS {tally}  IT IGNORES THEM
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 1812604141432836
+    m_Localized: DARK {tally}  IT SEES FARTHER
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 1812604141432837
+    m_Localized: RUNNING {tally}  IT HEARS YOU
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 1812604141432838
+    m_Localized: IT IS LEARNING.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432839
+    m_Localized: THE LESSON IS OVER.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432840
+    m_Localized: READ THE BOARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432841
+    m_Localized: '{n} LESSONS ON THE BOARD. IT NEVER FORGETS.'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 1812604141432842
+    m_Localized: NOTHING YET. IT IS STILL WATCHING.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432843
+    m_Localized: SOMEONE WIPED THE BOARD. ONLY THE LAST LINE IS LEFT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893206679552
+    m_Localized: "EAT THE BROTH  \xB7  STAMINA ON THE NEXT FLOOR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371328
+    m_Localized: "TAKE THE BLACK BREAD  \xB7  A SPARE BATTERY"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371329
+    m_Localized: "DRINK THE COLD TEA  \xB7  QUIET SHOES ON THE NEXT FLOOR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371330
+    m_Localized: IT'S STILL WARM. SOMEONE KNEW YOU WERE COMING.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371331
+    m_Localized: HARD AS A BRICK. SOMETHING METAL RATTLES INSIDE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371332
+    m_Localized: COLD. IT TASTES OF DUST, AND YOUR FOOTSTEPS GROW SOFT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371333
+    m_Localized: HANDS FULL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371334
+    m_Localized: ALREADY HAD SOME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371335
+    m_Localized: YOU CAN'T CARRY ANY MORE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371336
+    m_Localized: YOU ALREADY HAVE SOME OF THIS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371337
+    m_Localized: READ THE CARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371338
+    m_Localized: SHE ALWAYS SAVED HER BREAD FOR LATER. SHE COUNTED THE DOORS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371339
+    m_Localized: HE KNOCKS TWICE ON THE TABLE. THE PIPES ANSWER.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371340
+    m_Localized: HIS EYES ARE OPEN. HE IS STILL ASLEEP.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371341
+    m_Localized: THE CHAIR IS TOO SMALL FOR IT. IT SAT ANYWAY.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371342
+    m_Localized: THE DIRECTOR LAID THIS PLACE HIMSELF.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1856707763892224
+    m_Localized: VOICE {tally}  IT KNOWS YOU
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 1861983598538752
+    m_Localized: THE LIGHTS ARE OUT. EVERYONE IS GONE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1861983602733056
+    m_Localized: IT FOLLOWED YOU UP.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1861983602733057
+    m_Localized: THE DIRECTOR'S DOOR. RUN.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1861983602733058
+    m_Localized: IT WATCHED YOU GET IN.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1861983602733059
+    m_Localized: IT HAD YOU. FIND YOUR LIGHT. RUN.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -763,7 +909,13 @@ MonoBehaviour:
         - id: 392073349
         - id: 392073355
         - id: 392073362
-        - id: 392073374
         - id: 1534062807740417
         - id: 1534062811934720
         - id: 1534062811934721
+        - id: 1812604141432832
+        - id: 1812604141432834
+        - id: 1812604141432835
+        - id: 1812604141432836
+        - id: 1812604141432837
+        - id: 1812604141432841
+        - id: 1856707763892224

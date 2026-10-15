@@ -58,3 +58,11 @@ hud.prompt.open_cache,OUVRIR LA CACHE
 hud.tenant.held,ÇA TIENT LA PORTE
 hud.slot.floor_plan,{key}   PLAN D'ÉTAGE  x{count}
 hud.prompt.use_floor_plan,MAINTENIR POUR UTILISER LE PLAN
+hud.voice,VOIX
+hud.voice_loud,FORT
+hud.torch_dropped,LAMPE · TOMBÉE
+hud.prompt.pick_up_torch,RAMASSE TA LAMPE
+hud.locker.welded,SOUDÉ.
+hud.prompt.welded,SOUDÉ
+hud.prompt.drawer,OUVRIR LE TIROIR
+hud.prompt.ampoule,PRENDRE L'AMPOULE

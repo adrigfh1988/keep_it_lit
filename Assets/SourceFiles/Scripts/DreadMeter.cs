@@ -108,6 +108,14 @@ public class DreadMeter : MonoBehaviour
     /// <summary>F107 D2: a one-off spike, the same input a Stan touch makes (a Listener lunge, a Tenant shove, a living body). Fades like that pulse does.</summary>
     public void Spike() => _stanAt = Time.time;
 
+    private float _numbUntil = -1f;
+
+    /// <summary>F123 floor 4: the fear goes quiet for `seconds` (an ampoule). While numb the goal is 0, the value drains fast and no backoff builds: no fear, no mercy.</summary>
+    public void Numb(float seconds) => _numbUntil = Mathf.Max(_numbUntil, Time.time + Mathf.Max(0f, seconds));
+
+    /// <summary>F123: true while an ampoule's numbness lasts.</summary>
+    public bool IsNumb => Time.time < _numbUntil;
+
     /// <summary>The hidden fear value, 0..1.</summary>
     public float Value { get; private set; }
 
@@ -181,8 +189,12 @@ public class DreadMeter : MonoBehaviour
         UpdateProximity();
         UpdateDarkTime(dt);
 
+        if (IsNumb)
+        {
+            Value = Mathf.MoveTowards(Value, 0f, dt * fallRate * 4f); // F123
+        }
         // Hidden: the value holds. Hiding is the one place the player cannot be doing anything about their fear.
-        if (!_stealth.Hidden)
+        else if (!_stealth.Hidden)
         {
             float goal = Mathf.Max(Mathf.Clamp01(SumInputs()), _progress * progressFloorWeight);
             float rate = goal > Value ? riseRate : fallRate * (_stealth.LampExposure > litLampExposure ? litFallMultiplier : 1f);
@@ -245,7 +257,7 @@ public class DreadMeter : MonoBehaviour
     /// </summary>
     private void TickBackoff(float dt)
     {
-        if (Value < backoffThreshold || _follower.IsChasing || _follower.IsHunting || _follower.IsCaptured)
+        if (IsNumb || Value < backoffThreshold || _follower.IsChasing || _follower.IsHunting || _follower.IsCaptured)
         {
             _highTime = 0f;
             return;

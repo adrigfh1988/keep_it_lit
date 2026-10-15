@@ -39,7 +39,7 @@ public class BatteryCellPickup : MonoBehaviour, IInteractable
 
         _flashlight?.AddCharge(rechargeFraction);
 
-        if (_grantsSecondWind && PlayerInventory.Count(ShopItem.SecondWind) == 0)
+        if (_grantsSecondWind && PlayerInventory.CanHoldMore(ShopItem.SecondWind)) // F122: same as Count == 0, false under NO SECOND CHANCES
         {
             PlayerInventory.Grant(ShopItem.SecondWind);
             _hud?.ShowSubtitle(L10n.T("sub.pickup.second_wind"), 3f);

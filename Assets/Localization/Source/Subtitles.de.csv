@@ -54,3 +54,29 @@ sub.loop.offer,"EIN NEBENWEG. DU MUSST NICHT. HINTER DER ECKE GIBT ES KEIN ZURÜ
 sub.loop.offer_reward,"{n}-MAL HINTEREINANDER RICHTIG: DIE GANZE KARTE, EINE VOLLE LAMPE UND VORRÄTE."
 sub.loop.torch_full,VOLLE LAMPE
 sub.map.used,DER GRUNDRISS. NUR, WO DU GELAUFEN BIST.
+sub.grab.release,Es hat dich weggestoßen. Deine Lampe liegt am Boden.
+sub.grab.warning,Beim nächsten Mal lässt es nicht los.
+sub.grab.torch_back,Du hast das Licht.
+sub.hunter.learned_voice,ES KENNT DEINE STIMME.
+sub.banner.oaths,EID {rank}
+sub.nightmare.hilde.seen.0,HIER WAR KEINE TÜR.
+sub.nightmare.hilde.seen.1,EINE TÜR MEHR ALS VORHER.
+sub.nightmare.tomas.knocks_two,DIE ROHRE KLOPFEN ZWEIMAL.
+sub.nightmare.tomas.knocks_three,DIE ROHRE KLOPFEN DREIMAL.
+sub.nightmare.elias.empty.0,LEER. DAS TABLETT IST KALT.
+sub.nightmare.elias.empty.1,EIN SCHILD OHNE NAMEN. NIEMAND AUF DEM TABLETT.
+sub.nightmare.elias.empty.2,LEER. JEMAND HAT ES WIE EIN BETT GEMACHT.
+sub.nightmare.elias.five,"FACH FÜNF. NUR SEIN ZEHENSCHILD, WARTEND."
+sub.nightmare.elias.yours,DAS SCHILD TRÄGT DEINE NUMMER. DAS TABLETT IST NOCH WARM.
+sub.nightmare.elias.your_things,DEINE SACHEN LIEGEN AUF DEM TABLETT: EINE ERSATZBATTERIE.
+sub.nightmare.weiss.dose.0,"KLARES GLAS, BLAUE KAPPE. DEIN HERZ WIRD LANGSAMER."
+sub.nightmare.weiss.dose.1,DIE ANGST VERSTUMMT. DIE WARNUNG AUCH.
+sub.nightmare.weiss.dose.2,ALLE DREI. NIEMAND BEKOMMT EINE ZU KLEINE DOSIS.
+sub.nightmare.weiss.wears_off,DEIN HERZ IST ZURÜCK.
+sub.nightmare.director.welcome,GUTEN ABEND. DIE HAUSORDNUNG IST AUSGEHÄNGT. DANKE.
+sub.nightmare.director.warn.run,PATIENT {mark}. BITTE LANGSAM GEHEN.
+sub.nightmare.director.warn.hide,PATIENT {mark}. BITTE RAUS AUS DEM SCHRANK.
+sub.nightmare.director.warn.throw,PATIENT {mark}. WIR WERFEN NICHTS.
+sub.nightmare.director.report.run,"PATIENT {mark} RENNT. PFLEGER, BITTE UNTERSTÜTZEN."
+sub.nightmare.director.report.hide,"PATIENT {mark} VERSTECKT SICH. PFLEGER, BITTE UNTERSTÜTZEN."
+sub.nightmare.director.report.throw,"PATIENT {mark} WIRFT MIT DINGEN. PFLEGER, BITTE UNTERSTÜTZEN."

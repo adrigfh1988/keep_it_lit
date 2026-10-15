@@ -41,6 +41,6 @@ public static class PlayerLock
         // touch drives the game, so a menu closing never re-engages a pointer lock that just eats taps.
         bool locked = !free && !TouchInput.Active;
         Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None;
-        Cursor.visible = !locked;
+        Cursor.visible = !locked && GameInput.LastDevice != GameInput.Device.Gamepad;   // F119: a gamepad menu has no pointer to show (any mouse move flips the device back)
     }
 }

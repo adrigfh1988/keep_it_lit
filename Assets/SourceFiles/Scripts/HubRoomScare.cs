@@ -119,7 +119,7 @@ public abstract class HubRoomScare : MonoBehaviour
         Tick(hub);
         if (_fired || _routine != null) return;
         if (Time.timeScale <= 0f || hub.IsTransitioning || hub.Leaving) { _inRoomSeconds = 0f; _heldSeconds = 0f; return; }
-        if (HubState.IsFinale || !ArmedNow || room == null) return;
+        if (HubState.IsFinale || HubBreach.InProgress || !ArmedNow || room == null) return; // F121: the hunter is the scare
         if (hub.PursuerAfterPlayer()) return;
 
         if (!InRoom(hub)) { _inRoomSeconds = 0f; _heldSeconds = 0f; return; }

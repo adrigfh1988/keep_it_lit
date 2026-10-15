@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// F105 C6: what the hunter has learned about the player's habits, across the whole campaign. Four habits, each a level
+/// F105 C6: what the hunter has learned about the player's habits, across the whole campaign. Five habits (F120 added Voice), each a level
 /// 0..<see cref="MaxLevel"/>. <see cref="HabitTracker"/> counts a floor's habits and, at floor clear, <see cref="Learn"/>s
 /// every one over its threshold; AIFollower reads <see cref="Level"/> for its per-level effects. It never forgets: levels only
 /// go up within a campaign. Each lesson is queued as a pending announcement, shown as world text when the next floor starts.
@@ -14,7 +14,7 @@ using UnityEngine;
 public static class HunterMemory
 {
     /// <summary>The habits it can learn. Append only - a pending announcement is saved as a bitmask of (1 &lt;&lt; value).</summary>
-    public enum Habit { Lockers, Throws, Dark, Sprint }
+    public enum Habit { Lockers, Throws, Dark, Sprint, Voice }
 
     /// <summary>The highest level any habit reaches.</summary>
     public const int MaxLevel = 3;
@@ -106,6 +106,7 @@ public static class HunterMemory
         data.hunterThrows = Levels[(int)Habit.Throws];
         data.hunterDark = Levels[(int)Habit.Dark];
         data.hunterSprint = Levels[(int)Habit.Sprint];
+        data.hunterVoice = Levels[(int)Habit.Voice];
         data.hunterPendingMask = _pendingMask;
     }
 
@@ -116,6 +117,7 @@ public static class HunterMemory
         Levels[(int)Habit.Throws] = Mathf.Clamp(data.hunterThrows, 0, MaxLevel);
         Levels[(int)Habit.Dark] = Mathf.Clamp(data.hunterDark, 0, MaxLevel);
         Levels[(int)Habit.Sprint] = Mathf.Clamp(data.hunterSprint, 0, MaxLevel);
+        Levels[(int)Habit.Voice] = Mathf.Clamp(data.hunterVoice, 0, MaxLevel);
         _pendingMask = data.hunterPendingMask & ((1 << HabitCount) - 1);
     }
 

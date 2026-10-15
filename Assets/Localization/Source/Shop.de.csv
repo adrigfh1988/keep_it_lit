@@ -80,3 +80,18 @@ shop.payout.consolation,TROSTPREIS  {percent}% von {stars} {stars:plural:Stern|S
 shop.temperament.final,Es lässt dich nicht gehen.
 shop.item.floor_plan.name,Grundriss
 shop.item.floor_plan.blurb,"Selten. Halte {key} im Stockwerk, das es braucht: Die Karte zeigt nur, wo du gelaufen bist."
+shop.item.dynamo.name,Dynamo
+shop.item.dynamo.blurb,"Die Lampe lädt ausgeschaltet viel schneller auf, auf der nächsten Etage."
+shop.item.archivist_lamp.name,Lampe des Archivars
+shop.item.archivist_lamp.blurb,Notizen und Patientenakten glimmen auf der nächsten Etage schwach.
+shop.item.stethoscope.name,Stethoskop
+shop.item.stethoscope.blurb,Die Schritte des Jägers dringen auf der nächsten Etage deutlich durch Wände.
+shop.palette.torch.4,KNOCHEN
+shop.palette.torch.5,STATIONSGRÜN
+shop.palette.torch.6,EIDROT
+shop.contract.unseen.name,Ungesehen
+shop.contract.unseen.text,Nie verfolgt werden.
+shop.contract.hands_to_yourself.name,Hände weg
+shop.contract.hands_to_yourself.text,Wirf nichts.
+shop.contract.cut_it_close.name,Knapp genug
+shop.contract.cut_it_close.text,Erreiche den Ausgang mit höchstens 20 Sekunden Reserve.

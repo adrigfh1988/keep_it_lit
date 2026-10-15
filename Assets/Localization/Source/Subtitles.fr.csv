@@ -54,3 +54,29 @@ sub.loop.offer,"UN CHEMIN À PART. RIEN NE VOUS Y OBLIGE. PASSÉ L'ANGLE, PLUS D
 sub.loop.offer_reward,"RÉUSSISSEZ {n} FOIS DE SUITE : TOUT LE PLAN, UNE LAMPE PLEINE ET DES PROVISIONS."
 sub.loop.torch_full,LAMPE PLEINE
 sub.map.used,LE PLAN D'ÉTAGE. SEULEMENT CE QUE VOUS AVEZ PARCOURU.
+sub.grab.release,Ça t'a repoussé. Ta lampe est par terre.
+sub.grab.warning,"La prochaine fois, ça ne lâchera pas."
+sub.grab.torch_back,Tu as la lumière.
+sub.hunter.learned_voice,ÇA CONNAÎT TA VOIX.
+sub.banner.oaths,SERMENT {rank}
+sub.nightmare.hilde.seen.0,IL N'Y AVAIT PAS DE PORTE ICI.
+sub.nightmare.hilde.seen.1,UNE PORTE DE PLUS QUE TOUT À L'HEURE.
+sub.nightmare.tomas.knocks_two,LES TUYAUX FRAPPENT DEUX FOIS.
+sub.nightmare.tomas.knocks_three,LES TUYAUX FRAPPENT TROIS FOIS.
+sub.nightmare.elias.empty.0,VIDE. LE PLATEAU EST FROID.
+sub.nightmare.elias.empty.1,UNE ÉTIQUETTE SANS NOM. PERSONNE SUR LE PLATEAU.
+sub.nightmare.elias.empty.2,VIDE. QUELQU'UN L'A FAIT COMME UN LIT.
+sub.nightmare.elias.five,"TIROIR CINQ. SEULEMENT SON ÉTIQUETTE, QUI ATTEND."
+sub.nightmare.elias.yours,L'ÉTIQUETTE PORTE VOTRE NUMÉRO. LE PLATEAU EST ENCORE TIÈDE.
+sub.nightmare.elias.your_things,VOS AFFAIRES SONT SUR LE PLATEAU: UNE PILE DE RECHANGE.
+sub.nightmare.weiss.dose.0,"VERRE CLAIR, CAPUCHON BLEU. VOTRE CŒUR RALENTIT."
+sub.nightmare.weiss.dose.1,LA PEUR SE TAIT. L'AVERTISSEMENT AUSSI.
+sub.nightmare.weiss.dose.2,LES TROIS. PERSONNE N'A UNE DOSE TROP COURTE.
+sub.nightmare.weiss.wears_off,VOTRE CŒUR EST DE RETOUR.
+sub.nightmare.director.welcome,BONSOIR. LE RÈGLEMENT INTÉRIEUR EST AFFICHÉ. MERCI.
+sub.nightmare.director.warn.run,"PATIENT {mark}. AU PAS, S'IL VOUS PLAÎT."
+sub.nightmare.director.warn.hide,"PATIENT {mark}. SORTEZ DU PLACARD, S'IL VOUS PLAÎT."
+sub.nightmare.director.warn.throw,PATIENT {mark}. ON NE LANCE PAS D'OBJETS.
+sub.nightmare.director.report.run,"LE PATIENT {mark} COURT. AIDE-SOIGNANT, VEUILLEZ INTERVENIR."
+sub.nightmare.director.report.hide,"LE PATIENT {mark} SE CACHE. AIDE-SOIGNANT, VEUILLEZ INTERVENIR."
+sub.nightmare.director.report.throw,"LE PATIENT {mark} LANCE DES OBJETS. AIDE-SOIGNANT, VEUILLEZ INTERVENIR."

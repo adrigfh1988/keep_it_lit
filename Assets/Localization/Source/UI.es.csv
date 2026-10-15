@@ -55,8 +55,6 @@ ui.rules.item2,<b>2.</b>   Se abrirá una trampilla en algún lugar. Encuéntral
 ui.rules.item3,"<b>3.</b>   No estás a solas aquí abajo. Si te ve, <color=#DB1F17><b>corre</b></color>."
 ui.rules.item4,"<b>4.</b>   Los fragmentos brillan en la oscuridad. Entre plantas, alguien te venderá cosas a cambio."
 ui.rules.start,EMPEZAR
-ui.controls.keyboard,"<b>WASD</b>  moverse   <b>SHIFT</b>  correr   <b>RATÓN</b>  mirar   <b>F</b>  linterna   <b>E</b>  esconderse / hablar
-<b>1</b>  pila de repuesto   <b>2</b>  brújula estelar   <b>ESC</b>  pausa"
 ui.controls.touch,"<b>PULGAR IZQ.</b>  moverse   <b>PULGAR DER.</b>  mirar   botones: <b>LINTERNA</b>, <b>ENFOCAR</b>, <b>INTERACTUAR</b>, <b>LANZAR</b>, <b>CORRER</b>"
 ui.controls.tip,"Tu linterna tiene luz para tres minutos. Tus piernas, para menos. Los casilleros te esconden — a menos que te haya visto meterte."
 ui.pause.title,PAUSA
@@ -67,7 +65,7 @@ ui.pause.main_menu,MENÚ PRINCIPAL
 ui.pause.quit,SALIR DEL JUEGO
 ui.ledger.slip_heading,READMISIÓN  ·  INGRESO {admission}  ·  PACIENTE {patient}
 ui.ledger.slip_subtitle,EL ESCRIBIENTE HA REGISTRADO TU REGRESO.
-ui.ledger.subtitle,La trampilla se cerró detrás de ti. Algo aquí abajo está abierto.
+ui.ledger.subtitle,La trampilla se cerró detrás de ti. Alguien ha dejado una luz encendida.
 ui.ledger.already_yours,ya es tuyo
 ui.ledger.no_pay,sin pago
 ui.ledger.payout,PAGO  +{amount}
@@ -79,7 +77,7 @@ ui.ledger.contract_void,CONTRATO  {name}  ANULADO
 ui.end.won_final,ESTÁS FUERA
 ui.end.floor_cleared,PLANTA {floor} SUPERADA
 ui.end.won_final_body,La trampilla se cerró detrás de ti. Ya no queda nada más abajo.
-ui.end.floor_cleared_body,La trampilla se cerró detrás de ti. Aquí abajo está más oscuro.
+ui.end.floor_cleared_body,"La trampilla se cerró detrás de ti. Por algún motivo, el camino hacia abajo lleva arriba."
 ui.end.caught,ESO TE ENCONTRÓ
 ui.end.caught_hidden,Te vio esconderte.
 ui.end.caught_torch,Era más rápido en la oscuridad.
@@ -174,3 +172,196 @@ ui.credits.art,ARTE
 ui.credits.characters,PERSONAJES Y ANIMACIÓN
 ui.credits.fonts,TIPOGRAFÍAS
 ui.credits.unity,UNITY
+ui.settings.reduce_flashing,REDUCIR PARPADEOS
+ui.notice.photosensitivity.heading,AVISO DE FOTOSENSIBILIDAD
+ui.notice.photosensitivity.body,"Este juego contiene luces parpadeantes, oscuridad repentina y patrones que pueden provocar convulsiones en personas con epilepsia fotosensible. Si tú o algún familiar habéis sufrido una convulsión, consulta a un médico antes de jugar. Deja de jugar de inmediato si sientes mareo, visión borrosa, tics en los ojos o los músculos, o desorientación. Puedes activar REDUCIR PARPADEOS aquí o en AJUSTES > GENERAL en cualquier momento."
+ui.menu.save_problem_heading,PARTIDA NO CARGADA
+ui.menu.save_problem_body.too_new,"Tu partida guardada fue creada con una versión más reciente del juego. Se ha apartado, no borrado."
+ui.menu.save_problem_body.unreadable,No se pudo leer tu partida guardada y se ha apartado. Se empezará una campaña nueva.
+ui.glyph.mouse,RATÓN
+ui.glyph.mouse_left,CLIC IZQ.
+ui.glyph.mouse_right,CLIC DER.
+ui.glyph.mouse_middle,CLIC CENTRAL
+ui.glyph.lstick,STICK IZQ.
+ui.glyph.rstick,STICK DER.
+ui.glyph.dpad_up,CRUCETA ARRIBA
+ui.glyph.dpad_down,CRUCETA ABAJO
+ui.glyph.dpad_left,CRUCETA IZQ.
+ui.glyph.dpad_right,CRUCETA DER.
+ui.glyph.ps.cross,EQUIS
+ui.glyph.ps.circle,CÍRCULO
+ui.glyph.ps.square,CUADRADO
+ui.glyph.ps.triangle,TRIÁNGULO
+ui.glyph.view,VIEW
+ui.glyph.menu,MENU
+ui.glyph.options,OPTIONS
+ui.glyph.create,CREATE
+ui.glyph.unbound,---
+ui.controls.sheet,"{move}  moverse   {sprint}  correr   {look}  mirar   {torch}  linterna   {focus}  haz enfocado
+{interact}  esconderse / hablar   {throw}  lanzar   {item1}  pila de repuesto   {item2}  brújula estelar
+{map}  plano   {pause}  pausa"
+ui.settings.remap,REASIGNAR CONTROLES
+ui.rebind.title,REASIGNAR CONTROLES
+ui.rebind.col.keyboard,TECLADO / RATÓN
+ui.rebind.col.gamepad,MANDO
+ui.rebind.listening,PULSA UNA TECLA O BOTÓN  ·  {cancel} PARA CANCELAR
+ui.rebind.swapped,INTERCAMBIADO CON {action}
+ui.rebind.reset_all,RESTABLECER TODO
+ui.rebind.action.move_up,ADELANTE
+ui.rebind.action.move_down,ATRÁS
+ui.rebind.action.move_left,IZQUIERDA
+ui.rebind.action.move_right,DERECHA
+ui.rebind.action.sprint,CORRER
+ui.rebind.action.torch,LINTERNA ON / OFF
+ui.rebind.action.focus,HAZ ENFOCADO
+ui.rebind.action.interact,INTERACTUAR / ESCONDERSE
+ui.rebind.action.throw,LANZAR
+ui.rebind.action.item1,PILA DE REPUESTO
+ui.rebind.action.item2,BRÚJULA ESTELAR
+ui.rebind.action.map,PLANO
+ui.settings.mic,MICRÓFONO
+ui.settings.mic_device,DISPOSITIVO DE MICRÓFONO
+ui.settings.mic_none,NO SE ENCUENTRA NINGÚN MICRÓFONO
+ui.settings.mic_threshold,SE OYE POR ENCIMA DE
+ui.settings.mic_level,TU NIVEL
+ui.settings.mic_status.off,DESACTIVADO
+ui.settings.mic_status.listening,ESCUCHANDO
+ui.settings.mic_status.no_signal,SIN SEÑAL - REVISA LA PRIVACIDAD DEL MICRO
+ui.settings.mic_status.no_device,SIN DISPOSITIVO
+ui.settings.mic_privacy,"Se usa solo mientras juegas, para que el cazador te oiga. No se graba, guarda ni envía nada. Se recomiendan auriculares."
+ui.end.caught_dropped,"Te encontró en la oscuridad, lejos de tu luz."
+ui.replay.cam,CAM {n}
+ui.replay.rec,REC
+ui.replay.caption,VINO A POR TI
+ui.replay.caption_behind,ESTUVO DETRÁS DE TI TODO EL TIEMPO
+ui.descent.habit.voice,VOZ
+ui.hunter.effect.voice,"TE OYE DESDE MÁS LEJOS, INCLUSO EN UN ARMARIO."
+ui.end.caught_hub,Te ha seguido. No hay ningún lugar seguro.
+ui.end.stats_hub,EL ASILO · PLANTA {floor}
+ui.menu.record,REGISTRO
+ui.newcampaign.title,NUEVO INGRESO
+ui.newcampaign.begin,EMPEZAR
+ui.newcampaign.assists_header,AYUDAS
+ui.newcampaign.kit_header,EQUIPO DE INGRESO
+ui.newcampaign.kit,EQUIPO
+ui.newcampaign.torch,LINTERNA INICIAL
+ui.newcampaign.torch_hint,El color del haz con el que empiezas. Los colores ganados nunca se venden.
+ui.newcampaign.assisted_note,"LAS PARTIDAS CON AYUDAS DESBLOQUEAN COSAS, PERO NO FIJAN RÉCORDS NI JURAMENTOS"
+ui.newcampaign.oaths_button,JURAMENTOS
+ui.newcampaign.oaths_title,JURAMENTOS
+ui.newcampaign.oaths_done,LISTO
+ui.newcampaign.oaths_hint,Votos acumulables. Cada Juramento endurece el sanatorio y paga más fragmentos.
+ui.newcampaign.oaths_need_standard,REQUIERE UNA PARTIDA SIN AYUDAS
+ui.newcampaign.oath_summary,JURAMENTO {rank}  ·  FRAGMENTOS ×{mult}
+ui.preset.standard.name,ESTÁNDAR
+ui.preset.standard.desc,El juego tal como fue creado.
+ui.preset.story.name,HISTORIA
+ui.preset.story.desc,"Cuenta atrás más larga, linterna más suave, cazador más lento, señales honestas, pasillos más claros. Todo se sigue desbloqueando."
+ui.preset.nightmare.name,PESADILLA
+ui.preset.nightmare.desc,"Cuenta atrás más corta, cazador más agudo, linterna más hambrienta. Fragmentos ×1,25 y rango de Juramento +2."
+ui.assist.longer_timer.name,CUENTA ATRÁS MÁS LARGA
+ui.assist.longer_timer.desc,La cuenta atrás de la huida dura la mitad más.
+ui.assist.gentle_torch.name,LINTERNA SUAVE
+ui.assist.gentle_torch.desc,La pila se gasta más despacio y se recarga más rápido.
+ui.assist.slow_hunter.name,CAZADOR MÁS LENTO
+ui.assist.slow_hunter.desc,"Tarda más en comprometerse en la persecución, corre más despacio y oye menos."
+ui.assist.honest_cues.name,SEÑALES HONESTAS
+ui.assist.honest_cues.desc,"Sin sonidos mentirosos, sin fantasmas falsos, sin fallos de linterna, y los ojos del cazador siempre se ven."
+ui.assist.brighter_halls.name,PASILLOS MÁS CLAROS
+ui.assist.brighter_halls.desc,"Más luz ambiental, niebla más fina, lámparas más fuertes."
+ui.assist.steady_torch.name,LINTERNA FIRME
+ui.assist.steady_torch.desc,La linterna ya no se balancea ni se retrasa respecto a la vista. No afecta a los récords.
+ui.assist.no_replay.name,SIN REPETICIÓN DE MUERTE
+ui.assist.no_replay.desc,La pantalla final omite la repetición granulada de la captura. No afecta a los récords.
+ui.oath.old_battery.name,PILA VIEJA
+ui.oath.old_battery.desc,"La linterna empieza cada planta a medio cargar y se recarga despacio, también en la planta 1."
+ui.oath.does_not_wait.name,NO ESPERA
+ui.oath.does_not_wait.desc,"Desde la planta 1 el cazador sigue el paso de quien camina, se compromete antes y sus ojos están apagados."
+ui.oath.welded_lockers.name,TAQUILLAS SOLDADAS
+ui.oath.welded_lockers.desc,"Todas las taquillas de los laberintos están soldadas. No hay dónde esconderse, y el cazador nunca las revisa."
+ui.oath.stan_early.name,STAN DESPIERTA ANTES
+ui.oath.stan_early.desc,Stan camina desde la planta 2 en lugar de la 4.
+ui.oath.no_second_chances.name,SIN SEGUNDAS OPORTUNIDADES
+ui.oath.no_second_chances.desc,"Sin Segundo Aliento en ningún sitio, y la primera captura de una planta ya no es un empujón: toda captura mata."
+ui.oath.failing_grid.name,RED AVERIADA
+ui.oath.failing_grid.desc,"Pasillos más oscuros, lámparas más tenues y más separadas."
+ui.oath.short_fuse.name,MECHA CORTA
+ui.oath.short_fuse.desc,La cuenta atrás de la huida es un cuarto más corta.
+ui.oath.hears_everything.name,LO OYE TODO
+ui.oath.hears_everything.desc,Cada planta lleva la regla Oído Fino: el cazador oye mucho más.
+ui.oath.doors_dont_hold.name,LAS PUERTAS NO AGUANTAN
+ui.oath.doors_dont_hold.desc,"El sanatorio es asaltado en cada visita al vestíbulo después de la planta 4, no solo una vez."
+ui.kit.standard_issue.name,EQUIPO REGLAMENTARIO
+ui.kit.standard_issue.desc,Nada extra. Solo la linterna.
+ui.kit.scavenger.name,CARROÑERO
+ui.kit.scavenger.desc,Empiezas con una Pila de Repuesto y una Brújula de Estrellas.
+ui.kit.runner.name,CORREDOR
+ui.kit.runner.desc,La planta 1 empieza con un Tónico de Aguante y Zapatos Silenciosos ya activos.
+ui.kit.cartographer.name,CARTÓGRAFO
+ui.kit.cartographer.desc,Empiezas con un Plano.
+ui.campaign.tag.oath,JURAMENTO {rank}
+ui.campaign.tag.assisted,CON AYUDAS
+ui.ledger.oath,JURAMENTO {rank}  ×{mult}
+ui.ledger.grade,NOTA
+ui.ledger.grade_new_best,NUEVO RÉCORD
+ui.ledger.grade_bonus,BONO NOTA {grade}
+ui.ledger.record_new,REGISTRO DEL PACIENTE · {n} NUEVO(S)
+ui.end.grades,NOTAS  {grades}
+ui.shop.forsworn,RENUNCIADO
+ui.record.title,REGISTRO DEL PACIENTE
+ui.record.tab.record,REGISTRO
+ui.record.tab.unlocks,DESBLOQUEOS
+ui.record.tab.codex,CÓDICE
+ui.record.tab.assists,AYUDAS
+ui.record.empty,SIN INGRESOS REGISTRADOS
+ui.record.started,PARTIDAS EMPEZADAS
+ui.record.finished,PARTIDAS TERMINADAS
+ui.record.endings,FINALES VISTOS
+ui.record.best_oath_a,MEJOR JURAMENTO · ALTA MÉDICA
+ui.record.best_oath_b,MEJOR JURAMENTO · LIGHTS OUT
+ui.record.shards,FRAGMENTOS GANADOS
+ui.record.descent,DESCENSO MÁS PROFUNDO
+ui.record.floors_header,MEJORES PLANTAS
+ui.record.floor,PLANTA {floor}
+ui.record.floor_oath,JURAMENTO {rank}
+ui.record.new,NUEVO
+ui.record.unlocked,DESBLOQUEADO
+ui.record.not_met,Aún no lo has encontrado.
+ui.record.habits_header,LO QUE HA APRENDIDO
+ui.record.assists_next_floor,LOS CAMBIOS SE APLICAN EN EL SIGUIENTE LABERINTO.
+ui.record.assists_mark,ACTIVAR UNA AYUDA MARCA ESTA PARTIDA COMO CON AYUDAS PARA SIEMPRE.
+ui.record.unlock.codex.name,CÓDICE Y REGISTRO EN PAUSA
+ui.record.unlock.codex.cond,COMPLETA UNA PLANTA
+ui.record.unlock.kit_scavenger.name,EQUIPO: CARROÑERO
+ui.record.unlock.kit_scavenger.cond,COMPLETA LA PLANTA 2
+ui.record.unlock.card_stethoscope.name,CARTA DE TIENDA: ESTETOSCOPIO
+ui.record.unlock.card_stethoscope.cond,COMPLETA LA PLANTA 4
+ui.record.unlock.contract_unseen.name,CONTRATO: INVISIBLE
+ui.record.unlock.contract_unseen.cond,COMPLETA LA PLANTA 4
+ui.record.unlock.oaths.name,LA ESCALERA DE JURAMENTOS
+ui.record.unlock.oaths.cond,ALCANZA CUALQUIER FINAL
+ui.record.unlock.colour_bone.name,COLOR DE LINTERNA: HUESO
+ui.record.unlock.colour_bone.cond,ALCANZA CUALQUIER FINAL
+ui.record.unlock.kit_runner.name,EQUIPO: CORREDOR
+ui.record.unlock.kit_runner.cond,TERMINA 2 PARTIDAS
+ui.record.unlock.card_archivist.name,CARTA DE TIENDA: LÁMPARA DEL ARCHIVERO
+ui.record.unlock.card_archivist.cond,VE LOS DOS FINALES
+ui.record.unlock.card_dynamo.name,CARTA DE TIENDA: DINAMO
+ui.record.unlock.card_dynamo.cond,GANA 1500 FRAGMENTOS EN TOTAL
+ui.record.unlock.kit_cartographer.name,EQUIPO: CARTÓGRAFO
+ui.record.unlock.kit_cartographer.cond,TERMINA 3 PARTIDAS
+ui.record.unlock.contracts_skill.name,"CONTRATOS: SIN LANZAR, POR UN PELO"
+ui.record.unlock.contracts_skill.cond,CONSIGUE UNA NOTA S EN CUALQUIER PLANTA
+ui.record.unlock.colour_oath_red.name,COLOR DE LINTERNA: ROJO JURAMENTO
+ui.record.unlock.colour_oath_red.cond,ALCANZA UN FINAL CON RANGO DE JURAMENTO 5
+ui.record.unlock.colour_ward.name,COLOR DE LINTERNA: VERDE DE SALA
+ui.record.unlock.colour_ward.cond,ENCUENTRA TODO EN EL CÓDICE
+ui.ledger.slip_subtitle.1,REGRESO DEL PABELLÓN A. UNA PUERTA MÁS QUE AYER.
+ui.ledger.slip_subtitle.2,REGRESO DE LA SALA DE CALDERAS. DOS GOLPES. TODO DESPEJADO.
+ui.ledger.slip_subtitle.3,REGRESO DE LA CÁMARA FRIGORÍFICA. UN CAJÓN QUEDÓ ABIERTO.
+ui.ledger.slip_subtitle.4,REGRESO DEL QUIRÓFANO. DOSIS NO REGISTRADA.
+ui.end.wing.1,Hilde contó una puerta más esta noche. Era la tuya.
+ui.end.wing.2,Tres golpes. Luego nada.
+ui.end.wing.3,Tienen un cajón preparado. Lleva tu número.
+ui.end.wing.4,La habitación 4 ya no está vacía.
+ui.end.wing.5,El Escribiente ha terminado de mecanografiar tu expediente.

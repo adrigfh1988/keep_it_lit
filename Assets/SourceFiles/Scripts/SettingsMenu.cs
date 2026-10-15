@@ -4,9 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
 
 /// <summary>
 /// S2: the SETTINGS screen - four tabs (DISPLAY, GRAPHICS, AUDIO, CONTROLS) of slider / stepper rows over <see cref="GameSettings"/>, applied the
@@ -15,7 +12,7 @@ using UnityEngine.InputSystem;
 /// just uncovers that menu again. Esc / gamepad B closes only this panel: <see cref="BlocksPause"/> keeps PauseMenu from also reacting to that press.
 /// Mouse, touch, keyboard and gamepad all work (rows are Selectables; left / right change a selected stepper or slider; Q / E or LB / RB switch tabs).
 /// </summary>
-public class SettingsMenu : MonoBehaviour
+public partial class SettingsMenu : MonoBehaviour
 {
     public enum Tab { General, Display, Graphics, Audio, Controls }
 
@@ -106,25 +103,19 @@ public class SettingsMenu : MonoBehaviour
     {
         if (!_open) return;
         PlayerLock.SetCursorFree(true); // every frame: focus changes re-lock it
+        // F119: REMAP CONTROLS sits over this panel and owns Esc / B / Start, the tab keys and the gamepad focus while it is up (and for the frame it ended in).
+        if (RebindPanel.BlocksBack) return;
         if (_stale) Rebuild(); // the language changed: same panel, new text (done here, never inside the control that triggered it)
 
-        bool back = TouchInput.Pressed(TouchInput.TouchAction.Pause);
+        if (_tab == Tab.Audio) RefreshMicMeter(); // F120: the live microphone level
+
+        // F119: MenuCancel = Esc / pad B / touch Pause; MenuTabPrev / Next = Q, E / LB, RB.
+        bool back = GameInput.Pressed(GameAction.MenuCancel);
         int tabStep = 0;
-#if ENABLE_INPUT_SYSTEM
-        if (Keyboard.current != null)
-        {
-            if (Keyboard.current.escapeKey.wasPressedThisFrame) back = true;
-            if (Keyboard.current.qKey.wasPressedThisFrame) tabStep = -1;
-            if (Keyboard.current.eKey.wasPressedThisFrame) tabStep = 1;
-        }
-        if (Gamepad.current != null)
-        {
-            if (Gamepad.current.buttonEast.wasPressedThisFrame) back = true;
-            if (Gamepad.current.leftShoulder.wasPressedThisFrame) tabStep = -1;
-            if (Gamepad.current.rightShoulder.wasPressedThisFrame) tabStep = 1;
-        }
-#endif
+        if (GameInput.Pressed(GameAction.MenuTabPrev)) tabStep = -1;
+        if (GameInput.Pressed(GameAction.MenuTabNext)) tabStep = 1;
         if (back) { Close(); return; }
+        MenuFocus.Keep(_panel, _first);   // F119: a gamepad always has a selected row
         if (tabStep != 0)
         {
             int i = (_tabs.IndexOf(_tab) + tabStep + _tabs.Count) % _tabs.Count;
@@ -230,6 +221,7 @@ public class SettingsMenu : MonoBehaviour
             Destroy(child.gameObject);
         }
         _first = null;
+        ClearMicRefs(); // F120
         _rowIndex = 0;
 
         switch (tab)
@@ -250,6 +242,7 @@ public class SettingsMenu : MonoBehaviour
     {
         int current = Mathf.Max(0, Array.IndexOf(L10n.Codes, L10n.Code));
         AddStepper(S("language"), L10n.NativeNames, current, true, i => L10n.SetLanguage(L10n.Codes[i]));
+        AddStepper(S("reduce_flashing"), OffOn(), GameSettings.ReduceFlashing ? 1 : 0, true, i => GameSettings.ReduceFlashing = i == 1); // F118
     }
 
     private void BuildDisplay()
@@ -295,19 +288,12 @@ public class SettingsMenu : MonoBehaviour
     private void BuildAudio()
     {
         AddSlider(S("master_volume"), 0f, 1f, GameSettings.MasterVolume, false, v => GameSettings.MasterVolume = v, Percent);
-        if (!GameSettings.HasMixer) return; // Music / Effects need the mixer's groups
-        AddSlider(S("music_volume"), 0f, 1f, GameSettings.MusicVolume, false, v => GameSettings.MusicVolume = v, Percent);
-        AddSlider(S("effects_volume"), 0f, 1f, GameSettings.EffectsVolume, false, v => GameSettings.EffectsVolume = v, Percent);
-    }
-
-    private void BuildControls()
-    {
-        AddSlider(S("look"), GameSettings.MinMouseSensitivity, GameSettings.MaxMouseSensitivity, GameSettings.MouseSensitivity, false,
-            v => GameSettings.MouseSensitivity = v, v => v.ToString("0.00", L10n.Culture) + "x");
-        AddStepper(S("invert_y"), OffOn(), GameSettings.InvertY ? 1 : 0, true, i => GameSettings.InvertY = i == 1);
-        AddStepper(S("touch_controls"), new[] { S("opt.auto"), S("opt.on"), S("opt.off") }, (int)GameSettings.TouchControls, false, i => GameSettings.TouchControls = (TouchInput.Mode)i);
-        AddSlider(S("touch_look"), TouchInput.MinLookSensitivity, TouchInput.MaxLookSensitivity, GameSettings.TouchLookSensitivity, false,
-            v => GameSettings.TouchLookSensitivity = v, v => v.ToString("0.00", L10n.Culture) + "x");
+        if (GameSettings.HasMixer) // Music / Effects need the mixer's groups
+        {
+            AddSlider(S("music_volume"), 0f, 1f, GameSettings.MusicVolume, false, v => GameSettings.MusicVolume = v, Percent);
+            AddSlider(S("effects_volume"), 0f, 1f, GameSettings.EffectsVolume, false, v => GameSettings.EffectsVolume = v, Percent);
+        }
+        BuildMicRows(); // F120: desktop only
     }
 
     private static string Percent(float v) => Mathf.RoundToInt(v * 100f) + "%";

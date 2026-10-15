@@ -290,11 +290,6 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331669776663407
-  - m_Id: 22165078315025
-    m_Key: ui.controls.keyboard
-    m_Metadata:
-      m_Items:
-      - rid: 4707331669776663408
   - m_Id: 22165078315026
     m_Key: ui.controls.touch
     m_Metadata:
@@ -885,6 +880,961 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331721657843956
+  - m_Id: 1857900619755520
+    m_Key: ui.settings.reduce_flashing
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113619
+  - m_Id: 1857900695252992
+    m_Key: ui.notice.photosensitivity.heading
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113620
+  - m_Id: 1857900695252993
+    m_Key: ui.notice.photosensitivity.body
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113621
+  - m_Id: 1857900695252994
+    m_Key: ui.menu.save_problem_heading
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113622
+  - m_Id: 1857900695252995
+    m_Key: ui.menu.save_problem_body.too_new
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113623
+  - m_Id: 1857900695252996
+    m_Key: ui.menu.save_problem_body.unreadable
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113624
+  - m_Id: 1867415029280768
+    m_Key: ui.glyph.mouse
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113793
+  - m_Id: 1867415104778240
+    m_Key: ui.glyph.mouse_left
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113794
+  - m_Id: 1867415104778241
+    m_Key: ui.glyph.mouse_right
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113795
+  - m_Id: 1867415104778242
+    m_Key: ui.glyph.mouse_middle
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113796
+  - m_Id: 1867415104778243
+    m_Key: ui.glyph.lstick
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113797
+  - m_Id: 1867415104778244
+    m_Key: ui.glyph.rstick
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113798
+  - m_Id: 1867415104778245
+    m_Key: ui.glyph.dpad_up
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113799
+  - m_Id: 1867415104778246
+    m_Key: ui.glyph.dpad_down
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113800
+  - m_Id: 1867415104778247
+    m_Key: ui.glyph.dpad_left
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113801
+  - m_Id: 1867415104778248
+    m_Key: ui.glyph.dpad_right
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113802
+  - m_Id: 1867415104778249
+    m_Key: ui.glyph.ps.cross
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113803
+  - m_Id: 1867415104778250
+    m_Key: ui.glyph.ps.circle
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113804
+  - m_Id: 1867415104778251
+    m_Key: ui.glyph.ps.square
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113805
+  - m_Id: 1867415104778252
+    m_Key: ui.glyph.ps.triangle
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113806
+  - m_Id: 1867415104778253
+    m_Key: ui.glyph.view
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113807
+  - m_Id: 1867415104778254
+    m_Key: ui.glyph.menu
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113808
+  - m_Id: 1867415104778255
+    m_Key: ui.glyph.options
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113809
+  - m_Id: 1867415104778256
+    m_Key: ui.glyph.create
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113810
+  - m_Id: 1867415104778257
+    m_Key: ui.glyph.unbound
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113811
+  - m_Id: 1867415108972544
+    m_Key: ui.controls.sheet
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113812
+  - m_Id: 1867415108972545
+    m_Key: ui.settings.remap
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113813
+  - m_Id: 1867415108972546
+    m_Key: ui.rebind.title
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113814
+  - m_Id: 1867415108972547
+    m_Key: ui.rebind.col.keyboard
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113815
+  - m_Id: 1867415108972548
+    m_Key: ui.rebind.col.gamepad
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113816
+  - m_Id: 1867415108972549
+    m_Key: ui.rebind.listening
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113817
+  - m_Id: 1867415108972550
+    m_Key: ui.rebind.swapped
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113818
+  - m_Id: 1867415108972551
+    m_Key: ui.rebind.reset_all
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113819
+  - m_Id: 1867415108972552
+    m_Key: ui.rebind.action.move_up
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113820
+  - m_Id: 1867415108972553
+    m_Key: ui.rebind.action.move_down
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113821
+  - m_Id: 1867415108972554
+    m_Key: ui.rebind.action.move_left
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113822
+  - m_Id: 1867415108972555
+    m_Key: ui.rebind.action.move_right
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113823
+  - m_Id: 1867415108972556
+    m_Key: ui.rebind.action.sprint
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113824
+  - m_Id: 1867415108972557
+    m_Key: ui.rebind.action.torch
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113825
+  - m_Id: 1867415108972558
+    m_Key: ui.rebind.action.focus
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113826
+  - m_Id: 1867415108972559
+    m_Key: ui.rebind.action.interact
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113827
+  - m_Id: 1867415108972560
+    m_Key: ui.rebind.action.throw
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113828
+  - m_Id: 1867415108972561
+    m_Key: ui.rebind.action.item1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113829
+  - m_Id: 1867415108972562
+    m_Key: ui.rebind.action.item2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113830
+  - m_Id: 1867415108972563
+    m_Key: ui.rebind.action.map
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811113831
+  - m_Id: 1883058210336768
+    m_Key: ui.settings.mic
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114139
+  - m_Id: 1883058285834240
+    m_Key: ui.settings.mic_device
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114140
+  - m_Id: 1883058285834241
+    m_Key: ui.settings.mic_none
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114141
+  - m_Id: 1883058285834242
+    m_Key: ui.settings.mic_threshold
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114142
+  - m_Id: 1883058285834243
+    m_Key: ui.settings.mic_level
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114143
+  - m_Id: 1883058285834244
+    m_Key: ui.settings.mic_status.off
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114144
+  - m_Id: 1883058285834245
+    m_Key: ui.settings.mic_status.listening
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114145
+  - m_Id: 1883058285834246
+    m_Key: ui.settings.mic_status.no_signal
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114146
+  - m_Id: 1883058285834247
+    m_Key: ui.settings.mic_status.no_device
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114147
+  - m_Id: 1883058285834248
+    m_Key: ui.settings.mic_privacy
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114148
+  - m_Id: 1883058285834249
+    m_Key: ui.end.caught_dropped
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114149
+  - m_Id: 1883058285834250
+    m_Key: ui.replay.cam
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114150
+  - m_Id: 1883058285834251
+    m_Key: ui.replay.rec
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114151
+  - m_Id: 1883058285834252
+    m_Key: ui.replay.caption
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114152
+  - m_Id: 1883058285834253
+    m_Key: ui.replay.caption_behind
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114153
+  - m_Id: 1883058285834254
+    m_Key: ui.descent.habit.voice
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114154
+  - m_Id: 1883058285834255
+    m_Key: ui.hunter.effect.voice
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114155
+  - m_Id: 1888333877211136
+    m_Key: ui.end.caught_hub
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114245
+  - m_Id: 1888333877211137
+    m_Key: ui.end.stats_hub
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114246
+  - m_Id: 1896792261652480
+    m_Key: ui.menu.record
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114437
+  - m_Id: 1896792261652481
+    m_Key: ui.newcampaign.title
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114438
+  - m_Id: 1896792261652482
+    m_Key: ui.newcampaign.begin
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114439
+  - m_Id: 1896792261652483
+    m_Key: ui.newcampaign.assists_header
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114440
+  - m_Id: 1896792261652484
+    m_Key: ui.newcampaign.kit_header
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114441
+  - m_Id: 1896792261652485
+    m_Key: ui.newcampaign.kit
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114442
+  - m_Id: 1896792261652486
+    m_Key: ui.newcampaign.torch
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114443
+  - m_Id: 1896792261652487
+    m_Key: ui.newcampaign.torch_hint
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114444
+  - m_Id: 1896792261652488
+    m_Key: ui.newcampaign.assisted_note
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114445
+  - m_Id: 1896792261652489
+    m_Key: ui.newcampaign.oaths_button
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114446
+  - m_Id: 1896792261652490
+    m_Key: ui.newcampaign.oaths_title
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114447
+  - m_Id: 1896792261652491
+    m_Key: ui.newcampaign.oaths_done
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114448
+  - m_Id: 1896792261652492
+    m_Key: ui.newcampaign.oaths_hint
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114449
+  - m_Id: 1896792261652493
+    m_Key: ui.newcampaign.oaths_need_standard
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114450
+  - m_Id: 1896792261652494
+    m_Key: ui.newcampaign.oath_summary
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114451
+  - m_Id: 1896792261652495
+    m_Key: ui.preset.standard.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114452
+  - m_Id: 1896792261652496
+    m_Key: ui.preset.standard.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114453
+  - m_Id: 1896792261652497
+    m_Key: ui.preset.story.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114454
+  - m_Id: 1896792261652498
+    m_Key: ui.preset.story.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114455
+  - m_Id: 1896792261652499
+    m_Key: ui.preset.nightmare.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114456
+  - m_Id: 1896792261652500
+    m_Key: ui.preset.nightmare.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114457
+  - m_Id: 1896792261652501
+    m_Key: ui.assist.longer_timer.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114458
+  - m_Id: 1896792261652502
+    m_Key: ui.assist.longer_timer.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114459
+  - m_Id: 1896792261652503
+    m_Key: ui.assist.gentle_torch.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114460
+  - m_Id: 1896792261652504
+    m_Key: ui.assist.gentle_torch.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114461
+  - m_Id: 1896792261652505
+    m_Key: ui.assist.slow_hunter.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114462
+  - m_Id: 1896792261652506
+    m_Key: ui.assist.slow_hunter.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114463
+  - m_Id: 1896792261652507
+    m_Key: ui.assist.honest_cues.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114464
+  - m_Id: 1896792261652508
+    m_Key: ui.assist.honest_cues.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114465
+  - m_Id: 1896792261652509
+    m_Key: ui.assist.brighter_halls.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114466
+  - m_Id: 1896792261652510
+    m_Key: ui.assist.brighter_halls.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114467
+  - m_Id: 1896792261652511
+    m_Key: ui.assist.steady_torch.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114468
+  - m_Id: 1896792261652512
+    m_Key: ui.assist.steady_torch.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114469
+  - m_Id: 1896792261652513
+    m_Key: ui.assist.no_replay.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114470
+  - m_Id: 1896792261652514
+    m_Key: ui.assist.no_replay.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114471
+  - m_Id: 1896792261652515
+    m_Key: ui.oath.old_battery.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114472
+  - m_Id: 1896792261652516
+    m_Key: ui.oath.old_battery.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114473
+  - m_Id: 1896792261652517
+    m_Key: ui.oath.does_not_wait.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114474
+  - m_Id: 1896792261652518
+    m_Key: ui.oath.does_not_wait.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114475
+  - m_Id: 1896792261652519
+    m_Key: ui.oath.welded_lockers.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114476
+  - m_Id: 1896792261652520
+    m_Key: ui.oath.welded_lockers.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114477
+  - m_Id: 1896792261652521
+    m_Key: ui.oath.stan_early.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114478
+  - m_Id: 1896792261652522
+    m_Key: ui.oath.stan_early.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114479
+  - m_Id: 1896792261652523
+    m_Key: ui.oath.no_second_chances.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114480
+  - m_Id: 1896792261652524
+    m_Key: ui.oath.no_second_chances.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114481
+  - m_Id: 1896792261652525
+    m_Key: ui.oath.failing_grid.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114482
+  - m_Id: 1896792261652526
+    m_Key: ui.oath.failing_grid.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114483
+  - m_Id: 1896792261652527
+    m_Key: ui.oath.short_fuse.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114484
+  - m_Id: 1896792261652528
+    m_Key: ui.oath.short_fuse.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114485
+  - m_Id: 1896792261652529
+    m_Key: ui.oath.hears_everything.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114486
+  - m_Id: 1896792261652530
+    m_Key: ui.oath.hears_everything.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114487
+  - m_Id: 1896792261652531
+    m_Key: ui.oath.doors_dont_hold.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114488
+  - m_Id: 1896792261652532
+    m_Key: ui.oath.doors_dont_hold.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114489
+  - m_Id: 1896792261652533
+    m_Key: ui.kit.standard_issue.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114490
+  - m_Id: 1896792261652534
+    m_Key: ui.kit.standard_issue.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114491
+  - m_Id: 1896792261652535
+    m_Key: ui.kit.scavenger.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114492
+  - m_Id: 1896792261652536
+    m_Key: ui.kit.scavenger.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114493
+  - m_Id: 1896792261652537
+    m_Key: ui.kit.runner.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114494
+  - m_Id: 1896792261652538
+    m_Key: ui.kit.runner.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114495
+  - m_Id: 1896792261652539
+    m_Key: ui.kit.cartographer.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957120
+  - m_Id: 1896792261652540
+    m_Key: ui.kit.cartographer.desc
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957121
+  - m_Id: 1896792261652541
+    m_Key: ui.campaign.tag.oath
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957122
+  - m_Id: 1896792261652542
+    m_Key: ui.campaign.tag.assisted
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957123
+  - m_Id: 1896792261652543
+    m_Key: ui.ledger.oath
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957124
+  - m_Id: 1896792261652544
+    m_Key: ui.ledger.grade
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957125
+  - m_Id: 1896792261652545
+    m_Key: ui.ledger.grade_new_best
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957126
+  - m_Id: 1896792261652546
+    m_Key: ui.ledger.grade_bonus
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957127
+  - m_Id: 1896792261652547
+    m_Key: ui.ledger.record_new
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957128
+  - m_Id: 1896792261652548
+    m_Key: ui.end.grades
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957129
+  - m_Id: 1896792261652549
+    m_Key: ui.shop.forsworn
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957130
+  - m_Id: 1896792261652550
+    m_Key: ui.record.title
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957131
+  - m_Id: 1896792261652551
+    m_Key: ui.record.tab.record
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957132
+  - m_Id: 1896792261652552
+    m_Key: ui.record.tab.unlocks
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957133
+  - m_Id: 1896792261652553
+    m_Key: ui.record.tab.codex
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957134
+  - m_Id: 1896792261652554
+    m_Key: ui.record.tab.assists
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957135
+  - m_Id: 1896792261652555
+    m_Key: ui.record.empty
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957136
+  - m_Id: 1896792261652556
+    m_Key: ui.record.started
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957137
+  - m_Id: 1896792261652557
+    m_Key: ui.record.finished
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957138
+  - m_Id: 1896792261652558
+    m_Key: ui.record.endings
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957139
+  - m_Id: 1896792261652559
+    m_Key: ui.record.best_oath_a
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957140
+  - m_Id: 1896792261652560
+    m_Key: ui.record.best_oath_b
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957141
+  - m_Id: 1896792261652561
+    m_Key: ui.record.shards
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957142
+  - m_Id: 1896792261652562
+    m_Key: ui.record.descent
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957143
+  - m_Id: 1896792261652563
+    m_Key: ui.record.floors_header
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957144
+  - m_Id: 1896792261652564
+    m_Key: ui.record.floor
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957145
+  - m_Id: 1896792261652565
+    m_Key: ui.record.floor_oath
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957146
+  - m_Id: 1896792261652566
+    m_Key: ui.record.new
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957147
+  - m_Id: 1896792261652567
+    m_Key: ui.record.unlocked
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957148
+  - m_Id: 1896792261652568
+    m_Key: ui.record.not_met
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957149
+  - m_Id: 1896792261652569
+    m_Key: ui.record.habits_header
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957150
+  - m_Id: 1896792261652570
+    m_Key: ui.record.assists_next_floor
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957151
+  - m_Id: 1896792261652571
+    m_Key: ui.record.assists_mark
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957152
+  - m_Id: 1896792261652572
+    m_Key: ui.record.unlock.codex.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957153
+  - m_Id: 1896792261652573
+    m_Key: ui.record.unlock.codex.cond
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957154
+  - m_Id: 1896792261652574
+    m_Key: ui.record.unlock.kit_scavenger.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957155
+  - m_Id: 1896792261652575
+    m_Key: ui.record.unlock.kit_scavenger.cond
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957156
+  - m_Id: 1896792261652576
+    m_Key: ui.record.unlock.card_stethoscope.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957157
+  - m_Id: 1896792261652577
+    m_Key: ui.record.unlock.card_stethoscope.cond
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957158
+  - m_Id: 1896792261652578
+    m_Key: ui.record.unlock.contract_unseen.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957159
+  - m_Id: 1896792261652579
+    m_Key: ui.record.unlock.contract_unseen.cond
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957160
+  - m_Id: 1896792261652580
+    m_Key: ui.record.unlock.oaths.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957161
+  - m_Id: 1896792261652581
+    m_Key: ui.record.unlock.oaths.cond
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957162
+  - m_Id: 1896792261652582
+    m_Key: ui.record.unlock.colour_bone.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957163
+  - m_Id: 1896792261652583
+    m_Key: ui.record.unlock.colour_bone.cond
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957164
+  - m_Id: 1896792261652584
+    m_Key: ui.record.unlock.kit_runner.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957165
+  - m_Id: 1896792261652585
+    m_Key: ui.record.unlock.kit_runner.cond
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957166
+  - m_Id: 1896792261652586
+    m_Key: ui.record.unlock.card_archivist.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957167
+  - m_Id: 1896792261652587
+    m_Key: ui.record.unlock.card_archivist.cond
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957168
+  - m_Id: 1896792261652588
+    m_Key: ui.record.unlock.card_dynamo.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957169
+  - m_Id: 1896792261652589
+    m_Key: ui.record.unlock.card_dynamo.cond
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957170
+  - m_Id: 1896792261652590
+    m_Key: ui.record.unlock.kit_cartographer.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957171
+  - m_Id: 1896792261652591
+    m_Key: ui.record.unlock.kit_cartographer.cond
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957172
+  - m_Id: 1896792261652592
+    m_Key: ui.record.unlock.contracts_skill.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957173
+  - m_Id: 1896792261652593
+    m_Key: ui.record.unlock.contracts_skill.cond
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957174
+  - m_Id: 1896792261652594
+    m_Key: ui.record.unlock.colour_oath_red.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957175
+  - m_Id: 1896792261652595
+    m_Key: ui.record.unlock.colour_oath_red.cond
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957176
+  - m_Id: 1896792261652596
+    m_Key: ui.record.unlock.colour_ward.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957177
+  - m_Id: 1896792261652597
+    m_Key: ui.record.unlock.colour_ward.cond
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957178
+  - m_Id: 1901735156641792
+    m_Key: ui.ledger.slip_subtitle.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957362
+  - m_Id: 1901735156641793
+    m_Key: ui.ledger.slip_subtitle.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957363
+  - m_Id: 1901735156641794
+    m_Key: ui.ledger.slip_subtitle.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957364
+  - m_Id: 1901735156641795
+    m_Key: ui.ledger.slip_subtitle.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957365
+  - m_Id: 1901735156641796
+    m_Key: ui.end.wing.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957366
+  - m_Id: 1901735156641797
+    m_Key: ui.end.wing.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957367
+  - m_Id: 1901735156641798
+    m_Key: ui.end.wing.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957368
+  - m_Id: 1901735156641799
+    m_Key: ui.end.wing.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957369
+  - m_Id: 1901735156641800
+    m_Key: ui.end.wing.5
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957370
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -1116,10 +2066,6 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: 'Rules screen: begin the run (420 x 90 button, 44 pt)'
-    - rid: 4707331669776663408
-      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
-      data:
-        m_CommentText: Controls sheet, keyboard and mouse (34 pt, two lines, 1400 px). Key names in <b> stay as they are (WASD, SHIFT, F, E, 1, 2, ESC); MOUSE is translated
     - rid: 4707331669776663409
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
@@ -1427,7 +2373,7 @@ MonoBehaviour:
     - rid: 4707331669776663485
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: Dialogue panel hint, bottom-right (20 pt, one line, 760 px, auto-size) while the conversation continues. {key} = E on keyboard or TAP on touch, {back} = ESC or BACK on touch - do not translate the key names
+        m_CommentText: Dialogue panel hint, bottom-right (20 pt, one line, 760 px, auto-size) while the conversation continues. {key} = the bound key (E), the gamepad button or TAP on touch, {back} = ESC, the gamepad button or BACK on touch - do not translate the key names
     - rid: 4707331669776663486
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
@@ -1435,7 +2381,7 @@ MonoBehaviour:
     - rid: 4707331669776663487
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: Dialogue panel hint while two reply choices are on screen (20 pt, 760 px). {key} = ESC
+        m_CommentText: Dialogue panel hint while two reply choices are on screen (20 pt, 760 px). {key} = ESC, the gamepad button or ESC on touch
     - rid: 4707331674882704014
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
@@ -1592,3 +2538,767 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: 'Credits section heading: Unity Technologies (40 pt, one line)'
+    - rid: 4707331786811113619
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Settings row label and photosensitivity card toggle label, followed by ": ON/OFF" (600 px row label, auto-size; toggle button 760 px, 38 pt, auto-size)'
+    - rid: 4707331786811113620
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: First-launch photosensitivity warning heading (64 pt, one line, 1500 px, auto-size)
+    - rid: 4707331786811113621
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: First-launch photosensitivity warning body (36 pt, wraps, 1400 x 520 px, auto-size down to 60 %). Medical wording, keep it plain. Mentions the REDUCE FLASHING setting and SETTINGS > GENERAL
+    - rid: 4707331786811113622
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Title-screen notice heading when a saved run could not be loaded (76 pt, one line, 1400 px, auto-size)
+    - rid: 4707331786811113623
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Save notice body, save from a newer game version (34 pt, wraps, two sentences, 1400 x 200 px)
+    - rid: 4707331786811113624
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Save notice body, damaged save (34 pt, wraps, two sentences, 1400 x 200 px)
+    - rid: 4707331786811113793
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Key chip for looking around with the mouse (objective card, controls sheet). ALL CAPS, short, ~7 characters
+    - rid: 4707331786811113794
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Key chip: the left mouse button. ALL CAPS, short, ~12 characters'
+    - rid: 4707331786811113795
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Key chip: the right mouse button, hold to focus the torch beam. ALL CAPS, short, ~12 characters'
+    - rid: 4707331786811113796
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Key chip: the middle mouse button (wheel click). ALL CAPS, short, ~12 characters'
+    - rid: 4707331786811113797
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Key chip: the gamepad left stick (move). ALL CAPS, short, ~9 characters'
+    - rid: 4707331786811113798
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Key chip: the gamepad right stick (look). ALL CAPS, short, ~9 characters'
+    - rid: 4707331786811113799
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Key chip: gamepad d-pad up. ALL CAPS, short, ~16 characters'
+    - rid: 4707331786811113800
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Key chip: gamepad d-pad down. ALL CAPS, short, ~16 characters'
+    - rid: 4707331786811113801
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Key chip: gamepad d-pad left. ALL CAPS, short, ~16 characters'
+    - rid: 4707331786811113802
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Key chip: gamepad d-pad right. ALL CAPS, short, ~16 characters'
+    - rid: 4707331786811113803
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Key chip: the PlayStation cross button (bottom face button). ALL CAPS, short'
+    - rid: 4707331786811113804
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Key chip: the PlayStation circle button (right face button). ALL CAPS, short'
+    - rid: 4707331786811113805
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Key chip: the PlayStation square button (left face button). ALL CAPS, short'
+    - rid: 4707331786811113806
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Key chip: the PlayStation triangle button (top face button). ALL CAPS, short'
+    - rid: 4707331786811113807
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Key chip: the Xbox View button (small left button, floor plan). The printed name - keep it English in every language'
+    - rid: 4707331786811113808
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Key chip: the Xbox Menu button (small right button, pause). The printed name - keep it English in every language'
+    - rid: 4707331786811113809
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Key chip: the PlayStation Options button (pause). The printed name - keep it English in every language'
+    - rid: 4707331786811113810
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Key chip: the PlayStation Create button (floor plan). The printed name - keep it English in every language'
+    - rid: 4707331786811113811
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Key chip for an action with no key or button assigned (never translated)
+    - rid: 4707331786811113812
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Controls sheet for keyboard / mouse and gamepad (34 pt, three lines, 1400 px, auto-size). Every {placeholder} is replaced by the bound key or button in bold (do not translate or remove them, you may reorder): move, sprint, look, torch, focus, interact, throw, item1, item2, map, pause'
+    - rid: 4707331786811113813
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Controls tab row: opens the key and button remapping screen (label left, 360 x 56 button right, 34 pt). ALL CAPS, short'
+    - rid: 4707331786811113814
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Remapping screen heading (76 pt, one line, 1200 px). ALL CAPS
+    - rid: 4707331786811113815
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Remapping screen column header over the keyboard / mouse buttons (30 pt, 360 px). ALL CAPS
+    - rid: 4707331786811113816
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Remapping screen column header over the gamepad buttons (30 pt, 360 px). ALL CAPS
+    - rid: 4707331786811113817
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Remapping screen: banner while waiting for the new key or button (40 pt, one line, 1500 px). {cancel} = ESC on a keyboard or the Start / Menu button name on a gamepad (do not translate it)'
+    - rid: 4707331786811113818
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Remapping screen: shown for a moment when the chosen key was already used, so the two swapped (30 pt, one line). {action} = the other action name (ui.rebind.action.*)'
+    - rid: 4707331786811113819
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Remapping screen: button that restores every key and button to the default (320 x 70, 34 pt). ALL CAPS'
+    - rid: 4707331786811113820
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Remapping screen row label (34 pt, 600 px): the key that moves you forward. ALL CAPS'
+    - rid: 4707331786811113821
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Remapping screen row label: the key that moves you backward. ALL CAPS'
+    - rid: 4707331786811113822
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Remapping screen row label: the key that strafes left. ALL CAPS'
+    - rid: 4707331786811113823
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Remapping screen row label: the key that strafes right. ALL CAPS'
+    - rid: 4707331786811113824
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Remapping screen row label: hold to run. ALL CAPS'
+    - rid: 4707331786811113825
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Remapping screen row label: switch the flashlight on and off. ALL CAPS'
+    - rid: 4707331786811113826
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Remapping screen row label: hold to focus the flashlight beam. ALL CAPS'
+    - rid: 4707331786811113827
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Remapping screen row label: use, open, talk, hide in a locker. ALL CAPS'
+    - rid: 4707331786811113828
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Remapping screen row label: throw the item you carry. ALL CAPS'
+    - rid: 4707331786811113829
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Remapping screen row label: use the spare battery. ALL CAPS'
+    - rid: 4707331786811113830
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Remapping screen row label: use the star compass. ALL CAPS'
+    - rid: 4707331786811113831
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Remapping screen row label: hold to use the floor plan. ALL CAPS'
+    - rid: 4707331786811114139
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'F120 Settings AUDIO row label: let the hunter hear the microphone (ON/OFF stepper). Desktop only'
+    - rid: 4707331786811114140
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'F120 Settings AUDIO row label: which microphone device (stepper of device names)'
+    - rid: 4707331786811114141
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: F120 Settings AUDIO value text when the system reports no microphone (28 pt, 560 px, auto-size)
+    - rid: 4707331786811114142
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'F120 Settings AUDIO row label: the loudness above which the hunter hears you (slider, percent)'
+    - rid: 4707331786811114143
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: F120 Settings AUDIO row label of the live level meter
+    - rid: 4707331786811114144
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'F120 meter status text beside the level meter (22 pt, 260 px, wraps to 2 lines): microphone setting off'
+    - rid: 4707331786811114145
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'F120 meter status text: the microphone is open and working'
+    - rid: 4707331786811114146
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'F120 meter status text: the device is open but records only silence (usually the operating system''s microphone privacy switch). Wraps to 2 lines in 260 px'
+    - rid: 4707331786811114147
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'F120 meter status text: no microphone device could be opened'
+    - rid: 4707331786811114148
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: F120 privacy note under the microphone rows of the AUDIO tab (24 pt grey, centred, wraps over 1400 px, auto-size down to 16 pt)
+    - rid: 4707331786811114149
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'F120 end screen subtitle (36 pt): caught while the torch lay on the floor after the grab. It = the hunter'
+    - rid: 4707331786811114150
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: F120 death replay CCTV overlay, top-left (22 pt). {n} = a two-digit camera number. Keep CAM and the placeholder
+    - rid: 4707331786811114151
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: F120 death replay CCTV overlay, top-right, after a red dot (22 pt, blinks)
+    - rid: 4707331786811114152
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: F120 caption under the death replay frame (26 pt, ALL CAPS, 552 px, auto-size). It = the hunter
+    - rid: 4707331786811114153
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: F120 caption under the death replay frame when the hunter was behind the player in the last seconds (26 pt, ALL CAPS, 552 px, auto-size)
+    - rid: 4707331786811114154
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Habit name inside the IT HAD LEARNED line: your voice, heard through the microphone (one word, all caps)'
+    - rid: 4707331786811114155
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: What the hunter does now that it learned your voice. Same places and limits as ui.hunter.effect.lockers
+    - rid: 4707331786811114245
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'End screen subtitle (36 pt): caught by the hunter inside the asylum hub (F121 breach)'
+    - rid: 4707331786811114246
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'End screen stats line (32 pt, letter-spaced) for a death in the asylum hub: no stars or time to report. Keep {floor}'
+    - rid: 4707331786811114437
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Title and pause screens: open the Patient Record (200 x 86 button, 32 pt, auto-size). One short word'
+    - rid: 4707331786811114438
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: New-campaign screen heading (68 pt, one line, 1400 px)
+    - rid: 4707331786811114439
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'New-campaign screen: start button (440 x 80, 40 pt)'
+    - rid: 4707331786811114440
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'New-campaign screen: left column heading (30 pt, letter-spaced)'
+    - rid: 4707331786811114441
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'New-campaign screen: right column heading (30 pt, letter-spaced)'
+    - rid: 4707331786811114442
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'New-campaign screen: starting kit row label (300 px, 30 pt, auto-size)'
+    - rid: 4707331786811114443
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'New-campaign screen: starting torch colour row label (300 px, 30 pt, auto-size)'
+    - rid: 4707331786811114444
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'New-campaign screen: description of the torch colour row (27 pt, up to 4 lines, 840 px)'
+    - rid: 4707331786811114445
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'New-campaign screen: shown while assists are on (26 pt, one line, 1700 px, auto-size)'
+    - rid: 4707331786811114446
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'New-campaign screen: the row that opens the Oaths panel (caption start, then the summary; 840 x 54, 30 pt, auto-size)'
+    - rid: 4707331786811114447
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oaths panel heading (68 pt, one line)
+    - rid: 4707331786811114448
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Oaths panel: close button (440 x 80, 40 pt)'
+    - rid: 4707331786811114449
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'New-campaign screen: description of the Oaths row (27 pt, up to 4 lines)'
+    - rid: 4707331786811114450
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'New-campaign screen: why the Oaths row is dimmed (shown after the colon, 30 pt, auto-size)'
+    - rid: 4707331786811114451
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oaths summary (38 pt, one line). {rank} = Oath rank, {mult} = shard multiplier such as 1,35
+    - rid: 4707331786811114452
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Difficulty preset name (36 pt button, 400 px, auto-size; also the campaign tag)
+    - rid: 4707331786811114453
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Difficulty preset description (28 pt, up to 2 lines, 1500 px)
+    - rid: 4707331786811114454
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Difficulty preset name (36 pt button, 400 px, auto-size; also the campaign tag)
+    - rid: 4707331786811114455
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Difficulty preset description (28 pt, up to 2 lines, 1500 px)
+    - rid: 4707331786811114456
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Difficulty preset name (36 pt button, 400 px, auto-size; also the campaign tag)
+    - rid: 4707331786811114457
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Difficulty preset description (28 pt, up to 2 lines, 1500 px)
+    - rid: 4707331786811114458
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Assist row label (30 pt, 520 px, auto-size)
+    - rid: 4707331786811114459
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Assist description (27 pt, up to 4 lines, 840 px)
+    - rid: 4707331786811114460
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Assist row label (30 pt, 520 px, auto-size)
+    - rid: 4707331786811114461
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Assist description (27 pt, up to 4 lines, 840 px)
+    - rid: 4707331786811114462
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Assist row label (30 pt, 520 px, auto-size)
+    - rid: 4707331786811114463
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Assist description (27 pt, up to 4 lines, 840 px)
+    - rid: 4707331786811114464
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Assist row label (30 pt, 520 px, auto-size)
+    - rid: 4707331786811114465
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Assist description (27 pt, up to 4 lines, 840 px). The lying sounds, phantoms, torch failures and hidden eyes are switched off
+    - rid: 4707331786811114466
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Assist row label (30 pt, 520 px, auto-size)
+    - rid: 4707331786811114467
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Assist description (27 pt, up to 4 lines, 840 px)
+    - rid: 4707331786811114468
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Assist row label (30 pt, 520 px, auto-size). Comfort option: sets no records either way'
+    - rid: 4707331786811114469
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Assist description (27 pt, up to 4 lines, 840 px). Motion comfort
+    - rid: 4707331786811114470
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Assist row label (30 pt, 520 px, auto-size). Comfort option: sets no records either way'
+    - rid: 4707331786811114471
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Assist description (27 pt, up to 4 lines, 840 px)
+    - rid: 4707331786811114472
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oath name (30 pt, ~960 px with its rank and bonus, auto-size)
+    - rid: 4707331786811114473
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oath description (28 pt, up to 2 lines, 1500 px)
+    - rid: 4707331786811114474
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oath name (30 pt, ~960 px with its rank and bonus, auto-size)
+    - rid: 4707331786811114475
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oath description (28 pt, up to 2 lines, 1500 px)
+    - rid: 4707331786811114476
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oath name (30 pt, ~960 px with its rank and bonus, auto-size)
+    - rid: 4707331786811114477
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oath description (28 pt, up to 2 lines, 1500 px)
+    - rid: 4707331786811114478
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oath name (30 pt, ~960 px with its rank and bonus, auto-size)
+    - rid: 4707331786811114479
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oath description (28 pt, up to 2 lines, 1500 px)
+    - rid: 4707331786811114480
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oath name (30 pt, ~960 px with its rank and bonus, auto-size)
+    - rid: 4707331786811114481
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oath description (28 pt, up to 2 lines, 1500 px)
+    - rid: 4707331786811114482
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oath name (30 pt, ~960 px with its rank and bonus, auto-size)
+    - rid: 4707331786811114483
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oath description (28 pt, up to 2 lines, 1500 px)
+    - rid: 4707331786811114484
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oath name (30 pt, ~960 px with its rank and bonus, auto-size)
+    - rid: 4707331786811114485
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oath description (28 pt, up to 2 lines, 1500 px)
+    - rid: 4707331786811114486
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oath name (30 pt, ~960 px with its rank and bonus, auto-size)
+    - rid: 4707331786811114487
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oath description (28 pt, up to 2 lines, 1500 px)
+    - rid: 4707331786811114488
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oath name (30 pt, ~960 px with its rank and bonus, auto-size)
+    - rid: 4707331786811114489
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Oath description (28 pt, up to 2 lines, 1500 px)
+    - rid: 4707331786811114490
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Starting kit name (stepper, 480 px, 30 pt, auto-size)
+    - rid: 4707331786811114491
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Starting kit description (27 pt, up to 4 lines, 840 px)
+    - rid: 4707331786811114492
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Starting kit name (stepper, 480 px, 30 pt, auto-size)
+    - rid: 4707331786811114493
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Starting kit description (27 pt, up to 4 lines, 840 px)
+    - rid: 4707331786811114494
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Starting kit name (stepper, 480 px, 30 pt, auto-size)
+    - rid: 4707331786811114495
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Starting kit description (27 pt, up to 4 lines, 840 px)
+    - rid: 4707331789613957120
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Starting kit name (stepper, 480 px, 30 pt, auto-size)
+    - rid: 4707331789613957121
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Starting kit description (27 pt, up to 4 lines, 840 px)
+    - rid: 4707331789613957122
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Campaign tag piece after the preset name (28 pt, top right). {rank} = Oath rank
+    - rid: 4707331789613957123
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Campaign tag piece: the campaign used assists (28 pt, top right)'
+    - rid: 4707331789613957124
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Ledger line for the Oaths' shard bonus (36 pt label, 900 px). {rank} = Oath rank, {mult} = multiplier such as 1,35
+    - rid: 4707331789613957125
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Ledger and end screen: caption over the big grade letter (28 pt, letter-spaced, 220 px)'
+    - rid: 4707331789613957126
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Ledger: under the grade letter when it is a personal best (26 pt, 240 px, auto-size)'
+    - rid: 4707331789613957127
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Ledger line: shard bonus for the floor grade (36 pt label, 900 px). {grade} = S, A or B'
+    - rid: 4707331789613957128
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Ledger and end screen: top-left line when the Patient Record has something new (28 pt, 800 px). {n} = count'
+    - rid: 4707331789613957129
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: "End screen: the five floor grades (32 pt, letter-spaced, one line, 1600 px). {grades} = letters such as B \xB7 A \xB7 S \xB7 A \xB7 B"
+    - rid: 4707331789613957130
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Shop: status and button of the Second Wind card under the NO SECOND CHANCES Oath (19 pt status, 160 px button, auto-size)'
+    - rid: 4707331789613957131
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient Record screen heading (68 pt, one line, 1400 px)
+    - rid: 4707331789613957132
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient Record tab caption (330 x 66 button, 32 pt, auto-size)
+    - rid: 4707331789613957133
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient Record tab caption (330 x 66 button, 32 pt, auto-size)
+    - rid: 4707331789613957134
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient Record tab caption (330 x 66 button, 32 pt, auto-size)
+    - rid: 4707331789613957135
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient Record tab caption (330 x 66 button, 32 pt, auto-size). Pause menu only
+    - rid: 4707331789613957136
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Patient Record: shown when nothing is on file yet (40 pt, one line)'
+    - rid: 4707331789613957137
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient Record row label (30 pt, 700 px, auto-size)
+    - rid: 4707331789613957138
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient Record row label (30 pt, 700 px, auto-size)
+    - rid: 4707331789613957139
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Patient Record row label (30 pt, 700 px, auto-size)
+    - rid: 4707331789613957140
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Patient Record row label: best Oath rank on ending A, Discharged (30 pt, 700 px, auto-size)'
+    - rid: 4707331789613957141
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Patient Record row label: best Oath rank on ending B, Lights Out (30 pt, 700 px, auto-size)'
+    - rid: 4707331789613957142
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Patient Record row label: shards earned over every campaign (30 pt, 700 px, auto-size)'
+    - rid: 4707331789613957143
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Patient Record row label: deepest DESCENT level (30 pt, 700 px, auto-size)'
+    - rid: 4707331789613957144
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Patient Record: heading over the best grade per floor (28 pt)'
+    - rid: 4707331789613957145
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Patient Record: floor row label (30 pt). {floor} = number'
+    - rid: 4707331789613957146
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Patient Record: the Oath rank a best grade was set with. {rank} = number'
+    - rid: 4707331789613957147
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Patient Record: marks an unlock not yet viewed (appended to its name)'
+    - rid: 4707331789613957148
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Patient Record: detail line of an unlocked milestone (23 pt, green)'
+    - rid: 4707331789613957149
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Patient Record codex: body of an entry not met yet (28 pt, up to 4 lines)'
+    - rid: 4707331789613957150
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Patient Record codex: heading over the hunter''s learned habits (24 pt)'
+    - rid: 4707331789613957151
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Pause menu assists tab: note under the rows (26 pt, one line, 1500 px)'
+    - rid: 4707331789613957152
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Pause menu assists tab: warning (26 pt, one line, 1500 px)'
+    - rid: 4707331789613957153
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock name (29 pt, 880 px, auto-size)
+    - rid: 4707331789613957154
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock condition (23 pt, 880 px, then the progress count)
+    - rid: 4707331789613957155
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock name (29 pt, 880 px, auto-size)
+    - rid: 4707331789613957156
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock condition (23 pt, 880 px, then the progress count)
+    - rid: 4707331789613957157
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock name (29 pt, 880 px, auto-size)
+    - rid: 4707331789613957158
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock condition (23 pt, 880 px, then the progress count)
+    - rid: 4707331789613957159
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock name (29 pt, 880 px, auto-size)
+    - rid: 4707331789613957160
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock condition (23 pt, 880 px, then the progress count)
+    - rid: 4707331789613957161
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock name (29 pt, 880 px, auto-size)
+    - rid: 4707331789613957162
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock condition (23 pt, 880 px, then the progress count)
+    - rid: 4707331789613957163
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock name (29 pt, 880 px, auto-size)
+    - rid: 4707331789613957164
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock condition (23 pt, 880 px, then the progress count)
+    - rid: 4707331789613957165
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock name (29 pt, 880 px, auto-size)
+    - rid: 4707331789613957166
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock condition (23 pt, 880 px, then the progress count)
+    - rid: 4707331789613957167
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock name (29 pt, 880 px, auto-size)
+    - rid: 4707331789613957168
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock condition (23 pt, 880 px, then the progress count)
+    - rid: 4707331789613957169
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock name (29 pt, 880 px, auto-size)
+    - rid: 4707331789613957170
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock condition (23 pt, 880 px, then the progress count)
+    - rid: 4707331789613957171
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock name (29 pt, 880 px, auto-size)
+    - rid: 4707331789613957172
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock condition (23 pt, 880 px, then the progress count)
+    - rid: 4707331789613957173
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock name (29 pt, 880 px, auto-size)
+    - rid: 4707331789613957174
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock condition (23 pt, 880 px, then the progress count)
+    - rid: 4707331789613957175
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock name (29 pt, 880 px, auto-size)
+    - rid: 4707331789613957176
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock condition (23 pt, 880 px, then the progress count)
+    - rid: 4707331789613957177
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock name (29 pt, 880 px, auto-size)
+    - rid: 4707331789613957178
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Unlock condition (23 pt, 880 px, then the progress count)
+    - rid: 4707331789613957362
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Readmission slip subtitle typed after floor 1 (Ward A; ALL CAPS, one line, 1400 px at 34 pt, auto-size; keep under ~56 characters)
+    - rid: 4707331789613957363
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Readmission slip subtitle typed after floor 2 (Boiler Room; same limits)
+    - rid: 4707331789613957364
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Readmission slip subtitle typed after floor 3 (Cold Storage; same limits)
+    - rid: 4707331789613957365
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Readmission slip subtitle typed after floor 4 (Operating Theatre; same limits)
+    - rid: 4707331789613957366
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Second line of the end screen after a LOSS on floor 1 (Hilde's wing; 32 pt wrapped, sentence case, after the cause line)
+    - rid: 4707331789613957367
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Second line of the end screen after a loss on floor 2 (Tomas)
+    - rid: 4707331789613957368
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Second line of the end screen after a loss on floor 3 (Elias)
+    - rid: 4707331789613957369
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Second line of the end screen after a loss on floor 4 (Dr. Weiss)
+    - rid: 4707331789613957370
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Second line of the end screen after a loss on floor 5 (the Director)

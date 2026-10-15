@@ -141,4 +141,5 @@ public class GameAudioLibrary : ScriptableObject
     public AudioSlot stallSlam = new AudioSlot();      // F114: a toilet stall door / cell door slamming shut (empty = generated bang)
     public AudioSlot tvStatic = new AudioSlot();       // F114: the kitchen television hissing, a loop (empty = generated noise)
     public AudioSlot chairScrape = new AudioSlot();    // F114: a chair dragged back on the floor (empty = generated scrape)
+    public AudioSlot paChime = new AudioSlot();        // F123: the Director's ceiling PA chime on floor 5 (empty = a generated two-tone)
 }

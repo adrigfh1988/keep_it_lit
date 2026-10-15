@@ -4,9 +4,8 @@ using UnityEngine.InputSystem;
 #endif
 
 /// <summary>
-/// F76: the one facade every direct key-reader (Flashlight, PlayerInteractor, Locker, ThrowController,
-/// ConsumableController, PauseMenu, ShopMenu, ShopRoom) ORs in next to its keyboard/gamepad check, plus
-/// the auto-detect for whether the on-screen controls should show at all (<see cref="Active"/>).
+/// F76: the touch half of the input facade (since F119 <see cref="GameInput"/> ORs it into every action read, so nothing else calls
+/// Pressed/Held/Released directly), plus the auto-detect for whether the on-screen controls should show at all (<see cref="Active"/>).
 ///
 /// A plain static class per CLAUDE.md's "statics must survive a scene reload and must not survive Play
 /// mode" rule - <see cref="ResetStatics"/> below. Edge detection uses <see cref="Time.frameCount"/>
@@ -166,8 +165,8 @@ public static class TouchInput
         }
     }
 
-    /// <summary>Formats a key hint so it reads sensibly on-screen even while touch is active, e.g.
-    /// TouchInput.Key("E", "TAP") -> "E" on keyboard, "TAP" while the on-screen controls are up.</summary>
+    /// <summary>Legacy (F119): new code uses <see cref="InputGlyphs.Key"/>, which follows keyboard / gamepad / touch. Formats a key hint so it
+    /// reads sensibly on-screen even while touch is active, e.g. TouchInput.Key("E", "TAP") -> "E" on keyboard, "TAP" on touch.</summary>
     public static string Key(string keyboardLabel, string touchLabel) => Active ? touchLabel : keyboardLabel;
 
     /// <summary>
@@ -177,6 +176,7 @@ public static class TouchInput
     /// </summary>
     public static void Poll()
     {
+        GameInput.Poll();   // F119: settles the gamepad-used flag first (it re-enters here once; the frame check below makes that harmless)
         int frame = Time.frameCount;
         if (frame == _lastPollFrame) return;
         _lastPollFrame = frame;
@@ -216,7 +216,9 @@ public static class TouchInput
             // touch can raise a compatibility mouse event - ignore both for a short grace window after
             // any genuine touch activity so a tablet does not flicker between modes.
             bool withinTouchGrace = Time.unscaledTime - _lastTouchActivityTime < TouchActivityGrace;
-            if ((keyPressed || mousePressed) && !withinTouchGrace) Active = false;
+            // F119: a gamepad press turns them off too (Steam Deck: touch the screen to show them, press a button to hide them again).
+            bool padPressed = GameInput.GamepadUsedThisFrame;
+            if ((keyPressed || mousePressed || padPressed) && !withinTouchGrace) Active = false;
         }
 #endif
     }

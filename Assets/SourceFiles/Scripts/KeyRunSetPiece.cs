@@ -26,6 +26,9 @@ public class KeyRunSetPiece : HubSetPiece
 
     public bool KeyHeld { get; private set; }
 
+    /// <summary>F121: raised at the end of TakeKey (the hub breach's detonator). An instance event: the subscriber unsubscribes in OnEnd and OnDisable.</summary>
+    public event System.Action KeyTaken;
+
     public bool IsComplete => pursuer != null && route != null && route.Length >= 3 && key != null;
 
     protected override void OnBegin()
@@ -34,6 +37,15 @@ public class KeyRunSetPiece : HubSetPiece
         if (hub == null || !IsComplete)
         {
             Debug.LogError("KeyRunSetPiece: the pursuer, the patrol route or the key is missing. Run KEEP IT LIT > Build Missing Pieces. The Director's door stays open.", this);
+            return;
+        }
+
+        if (HubBreach.SkipKeyRun)
+        {
+            // F121: a Retry after a breach death. The key is already in the player's pocket, the Director's door open and Timmy is not on the route: the breach itself starts a few seconds after the arrival.
+            KeyHeld = true;
+            key.gameObject.SetActive(false);
+            SetDoorLock(false);
             return;
         }
 
@@ -75,6 +87,15 @@ public class KeyRunSetPiece : HubSetPiece
         SetDoorLock(false);
         if (key != null) key.gameObject.SetActive(false);
         if (Hub != null) Hub.SubtitleLine(L10n.T("hub.keyrun.taken"), 3f);
+        KeyTaken?.Invoke();
+    }
+
+    /// <summary>F121: the breach withdraws the patrolling Timmy under the blackout (the hunter takes over the hub).</summary>
+    public void DismissPursuer()
+    {
+        if (pursuer == null) return;
+        pursuer.Stop();
+        pursuer.gameObject.SetActive(false);
     }
 
     /// <summary>S9: this piece owns the Director's door lock (WingDoor.Lock / Unlock by owner - no text compare).</summary>

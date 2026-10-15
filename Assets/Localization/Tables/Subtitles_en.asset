@@ -251,6 +251,117 @@ MonoBehaviour:
     m_Localized: FULL TORCH
     m_Metadata:
       m_Items: []
+  - m_Id: 1860893469569024
+    m_Localized: It threw you off. Your torch is on the floor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860893545066496
+    m_Localized: Next time it will not let go.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860893545066497
+    m_Localized: You have the light.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860893545066498
+    m_Localized: IT KNOWS YOUR VOICE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1874627596382208
+    m_Localized: OATH {rank}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763132
+  - m_Id: 1879570495565824
+    m_Localized: THERE WAS NO DOOR HERE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565825
+    m_Localized: ONE MORE DOOR THAN BEFORE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565826
+    m_Localized: THE PIPES KNOCK TWICE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565827
+    m_Localized: THE PIPES KNOCK THREE TIMES.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565828
+    m_Localized: EMPTY. THE TRAY IS COLD.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565829
+    m_Localized: A TAG WITH NO NAME. NOBODY ON THE TRAY.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565830
+    m_Localized: EMPTY. SOMEONE HAS MADE IT UP LIKE A BED.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565831
+    m_Localized: DRAWER FIVE. ONLY HIS TOE TAG, WAITING.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565832
+    m_Localized: THE TAG HAS YOUR NUMBER. THE TRAY IS STILL WARM.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565833
+    m_Localized: 'YOUR THINGS ARE ON THE TRAY: A SPARE BATTERY.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565834
+    m_Localized: CLEAR GLASS, BLUE CAP. YOUR HEART SLOWS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565835
+    m_Localized: THE FEAR GOES QUIET. SO DOES THE WARNING.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565836
+    m_Localized: ALL THREE. NOBODY GETS A SHORT DOSE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565837
+    m_Localized: YOUR HEART IS BACK.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565838
+    m_Localized: GOOD EVENING. THE HOUSE RULES ARE POSTED. THANK YOU.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565839
+    m_Localized: PATIENT {mark}. WALKING PACE, PLEASE.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763132
+  - m_Id: 1879570495565840
+    m_Localized: PATIENT {mark}. OUT OF THE CUPBOARD, PLEASE.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763132
+  - m_Id: 1879570495565841
+    m_Localized: PATIENT {mark}. WE DO NOT THROW THINGS.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763132
+  - m_Id: 1879570495565842
+    m_Localized: PATIENT {mark} IS RUNNING. ORDERLY, PLEASE ASSIST.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763132
+  - m_Id: 1879570495565843
+    m_Localized: PATIENT {mark} IS HIDING. ORDERLY, PLEASE ASSIST.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763132
+  - m_Id: 1879570495565844
+    m_Localized: PATIENT {mark} IS THROWING THINGS. ORDERLY, PLEASE ASSIST.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763132
   references:
     version: 2
     RefIds:
@@ -271,3 +382,10 @@ MonoBehaviour:
         - id: 7993049387037
         - id: 441658820694018
         - id: 791730569777152
+        - id: 1874627596382208
+        - id: 1879570495565839
+        - id: 1879570495565840
+        - id: 1879570495565841
+        - id: 1879570495565842
+        - id: 1879570495565843
+        - id: 1879570495565844

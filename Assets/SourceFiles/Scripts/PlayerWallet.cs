@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>S9: what a ledger line is, so the ledger never has to read the (translated) label to decide how to draw it.</summary>
-public enum PayoutKind { Normal, ShardsFound, Contract }
+public enum PayoutKind { Normal, ShardsFound, Contract, Oath, Grade }
 
 /// <summary>One line of a Payout ledger, e.g. "STARS  2 x 10" / "+20".</summary>
 public struct PayoutLine
@@ -75,7 +75,7 @@ public static class PlayerWallet
         // flat ShardValue - only the actual payout below is scaled by F74's KeenEars run rule, or the
         // cap would silently shrink whenever a floor happens to roll it.
         MazeShardsEarnedOnFloor[floor] += ShardValue;
-        Add(Mathf.RoundToInt(ShardValue * RunRules.ShardPayoutMultiplier));
+        Add(Mathf.RoundToInt(ShardValue * RunRules.ShardPayoutMultiplier * CampaignRules.ShardMultiplier)); // F122: the Oaths' multiplier (1 under plain STANDARD)
     }
 
     /// <summary>F74: a one-off reward not tied to a maze shard or a floor clear - currently only a lore note's first read this campaign.</summary>

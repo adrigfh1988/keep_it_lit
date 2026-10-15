@@ -310,6 +310,46 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331699516899521
+  - m_Id: 1860894006439936
+    m_Key: hud.voice
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114135
+  - m_Id: 1860894094520320
+    m_Key: hud.voice_loud
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114136
+  - m_Id: 1860894094520321
+    m_Key: hud.torch_dropped
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114137
+  - m_Id: 1860894094520322
+    m_Key: hud.prompt.pick_up_torch
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114138
+  - m_Id: 1874628175196160
+    m_Key: hud.locker.welded
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114435
+  - m_Id: 1874628183584768
+    m_Key: hud.prompt.welded
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114436
+  - m_Id: 1879571208597504
+    m_Key: hud.prompt.drawer
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957360
+  - m_Id: 1879571216986112
+    m_Key: hud.prompt.ampoule
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957361
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -376,15 +416,15 @@ MonoBehaviour:
     - rid: 4707331669776663360
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: HUD consumable slot, bottom-right (24 pt, 360 px, auto-size). {key} = 1 on keyboard or TAP on touch (do not translate the key), {count} = batteries held
+        m_CommentText: HUD consumable slot, bottom-right (24 pt, 360 px, auto-size). {key} = the bound key (1), the gamepad button or TAP on touch (do not translate the key), {count} = batteries held
     - rid: 4707331669776663361
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: HUD consumable slot, bottom-right (24 pt, 360 px). {key} = 2 or TAP, {count} = compasses held
+        m_CommentText: HUD consumable slot, bottom-right (24 pt, 360 px). {key} = the bound key (2), the gamepad button or TAP, {count} = compasses held
     - rid: 4707331669776663362
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: HUD throwable slot, bottom-right (24 pt, 360 px). {key} = G or TAP, {count} = bottles/cans carried
+        m_CommentText: HUD throwable slot, bottom-right (24 pt, 360 px). {key} = the bound key (G), the gamepad button or TAP, {count} = bottles/cans carried
     - rid: 4707331669776663363
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
@@ -540,7 +580,7 @@ MonoBehaviour:
     - rid: 4707331695923429700
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: HUD consumable slot, bottom-right (24 pt, 360 px, auto-size). {key} = M (hold) or TAP on touch (do not translate the key), {count} = floor plans held
+        m_CommentText: HUD consumable slot, bottom-right (24 pt, 360 px, auto-size). {key} = the bound key (M, hold), the gamepad button or TAP on touch (do not translate the key), {count} = floor plans held
     - rid: 4707331695923429701
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
@@ -557,3 +597,35 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Interaction prompt on a padlocked exit gate's lever on a key-hunt floor. {h} keys held of {t}
+    - rid: 4707331786811114135
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: F120 microphone meter label above the stamina bar, bottom-left (18 pt, one line, 220 px, auto-size). Shown only while the microphone setting is on during a run
+    - rid: 4707331786811114136
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: F120 microphone meter label while the player is above the threshold (18 pt, 220 px, blinks at 4 Hz unless Reduce flashing)
+    - rid: 4707331786811114137
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: F120 torch battery label while the torch lies on the floor after the hunter's grab (20 pt, one line, 220 px, auto-size, blinks in red)
+    - rid: 4707331786811114138
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: F120 interaction prompt on the player's dropped torch (shown after the key chip)
+    - rid: 4707331786811114435
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle when E is pressed at a welded locker (WELDED LOCKERS Oath; one short line)
+    - rid: 4707331786811114436
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt at a welded locker (one short line)
+    - rid: 4707331789613957360
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Prompt after the E key cap (hold) while looking at a morgue drawer bank, floor 3 (ALL CAPS)
+    - rid: 4707331789613957361
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Prompt after the E key cap while looking at a blue-capped ampoule on the floor, floor 4 (ALL CAPS)

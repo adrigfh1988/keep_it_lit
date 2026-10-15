@@ -420,6 +420,81 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331695923429699
+  - m_Id: 1866634939068416
+    m_Key: shop.item.dynamo.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114420
+  - m_Id: 1866635001982976
+    m_Key: shop.item.dynamo.blurb
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114421
+  - m_Id: 1866635001982977
+    m_Key: shop.item.archivist_lamp.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114422
+  - m_Id: 1866635001982978
+    m_Key: shop.item.archivist_lamp.blurb
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114423
+  - m_Id: 1866635001982979
+    m_Key: shop.item.stethoscope.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114424
+  - m_Id: 1866635001982980
+    m_Key: shop.item.stethoscope.blurb
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114425
+  - m_Id: 1866635001982981
+    m_Key: shop.palette.torch.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114426
+  - m_Id: 1866635001982982
+    m_Key: shop.palette.torch.5
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114427
+  - m_Id: 1866635001982983
+    m_Key: shop.palette.torch.6
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114428
+  - m_Id: 1866635001982984
+    m_Key: shop.contract.unseen.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114429
+  - m_Id: 1866635001982985
+    m_Key: shop.contract.unseen.text
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114430
+  - m_Id: 1866635001982986
+    m_Key: shop.contract.hands_to_yourself.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114431
+  - m_Id: 1866635001982987
+    m_Key: shop.contract.hands_to_yourself.text
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114432
+  - m_Id: 1866635001982988
+    m_Key: shop.contract.cut_it_close.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114433
+  - m_Id: 1866635001982989
+    m_Key: shop.contract.cut_it_close.text
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114434
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -442,7 +517,7 @@ MonoBehaviour:
     - rid: 4707331672703762927
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). {key} = the physical key that uses the item (1)
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). {key} = the bound key (1), gamepad button or touch word that uses the item
     - rid: 4707331672703762928
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
@@ -450,7 +525,7 @@ MonoBehaviour:
     - rid: 4707331672703762929
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). {key} = the physical key that uses the item (2)
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). {key} = the bound key (2), gamepad button or touch word that uses the item
     - rid: 4707331672703762930
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
@@ -754,4 +829,64 @@ MonoBehaviour:
     - rid: 4707331695923429699
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). {key} = M, the key you hold to use it. Rare; shows only the cells you have walked
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). {key} = the bound key (M), gamepad button or touch word you hold to use it. Rare; shows only the cells you have walked
+    - rid: 4707331786811114420
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card item name (26 pt bold, one line, 340 px, auto-size)
+    - rid: 4707331786811114421
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)
+    - rid: 4707331786811114422
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card item name (26 pt bold, one line, 340 px, auto-size)
+    - rid: 4707331786811114423
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)
+    - rid: 4707331786811114424
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card item name (26 pt bold, one line, 340 px, auto-size)
+    - rid: 4707331786811114425
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)
+    - rid: 4707331786811114426
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Torch colour name (swatch and status line; ALL CAPS). Earned through the Patient Record, never sold
+    - rid: 4707331786811114427
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Torch colour name (swatch and status line; ALL CAPS). Earned through the Patient Record, never sold
+    - rid: 4707331786811114428
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Torch colour name (swatch and status line; ALL CAPS). Earned through the Patient Record, never sold
+    - rid: 4707331786811114429
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract name (card title, HUD line, ledger line, subtitles). Short, no final period
+    - rid: 4707331786811114430
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract description on the offer card (28 pt, up to 3 lines)
+    - rid: 4707331786811114431
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract name (card title, HUD line, ledger line, subtitles). Short, no final period
+    - rid: 4707331786811114432
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract description on the offer card (28 pt, up to 3 lines)
+    - rid: 4707331786811114433
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract name (card title, HUD line, ledger line, subtitles). Short, no final period
+    - rid: 4707331786811114434
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Contract description on the offer card (28 pt, up to 3 lines)

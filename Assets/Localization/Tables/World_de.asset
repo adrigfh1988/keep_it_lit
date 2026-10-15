@@ -222,6 +222,37 @@ MonoBehaviour:
     m_Localized: ETWAS ANDERS? KEHR UM.
     m_Metadata:
       m_Items: []
+  - m_Id: 1871577460764672
+    m_Localized: "5 \xB7 E. VOGT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1871577532067840
+    m_Localized: PATIENT {mark}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429569
+  - m_Id: 1871577532067841
+    m_Localized: 'E. VOGT
+
+      FACH 5
+
+      MORGENS GEFUNDEN'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1871577532067842
+    m_Localized: 'HAUSORDNUNG
+
+      1. PATIENTEN GEHEN.
+
+      2. PATIENTEN VERSTECKEN SICH NICHT.
+
+      3. PATIENTEN WERFEN NICHTS.
+
+      DER PFLEGER WIRD NACHHELFEN.
+
+      - DER DIREKTOR'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -231,3 +262,4 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 382911238803456
+        - id: 1871577532067840

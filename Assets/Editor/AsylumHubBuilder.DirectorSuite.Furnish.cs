@@ -56,20 +56,32 @@ public static partial class AsylumHubBuilder
     /// <summary>Deletes scene objects; a child of the hub prefab asset goes through the asset (an instance may not delete its prefab's children).</summary>
     private static void RemoveFromHub(AsylumHub hub, IEnumerable<Transform> targets)
     {
-        List<string> paths = new List<string>();
+        // F117: siblings can share a name (the hub dressing has several "F101_DiningRoom_ChairWhite"), so a bare path would delete the FIRST of them, not
+        // the one meant. Each target is therefore found in the prefab by its parent's path, its name and the sibling of that name nearest its local position.
+        List<(string parent, string name, Vector3 localPos)> found = new List<(string, string, Vector3)>();
         foreach (Transform t in targets.ToList())
         {
             if (t == null) continue;
             if (!PrefabUtility.IsPartOfPrefabInstance(t.gameObject) || PrefabUtility.IsAddedGameObjectOverride(t.gameObject)) { Object.DestroyImmediate(t.gameObject); continue; }
-            paths.Add(AnimationUtility.CalculateTransformPath(t, hub.transform));
+            string parentPath = t.parent == hub.transform ? "" : AnimationUtility.CalculateTransformPath(t.parent, hub.transform);
+            found.Add((parentPath, t.name, t.localPosition));
         }
-        if (paths.Count == 0) return;
+        if (found.Count == 0) return;
         EditHubPrefab(root =>
         {
-            foreach (string p in paths)
+            foreach ((string parentPath, string name, Vector3 localPos) in found)
             {
-                Transform t = root.transform.Find(p);
-                if (t != null) Object.DestroyImmediate(t.gameObject);
+                Transform parent = parentPath.Length == 0 ? root.transform : root.transform.Find(parentPath);
+                if (parent == null) continue;
+                Transform best = null;
+                float bestD = float.MaxValue;
+                foreach (Transform c in parent)
+                {
+                    if (c.name != name) continue;
+                    float d = (c.localPosition - localPos).sqrMagnitude;
+                    if (d < bestD) { bestD = d; best = c; }
+                }
+                if (best != null) Object.DestroyImmediate(best.gameObject);
             }
         });
     }

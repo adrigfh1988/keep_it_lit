@@ -280,6 +280,38 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763193
+  - m_Id: 1860894006439936
+    m_Localized: VOIX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860894094520320
+    m_Localized: FORT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860894094520321
+    m_Localized: "LAMPE \xB7 TOMB\xC9E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860894094520322
+    m_Localized: RAMASSE TA LAMPE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1874628175196160
+    m_Localized: "SOUD\xC9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1874628183584768
+    m_Localized: "SOUD\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879571208597504
+    m_Localized: OUVRIR LE TIROIR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879571216986112
+    m_Localized: PRENDRE L'AMPOULE
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

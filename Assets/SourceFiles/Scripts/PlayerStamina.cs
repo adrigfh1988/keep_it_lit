@@ -24,6 +24,15 @@ public class PlayerStamina : MonoBehaviour
 
     private ThirdPersonController _controller;
     private float _delay;
+    private float _noDrainUntil = -1f;
+
+    /// <summary>F123 floor 4 (an ampoule): the bar is full, no longer exhausted, and does not drain for `noDrainSeconds`.</summary>
+    public void Restore(float noDrainSeconds)
+    {
+        Fraction = 1f;
+        Exhausted = false;
+        _noDrainUntil = Time.time + Mathf.Max(0f, noDrainSeconds);
+    }
 
     /// <summary>0 (empty) to 1 (full).</summary>
     public float Fraction { get; private set; } = 1f;
@@ -40,6 +49,12 @@ public class PlayerStamina : MonoBehaviour
     /// <summary>F105 C3: the squeeze's own sprint lock, kept apart from SprintBlocked so the lantern and the squeeze never overwrite each other. ORed with it below.</summary>
     public bool SqueezeBlocked { get; set; }
 
+    /// <summary>F120: the limp after a hunter grab (HunterGrab) - no sprinting. A third flag so the lantern, the squeeze and the limp never overwrite each other.</summary>
+    public bool LimpBlocked { get; set; }
+
+    /// <summary>F120: true while limping (the HUD pulses the stamina bar).</summary>
+    public bool Limping => LimpBlocked;
+
     private void Awake()
     {
         _controller = GetComponent<ThirdPersonController>();
@@ -49,7 +64,11 @@ public class PlayerStamina : MonoBehaviour
     {
         float dt = Time.deltaTime;
 
-        if (_controller.IsSprinting)
+        if (_controller.IsSprinting && Time.time < _noDrainUntil)
+        {
+            _delay = recoverDelay;
+        }
+        else if (_controller.IsSprinting)
         {
             Fraction -= dt / Mathf.Max(0.01f, sprintSeconds);
             _delay = recoverDelay;
@@ -76,6 +95,6 @@ public class PlayerStamina : MonoBehaviour
             Exhausted = false;
         }
 
-        _controller.SprintLocked = Exhausted || SprintBlocked || SqueezeBlocked;
+        _controller.SprintLocked = Exhausted || SprintBlocked || SqueezeBlocked || LimpBlocked;
     }
 }

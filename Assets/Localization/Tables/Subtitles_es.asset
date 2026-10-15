@@ -251,6 +251,117 @@ MonoBehaviour:
     m_Localized: LINTERNA LLENA
     m_Metadata:
       m_Items: []
+  - m_Id: 1860893469569024
+    m_Localized: "Te apart\xF3 de un empuj\xF3n. Tu linterna est\xE1 en el suelo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860893545066496
+    m_Localized: "La pr\xF3xima vez no te soltar\xE1."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860893545066497
+    m_Localized: Tienes la luz.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860893545066498
+    m_Localized: CONOCE TU VOZ.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1874627596382208
+    m_Localized: JURAMENTO {rank}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763196
+  - m_Id: 1879570495565824
+    m_Localized: "AQU\xCD NO HAB\xCDA NINGUNA PUERTA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565825
+    m_Localized: "UNA PUERTA M\xC1S QUE ANTES."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565826
+    m_Localized: "LAS TUBER\xCDAS GOLPEAN DOS VECES."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565827
+    m_Localized: "LAS TUBER\xCDAS GOLPEAN TRES VECES."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565828
+    m_Localized: "VAC\xCDO. LA BANDEJA EST\xC1 FR\xCDA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565829
+    m_Localized: UNA ETIQUETA SIN NOMBRE. NADIE EN LA BANDEJA.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565830
+    m_Localized: "VAC\xCDO. ALGUIEN LO HA HECHO COMO UNA CAMA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565831
+    m_Localized: "CAJ\xD3N CINCO. SOLO SU ETIQUETA, ESPERANDO."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565832
+    m_Localized: "LA ETIQUETA LLEVA TU N\xDAMERO. LA BANDEJA A\xDAN EST\xC1 TIBIA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565833
+    m_Localized: "TUS COSAS EST\xC1N EN LA BANDEJA: UNA PILA DE REPUESTO."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565834
+    m_Localized: "VIDRIO CLARO, TAP\xD3N AZUL. TU CORAZ\xD3N SE CALMA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565835
+    m_Localized: "EL MIEDO CALLA. LA ADVERTENCIA TAMBI\xC9N."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565836
+    m_Localized: LAS TRES. NADIE RECIBE UNA DOSIS CORTA.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565837
+    m_Localized: "TU CORAZ\xD3N HA VUELTO."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565838
+    m_Localized: "BUENAS NOCHES. LAS NORMAS DE LA CASA EST\xC1N PUBLICADAS. GRACIAS."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565839
+    m_Localized: PACIENTE {mark}. AL PASO, POR FAVOR.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763196
+  - m_Id: 1879570495565840
+    m_Localized: PACIENTE {mark}. FUERA DEL ARMARIO, POR FAVOR.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763196
+  - m_Id: 1879570495565841
+    m_Localized: "PACIENTE {mark}. AQU\xCD NO SE TIRAN COSAS."
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763196
+  - m_Id: 1879570495565842
+    m_Localized: "EL PACIENTE {mark} EST\xC1 CORRIENDO. CELADOR, ASISTA, POR FAVOR."
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763196
+  - m_Id: 1879570495565843
+    m_Localized: EL PACIENTE {mark} SE ESCONDE. CELADOR, ASISTA, POR FAVOR.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763196
+  - m_Id: 1879570495565844
+    m_Localized: EL PACIENTE {mark} LANZA OBJETOS. CELADOR, ASISTA, POR FAVOR.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763196
   references:
     version: 2
     RefIds:
@@ -271,3 +382,10 @@ MonoBehaviour:
         - id: 7993049387037
         - id: 441658820694018
         - id: 791730569777152
+        - id: 1874627596382208
+        - id: 1879570495565839
+        - id: 1879570495565840
+        - id: 1879570495565841
+        - id: 1879570495565842
+        - id: 1879570495565843
+        - id: 1879570495565844

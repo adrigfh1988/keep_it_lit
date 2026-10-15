@@ -172,3 +172,38 @@ hub.cache.searched,REGISTRADO
 hub.cache.found,ENCONTRADO: {item}
 hub.cache.found_next,ENCONTRADO: {item}  ·  FUNCIONA EN LA SIGUIENTE PLANTA
 hub.cache.found_shards,ENCONTRADOS {n} {currency}
+hub.lesson.title,"LECCIÓN DE HOY"
+hub.lesson.patient,"PACIENTE #{n}"
+hub.lesson.none,"OBSERVA AL PACIENTE."
+hub.lesson.habit.lockers,"ARMARIOS {tally}  LOS REVISA"
+hub.lesson.habit.throws,"LANZAR {tally}  LO IGNORA"
+hub.lesson.habit.dark,"OSCURO {tally}  VE MÁS LEJOS"
+hub.lesson.habit.sprint,"CARRERA {tally}  TE OYE"
+hub.lesson.learning,"ESTÁ APRENDIENDO."
+hub.lesson.over,"LA LECCIÓN HA TERMINADO."
+hub.lesson.prompt,"LEER LA PIZARRA"
+hub.lesson.examine,"{n} LECCIONES EN LA PIZARRA. NUNCA OLVIDA."
+hub.lesson.examine_none,"NADA TODAVÍA. SIGUE OBSERVANDO."
+hub.lesson.examine_over,"ALGUIEN BORRÓ LA PIZARRA. SOLO QUEDA LA ÚLTIMA LÍNEA."
+hub.meal.broth.prompt,"TOMAR EL CALDO  ·  RESISTENCIA EN LA SIGUIENTE PLANTA"
+hub.meal.bread.prompt,"COGER EL PAN NEGRO  ·  UNA PILA DE REPUESTO"
+hub.meal.tea.prompt,"BEBER EL TÉ FRÍO  ·  ZAPATOS SILENCIOSOS EN LA SIGUIENTE PLANTA"
+hub.meal.broth.taken,"TODAVÍA ESTÁ CALIENTE. ALGUIEN SABÍA QUE VENDRÍAS."
+hub.meal.bread.taken,"DURO COMO UN LADRILLO. ALGO DE METAL TRAQUETEA DENTRO."
+hub.meal.tea.taken,"FRÍO. SABE A POLVO, Y TUS PASOS SE VUELVEN SUAVES."
+hub.meal.full,"MANOS LLENAS"
+hub.meal.had,"YA TOMASTE"
+hub.meal.full_line,"NO PUEDES LLEVAR MÁS."
+hub.meal.had_line,"YA TIENES UN POCO DE ESTO."
+hub.supper.card.prompt,"LEER LA TARJETA"
+hub.supper.card.1,"SIEMPRE GUARDABA SU PAN PARA DESPUÉS. CONTABA LAS PUERTAS."
+hub.supper.card.2,"ÉL GOLPEA DOS VECES LA MESA. LAS TUBERÍAS RESPONDEN."
+hub.supper.card.3,"TIENE LOS OJOS ABIERTOS. SIGUE DORMIDO."
+hub.supper.card.4,"LA SILLA ES DEMASIADO PEQUEÑA PARA ESO. SE SENTÓ IGUAL."
+hub.supper.card.5,"EL DIRECTOR PUSO ESTE CUBIERTO ÉL MISMO."
+hub.lesson.habit.voice,VOZ {tally}  TE CONOCE
+hub.breach.dark,LAS LUCES SE HAN APAGADO. NO QUEDA NADIE.
+hub.breach.followed,TE HA SEGUIDO HASTA AQUÍ.
+hub.breach.run,LA PUERTA DEL DIRECTOR. CORRE.
+hub.breach.locker,TE HA VISTO ENTRAR.
+hub.breach.grab,TE TENÍA. BUSCA TU LUZ. CORRE.

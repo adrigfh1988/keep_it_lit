@@ -214,6 +214,54 @@ MonoBehaviour:
     m_Localized: A CHALK HOUSE, SMEARED OUT BY A HAND.
     m_Metadata:
       m_Items: []
+  - m_Id: 1866635253641216
+    m_Localized: THE ORDERLY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944384
+    m_Localized: It hunts by sight and by sound, and it only takes you when it can see you. Light, footsteps and anything thrown tell it where you are. It learns what you lean on.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944385
+    m_Localized: STAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944386
+    m_Localized: He moves only while no light is on him and freezes in the beam. His touch drains your torch. He has never killed anyone.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944387
+    m_Localized: THE VISITOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944388
+    m_Localized: It lives in the corridor that loops and comes closer only while you are not looking. Learn the corridor; turn back when something is wrong.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944389
+    m_Localized: THE LISTENER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944390
+    m_Localized: Blind. It lies still until it hears you, then crawls to the sound. When it screams, it lunges at the last noise it heard.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944391
+    m_Localized: THE TENANT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944392
+    m_Localized: 'One locker is already taken. Listen before you hide: it breathes.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944393
+    m_Localized: THE BODIES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944394
+    m_Localized: Not all of them are dead. A hanging one drops on whoever passes in the dark; one on the floor crawls toward your light.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

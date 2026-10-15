@@ -58,3 +58,11 @@ hud.prompt.open_cache,ABRIR ALIJO
 hud.tenant.held,ALGO SUJETA LA PUERTA
 hud.slot.floor_plan,{key}   PLANO  x{count}
 hud.prompt.use_floor_plan,MANTÉN PARA USAR EL PLANO
+hud.voice,VOZ
+hud.voice_loud,FUERTE
+hud.torch_dropped,LINTERNA · CAÍDA
+hud.prompt.pick_up_torch,RECOGE TU LINTERNA
+hud.locker.welded,SOLDADA.
+hud.prompt.welded,SOLDADA
+hud.prompt.drawer,ABRIR EL CAJÓN
+hud.prompt.ampoule,TOMAR LA AMPOLLA

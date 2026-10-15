@@ -78,14 +78,6 @@ MonoBehaviour:
     m_Localized: STEP ONTO THE HATCH
     m_Metadata:
       m_Items: []
-  - m_Id: 635342859
-    m_Localized: MOUSE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 635342860
-    m_Localized: RMB
-    m_Metadata:
-      m_Items: []
   - m_Id: 635342861
     m_Localized: RIGHT THUMB
     m_Metadata:

@@ -75,13 +75,14 @@ public class HubLampFlicker : MonoBehaviour
         float t = Time.time;
         float factor = 1f + (Mathf.PerlinNoise(t * 9f, _seed) - 0.5f) * 2f * shimmer;
 
-        if (t >= _nextDip)
+        bool reduce = FlashSafety.On; // F118: no dips, only the 7 % shimmer
+        if (t >= _nextDip && !reduce)
         {
             _dipEnd = t + (Random.value < blackoutChance ? 0.1f : Random.Range(0.06f, 0.28f));
             _dipLevel = _dipEnd - t <= 0.1001f && Random.value < 0.5f ? 0f : Random.Range(0.15f, 0.55f);
             _nextDip = _dipEnd + Random.Range(secondsBetweenDips.x, secondsBetweenDips.y);
         }
-        if (t < _dipEnd) factor *= _dipLevel;
+        if (t < _dipEnd && !reduce) factor *= _dipLevel;
         factor *= External;
 
         lamp.intensity = _baseIntensity * factor;

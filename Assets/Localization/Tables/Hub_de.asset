@@ -732,6 +732,153 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763208
+  - m_Id: 1812604049158144
+    m_Localized: HEUTIGE LEKTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432832
+    m_Localized: PATIENT NR. {n}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763208
+  - m_Id: 1812604141432833
+    m_Localized: BEOBACHTE DEN PATIENTEN.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432834
+    m_Localized: SPINDE {tally}  ER SIEHT NACH
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763208
+  - m_Id: 1812604141432835
+    m_Localized: "W\xDCRFE {tally}  ER IGNORIERT SIE"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763208
+  - m_Id: 1812604141432836
+    m_Localized: DUNKEL {tally}  ER SIEHT WEITER
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763208
+  - m_Id: 1812604141432837
+    m_Localized: "RENNEN {tally}  ER H\xD6RT DICH"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763208
+  - m_Id: 1812604141432838
+    m_Localized: ES LERNT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432839
+    m_Localized: DIE LEKTION IST VORBEI.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432840
+    m_Localized: TAFEL LESEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432841
+    m_Localized: '{n} LEKTIONEN AN DER TAFEL. ER VERGISST NIE.'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763208
+  - m_Id: 1812604141432842
+    m_Localized: NOCH NICHTS. ER BEOBACHTET NOCH.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432843
+    m_Localized: JEMAND HAT DIE TAFEL GEWISCHT. NUR DIE LETZTE ZEILE BLIEB.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893206679552
+    m_Localized: "BR\xDCHE ESSEN  \xB7  AUSDAUER IM N\xC4CHSTEN STOCK"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371328
+    m_Localized: "SCHWARZBROT NEHMEN  \xB7  EINE ERSATZBATTERIE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371329
+    m_Localized: "KALTEN TEE TRINKEN  \xB7  LEISE SCHUHE IM N\xC4CHSTEN STOCK"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371330
+    m_Localized: ES IST NOCH WARM. JEMAND WUSSTE, DASS DU KOMMST.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371331
+    m_Localized: HART WIE EIN ZIEGEL. IM INNEREN KLAPPERT ETWAS AUS METALL.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371332
+    m_Localized: KALT. ER SCHMECKT NACH STAUB, UND DEINE SCHRITTE WERDEN LEISE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371333
+    m_Localized: "H\xC4NDE VOLL"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371334
+    m_Localized: SCHON GEHABT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371335
+    m_Localized: DU KANNST NICHTS MEHR TRAGEN.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371336
+    m_Localized: DAVON HAST DU SCHON.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371337
+    m_Localized: KARTE LESEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371338
+    m_Localized: "SIE HOB IHR BROT IMMER F\xDCR SP\xC4TER AUF. SIE Z\xC4HLTE DIE T\xDCREN."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371339
+    m_Localized: ER KLOPFT ZWEIMAL AUF DEN TISCH. DIE ROHRE ANTWORTEN.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371340
+    m_Localized: "SEINE AUGEN SIND OFFEN. ER SCHL\xC4FT NOCH."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371341
+    m_Localized: "DER STUHL IST ZU KLEIN DAF\xDCR. ES SETZTE SICH TROTZDEM."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371342
+    m_Localized: DER DIREKTOR HAT DIESEN PLATZ SELBST GEDECKT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1856707763892224
+    m_Localized: STIMME {tally}  ES KENNT DICH
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763208
+  - m_Id: 1861983598538752
+    m_Localized: DAS LICHT IST AUS. ALLE SIND FORT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1861983602733056
+    m_Localized: ES IST DIR NACH OBEN GEFOLGT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1861983602733057
+    m_Localized: "DIE T\xDCR DES DIREKTORS. LAUF."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1861983602733058
+    m_Localized: ES HAT DICH HINEINGEHEN SEHEN.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1861983602733059
+    m_Localized: ES HATTE DICH. FINDE DEIN LICHT. LAUF.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -767,3 +914,10 @@ MonoBehaviour:
         - id: 1534062807740417
         - id: 1534062811934720
         - id: 1534062811934721
+        - id: 1812604141432832
+        - id: 1812604141432834
+        - id: 1812604141432835
+        - id: 1812604141432836
+        - id: 1812604141432837
+        - id: 1812604141432841
+        - id: 1856707763892224

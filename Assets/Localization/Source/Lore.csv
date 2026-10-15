@@ -77,3 +77,15 @@ lore.vignette.barricade_early,"Hub vignette subtitle: a barricaded door, floors 
 lore.vignette.barricade_late,"Hub vignette subtitle: the same barricade from floor 4 on (ALL CAPS, max 100 characters)",THE TABLE HAS BEEN SHOVED. FROM THE OTHER SIDE.
 lore.vignette.chalkhouse_early,"Hub vignette subtitle: a child's chalk drawing of a house, floors 1-3 (ALL CAPS, max 100 characters)",A CHALK HOUSE WITH MORE WINDOWS THAN THE REAL ONE.
 lore.vignette.chalkhouse_late,"Hub vignette subtitle: the same chalk drawing from floor 4 on (ALL CAPS, max 100 characters)","A CHALK HOUSE, SMEARED OUT BY A HAND."
+lore.codex.hunter.name,Codex entry name (40 pt title and 30 pt list button),THE ORDERLY
+lore.codex.hunter.body,"Codex entry text (28 pt, up to 8 lines, 1000 px)","It hunts by sight and by sound, and it only takes you when it can see you. Light, footsteps and anything thrown tell it where you are. It learns what you lean on."
+lore.codex.stan.name,Codex entry name (40 pt title and 30 pt list button),STAN
+lore.codex.stan.body,"Codex entry text (28 pt, up to 8 lines, 1000 px)",He moves only while no light is on him and freezes in the beam. His touch drains your torch. He has never killed anyone.
+lore.codex.visitor.name,Codex entry name (40 pt title and 30 pt list button),THE VISITOR
+lore.codex.visitor.body,"Codex entry text (28 pt, up to 8 lines, 1000 px)",It lives in the corridor that loops and comes closer only while you are not looking. Learn the corridor; turn back when something is wrong.
+lore.codex.listener.name,Codex entry name (40 pt title and 30 pt list button),THE LISTENER
+lore.codex.listener.body,"Codex entry text (28 pt, up to 8 lines, 1000 px)","Blind. It lies still until it hears you, then crawls to the sound. When it screams, it lunges at the last noise it heard."
+lore.codex.tenant.name,Codex entry name (40 pt title and 30 pt list button),THE TENANT
+lore.codex.tenant.body,"Codex entry text (28 pt, up to 8 lines, 1000 px)",One locker is already taken. Listen before you hide: it breathes.
+lore.codex.living_body.name,Codex entry name (40 pt title and 30 pt list button),THE BODIES
+lore.codex.living_body.body,"Codex entry text (28 pt, up to 8 lines, 1000 px)",Not all of them are dead. A hanging one drops on whoever passes in the dark; one on the floor crawls toward your light.

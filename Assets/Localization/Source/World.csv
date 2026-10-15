@@ -59,3 +59,14 @@ world.loop.wrong_turned,"Hanging light-box sign in the looping corridor, top lin
 world.loop.wrong_missed,"Hanging light-box sign in the looping corridor, top line: the player walked on past a lap that had something different; the count went back to 0 (ALL CAPS, ~22 characters, red)",YOU MISSED SOMETHING
 world.loop.continue,"Hanging light-box sign in the looping corridor, lower line: the rule for a normal lap (ALL CAPS, ~32 characters)",NOTHING CHANGED? CONTINUE.
 world.loop.turn,"Hanging light-box sign in the looping corridor, lowest line: the rule for a lap with something different (ALL CAPS, ~32 characters)",SOMETHING DIFFERENT? TURN AROUND.
+world.nightmare.drawer.elias,"Tag on morgue drawer five, floor 3 (world text on a small card, about 12 characters; the name is not translated)",5 · E. VOGT
+world.nightmare.drawer.yours,"Tag on the drawer that carries the player's own number, floor 3 (world text, ALL CAPS). {mark} = the redaction glyph, or 7 once the truth is known",PATIENT {mark}
+world.nightmare.toetag,"The toe tag lying on the tray of drawer five, floor 3 (world text, 3 short lines, ALL CAPS, at most ~22 characters a line)","E. VOGT
+DRAWER 5
+FOUND AT DAWN"
+world.nightmare.director.rules,"Printed notice taped to the maze wall on floor 5 (world text, 6 short lines, ALL CAPS, at most ~32 characters a line; keep the line breaks)","HOUSE RULES
+1. PATIENTS WALK.
+2. PATIENTS DO NOT HIDE.
+3. PATIENTS DO NOT THROW THINGS.
+THE ORDERLY WILL ASSIST.
+- THE DIRECTOR"

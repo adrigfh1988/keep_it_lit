@@ -15,7 +15,11 @@ public enum ShopItem
     BottlePack,
     FocusLens,
     FuseMap,
-    FloorPlan
+    FloorPlan,
+    // F122: earned through the Patient Record (ShopItemDef.Requires); appended after FloorPlan, saves store ints.
+    Dynamo,
+    ArchivistLamp,
+    Stethoscope
 }
 
 /// <summary>What kind of thing a ShopItem is - drives how ShopMenu draws its card and how PlayerInventory holds it.</summary>
@@ -37,11 +41,21 @@ public sealed class ShopItemDef
     public int BasePrice;
     public int Cap;
 
+    /// <summary>F122: the Patient Record milestone that puts this card on the shelf (null = always sold).</summary>
+    public Unlock? Requires;
+
     /// <summary>The translated item name (Title Case in English).</summary>
     public string Name => L10n.T("shop.item." + Slug + ".name");
 
-    /// <summary>The translated description. {key} is the physical key that uses a consumable (1 / 2).</summary>
-    public string Blurb => L10n.T("shop.item." + Slug + ".blurb", ("key", Id == ShopItem.SpareBattery ? "1" : Id == ShopItem.FloorPlan ? "M" : "2"));
+    // F119: the bound key, gamepad button or (touch keeps the keyboard label, as before) key shown in the blurb.
+    private string BlurbKey()
+    {
+        GameAction a = Id == ShopItem.SpareBattery ? GameAction.Item1 : Id == ShopItem.FloorPlan ? GameAction.Map : GameAction.Item2;
+        return InputGlyphs.Key(a, InputGlyphs.KeyboardLabel(a));
+    }
+
+    /// <summary>The translated description. {key} is the bound key, gamepad button or touch word that uses the item (F119).</summary>
+    public string Blurb => L10n.T("shop.item." + Slug + ".blurb", ("key", BlurbKey()));
 }
 
 /// <summary>
@@ -84,9 +98,36 @@ public static class ShopCatalogue
             BasePrice = 25, Cap = 1 },
     };
 
+    /// <summary>F122: cards earned through the Patient Record. Kept apart from <see cref="Items"/> so the base shelf (and everything that counts it) is untouched; <see cref="Available"/> joins them.</summary>
+    public static readonly ShopItemDef[] Unlockable =
+    {
+        new ShopItemDef { Id = ShopItem.Dynamo, Kind = ItemKind.FloorModifier, Slug = "dynamo", BasePrice = 35, Cap = 1, Requires = Unlock.CardDynamo },
+        new ShopItemDef { Id = ShopItem.ArchivistLamp, Kind = ItemKind.FloorModifier, Slug = "archivist_lamp", BasePrice = 30, Cap = 1, Requires = Unlock.CardArchivist },
+        new ShopItemDef { Id = ShopItem.Stethoscope, Kind = ItemKind.FloorModifier, Slug = "stethoscope", BasePrice = 30, Cap = 1, Requires = Unlock.CardStethoscope },
+    };
+
+    /// <summary>F122: the swatches on the TORCH COLOUR card (palette entries 1..3). Entries past them are earned, never sold.</summary>
+    public const int ShopTorchSwatches = 3;
+
+    /// <summary>F122: the shelf as the shop shows it - the 12 base cards, then each unlocked extra card (at most 16).</summary>
+    public static System.Collections.Generic.List<ShopItemDef> Available()
+    {
+        System.Collections.Generic.List<ShopItemDef> list = new System.Collections.Generic.List<ShopItemDef>(Items);
+        foreach (ShopItemDef def in Unlockable)
+        {
+            if (def.Requires == null || PatientRecord.IsUnlocked(def.Requires.Value)) list.Add(def);
+        }
+        if (list.Count > 16) list.RemoveRange(16, list.Count - 16);
+        return list;
+    }
+
     public static ShopItemDef Get(ShopItem id)
     {
         foreach (ShopItemDef def in Items)
+        {
+            if (def.Id == id) return def;
+        }
+        foreach (ShopItemDef def in Unlockable)
         {
             if (def.Id == id) return def;
         }
@@ -108,7 +149,7 @@ public static class ShopCatalogue
     public static int CheapestOpenPrice(int shopFloor)
     {
         int best = -1;
-        foreach (ShopItemDef def in Items)
+        foreach (ShopItemDef def in Available()) // F122: the unlocked extra cards count too
         {
             bool open;
             switch (def.Kind)
@@ -120,7 +161,7 @@ public static class ShopCatalogue
                 {
                     bool torch = def.Id == ShopItem.TorchColour;
                     open = false;
-                    int count = TorchColours.Length;
+                    int count = ShopTorchSwatches + 1; // F122: the earned colours past the swatches are never sold
                     for (int i = 1; i < count && !open; i++) open = !PlayerInventory.OwnsTorchColour(i);
                     break;
                 }
@@ -142,6 +183,10 @@ public static class ShopCatalogue
         ("Cold",   new Color(0.78f, 0.88f, 1f)),
         ("Ember",  new Color(1f, 0.72f, 0.45f)),
         ("Violet", new Color(0.82f, 0.68f, 1f)),
+        // F122: earned through the Patient Record, never sold; owned from the start of a campaign (CampaignRules.Begin) and chosen on the new-campaign screen.
+        ("Bone",      new Color(0.93f, 0.93f, 0.88f)),
+        ("WardGreen", new Color(0.72f, 1f, 0.80f)),
+        ("OathRed",   new Color(1f, 0.55f, 0.50f)),
     };
 
     public static readonly (string Name, Color Colour)[] HudTints =

@@ -730,6 +730,153 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763192
+  - m_Id: 1812604049158144
+    m_Localized: "LE\xC7ON DU JOUR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432832
+    m_Localized: "PATIENT N\xB0{n}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763192
+  - m_Id: 1812604141432833
+    m_Localized: OBSERVEZ LE PATIENT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432834
+    m_Localized: CASIERS {tally}  IL LES FOUILLE
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763192
+  - m_Id: 1812604141432835
+    m_Localized: JETS {tally}  IL LES IGNORE
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763192
+  - m_Id: 1812604141432836
+    m_Localized: NOIR {tally}  IL VOIT PLUS LOIN
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763192
+  - m_Id: 1812604141432837
+    m_Localized: COURSE {tally}  IL VOUS ENTEND
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763192
+  - m_Id: 1812604141432838
+    m_Localized: IL APPREND.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432839
+    m_Localized: "LA LE\xC7ON EST FINIE."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432840
+    m_Localized: LIRE LE TABLEAU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432841
+    m_Localized: "{n} LE\xC7ONS AU TABLEAU. IL N'OUBLIE JAMAIS."
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763192
+  - m_Id: 1812604141432842
+    m_Localized: RIEN POUR L'INSTANT. IL OBSERVE ENCORE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432843
+    m_Localized: "QUELQU'UN A EFFAC\xC9 LE TABLEAU. IL NE RESTE QUE LA DERNI\xC8RE LIGNE."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893206679552
+    m_Localized: "MANGER LE BOUILLON  \xB7  ENDURANCE \xC0 L'\xC9TAGE SUIVANT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371328
+    m_Localized: "PRENDRE LE PAIN NOIR  \xB7  UNE PILE DE RECHANGE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371329
+    m_Localized: "BOIRE LE TH\xC9 FROID  \xB7  CHAUSSURES SILENCIEUSES \xC0 L'\xC9TAGE SUIVANT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371330
+    m_Localized: IL EST ENCORE CHAUD. QUELQU'UN SAVAIT QUE VOUS VIENDRIEZ.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371331
+    m_Localized: "DUR COMME UNE BRIQUE. QUELQUE CHOSE DE M\xC9TALLIQUE CLIQUETTE DEDANS."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371332
+    m_Localized: "FROID. IL A GO\xDBT DE POUSSI\xC8RE, ET VOS PAS S'ADOUCISSENT."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371333
+    m_Localized: MAINS PLEINES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371334
+    m_Localized: "D\xC9J\xC0 SERVI"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371335
+    m_Localized: VOUS NE POUVEZ PLUS RIEN PORTER.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371336
+    m_Localized: "VOUS EN AVEZ D\xC9J\xC0."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371337
+    m_Localized: LIRE LA CARTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371338
+    m_Localized: ELLE GARDAIT TOUJOURS SON PAIN POUR PLUS TARD. ELLE COMPTAIT LES PORTES.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371339
+    m_Localized: "IL FRAPPE DEUX FOIS SUR LA TABLE. LES TUYAUX R\xC9PONDENT."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371340
+    m_Localized: SES YEUX SONT OUVERTS. IL DORT ENCORE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371341
+    m_Localized: "LA CHAISE EST TROP PETITE POUR \xC7A. IL S'EST ASSIS QUAND M\xCAME."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371342
+    m_Localized: "LE DIRECTEUR A MIS CE COUVERT LUI-M\xCAME."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1856707763892224
+    m_Localized: "VOIX {tally}  \xC7A TE CONNA\xCET"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763192
+  - m_Id: 1861983598538752
+    m_Localized: "LES LUMI\xC8RES SONT \xC9TEINTES. TOUT LE MONDE A DISPARU."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1861983602733056
+    m_Localized: "\xC7A T'A SUIVI JUSQU'ICI."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1861983602733057
+    m_Localized: LA PORTE DU DIRECTEUR. COURS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1861983602733058
+    m_Localized: "\xC7A T'A VU ENTRER."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1861983602733059
+    m_Localized: "\xC7A TE TENAIT. RETROUVE TA LAMPE. COURS."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -765,3 +912,10 @@ MonoBehaviour:
         - id: 1534062807740417
         - id: 1534062811934720
         - id: 1534062811934721
+        - id: 1812604141432832
+        - id: 1812604141432834
+        - id: 1812604141432835
+        - id: 1812604141432836
+        - id: 1812604141432837
+        - id: 1812604141432841
+        - id: 1856707763892224

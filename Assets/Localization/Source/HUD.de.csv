@@ -58,3 +58,11 @@ hud.prompt.open_cache,VERSTECK ÖFFNEN
 hud.tenant.held,ES HÄLT DIE TÜR ZU
 hud.slot.floor_plan,{key}   GRUNDRISS  x{count}
 hud.prompt.use_floor_plan,GEDRÜCKT HALTEN FÜR DEN GRUNDRISS
+hud.voice,STIMME
+hud.voice_loud,LAUT
+hud.torch_dropped,LAMPE · AM BODEN
+hud.prompt.pick_up_torch,HEB DEINE LAMPE AUF
+hud.locker.welded,ZUGESCHWEISST.
+hud.prompt.welded,ZUGESCHWEISST
+hud.prompt.drawer,FACH ÖFFNEN
+hud.prompt.ampoule,AMPULLE NEHMEN

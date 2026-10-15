@@ -45,6 +45,15 @@ public class HubStalker : MonoBehaviour
     /// <summary>F113: Hub string key of the line shown after a catch instead of the default "you wake at the door"; null = the default.</summary>
     [System.NonSerialized] public string catchLineKey;
 
+    /// <summary>F121: set by the hub breach. A catch asks this (head position) instead of hub.BeginCatch; true = the catch was taken (the stalker then stands in Catching until its owner moves it). Cleared by whoever set it.</summary>
+    [System.NonSerialized] public System.Func<Vector3, bool> catchHandler;
+    /// <summary>F121: height of the head (m): the catch handler gets it and sight starts there. 1.6 for Timmy, ~1.8 for the Cyborg.</summary>
+    [System.NonSerialized] public float eyeHeight = 1.6f;
+    /// <summary>F121: &gt; 0 and the player's torch is off (or on the floor): the view range while it is dark (a hunter that has learned the dark sees further).</summary>
+    [System.NonSerialized] public float darkViewRange;
+    /// <summary>F121: slots played instead of timmySpot on spotting / layered under each footstep (empty = the Timmy defaults).</summary>
+    [System.NonSerialized] public AudioSlot spotSlot, stepLayerSlot;
+
     public Mode CurrentMode { get; private set; } = Mode.Idle;
     public int Catches { get; private set; }
     public bool IsActive => gameObject.activeInHierarchy && CurrentMode != Mode.Idle;
@@ -234,6 +243,28 @@ public class HubStalker : MonoBehaviour
 
     public void ResetCatches() => Catches = 0;
 
+    /// <summary>
+    /// F121: the breach hunter walks to `point` at `speed` (m/s) as a route-less patrol: the Patrol case then does the sensing (sight / hearing -> Spot).
+    /// Only from Idle / Patrol / Search - never interrupts Spotted, Chase, Catching or Rising. `force` also takes a Spotted / Chase over (the breach sending it to a locker it watched the player enter). True when it took the order.
+    /// </summary>
+    public bool Hunt(Vector3 point, float speed, bool force = false)
+    {
+        EnsureAgent();
+        if (!_agent.isOnNavMesh) return false;
+        bool free = CurrentMode == Mode.Idle || CurrentMode == Mode.Patrol || CurrentMode == Mode.Search;
+        if (!free && !(force && (CurrentMode == Mode.Spotted || CurrentMode == Mode.Chase))) return false; // `force`: the locker walk-up takes over a chase
+        _hasRoute = false;
+        CurrentMode = Mode.Patrol;
+        _agent.isStopped = false;
+        _agent.speed = speed;
+        _agent.SetDestination(point);
+        return true;
+    }
+
+    /// <summary>F121: walking to a Hunt() point (testing and the breach's retarget).</summary>
+    public bool IsHunting => CurrentMode == Mode.Patrol && !_hasRoute;
+
+
     /// <summary>F113: like <see cref="ForceChase()"/>, with `onReset` run after each catch instead of the default respawn.</summary>
     public void ForceChase(System.Action onReset) { _onReset = onReset; _hasRoute = false; ForceChase(); }
 
@@ -266,12 +297,13 @@ public class HubStalker : MonoBehaviour
         AsylumHub hub = AsylumHub.Active;
         if (hub == null || hub.Player == null || hub.PlayerCamera == null) return false;
         if (hub.Stealth != null && hub.Stealth.Hidden) return false;
-        Vector3 eye = transform.position + Vector3.up * 1.6f;
+        Vector3 eye = transform.position + Vector3.up * eyeHeight;
         Vector3 target = hub.Player.position + Vector3.up * 1.1f;
         Vector3 to = target - eye;
         if (Mathf.Abs(to.y) > 3.2f) return false;
         Flashlight torch = hub.Torch;
         float range = torch != null && torch.IsOn && torch.IsFocused ? focusedViewRange : viewRange;
+        if (darkViewRange > 0f && (torch == null || !torch.IsOn)) range = darkViewRange; // F121
         Vector3 flat = new Vector3(to.x, 0f, to.z);
         if (flat.magnitude > range) return false;
         if (Vector3.Angle(transform.forward, flat) > viewAngle * 0.5f && flat.magnitude > 1.6f) return false;
@@ -373,7 +405,7 @@ public class HubStalker : MonoBehaviour
         CurrentMode = Mode.Spotted;
         _stateUntil = Time.time + (_locomotion ? stareSeconds : screamSeconds);
         SetEyes(true);
-        GameAudio.PlayAt(GameAudio.Library.timmySpot, transform.position + Vector3.up * 1.4f, 1f); // F97: servo screech (recorded clip only)
+        GameAudio.PlayAt(spotSlot ?? GameAudio.Library.timmySpot, transform.position + Vector3.up * 1.4f, 1f); // F97: servo screech (recorded clip only); F121: the breach hunter's own alert
         PlayAnim(Scream, 0.1f);
     }
 
@@ -383,7 +415,12 @@ public class HubStalker : MonoBehaviour
         if (Mathf.Abs(to.y) > 1.4f || new Vector3(to.x, 0f, to.z).magnitude > catchDistance) return;
         if (hub.Stealth != null && hub.Stealth.Hidden) return;
         if (!Clear(transform.position + Vector3.up * 1.2f, hub.Player.position + Vector3.up * 1.1f, hub.Player)) return;
-        if (!hub.BeginCatch(ResetAfterCatch, string.IsNullOrEmpty(catchLineKey) ? null : L10n.T(catchLineKey))) return;
+        if (catchHandler != null)
+        {
+            // F121: the owner decides (a free grab, a Second Wind, a real death); it never goes through the soft hub catch.
+            if (hub.IsTransitioning || hub.Leaving || !catchHandler(transform.position + Vector3.up * eyeHeight)) return;
+        }
+        else if (!hub.BeginCatch(ResetAfterCatch, string.IsNullOrEmpty(catchLineKey) ? null : L10n.T(catchLineKey))) return;
         CurrentMode = Mode.Catching;
         _agent.isStopped = true;
         FaceTowards(hub.Player.position);
@@ -479,6 +516,7 @@ public class HubStalker : MonoBehaviour
             _stepDistance = 0f;
             _audio.pitch = Random.Range(0.9f, 1.05f);
             DoorAudio.Note("HubStalker step");
+            if (stepLayerSlot != null) GameAudio.PlayAt(stepLayerSlot, transform.position, 0.6f, 1f, 18f); // F121: the hunter's metal scrape under its steps
             AudioSlot stepSlot = GameAudio.Library.timmyStep; // F97: heavy recorded steps, pitch-varied
             AudioClip stepClip = stepSlot.Pick();
             if (stepClip != null) { _audio.pitch *= stepSlot.PickPitch(); _audio.PlayOneShot(stepClip, (CurrentMode == Mode.Chase ? 1f : 0.8f) * stepSlot.volume); }

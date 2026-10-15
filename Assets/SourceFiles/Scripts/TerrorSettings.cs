@@ -76,6 +76,29 @@ public class TerrorSettings
     [Tooltip("C4 (run 3): a corridor outside the maze that loops")]
     public bool loopCorridor = true;
 
+    [Header("F120 - fear mechanics")]
+    [Tooltip("F120: the first hunter catch on a floor is a shove (torch knocked away, hunter stunned, you limp) instead of a death. Off = every catch kills as before.")]
+    public bool survivableGrab = true;
+    [Tooltip("F120: the caught end screen plays a ~6 s grainy CCTV replay of the hunter coming for you")]
+    public bool deathReplay = true;
+
+    [Header("Wing nightmares (F123)")]
+    [Tooltip("F123 floor 1 (Hilde): a door that was not there appears behind the player, out of sight")]
+    public bool extraDoors = true;
+    [Tooltip("F123 floor 2 (Tomas): the pipes knock twice when the hunter is far, three times when it is near")]
+    public bool pipeKnocks = true;
+    [Tooltip("F123 floor 2: the knocks sometimes lie (Tier A rules). CampaignRules.ApplyTerror clears this with the HONEST CUES assist, and PipeKnocks also reads CampaignRules.UnreliableCues")]
+    public bool lyingKnocks = true;
+    [Tooltip("F123 floor 3 (Elias): morgue drawer banks line the dead ends; one holds his toe tag, one has your number")]
+    public bool morgueDrawers = true;
+    [Tooltip("F123 floor 4 (Dr. Weiss): three blue-capped ampoules lie where the light isn't")]
+    public bool ampoules = true;
+    [Tooltip("F123 floor 5 (the Director): the house rules are posted and the PA reports the patient who breaks them")]
+    public bool houseRules = true;
+
+    /// <summary>F122: a shallow copy (every field is a bool). CampaignRules.ApplyTerror edits the copy, never the serialized instance.</summary>
+    public TerrorSettings Clone() => (TerrorSettings)MemberwiseClone();
+
     /// <summary>Console line tagged [Terror], only while logEvents is on.</summary>
     public void Log(string message, Object context = null)
     {

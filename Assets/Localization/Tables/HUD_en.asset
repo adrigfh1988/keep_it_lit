@@ -280,6 +280,38 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331669776663390
+  - m_Id: 1860894006439936
+    m_Localized: VOICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860894094520320
+    m_Localized: LOUD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860894094520321
+    m_Localized: "TORCH \xB7 DROPPED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860894094520322
+    m_Localized: PICK UP YOUR TORCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1874628175196160
+    m_Localized: WELDED SHUT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1874628183584768
+    m_Localized: WELDED SHUT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879571208597504
+    m_Localized: OPEN THE DRAWER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879571216986112
+    m_Localized: TAKE THE AMPOULE
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

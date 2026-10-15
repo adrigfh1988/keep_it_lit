@@ -245,6 +245,66 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763064
+  - m_Id: 1866635253641216
+    m_Key: lore.codex.hunter.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957179
+  - m_Id: 1866635324944384
+    m_Key: lore.codex.hunter.body
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957180
+  - m_Id: 1866635324944385
+    m_Key: lore.codex.stan.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957181
+  - m_Id: 1866635324944386
+    m_Key: lore.codex.stan.body
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957182
+  - m_Id: 1866635324944387
+    m_Key: lore.codex.visitor.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957183
+  - m_Id: 1866635324944388
+    m_Key: lore.codex.visitor.body
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957184
+  - m_Id: 1866635324944389
+    m_Key: lore.codex.listener.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957185
+  - m_Id: 1866635324944390
+    m_Key: lore.codex.listener.body
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957186
+  - m_Id: 1866635324944391
+    m_Key: lore.codex.tenant.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957187
+  - m_Id: 1866635324944392
+    m_Key: lore.codex.tenant.body
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957188
+  - m_Id: 1866635324944393
+    m_Key: lore.codex.living_body.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957189
+  - m_Id: 1866635324944394
+    m_Key: lore.codex.living_body.body
+    m_Metadata:
+      m_Items:
+      - rid: 4707331789613957190
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -440,3 +500,51 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: 'Hub vignette subtitle: the same chalk drawing from floor 4 on (ALL CAPS, max 100 characters)'
+    - rid: 4707331789613957179
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Codex entry name (40 pt title and 30 pt list button)
+    - rid: 4707331789613957180
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Codex entry text (28 pt, up to 8 lines, 1000 px)
+    - rid: 4707331789613957181
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Codex entry name (40 pt title and 30 pt list button)
+    - rid: 4707331789613957182
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Codex entry text (28 pt, up to 8 lines, 1000 px)
+    - rid: 4707331789613957183
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Codex entry name (40 pt title and 30 pt list button)
+    - rid: 4707331789613957184
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Codex entry text (28 pt, up to 8 lines, 1000 px)
+    - rid: 4707331789613957185
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Codex entry name (40 pt title and 30 pt list button)
+    - rid: 4707331789613957186
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Codex entry text (28 pt, up to 8 lines, 1000 px)
+    - rid: 4707331789613957187
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Codex entry name (40 pt title and 30 pt list button)
+    - rid: 4707331789613957188
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Codex entry text (28 pt, up to 8 lines, 1000 px)
+    - rid: 4707331789613957189
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Codex entry name (40 pt title and 30 pt list button)
+    - rid: 4707331789613957190
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Codex entry text (28 pt, up to 8 lines, 1000 px)

@@ -10,7 +10,8 @@ using UnityEngine;
 /// Assets/Cyborg/Materials (roughness baked into the metallic map's alpha, red emissive on the gear and headgear).
 ///
 /// Which body the hunter wears is an Editor preference (<see cref="CurrentLook"/>), switched by KEEP IT LIT &gt; Build &gt; Hunter Body Look,
-/// which rebuilds the hunter at once; Build Hunter Body and Check Project follow the selected look. The cyborg is the default (11 Oct 2026).
+/// which rebuilds the hunter at once; Build Hunter Body and Check Project follow the selected look. The F121 breach hunter in the asylum hub
+/// wears the same look, but only after Build Missing Pieces (switching the look leaves it stale; Check Project reports it). The cyborg is the default (11 Oct 2026).
 /// </summary>
 public static partial class HunterBodyBuilder
 {
@@ -44,7 +45,7 @@ public static partial class HunterBodyBuilder
     private static bool UseOrderlyValidate() { Menu.SetChecked("KEEP IT LIT/Build/Hunter Body Look/Orderly robot", CurrentLook == BodyLook.Orderly); return true; }
 
     /// <summary>The cyborg model imported as a valid Humanoid, with its materials made; null when the pack is missing or the avatar is not valid.</summary>
-    private static GameObject EnsureCyborgModel()
+    internal static GameObject EnsureCyborgModel()
     {
         ModelImporter importer = AssetImporter.GetAtPath(CyborgModelPath) as ModelImporter;
         if (importer == null) return null;
@@ -68,7 +69,7 @@ public static partial class HunterBodyBuilder
     }
 
     /// <summary>The cyborg under <paramref name="parent"/>: unpacked, weapons removed, every Body slot on its URP material, on the avatar.</summary>
-    private static GameObject InstantiateCyborg(GameObject model, Transform parent)
+    internal static GameObject InstantiateCyborg(GameObject model, Transform parent)
     {
         GameObject body = (GameObject)PrefabUtility.InstantiatePrefab(model, parent);
         PrefabUtility.UnpackPrefabInstance(body, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);

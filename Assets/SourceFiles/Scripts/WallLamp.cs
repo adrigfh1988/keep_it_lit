@@ -189,14 +189,20 @@ public class WallLamp : MonoBehaviour
 
             // The power-on "strike": two quick blinks before settling to steady light. Queued through
             // the same _blinks list Blink() uses, rather than a new coroutine.
-            _blinks.Add(new BlinkRequest { Delay = 0f, Duration = 0.08f });
-            _blinks.Add(new BlinkRequest { Delay = 0.16f, Duration = 0.08f });
+            // F118: with Reduce flashing on there is no strike; the smoothing below fades the lamp up instead.
+            if (!FlashSafety.On)
+            {
+                _blinks.Add(new BlinkRequest { Delay = 0f, Duration = 0.08f });
+                _blinks.Add(new BlinkRequest { Delay = 0.16f, Duration = 0.08f });
+            }
         }
         else
         {
             _powered = false;
         }
     }
+
+    private float _shown = 1f; // F118: the drawn brightness while Reduce flashing is on
 
     private void Update()
     {
@@ -221,6 +227,7 @@ public class WallLamp : MonoBehaviour
         {
             // Dark, no flicker/dropout tick - a Blackout floor's lamp before its fuse is restored.
             CurrentIntensity01 = 0f;
+            _shown = 0f;
             _light.intensity = 0f;
             _light.enabled = false;
 
@@ -237,7 +244,7 @@ public class WallLamp : MonoBehaviour
         float n = Mathf.PerlinNoise(Time.time * 6f + _phase, 0.3f);
         float k = 0.85f + 0.15f * n;
 
-        if (_faulty)
+        if (_faulty && !FlashSafety.On) // F118: the faulty lamp's hard dropouts are skipped with Reduce flashing on
         {
             if (_dropoutRemaining > 0f)
             {
@@ -296,15 +303,21 @@ public class WallLamp : MonoBehaviour
             }
         }
 
-        CurrentIntensity01 = k;
-        _light.intensity = _base * k;
+        CurrentIntensity01 = k; // gameplay value: never smoothed (stealth, LightPool, Stalker and phantoms read it)
+
+        // F118: Reduce flashing only changes what is DRAWN - a full swing takes 0.25 s, so a blink / dropout / kill stutter is a slow fade.
+        float drawn = k;
+        if (FlashSafety.On) { _shown = FlashSafety.Smooth(_shown, k, Time.deltaTime); drawn = _shown; }
+        else _shown = k;
+
+        _light.intensity = _base * drawn;
 
         if (_renderer != null)
         {
             // A property block rather than an instance material: every lamp shares one Material, so
             // writing to it directly would flicker every other lamp in lockstep.
             _renderer.GetPropertyBlock(_block ??= new MaterialPropertyBlock());
-            _block.SetColor("_EmissionColor", EmissionColor() * k);
+            _block.SetColor("_EmissionColor", EmissionColor() * drawn);
             _renderer.SetPropertyBlock(_block);
         }
     }

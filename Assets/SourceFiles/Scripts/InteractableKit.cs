@@ -75,6 +75,10 @@ public class InteractableKit : MonoBehaviour
     [Tooltip("The blind second killer: Char_Subject (pale, gaunt, no emission) on Animation/Descent/Listener.controller, with a Listener on the root. MazeGenerator.BuildEntities clones it, adds a NavMeshAgent and warps it onto the mesh.")]
     [SerializeField] private Listener listener;
 
+    [Header("F120 - survivable grab")]
+    [Tooltip("The player's torch lying on the floor after the hunter's shove: DroppedTorch on the root (solid collider, local +Z = the beam axis) and a disabled spot light child \"Beam\". HunterGrab clones it; Flashlight.CopyBeamTo copies the live beam onto it. Without it a catch is always a death.")]
+    [SerializeField] private DroppedTorch droppedTorch;
+
     [Header("DESCENT item cache (F107)")]
     [Tooltip("A small chest against a wall: hold E to open it for one item. MazeGenerator.BuildItemCaches clones it in a DESCENT only.")]
     [SerializeField] private DescentItem itemCache;
@@ -82,6 +86,12 @@ public class InteractableKit : MonoBehaviour
     [Header("Patient file (F93)")]
     [Tooltip("A case file on a small wall bracket: it IS a LoreNote (ids 100+), so reading, the first-read bonus and the save all work as for any note. MazeGenerator.BuildPatientFile clones it once per floor.")]
     [SerializeField] private LoreNote patientFile;
+
+    [Header("Wing nightmares (F123)")]
+    [Tooltip("Floor 3 (Elias): a cabinet of four morgue drawers, origin at the back-bottom-centre and the fronts facing +Z; MorgueDrawerBank on the root. MazeGenerator.BuildMorgueDrawers clones it onto the end wall of dead ends.")]
+    [SerializeField] private MorgueDrawerBank morgueDrawerBank;
+    [Tooltip("Floor 4 (Dr. Weiss): a clear-glass, blue-capped ampoule lying on the floor, origin at its base; NightmareAmpoule and a trigger collider on the root. MazeGenerator.BuildAmpoules clones it.")]
+    [SerializeField] private NightmareAmpoule nightmareAmpoule;
 
     [Header("Shard model (F90)")]
     [Tooltip("The currency shard's model: a pack item (Alchemist House Bulb01, a lumpy cluster) centred on this object's origin. MazeGenerator.BuildShard clones its children under each shard and gives them the glowing Maze_Shard material; empty = the old primitive cube.")]
@@ -116,6 +126,9 @@ public class InteractableKit : MonoBehaviour
     public LoreNote PatientFile => patientFile;
     public DescentItem ItemCache => itemCache;
     public Listener Listener => listener;
+    public DroppedTorch DroppedTorch => droppedTorch;
+    public MorgueDrawerBank MorgueDrawerBank => morgueDrawerBank;
+    public NightmareAmpoule NightmareAmpoule => nightmareAmpoule;
 
     /// <summary>True once every F72 template slot is assigned - MazeGenerator.BuildDoors logs and skips the whole feature otherwise.</summary>
     public bool HasDoorsAndButtons => shutterDoor != null && wallButton != null && batteryCell != null;
@@ -149,6 +162,12 @@ public class InteractableKit : MonoBehaviour
 
     /// <summary>F107: true once the item cache template is assigned - MazeGenerator.BuildItemCaches logs and skips otherwise.</summary>
     public bool HasItemCache => itemCache != null;
+
+    /// <summary>F123: true once the morgue drawer bank template is assigned - MazeGenerator.BuildMorgueDrawers logs and skips otherwise.</summary>
+    public bool HasMorgueDrawerBank => morgueDrawerBank != null;
+
+    /// <summary>F123: true once the ampoule template is assigned - MazeGenerator.BuildAmpoules logs and skips otherwise.</summary>
+    public bool HasNightmareAmpoule => nightmareAmpoule != null;
 
     /// <summary>F107 D2: true once the Listener template is assigned - MazeGenerator.BuildEntities logs and skips the Listener otherwise.</summary>
     public bool HasListener => listener != null;

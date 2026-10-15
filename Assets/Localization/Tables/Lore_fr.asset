@@ -206,6 +206,54 @@ MonoBehaviour:
     m_Localized: "UNE MAISON \xC0 LA CRAIE, EFFAC\xC9E D'UN REVERS DE MAIN."
     m_Metadata:
       m_Items: []
+  - m_Id: 1866635253641216
+    m_Localized: L'INFIRMIER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944384
+    m_Localized: "Il chasse \xE0 la vue et \xE0 l'ou\xEFe, et ne vous attrape que s'il vous voit. La lumi\xE8re, les pas et tout objet lanc\xE9 lui disent o\xF9 vous \xEAtes. Il apprend ce sur quoi vous vous appuyez."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944385
+    m_Localized: STAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944386
+    m_Localized: "Il ne bouge que lorsqu'aucune lumi\xE8re ne l'\xE9claire et se fige dans le faisceau. Son contact vide votre lampe. Il n'a jamais tu\xE9 personne."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944387
+    m_Localized: LE VISITEUR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944388
+    m_Localized: Il vit dans le couloir qui boucle et ne s'approche que lorsque vous ne regardez pas. Apprenez le couloir ; faites demi-tour quand quelque chose cloche.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944389
+    m_Localized: "L'\xC9COUTEUR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944390
+    m_Localized: "Aveugle. Il reste immobile jusqu'\xE0 vous entendre, puis rampe vers le bruit. Quand il hurle, il se jette sur le dernier bruit entendu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944391
+    m_Localized: LE LOCATAIRE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944392
+    m_Localized: "Un casier est d\xE9j\xE0 pris. \xC9coutez avant de vous cacher : il respire."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944393
+    m_Localized: LES CORPS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944394
+    m_Localized: "Tous ne sont pas morts. Un pendu tombe sur qui passe dans le noir ; un corps au sol rampe vers votre lumi\xE8re."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

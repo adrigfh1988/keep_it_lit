@@ -1,9 +1,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
 
 /// <summary>
 /// Hotkeys for the two active consumables (F33): 1 refills the torch from a Spare Battery, 2 points a
@@ -26,6 +23,9 @@ public class ConsumableController : MonoBehaviour
     private GameOutcome _outcome;
     private MainMenu _menu;
     private PauseMenu _pause;
+
+    /// <summary>F122: raised when a held consumable is spent (FloorGradeTracker counts the spare batteries). Instance event: a scene reload drops its subscribers.</summary>
+    public event System.Action<ShopItem> ItemUsed;
 
     private TextMeshProUGUI _chevron;
     private Coroutine _compassRoutine;
@@ -69,25 +69,8 @@ public class ConsumableController : MonoBehaviour
         if (_menu != null && _menu.IsOpen) return;
         if (_pause != null && _pause.IsPaused) return;
 
-        bool slot1 = false;
-        bool slot2 = false;
-#if ENABLE_INPUT_SYSTEM
-        if (Keyboard.current != null)
-        {
-            if (Keyboard.current.digit1Key.wasPressedThisFrame || Keyboard.current.numpad1Key.wasPressedThisFrame) slot1 = true;
-            if (Keyboard.current.digit2Key.wasPressedThisFrame || Keyboard.current.numpad2Key.wasPressedThisFrame) slot2 = true;
-        }
-        if (Gamepad.current != null)
-        {
-            if (Gamepad.current.dpad.left.wasPressedThisFrame) slot1 = true;
-            if (Gamepad.current.dpad.right.wasPressedThisFrame) slot2 = true;
-        }
-#endif
-        if (TouchInput.Pressed(TouchInput.TouchAction.Item1)) slot1 = true;
-        if (TouchInput.Pressed(TouchInput.TouchAction.Item2)) slot2 = true;
-
-        if (slot1) UseBattery();
-        if (slot2) UseCompass();
+        if (GameInput.Pressed(GameAction.Item1)) UseBattery();
+        if (GameInput.Pressed(GameAction.Item2)) UseCompass();
     }
 
     private void UseBattery()
@@ -109,6 +92,7 @@ public class ConsumableController : MonoBehaviour
         }
 
         PlayerInventory.TryConsume(ShopItem.SpareBattery);
+        ItemUsed?.Invoke(ShopItem.SpareBattery);
         if (_flashlight != null) _flashlight.Refill();
         if (_hud != null)
         {
@@ -132,6 +116,7 @@ public class ConsumableController : MonoBehaviour
         if (_compassRoutine != null) return; // already active
 
         PlayerInventory.TryConsume(ShopItem.StarCompass);
+        ItemUsed?.Invoke(ShopItem.StarCompass);
         if (_hud != null) _hud.PulseSlot(1);
         _compassRoutine = StartCoroutine(CompassRoutine());
     }

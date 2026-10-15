@@ -44,6 +44,14 @@ public class AsylumHub : MonoBehaviour
     [Tooltip("AsylumHub/Shop: the Commissary, the shop as a room of the asylum (the ground-floor storeroom). A hub without it still works; clearing a maze then goes to the old shop room directly, as before.")]
     public HubShop shop;
 
+    [Header("Empty rooms (F117, optional - not part of IsComplete)")]
+    [Tooltip("AsylumHub/Lesson: the classroom blackboard, chalk text of what the hunter has learned.")]
+    public HubLesson lesson;
+    [Tooltip("AsylumHub/Meal: the kitchen serving table, one free dish per floor (F117).")]
+    public HubMeal meal;
+    [Tooltip("AsylumHub/Supper: the dining room's long table, THE LAST SUPPER (F117).")]
+    public HubSupper supper;
+
     [Header("Points (always active)")]
     public Transform points;
     public Transform mainEntrance;
@@ -199,6 +207,9 @@ public class AsylumHub : MonoBehaviour
         if (wings != null) wings.gameObject.SetActive(active);
         if (life != null) life.gameObject.SetActive(active);
         if (shop != null) shop.gameObject.SetActive(active); // F116: the Commissary is hub content too
+        if (lesson != null) lesson.gameObject.SetActive(active); // F117
+        if (meal != null) meal.gameObject.SetActive(active); // F117
+        if (supper != null) supper.gameObject.SetActive(active); // F117
     }
 
     /// <summary>S2: every fog emitter under Dressing/Fog follows the Fog setting (a FogScale is added on first activation and applies on its own enable).</summary>
@@ -327,6 +338,9 @@ public class AsylumHub : MonoBehaviour
         SetContentActive(true);
         foreach (WingDoor door in wingDoors) door.Refresh();
         if (shop != null) shop.Refresh();
+        if (lesson != null) lesson.Refresh(); // F117
+        if (meal != null) meal.Refresh(); // F117
+        if (supper != null) supper.Refresh(); // F117
 
         ArrivalPosition = arrival.position;
         ArrivalYaw = arrival.eulerAngles.y;

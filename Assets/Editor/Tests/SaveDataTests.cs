@@ -1,0 +1,333 @@
+using System;
+using System.IO;
+using System.Reflection;
+using NUnit.Framework;
+using UnityEngine;
+
+namespace KeepItLit.Tests
+{
+    /// <summary>F118: SaveData round trip, version migration, problem classification and the file store. Pure, no Play mode.</summary>
+    [Category("Fast")]
+    public class SaveDataTests
+    {
+        private string _dir;
+        private string _legacyKey;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _dir = Path.Combine(Path.GetTempPath(), "kil-tests-" + Guid.NewGuid().ToString("N"));
+            _legacyKey = null;
+            SaveSystem.DirectoryOverride = _dir;
+            SaveSystem.LegacyKeyOverride = null;
+            SaveSystem.ConsumeProblem();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            SaveSystem.DirectoryOverride = null;
+            SaveSystem.LegacyKeyOverride = null;
+            SaveSystem.ConsumeProblem();
+            if (_legacyKey != null)
+            {
+                PlayerPrefs.DeleteKey(_legacyKey);
+                PlayerPrefs.DeleteKey(_legacyKey + ".moved");
+            }
+            try { if (Directory.Exists(_dir)) Directory.Delete(_dir, true); } catch (IOException) { }
+        }
+
+        // ------------------------------------------------------------ helpers
+
+        private static string Fixture(string name) => File.ReadAllText(Path.Combine(Application.dataPath, "Editor/Tests/Fixtures", name));
+
+        /// <summary>Every public instance field set to a non-default value, by reflection, so fields added later are covered automatically.</summary>
+        private static SaveData FullSave()
+        {
+            SaveData d = new SaveData();
+            int n = 3;
+            foreach (FieldInfo f in typeof(SaveData).GetFields(BindingFlags.Public | BindingFlags.Instance))
+            {
+                n++;
+                if (f.FieldType == typeof(int)) f.SetValue(d, n);
+                else if (f.FieldType == typeof(bool)) f.SetValue(d, true);
+                else if (f.FieldType == typeof(string)) f.SetValue(d, "v" + n);
+                else if (f.FieldType == typeof(float)) f.SetValue(d, n + 0.5f);
+                else if (f.FieldType == typeof(int[])) f.SetValue(d, new[] { n, n + 1, n + 2 });
+                else Assert.Fail("SaveData." + f.Name + " has a type the round-trip test does not know: " + f.FieldType);
+            }
+            d.version = SaveSystem.Version;
+            d.floor = 3;
+            d.inShop = true;
+            return d;
+        }
+
+        private static void AssertSame(SaveData a, SaveData b, params string[] ignore)
+        {
+            foreach (FieldInfo f in typeof(SaveData).GetFields(BindingFlags.Public | BindingFlags.Instance))
+            {
+                if (Array.IndexOf(ignore, f.Name) >= 0) continue;
+                object x = f.GetValue(a), y = f.GetValue(b);
+                if (x is Array xa)
+                {
+                    Array ya = y as Array;
+                    Assert.IsNotNull(ya, f.Name);
+                    Assert.AreEqual(xa.Length, ya.Length, f.Name + ".Length");
+                    for (int i = 0; i < xa.Length; i++) Assert.AreEqual(xa.GetValue(i), ya.GetValue(i), f.Name + "[" + i + "]");
+                }
+                else Assert.AreEqual(x, y, f.Name);
+            }
+        }
+
+        private string MainPath => Path.Combine(_dir, "save.json");
+
+        // ------------------------------------------------------------ pure parse
+
+        [Test]
+        public void RoundTrip_EveryFieldSurvives()
+        {
+            SaveData d = FullSave();
+            Assert.IsTrue(SaveSystem.TryParse(JsonUtility.ToJson(d), out SaveData back, out var problem, out bool migrated), problem.ToString());
+            Assert.IsFalse(migrated);
+            AssertSame(d, back);
+        }
+
+        [Test]
+        public void MigrateV1Fixture_BringsItToCurrentVersion()
+        {
+            string json = Fixture("save-v1.json");
+            Assert.IsTrue(json.Contains("\"version\":1"));
+            SaveData old = JsonUtility.FromJson<SaveData>(json);
+            Assert.AreNotEqual(0, old.hudTintIndex, "fixture must carry a non-zero hudTintIndex so the step is exercised");
+
+            Assert.IsTrue(SaveSystem.TryParse(json, out SaveData d, out var problem, out bool migrated), problem.ToString());
+            Assert.IsTrue(migrated);
+            Assert.AreEqual(SaveSystem.Version, d.version);
+            Assert.AreEqual(0, d.hudTintIndex);
+            Assert.AreEqual(1, d.ownedHudTints);
+            AssertSame(old, d, "version", "hudTintIndex", "ownedHudTints");
+        }
+
+        [Test]
+        public void Problems_AreClassified()
+        {
+            SaveSystem.LoadProblem p;
+            Assert.IsFalse(SaveSystem.TryParse("{", out _, out p, out _));
+            Assert.AreEqual(SaveSystem.LoadProblem.Corrupt, p);
+
+            SaveData d = FullSave();
+            d.version = SaveSystem.Version + 1;
+            Assert.IsFalse(SaveSystem.TryParse(JsonUtility.ToJson(d), out _, out p, out _));
+            Assert.AreEqual(SaveSystem.LoadProblem.TooNew, p);
+
+            d.version = 0;
+            Assert.IsFalse(SaveSystem.TryParse(JsonUtility.ToJson(d), out _, out p, out _));
+            Assert.AreEqual(SaveSystem.LoadProblem.Corrupt, p);
+
+            d.version = SaveSystem.Version;
+            d.floor = 99;
+            Assert.IsFalse(SaveSystem.TryParse(JsonUtility.ToJson(d), out _, out p, out _));
+            Assert.AreEqual(SaveSystem.LoadProblem.OutOfRange, p);
+
+            d.floor = FloorProfile.FinalFloor;
+            d.inShop = true;
+            Assert.IsFalse(SaveSystem.TryParse(JsonUtility.ToJson(d), out _, out p, out _));
+            Assert.AreEqual(SaveSystem.LoadProblem.OutOfRange, p);
+        }
+
+        [Test]
+        public void MigrationChain_IsComplete()
+        {
+            // Fails when someone bumps SaveSystem.Version without adding the matching SaveMigrations case.
+            for (int v = 1; v < SaveSystem.Version; v++)
+            {
+                SaveData d = new SaveData { version = v, floor = 1 };
+                Assert.IsTrue(SaveMigrations.Run(d), "no migration step from v" + v);
+                Assert.AreEqual(SaveSystem.Version, d.version);
+            }
+        }
+
+        // ------------------------------------------------------------ file store through SaveSystem
+
+        [Test]
+        public void WriteTwice_KeepsBackup_NoTemp()
+        {
+            SaveData a = FullSave(); a.shards = 111;
+            SaveData b = FullSave(); b.shards = 222;
+            var store = new SaveFileStore(_dir, "save.json");
+            store.Write(JsonUtility.ToJson(a));
+            Assert.IsFalse(File.Exists(store.BackupPath));
+            store.Write(JsonUtility.ToJson(b));
+            Assert.AreEqual(JsonUtility.ToJson(b), File.ReadAllText(MainPath));
+            Assert.AreEqual(JsonUtility.ToJson(a), File.ReadAllText(store.BackupPath));
+            Assert.IsFalse(File.Exists(store.TempPath));
+        }
+
+        [Test]
+        public void CorruptMain_RestoresBackup_AndRewritesMain()
+        {
+            SaveData a = FullSave(); a.shards = 111;
+            SaveData b = FullSave(); b.shards = 222;
+            var store = new SaveFileStore(_dir, "save.json");
+            store.Write(JsonUtility.ToJson(a));
+            store.Write(JsonUtility.ToJson(b));
+            File.WriteAllText(MainPath, "garbage");
+
+            Assert.IsTrue(SaveSystem.TryLoad(out SaveData loaded));
+            Assert.AreEqual(111, loaded.shards, "the .bak (A) is restored");
+            Assert.AreEqual(JsonUtility.ToJson(a), File.ReadAllText(MainPath), "main rewritten with A");
+            Assert.AreEqual(SaveSystem.LoadProblem.None, SaveSystem.ConsumeProblem());
+        }
+
+        [Test]
+        public void Delete_RemovesMainAndBackup()
+        {
+            var store = new SaveFileStore(_dir, "save.json");
+            store.Write(JsonUtility.ToJson(FullSave()));
+            store.Write(JsonUtility.ToJson(FullSave()));
+            SaveSystem.Delete();
+            Assert.IsFalse(File.Exists(MainPath));
+            Assert.IsFalse(File.Exists(store.BackupPath));
+            Assert.IsFalse(SaveSystem.TryLoad(out _));
+        }
+
+        [Test]
+        public void BothUnreadable_SetsAside_ReportsOnce()
+        {
+            Directory.CreateDirectory(_dir);
+            File.WriteAllText(MainPath, "garbage");
+            File.WriteAllText(MainPath + ".bak", "more garbage");
+
+            Assert.IsFalse(SaveSystem.TryLoad(out _));
+            Assert.IsTrue(File.Exists(Path.Combine(_dir, "save.unreadable.json")), "kept, not deleted");
+            Assert.IsFalse(File.Exists(MainPath));
+            Assert.AreEqual(SaveSystem.LoadProblem.Corrupt, SaveSystem.ConsumeProblem());
+            Assert.AreEqual(SaveSystem.LoadProblem.None, SaveSystem.ConsumeProblem());
+
+            Assert.IsFalse(SaveSystem.TryLoad(out _), "second load: no save");
+            Assert.AreEqual(SaveSystem.LoadProblem.None, SaveSystem.ConsumeProblem(), "not re-reported");
+        }
+
+        [Test]
+        public void TooNewSave_IsSetAside_NotDestroyed()
+        {
+            Directory.CreateDirectory(_dir);
+            SaveData d = FullSave(); d.version = SaveSystem.Version + 7;
+            string json = JsonUtility.ToJson(d);
+            File.WriteAllText(MainPath, json);
+
+            Assert.IsFalse(SaveSystem.TryLoad(out _));
+            Assert.AreEqual(SaveSystem.LoadProblem.TooNew, SaveSystem.ConsumeProblem());
+            Assert.AreEqual(json, File.ReadAllText(Path.Combine(_dir, "save.unreadable.json")));
+        }
+
+        [Test]
+        public void V1FileSave_IsMigrated_AndOldTextBecomesBackup()
+        {
+            Directory.CreateDirectory(_dir);
+            string v1 = Fixture("save-v1.json");
+            File.WriteAllText(MainPath, v1);
+
+            Assert.IsTrue(SaveSystem.TryLoad(out SaveData d));
+            Assert.AreEqual(SaveSystem.Version, d.version);
+            Assert.AreEqual(0, d.hudTintIndex);
+            Assert.AreEqual(SaveSystem.Version, JsonUtility.FromJson<SaveData>(File.ReadAllText(MainPath)).version, "written back");
+            Assert.AreEqual(v1, File.ReadAllText(MainPath + ".bak"), "the pre-migration text is the backup");
+        }
+
+        [Test]
+        public void TmpOnly_IsNotTrusted()
+        {
+            Directory.CreateDirectory(_dir);
+            File.WriteAllText(MainPath + ".tmp", JsonUtility.ToJson(FullSave()));
+            Assert.IsFalse(SaveSystem.TryLoad(out _));
+            Assert.AreEqual(SaveSystem.LoadProblem.None, SaveSystem.ConsumeProblem());
+        }
+
+        // ------------------------------------------------------------ legacy PlayerPrefs move (D3)
+
+        [Test]
+        public void LegacyPlayerPrefsSave_MovesToFile_Once()
+        {
+            _legacyKey = "kil-test-legacy-" + Guid.NewGuid().ToString("N");
+            string v1 = Fixture("save-v1.json");
+            PlayerPrefs.SetString(_legacyKey, v1);
+            SaveSystem.LegacyKeyOverride = _legacyKey;
+
+            Assert.IsTrue(SaveSystem.TryLoad(out SaveData d));
+            Assert.AreEqual(SaveSystem.Version, d.version, "migrated on load");
+            Assert.IsTrue(File.Exists(MainPath));
+            Assert.IsFalse(PlayerPrefs.HasKey(_legacyKey), "legacy key removed after a verified copy");
+            Assert.AreEqual(1, PlayerPrefs.GetInt(_legacyKey + ".moved", 0));
+        }
+
+        [Test]
+        public void DirectoryOverride_NeverTouchesTheRealPlayerPrefsSave()
+        {
+            string before = PlayerPrefs.GetString(SaveSystem.Key, "<none>"); // read only
+            bool hadKey = PlayerPrefs.HasKey(SaveSystem.Key);
+
+            Assert.IsFalse(SaveSystem.TryLoad(out _));
+            Assert.IsFalse(File.Exists(MainPath), "the file store stays empty");
+            Assert.AreEqual(hadKey, PlayerPrefs.HasKey(SaveSystem.Key));
+            Assert.AreEqual(before, PlayerPrefs.GetString(SaveSystem.Key, "<none>"), "real PlayerPrefs save untouched");
+        }
+
+        [Test]
+        public void HunterVoiceHabit_RoundTripsThroughSaveData()
+        {
+            // F120: SaveData.hunterVoice is additive (P1.1): missing = 0 = it has not learned your voice.
+            HunterMemory.ResetCampaign();
+            try
+            {
+                Assert.IsTrue(HunterMemory.Learn(HunterMemory.Habit.Voice));
+                Assert.IsTrue(HunterMemory.Learn(HunterMemory.Habit.Voice));
+                SaveData data = new SaveData();
+                HunterMemory.CaptureTo(data);
+                Assert.AreEqual(2, data.hunterVoice);
+
+                HunterMemory.ResetCampaign();
+                HunterMemory.RestoreFrom(data);
+                Assert.AreEqual(2, HunterMemory.Level(HunterMemory.Habit.Voice));
+
+                HunterMemory.RestoreFrom(new SaveData()); // an older save: the field is missing = 0
+                Assert.AreEqual(0, HunterMemory.Level(HunterMemory.Habit.Voice));
+            }
+            finally { HunterMemory.ResetCampaign(); }
+        }
+
+        [Test]
+        public void HubBreachDone_RoundTripsThroughSaveData()
+        {
+            // F121: SaveData.hubBreachDone is additive (P1.1): missing = false = the hub breach has not happened yet.
+            HubState.ResetCampaign();
+            try
+            {
+                SaveData data = new SaveData { version = SaveSystem.Version, floor = 5 };
+                HubState.CaptureTo(data);
+                Assert.IsFalse(data.hubBreachDone);
+
+                HubState.BreachDone = true;
+                HubState.MealFloor = 3;
+                HubState.CaptureTo(data);
+                Assert.IsTrue(data.hubBreachDone);
+                Assert.IsTrue(SaveSystem.TryParse(JsonUtility.ToJson(data), out SaveData back, out var problem, out _), problem.ToString());
+                Assert.IsTrue(back.hubBreachDone, "survives the JSON round trip");
+
+                HubState.ResetCampaign();
+                Assert.IsFalse(HubState.BreachDone, "ResetCampaign clears it");
+                HubState.RestoreFrom(back);
+                Assert.IsTrue(HubState.BreachDone);
+                Assert.AreEqual(3, HubState.MealFloor, "the meal floor beside it is untouched");
+
+                HubState.RestoreFrom(new SaveData()); // an older save: the field is missing = false
+                Assert.IsFalse(HubState.BreachDone);
+
+                // the v1 fixture predates the field: reads false, and migration keeps it false
+                Assert.IsTrue(SaveSystem.TryParse(Fixture("save-v1.json"), out SaveData old, out var oldProblem, out _), oldProblem.ToString());
+                Assert.IsFalse(old.hubBreachDone);
+            }
+            finally { HubState.ResetCampaign(); }
+        }
+    }
+}

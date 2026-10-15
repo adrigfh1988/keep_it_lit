@@ -144,6 +144,9 @@ public class MazeEscape : MonoBehaviour
     /// <summary>Seconds left on the countdown. Valid even after Stop() - Stop() hides the display, it does not zero the field.</summary>
     public float TimeLeft => Mathf.Max(0f, _timeLeft);
 
+    /// <summary>F122: the value the countdown started from (0 before the hatch / gates open). The floor grade's time margin is measured against it.</summary>
+    public float CountdownSeconds { get; private set; }
+
     /// <summary>F36 Second Wind: holds the countdown without the permanent Stop(), so it can resume.</summary>
     public bool Frozen { get; set; }
 
@@ -278,6 +281,7 @@ public class MazeEscape : MonoBehaviour
 
             BuildPingSource(_hatchPosition);
             _timeLeft = gateEscapeSeconds;
+            CountdownSeconds = _timeLeft; // F122
             BuildTimerText();
             ApplyLockLook();
             _hud?.ShowSubtitle(L10n.T("sub.escape.gates_powered"), 2.5f);
@@ -289,6 +293,7 @@ public class MazeEscape : MonoBehaviour
             BuildHatch(_hatchPosition);
             BuildLandingPlatform(_hatchPosition);
             _timeLeft = escapeSeconds;
+            CountdownSeconds = _timeLeft; // F122
             BuildTimerText();
             ApplyLockLook();
         }

@@ -80,3 +80,18 @@ shop.payout.consolation,CONSOLATION  {percent}% de {stars} {stars:plural:étoile
 shop.temperament.final,"Ça ne vous laissera pas partir."
 shop.item.floor_plan.name,Plan d'étage
 shop.item.floor_plan.blurb,"Rare. Maintenez {key} à l'étage qui l'exige : la carte ne montre que ce que vous avez parcouru."
+shop.item.dynamo.name,Dynamo
+shop.item.dynamo.blurb,"La lampe se recharge bien plus vite éteinte, à l'étage suivant."
+shop.item.archivist_lamp.name,Lampe de l'Archiviste
+shop.item.archivist_lamp.blurb,Les notes et les dossiers de patients luisent faiblement à l'étage suivant.
+shop.item.stethoscope.name,Stéthoscope
+shop.item.stethoscope.blurb,Les pas du chasseur traversent nettement les murs à l'étage suivant.
+shop.palette.torch.4,OS
+shop.palette.torch.5,VERT DE SALLE
+shop.palette.torch.6,ROUGE SERMENT
+shop.contract.unseen.name,Invisible
+shop.contract.unseen.text,Ne jamais être poursuivi.
+shop.contract.hands_to_yourself.name,Les mains dans les poches
+shop.contract.hands_to_yourself.text,Ne lancez rien.
+shop.contract.cut_it_close.name,De justesse
+shop.contract.cut_it_close.text,Atteignez la sortie avec 20 secondes ou moins de marge.

@@ -85,7 +85,9 @@ public class FlickerLight : MonoBehaviour
 
         float k = 1f;
 
-        switch (mode)
+        // F118: with Reduce flashing on the fast modes (Faulty dropouts, Spark bursts) behave as the gentle Candle waver.
+        FlickerMode effectiveMode = FlashSafety.On ? FlickerMode.Candle : mode;
+        switch (effectiveMode)
         {
             case FlickerMode.Candle:
                 float noise = Mathf.PerlinNoise(Time.time * 4f + _phase, 0.5f);

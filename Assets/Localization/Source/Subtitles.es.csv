@@ -54,3 +54,29 @@ sub.loop.offer,UN CAMINO APARTE. NO ESTÁS OBLIGADO. PASADA LA ESQUINA NO HAY VU
 sub.loop.offer_reward,"ACIERTA {n} VECES SEGUIDAS: TODO EL MAPA, LA LINTERNA LLENA Y PROVISIONES."
 sub.loop.torch_full,LINTERNA LLENA
 sub.map.used,EL PLANO. SOLO LO QUE HAS RECORRIDO.
+sub.grab.release,Te apartó de un empujón. Tu linterna está en el suelo.
+sub.grab.warning,La próxima vez no te soltará.
+sub.grab.torch_back,Tienes la luz.
+sub.hunter.learned_voice,CONOCE TU VOZ.
+sub.banner.oaths,JURAMENTO {rank}
+sub.nightmare.hilde.seen.0,AQUÍ NO HABÍA NINGUNA PUERTA.
+sub.nightmare.hilde.seen.1,UNA PUERTA MÁS QUE ANTES.
+sub.nightmare.tomas.knocks_two,LAS TUBERÍAS GOLPEAN DOS VECES.
+sub.nightmare.tomas.knocks_three,LAS TUBERÍAS GOLPEAN TRES VECES.
+sub.nightmare.elias.empty.0,VACÍO. LA BANDEJA ESTÁ FRÍA.
+sub.nightmare.elias.empty.1,UNA ETIQUETA SIN NOMBRE. NADIE EN LA BANDEJA.
+sub.nightmare.elias.empty.2,VACÍO. ALGUIEN LO HA HECHO COMO UNA CAMA.
+sub.nightmare.elias.five,"CAJÓN CINCO. SOLO SU ETIQUETA, ESPERANDO."
+sub.nightmare.elias.yours,LA ETIQUETA LLEVA TU NÚMERO. LA BANDEJA AÚN ESTÁ TIBIA.
+sub.nightmare.elias.your_things,TUS COSAS ESTÁN EN LA BANDEJA: UNA PILA DE REPUESTO.
+sub.nightmare.weiss.dose.0,"VIDRIO CLARO, TAPÓN AZUL. TU CORAZÓN SE CALMA."
+sub.nightmare.weiss.dose.1,EL MIEDO CALLA. LA ADVERTENCIA TAMBIÉN.
+sub.nightmare.weiss.dose.2,LAS TRES. NADIE RECIBE UNA DOSIS CORTA.
+sub.nightmare.weiss.wears_off,TU CORAZÓN HA VUELTO.
+sub.nightmare.director.welcome,BUENAS NOCHES. LAS NORMAS DE LA CASA ESTÁN PUBLICADAS. GRACIAS.
+sub.nightmare.director.warn.run,"PACIENTE {mark}. AL PASO, POR FAVOR."
+sub.nightmare.director.warn.hide,"PACIENTE {mark}. FUERA DEL ARMARIO, POR FAVOR."
+sub.nightmare.director.warn.throw,PACIENTE {mark}. AQUÍ NO SE TIRAN COSAS.
+sub.nightmare.director.report.run,"EL PACIENTE {mark} ESTÁ CORRIENDO. CELADOR, ASISTA, POR FAVOR."
+sub.nightmare.director.report.hide,"EL PACIENTE {mark} SE ESCONDE. CELADOR, ASISTA, POR FAVOR."
+sub.nightmare.director.report.throw,"EL PACIENTE {mark} LANZA OBJETOS. CELADOR, ASISTA, POR FAVOR."

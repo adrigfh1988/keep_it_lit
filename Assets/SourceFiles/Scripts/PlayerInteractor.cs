@@ -1,7 +1,4 @@
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
 
 /// <summary>
 /// F72 decision D12: the one interaction system every new pickup/door/button goes through. A camera
@@ -80,7 +77,7 @@ public class PlayerInteractor : MonoBehaviour
             // while open) still owns E - see the Fallback doc comment.
             if (Fallback != null && Fallback.CanInteract)
             {
-                if (_hud != null) _hud.SetFocusPrompt("E", Fallback.Prompt);
+                if (_hud != null) _hud.SetFocusPrompt(GameAction.Interact, Fallback.Prompt);
                 if (pressed) Fallback.Interact(this);
             }
             else if (_hud != null)
@@ -99,7 +96,7 @@ public class PlayerInteractor : MonoBehaviour
             if (_hud != null)
             {
                 float fill = progressive.Progress01;
-                _hud.SetFocusPrompt("E", progressive.Prompt, fill > 0f ? Mathf.RoundToInt(Mathf.Clamp01(fill) * 100f) : -1);
+                _hud.SetFocusPrompt(GameAction.Interact, progressive.Prompt, fill > 0f ? Mathf.RoundToInt(Mathf.Clamp01(fill) * 100f) : -1);
             }
             return;
         }
@@ -107,7 +104,7 @@ public class PlayerInteractor : MonoBehaviour
         if (_focused.HoldSeconds <= 0f)
         {
             if (pressed && canInteract) _focused.Interact(this);
-            if (_hud != null) _hud.SetFocusPrompt("E", canInteract ? _focused.Prompt : null);
+            if (_hud != null) _hud.SetFocusPrompt(GameAction.Interact, canInteract ? _focused.Prompt : null);
         }
         else
         {
@@ -123,13 +120,13 @@ public class PlayerInteractor : MonoBehaviour
                 else if (_hud != null)
                 {
                     int percent = Mathf.RoundToInt(Mathf.Clamp01(_holdElapsed / _focused.HoldSeconds) * 100f);
-                    _hud.SetFocusPrompt("E", _focused.Prompt, percent);
+                    _hud.SetFocusPrompt(GameAction.Interact, _focused.Prompt, percent);
                 }
             }
             else
             {
                 _holdElapsed = 0f;
-                if (_hud != null) _hud.SetFocusPrompt("E", canInteract ? _focused.Prompt : null);
+                if (_hud != null) _hud.SetFocusPrompt(GameAction.Interact, canInteract ? _focused.Prompt : null);
             }
         }
     }
@@ -182,16 +179,7 @@ public class PlayerInteractor : MonoBehaviour
 
     private void ReadInput(out bool pressed, out bool held)
     {
-#if ENABLE_INPUT_SYSTEM
-        pressed = (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
-               || (Gamepad.current != null && Gamepad.current.buttonWest.wasPressedThisFrame)
-               || TouchInput.Pressed(TouchInput.TouchAction.Interact);
-        held = (Keyboard.current != null && Keyboard.current.eKey.isPressed)
-            || (Gamepad.current != null && Gamepad.current.buttonWest.isPressed)
-            || TouchInput.Held(TouchInput.TouchAction.Interact);
-#else
-        pressed = false;
-        held = false;
-#endif
+        pressed = GameInput.Pressed(GameAction.Interact);
+        held = GameInput.Held(GameAction.Interact);
     }
 }

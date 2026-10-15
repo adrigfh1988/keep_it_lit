@@ -77,3 +77,15 @@ lore.vignette.barricade_early,ATRANCARON LA PUERTA. DESDE DENTRO.
 lore.vignette.barricade_late,HAN EMPUJADO LA MESA. DESDE EL OTRO LADO.
 lore.vignette.chalkhouse_early,UNA CASA DE TIZA CON MÁS VENTANAS QUE LA DE VERDAD.
 lore.vignette.chalkhouse_late,"UNA CASA DE TIZA, BORRADA POR UNA MANO."
+lore.codex.hunter.name,EL CELADOR
+lore.codex.hunter.body,"Caza por la vista y por el oído, y solo te atrapa cuando te ve. La luz, los pasos y todo lo que lances le dicen dónde estás. Aprende en qué te apoyas."
+lore.codex.stan.name,STAN
+lore.codex.stan.body,Solo se mueve mientras ninguna luz lo alcanza y se queda quieto en el haz. Su contacto drena tu linterna. Nunca ha matado a nadie.
+lore.codex.visitor.name,EL VISITANTE
+lore.codex.visitor.body,Vive en el pasillo que se repite y solo se acerca cuando no lo miras. Aprende el pasillo; da media vuelta cuando algo falle.
+lore.codex.listener.name,EL OYENTE
+lore.codex.listener.body,"Ciego. Yace inmóvil hasta que te oye, y entonces se arrastra hacia el sonido. Cuando grita, se lanza hacia el último ruido que oyó."
+lore.codex.tenant.name,EL INQUILINO
+lore.codex.tenant.body,Una taquilla ya está ocupada. Escucha antes de esconderte: respira.
+lore.codex.living_body.name,LOS CUERPOS
+lore.codex.living_body.body,No todos están muertos. Uno colgado cae sobre quien pasa en la oscuridad; uno en el suelo se arrastra hacia tu luz.

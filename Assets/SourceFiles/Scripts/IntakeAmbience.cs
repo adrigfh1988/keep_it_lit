@@ -90,12 +90,12 @@ public class IntakeAmbience : MonoBehaviour
         {
             if (buzzLights[i] == null) continue;
             float factor = 1f + (Mathf.PerlinNoise(time * 11f, i * 5.3f) - 0.5f) * 0.12f;
-            if (time >= _nextDip[i])
+            if (time >= _nextDip[i] && !FlashSafety.On) // F118
             {
                 _dipEnd[i] = time + Random.Range(0.08f, 0.2f);
                 _nextDip[i] = _dipEnd[i] + Random.Range(6f, 14f);
             }
-            if (time < _dipEnd[i]) factor = 0.15f;
+            if (time < _dipEnd[i] && !FlashSafety.On) factor = 0.15f;
             buzzLights[i].intensity = _lightBase[i] * factor;
             if (_buzzMats[i] != null && _buzzMats[i].HasProperty("_EmissionColor")) _buzzMats[i].SetColor("_EmissionColor", _buzzEmission[i] * factor);
         }
@@ -103,13 +103,13 @@ public class IntakeAmbience : MonoBehaviour
         for (int i = 0; i < _signBase.Length; i++)
         {
             if (flickerSigns[i] == null) continue;
-            if (time >= _nextStutter[i])
+            if (time >= _nextStutter[i] && !FlashSafety.On) // F118: the sign stays steady
             {
                 _stutterEnd[i] = time + Random.Range(0.15f, 0.4f);
                 _nextStutter[i] = _stutterEnd[i] + Random.Range(5f, 12f);
             }
             Color c = _signBase[i];
-            if (time < _stutterEnd[i]) c.a *= Random.value < 0.5f ? Random.Range(0.1f, 0.5f) : 1f;
+            if (time < _stutterEnd[i] && !FlashSafety.On) c.a *= Random.value < 0.5f ? Random.Range(0.1f, 0.5f) : 1f;
             flickerSigns[i].color = c;
         }
 

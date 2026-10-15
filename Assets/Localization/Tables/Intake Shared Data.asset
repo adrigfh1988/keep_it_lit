@@ -90,16 +90,6 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763080
-  - m_Id: 635342859
-    m_Key: intake.key.mouse
-    m_Metadata:
-      m_Items:
-      - rid: 4707331672703763081
-  - m_Id: 635342860
-    m_Key: intake.key.rmb
-    m_Metadata:
-      m_Items:
-      - rid: 4707331672703763082
   - m_Id: 635342861
     m_Key: intake.key.right_thumb
     m_Metadata:
@@ -256,14 +246,6 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: 'Tutorial objective card, step 9 of 9, after the star: walk onto the hatch in the floor (42 pt, one line, auto-size)'
-    - rid: 4707331672703763081
-      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
-      data:
-        m_CommentText: 'Key chip on the objective card: look around with the mouse (keyboard-and-mouse players). ALL CAPS, short, ~7 characters'
-    - rid: 4707331672703763082
-      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
-      data:
-        m_CommentText: 'Key chip on the objective card: the right mouse button, hold to focus the torch beam. ALL CAPS, short, ~6 characters'
     - rid: 4707331672703763083
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:

@@ -59,3 +59,14 @@ world.loop.wrong_turned,NICHTS WAR ANDERS
 world.loop.wrong_missed,DU HAST ETWAS ÜBERSEHEN
 world.loop.continue,NICHTS VERÄNDERT? GEH WEITER.
 world.loop.turn,ETWAS ANDERS? KEHR UM.
+world.nightmare.drawer.elias,5 · E. VOGT
+world.nightmare.drawer.yours,PATIENT {mark}
+world.nightmare.toetag,"E. VOGT
+FACH 5
+MORGENS GEFUNDEN"
+world.nightmare.director.rules,"HAUSORDNUNG
+1. PATIENTEN GEHEN.
+2. PATIENTEN VERSTECKEN SICH NICHT.
+3. PATIENTEN WERFEN NICHTS.
+DER PFLEGER WIRD NACHHELFEN.
+- DER DIREKTOR"

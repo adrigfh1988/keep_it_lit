@@ -64,7 +64,7 @@ public class ScareTelevision : HubRoomScare
     protected override void Tick(AsylumHub hub)
     {
         if (!_on || _material == null || Time.timeScale <= 0f || Time.time < _nextStep) return;
-        _nextStep = Time.time + staticStep;
+        _nextStep = Time.time + (FlashSafety.On ? Mathf.Max(staticStep, 0.25f) : staticStep); // F118: the static jumps at most 4 times a second
         _material.mainTextureOffset = new Vector2(Random.value, Random.value);
     }
 

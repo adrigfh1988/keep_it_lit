@@ -108,7 +108,7 @@ public class TouchControls : MonoBehaviour
     {
         if (_root == null) return;
 
-        TouchInput.Poll();
+        GameInput.Poll();   // F119: also runs TouchInput.Poll() (once per frame)
         bool active = TouchInput.Active;
         HandleActiveTransition(active);
 

@@ -32,6 +32,7 @@ public class ContractTracker : MonoBehaviour
     private ThirdPersonController _controller;
     private CharacterController _characterController;
     private AIFollower _hunter;
+    private ThrowController _throw; // F122 HANDS TO YOURSELF
 
     private float _darkSeconds;
     private int _shardsPlaced;
@@ -93,6 +94,12 @@ public class ContractTracker : MonoBehaviour
         {
             _hunter = hunter;
             _hunter.PlayerCaught += HandleCaught;
+            if (_id == ContractState.Unseen) _hunter.ChaseStateChanged += HandleChase; // F122: a chase begun at all fails it
+        }
+        if (_id == ContractState.HandsToYourself)
+        {
+            _throw = FindAnyObjectByType<ThrowController>(); // F122: any throw fails it
+            if (_throw != null) _throw.Thrown += HandleThrown;
         }
         LoreNote.Read += HandleNoteRead;
         Stalker.PlayerTouched += HandleStalkerTouch;
@@ -106,7 +113,8 @@ public class ContractTracker : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (_hunter != null) _hunter.PlayerCaught -= HandleCaught;
+        if (_hunter != null) { _hunter.PlayerCaught -= HandleCaught; _hunter.ChaseStateChanged -= HandleChase; }
+        if (_throw != null) _throw.Thrown -= HandleThrown;
         if (!_subscribed) return;
         LoreNote.Read -= HandleNoteRead;
         Stalker.PlayerTouched -= HandleStalkerTouch;
@@ -122,6 +130,16 @@ public class ContractTracker : MonoBehaviour
     {
         // Second Wind also raises PlayerCaught: being caught at all breaks "not a scratch".
         if (Counting && _id == ContractState.Untouched) Fail();
+    }
+
+    private void HandleChase(bool chasing)
+    {
+        if (chasing && Counting && _id == ContractState.Unseen) Fail();
+    }
+
+    private void HandleThrown()
+    {
+        if (Counting && _id == ContractState.HandsToYourself) Fail();
     }
 
     private void HandleStalkerTouch()
@@ -222,7 +240,7 @@ public class ContractTracker : MonoBehaviour
     /// rides in the payout's Total, so Deposit pays it with everything else) and consumes the contract. A no-op with
     /// no contract. Called by GameOutcome right after PlayerWallet.ComputeFloorClear, for the ledger and for floor 5's win screen.
     /// </summary>
-    public void AppendTo(Payout payout)
+    public void AppendTo(Payout payout, float secondsLeft = -1f)
     {
         if (payout == null || _id < 0 || !ContractState.HasActive) return;
 
@@ -233,7 +251,12 @@ public class ContractTracker : MonoBehaviour
                 case ContractState.NoHide:
                 case ContractState.Untouched:
                 case ContractState.Silent:
+                case ContractState.Unseen: // F122: nothing went wrong all floor
+                case ContractState.HandsToYourself:
                     _state = State.Complete; // nothing went wrong all floor
+                    break;
+                case ContractState.CutItClose: // F122: decided only now, by the seconds left on the countdown
+                    _state = secondsLeft >= 0f && secondsLeft <= ContractState.CutItCloseSeconds ? State.Complete : State.Failed;
                     break;
                 case ContractState.Quick:
                     _state = Elapsed <= ContractState.QuickSeconds(GameFlow.CurrentFloor) ? State.Complete : State.Failed;

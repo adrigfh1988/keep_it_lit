@@ -172,3 +172,38 @@ hub.cache.searched,DURCHSUCHT
 hub.cache.found,GEFUNDEN: {item}
 hub.cache.found_next,GEFUNDEN: {item}  ·  WIRKT AUF DER NÄCHSTEN ETAGE
 hub.cache.found_shards,{n} {currency} GEFUNDEN
+hub.lesson.title,"HEUTIGE LEKTION"
+hub.lesson.patient,"PATIENT NR. {n}"
+hub.lesson.none,"BEOBACHTE DEN PATIENTEN."
+hub.lesson.habit.lockers,"SPINDE {tally}  ER SIEHT NACH"
+hub.lesson.habit.throws,"WÜRFE {tally}  ER IGNORIERT SIE"
+hub.lesson.habit.dark,"DUNKEL {tally}  ER SIEHT WEITER"
+hub.lesson.habit.sprint,"RENNEN {tally}  ER HÖRT DICH"
+hub.lesson.learning,"ES LERNT."
+hub.lesson.over,"DIE LEKTION IST VORBEI."
+hub.lesson.prompt,"TAFEL LESEN"
+hub.lesson.examine,"{n} LEKTIONEN AN DER TAFEL. ER VERGISST NIE."
+hub.lesson.examine_none,"NOCH NICHTS. ER BEOBACHTET NOCH."
+hub.lesson.examine_over,"JEMAND HAT DIE TAFEL GEWISCHT. NUR DIE LETZTE ZEILE BLIEB."
+hub.meal.broth.prompt,"BRÜHE ESSEN  ·  AUSDAUER IM NÄCHSTEN STOCK"
+hub.meal.bread.prompt,"SCHWARZBROT NEHMEN  ·  EINE ERSATZBATTERIE"
+hub.meal.tea.prompt,"KALTEN TEE TRINKEN  ·  LEISE SCHUHE IM NÄCHSTEN STOCK"
+hub.meal.broth.taken,"ES IST NOCH WARM. JEMAND WUSSTE, DASS DU KOMMST."
+hub.meal.bread.taken,"HART WIE EIN ZIEGEL. IM INNEREN KLAPPERT ETWAS AUS METALL."
+hub.meal.tea.taken,"KALT. ER SCHMECKT NACH STAUB, UND DEINE SCHRITTE WERDEN LEISE."
+hub.meal.full,"HÄNDE VOLL"
+hub.meal.had,"SCHON GEHABT"
+hub.meal.full_line,"DU KANNST NICHTS MEHR TRAGEN."
+hub.meal.had_line,"DAVON HAST DU SCHON."
+hub.supper.card.prompt,"KARTE LESEN"
+hub.supper.card.1,"SIE HOB IHR BROT IMMER FÜR SPÄTER AUF. SIE ZÄHLTE DIE TÜREN."
+hub.supper.card.2,"ER KLOPFT ZWEIMAL AUF DEN TISCH. DIE ROHRE ANTWORTEN."
+hub.supper.card.3,"SEINE AUGEN SIND OFFEN. ER SCHLÄFT NOCH."
+hub.supper.card.4,"DER STUHL IST ZU KLEIN DAFÜR. ES SETZTE SICH TROTZDEM."
+hub.supper.card.5,"DER DIREKTOR HAT DIESEN PLATZ SELBST GEDECKT."
+hub.lesson.habit.voice,STIMME {tally}  ES KENNT DICH
+hub.breach.dark,DAS LICHT IST AUS. ALLE SIND FORT.
+hub.breach.followed,ES IST DIR NACH OBEN GEFOLGT.
+hub.breach.run,DIE TÜR DES DIREKTORS. LAUF.
+hub.breach.locker,ES HAT DICH HINEINGEHEN SEHEN.
+hub.breach.grab,ES HATTE DICH. FINDE DEIN LICHT. LAUF.

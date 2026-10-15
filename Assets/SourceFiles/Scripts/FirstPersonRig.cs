@@ -33,6 +33,20 @@ public class FirstPersonRig : MonoBehaviour
     public Flashlight Flashlight { get; private set; }
     public PlayerStealthState Stealth { get; private set; }
 
+    private readonly System.Collections.Generic.List<Renderer> _hiddenRenderers = new System.Collections.Generic.List<Renderer>();
+
+    /// <summary>
+    /// F120: the death replay films the player's own robot, so the renderers HideBody switched off come back on. Only for the end screen, where the
+    /// player camera is masked out and the world is behind an opaque blackout; every end-screen button reloads the scene, so nothing is restored.
+    /// </summary>
+    public void ShowBodyForReplay()
+    {
+        foreach (Renderer renderer in _hiddenRenderers)
+        {
+            if (renderer != null) renderer.enabled = true;
+        }
+    }
+
     private void Awake()
     {
         // The same prefab is instantiated again as the AI's body, where the Robot object is retagged
@@ -118,8 +132,10 @@ public class FirstPersonRig : MonoBehaviour
         // Renderer.enabled is per-instance, and the AI is a separate instantiation of this prefab,
         // so switching these off cannot affect it. transform.root catches the nested robot FBX,
         // where the actual SkinnedMeshRenderers live.
+        _hiddenRenderers.Clear();
         foreach (Renderer renderer in transform.root.GetComponentsInChildren<Renderer>(true))
         {
+            if (renderer.enabled) _hiddenRenderers.Add(renderer); // F120: remembered so the death replay can show the body again
             renderer.enabled = false;
         }
 

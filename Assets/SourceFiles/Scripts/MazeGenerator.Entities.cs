@@ -52,7 +52,12 @@ public partial class MazeGenerator
         _livingCandidates.Clear();
         if (debugEntities != EntityKind.None) _entitySet = debugEntities;
         else if (_profile == null) _entitySet = EntityKind.None;
-        else _entitySet = EntityRoster.For(GameFlow.IsDescent, GameFlow.IsDescent ? DescentRun.Depth : _profile.Floor, usedSeed);
+        else
+        {
+            _entitySet = EntityRoster.For(GameFlow.IsDescent, GameFlow.IsDescent ? DescentRun.Depth : _profile.Floor, usedSeed);
+            // F122 STAN WAKES EARLY: Stan from floor 2 instead of 4 (StalkerFromFloor is 4 without the Oath, i.e. the roster's own answer). Story only.
+            if (!GameFlow.IsDescent && _profile.Floor >= CampaignRules.StalkerFromFloor) _entitySet |= EntityKind.Stalker;
+        }
 
         terror.Log($"Entities set for this level: {_entitySet}{(debugEntities != EntityKind.None ? " (debugEntities)" : "")}", this);
     }

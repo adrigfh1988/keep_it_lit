@@ -25,6 +25,12 @@ public static class ContractState
 {
     public const int NoHide = 0, Untouched = 1, DarkWalk = 2, Scavenger = 3, Reader = 4, Quick = 5, Distract = 6, Silent = 7;
 
+    /// <summary>F122: the three contracts earned through the Patient Record (ids 8-10, append only). Offered only once unlocked; the base eight are rolled exactly as before.</summary>
+    public const int Unseen = 8, HandsToYourself = 9, CutItClose = 10;
+
+    /// <summary>CUT IT CLOSE: the floor must be cleared with at most this many seconds left on the countdown.</summary>
+    public const float CutItCloseSeconds = 20f;
+
     /// <summary>Seconds with the torch off while moving that DarkWalk needs.</summary>
     public const float DarkWalkSeconds = 60f;
     /// <summary>Fraction of the floor's shards Scavenger needs.</summary>
@@ -42,6 +48,9 @@ public static class ContractState
         new ContractDef { Slug = "dont_dawdle", BaseReward = 45 },
         new ContractDef { Slug = "make_noise", BaseReward = 40 },
         new ContractDef { Slug = "light_feet", BaseReward = 35 },
+        new ContractDef { Slug = "unseen", BaseReward = 45 },
+        new ContractDef { Slug = "hands_to_yourself", BaseReward = 30 },
+        new ContractDef { Slug = "cut_it_close", BaseReward = 40 },
     };
 
     public static int Count => Defs.Length;
@@ -82,10 +91,27 @@ public static class ContractState
     {
         int h = unchecked(usedSeed * 73856093 ^ floor * 19349663 ^ 0x2F6B1D);
         System.Random rng = new System.Random(h);
-        OfferA = rng.Next(Defs.Length);
-        int b = rng.Next(Defs.Length - 1);
-        OfferB = b >= OfferA ? b + 1 : b;
+        // F122: drawn from the offer pool - the eight base contracts plus the Patient Record's unlocked ones. With no unlocks pool[i] == i, so the draws (and the pair) are identical to before.
+        int[] pool = OfferPool();
+        int a = rng.Next(pool.Length);
+        int b = rng.Next(pool.Length - 1);
+        OfferA = pool[a];
+        OfferB = pool[b >= a ? b + 1 : b];
     }
+
+    /// <summary>F122: the ids a shop may offer - 0..7 always, then each id the Patient Record has unlocked, in id order.</summary>
+    public static int[] OfferPool()
+    {
+        System.Collections.Generic.List<int> pool = new System.Collections.Generic.List<int>();
+        for (int i = 0; i < Defs.Length; i++)
+        {
+            if (i < BaseCount || PatientRecord.IsContractUnlocked(i)) pool.Add(i);
+        }
+        return pool.ToArray();
+    }
+
+    /// <summary>The contracts that were always offered (ids 0..7).</summary>
+    public const int BaseCount = 8;
 
     /// <summary>Takes an offered contract for the given floor. One at most: replaces any earlier take.</summary>
     public static void Take(int id, int forFloor)

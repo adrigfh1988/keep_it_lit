@@ -40,7 +40,7 @@ public class HubDecay : MonoBehaviour
         public Light light;
         public List<Renderer> fixtures;
         public HubLampFlicker flicker; // a lamp with its own flicker takes the burst as a multiplier so the buzz follows
-        public float next, end, nextStep, level = 1f, baseIntensity, lastWritten = -1f;
+        public float next, end, nextStep, level = 1f, shown = 1f, baseIntensity, lastWritten = -1f;
         public bool bursting, brown, useFlicker;
         public Color[] baseEmission;
     }
@@ -61,10 +61,12 @@ public class HubDecay : MonoBehaviour
         AsylumHub.OnEnterHub -= HandleEnter;
         AsylumHub.OnLeaveHub -= HandleLeave;
         EndAllBursts();
+        SetBlackout(false, null); // F121
     }
 
     private void HandleLeave()
     {
+        SetBlackout(false, null); // F121: the full restore (needs _blackoutFloor, so before _floor is cleared); the breach's own OnEnd and this run in either order
         EndAllBursts();
         RestoreDoors();
         _floor = 0;
@@ -75,11 +77,100 @@ public class HubDecay : MonoBehaviour
         if (hub == null) hub = AsylumHub.Active;
         if (hub == null) return;
         if (!_built) Build();
+        SetBlackout(false, null); // F121: a hub left mid-breach is never dark on the next entry
         _floor = floor;
         EndAllBursts();
         if (HubState.IsFinale) return; // HubFinale owns the lights then
         Apply(floor);
         PickBursters(floor);
+    }
+
+    // ---------------------------------------------------------------- F121 breach blackout
+
+    private bool _blackout;
+    private int _blackoutFloor = 1;
+    private readonly Dictionary<HubLampFlicker, bool> _blackoutFlickers = new Dictionary<HubLampFlicker, bool>();
+
+    /// <summary>F121: the hub's power is cut (the breach).</summary>
+    public bool InBlackout => _blackout;
+
+    /// <summary>
+    /// F121: the hub breach cuts the power. on: every decay slot light goes out (fixture glow black, flickers off, bursts ended) except the lights in
+    /// `keep` (the red emergency lights, left enabled and steady); off: the flickers get their old enabled state back and the floor's normal decay look is
+    /// applied again. Off is a no-op only when the hub is not in a blackout, so HandleLeave / HandleEnter / the breach's OnEnd can all call it.
+    /// </summary>
+    public void SetBlackout(bool on, ICollection<Light> keep)
+    {
+        if (!on)
+        {
+            if (!_blackout) return;
+            _blackout = false;
+            foreach (KeyValuePair<HubLampFlicker, bool> f in _blackoutFlickers) if (f.Key != null) f.Key.enabled = f.Value;
+            _blackoutFlickers.Clear();
+            if (hub != null && _built) { Apply(_blackoutFloor); PickBursters(_blackoutFloor); }
+            return;
+        }
+        if (_blackout) return;
+        if (hub == null) hub = AsylumHub.Active;
+        if (hub == null) return;
+        if (!_built) Build();
+        _blackout = true;
+        _blackoutFloor = _floor > 0 ? _floor : HubState.Floor;
+        EndAllBursts();
+        _bursters.Clear();
+        _blackoutFlickers.Clear();
+        foreach (Slot s in _slots)
+        {
+            if (s.light == null) continue;
+            HubLampFlicker own = s.light.GetComponent<HubLampFlicker>();
+            if (own != null) { _blackoutFlickers[own] = own.enabled; own.enabled = false; } // its OnDisable puts the fixture block and the intensity back first
+            bool kept = keep != null && keep.Contains(s.light);
+            s.light.enabled = kept;
+            foreach (Renderer r in s.fixtures)
+            {
+                if (r == null) continue;
+                if (kept) r.SetPropertyBlock(null);
+                else
+                {
+                    _block.Clear();
+                    _block.SetColor("_EmissionColor", Color.black);
+                    r.SetPropertyBlock(_block);
+                }
+            }
+        }
+    }
+
+    /// <summary>F121: the decay light nearest to `p` within `max` metres (flat + vertical) that is not in `exclude`, dead or alive (the breach lights some dead ones red). Null when none.</summary>
+    public Light NearestSlotLight(Vector3 p, float max, ICollection<Light> exclude)
+    {
+        Light best = null;
+        float bestSqr = max * max;
+        foreach (Slot s in _slots)
+        {
+            if (s.light == null || (exclude != null && exclude.Contains(s.light))) continue;
+            float d = (s.light.transform.position - p).sqrMagnitude;
+            if (d < bestSqr) { bestSqr = d; best = s.light; }
+        }
+        return best;
+    }
+
+    /// <summary>F121: during a blackout, one decay light comes back as a red emergency light: enabled, its fixture glowing `tint`. The breach drives its colour and intensity; SetBlackout(false) puts the floor's normal look back.</summary>
+    public void EmergencyOn(Light light, Color tint)
+    {
+        if (!_blackout || light == null) return;
+        foreach (Slot s in _slots)
+        {
+            if (s.light != light) continue;
+            light.enabled = true;
+            foreach (Renderer r in s.fixtures)
+            {
+                if (r == null) continue;
+                _block.Clear();
+                _block.SetColor("_EmissionColor", tint);
+                r.SetPropertyBlock(_block);
+            }
+            return;
+        }
     }
 
     // ---------------------------------------------------------------- F96 flicker bursts
@@ -122,7 +213,8 @@ public class HubDecay : MonoBehaviour
                 if (!b.light.enabled || (!own && b.light.intensity < 0.01f)) { b.next = t + Random.Range(secondsBetweenBursts.x, secondsBetweenBursts.y); continue; }
                 b.useFlicker = own;
                 b.baseIntensity = b.light.intensity;
-                b.brown = Random.value < brownoutChance;
+                b.brown = FlashSafety.On || Random.value < brownoutChance; // F118: with Reduce flashing on every burst is a slow brownout
+                b.shown = 1f;
                 b.end = t + (b.brown ? Random.Range(brownoutSeconds.x, brownoutSeconds.y) : Random.Range(burstSeconds.x, burstSeconds.y));
                 b.nextStep = t;
                 b.bursting = true;
@@ -150,6 +242,9 @@ public class HubDecay : MonoBehaviour
 
     private void SetBurstLevel(Burster b, float level)
     {
+        // F118: low-pass what is drawn (0.3 s per full swing); b.level, the burst's own schedule, is unchanged.
+        if (FlashSafety.On) { b.shown = FlashSafety.Smooth(b.shown, level, Time.deltaTime, 0.3f); level = b.shown; }
+        else b.shown = level;
         if (b.useFlicker && b.flicker != null) b.flicker.External = level;
         else { b.light.intensity = b.baseIntensity * level; b.lastWritten = b.light.intensity; }
         for (int k = 0; k < b.fixtures.Count; k++)
@@ -201,6 +296,11 @@ public class HubDecay : MonoBehaviour
         HashSet<Light> exempt = new HashSet<Light>();
         foreach (WingDoor door in hub.wingDoors) if (door != null && door.beacon != null) exempt.Add(door.beacon);
         if (hub.shop != null && hub.shop.lamps != null) foreach (Light l in hub.shop.lamps) if (l != null) exempt.Add(l); // F116: the Commissary switches its own lamps (lit while open, dark while shut) and is the one safe, warm room: decay never blinks them
+
+        if (hub.meal != null && hub.meal.light != null) exempt.Add(hub.meal.light); // F117: the kitchen tray's warm light stays on
+        if (hub.supper != null && hub.supper.candleLight != null) exempt.Add(hub.supper.candleLight); // F117: the finale candle is lit by HubSupper alone
+        if (hub.supper != null && hub.supper.tableLight != null) exempt.Add(hub.supper.tableLight); // F117: the dining room's only hub light, over the table
+        if (hub.lesson != null && hub.lesson.light != null) exempt.Add(hub.lesson.light); // F117: the classroom's only light, on the board
 
         foreach (Light l in hub.GetComponentsInChildren<Light>(true))
         {
@@ -291,7 +391,7 @@ public class HubDecay : MonoBehaviour
     private void Update()
     {
         if (!_built || HubState.IsFinale || hub == null || !hub.ContentActive) return;
-        UpdateBursts();
+        if (!_blackout) UpdateBursts(); // F121: no flicker bursts in a dead hub
         if (_floor < 3) return;
         for (int i = 0; i < _swingers.Count; i++)
         {

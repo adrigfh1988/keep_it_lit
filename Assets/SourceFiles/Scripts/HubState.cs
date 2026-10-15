@@ -37,6 +37,7 @@ public static class HubState
     public static bool PatientPresent(Patient patient, int floor, bool finale)
     {
         if (finale) return true;
+        if (HubBreach.NpcsGone) return false; // F121: the breach emptied the asylum
         switch (patient)
         {
             case Patient.Hilde: return floor <= 4;
@@ -78,6 +79,35 @@ public static class HubState
         }
     }
 
+    /// <summary>F117: the floor whose free hot meal (the kitchen's tray) has been eaten, 0 = none. Campaign-scoped like HubCaches: it must survive the scene reloads of a wing entry, Retry and CONTINUE, so it is saved (SaveData.hubMealFloor) and reset by ResetCampaign.</summary>
+    public static int MealFloor { get; set; }
+
+    /// <summary>F121: the hub breach has been survived this campaign (set when the player walks into the Director's door while it hunts; saved as SaveData.hubBreachDone). Campaign-scoped like MealFloor.</summary>
+    public static bool BreachDone { get; set; }
+
+    public static void ResetCampaign()
+    {
+        MealFloor = 0;
+        BreachDone = false;
+    }
+
+    public static void CaptureTo(SaveData data)
+    {
+        data.hubMealFloor = MealFloor;
+        data.hubBreachDone = BreachDone;
+    }
+
+    public static void RestoreFrom(SaveData data)
+    {
+        MealFloor = Mathf.Clamp(data.hubMealFloor, 0, FloorProfile.FinalFloor);
+        BreachDone = data.hubBreachDone;
+    }
+
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-    private static void ResetStatics() => IsFinale = false;
+    private static void ResetStatics()
+    {
+        IsFinale = false;
+        MealFloor = 0;
+        BreachDone = false;
+    }
 }

@@ -131,6 +131,7 @@ public class HorrorAudioDirector : MonoBehaviour
     private AudioClip _relocationCue;
     private AudioClip _whisperClip;
     private float _beatTimer;
+    private float _heartbeatMutedUntil = -1f; // F123 floor 4: an ampoule silences the heart
     private float _intensity;
     private bool _panicking;
     private Coroutine _holdBreathRoutine;
@@ -154,6 +155,12 @@ public class HorrorAudioDirector : MonoBehaviour
     private float _bedStateEndsAt = -1f;
     private Coroutine _panicDelayRoutine;
     private bool _escapeBegun;
+
+    /// <summary>F123 floor 4: no heartbeat for `seconds` (an ampoule), whether or not the dread meter is active.</summary>
+    public void SuppressHeartbeat(float seconds) => _heartbeatMutedUntil = Mathf.Max(_heartbeatMutedUntil, Time.time + Mathf.Max(0f, seconds));
+
+    /// <summary>F123: true while the bed is ducked (the held breath, the loop corridor): the pipe knocks stay silent then.</summary>
+    public bool IsDucked => _duckTarget < 0.99f;
 
     /// <summary>
     /// Wired by MazeGenerator, which already knows about both actors. droneIsMusic: the bed is a composed track (the
@@ -374,6 +381,12 @@ public class HorrorAudioDirector : MonoBehaviour
         ApplyBedVolume();
 
         if (_player == null || _hunter == null) return;
+
+        if (Time.time < _heartbeatMutedUntil)
+        {
+            _beatTimer = 0f; // F123
+            return;
+        }
 
         // The heartbeat carries further as the maze empties out
         float range = Mathf.Lerp(heartbeatRange, heartbeatRangeAtPeak, _intensity);

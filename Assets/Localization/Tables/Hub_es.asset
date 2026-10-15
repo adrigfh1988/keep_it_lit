@@ -732,6 +732,153 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763214
+  - m_Id: 1812604049158144
+    m_Localized: "LECCI\xD3N DE HOY"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432832
+    m_Localized: PACIENTE #{n}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763214
+  - m_Id: 1812604141432833
+    m_Localized: OBSERVA AL PACIENTE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432834
+    m_Localized: ARMARIOS {tally}  LOS REVISA
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763214
+  - m_Id: 1812604141432835
+    m_Localized: LANZAR {tally}  LO IGNORA
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763214
+  - m_Id: 1812604141432836
+    m_Localized: "OSCURO {tally}  VE M\xC1S LEJOS"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763214
+  - m_Id: 1812604141432837
+    m_Localized: CARRERA {tally}  TE OYE
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763214
+  - m_Id: 1812604141432838
+    m_Localized: "EST\xC1 APRENDIENDO."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432839
+    m_Localized: "LA LECCI\xD3N HA TERMINADO."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432840
+    m_Localized: LEER LA PIZARRA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432841
+    m_Localized: '{n} LECCIONES EN LA PIZARRA. NUNCA OLVIDA.'
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763214
+  - m_Id: 1812604141432842
+    m_Localized: "NADA TODAV\xCDA. SIGUE OBSERVANDO."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1812604141432843
+    m_Localized: "ALGUIEN BORR\xD3 LA PIZARRA. SOLO QUEDA LA \xDALTIMA L\xCDNEA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893206679552
+    m_Localized: "TOMAR EL CALDO  \xB7  RESISTENCIA EN LA SIGUIENTE PLANTA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371328
+    m_Localized: "COGER EL PAN NEGRO  \xB7  UNA PILA DE REPUESTO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371329
+    m_Localized: "BEBER EL T\xC9 FR\xCDO  \xB7  ZAPATOS SILENCIOSOS EN LA SIGUIENTE PLANTA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371330
+    m_Localized: "TODAV\xCDA EST\xC1 CALIENTE. ALGUIEN SAB\xCDA QUE VENDR\xCDAS."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371331
+    m_Localized: DURO COMO UN LADRILLO. ALGO DE METAL TRAQUETEA DENTRO.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371332
+    m_Localized: "FR\xCDO. SABE A POLVO, Y TUS PASOS SE VUELVEN SUAVES."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371333
+    m_Localized: MANOS LLENAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371334
+    m_Localized: YA TOMASTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371335
+    m_Localized: "NO PUEDES LLEVAR M\xC1S."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371336
+    m_Localized: YA TIENES UN POCO DE ESTO.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371337
+    m_Localized: LEER LA TARJETA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371338
+    m_Localized: "SIEMPRE GUARDABA SU PAN PARA DESPU\xC9S. CONTABA LAS PUERTAS."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371339
+    m_Localized: "\xC9L GOLPEA DOS VECES LA MESA. LAS TUBER\xCDAS RESPONDEN."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371340
+    m_Localized: TIENE LOS OJOS ABIERTOS. SIGUE DORMIDO.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371341
+    m_Localized: "LA SILLA ES DEMASIADO PEQUE\xD1A PARA ESO. SE SENT\xD3 IGUAL."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1818893286371342
+    m_Localized: "EL DIRECTOR PUSO ESTE CUBIERTO \xC9L MISMO."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1856707763892224
+    m_Localized: VOZ {tally}  TE CONOCE
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763214
+  - m_Id: 1861983598538752
+    m_Localized: LAS LUCES SE HAN APAGADO. NO QUEDA NADIE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1861983602733056
+    m_Localized: "TE HA SEGUIDO HASTA AQU\xCD."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1861983602733057
+    m_Localized: LA PUERTA DEL DIRECTOR. CORRE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1861983602733058
+    m_Localized: TE HA VISTO ENTRAR.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1861983602733059
+    m_Localized: "TE TEN\xCDA. BUSCA TU LUZ. CORRE."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -767,3 +914,10 @@ MonoBehaviour:
         - id: 1534062807740417
         - id: 1534062811934720
         - id: 1534062811934721
+        - id: 1812604141432832
+        - id: 1812604141432834
+        - id: 1812604141432835
+        - id: 1812604141432836
+        - id: 1812604141432837
+        - id: 1812604141432841
+        - id: 1856707763892224

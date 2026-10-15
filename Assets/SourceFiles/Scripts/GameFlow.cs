@@ -96,6 +96,19 @@ public static class GameFlow
         Reload();
     }
 
+    /// <summary>F122: set by the new-campaign screen when its choice changes how floor 1 is built, so the scene is rebuilt once with the rules in place; consumed by MainMenu.Start, which then begins the campaign (Intake) instead of showing the title. Survives the reload on purpose; reset in ResetStatics and ReturnToMenu.</summary>
+    public static bool BeginCampaignOnLoad;
+
+    /// <summary>F122: reload into a brand-new scene that behaves like the title screen (not a retry), e.g. to rebuild floor 1 under a chosen difficulty.</summary>
+    public static void ReloadFresh()
+    {
+        SkipMenuOnLoad = false;
+        PendingSeed = 0;
+        ArriveInHub = false;
+        ResumeInShop = false;
+        Reload();
+    }
+
     /// <summary>Go up one floor with a fresh maze. Callers only offer this below the final floor.</summary>
     public static void NextFloor()
     {
@@ -124,7 +137,9 @@ public static class GameFlow
         PendingSeed = 0;
         ResumeInShop = false;
         ArriveInHub = false;
+        PatientRecord.CommitShards(); // F122: bank the campaign's earnings in the record BEFORE the wallet is cleared (a descent banks nothing)
         IsDescent = false; // F107
+        BeginCampaignOnLoad = false; // F122
         DescentRun.ResetState();
         // F83: deliberately does NOT delete the save - that is what puts CONTINUE on the title screen.
         PlayerWallet.ResetCampaign();
@@ -136,6 +151,10 @@ public static class GameFlow
         HunterMemory.ResetCampaign(); // F105 C6
         LoopCorridor.ResetCampaign(); // F105 C4
         HubCaches.ResetCampaign(); // F114
+        HubState.ResetCampaign(); // F117 (+ F121 BreachDone)
+        HubBreach.ResetCampaign(); // F121
+        HunterGrab.DisabledByRules = false; // F120
+        CampaignRules.ResetCampaign(); // F122 (re-derives HubBreach.Mode)
         System.Array.Clear(RolledObjectives, 0, RolledObjectives.Length);
         Reload();
     }
@@ -158,6 +177,7 @@ public static class GameFlow
         IsInShop = false;
         IsInIntake = false;
         IsInHub = false;
+        HubBreach.InProgress = false; // F121: every way out of the hub goes through here (Retrying survives on purpose)
         HubState.IsFinale = false; // F93
         // Restart can be called from the pause menu with both engaged. MainMenu.Awake zeroes the
         // clock again in the new scene anyway.
@@ -182,6 +202,7 @@ public static class GameFlow
         ResumeInShop = false;
         ArriveInHub = false;
         IsDescent = false; // F107
+        BeginCampaignOnLoad = false; // F122
         System.Array.Clear(RolledObjectives, 0, RolledObjectives.Length);
     }
 }

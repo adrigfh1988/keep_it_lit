@@ -234,6 +234,37 @@ MonoBehaviour:
     m_Localized: SOMETHING DIFFERENT? TURN AROUND.
     m_Metadata:
       m_Items: []
+  - m_Id: 1871577460764672
+    m_Localized: "5 \xB7 E. VOGT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1871577532067840
+    m_Localized: PATIENT {mark}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331695923429580
+  - m_Id: 1871577532067841
+    m_Localized: 'E. VOGT
+
+      DRAWER 5
+
+      FOUND AT DAWN'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1871577532067842
+    m_Localized: 'HOUSE RULES
+
+      1. PATIENTS WALK.
+
+      2. PATIENTS DO NOT HIDE.
+
+      3. PATIENTS DO NOT THROW THINGS.
+
+      THE ORDERLY WILL ASSIST.
+
+      - THE DIRECTOR'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -243,3 +274,4 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 382911238803456
+        - id: 1871577532067840

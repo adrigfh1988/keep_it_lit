@@ -331,7 +331,7 @@ public class IntakeRoom : MonoBehaviour
         // 1. Wake up: lying down, looking around, then up.
         Vector3 lastForward = _camera != null ? _camera.transform.forward : Vector3.forward;
         float turned = 0f;
-        yield return Step(0, () => L10n.T("intake.goal.look"), () => K(TouchInput.Key(L10n.T("intake.key.mouse"), L10n.T("intake.key.right_thumb"))), () =>
+        yield return Step(0, () => L10n.T("intake.goal.look"), () => K(InputGlyphs.Key(GameAction.Look, L10n.T("intake.key.right_thumb"))), () =>
         {
             if (_camera == null) return true;
             Vector3 f = _camera.transform.forward;
@@ -342,19 +342,19 @@ public class IntakeRoom : MonoBehaviour
         yield return StandUp();
 
         // 2. Move.
-        yield return Step(1, () => L10n.T("intake.goal.move"), () => K(TouchInput.Key(MoveKeysLabel(), L10n.T("intake.key.left_thumb"))), () => InZone(moveZone),
+        yield return Step(1, () => L10n.T("intake.goal.move"), () => K(InputGlyphs.Key(GameAction.Move, L10n.T("intake.key.left_thumb"))), () => InZone(moveZone),
             marker: () => Mk(moveMarker, 0.9f));
 
         // 3. Torch: the lamp dies, the torch is handed over.
         TorchAllowed = true;
         if (_flashlight != null) _flashlight.InputEnabled = true;
         StartCoroutine(SparkOutLamp());
-        yield return Step(2, () => L10n.T("intake.goal.torch"), () => K(TouchInput.Key("F", L10n.T("intake.key.torch"))), () => _flashlight == null || _flashlight.IsOn);
+        yield return Step(2, () => L10n.T("intake.goal.torch"), () => K(InputGlyphs.Key(GameAction.Torch, L10n.T("intake.key.torch"))), () => _flashlight == null || _flashlight.IsOn);
 
         // 4. Focus: the far sign is only legible in the focused beam.
         float seen = 0f;
         if (focusSign != null) SetSignAlpha(0.07f);
-        yield return Step(3, () => L10n.T("intake.goal.focus"), () => K(TouchInput.Key(L10n.T("intake.key.rmb"), L10n.T("intake.key.focus"))), () =>
+        yield return Step(3, () => L10n.T("intake.goal.focus"), () => K(InputGlyphs.Key(GameAction.Focus, L10n.T("intake.key.focus"))), () =>
         {
             if (focusSign == null || _flashlight == null || _camera == null) return true;
             Vector3 to = focusSign.transform.position - _camera.transform.position;
@@ -385,7 +385,7 @@ public class IntakeRoom : MonoBehaviour
         // 7. Throw.
         float missingFor = 0f;
         yield return Step(6, () => L10n.T(_throw != null && _throw.Carried > 0 ? "intake.goal.throw" : "intake.goal.throw_pick"),
-            () => _throw != null && _throw.Carried > 0 ? K(TouchInput.Key("G", L10n.T("intake.key.throw"))) : K(UseKey()), () =>
+            () => _throw != null && _throw.Carried > 0 ? K(InputGlyphs.Key(GameAction.Throw, L10n.T("intake.key.throw"))) : K(UseKey()), () =>
         {
             if (bell == null) return true;
             // Missed, or the glass broke on the wall: put another bottle on the table.
@@ -461,44 +461,7 @@ public class IntakeRoom : MonoBehaviour
     }
 
     /// <summary>The interact chip: the E key, or the on-screen USE button on touch.</summary>
-    private static string UseKey() => TouchInput.Key("E", L10n.T("ui.key.use"));
-
-    private string _moveKeys;
-
-    /// <summary>
-    /// D15: the movement chip shows the move binding's own display string, so an AZERTY keyboard reads ZQSD. Up, left, down, right of the
-    /// Move action's keyboard composite, each through the layout-aware display name; WASD if anything is missing.
-    /// </summary>
-    private string MoveKeysLabel()
-    {
-        if (_moveKeys != null) return _moveKeys;
-        string label = "WASD";
-        try
-        {
-            var input = _player != null ? _player.GetComponentInChildren<UnityEngine.InputSystem.PlayerInput>() : null;
-            UnityEngine.InputSystem.InputAction move = input != null && input.actions != null ? input.actions.FindAction("Move") : null;
-            if (move != null)
-            {
-                string[] parts = new string[4];
-                for (int i = 0; i < move.bindings.Count; i++)
-                {
-                    var b = move.bindings[i];
-                    if (!b.isPartOfComposite || b.path == null || !b.path.StartsWith("<Keyboard>")) continue;
-                    int slot = b.name == "up" ? 0 : b.name == "left" ? 1 : b.name == "down" ? 2 : b.name == "right" ? 3 : -1;
-                    if (slot < 0 || parts[slot] != null) continue;
-                    parts[slot] = UnityEngine.InputSystem.InputActionRebindingExtensions.GetBindingDisplayString(move, i);
-                }
-                if (parts[0] != null && parts[1] != null && parts[2] != null && parts[3] != null)
-                {
-                    string joined = string.Concat(parts).ToUpperInvariant();
-                    if (joined.Length == 4) label = joined;
-                }
-            }
-        }
-        catch (Exception) { /* keep WASD */ }
-        _moveKeys = label;
-        return label;
-    }
+    private static string UseKey() => InputGlyphs.Key(GameAction.Interact, L10n.T("ui.key.use"));
 
     private struct Marker
     {
@@ -630,12 +593,12 @@ public class IntakeRoom : MonoBehaviour
         while (true)
         {
             float factor = 1f + (Mathf.PerlinNoise(Time.time * 9f, 3.1f) - 0.5f) * 0.12f;
-            if (Time.time >= nextDip)
+            if (Time.time >= nextDip && !FlashSafety.On) // F118: no dips with Reduce flashing on
             {
                 dipEnd = Time.time + UnityEngine.Random.Range(0.08f, 0.2f);
                 nextDip = dipEnd + UnityEngine.Random.Range(6f, 14f);
             }
-            if (Time.time < dipEnd) factor = 0.15f;
+            if (Time.time < dipEnd && !FlashSafety.On) factor = 0.15f;
             mainLamp.intensity = _mainBase * factor;
             if (fixtureMat != null && fixtureMat.HasProperty("_EmissionColor")) fixtureMat.SetColor("_EmissionColor", baseEmission * factor);
             yield return null;
@@ -658,7 +621,12 @@ public class IntakeRoom : MonoBehaviour
         while (t < 1.1f)
         {
             t += Time.deltaTime;
-            if (mainLamp != null) mainLamp.intensity = UnityEngine.Random.value < 0.5f ? start * UnityEngine.Random.Range(0.2f, 1.1f) : 0f;
+            if (mainLamp != null)
+            {
+                // F118: with Reduce flashing on the lamp just fades out over the 1.1 s instead of sputtering at frame rate.
+                if (FlashSafety.On) mainLamp.intensity = start * Mathf.Clamp01(1f - t / 1.1f);
+                else mainLamp.intensity = UnityEngine.Random.value < 0.5f ? start * UnityEngine.Random.Range(0.2f, 1.1f) : 0f;
+            }
             yield return null;
         }
         if (mainLamp != null) mainLamp.intensity = 0f;
@@ -882,6 +850,13 @@ public class IntakeRoom : MonoBehaviour
         float baseIntensity = lampB.intensity;
         while (!_silhouettePassed && !_leaving)
         {
+            if (FlashSafety.On)
+            {
+                // F118: a steady dim lamp with a 0.5 Hz breath (0.3..0.5 of base) instead of a 4-20 Hz stutter.
+                lampB.intensity = baseIntensity * (0.4f + 0.1f * Mathf.Sin(Time.time * Mathf.PI));
+                yield return null;
+                continue;
+            }
             lampB.intensity = UnityEngine.Random.value < 0.35f ? baseIntensity * UnityEngine.Random.Range(0.05f, 0.5f) : baseIntensity;
             yield return new WaitForSeconds(UnityEngine.Random.Range(0.05f, 0.25f));
         }

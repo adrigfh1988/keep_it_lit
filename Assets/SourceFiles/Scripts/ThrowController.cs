@@ -1,8 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
 
 /// <summary>
 /// Carries up to 3 thrown items (bottles/cans) and throws the most recently picked up one on G /
@@ -75,14 +72,7 @@ public class ThrowController : MonoBehaviour
     {
         if (_camera == null || _carried.Count == 0 || !IsActive()) return;
 
-#if ENABLE_INPUT_SYSTEM
-        bool pressed = (Keyboard.current != null && Keyboard.current.gKey.wasPressedThisFrame)
-                    || (Gamepad.current != null && Gamepad.current.rightShoulder.wasPressedThisFrame);
-#else
-        bool pressed = false;
-#endif
-        pressed |= TouchInput.Pressed(TouchInput.TouchAction.Throw);
-        if (pressed) Throw();
+        if (GameInput.Pressed(GameAction.Throw)) Throw();
     }
 
     private bool IsActive()

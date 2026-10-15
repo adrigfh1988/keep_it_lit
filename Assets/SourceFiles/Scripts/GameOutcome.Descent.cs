@@ -34,6 +34,7 @@ public partial class GameOutcome
         GameFlow.IsRunActive = false;
         _runTime = Time.time - GameFlow.RunStartTime;
         DescentRun.CommitLevel(_runTime, _collected);
+        NoteMetThisLevel(); // F122: the codex works in a DESCENT too
 
         EndTheHunt();
         if (_flashlight != null) { _flashlight.SetOn(false); _flashlight.InputEnabled = false; }
@@ -111,11 +112,13 @@ public partial class GameOutcome
         if (canvas == null) return;
 
         DescentRun.CommitLevel(_runTime, _collected);
+        NoteMetThisLevel(); // F122: the codex works in a DESCENT too
         int depth = DescentRun.Depth;
         int previousBest = DescentRecords.BestDepth;
         bool newRecord = DescentRecords.Submit(depth, DescentRun.TotalRunSeconds);
 
         Transform root = RuntimeUi.CreatePanel(canvas.transform, "EndScreen", new Color(0f, 0f, 0f, 0.92f)).transform;
+        _endRoot = root.gameObject;
         _ledgerTexts.Clear();
 
         float y = -150f;
@@ -155,6 +158,7 @@ public partial class GameOutcome
         menu.onClick.AddListener(GameFlow.ReturnToMenu);
         RuntimeUi.BindButton(menu, "ui.end.main_menu");
 
+        TryShowReplay(root, true); // F120: the CCTV loop on the slip (a hunter death only)
         // The slip types out like the story's: the first press of CONTINUE-style input completes the text. Nothing waits on it here.
         _slipLedger = true;
         _showingLedger = true;

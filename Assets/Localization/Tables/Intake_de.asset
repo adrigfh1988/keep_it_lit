@@ -78,14 +78,6 @@ MonoBehaviour:
     m_Localized: TRITT AUF DIE LUKE
     m_Metadata:
       m_Items: []
-  - m_Id: 635342859
-    m_Localized: MAUS
-    m_Metadata:
-      m_Items: []
-  - m_Id: 635342860
-    m_Localized: RECHTSKLICK
-    m_Metadata:
-      m_Items: []
   - m_Id: 635342861
     m_Localized: RECHTER DAUMEN
     m_Metadata:

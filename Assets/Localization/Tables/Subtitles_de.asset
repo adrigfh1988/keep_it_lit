@@ -251,6 +251,117 @@ MonoBehaviour:
     m_Localized: VOLLE LAMPE
     m_Metadata:
       m_Items: []
+  - m_Id: 1860893469569024
+    m_Localized: "Es hat dich weggesto\xDFen. Deine Lampe liegt am Boden."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860893545066496
+    m_Localized: "Beim n\xE4chsten Mal l\xE4sst es nicht los."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860893545066497
+    m_Localized: Du hast das Licht.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860893545066498
+    m_Localized: ES KENNT DEINE STIMME.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1874627596382208
+    m_Localized: EID {rank}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763191
+  - m_Id: 1879570495565824
+    m_Localized: "HIER WAR KEINE T\xDCR."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565825
+    m_Localized: "EINE T\xDCR MEHR ALS VORHER."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565826
+    m_Localized: DIE ROHRE KLOPFEN ZWEIMAL.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565827
+    m_Localized: DIE ROHRE KLOPFEN DREIMAL.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565828
+    m_Localized: LEER. DAS TABLETT IST KALT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565829
+    m_Localized: EIN SCHILD OHNE NAMEN. NIEMAND AUF DEM TABLETT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565830
+    m_Localized: LEER. JEMAND HAT ES WIE EIN BETT GEMACHT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565831
+    m_Localized: "FACH F\xDCNF. NUR SEIN ZEHENSCHILD, WARTEND."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565832
+    m_Localized: "DAS SCHILD TR\xC4GT DEINE NUMMER. DAS TABLETT IST NOCH WARM."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565833
+    m_Localized: 'DEINE SACHEN LIEGEN AUF DEM TABLETT: EINE ERSATZBATTERIE.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565834
+    m_Localized: KLARES GLAS, BLAUE KAPPE. DEIN HERZ WIRD LANGSAMER.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565835
+    m_Localized: DIE ANGST VERSTUMMT. DIE WARNUNG AUCH.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565836
+    m_Localized: ALLE DREI. NIEMAND BEKOMMT EINE ZU KLEINE DOSIS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565837
+    m_Localized: "DEIN HERZ IST ZUR\xDCCK."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565838
+    m_Localized: "GUTEN ABEND. DIE HAUSORDNUNG IST AUSGEH\xC4NGT. DANKE."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565839
+    m_Localized: PATIENT {mark}. BITTE LANGSAM GEHEN.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763191
+  - m_Id: 1879570495565840
+    m_Localized: PATIENT {mark}. BITTE RAUS AUS DEM SCHRANK.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763191
+  - m_Id: 1879570495565841
+    m_Localized: PATIENT {mark}. WIR WERFEN NICHTS.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763191
+  - m_Id: 1879570495565842
+    m_Localized: "PATIENT {mark} RENNT. PFLEGER, BITTE UNTERST\xDCTZEN."
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763191
+  - m_Id: 1879570495565843
+    m_Localized: "PATIENT {mark} VERSTECKT SICH. PFLEGER, BITTE UNTERST\xDCTZEN."
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763191
+  - m_Id: 1879570495565844
+    m_Localized: "PATIENT {mark} WIRFT MIT DINGEN. PFLEGER, BITTE UNTERST\xDCTZEN."
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763191
   references:
     version: 2
     RefIds:
@@ -271,3 +382,10 @@ MonoBehaviour:
         - id: 7993049387037
         - id: 441658820694018
         - id: 791730569777152
+        - id: 1874627596382208
+        - id: 1879570495565839
+        - id: 1879570495565840
+        - id: 1879570495565841
+        - id: 1879570495565842
+        - id: 1879570495565843
+        - id: 1879570495565844

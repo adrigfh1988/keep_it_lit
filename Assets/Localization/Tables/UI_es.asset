@@ -240,8 +240,8 @@ MonoBehaviour:
     m_Localized: EMPEZAR
     m_Metadata:
       m_Items: []
-  - m_Id: 22165078315025
-    m_Localized: "<b>WASD</b>  moverse   <b>SHIFT</b>  correr   <b>RAT\xD3N</b>  mirar   <b>F</b>  linterna   <b>E</b>  esconderse / hablar\n<b>1</b>  pila de repuesto   <b>2</b>  br\xFAjula estelar   <b>ESC</b>  pausa"
+  - m_Id: 1867415029280768
+    m_Localized: "RAT\xD3N"
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315026
@@ -286,7 +286,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315036
-    m_Localized: "La trampilla se cerr\xF3 detr\xE1s de ti. Algo aqu\xED abajo est\xE1 abierto."
+    m_Localized: "La trampilla se cerr\xF3 detr\xE1s de ti. Alguien ha dejado una luz encendida."
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315037
@@ -341,7 +341,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315048
-    m_Localized: "La trampilla se cerr\xF3 detr\xE1s de ti. Aqu\xED abajo est\xE1 m\xE1s oscuro."
+    m_Localized: "La trampilla se cerr\xF3 detr\xE1s de ti. Por alg\xFAn motivo, el camino hacia abajo lleva arriba."
     m_Metadata:
       m_Items: []
   - m_Id: 22165078315049
@@ -750,6 +750,779 @@ MonoBehaviour:
     m_Localized: UNITY
     m_Metadata:
       m_Items: []
+  - m_Id: 1857900619755520
+    m_Localized: REDUCIR PARPADEOS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252992
+    m_Localized: AVISO DE FOTOSENSIBILIDAD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252993
+    m_Localized: "Este juego contiene luces parpadeantes, oscuridad repentina y patrones que pueden provocar convulsiones en personas con epilepsia fotosensible. Si t\xFA o alg\xFAn familiar hab\xE9is sufrido una convulsi\xF3n, consulta a un m\xE9dico antes de jugar. Deja de jugar de inmediato si sientes mareo, visi\xF3n borrosa, tics en los ojos o los m\xFAsculos, o desorientaci\xF3n. Puedes activar REDUCIR PARPADEOS aqu\xED o en AJUSTES > GENERAL en cualquier momento."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252994
+    m_Localized: PARTIDA NO CARGADA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252995
+    m_Localized: "Tu partida guardada fue creada con una versi\xF3n m\xE1s reciente del juego. Se ha apartado, no borrado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1857900695252996
+    m_Localized: "No se pudo leer tu partida guardada y se ha apartado. Se empezar\xE1 una campa\xF1a nueva."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778240
+    m_Localized: CLIC IZQ.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778241
+    m_Localized: CLIC DER.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778242
+    m_Localized: CLIC CENTRAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778243
+    m_Localized: STICK IZQ.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778244
+    m_Localized: STICK DER.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778245
+    m_Localized: CRUCETA ARRIBA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778246
+    m_Localized: CRUCETA ABAJO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778247
+    m_Localized: CRUCETA IZQ.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778248
+    m_Localized: CRUCETA DER.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778249
+    m_Localized: EQUIS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778250
+    m_Localized: "C\xCDRCULO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778251
+    m_Localized: CUADRADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778252
+    m_Localized: "TRI\xC1NGULO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778253
+    m_Localized: VIEW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778254
+    m_Localized: MENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778255
+    m_Localized: OPTIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778256
+    m_Localized: CREATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415104778257
+    m_Localized: ---
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972544
+    m_Localized: "{move}  moverse   {sprint}  correr   {look}  mirar   {torch}  linterna   {focus}  haz enfocado\n{interact}  esconderse / hablar   {throw}  lanzar   {item1}  pila de repuesto   {item2}  br\xFAjula estelar\n{map}  plano   {pause}  pausa"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 1867415108972545
+    m_Localized: REASIGNAR CONTROLES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972546
+    m_Localized: REASIGNAR CONTROLES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972547
+    m_Localized: "TECLADO / RAT\xD3N"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972548
+    m_Localized: MANDO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972549
+    m_Localized: "PULSA UNA TECLA O BOT\xD3N  \xB7  {cancel} PARA CANCELAR"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 1867415108972550
+    m_Localized: INTERCAMBIADO CON {action}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 1867415108972551
+    m_Localized: RESTABLECER TODO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972552
+    m_Localized: ADELANTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972553
+    m_Localized: "ATR\xC1S"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972554
+    m_Localized: IZQUIERDA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972555
+    m_Localized: DERECHA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972556
+    m_Localized: CORRER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972557
+    m_Localized: LINTERNA ON / OFF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972558
+    m_Localized: HAZ ENFOCADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972559
+    m_Localized: INTERACTUAR / ESCONDERSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972560
+    m_Localized: LANZAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972561
+    m_Localized: PILA DE REPUESTO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972562
+    m_Localized: "BR\xDAJULA ESTELAR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1867415108972563
+    m_Localized: PLANO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058210336768
+    m_Localized: "MICR\xD3FONO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834240
+    m_Localized: "DISPOSITIVO DE MICR\xD3FONO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834241
+    m_Localized: "NO SE ENCUENTRA NING\xDAN MICR\xD3FONO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834242
+    m_Localized: SE OYE POR ENCIMA DE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834243
+    m_Localized: TU NIVEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834244
+    m_Localized: DESACTIVADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834245
+    m_Localized: ESCUCHANDO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834246
+    m_Localized: "SIN SE\xD1AL - REVISA LA PRIVACIDAD DEL MICRO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834247
+    m_Localized: SIN DISPOSITIVO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834248
+    m_Localized: "Se usa solo mientras juegas, para que el cazador te oiga. No se graba, guarda ni env\xEDa nada. Se recomiendan auriculares."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834249
+    m_Localized: "Te encontr\xF3 en la oscuridad, lejos de tu luz."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834250
+    m_Localized: CAM {n}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 1883058285834251
+    m_Localized: REC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834252
+    m_Localized: VINO A POR TI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834253
+    m_Localized: "ESTUVO DETR\xC1S DE TI TODO EL TIEMPO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834254
+    m_Localized: VOZ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883058285834255
+    m_Localized: "TE OYE DESDE M\xC1S LEJOS, INCLUSO EN UN ARMARIO."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1888333877211136
+    m_Localized: "Te ha seguido. No hay ning\xFAn lugar seguro."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1888333877211137
+    m_Localized: "EL ASILO \xB7 PLANTA {floor}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 1896792261652480
+    m_Localized: REGISTRO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652481
+    m_Localized: NUEVO INGRESO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652482
+    m_Localized: EMPEZAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652483
+    m_Localized: AYUDAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652484
+    m_Localized: EQUIPO DE INGRESO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652485
+    m_Localized: EQUIPO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652486
+    m_Localized: LINTERNA INICIAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652487
+    m_Localized: El color del haz con el que empiezas. Los colores ganados nunca se venden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652488
+    m_Localized: "LAS PARTIDAS CON AYUDAS DESBLOQUEAN COSAS, PERO NO FIJAN R\xC9CORDS NI JURAMENTOS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652489
+    m_Localized: JURAMENTOS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652490
+    m_Localized: JURAMENTOS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652491
+    m_Localized: LISTO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652492
+    m_Localized: "Votos acumulables. Cada Juramento endurece el sanatorio y paga m\xE1s fragmentos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652493
+    m_Localized: REQUIERE UNA PARTIDA SIN AYUDAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652494
+    m_Localized: "JURAMENTO {rank}  \xB7  FRAGMENTOS \xD7{mult}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 1896792261652495
+    m_Localized: "EST\xC1NDAR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652496
+    m_Localized: El juego tal como fue creado.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652497
+    m_Localized: HISTORIA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652498
+    m_Localized: "Cuenta atr\xE1s m\xE1s larga, linterna m\xE1s suave, cazador m\xE1s lento, se\xF1ales honestas, pasillos m\xE1s claros. Todo se sigue desbloqueando."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652499
+    m_Localized: PESADILLA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652500
+    m_Localized: "Cuenta atr\xE1s m\xE1s corta, cazador m\xE1s agudo, linterna m\xE1s hambrienta. Fragmentos \xD71,25 y rango de Juramento +2."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652501
+    m_Localized: "CUENTA ATR\xC1S M\xC1S LARGA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652502
+    m_Localized: "La cuenta atr\xE1s de la huida dura la mitad m\xE1s."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652503
+    m_Localized: LINTERNA SUAVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652504
+    m_Localized: "La pila se gasta m\xE1s despacio y se recarga m\xE1s r\xE1pido."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652505
+    m_Localized: "CAZADOR M\xC1S LENTO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652506
+    m_Localized: "Tarda m\xE1s en comprometerse en la persecuci\xF3n, corre m\xE1s despacio y oye menos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652507
+    m_Localized: "SE\xD1ALES HONESTAS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652508
+    m_Localized: Sin sonidos mentirosos, sin fantasmas falsos, sin fallos de linterna, y los ojos del cazador siempre se ven.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652509
+    m_Localized: "PASILLOS M\xC1S CLAROS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652510
+    m_Localized: "M\xE1s luz ambiental, niebla m\xE1s fina, l\xE1mparas m\xE1s fuertes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652511
+    m_Localized: LINTERNA FIRME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652512
+    m_Localized: "La linterna ya no se balancea ni se retrasa respecto a la vista. No afecta a los r\xE9cords."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652513
+    m_Localized: "SIN REPETICI\xD3N DE MUERTE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652514
+    m_Localized: "La pantalla final omite la repetici\xF3n granulada de la captura. No afecta a los r\xE9cords."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652515
+    m_Localized: PILA VIEJA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652516
+    m_Localized: "La linterna empieza cada planta a medio cargar y se recarga despacio, tambi\xE9n en la planta 1."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652517
+    m_Localized: NO ESPERA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652518
+    m_Localized: "Desde la planta 1 el cazador sigue el paso de quien camina, se compromete antes y sus ojos est\xE1n apagados."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652519
+    m_Localized: TAQUILLAS SOLDADAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652520
+    m_Localized: "Todas las taquillas de los laberintos est\xE1n soldadas. No hay d\xF3nde esconderse, y el cazador nunca las revisa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652521
+    m_Localized: STAN DESPIERTA ANTES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652522
+    m_Localized: Stan camina desde la planta 2 en lugar de la 4.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652523
+    m_Localized: SIN SEGUNDAS OPORTUNIDADES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652524
+    m_Localized: "Sin Segundo Aliento en ning\xFAn sitio, y la primera captura de una planta ya no es un empuj\xF3n: toda captura mata."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652525
+    m_Localized: RED AVERIADA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652526
+    m_Localized: "Pasillos m\xE1s oscuros, l\xE1mparas m\xE1s tenues y m\xE1s separadas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652527
+    m_Localized: MECHA CORTA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652528
+    m_Localized: "La cuenta atr\xE1s de la huida es un cuarto m\xE1s corta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652529
+    m_Localized: LO OYE TODO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652530
+    m_Localized: "Cada planta lleva la regla O\xEDdo Fino: el cazador oye mucho m\xE1s."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652531
+    m_Localized: LAS PUERTAS NO AGUANTAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652532
+    m_Localized: "El sanatorio es asaltado en cada visita al vest\xEDbulo despu\xE9s de la planta 4, no solo una vez."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652533
+    m_Localized: EQUIPO REGLAMENTARIO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652534
+    m_Localized: Nada extra. Solo la linterna.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652535
+    m_Localized: "CARRO\xD1ERO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652536
+    m_Localized: "Empiezas con una Pila de Repuesto y una Br\xFAjula de Estrellas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652537
+    m_Localized: CORREDOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652538
+    m_Localized: "La planta 1 empieza con un T\xF3nico de Aguante y Zapatos Silenciosos ya activos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652539
+    m_Localized: "CART\xD3GRAFO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652540
+    m_Localized: Empiezas con un Plano.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652541
+    m_Localized: JURAMENTO {rank}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 1896792261652542
+    m_Localized: CON AYUDAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652543
+    m_Localized: "JURAMENTO {rank}  \xD7{mult}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 1896792261652544
+    m_Localized: NOTA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652545
+    m_Localized: "NUEVO R\xC9CORD"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652546
+    m_Localized: BONO NOTA {grade}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 1896792261652547
+    m_Localized: "REGISTRO DEL PACIENTE \xB7 {n} NUEVO(S)"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 1896792261652548
+    m_Localized: NOTAS  {grades}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 1896792261652549
+    m_Localized: RENUNCIADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652550
+    m_Localized: REGISTRO DEL PACIENTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652551
+    m_Localized: REGISTRO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652552
+    m_Localized: DESBLOQUEOS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652553
+    m_Localized: "C\xD3DICE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652554
+    m_Localized: AYUDAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652555
+    m_Localized: SIN INGRESOS REGISTRADOS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652556
+    m_Localized: PARTIDAS EMPEZADAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652557
+    m_Localized: PARTIDAS TERMINADAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652558
+    m_Localized: FINALES VISTOS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652559
+    m_Localized: "MEJOR JURAMENTO \xB7 ALTA M\xC9DICA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652560
+    m_Localized: "MEJOR JURAMENTO \xB7 LIGHTS OUT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652561
+    m_Localized: FRAGMENTOS GANADOS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652562
+    m_Localized: "DESCENSO M\xC1S PROFUNDO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652563
+    m_Localized: MEJORES PLANTAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652564
+    m_Localized: PLANTA {floor}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 1896792261652565
+    m_Localized: JURAMENTO {rank}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763212
+  - m_Id: 1896792261652566
+    m_Localized: NUEVO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652567
+    m_Localized: DESBLOQUEADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652568
+    m_Localized: "A\xFAn no lo has encontrado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652569
+    m_Localized: LO QUE HA APRENDIDO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652570
+    m_Localized: LOS CAMBIOS SE APLICAN EN EL SIGUIENTE LABERINTO.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652571
+    m_Localized: ACTIVAR UNA AYUDA MARCA ESTA PARTIDA COMO CON AYUDAS PARA SIEMPRE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652572
+    m_Localized: "C\xD3DICE Y REGISTRO EN PAUSA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652573
+    m_Localized: COMPLETA UNA PLANTA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652574
+    m_Localized: "EQUIPO: CARRO\xD1ERO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652575
+    m_Localized: COMPLETA LA PLANTA 2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652576
+    m_Localized: 'CARTA DE TIENDA: ESTETOSCOPIO'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652577
+    m_Localized: COMPLETA LA PLANTA 4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652578
+    m_Localized: 'CONTRATO: INVISIBLE'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652579
+    m_Localized: COMPLETA LA PLANTA 4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652580
+    m_Localized: LA ESCALERA DE JURAMENTOS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652581
+    m_Localized: ALCANZA CUALQUIER FINAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652582
+    m_Localized: 'COLOR DE LINTERNA: HUESO'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652583
+    m_Localized: ALCANZA CUALQUIER FINAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652584
+    m_Localized: 'EQUIPO: CORREDOR'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652585
+    m_Localized: TERMINA 2 PARTIDAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652586
+    m_Localized: "CARTA DE TIENDA: L\xC1MPARA DEL ARCHIVERO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652587
+    m_Localized: VE LOS DOS FINALES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652588
+    m_Localized: 'CARTA DE TIENDA: DINAMO'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652589
+    m_Localized: GANA 1500 FRAGMENTOS EN TOTAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652590
+    m_Localized: "EQUIPO: CART\xD3GRAFO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652591
+    m_Localized: TERMINA 3 PARTIDAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652592
+    m_Localized: 'CONTRATOS: SIN LANZAR, POR UN PELO'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652593
+    m_Localized: CONSIGUE UNA NOTA S EN CUALQUIER PLANTA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652594
+    m_Localized: 'COLOR DE LINTERNA: ROJO JURAMENTO'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652595
+    m_Localized: ALCANZA UN FINAL CON RANGO DE JURAMENTO 5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652596
+    m_Localized: 'COLOR DE LINTERNA: VERDE DE SALA'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1896792261652597
+    m_Localized: "ENCUENTRA TODO EN EL C\xD3DICE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641792
+    m_Localized: "REGRESO DEL PABELL\xD3N A. UNA PUERTA M\xC1S QUE AYER."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641793
+    m_Localized: REGRESO DE LA SALA DE CALDERAS. DOS GOLPES. TODO DESPEJADO.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641794
+    m_Localized: "REGRESO DE LA C\xC1MARA FRIGOR\xCDFICA. UN CAJ\xD3N QUED\xD3 ABIERTO."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641795
+    m_Localized: "REGRESO DEL QUIR\xD3FANO. DOSIS NO REGISTRADA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641796
+    m_Localized: "Hilde cont\xF3 una puerta m\xE1s esta noche. Era la tuya."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641797
+    m_Localized: Tres golpes. Luego nada.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641798
+    m_Localized: "Tienen un caj\xF3n preparado. Lleva tu n\xFAmero."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641799
+    m_Localized: "La habitaci\xF3n 4 ya no est\xE1 vac\xEDa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901735156641800
+    m_Localized: El Escribiente ha terminado de mecanografiar tu expediente.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -793,3 +1566,16 @@ MonoBehaviour:
         - id: 193175966617612
         - id: 193175966617617
         - id: 193175966617618
+        - id: 1867415108972544
+        - id: 1867415108972549
+        - id: 1867415108972550
+        - id: 1883058285834250
+        - id: 1888333877211137
+        - id: 1896792261652494
+        - id: 1896792261652541
+        - id: 1896792261652543
+        - id: 1896792261652546
+        - id: 1896792261652547
+        - id: 1896792261652548
+        - id: 1896792261652564
+        - id: 1896792261652565

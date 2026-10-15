@@ -12,9 +12,9 @@ hud.floor,"HUD floor label top-left under the star counter (26 pt, letter-spaced
 hud.asylum,"HUD floor label while in the hospital hub (26 pt, 320 px)",ASYLUM
 hud.shards,"HUD shard counter top-left (26 pt, letter-spaced, 320 px, auto-size). {currency} = currency name, {shards} = balance",{currency}  {shards}
 hud.second_wind,"HUD label shown while a Second Wind is held (22 pt, bottom-right, 360 px)",SECOND WIND
-hud.slot.battery,"HUD consumable slot, bottom-right (24 pt, 360 px, auto-size). {key} = 1 on keyboard or TAP on touch (do not translate the key), {count} = batteries held",{key}   BATTERY  x{count}
-hud.slot.compass,"HUD consumable slot, bottom-right (24 pt, 360 px). {key} = 2 or TAP, {count} = compasses held",{key}   COMPASS  x{count}
-hud.slot.throw,"HUD throwable slot, bottom-right (24 pt, 360 px). {key} = G or TAP, {count} = bottles/cans carried",{key}   THROW  x{count}
+hud.slot.battery,"HUD consumable slot, bottom-right (24 pt, 360 px, auto-size). {key} = the bound key (1), the gamepad button or TAP on touch (do not translate the key), {count} = batteries held",{key}   BATTERY  x{count}
+hud.slot.compass,"HUD consumable slot, bottom-right (24 pt, 360 px). {key} = the bound key (2), the gamepad button or TAP, {count} = compasses held",{key}   COMPASS  x{count}
+hud.slot.throw,"HUD throwable slot, bottom-right (24 pt, 360 px). {key} = the bound key (G), the gamepad button or TAP, {count} = bottles/cans carried",{key}   THROW  x{count}
 hud.prompt.hide,"Interaction prompt next to a locker: climb in. Shown as ""E  <text>"" (34 pt, 600 x 50, auto-size). Imperative/infinitive",HIDE
 hud.prompt.leave,Interaction prompt inside a locker: climb out,LEAVE
 hud.prompt.talk,Interaction prompt at the shop counter: open the shop menu,TALK
@@ -56,5 +56,13 @@ hud.descent.found_next,"Subtitle after opening an item cache, item applies from 
 hud.descent.hands_full,"Item cache prompt when nothing it holds fits (all-caps prompt, after the E key cap)",HANDS FULL
 hud.prompt.open_cache,"Prompt after the E key cap while looking at a closed item cache in a DESCENT (hold E)",OPEN CACHE
 hud.tenant.held,"Prompt under the crosshair at a locker that something already occupies, after it has shoved the player out once (E key chip + this text, one line, ALL CAPS). ""IT"" = the thing inside, never named",IT HOLDS THE DOOR
-hud.slot.floor_plan,"HUD consumable slot, bottom-right (24 pt, 360 px, auto-size). {key} = M (hold) or TAP on touch (do not translate the key), {count} = floor plans held",{key}   FLOOR PLAN  x{count}
+hud.slot.floor_plan,"HUD consumable slot, bottom-right (24 pt, 360 px, auto-size). {key} = the bound key (M, hold), the gamepad button or TAP on touch (do not translate the key), {count} = floor plans held",{key}   FLOOR PLAN  x{count}
 hud.prompt.use_floor_plan,"Hint on the prompt line (34 pt, 600 x 50, auto-size, 4 s) when a Floor Plan is held and unused; shown after the key label M: ""M  HOLD TO USE THE FLOOR PLAN"". Instruction, ALL CAPS",HOLD TO USE THE FLOOR PLAN
+hud.voice,"F120 microphone meter label above the stamina bar, bottom-left (18 pt, one line, 220 px, auto-size). Shown only while the microphone setting is on during a run",VOICE
+hud.voice_loud,"F120 microphone meter label while the player is above the threshold (18 pt, 220 px, blinks at 4 Hz unless Reduce flashing)",LOUD
+hud.torch_dropped,"F120 torch battery label while the torch lies on the floor after the hunter's grab (20 pt, one line, 220 px, auto-size, blinks in red)",TORCH · DROPPED
+hud.prompt.pick_up_torch,F120 interaction prompt on the player's dropped torch (shown after the key chip),PICK UP YOUR TORCH
+hud.locker.welded,Subtitle when E is pressed at a welded locker (WELDED LOCKERS Oath; one short line),WELDED SHUT.
+hud.prompt.welded,Interaction prompt at a welded locker (one short line),WELDED SHUT
+hud.prompt.drawer,"Prompt after the E key cap (hold) while looking at a morgue drawer bank, floor 3 (ALL CAPS)",OPEN THE DRAWER
+hud.prompt.ampoule,"Prompt after the E key cap while looking at a blue-capped ampoule on the floor, floor 4 (ALL CAPS)",TAKE THE AMPOULE

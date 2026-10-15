@@ -353,6 +353,66 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763210
+  - m_Id: 1866634939068416
+    m_Localized: Dynamo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982976
+    m_Localized: "Die Lampe l\xE4dt ausgeschaltet viel schneller auf, auf der n\xE4chsten Etage."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982977
+    m_Localized: Lampe des Archivars
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982978
+    m_Localized: "Notizen und Patientenakten glimmen auf der n\xE4chsten Etage schwach."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982979
+    m_Localized: Stethoskop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982980
+    m_Localized: "Die Schritte des J\xE4gers dringen auf der n\xE4chsten Etage deutlich durch W\xE4nde."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982981
+    m_Localized: KNOCHEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982982
+    m_Localized: "STATIONSGR\xDCN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982983
+    m_Localized: EIDROT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982984
+    m_Localized: Ungesehen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982985
+    m_Localized: Nie verfolgt werden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982986
+    m_Localized: "H\xE4nde weg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982987
+    m_Localized: Wirf nichts.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982988
+    m_Localized: Knapp genug
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982989
+    m_Localized: "Erreiche den Ausgang mit h\xF6chstens 20 Sekunden Reserve."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

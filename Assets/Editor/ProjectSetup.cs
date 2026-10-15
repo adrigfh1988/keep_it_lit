@@ -233,6 +233,34 @@ public static class ProjectSetup
         },
         new Piece
         {
+            Name = "Asylum classroom board (F117: THE LESSON, chalk text of what the hunter has learned)",
+            FixMenu = "Build Missing Pieces (writes the chalk text, light and E target on the classroom blackboard and applies them to the prefab)",
+            Problem = AsylumHubBuilder.LessonProblem,
+            Build = AsylumHubBuilder.BuildLesson
+        },
+        new Piece
+        {
+            Name = "Asylum kitchen meal (F117: A HOT MEAL, three free dishes on the serving table)",
+            FixMenu = "Build Missing Pieces (places the tray and dishes on the kitchen table, removes what lay there, applies it to the prefab)",
+            Problem = AsylumHubBuilder.MealProblem,
+            Build = AsylumHubBuilder.BuildMeal
+        },
+        new Piece
+        {
+            Name = "Asylum dining room (F117: THE LAST SUPPER, the long table, seated patients and name cards)",
+            FixMenu = "Build Missing Pieces (builds the long table in the dining room, removes what stood in its walkway, applies it to the prefab)",
+            Problem = AsylumHubBuilder.SupperProblem,
+            Build = AsylumHubBuilder.BuildSupper
+        },
+        new Piece
+        {
+            Name = "Asylum hub breach (F121: the hunter in the hub once, floor 5)",
+            FixMenu = "Build Missing Pieces (adds Life/Breach and the breach hunter's body to the hub and applies them to the prefab)",
+            Problem = AsylumHubBuilder.BreachProblem,
+            Build = AsylumHubBuilder.BuildBreach
+        },
+        new Piece
+        {
             Name = "Asylum look (F95: light palette, reflection probes, hub-only SSAO, aged materials)",
             FixMenu = "Build Missing Pieces (adds only what is missing to the scene hub and applies it to the prefab)",
             Problem = AsylumHubBuilder.LookProblem,

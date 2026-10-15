@@ -371,7 +371,8 @@ public class LiftSetPiece : HubSetPiece
                 nextCatch = t + Random.Range(0.45f, 1.1f) * (1f - 0.5f * k);
                 Jolt(0.35f, 0.012f);
                 Dust(6);
-                if (Random.value < 0.4f + 0.5f * k) _flickerUntil = Time.time + Random.Range(0.05f, 0.18f);
+                if (!FlashSafety.On && Random.value < 0.4f + 0.5f * k) _flickerUntil = // F118: the car lights never cut out with Reduce flashing on
+                     Time.time + Random.Range(0.05f, 0.18f);
             }
             SetCarLights(Time.time >= _flickerUntil);
             yield return null;
@@ -412,7 +413,7 @@ public class LiftSetPiece : HubSetPiece
             float k = Mathf.Clamp01(t / fall);
             SetCar(Mathf.Lerp(jamDepth, total, k * k));
             _rumble = Mathf.Lerp(0.35f, 0.8f, k);
-            if (redLight != null) redLight.intensity = Random.Range(0.4f, 2.4f);
+            if (redLight != null) redLight.intensity = FlashSafety.On ? Mathf.MoveTowards(redLight.intensity, 1.4f, Time.deltaTime * 2f) : Random.Range(0.4f, 2.4f); // F118: saturated red per-frame noise is the worst flicker, so it becomes a steady glow
             yield return null;
         }
         SetCar(total);
@@ -426,7 +427,7 @@ public class LiftSetPiece : HubSetPiece
 
         Landed?.Invoke();
         // 6. the doors are stuck: force them (hold E)
-        hub.SubtitleLine(L10n.T("hub.lift.doors_stuck", ("key", TouchInput.Key("E", L10n.T("ui.key.use")))), 4f);
+        hub.SubtitleLine(L10n.T("hub.lift.doors_stuck", ("key", InputGlyphs.Key(GameAction.Interact, L10n.T("ui.key.use")))), 4f);
         _arrived = true;
         _pryReady = true;
         LockPlayer(false); // look and turn freely; the only way on is the doors

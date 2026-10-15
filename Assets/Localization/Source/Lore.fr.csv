@@ -77,3 +77,15 @@ lore.vignette.barricade_early,ILS ONT BARRICADÉ LA PORTE. DE L'INTÉRIEUR.
 lore.vignette.barricade_late,LA TABLE A ÉTÉ POUSSÉE. DE L'AUTRE CÔTÉ.
 lore.vignette.chalkhouse_early,"UNE MAISON À LA CRAIE, AVEC PLUS DE FENÊTRES QUE LA VRAIE."
 lore.vignette.chalkhouse_late,"UNE MAISON À LA CRAIE, EFFACÉE D'UN REVERS DE MAIN."
+lore.codex.hunter.name,L'INFIRMIER
+lore.codex.hunter.body,"Il chasse à la vue et à l'ouïe, et ne vous attrape que s'il vous voit. La lumière, les pas et tout objet lancé lui disent où vous êtes. Il apprend ce sur quoi vous vous appuyez."
+lore.codex.stan.name,STAN
+lore.codex.stan.body,Il ne bouge que lorsqu'aucune lumière ne l'éclaire et se fige dans le faisceau. Son contact vide votre lampe. Il n'a jamais tué personne.
+lore.codex.visitor.name,LE VISITEUR
+lore.codex.visitor.body,Il vit dans le couloir qui boucle et ne s'approche que lorsque vous ne regardez pas. Apprenez le couloir ; faites demi-tour quand quelque chose cloche.
+lore.codex.listener.name,L'ÉCOUTEUR
+lore.codex.listener.body,"Aveugle. Il reste immobile jusqu'à vous entendre, puis rampe vers le bruit. Quand il hurle, il se jette sur le dernier bruit entendu."
+lore.codex.tenant.name,LE LOCATAIRE
+lore.codex.tenant.body,Un casier est déjà pris. Écoutez avant de vous cacher : il respire.
+lore.codex.living_body.name,LES CORPS
+lore.codex.living_body.body,Tous ne sont pas morts. Un pendu tombe sur qui passe dans le noir ; un corps au sol rampe vers votre lumière.

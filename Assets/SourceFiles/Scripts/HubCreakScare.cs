@@ -52,7 +52,7 @@ public class HubCreakScare : MonoBehaviour
         if (_fired || chair == null) return;
         AsylumHub hub = AsylumHub.Active;
         if (hub == null || hub.Player == null || hub.PlayerCamera == null || hub.IsTransitioning || hub.Leaving) return;
-        if (HubState.IsFinale || HubState.Floor < 4) return;
+        if (HubState.IsFinale || HubBreach.InProgress || HubState.Floor < 4) return; // F121: no extra scares during the breach
         if (hub.PursuerAfterPlayer()) return;
 
         Vector3 to = chair.position + Vector3.up * 0.6f - hub.PlayerCamera.transform.position;

@@ -353,6 +353,66 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763211
+  - m_Id: 1866634939068416
+    m_Localized: Dynamo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982976
+    m_Localized: "La lampe se recharge bien plus vite \xE9teinte, \xE0 l'\xE9tage suivant."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982977
+    m_Localized: Lampe de l'Archiviste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982978
+    m_Localized: "Les notes et les dossiers de patients luisent faiblement \xE0 l'\xE9tage suivant."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982979
+    m_Localized: "St\xE9thoscope"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982980
+    m_Localized: "Les pas du chasseur traversent nettement les murs \xE0 l'\xE9tage suivant."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982981
+    m_Localized: OS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982982
+    m_Localized: VERT DE SALLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982983
+    m_Localized: ROUGE SERMENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982984
+    m_Localized: Invisible
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982985
+    m_Localized: "Ne jamais \xEAtre poursuivi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982986
+    m_Localized: Les mains dans les poches
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982987
+    m_Localized: Ne lancez rien.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982988
+    m_Localized: De justesse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982989
+    m_Localized: Atteignez la sortie avec 20 secondes ou moins de marge.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

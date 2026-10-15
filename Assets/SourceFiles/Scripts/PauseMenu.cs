@@ -1,9 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
 
 /// <summary>
 /// Esc pauses. Added at runtime by MazeGenerator; builds nothing until the first pause, so its panel
@@ -34,6 +31,7 @@ public class PauseMenu : MonoBehaviour
     private const float LessonsWidth = 560f;
     private static readonly Color LessonsRed = new Color(0.85f, 0.12f, 0.08f);
     private bool _paused;
+    private Button _settingsButton, _recordButton; // F122: SETTINGS fills the row alone until the Patient Record has a codex, then it splits with RECORD
     /// <summary>Last frame the cursor was locked and a pause was allowed. See the lock-loss check in Update.</summary>
     private bool _wasLockedAndPausable;
 
@@ -58,6 +56,8 @@ public class PauseMenu : MonoBehaviour
         {
             // Held every frame: focus changes re-lock the cursor
             PlayerLock.SetCursorFree(true);
+            // F119: a gamepad always has a selected button (RESUME first); Settings, opened over this panel, keeps its own.
+            if (!SettingsMenu.BlocksPause && !PatientRecordMenu.BlocksBack) MenuFocus.Keep(_panel, null);
         }
 
         // In a browser, Esc belongs to the page: it releases the pointer lock and usually never reaches
@@ -76,21 +76,26 @@ public class PauseMenu : MonoBehaviour
             return;
         }
 
-        bool pressed = false;
-#if ENABLE_INPUT_SYSTEM
-        // Read directly, like Flashlight: the Player action map has no Pause action. P is the
-        // browser-safe key; Esc still works everywhere else.
-        if (Keyboard.current != null && (Keyboard.current.escapeKey.wasPressedThisFrame || Keyboard.current.pKey.wasPressedThisFrame)) pressed = true;
-        if (Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame) pressed = true;
-#endif
-        if (TouchInput.Pressed(TouchInput.TouchAction.Pause)) pressed = true;
+        // F119: Pause is Esc / P / Start / touch Pause; while paused pad B (MenuCancel) resumes too. One boolean, so Esc (in both) toggles once.
+        bool pressed = GameInput.Pressed(GameAction.Pause) || (_paused && GameInput.Pressed(GameAction.MenuCancel));
         if (!pressed) return;
 
         // S2: Esc / B / Start while the settings screen is up (or closed it this very frame) belong to the settings screen, not to us.
-        if (SettingsMenu.BlocksPause) return;
+        if (SettingsMenu.BlocksPause || PatientRecordMenu.BlocksBack) return; // F122: the record screen owns that press too
 
         if (_paused) Resume();
         else if (CanPause()) Pause();
+    }
+
+    // F119 D9: a suspend (Steam Deck sleep) or alt-tab in a build pauses like a lost pointer lock does. Not in the Editor: the CLI stealing focus would pause every run.
+    private void OnApplicationFocus(bool focused)
+    {
+        if (!focused && !Application.isEditor) ExternalPause();
+    }
+
+    private void OnApplicationPause(bool paused)
+    {
+        if (paused && !Application.isEditor) ExternalPause();
     }
 
     /// <summary>F76 T7: lets TouchControls pause for the "ROTATE YOUR DEVICE" overlay through the same
@@ -149,16 +154,37 @@ public class PauseMenu : MonoBehaviour
         // F106: the map button is for touch players (no M key) and anyone who forgot it; only once the loop corridor has handed the map over.
         if (_mapButton != null) _mapButton.gameObject.SetActive(_map != null && (_map.Available || _map.CanUsePlan)); // F110: a held, unused Floor Plan also offers it (touch has no M)
         RefreshLessons();
+        LayoutSettingsRow(); // F122
         _panel.SetActive(true);
         _panel.transform.SetAsLastSibling();
 
         PlayerLock.SetCursorFree(true);
     }
 
+    /// <summary>F122: SETTINGS keeps the whole row (today's layout) until the Patient Record has a codex; then it shares the row with RECORD. Not in a descent.</summary>
+    private void LayoutSettingsRow()
+    {
+        if (_settingsButton == null || _recordButton == null) return;
+        bool split = !GameFlow.IsDescent && PatientRecord.IsUnlocked(Unlock.Codex);
+        _recordButton.gameObject.SetActive(split);
+        RectTransform rect = (RectTransform)_settingsButton.transform;
+        rect.anchoredPosition = new Vector2(split ? -110f : 0f, 300f);
+        rect.sizeDelta = new Vector2(split ? 200f : 420f, 86f);
+        TMP_Text caption = _settingsButton.GetComponentInChildren<TMP_Text>();
+        if (caption != null)
+        {
+            float size = split ? 32f : 40f;
+            caption.fontSizeMax = size;
+            caption.fontSize = size;
+            caption.fontSizeMin = size * 0.65f;
+        }
+    }
+
     private void Resume()
     {
         _paused = false;
         if (_panel != null) _panel.SetActive(false);
+        MenuFocus.Release();
 
         Time.timeScale = 1f;
         AudioListener.pause = false;
@@ -330,10 +356,18 @@ public class PauseMenu : MonoBehaviour
         _skipButton.gameObject.SetActive(false);
 
         // S2: SETTINGS (the touch-controls toggle and look-sensitivity slider that used to sit here live in its CONTROLS tab now)
-        Button settings = RuntimeUi.CreateButton(_panel.transform, L10n.T("ui.menu.settings"),
+        Button settings = _settingsButton = RuntimeUi.CreateButton(_panel.transform, L10n.T("ui.menu.settings"),
             new Vector2(0f, 300f), size, 40f, ButtonIdle, ButtonHover, Color.white);
         RuntimeUi.BindButton(settings, "ui.menu.settings");
         settings.onClick.AddListener(SettingsMenu.Show);
+
+        // F122: RECORD opens the Patient Record on its CODEX tab (with the ASSISTS tab, in a story campaign). Shown, sharing the SETTINGS row, only once the codex is unlocked.
+        _recordButton = RuntimeUi.CreateButton(_panel.transform, L10n.T("ui.menu.record"),
+            new Vector2(110f, 300f), new Vector2(200f, 86f), 32f, ButtonIdle, ButtonHover, Color.white);
+        _recordButton.name = "Record Button";
+        RuntimeUi.BindButton(_recordButton, "ui.menu.record");
+        _recordButton.onClick.AddListener(() => PatientRecordMenu.Show(PatientRecord.IsUnlocked(Unlock.Codex) ? PatientRecordMenu.Tab.Codex : PatientRecordMenu.Tab.Record, true));
+        _recordButton.gameObject.SetActive(false);
 
         Button menu = RuntimeUi.CreateButton(_panel.transform, L10n.T("ui.pause.main_menu"),
             new Vector2(0f, 190f), size, 40f, ButtonIdle, ButtonHover, Color.white);

@@ -330,6 +330,39 @@ public static partial class InteractableKitBuilder
                 built++;
             }
         }
+
+        // F120: the dropped torch, same build-missing-only rule.
+        SerializedProperty droppedTorchProp = so.FindProperty("droppedTorch");
+        if (droppedTorchProp.objectReferenceValue == null)
+        {
+            droppedTorchProp.objectReferenceValue = BuildDroppedTorch(root.transform, new Vector3(x, 0.1f, 0f));
+            x += PieceSpacing;
+            built++;
+        }
+
+        // F123: the wing nightmares' two templates, same build-missing-only rule. A missing pack model logs an error and leaves the slot empty.
+        SerializedProperty bankProp = so.FindProperty("morgueDrawerBank");
+        if (bankProp.objectReferenceValue == null)
+        {
+            MorgueDrawerBank bank = BuildMorgueDrawerBank(root.transform, new Vector3(x, 0f, 0f));
+            if (bank != null)
+            {
+                bankProp.objectReferenceValue = bank;
+                x += PieceSpacing;
+                built++;
+            }
+        }
+        SerializedProperty ampouleProp = so.FindProperty("nightmareAmpoule");
+        if (ampouleProp.objectReferenceValue == null)
+        {
+            NightmareAmpoule ampoule = BuildNightmareAmpoule(root.transform, new Vector3(x, 0f, 0f));
+            if (ampoule != null)
+            {
+                ampouleProp.objectReferenceValue = ampoule;
+                x += PieceSpacing;
+                built++;
+            }
+        }
         so.ApplyModifiedPropertiesWithoutUndo();
         ThemeSurfaceUpgrade.Apply(); // F88/F90: the fixture materials (shutter, bell, valve) get their texture sets
         AssetDatabase.SaveAssets();

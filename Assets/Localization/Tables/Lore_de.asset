@@ -208,6 +208,54 @@ MonoBehaviour:
     m_Localized: EIN KREIDEHAUS, VON EINER HAND VERWISCHT.
     m_Metadata:
       m_Items: []
+  - m_Id: 1866635253641216
+    m_Localized: DER PFLEGER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944384
+    m_Localized: "Er jagt nach Sicht und Geh\xF6r und f\xE4ngt dich nur, wenn er dich sieht. Licht, Schritte und alles Geworfene verraten ihm, wo du bist. Er lernt, worauf du dich verl\xE4sst."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944385
+    m_Localized: STAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944386
+    m_Localized: "Er bewegt sich nur, solange kein Licht auf ihm liegt, und erstarrt im Strahl. Seine Ber\xFChrung entl\xE4dt deine Lampe. Er hat nie jemanden get\xF6tet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944387
+    m_Localized: DER BESUCHER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944388
+    m_Localized: "Er lebt im Gang, der sich wiederholt, und kommt nur n\xE4her, wenn du nicht hinsiehst. Lerne den Gang; kehre um, wenn etwas nicht stimmt."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944389
+    m_Localized: DER HORCHER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944390
+    m_Localized: "Blind. Er liegt still, bis er dich h\xF6rt, und kriecht dann zum Ger\xE4usch. Wenn er schreit, st\xFCrzt er auf das letzte Ger\xE4usch zu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944391
+    m_Localized: DER MIETER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944392
+    m_Localized: 'Ein Spind ist schon besetzt. Horche, bevor du dich versteckst: er atmet.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944393
+    m_Localized: "DIE K\xD6RPER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944394
+    m_Localized: "Nicht alle sind tot. Ein h\xE4ngender f\xE4llt auf den, der im Dunkeln vorbeigeht; einer am Boden kriecht zu deinem Licht."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

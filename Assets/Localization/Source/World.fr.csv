@@ -59,3 +59,14 @@ world.loop.wrong_turned,RIEN N'AVAIT CHANGÉ
 world.loop.wrong_missed,QUELQUE CHOSE VOUS A ÉCHAPPÉ
 world.loop.continue,"RIEN N'A CHANGÉ ? CONTINUEZ."
 world.loop.turn,"QUELQUE CHOSE A CHANGÉ ? DEMI-TOUR."
+world.nightmare.drawer.elias,5 · E. VOGT
+world.nightmare.drawer.yours,PATIENT {mark}
+world.nightmare.toetag,"E. VOGT
+TIROIR 5
+TROUVÉ À L'AUBE"
+world.nightmare.director.rules,"RÈGLEMENT INTÉRIEUR
+1. LES PATIENTS MARCHENT.
+2. LES PATIENTS NE SE CACHENT PAS.
+3. LES PATIENTS NE LANCENT RIEN.
+L'AIDE-SOIGNANT INTERVIENDRA.
+- LE DIRECTEUR"

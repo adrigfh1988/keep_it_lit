@@ -55,8 +55,6 @@ ui.rules.item2,"Rules screen, rule 2",<b>2.</b>   A hatch will open somewhere. F
 ui.rules.item3,"Rules screen, rule 3. Keep the red <color> and <b> tags around the word RUN","<b>3.</b>   You are not alone down here. If it sees you, <color=#DB1F17><b>run</b></color>."
 ui.rules.item4,"Rules screen, rule 4","<b>4.</b>   Shards glint in the dark. Between floors, someone will sell you things for them."
 ui.rules.start,"Rules screen: begin the run (420 x 90 button, 44 pt)",START
-ui.controls.keyboard,"Controls sheet, keyboard and mouse (34 pt, two lines, 1400 px). Key names in <b> stay as they are (WASD, SHIFT, F, E, 1, 2, ESC); MOUSE is translated","<b>WASD</b>  move   <b>SHIFT</b>  sprint   <b>MOUSE</b>  look   <b>F</b>  flashlight   <b>E</b>  hide / talk
-<b>1</b>  spare battery   <b>2</b>  star compass   <b>ESC</b>  pause"
 ui.controls.touch,"Controls sheet, touch layout (34 pt, one line, 1400 px). The button names in <b> must match the on-screen button captions (ui.touch.*)","<b>LEFT THUMB</b>  move   <b>RIGHT THUMB</b>  look   buttons: <b>TORCH</b>, <b>FOCUS</b>, <b>INTERACT</b>, <b>THROW</b>, <b>SPRINT</b>"
 ui.controls.tip,"Controls sheet and rules, tip line below the controls (30 pt, 1400 px)",Your torch has three minutes of light in it. Your legs have less. Lockers hide you — unless it saw you climb in.
 ui.pause.title,"Pause screen heading (84 pt, one line, 1200 px)",PAUSED
@@ -67,7 +65,7 @@ ui.pause.main_menu,"Pause menu: back to the title screen (420 x 86 button, 40 pt
 ui.pause.quit,"Pause menu: quit the game (420 x 86 button, 40 pt)",QUIT
 ui.ledger.slip_heading,"Readmission slip heading above the ledger (30 pt amber, one line, 1400 px, auto-size). {admission} = admission number, {patient} = 7 or a redaction glyph (#)",READMITTED  ·  ADMISSION {admission}  ·  PATIENT {patient}
 ui.ledger.slip_subtitle,"Readmission slip subtitle, typed out (34 pt, one line, 1400 px)",THE CLERK HAS TYPED YOUR RETURN.
-ui.ledger.subtitle,"Floor-clear ledger subtitle in the legacy shop flow (34 pt, one line, 1400 px)",The hatch closed behind you. Something down here is open.
+ui.ledger.subtitle,"Floor-clear ledger subtitle in the legacy shop flow (34 pt, one line, 1400 px)",The hatch closed behind you. Someone has left a light on.
 ui.ledger.already_yours,"Ledger amount column for the informational SHARDS FOUND line (36 pt, right aligned, 300 px)",already yours
 ui.ledger.no_pay,"Ledger amount column for a contract line that paid nothing (36 pt, right aligned, 300 px)",no pay
 ui.ledger.payout,"Ledger total line (44 pt green, 900 px). {amount} = shards paid",PAYOUT  +{amount}
@@ -79,7 +77,7 @@ ui.ledger.contract_void,"Ledger line for a voided contract (36 pt, left column 9
 ui.end.won_final,"End screen title, campaign won (96 pt bold green, one line, 1600 px)",YOU GOT OUT
 ui.end.floor_cleared,"End screen title, floor cleared in the no-shop fallback (96 pt). {floor} = floor number",FLOOR {floor} CLEARED
 ui.end.won_final_body,"End screen subtitle after the final floor (36 pt, one line, 1600 px)",The hatch closed behind you. There is nothing left below.
-ui.end.floor_cleared_body,"End screen subtitle after floors 1-4 (36 pt, one line, 1600 px)",The hatch closed behind you. It is darker down here.
+ui.end.floor_cleared_body,"End screen subtitle after floors 1-4 (36 pt, one line, 1600 px)","The hatch closed behind you. Somehow, the way down leads back up."
 ui.end.caught,End screen title when the hunter caught you (96 pt bold red),IT FOUND YOU
 ui.end.caught_hidden,End screen subtitle: caught after being seen hiding in a locker (36 pt),It watched you hide.
 ui.end.caught_torch,End screen subtitle: caught with the torch on (36 pt),It was faster in the dark.
@@ -133,9 +131,9 @@ ui.touch.pause,"Touch screen pause button caption: a pause symbol, not a word - 
 ui.touch.rotate,"Overlay shown on a touch device held in portrait (52 pt, 900 x 220, wraps)",ROTATE YOUR DEVICE
 ui.key.back,"Key chip on touch devices in place of the ESC key in the dialogue hint (short, ~4 characters)",BACK
 ui.objective.label,"Small grey label at the top of the objective card (20 pt, letter-spaced, 300 px)",OBJECTIVE
-ui.dialogue.hint_next,"Dialogue panel hint, bottom-right (20 pt, one line, 760 px, auto-size) while the conversation continues. {key} = E on keyboard or TAP on touch, {back} = ESC or BACK on touch - do not translate the key names",{key}  CONTINUE    ·    {back}  LEAVE
+ui.dialogue.hint_next,"Dialogue panel hint, bottom-right (20 pt, one line, 760 px, auto-size) while the conversation continues. {key} = the bound key (E), the gamepad button or TAP on touch, {back} = ESC, the gamepad button or BACK on touch - do not translate the key names",{key}  CONTINUE    ·    {back}  LEAVE
 ui.dialogue.hint_end,"Dialogue panel hint on the last line of a conversation (20 pt, 760 px). {key}, {back} as in hint_next",{key}  END    ·    {back}  LEAVE
-ui.dialogue.hint_leave,"Dialogue panel hint while two reply choices are on screen (20 pt, 760 px). {key} = ESC",{key}  LEAVE
+ui.dialogue.hint_leave,"Dialogue panel hint while two reply choices are on screen (20 pt, 760 px). {key} = ESC, the gamepad button or ESC on touch",{key}  LEAVE
 ui.pause.map,"Pause menu: close the menu and open the floor map (420 x 86 button, 40 pt). Only shown once the map is unlocked. Noun",MAP
 ui.menu.descent,"Title screen: start the endless DESCENT mode (420 x 86 button, 40 pt, under START GAME)",DESCENT
 ui.menu.descent_best,"Title screen note beside the DESCENT button once a record exists (26 pt, left-aligned, one line, 520 px, auto-size). {n} = deepest level reached, shown as -n",DEEPEST  ·  LEVEL -{n}
@@ -174,3 +172,196 @@ ui.credits.art,"Credits section heading: art and environments (40 pt, one line)"
 ui.credits.characters,"Credits section heading: characters and animation (40 pt, one line)",CHARACTERS AND ANIMATION
 ui.credits.fonts,"Credits section heading: fonts (40 pt, one line)",FONTS
 ui.credits.unity,"Credits section heading: Unity Technologies (40 pt, one line)",UNITY
+ui.settings.reduce_flashing,"Settings row label and photosensitivity card toggle label, followed by "": ON/OFF"" (600 px row label, auto-size; toggle button 760 px, 38 pt, auto-size)",REDUCE FLASHING
+ui.notice.photosensitivity.heading,"First-launch photosensitivity warning heading (64 pt, one line, 1500 px, auto-size)",PHOTOSENSITIVITY WARNING
+ui.notice.photosensitivity.body,"First-launch photosensitivity warning body (36 pt, wraps, 1400 x 520 px, auto-size down to 60 %). Medical wording, keep it plain. Mentions the REDUCE FLASHING setting and SETTINGS > GENERAL","This game contains flickering lights, sudden darkness and patterns that may trigger seizures in people with photosensitive epilepsy. If you or anyone in your family has had a seizure, consult a doctor before playing. Stop immediately if you feel dizzy, have blurred vision, eye or muscle twitches, or disorientation. You can turn on REDUCE FLASHING here or in SETTINGS > GENERAL at any time."
+ui.menu.save_problem_heading,"Title-screen notice heading when a saved run could not be loaded (76 pt, one line, 1400 px, auto-size)",SAVE NOT LOADED
+ui.menu.save_problem_body.too_new,"Save notice body, save from a newer game version (34 pt, wraps, two sentences, 1400 x 200 px)","Your saved run was made by a newer version of the game. It has been kept aside, not deleted."
+ui.menu.save_problem_body.unreadable,"Save notice body, damaged save (34 pt, wraps, two sentences, 1400 x 200 px)",Your saved run could not be read and has been set aside. A new campaign will start fresh.
+ui.glyph.mouse,"Key chip for looking around with the mouse (objective card, controls sheet). ALL CAPS, short, ~7 characters",MOUSE
+ui.glyph.mouse_left,"Key chip: the left mouse button. ALL CAPS, short, ~12 characters",LMB
+ui.glyph.mouse_right,"Key chip: the right mouse button, hold to focus the torch beam. ALL CAPS, short, ~12 characters",RMB
+ui.glyph.mouse_middle,"Key chip: the middle mouse button (wheel click). ALL CAPS, short, ~12 characters",MMB
+ui.glyph.lstick,"Key chip: the gamepad left stick (move). ALL CAPS, short, ~9 characters",L-STICK
+ui.glyph.rstick,"Key chip: the gamepad right stick (look). ALL CAPS, short, ~9 characters",R-STICK
+ui.glyph.dpad_up,"Key chip: gamepad d-pad up. ALL CAPS, short, ~16 characters",D-PAD UP
+ui.glyph.dpad_down,"Key chip: gamepad d-pad down. ALL CAPS, short, ~16 characters",D-PAD DOWN
+ui.glyph.dpad_left,"Key chip: gamepad d-pad left. ALL CAPS, short, ~16 characters",D-PAD LEFT
+ui.glyph.dpad_right,"Key chip: gamepad d-pad right. ALL CAPS, short, ~16 characters",D-PAD RIGHT
+ui.glyph.ps.cross,"Key chip: the PlayStation cross button (bottom face button). ALL CAPS, short",CROSS
+ui.glyph.ps.circle,"Key chip: the PlayStation circle button (right face button). ALL CAPS, short",CIRCLE
+ui.glyph.ps.square,"Key chip: the PlayStation square button (left face button). ALL CAPS, short",SQUARE
+ui.glyph.ps.triangle,"Key chip: the PlayStation triangle button (top face button). ALL CAPS, short",TRIANGLE
+ui.glyph.view,"Key chip: the Xbox View button (small left button, floor plan). The printed name - keep it English in every language",VIEW
+ui.glyph.menu,"Key chip: the Xbox Menu button (small right button, pause). The printed name - keep it English in every language",MENU
+ui.glyph.options,Key chip: the PlayStation Options button (pause). The printed name - keep it English in every language,OPTIONS
+ui.glyph.create,Key chip: the PlayStation Create button (floor plan). The printed name - keep it English in every language,CREATE
+ui.glyph.unbound,Key chip for an action with no key or button assigned (never translated),---
+ui.controls.sheet,"Controls sheet for keyboard / mouse and gamepad (34 pt, three lines, 1400 px, auto-size). Every {placeholder} is replaced by the bound key or button in bold (do not translate or remove them, you may reorder): move, sprint, look, torch, focus, interact, throw, item1, item2, map, pause","{move}  move   {sprint}  sprint   {look}  look   {torch}  flashlight   {focus}  focus beam
+{interact}  hide / talk   {throw}  throw   {item1}  spare battery   {item2}  star compass
+{map}  floor plan   {pause}  pause"
+ui.settings.remap,"Controls tab row: opens the key and button remapping screen (label left, 360 x 56 button right, 34 pt). ALL CAPS, short",REMAP CONTROLS
+ui.rebind.title,"Remapping screen heading (76 pt, one line, 1200 px). ALL CAPS",REMAP CONTROLS
+ui.rebind.col.keyboard,"Remapping screen column header over the keyboard / mouse buttons (30 pt, 360 px). ALL CAPS",KEYBOARD / MOUSE
+ui.rebind.col.gamepad,"Remapping screen column header over the gamepad buttons (30 pt, 360 px). ALL CAPS",GAMEPAD
+ui.rebind.listening,"Remapping screen: banner while waiting for the new key or button (40 pt, one line, 1500 px). {cancel} = ESC on a keyboard or the Start / Menu button name on a gamepad (do not translate it)",PRESS A KEY OR BUTTON  ·  {cancel} TO CANCEL
+ui.rebind.swapped,"Remapping screen: shown for a moment when the chosen key was already used, so the two swapped (30 pt, one line). {action} = the other action name (ui.rebind.action.*)",SWAPPED WITH {action}
+ui.rebind.reset_all,"Remapping screen: button that restores every key and button to the default (320 x 70, 34 pt). ALL CAPS",RESET ALL
+ui.rebind.action.move_up,"Remapping screen row label (34 pt, 600 px): the key that moves you forward. ALL CAPS",FORWARD
+ui.rebind.action.move_down,Remapping screen row label: the key that moves you backward. ALL CAPS,BACKWARD
+ui.rebind.action.move_left,Remapping screen row label: the key that strafes left. ALL CAPS,LEFT
+ui.rebind.action.move_right,Remapping screen row label: the key that strafes right. ALL CAPS,RIGHT
+ui.rebind.action.sprint,Remapping screen row label: hold to run. ALL CAPS,SPRINT
+ui.rebind.action.torch,Remapping screen row label: switch the flashlight on and off. ALL CAPS,TORCH ON / OFF
+ui.rebind.action.focus,Remapping screen row label: hold to focus the flashlight beam. ALL CAPS,FOCUS BEAM
+ui.rebind.action.interact,"Remapping screen row label: use, open, talk, hide in a locker. ALL CAPS",INTERACT / HIDE
+ui.rebind.action.throw,Remapping screen row label: throw the item you carry. ALL CAPS,THROW
+ui.rebind.action.item1,Remapping screen row label: use the spare battery. ALL CAPS,SPARE BATTERY
+ui.rebind.action.item2,Remapping screen row label: use the star compass. ALL CAPS,STAR COMPASS
+ui.rebind.action.map,Remapping screen row label: hold to use the floor plan. ALL CAPS,FLOOR PLAN
+ui.settings.mic,F120 Settings AUDIO row label: let the hunter hear the microphone (ON/OFF stepper). Desktop only,MICROPHONE
+ui.settings.mic_device,F120 Settings AUDIO row label: which microphone device (stepper of device names),MICROPHONE DEVICE
+ui.settings.mic_none,"F120 Settings AUDIO value text when the system reports no microphone (28 pt, 560 px, auto-size)",NO MICROPHONE FOUND
+ui.settings.mic_threshold,"F120 Settings AUDIO row label: the loudness above which the hunter hears you (slider, percent)",HEARD ABOVE
+ui.settings.mic_level,F120 Settings AUDIO row label of the live level meter,YOUR LEVEL
+ui.settings.mic_status.off,"F120 meter status text beside the level meter (22 pt, 260 px, wraps to 2 lines): microphone setting off",OFF
+ui.settings.mic_status.listening,F120 meter status text: the microphone is open and working,LISTENING
+ui.settings.mic_status.no_signal,F120 meter status text: the device is open but records only silence (usually the operating system's microphone privacy switch). Wraps to 2 lines in 260 px,NO SIGNAL - CHECK MIC PRIVACY
+ui.settings.mic_status.no_device,F120 meter status text: no microphone device could be opened,NO DEVICE
+ui.settings.mic_privacy,"F120 privacy note under the microphone rows of the AUDIO tab (24 pt grey, centred, wraps over 1400 px, auto-size down to 16 pt)","Used only while you play, to let the hunter hear you. Nothing is recorded, saved or sent. Headphones recommended."
+ui.end.caught_dropped,F120 end screen subtitle (36 pt): caught while the torch lay on the floor after the grab. It = the hunter,"It found you in the dark, away from your light."
+ui.replay.cam,"F120 death replay CCTV overlay, top-left (22 pt). {n} = a two-digit camera number. Keep CAM and the placeholder",CAM {n}
+ui.replay.rec,"F120 death replay CCTV overlay, top-right, after a red dot (22 pt, blinks)",REC
+ui.replay.caption,"F120 caption under the death replay frame (26 pt, ALL CAPS, 552 px, auto-size). It = the hunter",IT CAME FOR YOU
+ui.replay.caption_behind,"F120 caption under the death replay frame when the hunter was behind the player in the last seconds (26 pt, ALL CAPS, 552 px, auto-size)",IT WAS BEHIND YOU THE WHOLE TIME
+ui.descent.habit.voice,"Habit name inside the IT HAD LEARNED line: your voice, heard through the microphone (one word, all caps)",VOICE
+ui.hunter.effect.voice,What the hunter does now that it learned your voice. Same places and limits as ui.hunter.effect.lockers,"IT HEARS YOU FROM FURTHER AWAY, EVEN IN A LOCKER."
+ui.end.caught_hub,End screen subtitle (36 pt): caught by the hunter inside the asylum hub (F121 breach),It followed you up. There is no safe room.
+ui.end.stats_hub,"End screen stats line (32 pt, letter-spaced) for a death in the asylum hub: no stars or time to report. Keep {floor}",THE ASYLUM · FLOOR {floor}
+ui.menu.record,"Title and pause screens: open the Patient Record (200 x 86 button, 32 pt, auto-size). One short word",RECORD
+ui.newcampaign.title,"New-campaign screen heading (68 pt, one line, 1400 px)",NEW ADMISSION
+ui.newcampaign.begin,"New-campaign screen: start button (440 x 80, 40 pt)",BEGIN
+ui.newcampaign.assists_header,"New-campaign screen: left column heading (30 pt, letter-spaced)",ASSISTS
+ui.newcampaign.kit_header,"New-campaign screen: right column heading (30 pt, letter-spaced)",ADMISSION KIT
+ui.newcampaign.kit,"New-campaign screen: starting kit row label (300 px, 30 pt, auto-size)",KIT
+ui.newcampaign.torch,"New-campaign screen: starting torch colour row label (300 px, 30 pt, auto-size)",STARTING TORCH
+ui.newcampaign.torch_hint,"New-campaign screen: description of the torch colour row (27 pt, up to 4 lines, 840 px)",The beam colour you start with. Earned colours are never sold.
+ui.newcampaign.assisted_note,"New-campaign screen: shown while assists are on (26 pt, one line, 1700 px, auto-size)","ASSISTED CAMPAIGNS STILL UNLOCK THINGS, BUT SET NO RECORDS OR OATHS"
+ui.newcampaign.oaths_button,"New-campaign screen: the row that opens the Oaths panel (caption start, then the summary; 840 x 54, 30 pt, auto-size)",OATHS
+ui.newcampaign.oaths_title,"Oaths panel heading (68 pt, one line)",OATHS
+ui.newcampaign.oaths_done,"Oaths panel: close button (440 x 80, 40 pt)",DONE
+ui.newcampaign.oaths_hint,"New-campaign screen: description of the Oaths row (27 pt, up to 4 lines)",Stackable vows. Every Oath makes the asylum harder and pays more shards.
+ui.newcampaign.oaths_need_standard,"New-campaign screen: why the Oaths row is dimmed (shown after the colon, 30 pt, auto-size)",NEEDS A CAMPAIGN WITHOUT ASSISTS
+ui.newcampaign.oath_summary,"Oaths summary (38 pt, one line). {rank} = Oath rank, {mult} = shard multiplier such as 1,35",OATH {rank}  ·  SHARDS ×{mult}
+ui.preset.standard.name,"Difficulty preset name (36 pt button, 400 px, auto-size; also the campaign tag)",STANDARD
+ui.preset.standard.desc,"Difficulty preset description (28 pt, up to 2 lines, 1500 px)",The game as it was made.
+ui.preset.story.name,"Difficulty preset name (36 pt button, 400 px, auto-size; also the campaign tag)",STORY
+ui.preset.story.desc,"Difficulty preset description (28 pt, up to 2 lines, 1500 px)","Longer countdowns, a gentler torch, a slower hunter, honest cues, brighter halls. Everything still unlocks."
+ui.preset.nightmare.name,"Difficulty preset name (36 pt button, 400 px, auto-size; also the campaign tag)",NIGHTMARE
+ui.preset.nightmare.desc,"Difficulty preset description (28 pt, up to 2 lines, 1500 px)","Shorter countdowns, a keener hunter, a hungrier torch. Shards ×1.25 and Oath rank +2."
+ui.assist.longer_timer.name,"Assist row label (30 pt, 520 px, auto-size)",LONGER COUNTDOWN
+ui.assist.longer_timer.desc,"Assist description (27 pt, up to 4 lines, 840 px)",The escape countdown lasts half as long again.
+ui.assist.gentle_torch.name,"Assist row label (30 pt, 520 px, auto-size)",GENTLE TORCH
+ui.assist.gentle_torch.desc,"Assist description (27 pt, up to 4 lines, 840 px)",The battery drains slower and recharges faster.
+ui.assist.slow_hunter.name,"Assist row label (30 pt, 520 px, auto-size)",SLOWER HUNTER
+ui.assist.slow_hunter.desc,"Assist description (27 pt, up to 4 lines, 840 px)","It takes longer to commit to a chase, runs slower and hears less."
+ui.assist.honest_cues.name,"Assist row label (30 pt, 520 px, auto-size)",HONEST CUES
+ui.assist.honest_cues.desc,"Assist description (27 pt, up to 4 lines, 840 px). The lying sounds, phantoms, torch failures and hidden eyes are switched off","No lying sounds, no false phantoms, no torch failures, and the hunter's eyes always show."
+ui.assist.brighter_halls.name,"Assist row label (30 pt, 520 px, auto-size)",BRIGHTER HALLS
+ui.assist.brighter_halls.desc,"Assist description (27 pt, up to 4 lines, 840 px)","More ambient light, thinner fog, stronger lamps."
+ui.assist.steady_torch.name,"Assist row label (30 pt, 520 px, auto-size). Comfort option: sets no records either way",STEADY TORCH
+ui.assist.steady_torch.desc,"Assist description (27 pt, up to 4 lines, 840 px). Motion comfort",The torch no longer sways or lags behind the view. Does not affect records.
+ui.assist.no_replay.name,"Assist row label (30 pt, 520 px, auto-size). Comfort option: sets no records either way",NO DEATH REPLAY
+ui.assist.no_replay.desc,"Assist description (27 pt, up to 4 lines, 840 px)",The end screen skips the grainy replay of the hunter catching you. Does not affect records.
+ui.oath.old_battery.name,"Oath name (30 pt, ~960 px with its rank and bonus, auto-size)",OLD BATTERY
+ui.oath.old_battery.desc,"Oath description (28 pt, up to 2 lines, 1500 px)","The torch starts every floor half charged and recharges slowly, floor 1 included."
+ui.oath.does_not_wait.name,"Oath name (30 pt, ~960 px with its rank and bonus, auto-size)",IT DOES NOT WAIT
+ui.oath.does_not_wait.desc,"Oath description (28 pt, up to 2 lines, 1500 px)","From floor 1 the hunter keeps pace with a walker, commits sooner and its eyes are dark."
+ui.oath.welded_lockers.name,"Oath name (30 pt, ~960 px with its rank and bonus, auto-size)",WELDED LOCKERS
+ui.oath.welded_lockers.desc,"Oath description (28 pt, up to 2 lines, 1500 px)","Every locker in the mazes is welded shut. Nowhere to hide, and the hunter never checks them."
+ui.oath.stan_early.name,"Oath name (30 pt, ~960 px with its rank and bonus, auto-size)",STAN WAKES EARLY
+ui.oath.stan_early.desc,"Oath description (28 pt, up to 2 lines, 1500 px)",Stan walks from floor 2 instead of floor 4.
+ui.oath.no_second_chances.name,"Oath name (30 pt, ~960 px with its rank and bonus, auto-size)",NO SECOND CHANCES
+ui.oath.no_second_chances.desc,"Oath description (28 pt, up to 2 lines, 1500 px)","No Second Wind anywhere, and the first catch on a floor is no longer a shove: every catch kills."
+ui.oath.failing_grid.name,"Oath name (30 pt, ~960 px with its rank and bonus, auto-size)",FAILING GRID
+ui.oath.failing_grid.desc,"Oath description (28 pt, up to 2 lines, 1500 px)","Darker halls, dimmer lamps, further apart."
+ui.oath.short_fuse.name,"Oath name (30 pt, ~960 px with its rank and bonus, auto-size)",SHORT FUSE
+ui.oath.short_fuse.desc,"Oath description (28 pt, up to 2 lines, 1500 px)",The escape countdown is a quarter shorter.
+ui.oath.hears_everything.name,"Oath name (30 pt, ~960 px with its rank and bonus, auto-size)",IT HEARS EVERYTHING
+ui.oath.hears_everything.desc,"Oath description (28 pt, up to 2 lines, 1500 px)",Every floor carries the Keen Ears rule: the hunter hears far more.
+ui.oath.doors_dont_hold.name,"Oath name (30 pt, ~960 px with its rank and bonus, auto-size)",THE DOORS DON'T HOLD
+ui.oath.doors_dont_hold.desc,"Oath description (28 pt, up to 2 lines, 1500 px)","The asylum is breached on every visit to the hub after floor 4, not just once."
+ui.kit.standard_issue.name,"Starting kit name (stepper, 480 px, 30 pt, auto-size)",STANDARD ISSUE
+ui.kit.standard_issue.desc,"Starting kit description (27 pt, up to 4 lines, 840 px)",Nothing extra. Just the torch.
+ui.kit.scavenger.name,"Starting kit name (stepper, 480 px, 30 pt, auto-size)",SCAVENGER
+ui.kit.scavenger.desc,"Starting kit description (27 pt, up to 4 lines, 840 px)",Start with a Spare Battery and a Star Compass.
+ui.kit.runner.name,"Starting kit name (stepper, 480 px, 30 pt, auto-size)",RUNNER
+ui.kit.runner.desc,"Starting kit description (27 pt, up to 4 lines, 840 px)",Floor 1 starts with a Stamina Tonic and Quiet Shoes already working.
+ui.kit.cartographer.name,"Starting kit name (stepper, 480 px, 30 pt, auto-size)",CARTOGRAPHER
+ui.kit.cartographer.desc,"Starting kit description (27 pt, up to 4 lines, 840 px)",Start with a Floor Plan.
+ui.campaign.tag.oath,"Campaign tag piece after the preset name (28 pt, top right). {rank} = Oath rank",OATH {rank}
+ui.campaign.tag.assisted,"Campaign tag piece: the campaign used assists (28 pt, top right)",ASSISTED
+ui.ledger.oath,"Ledger line for the Oaths' shard bonus (36 pt label, 900 px). {rank} = Oath rank, {mult} = multiplier such as 1,35",OATH {rank}  ×{mult}
+ui.ledger.grade,"Ledger and end screen: caption over the big grade letter (28 pt, letter-spaced, 220 px)",GRADE
+ui.ledger.grade_new_best,"Ledger: under the grade letter when it is a personal best (26 pt, 240 px, auto-size)",NEW BEST
+ui.ledger.grade_bonus,"Ledger line: shard bonus for the floor grade (36 pt label, 900 px). {grade} = S, A or B",GRADE {grade} BONUS
+ui.ledger.record_new,"Ledger and end screen: top-left line when the Patient Record has something new (28 pt, 800 px). {n} = count",PATIENT RECORD · {n} NEW
+ui.end.grades,"End screen: the five floor grades (32 pt, letter-spaced, one line, 1600 px). {grades} = letters such as B · A · S · A · B",GRADES  {grades}
+ui.shop.forsworn,"Shop: status and button of the Second Wind card under the NO SECOND CHANCES Oath (19 pt status, 160 px button, auto-size)",FORSWORN
+ui.record.title,"Patient Record screen heading (68 pt, one line, 1400 px)",PATIENT RECORD
+ui.record.tab.record,"Patient Record tab caption (330 x 66 button, 32 pt, auto-size)",RECORD
+ui.record.tab.unlocks,"Patient Record tab caption (330 x 66 button, 32 pt, auto-size)",UNLOCKS
+ui.record.tab.codex,"Patient Record tab caption (330 x 66 button, 32 pt, auto-size)",CODEX
+ui.record.tab.assists,"Patient Record tab caption (330 x 66 button, 32 pt, auto-size). Pause menu only",ASSISTS
+ui.record.empty,"Patient Record: shown when nothing is on file yet (40 pt, one line)",NO ADMISSIONS ON FILE
+ui.record.started,"Patient Record row label (30 pt, 700 px, auto-size)",CAMPAIGNS STARTED
+ui.record.finished,"Patient Record row label (30 pt, 700 px, auto-size)",CAMPAIGNS FINISHED
+ui.record.endings,"Patient Record row label (30 pt, 700 px, auto-size)",ENDINGS SEEN
+ui.record.best_oath_a,"Patient Record row label: best Oath rank on ending A, Discharged (30 pt, 700 px, auto-size)",BEST OATH · DISCHARGED
+ui.record.best_oath_b,"Patient Record row label: best Oath rank on ending B, Lights Out (30 pt, 700 px, auto-size)",BEST OATH · LIGHTS OUT
+ui.record.shards,"Patient Record row label: shards earned over every campaign (30 pt, 700 px, auto-size)",SHARDS EARNED
+ui.record.descent,"Patient Record row label: deepest DESCENT level (30 pt, 700 px, auto-size)",DEEPEST DESCENT
+ui.record.floors_header,Patient Record: heading over the best grade per floor (28 pt),BEST FLOORS
+ui.record.floor,Patient Record: floor row label (30 pt). {floor} = number,FLOOR {floor}
+ui.record.floor_oath,Patient Record: the Oath rank a best grade was set with. {rank} = number,OATH {rank}
+ui.record.new,Patient Record: marks an unlock not yet viewed (appended to its name),NEW
+ui.record.unlocked,"Patient Record: detail line of an unlocked milestone (23 pt, green)",UNLOCKED
+ui.record.not_met,"Patient Record codex: body of an entry not met yet (28 pt, up to 4 lines)",Not met yet.
+ui.record.habits_header,Patient Record codex: heading over the hunter's learned habits (24 pt),WHAT IT HAS LEARNED
+ui.record.assists_next_floor,"Pause menu assists tab: note under the rows (26 pt, one line, 1500 px)",CHANGES TAKE EFFECT AT THE NEXT MAZE.
+ui.record.assists_mark,"Pause menu assists tab: warning (26 pt, one line, 1500 px)",TURNING ON ANY ASSIST MARKS THIS CAMPAIGN AS ASSISTED FOR GOOD.
+ui.record.unlock.codex.name,"Unlock name (29 pt, 880 px, auto-size)",CODEX AND PAUSE-MENU RECORD
+ui.record.unlock.codex.cond,"Unlock condition (23 pt, 880 px, then the progress count)",CLEAR A FLOOR
+ui.record.unlock.kit_scavenger.name,"Unlock name (29 pt, 880 px, auto-size)",KIT: SCAVENGER
+ui.record.unlock.kit_scavenger.cond,"Unlock condition (23 pt, 880 px, then the progress count)",CLEAR FLOOR 2
+ui.record.unlock.card_stethoscope.name,"Unlock name (29 pt, 880 px, auto-size)",SHOP CARD: STETHOSCOPE
+ui.record.unlock.card_stethoscope.cond,"Unlock condition (23 pt, 880 px, then the progress count)",CLEAR FLOOR 4
+ui.record.unlock.contract_unseen.name,"Unlock name (29 pt, 880 px, auto-size)",CONTRACT: UNSEEN
+ui.record.unlock.contract_unseen.cond,"Unlock condition (23 pt, 880 px, then the progress count)",CLEAR FLOOR 4
+ui.record.unlock.oaths.name,"Unlock name (29 pt, 880 px, auto-size)",THE OATH LADDER
+ui.record.unlock.oaths.cond,"Unlock condition (23 pt, 880 px, then the progress count)",REACH ANY ENDING
+ui.record.unlock.colour_bone.name,"Unlock name (29 pt, 880 px, auto-size)",TORCH COLOUR: BONE
+ui.record.unlock.colour_bone.cond,"Unlock condition (23 pt, 880 px, then the progress count)",REACH ANY ENDING
+ui.record.unlock.kit_runner.name,"Unlock name (29 pt, 880 px, auto-size)",KIT: RUNNER
+ui.record.unlock.kit_runner.cond,"Unlock condition (23 pt, 880 px, then the progress count)",FINISH 2 CAMPAIGNS
+ui.record.unlock.card_archivist.name,"Unlock name (29 pt, 880 px, auto-size)",SHOP CARD: ARCHIVIST'S LAMP
+ui.record.unlock.card_archivist.cond,"Unlock condition (23 pt, 880 px, then the progress count)",SEE BOTH ENDINGS
+ui.record.unlock.card_dynamo.name,"Unlock name (29 pt, 880 px, auto-size)",SHOP CARD: DYNAMO
+ui.record.unlock.card_dynamo.cond,"Unlock condition (23 pt, 880 px, then the progress count)",EARN 1500 SHARDS IN TOTAL
+ui.record.unlock.kit_cartographer.name,"Unlock name (29 pt, 880 px, auto-size)",KIT: CARTOGRAPHER
+ui.record.unlock.kit_cartographer.cond,"Unlock condition (23 pt, 880 px, then the progress count)",FINISH 3 CAMPAIGNS
+ui.record.unlock.contracts_skill.name,"Unlock name (29 pt, 880 px, auto-size)","CONTRACTS: HANDS TO YOURSELF, CUT IT CLOSE"
+ui.record.unlock.contracts_skill.cond,"Unlock condition (23 pt, 880 px, then the progress count)",EARN A GRADE S ON ANY FLOOR
+ui.record.unlock.colour_oath_red.name,"Unlock name (29 pt, 880 px, auto-size)",TORCH COLOUR: OATH RED
+ui.record.unlock.colour_oath_red.cond,"Unlock condition (23 pt, 880 px, then the progress count)",REACH AN ENDING AT OATH RANK 5
+ui.record.unlock.colour_ward.name,"Unlock name (29 pt, 880 px, auto-size)",TORCH COLOUR: WARD GREEN
+ui.record.unlock.colour_ward.cond,"Unlock condition (23 pt, 880 px, then the progress count)",MEET EVERYTHING IN THE CODEX
+ui.ledger.slip_subtitle.1,"Readmission slip subtitle typed after floor 1 (Ward A; ALL CAPS, one line, 1400 px at 34 pt, auto-size; keep under ~56 characters)",RETURNED FROM WARD A. ONE DOOR MORE THAN YESTERDAY.
+ui.ledger.slip_subtitle.2,Readmission slip subtitle typed after floor 2 (Boiler Room; same limits),RETURNED FROM THE BOILER ROOM. TWO KNOCKS. ALL CLEAR.
+ui.ledger.slip_subtitle.3,Readmission slip subtitle typed after floor 3 (Cold Storage; same limits),RETURNED FROM COLD STORAGE. ONE DRAWER LEFT OPEN.
+ui.ledger.slip_subtitle.4,Readmission slip subtitle typed after floor 4 (Operating Theatre; same limits),RETURNED FROM THE OPERATING THEATRE. DOSE NOT RECORDED.
+ui.end.wing.1,"Second line of the end screen after a LOSS on floor 1 (Hilde's wing; 32 pt wrapped, sentence case, after the cause line)",Hilde counted one more door tonight. It was yours.
+ui.end.wing.2,Second line of the end screen after a loss on floor 2 (Tomas),Three knocks. Then nothing.
+ui.end.wing.3,Second line of the end screen after a loss on floor 3 (Elias),They have a drawer ready. It has your number on it.
+ui.end.wing.4,Second line of the end screen after a loss on floor 4 (Dr. Weiss),Room 4 is not empty any more.
+ui.end.wing.5,Second line of the end screen after a loss on floor 5 (the Director),The Clerk has finished typing your file.

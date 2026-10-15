@@ -10,8 +10,10 @@ using UnityEngine;
 [Serializable]
 public class SaveData
 {
-    /// <summary>SaveSystem.Version when written; a mismatch discards the save.</summary>
+    /// <summary>SaveSystem.Version when written; an older one is migrated by SaveMigrations, a newer one is set aside.</summary>
     public int version;
+    /// <summary>F118: Application.version at write time, for bug reports. Missing in an older save (empty = unknown), so no Version bump.</summary>
+    public string writtenBy;
     /// <summary>The floor to resume (1..FinalFloor). With inShop, the floor that was just cleared.</summary>
     public int floor;
     /// <summary>Resume inside the shop after clearing <see cref="floor"/> rather than at the start of it.</summary>
@@ -41,11 +43,26 @@ public class SaveData
     // Missing in a save from before F105 (read as 0 = a hunter that has learned nothing), so SaveSystem.Version was not bumped.
     public int hunterLockers, hunterThrows, hunterDark, hunterSprint, hunterPendingMask;
 
+    // F120 HunterMemory.Habit.Voice: a level (0..3). Missing in an older save (0 = it has not learned your voice), so no Version bump (P1.1).
+    public int hunterVoice;
+
     // F105 C4 LoopCorridor.UsedThisCampaign: the looping corridor has already appeared on a cleared floor. Missing in an older save (false = it may still appear), so no Version bump.
     public bool loopCorridorUsed;
 
     // F114 HubCaches.SearchedMask: bit n = hub room find n has been searched this campaign. Missing in an older save (0 = nothing searched), so no Version bump.
     public int hubCachesSearched;
+
+    // F117 HubState.MealFloor: the floor whose free hot meal has been eaten (0 = none). Missing in an older save (0), so no Version bump.
+    public int hubMealFloor;
+
+    // F121 HubState.BreachDone: the hub breach (the hunter in the asylum, floor 5) has been survived this campaign. Missing in an older save (false = it has not happened yet), so no Version bump (P1.1).
+    public bool hubBreachDone;
+
+    // F122 CampaignRules (the difficulty preset, assists, Oaths and starting kit) + FloorGrade (this campaign's grade and deaths per floor, index = floor).
+    // Missing in an older save (0 / null = STANDARD, no assists, no Oaths, no grades), so no Version bump (P1.1). The enums are saved as ints: append only.
+    public int campaignPreset, campaignAssists, campaignOaths, campaignKit;
+    public bool campaignAssistedSticky;
+    public int[] campaignGrades, floorDeaths;
 }
 
 /// <summary>
@@ -55,89 +72,219 @@ public class SaveData
 /// GameFlow.ReturnToMenu leaves it alone, which is what puts CONTINUE on the title screen. CONTINUE always
 /// builds a fresh maze (seed 0), so reloading can't be used to scout a layout.
 ///
-/// Storage sits behind <see cref="ISaveStore"/> so the backend is a one-file swap. Holds no static run state.
+/// F118: storage is a file (persistentDataPath/save.json, atomic write, .bak) on desktop and PlayerPrefs on WebGL, behind
+/// <see cref="ISaveStore"/>. An older save is migrated, an unreadable one is set aside as save.unreadable.json. Holds no run state.
 /// </summary>
 public static class SaveSystem
 {
-    /// <summary>Bump when SaveData's meaning changes. A save with another version is discarded.</summary>
-    public const int Version = 1;
+    /// <summary>
+    /// Bump when SaveData's meaning changes in a way an older save cannot express (pattern P1.2 in plannings/f118-release-foundations-plan.md):
+    /// add a case to <see cref="SaveMigrations"/> and a fixture test. A save with an older version is migrated, never discarded.
+    /// </summary>
+    public const int Version = 2;
 
-    /// <summary>Namespaced: itch.io serves many games from shared origins.</summary>
+    /// <summary>Namespaced: itch.io serves many games from shared origins. Also the legacy PlayerPrefs key (desktop saves moved to a file in F118).</summary>
     public const string Key = "keepitlit.save.v1";
+
+    /// <summary>Why a stored save could not be used.</summary>
+    public enum LoadProblem { None, Corrupt, TooNew, NoMigration, OutOfRange }
 
     // ---------------------------------------------------------------- storage
 
-    private interface ISaveStore
+    private static ISaveStore _store;
+    private static string _directoryOverride;
+    private static bool _loggedWrittenBy;
+
+    /// <summary>Tests only: save somewhere else (setting it drops the cached store). Cleared on Play entry.</summary>
+    public static string DirectoryOverride
     {
-        string Read();
-        void Write(string json);
-        void Delete();
+        get => _directoryOverride;
+        set { _directoryOverride = value; _store = null; }
     }
 
-    /// <summary>PlayerPrefs. On the web Unity keeps these in IndexedDB and Save() is what flushes them.</summary>
-    private sealed class PlayerPrefsStore : ISaveStore
+    /// <summary>Tests only: the PlayerPrefs key the one-time file migration reads. Null with a DirectoryOverride = skip it, so a test never touches the developer's real save.</summary>
+    public static string LegacyKeyOverride
     {
-        public string Read() => PlayerPrefs.HasKey(Key) ? PlayerPrefs.GetString(Key, "") : "";
+        get => _legacyKeyOverride;
+        set { _legacyKeyOverride = value; _store = null; }
+    }
+    private static string _legacyKeyOverride;
 
-        public void Write(string json)
-        {
-            PlayerPrefs.SetString(Key, json);
-            PlayerPrefs.Save();
-        }
+    /// <summary>Set by <see cref="TryLoad"/> when it had to set a save aside; shown once by the title screen.</summary>
+    public static LoadProblem PendingProblem { get; private set; }
 
-        public void Delete()
+    /// <summary>Returns and clears <see cref="PendingProblem"/>.</summary>
+    public static LoadProblem ConsumeProblem()
+    {
+        LoadProblem p = PendingProblem;
+        PendingProblem = LoadProblem.None;
+        return p;
+    }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics()
+    {
+        _store = null;
+        _directoryOverride = null;
+        _legacyKeyOverride = null;
+        PendingProblem = LoadProblem.None;
+        _loggedWrittenBy = false;
+    }
+
+    private static ISaveStore Store
+    {
+        get
         {
-            PlayerPrefs.DeleteKey(Key);
-            PlayerPrefs.Save();
+            if (_store != null) return _store;
+            ISaveStore created;
+            if (Application.platform == RuntimePlatform.WebGLPlayer)
+            {
+                created = new SavePrefsStore(Key);
+            }
+            else
+            {
+                created = new SaveFileStore(_directoryOverride ?? Application.persistentDataPath, "save.json");
+                MoveLegacyPlayerPrefsSave(created);
+            }
+            Debug.Log("SaveSystem: saves in " + created.Describe());
+            _store = created;
+            return _store;
         }
     }
 
-    private static readonly ISaveStore Store = new PlayerPrefsStore();
+    /// <summary>
+    /// One-time move of a pre-F118 PlayerPrefs save into the file store. The JSON is copied unchanged (the version
+    /// migration happens on load like for any save); PlayerPrefs is cleared only once the file reads back identical.
+    /// </summary>
+    private static void MoveLegacyPlayerPrefsSave(ISaveStore store)
+    {
+        string legacyKey = _legacyKeyOverride ?? (_directoryOverride == null ? Key : null);
+        if (legacyKey == null) return;
+        try
+        {
+            if (!store.IsEmpty() || !PlayerPrefs.HasKey(legacyKey)) return;
+            string json = PlayerPrefs.GetString(legacyKey, "");
+            if (string.IsNullOrEmpty(json)) return;
+            store.Write(json);
+            if (store.Read() != json) return;
+            PlayerPrefs.DeleteKey(legacyKey);
+            PlayerPrefs.SetInt(legacyKey == Key ? "keepitlit.save.movedToFile" : legacyKey + ".moved", 1);
+            PlayerPrefs.Save();
+            Debug.Log("SaveSystem: moved the PlayerPrefs save to " + store.Describe());
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"SaveSystem: could not move the PlayerPrefs save to a file ({e.Message}); it stays where it is.");
+        }
+    }
 
     // ---------------------------------------------------------------- queries
 
-    /// <summary>True if a readable, current-version save exists. Deletes an unreadable one (see TryLoad).</summary>
+    /// <summary>True if a usable save exists (migrated / restored from the backup as needed).</summary>
     public static bool HasSave => TryLoad(out _);
 
-    /// <summary>False if there is no save, or it failed to parse / is the wrong version / is out of range (it is then deleted, with one warning).</summary>
+    /// <summary>
+    /// False if there is no save or it cannot be used. A readable older save is migrated and written back (the old text becomes the
+    /// backup); an unreadable main file falls back to the backup; if both fail the main file is SET ASIDE (never deleted) and
+    /// <see cref="PendingProblem"/> says why.
+    /// </summary>
     public static bool TryLoad(out SaveData data)
     {
         data = null;
+        try
+        {
+            ISaveStore store = Store;
+            string json = store.Read();
 
-        string json;
-        try { json = Store.Read(); }
+            LoadProblem mainProblem = LoadProblem.None;
+            if (!string.IsNullOrEmpty(json))
+            {
+                if (TryParse(json, out SaveData d, out mainProblem, out bool migrated))
+                {
+                    if (migrated)
+                    {
+                        Debug.Log($"SaveSystem: migrated save v{ReadVersion(json)} -> v{Version}");
+                        store.Write(JsonUtility.ToJson(d)); // the pre-migration text becomes the .bak
+                    }
+                    LogWrittenBy(d);
+                    data = d;
+                    return true;
+                }
+            }
+
+            bool hasBackup = store.TryReadBackup(out string bak);
+            if (hasBackup)
+            {
+                if (TryParse(bak, out SaveData b, out LoadProblem bakProblem, out bool bakMigrated))
+                {
+                    Debug.LogWarning($"SaveSystem: the save was unreadable ({(string.IsNullOrEmpty(json) ? "missing" : mainProblem.ToString())}); restored the backup.");
+                    if (!string.IsNullOrEmpty(json)) store.SetAside("replaced by the backup");
+                    store.Write(bakMigrated ? JsonUtility.ToJson(b) : bak);
+                    LogWrittenBy(b);
+                    data = b;
+                    return true;
+                }
+                if (string.IsNullOrEmpty(json)) mainProblem = bakProblem;
+            }
+
+            if (mainProblem != LoadProblem.None)
+            {
+                string why = mainProblem == LoadProblem.TooNew
+                    ? "it was written by a newer version of the game; reinstall that version and rename the file back to recover it"
+                    : "it could not be read: " + mainProblem;
+                if (!string.IsNullOrEmpty(json)) store.SetAside(why);
+                if (hasBackup) store.SetAsideBackup();
+                PendingProblem = mainProblem;
+            }
+            return false;
+        }
         catch (Exception e)
         {
             Debug.LogWarning($"SaveSystem: could not read the save ({e.Message}).");
             return false;
         }
-
-        if (string.IsNullOrEmpty(json)) return false;
-
-        SaveData parsed = Parse(json);
-        if (parsed == null)
-        {
-            Debug.LogWarning("SaveSystem: the stored save is unreadable or from another version - discarding it.");
-            Delete();
-            return false;
-        }
-
-        data = parsed;
-        return true;
     }
 
-    /// <summary>JsonUtility parse plus the validity rules applied by TryLoad. Null = invalid.</summary>
-    private static SaveData Parse(string json)
+    private static void LogWrittenBy(SaveData d)
     {
+        if (_loggedWrittenBy) return;
+        _loggedWrittenBy = true;
+        Debug.Log($"SaveSystem: save v{d.version} written by '{(string.IsNullOrEmpty(d.writtenBy) ? "unknown" : d.writtenBy)}'");
+    }
+
+    private static int ReadVersion(string json)
+    {
+        try { return JsonUtility.FromJson<SaveData>(json).version; } catch (Exception) { return -1; }
+    }
+
+    /// <summary>
+    /// Pure: JsonUtility parse, version check, migration and the range rules. No I/O, no statics touched (the tests call it).
+    /// <paramref name="migrated"/> is true when the data was brought forward from an older version.
+    /// </summary>
+    public static bool TryParse(string json, out SaveData data, out LoadProblem problem, out bool migrated)
+    {
+        data = null;
+        migrated = false;
+        problem = LoadProblem.None;
+
         SaveData d;
         try { d = JsonUtility.FromJson<SaveData>(json); }
-        catch (Exception) { return null; }
+        catch (Exception) { problem = LoadProblem.Corrupt; return false; }
 
-        if (d == null || d.version != Version) return null;
-        if (d.floor < 1 || d.floor > FloorProfile.FinalFloor) return null;
+        if (d == null || d.version <= 0) { problem = LoadProblem.Corrupt; return false; }
+        if (d.version > Version) { problem = LoadProblem.TooNew; return false; }
+        if (d.version < Version)
+        {
+            if (!SaveMigrations.Run(d)) { problem = LoadProblem.NoMigration; return false; }
+            migrated = true;
+        }
+
+        if (d.floor < 1 || d.floor > FloorProfile.FinalFloor) { problem = LoadProblem.OutOfRange; return false; }
         // The shop only follows floors 1..FinalFloor-1; the last floor ends in Win.
-        if (d.inShop && d.floor >= FloorProfile.FinalFloor) return null;
-        return d;
+        if (d.inShop && d.floor >= FloorProfile.FinalFloor) { problem = LoadProblem.OutOfRange; return false; }
+
+        data = d;
+        return true;
     }
 
     // ---------------------------------------------------------------- writing
@@ -154,6 +301,7 @@ public static class SaveSystem
             SaveData d = new SaveData
             {
                 version = Version,
+                writtenBy = Application.version,
                 floor = Mathf.Clamp(floor, 1, FloorProfile.FinalFloor),
                 inShop = inShop,
                 rolledObjectives = (int[])GameFlow.RolledObjectives.Clone()
@@ -167,6 +315,8 @@ public static class SaveSystem
             HunterMemory.CaptureTo(d);
             LoopCorridor.CaptureTo(d);
             HubCaches.CaptureTo(d);
+            HubState.CaptureTo(d);
+            CampaignRules.CaptureTo(d); // F122
 
             Store.Write(JsonUtility.ToJson(d));
         }
@@ -205,6 +355,9 @@ public static class SaveSystem
         HunterMemory.RestoreFrom(d);
         LoopCorridor.RestoreFrom(d);
         HubCaches.RestoreFrom(d);
+        HubState.RestoreFrom(d);
+        CampaignRules.RestoreFrom(d); // F122 (also derives the HubBreach / HunterGrab switches)
+        PatientRecord.ResetShardBaseline(PlayerWallet.TotalEarned); // F122: what the restored wallet already holds is not new earnings
 
         GameFlow.CurrentFloor = d.floor;
         CopyRolledObjectives(d);

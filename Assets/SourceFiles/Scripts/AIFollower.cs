@@ -298,6 +298,7 @@ public class AIFollower : MonoBehaviour
     private float _playerSprintSpeed;
     private float _speedCap;
     private float _chaseWalkFraction = 1f;
+    private float _chaseCommitScale = 1f; // F122
     private TerrorSettings _terror = new TerrorSettings();
     // F104 B3: how recently the player was heard or seen near each hiding spot (parallel to _hidingSpots),
     // the Time.time of that reading, whether it has already peeked into a locker this floor, the throttle
@@ -421,6 +422,24 @@ public class AIFollower : MonoBehaviour
 
     /// <summary>F50: the pose UpdateAnimator computed this frame - see the Pose enum doc comment.</summary>
     public Pose CurrentPose { get; private set; }
+
+    /// <summary>F120: true while a Release stun is running (the grab). Read by the replay and the grab sequence.</summary>
+    public bool IsStunned => Time.time < _stunnedUntil;
+
+    /// <summary>F120: the capture that raised PlayerCaught was a locker bust (cornered). A bust is never a survivable grab. Assigned first in EnterCaptured, which clears _bustingHidingSpot before raising the event.</summary>
+    public bool LastCaptureWasBust { get; private set; }
+
+    /// <summary>F120: which kind of noise last made the hunter react (World by default, Voice for the microphone).</summary>
+    public NoiseSource LastHeardSource { get; private set; }
+
+    /// <summary>F120: the body animator, for the death replay (null before Build Hunter Body has run).</summary>
+    public Animator BodyAnimator => animator;
+
+    /// <summary>F120: the Speed (gait 0/1/2) value last written to the animator.</summary>
+    public float AnimGait => _gait;
+
+    /// <summary>F120: the MotionSpeed (playback) value last written to the animator.</summary>
+    public float AnimPlayback { get; private set; } = 1f;
 
     /// <summary>F50: the last position sight or hearing actually placed the player at.</summary>
     public Vector3 LastKnownPosition => _lastKnownPosition;
@@ -556,6 +575,7 @@ public class AIFollower : MonoBehaviour
         patrolBias = profile.PatrolBias;
         searchBudget = profile.SearchBudget;
         _chaseWalkFraction = profile.ChaseWalkFraction;
+        _chaseCommitScale = profile.ChaseCommitScale; // F122
 
         ambushBias = profile.AmbushBias;
         ambushWaitSeconds = profile.AmbushWaitSeconds;
@@ -587,7 +607,7 @@ public class AIFollower : MonoBehaviour
     }
 
     /// <summary>F104 B2: unbroken sight for chaseCommitSeconds (TrackSightSince logs the moment it starts, once per chase).</summary>
-    private bool IsCommitted => _terror.committedChase && _sightSince >= 0f && Time.time - _sightSince >= chaseCommitSeconds;
+    private bool IsCommitted => _terror.committedChase && _sightSince >= 0f && Time.time - _sightSince >= chaseCommitSeconds * _chaseCommitScale;
 
     void Awake()
     {
@@ -1144,10 +1164,15 @@ public class AIFollower : MonoBehaviour
     /// scaled by the floor's hearing, and it can only ever start a search - never a chase. Returns true
     /// if it was heard, so the caller can say so (a subtitle).
     /// </summary>
-    public bool HearNoise(Vector3 at, float radius)
+    public bool HearNoise(Vector3 at, float radius) => HearNoise(at, radius, NoiseSource.World);
+
+    /// <summary>F120: the same noise with a source tag (the microphone is NoiseSource.Voice). LastHeardSource is set only when the hunter reacts.</summary>
+    public bool HearNoise(Vector3 at, float radius, NoiseSource source)
     {
         MazeNoise.Emit(at, radius); // F107 D2: before any gate of the hunter's own, so every listening entity hears it
-        return HearNoiseInternal(at, radius);
+        bool heard = HearNoiseInternal(at, radius);
+        if (heard) LastHeardSource = source;
+        return heard;
     }
 
     /// <summary>F107 D2: the hunter's half of HearNoise, without the MazeNoise broadcast. The torch-beam check calls this directly.</summary>
@@ -1556,6 +1581,7 @@ public class AIFollower : MonoBehaviour
 
     private void EnterCaptured()
     {
+        LastCaptureWasBust = _bustingHidingSpot; // F120: first statement - the next lines clear the flag
         _state = State.Captured;
         CancelHeardYouBeat();
         _backoffUntil = -1f;
@@ -2097,6 +2123,19 @@ public class AIFollower : MonoBehaviour
     /// Chase→Captured transition never did (EnterCaptured runs after the transition check), so anything
     /// listening still thinks it is mid-chase.
     /// </summary>
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+    /// <summary>F120 test hook: forces a capture of the player (a bust when `asBust`). Only while the run is active and the hunter is not already Captured.</summary>
+    [ContextMenu("Debug: capture the player")]
+    public void DebugCapture() => DebugCapture(false);
+
+    public void DebugCapture(bool asBust)
+    {
+        if (!GameFlow.IsRunActive || _state == State.Captured || _agent == null) return;
+        _bustingHidingSpot = asBust;
+        EnterCaptured();
+    }
+#endif
+
     public bool Release(Vector3 warpTo, float stunSeconds)
     {
         if (_agent == null || _state != State.Captured) return false;
@@ -2232,6 +2271,7 @@ public class AIFollower : MonoBehaviour
         float clipSpeed = _gaitRunning ? locomotionRunSpeed : locomotionWalkSpeed;
         float playback = v < 0.05f || clipSpeed < 0.05f ? 1f : Mathf.Clamp(v / clipSpeed, MinLocomotionPlayback, maxLocomotionPlayback);
         animator.SetFloat(AnimSpeed, _gait);
+        AnimPlayback = playback;
         animator.SetFloat(AnimMotionSpeed, playback);
         animator.SetBool(AnimGrounded, true);
 

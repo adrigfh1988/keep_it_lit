@@ -88,9 +88,11 @@ public class HubFinale : MonoBehaviour
             picked++;
         }
 
+        // F117: the one candle at the Last Supper table (the Director's empty place) burns through the finale; HubSupper lights it, this keeps it from being put out with the rest.
+        Light candle = hub.supper != null ? hub.supper.candleLight : null;
         foreach (Light l in all)
         {
-            if (keep.Contains(l)) l.enabled = true;
+            if (keep.Contains(l) || (candle != null && l == candle)) l.enabled = true;
             else l.enabled = false;
         }
         // The wing beacons are story pieces of the maze run; the finale has none.

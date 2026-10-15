@@ -17,3 +17,10 @@ public static class MazeNoise
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetStatics() => Emitted = null;
 }
+
+/// <summary>F120: what made a noise. World is every pre-existing source; Voice is the player's microphone (PlayerVoice).</summary>
+public enum NoiseSource
+{
+    World,
+    Voice,
+}

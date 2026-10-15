@@ -172,3 +172,38 @@ hub.cache.searched,FOUILLÉ
 hub.cache.found,TROUVÉ: {item}
 hub.cache.found_next,TROUVÉ: {item}  ·  FONCTIONNE À L'ÉTAGE SUIVANT
 hub.cache.found_shards,TROUVÉ {n} {currency}
+hub.lesson.title,"LEÇON DU JOUR"
+hub.lesson.patient,"PATIENT N°{n}"
+hub.lesson.none,"OBSERVEZ LE PATIENT."
+hub.lesson.habit.lockers,"CASIERS {tally}  IL LES FOUILLE"
+hub.lesson.habit.throws,"JETS {tally}  IL LES IGNORE"
+hub.lesson.habit.dark,"NOIR {tally}  IL VOIT PLUS LOIN"
+hub.lesson.habit.sprint,"COURSE {tally}  IL VOUS ENTEND"
+hub.lesson.learning,"IL APPREND."
+hub.lesson.over,"LA LEÇON EST FINIE."
+hub.lesson.prompt,"LIRE LE TABLEAU"
+hub.lesson.examine,"{n} LEÇONS AU TABLEAU. IL N'OUBLIE JAMAIS."
+hub.lesson.examine_none,"RIEN POUR L'INSTANT. IL OBSERVE ENCORE."
+hub.lesson.examine_over,"QUELQU'UN A EFFACÉ LE TABLEAU. IL NE RESTE QUE LA DERNIÈRE LIGNE."
+hub.meal.broth.prompt,"MANGER LE BOUILLON  ·  ENDURANCE À L'ÉTAGE SUIVANT"
+hub.meal.bread.prompt,"PRENDRE LE PAIN NOIR  ·  UNE PILE DE RECHANGE"
+hub.meal.tea.prompt,"BOIRE LE THÉ FROID  ·  CHAUSSURES SILENCIEUSES À L'ÉTAGE SUIVANT"
+hub.meal.broth.taken,"IL EST ENCORE CHAUD. QUELQU'UN SAVAIT QUE VOUS VIENDRIEZ."
+hub.meal.bread.taken,"DUR COMME UNE BRIQUE. QUELQUE CHOSE DE MÉTALLIQUE CLIQUETTE DEDANS."
+hub.meal.tea.taken,"FROID. IL A GOÛT DE POUSSIÈRE, ET VOS PAS S'ADOUCISSENT."
+hub.meal.full,"MAINS PLEINES"
+hub.meal.had,"DÉJÀ SERVI"
+hub.meal.full_line,"VOUS NE POUVEZ PLUS RIEN PORTER."
+hub.meal.had_line,"VOUS EN AVEZ DÉJÀ."
+hub.supper.card.prompt,"LIRE LA CARTE"
+hub.supper.card.1,"ELLE GARDAIT TOUJOURS SON PAIN POUR PLUS TARD. ELLE COMPTAIT LES PORTES."
+hub.supper.card.2,"IL FRAPPE DEUX FOIS SUR LA TABLE. LES TUYAUX RÉPONDENT."
+hub.supper.card.3,"SES YEUX SONT OUVERTS. IL DORT ENCORE."
+hub.supper.card.4,"LA CHAISE EST TROP PETITE POUR ÇA. IL S'EST ASSIS QUAND MÊME."
+hub.supper.card.5,"LE DIRECTEUR A MIS CE COUVERT LUI-MÊME."
+hub.lesson.habit.voice,VOIX {tally}  ÇA TE CONNAÎT
+hub.breach.dark,LES LUMIÈRES SONT ÉTEINTES. TOUT LE MONDE A DISPARU.
+hub.breach.followed,ÇA T'A SUIVI JUSQU'ICI.
+hub.breach.run,LA PORTE DU DIRECTEUR. COURS.
+hub.breach.locker,ÇA T'A VU ENTRER.
+hub.breach.grab,ÇA TE TENAIT. RETROUVE TA LAMPE. COURS.

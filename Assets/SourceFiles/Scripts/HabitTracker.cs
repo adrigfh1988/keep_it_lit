@@ -27,6 +27,8 @@ public class HabitTracker : MonoBehaviour
     [SerializeField, Min(0f)] private float darkMinSeconds = 90f;
     [Tooltip("Seconds of sprinting on one floor that teach it the run")]
     [SerializeField, Min(1f)] private float sprintSeconds = 120f;
+    [Tooltip("F120: voice noises (microphone) the hunter heard on one floor that teach it your voice")]
+    [SerializeField, Min(1)] private int voiceHeard = 4;
 
     [Header("F105 C6 - announcement")]
     [Tooltip("Seconds after the run starts before a learned lesson is shown (the floor intro banner takes about 5.5 s)")]
@@ -118,6 +120,10 @@ public class HabitTracker : MonoBehaviour
         bool dark = _darkSeconds >= darkMinSeconds && _runSeconds > 0f && _darkSeconds / _runSeconds >= darkShare;
         TryLearn(HunterMemory.Habit.Dark, dark, $"{_darkSeconds:0} s in the dark of {_runSeconds:0} s");
         TryLearn(HunterMemory.Habit.Sprint, _sprintSeconds >= sprintSeconds, $"{_sprintSeconds:0} s sprinting");
+        // F120: only a player with the microphone on can ever teach it this one.
+        PlayerVoice voice = GetComponent<PlayerVoice>();
+        int heard = voice != null ? voice.HeardThisFloor : 0;
+        TryLearn(HunterMemory.Habit.Voice, heard >= voiceHeard, $"{heard} voice noises heard");
     }
 
     private void TryLearn(HunterMemory.Habit habit, bool overThreshold, string evidence)

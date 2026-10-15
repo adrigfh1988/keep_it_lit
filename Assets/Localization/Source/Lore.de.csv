@@ -77,3 +77,15 @@ lore.vignette.barricade_early,SIE HABEN DIE TÜR VERBARRIKADIERT. VON INNEN.
 lore.vignette.barricade_late,DER TISCH WURDE VERSCHOBEN. VON DER ANDEREN SEITE.
 lore.vignette.chalkhouse_early,EIN KREIDEHAUS MIT MEHR FENSTERN ALS DAS ECHTE.
 lore.vignette.chalkhouse_late,"EIN KREIDEHAUS, VON EINER HAND VERWISCHT."
+lore.codex.hunter.name,DER PFLEGER
+lore.codex.hunter.body,"Er jagt nach Sicht und Gehör und fängt dich nur, wenn er dich sieht. Licht, Schritte und alles Geworfene verraten ihm, wo du bist. Er lernt, worauf du dich verlässt."
+lore.codex.stan.name,STAN
+lore.codex.stan.body,"Er bewegt sich nur, solange kein Licht auf ihm liegt, und erstarrt im Strahl. Seine Berührung entlädt deine Lampe. Er hat nie jemanden getötet."
+lore.codex.visitor.name,DER BESUCHER
+lore.codex.visitor.body,"Er lebt im Gang, der sich wiederholt, und kommt nur näher, wenn du nicht hinsiehst. Lerne den Gang; kehre um, wenn etwas nicht stimmt."
+lore.codex.listener.name,DER HORCHER
+lore.codex.listener.body,"Blind. Er liegt still, bis er dich hört, und kriecht dann zum Geräusch. Wenn er schreit, stürzt er auf das letzte Geräusch zu."
+lore.codex.tenant.name,DER MIETER
+lore.codex.tenant.body,"Ein Spind ist schon besetzt. Horche, bevor du dich versteckst: er atmet."
+lore.codex.living_body.name,DIE KÖRPER
+lore.codex.living_body.body,"Nicht alle sind tot. Ein hängender fällt auf den, der im Dunkeln vorbeigeht; einer am Boden kriecht zu deinem Licht."

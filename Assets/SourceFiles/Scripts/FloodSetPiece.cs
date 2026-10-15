@@ -105,7 +105,7 @@ public class FloodSetPiece : HubSetPiece
             else
             {
                 l.t += Time.deltaTime / 0.6f;
-                l.light.intensity = l.baseIntensity * Mathf.Clamp01(1f - l.t) * (Random.value > 0.3f ? 1f : 0.3f);
+                l.light.intensity = l.baseIntensity * Mathf.Clamp01(1f - l.t) * (FlashSafety.On || Random.value > 0.3f ? 1f : 0.3f); // F118: a plain fade with Reduce flashing on
                 if (l.t >= 1f) { l.light.enabled = false; l.done = true; }
             }
             _lamps[i] = l;

@@ -70,7 +70,7 @@ public class HubShop : MonoBehaviour
     private float _musicLevel; // 0..1 of musicVolume
 
     /// <summary>The F94 rule, now the Commissary's: a floor has been cleared (the player may have shards and the board offers) and the finale is not running.</summary>
-    public static bool OpenFor(int currentFloor) => currentFloor >= 2 && !HubState.IsFinale;
+    public static bool OpenFor(int currentFloor) => currentFloor >= 2 && !HubState.IsFinale && !HubBreach.ShopShut; // F121: shut from the breach on
 
     public bool IsOpen => OpenFor(GameFlow.CurrentFloor);
 
@@ -190,6 +190,7 @@ public class HubShop : MonoBehaviour
         bool live = Live;
         if (shopkeeper != null) shopkeeper.SetTalking(live && MenuOpen);
         UpdateMusic(live);
+        if (MenuOpen && !IsOpen && GameFlow.IsInHub) _menu.Close(); // F121: the breach shut the Commissary under an open menu
         if (!live || Time.timeScale <= 0f) return;
 
         AsylumHub hub = Hub;

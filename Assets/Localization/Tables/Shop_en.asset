@@ -353,6 +353,66 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763065
+  - m_Id: 1866634939068416
+    m_Localized: Dynamo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982976
+    m_Localized: The torch recharges much faster while it is off, on the next floor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982977
+    m_Localized: Archivist's Lamp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982978
+    m_Localized: Notes and patient files glow faintly on the next floor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982979
+    m_Localized: Stethoscope
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982980
+    m_Localized: The hunter's footsteps carry clearly through walls on the next floor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982981
+    m_Localized: BONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982982
+    m_Localized: WARD GREEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982983
+    m_Localized: OATH RED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982984
+    m_Localized: Unseen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982985
+    m_Localized: Never be chased.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982986
+    m_Localized: Hands to yourself
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982987
+    m_Localized: Throw nothing.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982988
+    m_Localized: Cut it close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635001982989
+    m_Localized: Reach the way out with 20 seconds or less to spare.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

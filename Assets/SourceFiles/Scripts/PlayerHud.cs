@@ -99,6 +99,9 @@ public class PlayerHud : MonoBehaviour
     private struct PromptParts
     {
         public string Key;
+        public bool HasAction;          // F119: the label comes from InputGlyphs (keyboard key, gamepad button or touch word), resolved when the line is drawn
+        public GameAction Action;
+        public string TouchLabel;
         public string Text;
         public string TextKey;
         public int Percent;
@@ -129,6 +132,13 @@ public class PlayerHud : MonoBehaviour
         RefreshPrompt();
     }
 
+    /// <summary>F119: as SetPromptKey(string, string) but the key label follows the player's device (keyboard key / gamepad button / touch word).</summary>
+    public void SetPromptKey(GameAction action, string textKey)
+    {
+        _triggerPrompt = string.IsNullOrEmpty(textKey) ? default : new PromptParts { HasAction = true, Action = action, TextKey = textKey, Percent = -1 };
+        RefreshPrompt();
+    }
+
     /// <summary>Called every frame by PlayerInteractor. Null or empty falls back to the trigger prompt.</summary>
     public void SetFocusPrompt(string text)
     {
@@ -140,6 +150,13 @@ public class PlayerHud : MonoBehaviour
     public void SetFocusPrompt(string keyLabel, string text, int percent = -1)
     {
         _focusPrompt = string.IsNullOrEmpty(text) ? default : new PromptParts { Key = keyLabel, Text = text, Percent = percent };
+        RefreshPrompt();
+    }
+
+    /// <summary>F119: the focus prompt with a device-following key label.</summary>
+    public void SetFocusPrompt(GameAction action, string text, int percent = -1)
+    {
+        _focusPrompt = string.IsNullOrEmpty(text) ? default : new PromptParts { HasAction = true, Action = action, Text = text, Percent = percent };
         RefreshPrompt();
     }
 
@@ -155,6 +172,15 @@ public class PlayerHud : MonoBehaviour
     {
         if (_hintRoutine != null) StopCoroutine(_hintRoutine);
         _hintPrompt = new PromptParts { Key = keyLabel, TextKey = textKey, Percent = percent };
+        RefreshPrompt();
+        _hintRoutine = StartCoroutine(ClearHintAfter(seconds));
+    }
+
+    /// <summary>F119: ShowHintPrompt with a device-following key label; <paramref name="touchLabel"/> is what a touch screen shows.</summary>
+    public void ShowHintPrompt(GameAction action, string touchLabel, string textKey, float seconds, int percent = -1)
+    {
+        if (_hintRoutine != null) StopCoroutine(_hintRoutine);
+        _hintPrompt = new PromptParts { HasAction = true, Action = action, TouchLabel = touchLabel, TextKey = textKey, Percent = percent };
         RefreshPrompt();
         _hintRoutine = StartCoroutine(ClearHintAfter(seconds));
     }
@@ -177,11 +203,12 @@ public class PlayerHud : MonoBehaviour
     {
         if (p.IsEmpty) return null;
         string text = p.ResolvedText;
-        if (text == _promptBuiltText && p.Key == _promptBuiltKey && p.Percent == _promptBuiltPercent) return _promptBuilt;
-        string line = string.IsNullOrEmpty(p.Key) ? text : $"{p.Key}  {text}";
+        string key = p.HasAction ? InputGlyphs.Key(p.Action, p.TouchLabel) : p.Key;
+        if (text == _promptBuiltText && key == _promptBuiltKey && p.Percent == _promptBuiltPercent) return _promptBuilt;
+        string line = string.IsNullOrEmpty(key) ? text : $"{key}  {text}";
         if (p.Percent >= 0) line += $"  {p.Percent}%";
         _promptBuiltText = text;
-        _promptBuiltKey = p.Key;
+        _promptBuiltKey = key;
         _promptBuiltPercent = p.Percent;
         _promptBuilt = line;
         return line;
@@ -300,6 +327,29 @@ public class PlayerHud : MonoBehaviour
         _staminaGroup = _staminaHolder.AddComponent<CanvasGroup>();
         _staminaGroup.alpha = 0f;
 
+        // F120: the microphone's "you are loud" meter, above the stamina bar. Hidden unless PlayerVoice.Active.
+        _voiceFill = CreateBar(canvas.transform, "VoiceBar", new Vector2(20f, 104f), BarSize,
+            new Color(0f, 0f, 0f, 0.55f), StaminaColor, out _voiceHolder, out _voiceGhost);
+        _voiceGroup = _voiceHolder.AddComponent<CanvasGroup>();
+        _voiceGroup.alpha = 0f;
+        _voiceGroup.blocksRaycasts = false;
+        GameObject tick = new GameObject("VoiceThreshold");
+        tick.transform.SetParent(_voiceHolder.transform, false);
+        tick.layer = _voiceHolder.layer;
+        _voiceTick = tick.AddComponent<Image>();
+        _voiceTick.color = new Color(1f, 1f, 1f, 0.9f);
+        _voiceTick.raycastTarget = false;
+        _voiceLabel = RuntimeUi.CreateText(canvas.transform, "VoiceLabel", L10n.T("hud.voice"), 18f, _tint);
+        _voiceLabel.alignment = TextAlignmentOptions.Left;
+        RectTransform voiceRect = _voiceLabel.rectTransform;
+        voiceRect.anchorMin = Vector2.zero;
+        voiceRect.anchorMax = Vector2.zero;
+        voiceRect.pivot = Vector2.zero;
+        voiceRect.anchoredPosition = new Vector2(20f, 118f);
+        voiceRect.sizeDelta = new Vector2(220f, 22f);
+        RuntimeUi.AutoFit(_voiceLabel, 0.7f);
+        _voiceLabel.gameObject.SetActive(false);
+
         // Sits under TensionDirector's star counter (top-left, 36 px in, 30 px down, 60 px tall)
         TextMeshProUGUI floorText = _floorText = RuntimeUi.CreateText(canvas.transform, "FloorLabel",
             GameFlow.IsDescent ? L10n.T("hud.descent.level", ("n", DescentRun.Depth)) : L10n.T("hud.floor", ("floor", GameFlow.CurrentFloor)), 26f, new Color(0.62f, 0.62f, 0.66f));
@@ -382,9 +432,14 @@ public class PlayerHud : MonoBehaviour
         RuntimeUi.AutoFit(_slot2Text, 0.7f);
         RuntimeUi.AutoFit(_throwText, 0.7f);
         L10n.Changed += OnLanguageChanged;
+        GameInput.DeviceChanged += RefreshPrompt;   // F119: the key label follows keyboard / gamepad / touch (the slot chips re-read it every frame)
     }
 
-    private void OnDestroy() => L10n.Changed -= OnLanguageChanged;
+    private void OnDestroy()
+    {
+        L10n.Changed -= OnLanguageChanged;
+        GameInput.DeviceChanged -= RefreshPrompt;
+    }
 
     /// <summary>S9: drops the caches of composed labels so the next Update rewrites them in the new language.</summary>
     private void OnLanguageChanged()
@@ -429,6 +484,7 @@ public class PlayerHud : MonoBehaviour
         }
         UpdateBattery();
         UpdateStamina();
+        UpdateVoice(); // F120
         UpdateShardCounter();
         UpdateItemSlots();
         RefreshPrompt(); // F76: keeps the prompt line's touch-mode visibility current every frame too
@@ -453,7 +509,7 @@ public class PlayerHud : MonoBehaviour
             {
                 int held = _throwController != null ? _throwController.Carried : 0;
                 _throwText.gameObject.SetActive(held > 0);
-                if (held > 0) SetSlotText(_throwText, ref _slotKeyThrow, "hud.slot.throw", "G", held);
+                if (held > 0) SetSlotText(_throwText, ref _slotKeyThrow, "hud.slot.throw", GameAction.Throw, held);
             }
             return;
         }
@@ -463,11 +519,11 @@ public class PlayerHud : MonoBehaviour
         _slot2Punch = Mathf.MoveTowards(_slot2Punch, 0f, Time.unscaledDeltaTime / 0.25f);
 
         int batteryCount = PlayerInventory.Count(ShopItem.SpareBattery);
-        SetSlotText(_slot1Text, ref _slotKey1, "hud.slot.battery", "1", batteryCount);
+        SetSlotText(_slot1Text, ref _slotKey1, "hud.slot.battery", GameAction.Item1, batteryCount);
         ApplySlot(_slot1Text, batteryCount > 0, _slot1Punch);
 
         int compassCount = PlayerInventory.Count(ShopItem.StarCompass);
-        SetSlotText(_slot2Text, ref _slotKey2, "hud.slot.compass", "2", compassCount);
+        SetSlotText(_slot2Text, ref _slotKey2, "hud.slot.compass", GameAction.Item2, compassCount);
         ApplySlot(_slot2Text, compassCount > 0, _slot2Punch);
 
         if (_planText != null)
@@ -477,7 +533,7 @@ public class PlayerHud : MonoBehaviour
             _planText.gameObject.SetActive(plans > 0);
             if (plans > 0)
             {
-                SetSlotText(_planText, ref _slotKeyPlan, "hud.slot.floor_plan", "M", plans);
+                SetSlotText(_planText, ref _slotKeyPlan, "hud.slot.floor_plan", GameAction.Map, plans);
                 ApplySlot(_planText, true, _planPunch);
             }
         }
@@ -486,14 +542,14 @@ public class PlayerHud : MonoBehaviour
         {
             int carried = _throwController != null ? _throwController.Carried : 0;
             _throwText.gameObject.SetActive(carried > 0);
-            if (carried > 0) SetSlotText(_throwText, ref _slotKeyThrow, "hud.slot.throw", "G", carried);
+            if (carried > 0) SetSlotText(_throwText, ref _slotKeyThrow, "hud.slot.throw", GameAction.Throw, carried);
         }
     }
 
-    /// <summary>S9: writes "{key}   NAME  x{count}" only when the key mode, count or language changed (no per-frame string garbage).</summary>
-    private static void SetSlotText(TextMeshProUGUI text, ref string cache, string key, string keyboardKey, int count)
+    /// <summary>S9: writes "{key}   NAME  x{count}" only when the key mode (keyboard / gamepad / touch), count or language changed (no per-frame string garbage).</summary>
+    private static void SetSlotText(TextMeshProUGUI text, ref string cache, string key, GameAction action, int count)
     {
-        string chip = TouchInput.Key(keyboardKey, L10n.T("ui.key.tap"));
+        string chip = InputGlyphs.Key(action, L10n.T("ui.key.tap"));
         string id = key + "|" + chip + "|" + count;
         if (cache == id) return;
         cache = id;
@@ -561,13 +617,20 @@ public class PlayerHud : MonoBehaviour
             _batteryLabel.text = L10n.T("hud.torch_dead");
             _batteryLabel.color = AlarmedColor;
         }
+        else if (_flashlight.IsDropped)
+        {
+            // F120: the torch is on the floor - the bar keeps showing the charge, the label blinks at 2 Hz (steady with Reduce flashing)
+            _batteryLabel.text = L10n.T("hud.torch_dropped");
+            bool on = FlashSafety.On || ((int)(Time.unscaledTime * 4f)) % 2 == 0;
+            _batteryLabel.color = on ? AlarmedColor : _tint;
+        }
         else
         {
             _batteryLabel.text = L10n.T("hud.torch");
             bool blinking = charge <= 0.1f;
             if (blinking)
             {
-                bool on = ((int)(Time.time * 4f)) % 2 == 0;
+                bool on = FlashSafety.On || ((int)(Time.time * 4f)) % 2 == 0; // F118: steady warning colour with Reduce flashing on
                 _batteryLabel.color = on ? AlarmedColor : _tint;
             }
             else
@@ -577,6 +640,59 @@ public class PlayerHud : MonoBehaviour
         }
     }
 
+
+    // ---- F120: the microphone meter -----------------------------------------------------------------------------------------
+    private PlayerVoice _voice;
+    private GameObject _voiceHolder;
+    private Image _voiceFill;
+    private Image _voiceGhost;
+    private Image _voiceTick;
+    private CanvasGroup _voiceGroup;
+    private TextMeshProUGUI _voiceLabel;
+    private float _voiceShown;
+    private float _voiceVel;
+    private float _voiceAlpha;
+
+    /// <summary>F120: the player's microphone, for the "you are loud" bar. May stay null.</summary>
+    public void BindVoice(PlayerVoice voice) => _voice = voice;
+
+    private void UpdateVoice()
+    {
+        if (_voiceFill == null || _voiceGroup == null) return;
+
+        bool active = _voice != null && _voice.Active;
+        _voiceAlpha = Mathf.MoveTowards(_voiceAlpha, active ? 1f : 0f, Time.unscaledDeltaTime * 4f);
+        _voiceGroup.alpha = _voiceAlpha;
+        if (_voiceLabel != null) _voiceLabel.gameObject.SetActive(_voiceAlpha > 0.01f);
+        if (!active) return;
+
+        float level = MicInput.Level;
+        _voiceShown = Mathf.SmoothDamp(_voiceShown, level, ref _voiceVel, 0.05f, float.MaxValue, Time.unscaledDeltaTime);
+        SetFill(_voiceFill, _voiceShown);
+        SetFill(_voiceGhost, 0f);
+
+        float threshold = _voice.Threshold;
+        if (_voiceTick != null)
+        {
+            RectTransform tr = _voiceTick.rectTransform;
+            tr.anchorMin = new Vector2(Mathf.Clamp01(threshold), 0f);
+            tr.anchorMax = new Vector2(Mathf.Clamp01(threshold), 1f);
+            tr.pivot = new Vector2(0.5f, 0.5f);
+            tr.sizeDelta = new Vector2(2f, 0f);
+            tr.anchoredPosition = Vector2.zero;
+        }
+
+        bool loud = _voice.Loud;
+        _voiceFill.color = loud ? AlarmedColor : StaminaColor;
+        _voiceGroup.alpha = _voiceAlpha * (level < 0.6f * threshold && !loud ? 0.35f : 1f);
+        if (_voiceLabel != null)
+        {
+            _voiceLabel.text = loud ? L10n.T("hud.voice_loud") : L10n.T("hud.voice");
+            // 4 Hz blink; steady with Reduce flashing on (F118)
+            bool on = !loud || FlashSafety.On || ((int)(Time.unscaledTime * 8f)) % 2 == 0;
+            _voiceLabel.color = loud ? (on ? AlarmedColor : _tint) : _tint;
+        }
+    }
     private void UpdateStamina()
     {
         if (_stamina == null || _staminaFill == null)
@@ -594,7 +710,7 @@ public class PlayerHud : MonoBehaviour
 
         // Exhausted pulses red so the lockout is legible; a recovering bar tints toward white as it fills
         Color color = StaminaColor;
-        if (_stamina.Exhausted)
+        if (_stamina.Exhausted || _stamina.Limping) // F120: a limp pulses like the lockout
         {
             float pulse = 0.65f + 0.35f * Mathf.Abs(Mathf.Sin(Time.unscaledTime * 6f));
             color = StaminaExhaustedColor * pulse;
@@ -603,7 +719,7 @@ public class PlayerHud : MonoBehaviour
         _staminaFill.color = color;
 
         // Stays visible until it has genuinely finished refilling, then fades out
-        bool full = fraction >= 0.999f && _staminaShown >= 0.99f;
+        bool full = fraction >= 0.999f && _staminaShown >= 0.99f && !_stamina.Limping;
         float targetAlpha = full ? 0f : 1f;
         _staminaAlpha = Mathf.MoveTowards(_staminaAlpha, targetAlpha, Time.unscaledDeltaTime * (full ? 1f : 6f));
         if (_staminaGroup != null) _staminaGroup.alpha = _staminaAlpha;

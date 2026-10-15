@@ -4,9 +4,6 @@ using StarterAssets;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
 
 /// <summary>
 /// F98: the bottom-of-screen conversation panel the hospital's people talk through. One instance lives under AsylumHub/Life/Npcs (so
@@ -182,9 +179,14 @@ public class DialoguePanel : MonoBehaviour
         {
             bool show = choices && i < _node.choices.Length;
             _choiceButtons[i].gameObject.SetActive(show);
-            if (show) _choiceLabels[i].text = $"{TouchInput.Key((i + 1).ToString(), (i + 1).ToString())}   {_node.choices[i].Label}";
+            if (show) _choiceLabels[i].text = ChoiceLabel(i);
         }
     }
+
+    // F119: the number key, d-pad direction or touch number in front of a choice follows the player's device.
+    private string ChoiceLabel(int i) => $"{InputGlyphs.Key(i == 0 ? GameAction.MenuChoice1 : GameAction.MenuChoice2, (i + 1).ToString())}   {_node.choices[i].Label}";
+
+    private int _glyphVersion = -1;
 
     private void Choose(int index)
     {
@@ -202,9 +204,9 @@ public class DialoguePanel : MonoBehaviour
     {
         if (_hint == null) return;
         bool revealed = _line.maxVisibleCharacters >= _line.textInfo.characterCount && _line.textInfo.characterCount > 0;
-        if (_node != null && _node.HasChoices) _hint.text = revealed ? L10n.T("ui.dialogue.hint_leave", ("key", "ESC")) : "";
+        if (_node != null && _node.HasChoices) _hint.text = revealed ? L10n.T("ui.dialogue.hint_leave", ("key", InputGlyphs.Key(GameAction.MenuCancel, "ESC"))) : "";
         else _hint.text = L10n.T(_queue.Count == 0 ? "ui.dialogue.hint_end" : "ui.dialogue.hint_next",
-            ("key", TouchInput.Key("E", L10n.T("ui.key.tap"))), ("back", TouchInput.Key("ESC", L10n.T("ui.key.back"))));
+            ("key", InputGlyphs.Key(GameAction.Interact, L10n.T("ui.key.tap"))), ("back", InputGlyphs.Key(GameAction.MenuCancel, L10n.T("ui.key.back"))));
     }
 
     // ---------------------------------------------------------------- update
@@ -244,6 +246,13 @@ public class DialoguePanel : MonoBehaviour
             }
         }
 
+        if (_glyphVersion != GameInput.Version)
+        {
+            _glyphVersion = GameInput.Version;
+            if (_node != null && _node.HasChoices) for (int i = 0; i < _choiceLabels.Length && i < _node.choices.Length; i++) _choiceLabels[i].text = ChoiceLabel(i);
+            UpdateHint();
+        }
+
         if (Time.frameCount == _openFrame) return; // the E that opened it must not also advance it
 
         ReadInput(out bool confirm, out int pick, out bool leave);
@@ -266,34 +275,13 @@ public class DialoguePanel : MonoBehaviour
 
     private static void ReadInput(out bool confirm, out int pick, out bool leave)
     {
-        confirm = false;
+        // F119: confirm = Interact (E / pad X / touch) or MenuSubmit (Enter, Space / pad A) or MenuClick (left mouse); pick = MenuChoice1 / 2
+        // (1, 2 / d-pad up, down / touch ITEM 1, ITEM 2); leave = MenuCancel (Esc / pad B / touch PAUSE, which must not open the pause menu here: BlocksPause).
+        confirm = GameInput.Pressed(GameAction.Interact) || GameInput.Pressed(GameAction.MenuSubmit) || GameInput.Pressed(GameAction.MenuClick);
         pick = -1;
-        leave = false;
-#if ENABLE_INPUT_SYSTEM
-        Keyboard kb = Keyboard.current;
-        Gamepad pad = Gamepad.current;
-        if (kb != null)
-        {
-            confirm |= kb.eKey.wasPressedThisFrame || kb.spaceKey.wasPressedThisFrame || kb.enterKey.wasPressedThisFrame;
-            if (kb.digit1Key.wasPressedThisFrame || kb.numpad1Key.wasPressedThisFrame) pick = 0;
-            if (kb.digit2Key.wasPressedThisFrame || kb.numpad2Key.wasPressedThisFrame) pick = 1;
-            leave |= kb.escapeKey.wasPressedThisFrame;
-        }
-        if (pad != null)
-        {
-            confirm |= pad.buttonWest.wasPressedThisFrame || pad.buttonSouth.wasPressedThisFrame;
-            if (pad.dpad.up.wasPressedThisFrame) pick = 0;
-            if (pad.dpad.down.wasPressedThisFrame) pick = 1;
-            leave |= pad.buttonEast.wasPressedThisFrame;
-        }
-        Mouse mouse = Mouse.current;
-        if (mouse != null) confirm |= mouse.leftButton.wasPressedThisFrame;
-#endif
-        // F76: touch. INTERACT advances, ITEM 1 / ITEM 2 pick, PAUSE leaves (the pause button must not open the pause menu here: BlocksPause).
-        confirm |= TouchInput.Pressed(TouchInput.TouchAction.Interact);
-        if (TouchInput.Pressed(TouchInput.TouchAction.Item1)) pick = 0;
-        if (TouchInput.Pressed(TouchInput.TouchAction.Item2)) pick = 1;
-        leave |= TouchInput.Pressed(TouchInput.TouchAction.Pause);
+        if (GameInput.Pressed(GameAction.MenuChoice1)) pick = 0;
+        if (GameInput.Pressed(GameAction.MenuChoice2)) pick = 1;
+        leave = GameInput.Pressed(GameAction.MenuCancel);
     }
 
     // ---------------------------------------------------------------- ui

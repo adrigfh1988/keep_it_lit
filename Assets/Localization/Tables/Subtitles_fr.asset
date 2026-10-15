@@ -251,6 +251,117 @@ MonoBehaviour:
     m_Localized: LAMPE PLEINE
     m_Metadata:
       m_Items: []
+  - m_Id: 1860893469569024
+    m_Localized: "\xC7a t'a repouss\xE9. Ta lampe est par terre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860893545066496
+    m_Localized: "La prochaine fois, \xE7a ne l\xE2chera pas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860893545066497
+    m_Localized: "Tu as la lumi\xE8re."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860893545066498
+    m_Localized: "\xC7A CONNA\xCET TA VOIX."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1874627596382208
+    m_Localized: SERMENT {rank}
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763194
+  - m_Id: 1879570495565824
+    m_Localized: IL N'Y AVAIT PAS DE PORTE ICI.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565825
+    m_Localized: "UNE PORTE DE PLUS QUE TOUT \xC0 L'HEURE."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565826
+    m_Localized: LES TUYAUX FRAPPENT DEUX FOIS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565827
+    m_Localized: LES TUYAUX FRAPPENT TROIS FOIS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565828
+    m_Localized: VIDE. LE PLATEAU EST FROID.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565829
+    m_Localized: "UNE \xC9TIQUETTE SANS NOM. PERSONNE SUR LE PLATEAU."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565830
+    m_Localized: VIDE. QUELQU'UN L'A FAIT COMME UN LIT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565831
+    m_Localized: "TIROIR CINQ. SEULEMENT SON \xC9TIQUETTE, QUI ATTEND."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565832
+    m_Localized: "L'\xC9TIQUETTE PORTE VOTRE NUM\xC9RO. LE PLATEAU EST ENCORE TI\xC8DE."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565833
+    m_Localized: 'VOS AFFAIRES SONT SUR LE PLATEAU: UNE PILE DE RECHANGE.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565834
+    m_Localized: "VERRE CLAIR, CAPUCHON BLEU. VOTRE C\u0152UR RALENTIT."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565835
+    m_Localized: LA PEUR SE TAIT. L'AVERTISSEMENT AUSSI.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565836
+    m_Localized: LES TROIS. PERSONNE N'A UNE DOSE TROP COURTE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565837
+    m_Localized: "VOTRE C\u0152UR EST DE RETOUR."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565838
+    m_Localized: "BONSOIR. LE R\xC8GLEMENT INT\xC9RIEUR EST AFFICH\xC9. MERCI."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1879570495565839
+    m_Localized: "PATIENT {mark}. AU PAS, S'IL VOUS PLA\xCET."
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763194
+  - m_Id: 1879570495565840
+    m_Localized: "PATIENT {mark}. SORTEZ DU PLACARD, S'IL VOUS PLA\xCET."
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763194
+  - m_Id: 1879570495565841
+    m_Localized: PATIENT {mark}. ON NE LANCE PAS D'OBJETS.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763194
+  - m_Id: 1879570495565842
+    m_Localized: LE PATIENT {mark} COURT. AIDE-SOIGNANT, VEUILLEZ INTERVENIR.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763194
+  - m_Id: 1879570495565843
+    m_Localized: LE PATIENT {mark} SE CACHE. AIDE-SOIGNANT, VEUILLEZ INTERVENIR.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763194
+  - m_Id: 1879570495565844
+    m_Localized: LE PATIENT {mark} LANCE DES OBJETS. AIDE-SOIGNANT, VEUILLEZ INTERVENIR.
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763194
   references:
     version: 2
     RefIds:
@@ -271,3 +382,10 @@ MonoBehaviour:
         - id: 7993049387037
         - id: 441658820694018
         - id: 791730569777152
+        - id: 1874627596382208
+        - id: 1879570495565839
+        - id: 1879570495565840
+        - id: 1879570495565841
+        - id: 1879570495565842
+        - id: 1879570495565843
+        - id: 1879570495565844

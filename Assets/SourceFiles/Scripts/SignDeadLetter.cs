@@ -49,6 +49,7 @@ public class SignDeadLetter : MonoBehaviour
             _index = PickCharacter();
         }
         if (_index < 0) return;
+        if (FlashSafety.On) { Apply(1f); return; } // F118: the letter stays lit
 
         float t = Time.time;
         if (_flicksLeft > 0)

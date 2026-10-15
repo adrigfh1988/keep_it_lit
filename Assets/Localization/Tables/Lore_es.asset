@@ -206,6 +206,54 @@ MonoBehaviour:
     m_Localized: UNA CASA DE TIZA, BORRADA POR UNA MANO.
     m_Metadata:
       m_Items: []
+  - m_Id: 1866635253641216
+    m_Localized: EL CELADOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944384
+    m_Localized: "Caza por la vista y por el o\xEDdo, y solo te atrapa cuando te ve. La luz, los pasos y todo lo que lances le dicen d\xF3nde est\xE1s. Aprende en qu\xE9 te apoyas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944385
+    m_Localized: STAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944386
+    m_Localized: Solo se mueve mientras ninguna luz lo alcanza y se queda quieto en el haz. Su contacto drena tu linterna. Nunca ha matado a nadie.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944387
+    m_Localized: EL VISITANTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944388
+    m_Localized: Vive en el pasillo que se repite y solo se acerca cuando no lo miras. Aprende el pasillo; da media vuelta cuando algo falle.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944389
+    m_Localized: EL OYENTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944390
+    m_Localized: "Ciego. Yace inm\xF3vil hasta que te oye, y entonces se arrastra hacia el sonido. Cuando grita, se lanza hacia el \xFAltimo ruido que oy\xF3."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944391
+    m_Localized: EL INQUILINO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944392
+    m_Localized: "Una taquilla ya est\xE1 ocupada. Escucha antes de esconderte: respira."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944393
+    m_Localized: LOS CUERPOS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866635324944394
+    m_Localized: "No todos est\xE1n muertos. Uno colgado cae sobre quien pasa en la oscuridad; uno en el suelo se arrastra hacia tu luz."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

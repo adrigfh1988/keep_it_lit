@@ -870,6 +870,181 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331767211393346
+  - m_Id: 1812604049158144
+    m_Key: hub.lesson.title
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098161
+  - m_Id: 1812604141432832
+    m_Key: hub.lesson.patient
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098162
+  - m_Id: 1812604141432833
+    m_Key: hub.lesson.none
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098163
+  - m_Id: 1812604141432834
+    m_Key: hub.lesson.habit.lockers
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098164
+  - m_Id: 1812604141432835
+    m_Key: hub.lesson.habit.throws
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098165
+  - m_Id: 1812604141432836
+    m_Key: hub.lesson.habit.dark
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098166
+  - m_Id: 1812604141432837
+    m_Key: hub.lesson.habit.sprint
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098167
+  - m_Id: 1812604141432838
+    m_Key: hub.lesson.learning
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098168
+  - m_Id: 1812604141432839
+    m_Key: hub.lesson.over
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098169
+  - m_Id: 1812604141432840
+    m_Key: hub.lesson.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098170
+  - m_Id: 1812604141432841
+    m_Key: hub.lesson.examine
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098171
+  - m_Id: 1812604141432842
+    m_Key: hub.lesson.examine_none
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098172
+  - m_Id: 1812604141432843
+    m_Key: hub.lesson.examine_over
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098173
+  - m_Id: 1818893206679552
+    m_Key: hub.meal.broth.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098465
+  - m_Id: 1818893286371328
+    m_Key: hub.meal.bread.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098466
+  - m_Id: 1818893286371329
+    m_Key: hub.meal.tea.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098467
+  - m_Id: 1818893286371330
+    m_Key: hub.meal.broth.taken
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098468
+  - m_Id: 1818893286371331
+    m_Key: hub.meal.bread.taken
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098469
+  - m_Id: 1818893286371332
+    m_Key: hub.meal.tea.taken
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098470
+  - m_Id: 1818893286371333
+    m_Key: hub.meal.full
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098471
+  - m_Id: 1818893286371334
+    m_Key: hub.meal.had
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098472
+  - m_Id: 1818893286371335
+    m_Key: hub.meal.full_line
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098473
+  - m_Id: 1818893286371336
+    m_Key: hub.meal.had_line
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098474
+  - m_Id: 1818893286371337
+    m_Key: hub.supper.card.prompt
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098475
+  - m_Id: 1818893286371338
+    m_Key: hub.supper.card.1
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098476
+  - m_Id: 1818893286371339
+    m_Key: hub.supper.card.2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098477
+  - m_Id: 1818893286371340
+    m_Key: hub.supper.card.3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098478
+  - m_Id: 1818893286371341
+    m_Key: hub.supper.card.4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098479
+  - m_Id: 1818893286371342
+    m_Key: hub.supper.card.5
+    m_Metadata:
+      m_Items:
+      - rid: 4707331782202098480
+  - m_Id: 1856707763892224
+    m_Key: hub.lesson.habit.voice
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114156
+  - m_Id: 1861983598538752
+    m_Key: hub.breach.dark
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114247
+  - m_Id: 1861983602733056
+    m_Key: hub.breach.followed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114248
+  - m_Id: 1861983602733057
+    m_Key: hub.breach.run
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114249
+  - m_Id: 1861983602733058
+    m_Key: hub.breach.locker
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114250
+  - m_Id: 1861983602733059
+    m_Key: hub.breach.grab
+    m_Metadata:
+      m_Items:
+      - rid: 4707331786811114251
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -1516,7 +1691,7 @@ MonoBehaviour:
     - rid: 4707331672703762808
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_CommentText: Subtitle (4 s) at the bottom of the lift. {key} = E on keyboard or USE on touch (do not translate the key)
+        m_CommentText: Subtitle (4 s) at the bottom of the lift. {key} = the bound key (E)
     - rid: 4707331672703762809
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
@@ -1565,3 +1740,143 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Subtitle (3 s) after searching a hub room find that held shards. {n} = the amount, {currency} = the shards currency (see shop.currency), ALL CAPS
+    - rid: 4707331782202098161
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Blackboard header in the asylum classroom (chalk, ALL CAPS, short; shown large)
+    - rid: 4707331782202098162
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Blackboard second line. {n} = the floor about to be entered. ALL CAPS
+    - rid: 4707331782202098163
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Blackboard line while the hunter has learned nothing yet. ALL CAPS
+    - rid: 4707331782202098164
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Blackboard chalk line: the hunter learned that the player hides in lockers. {tally} = chalk strokes for its level (|, || or |||). One short line, ALL CAPS, about 30 characters'
+    - rid: 4707331782202098165
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Blackboard chalk line: the hunter learned that the player throws things to distract it. {tally} = chalk strokes for its level. One short line, ALL CAPS, about 30 characters'
+    - rid: 4707331782202098166
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Blackboard chalk line: the hunter learned that the player walks with the torch off. {tally} = chalk strokes for its level. One short line, ALL CAPS, about 30 characters'
+    - rid: 4707331782202098167
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Blackboard chalk line: the hunter learned that the player runs. {tally} = chalk strokes for its level. One short line, ALL CAPS, about 30 characters'
+    - rid: 4707331782202098168
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Blackboard last line, underlined, from floor 3 on. ALL CAPS
+    - rid: 4707331782202098169
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Blackboard last line, underlined, in the finale. ALL CAPS
+    - rid: 4707331782202098170
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Interaction prompt on the classroom blackboard (after E). ALL CAPS
+    - rid: 4707331782202098171
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (4.5 s) when the classroom blackboard is examined and the hunter has learned something. {n} = how many habits. ALL CAPS
+    - rid: 4707331782202098172
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (4.5 s) when the classroom blackboard is examined and nothing has been learned yet. ALL CAPS
+    - rid: 4707331782202098173
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (4.5 s) when the classroom blackboard is examined in the finale. ALL CAPS
+    - rid: 4707331782202098465
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Prompt on the kitchen's bowl of broth (after E), floors 2-5. ALL CAPS, one line (about 50 characters). Stamina on the next floor
+    - rid: 4707331782202098466
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Prompt on the kitchen's plate of black bread (after E). ALL CAPS, one line. A spare battery
+    - rid: 4707331782202098467
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Prompt on the kitchen's jug of cold tea (after E). ALL CAPS, one line. Quiet shoes on the next floor
+    - rid: 4707331782202098468
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (4 s) after eating the broth. ALL CAPS, the asylum is feeding you; unsettling, kind
+    - rid: 4707331782202098469
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (4 s) after taking the black bread (a spare battery was hidden in it / came with it). ALL CAPS
+    - rid: 4707331782202098470
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (4 s) after drinking the cold tea. ALL CAPS
+    - rid: 4707331782202098471
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Prompt on a kitchen dish that cannot be taken because the player already holds the maximum of that item. ALL CAPS, short
+    - rid: 4707331782202098472
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Prompt on a kitchen dish whose buff the player already has (bought in the Commissary). ALL CAPS, short
+    - rid: 4707331782202098473
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (2.4 s) when E is pressed on a kitchen dish and the player's hands are full. ALL CAPS
+    - rid: 4707331782202098474
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (2.4 s) when E is pressed on a kitchen dish whose buff the player already has. ALL CAPS
+    - rid: 4707331782202098475
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Prompt on a name card at the dining room's long table, once it carries a name (after E). ALL CAPS
+    - rid: 4707331782202098476
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (4.5 s) on the name card of patient 1 (Hilde Brandt, who counted the doors). ALL CAPS, unsettling, one or two short sentences
+    - rid: 4707331782202098477
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (4.5 s) on the name card of patient 2 (Tomas Reiner, the stoker who knocks on pipes). ALL CAPS
+    - rid: 4707331782202098478
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (4.5 s) on the name card of patient 3 (Elias Vogt, the sleepwalker). ALL CAPS
+    - rid: 4707331782202098479
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (4.5 s) on the name card of seat 4 (Subject A, the creature of the lower levels). ALL CAPS
+    - rid: 4707331782202098480
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (4.5 s) on the name card of seat 5 (the Director's private note). ALL CAPS
+    - rid: 4707331786811114156
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Blackboard chalk line: the hunter learned the player''s voice (microphone). {tally} = chalk strokes for its level. One short line, ALL CAPS, about 30 characters'
+    - rid: 4707331786811114247
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (3.5 s) a second after the asylum power dies on the floor-5 visit (F121 hub breach): the Clerk and the patient have vanished in the dark. ALL CAPS'
+    - rid: 4707331786811114248
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (3 s) at the second bang on the Surgery wing door: the maze hunter has come up into the asylum. "IT" = the hunter, never named. ALL CAPS'
+    - rid: 4707331786811114249
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (3 s) the first time the hunter spots the player during the breach: the way out is the Director''s door. ALL CAPS'
+    - rid: 4707331786811114250
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Subtitle (3 s) when the hunter, having learned the lockers, comes for the locker it saw the player enter. ALL CAPS
+    - rid: 4707331786811114251
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Subtitle (3.5 s) after the breach''s free grab: the torch was knocked away, the hunter is stunned for a moment. ALL CAPS'

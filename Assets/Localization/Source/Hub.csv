@@ -159,7 +159,7 @@ hub.lift.gate_chained,Subtitle (2.6 s) when E is pressed at the chained gate,THE
 hub.lift.does_not_move,Subtitle (2.2 s) when the lift is called on floor 1 or in the finale,THE LIFT DOES NOT MOVE
 hub.lift.will_not_come,Subtitle (3 s) when the lift is called on floor 2 before the Boiler Room key is in hand. Names the Boiler Room (wing 2) with its article,THE LIFT WILL NOT COME · THE BOILER ROOM IS STILL LOCKED
 hub.lift.stopped,Subtitle (2.2 s) when the lift jams half-way down,THE LIFT STOPPED
-hub.lift.doors_stuck,Subtitle (4 s) at the bottom of the lift. {key} = E on keyboard or USE on touch (do not translate the key),THE DOORS ARE STUCK · HOLD {key} TO FORCE THEM
+hub.lift.doors_stuck,Subtitle (4 s) at the bottom of the lift. {key} = the bound key (E), the gamepad button or USE on touch (do not translate the key),THE DOORS ARE STUCK · HOLD {key} TO FORCE THEM
 hub.flood.knocks,Subtitle (3.5 s) in the basement hall on floor 3: Tomas knocks in the pipes. Sentence in capitals with a final full stop,SOMETHING KNOCKS THREE TIMES.
 hub.chase.stops,Subtitle (2.6 s) when the floor-4 chase ends at the surgery door,IT STOPS AT THE DOOR
 hub.chase.run,"Subtitle (3 s) when the floor-4 chase starts: the pursuer rises at the basement stairs and the player must run to the Surgery wing door upstairs, where it stops (see hub.chase.stops). ALL CAPS. ""IT"" = the pursuer",IT IS AWAKE. RUN TO THE SURGERY.
@@ -172,3 +172,38 @@ hub.cache.searched,"Prompt on a hub room find that has already been searched. No
 hub.cache.found,"Subtitle (3 s) after searching a hub room find: an item the player can use now. {item} = the item's shop name. ALL CAPS label",FOUND: {item}
 hub.cache.found_next,"Subtitle (3 s) after searching a hub room find: a perk that applies on the next floor. {item} = the item's shop name",FOUND: {item}  ·  IT WORKS ON THE NEXT FLOOR
 hub.cache.found_shards,"Subtitle (3 s) after searching a hub room find that held shards. {n} = the amount, {currency} = the shards currency (see shop.currency), ALL CAPS",FOUND {n} {currency}
+hub.lesson.title,"Blackboard header in the asylum classroom (chalk, ALL CAPS, short; shown large)","TODAY'S LESSON"
+hub.lesson.patient,"Blackboard second line. {n} = the floor about to be entered. ALL CAPS","PATIENT #{n}"
+hub.lesson.none,"Blackboard line while the hunter has learned nothing yet. ALL CAPS","OBSERVE THE PATIENT."
+hub.lesson.habit.lockers,"Blackboard chalk line: the hunter learned that the player hides in lockers. {tally} = chalk strokes for its level (|, || or |||). One short line, ALL CAPS, about 30 characters","LOCKERS {tally}  IT CHECKS THEM"
+hub.lesson.habit.throws,"Blackboard chalk line: the hunter learned that the player throws things to distract it. {tally} = chalk strokes for its level. One short line, ALL CAPS, about 30 characters","THROWS {tally}  IT IGNORES THEM"
+hub.lesson.habit.dark,"Blackboard chalk line: the hunter learned that the player walks with the torch off. {tally} = chalk strokes for its level. One short line, ALL CAPS, about 30 characters","DARK {tally}  IT SEES FARTHER"
+hub.lesson.habit.sprint,"Blackboard chalk line: the hunter learned that the player runs. {tally} = chalk strokes for its level. One short line, ALL CAPS, about 30 characters","RUNNING {tally}  IT HEARS YOU"
+hub.lesson.learning,"Blackboard last line, underlined, from floor 3 on. ALL CAPS","IT IS LEARNING."
+hub.lesson.over,"Blackboard last line, underlined, in the finale. ALL CAPS","THE LESSON IS OVER."
+hub.lesson.prompt,"Interaction prompt on the classroom blackboard (after E). ALL CAPS","READ THE BOARD"
+hub.lesson.examine,"Subtitle (4.5 s) when the classroom blackboard is examined and the hunter has learned something. {n} = how many habits. ALL CAPS","{n} LESSONS ON THE BOARD. IT NEVER FORGETS."
+hub.lesson.examine_none,"Subtitle (4.5 s) when the classroom blackboard is examined and nothing has been learned yet. ALL CAPS","NOTHING YET. IT IS STILL WATCHING."
+hub.lesson.examine_over,"Subtitle (4.5 s) when the classroom blackboard is examined in the finale. ALL CAPS","SOMEONE WIPED THE BOARD. ONLY THE LAST LINE IS LEFT."
+hub.meal.broth.prompt,"Prompt on the kitchen's bowl of broth (after E), floors 2-5. ALL CAPS, one line (about 50 characters). Stamina on the next floor","EAT THE BROTH  ·  STAMINA ON THE NEXT FLOOR"
+hub.meal.bread.prompt,"Prompt on the kitchen's plate of black bread (after E). ALL CAPS, one line. A spare battery","TAKE THE BLACK BREAD  ·  A SPARE BATTERY"
+hub.meal.tea.prompt,"Prompt on the kitchen's jug of cold tea (after E). ALL CAPS, one line. Quiet shoes on the next floor","DRINK THE COLD TEA  ·  QUIET SHOES ON THE NEXT FLOOR"
+hub.meal.broth.taken,"Subtitle (4 s) after eating the broth. ALL CAPS, the asylum is feeding you; unsettling, kind","IT'S STILL WARM. SOMEONE KNEW YOU WERE COMING."
+hub.meal.bread.taken,"Subtitle (4 s) after taking the black bread (a spare battery was hidden in it / came with it). ALL CAPS","HARD AS A BRICK. SOMETHING METAL RATTLES INSIDE."
+hub.meal.tea.taken,"Subtitle (4 s) after drinking the cold tea. ALL CAPS","COLD. IT TASTES OF DUST, AND YOUR FOOTSTEPS GROW SOFT."
+hub.meal.full,"Prompt on a kitchen dish that cannot be taken because the player already holds the maximum of that item. ALL CAPS, short","HANDS FULL"
+hub.meal.had,"Prompt on a kitchen dish whose buff the player already has (bought in the Commissary). ALL CAPS, short","ALREADY HAD SOME"
+hub.meal.full_line,"Subtitle (2.4 s) when E is pressed on a kitchen dish and the player's hands are full. ALL CAPS","YOU CAN'T CARRY ANY MORE."
+hub.meal.had_line,"Subtitle (2.4 s) when E is pressed on a kitchen dish whose buff the player already has. ALL CAPS","YOU ALREADY HAVE SOME OF THIS."
+hub.supper.card.prompt,"Prompt on a name card at the dining room's long table, once it carries a name (after E). ALL CAPS","READ THE CARD"
+hub.supper.card.1,"Subtitle (4.5 s) on the name card of patient 1 (Hilde Brandt, who counted the doors). ALL CAPS, unsettling, one or two short sentences","SHE ALWAYS SAVED HER BREAD FOR LATER. SHE COUNTED THE DOORS."
+hub.supper.card.2,"Subtitle (4.5 s) on the name card of patient 2 (Tomas Reiner, the stoker who knocks on pipes). ALL CAPS","HE KNOCKS TWICE ON THE TABLE. THE PIPES ANSWER."
+hub.supper.card.3,"Subtitle (4.5 s) on the name card of patient 3 (Elias Vogt, the sleepwalker). ALL CAPS","HIS EYES ARE OPEN. HE IS STILL ASLEEP."
+hub.supper.card.4,"Subtitle (4.5 s) on the name card of seat 4 (Subject A, the creature of the lower levels). ALL CAPS","THE CHAIR IS TOO SMALL FOR IT. IT SAT ANYWAY."
+hub.supper.card.5,"Subtitle (4.5 s) on the name card of seat 5 (the Director's private note). ALL CAPS","THE DIRECTOR LAID THIS PLACE HIMSELF."
+hub.lesson.habit.voice,"Blackboard chalk line: the hunter learned the player's voice (microphone). {tally} = chalk strokes for its level. One short line, ALL CAPS, about 30 characters",VOICE {tally}  IT KNOWS YOU
+hub.breach.dark,"Subtitle (3.5 s) a second after the asylum power dies on the floor-5 visit (F121 hub breach): the Clerk and the patient have vanished in the dark. ALL CAPS",THE LIGHTS ARE OUT. EVERYONE IS GONE.
+hub.breach.followed,"Subtitle (3 s) at the second bang on the Surgery wing door: the maze hunter has come up into the asylum. ""IT"" = the hunter, never named. ALL CAPS",IT FOLLOWED YOU UP.
+hub.breach.run,"Subtitle (3 s) the first time the hunter spots the player during the breach: the way out is the Director's door. ALL CAPS","THE DIRECTOR'S DOOR. RUN."
+hub.breach.locker,"Subtitle (3 s) when the hunter, having learned the lockers, comes for the locker it saw the player enter. ALL CAPS",IT WATCHED YOU GET IN.
+hub.breach.grab,"Subtitle (3.5 s) after the breach's free grab: the torch was knocked away, the hunter is stunned for a moment. ALL CAPS",IT HAD YOU. FIND YOUR LIGHT. RUN.

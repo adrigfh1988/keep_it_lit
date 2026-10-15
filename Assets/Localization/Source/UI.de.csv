@@ -55,8 +55,6 @@ ui.rules.item2,"<b>2.</b>   Irgendwo öffnet sich eine Luke. Finde sie, bevor di
 ui.rules.item3,"<b>3.</b>   Du bist hier unten nicht allein. Wenn es dich sieht, <color=#DB1F17><b>lauf</b></color>."
 ui.rules.item4,<b>4.</b>   Splitter glitzern im Dunkeln. Zwischen den Etagen verkauft dir jemand Dinge dafür.
 ui.rules.start,STARTEN
-ui.controls.keyboard,"<b>WASD</b>  bewegen   <b>SHIFT</b>  sprinten   <b>MAUS</b>  umsehen   <b>F</b>  Lampe   <b>E</b>  verstecken / sprechen
-<b>1</b>  Ersatzbatterie   <b>2</b>  Sternenkompass   <b>ESC</b>  Pause"
 ui.controls.touch,"<b>LINKER DAUMEN</b>  bewegen   <b>RECHTER DAUMEN</b>  umsehen   Tasten: <b>LAMPE</b>, <b>FOKUS</b>, <b>INTERAGIEREN</b>, <b>WERFEN</b>, <b>SPRINTEN</b>"
 ui.controls.tip,Deine Lampe hat Licht für drei Minuten. Deine Beine haben weniger. Spinde verstecken dich — außer es hat dich hineinklettern sehen.
 ui.pause.title,PAUSE
@@ -67,7 +65,7 @@ ui.pause.main_menu,HAUPTMENÜ
 ui.pause.quit,BEENDEN
 ui.ledger.slip_heading,WIEDERAUFGENOMMEN  ·  AUFNAHME {admission}  ·  PATIENT {patient}
 ui.ledger.slip_subtitle,DER SCHREIBER HAT DEINE RÜCKKEHR ABGETIPPT.
-ui.ledger.subtitle,Die Luke hat sich hinter dir geschlossen. Etwas hier unten steht offen.
+ui.ledger.subtitle,Die Luke hat sich hinter dir geschlossen. Jemand hat ein Licht angelassen.
 ui.ledger.already_yours,schon deins
 ui.ledger.no_pay,kein Lohn
 ui.ledger.payout,AUSZAHLUNG  +{amount}
@@ -79,7 +77,7 @@ ui.ledger.contract_void,AUFTRAG  {name}  ENTFALLEN
 ui.end.won_final,DU BIST ENTKOMMEN
 ui.end.floor_cleared,ETAGE {floor} GESCHAFFT
 ui.end.won_final_body,Die Luke hat sich hinter dir geschlossen. Darunter ist nichts mehr.
-ui.end.floor_cleared_body,Die Luke hat sich hinter dir geschlossen. Hier unten ist es dunkler.
+ui.end.floor_cleared_body,Die Luke hat sich hinter dir geschlossen. Irgendwie führt der Weg nach unten wieder hinauf.
 ui.end.caught,ES HAT DICH GEFUNDEN
 ui.end.caught_hidden,Es sah dir beim Verstecken zu.
 ui.end.caught_torch,Im Dunkeln war es schneller.
@@ -174,3 +172,196 @@ ui.credits.art,GRAFIK
 ui.credits.characters,FIGUREN UND ANIMATION
 ui.credits.fonts,SCHRIFTARTEN
 ui.credits.unity,UNITY
+ui.settings.reduce_flashing,FLACKERN REDUZIEREN
+ui.notice.photosensitivity.heading,WARNUNG: LICHTEMPFINDLICHKEIT
+ui.notice.photosensitivity.body,"Dieses Spiel enthält flackernde Lichter, plötzliche Dunkelheit und Muster, die bei Menschen mit photosensibler Epilepsie Anfälle auslösen können. Wenn Sie oder ein Familienmitglied schon einmal einen Anfall hatten, sprechen Sie vor dem Spielen mit einem Arzt. Hören Sie sofort auf, wenn Ihnen schwindelig wird, Sie verschwommen sehen, Augen- oder Muskelzucken bemerken oder sich desorientiert fühlen. Sie können FLACKERN REDUZIEREN hier oder jederzeit unter EINSTELLUNGEN > ALLGEMEIN einschalten."
+ui.menu.save_problem_heading,SPEICHERSTAND NICHT GELADEN
+ui.menu.save_problem_body.too_new,"Dein gespeicherter Lauf stammt aus einer neueren Version des Spiels. Er wurde beiseitegelegt, nicht gelöscht."
+ui.menu.save_problem_body.unreadable,Dein gespeicherter Lauf konnte nicht gelesen werden und wurde beiseitegelegt. Eine neue Kampagne beginnt von vorn.
+ui.glyph.mouse,MAUS
+ui.glyph.mouse_left,LINKSKLICK
+ui.glyph.mouse_right,RECHTSKLICK
+ui.glyph.mouse_middle,MITTELKLICK
+ui.glyph.lstick,L-STICK
+ui.glyph.rstick,R-STICK
+ui.glyph.dpad_up,STEUERKREUZ OBEN
+ui.glyph.dpad_down,STEUERKREUZ UNTEN
+ui.glyph.dpad_left,STEUERKREUZ LINKS
+ui.glyph.dpad_right,STEUERKREUZ RECHTS
+ui.glyph.ps.cross,KREUZ
+ui.glyph.ps.circle,KREIS
+ui.glyph.ps.square,QUADRAT
+ui.glyph.ps.triangle,DREIECK
+ui.glyph.view,VIEW
+ui.glyph.menu,MENU
+ui.glyph.options,OPTIONS
+ui.glyph.create,CREATE
+ui.glyph.unbound,---
+ui.controls.sheet,"{move}  bewegen   {sprint}  sprinten   {look}  umsehen   {torch}  Lampe   {focus}  Fokusstrahl
+{interact}  verstecken / sprechen   {throw}  werfen   {item1}  Ersatzbatterie   {item2}  Sternenkompass
+{map}  Grundriss   {pause}  Pause"
+ui.settings.remap,TASTEN BELEGEN
+ui.rebind.title,TASTEN BELEGEN
+ui.rebind.col.keyboard,TASTATUR / MAUS
+ui.rebind.col.gamepad,GAMEPAD
+ui.rebind.listening,TASTE ODER KNOPF DRÜCKEN  ·  {cancel} ZUM ABBRECHEN
+ui.rebind.swapped,GETAUSCHT MIT {action}
+ui.rebind.reset_all,ALLE ZURÜCKSETZEN
+ui.rebind.action.move_up,VORWÄRTS
+ui.rebind.action.move_down,RÜCKWÄRTS
+ui.rebind.action.move_left,LINKS
+ui.rebind.action.move_right,RECHTS
+ui.rebind.action.sprint,SPRINTEN
+ui.rebind.action.torch,LAMPE AN / AUS
+ui.rebind.action.focus,FOKUSSTRAHL
+ui.rebind.action.interact,INTERAGIEREN / VERSTECKEN
+ui.rebind.action.throw,WERFEN
+ui.rebind.action.item1,ERSATZBATTERIE
+ui.rebind.action.item2,STERNENKOMPASS
+ui.rebind.action.map,GRUNDRISS
+ui.settings.mic,MIKROFON
+ui.settings.mic_device,MIKROFON-GERÄT
+ui.settings.mic_none,KEIN MIKROFON GEFUNDEN
+ui.settings.mic_threshold,GEHÖRT AB
+ui.settings.mic_level,DEIN PEGEL
+ui.settings.mic_status.off,AUS
+ui.settings.mic_status.listening,HÖRT ZU
+ui.settings.mic_status.no_signal,KEIN SIGNAL - MIKROFON-DATENSCHUTZ PRÜFEN
+ui.settings.mic_status.no_device,KEIN GERÄT
+ui.settings.mic_privacy,"Wird nur während des Spiels verwendet, damit der Jäger dich hört. Nichts wird aufgenommen, gespeichert oder gesendet. Kopfhörer empfohlen."
+ui.end.caught_dropped,"Es hat dich im Dunkeln gefunden, fern von deinem Licht."
+ui.replay.cam,KAM {n}
+ui.replay.rec,REC
+ui.replay.caption,ES KAM FÜR DICH
+ui.replay.caption_behind,ES WAR DIE GANZE ZEIT HINTER DIR
+ui.descent.habit.voice,STIMME
+ui.hunter.effect.voice,"ES HÖRT DICH AUS GRÖSSERER ENTFERNUNG, SOGAR IM SPIND."
+ui.end.caught_hub,Es ist dir gefolgt. Es gibt keinen sicheren Raum.
+ui.end.stats_hub,DIE ANSTALT · ETAGE {floor}
+ui.menu.record,AKTE
+ui.newcampaign.title,NEUAUFNAHME
+ui.newcampaign.begin,BEGINNEN
+ui.newcampaign.assists_header,HILFEN
+ui.newcampaign.kit_header,AUFNAHME-SET
+ui.newcampaign.kit,SET
+ui.newcampaign.torch,START-LAMPE
+ui.newcampaign.torch_hint,"Die Strahlfarbe, mit der du beginnst. Verdiente Farben werden nie verkauft."
+ui.newcampaign.assisted_note,"UNTERSTÜTZTE KAMPAGNEN SCHALTEN TROTZDEM FREI, ZÄHLEN ABER NICHT FÜR REKORDE ODER EIDE"
+ui.newcampaign.oaths_button,EIDE
+ui.newcampaign.oaths_title,EIDE
+ui.newcampaign.oaths_done,FERTIG
+ui.newcampaign.oaths_hint,Stapelbare Gelübde. Jeder Eid macht die Anstalt härter und zahlt mehr Splitter.
+ui.newcampaign.oaths_need_standard,BRAUCHT EINE KAMPAGNE OHNE HILFEN
+ui.newcampaign.oath_summary,EID {rank}  ·  SPLITTER ×{mult}
+ui.preset.standard.name,STANDARD
+ui.preset.standard.desc,"Das Spiel, wie es gedacht war."
+ui.preset.story.name,GESCHICHTE
+ui.preset.story.desc,"Längere Countdowns, sanftere Lampe, langsamerer Jäger, ehrliche Hinweise, hellere Gänge. Alles wird trotzdem freigeschaltet."
+ui.preset.nightmare.name,ALBTRAUM
+ui.preset.nightmare.desc,"Kürzere Countdowns, ein schärferer Jäger, eine hungrigere Lampe. Splitter ×1,25 und Eid-Rang +2."
+ui.assist.longer_timer.name,LÄNGERER COUNTDOWN
+ui.assist.longer_timer.desc,Der Fluchtcountdown dauert die Hälfte länger.
+ui.assist.gentle_torch.name,SANFTE LAMPE
+ui.assist.gentle_torch.desc,Die Batterie entlädt sich langsamer und lädt schneller auf.
+ui.assist.slow_hunter.name,LANGSAMERER JÄGER
+ui.assist.slow_hunter.desc,"Er legt sich später auf eine Verfolgung fest, läuft langsamer und hört weniger."
+ui.assist.honest_cues.name,EHRLICHE HINWEISE
+ui.assist.honest_cues.desc,"Keine lügenden Geräusche, keine falschen Phantome, keine Lampenausfälle, und die Augen des Jägers sind immer sichtbar."
+ui.assist.brighter_halls.name,HELLERE GÄNGE
+ui.assist.brighter_halls.desc,"Mehr Umgebungslicht, dünnerer Nebel, stärkere Lampen."
+ui.assist.steady_torch.name,RUHIGE LAMPE
+ui.assist.steady_torch.desc,Die Lampe schwankt nicht mehr und hinkt der Sicht nicht hinterher. Beeinflusst keine Rekorde.
+ui.assist.no_replay.name,KEIN TODES-REPLAY
+ui.assist.no_replay.desc,Der Endbildschirm zeigt die grobkörnige Wiederholung des Fangs nicht. Beeinflusst keine Rekorde.
+ui.oath.old_battery.name,ALTE BATTERIE
+ui.oath.old_battery.desc,"Die Lampe startet jede Etage halb geladen und lädt langsam auf, auch in Etage 1."
+ui.oath.does_not_wait.name,ES WARTET NICHT
+ui.oath.does_not_wait.desc,"Schon ab Etage 1 hält der Jäger mit Gehenden mit, legt sich früher fest und seine Augen sind dunkel."
+ui.oath.welded_lockers.name,VERSCHWEISSTE SPINDE
+ui.oath.welded_lockers.desc,"Jeder Spind in den Labyrinthen ist zugeschweißt. Kein Versteck, und der Jäger prüft sie nie."
+ui.oath.stan_early.name,STAN ERWACHT FRÜH
+ui.oath.stan_early.desc,Stan geht schon ab Etage 2 statt ab Etage 4.
+ui.oath.no_second_chances.name,KEINE ZWEITE CHANCE
+ui.oath.no_second_chances.desc,"Nirgends ein zweiter Atem, und der erste Fang einer Etage ist kein Stoß mehr: jeder Fang tötet."
+ui.oath.failing_grid.name,MARODES NETZ
+ui.oath.failing_grid.desc,"Dunklere Gänge, schwächere Lampen, weiter auseinander."
+ui.oath.short_fuse.name,KURZE LUNTE
+ui.oath.short_fuse.desc,Der Fluchtcountdown ist ein Viertel kürzer.
+ui.oath.hears_everything.name,ES HÖRT ALLES
+ui.oath.hears_everything.desc,Jede Etage trägt die Regel Feines Gehör: der Jäger hört viel mehr.
+ui.oath.doors_dont_hold.name,DIE TÜREN HALTEN NICHT
+ui.oath.doors_dont_hold.desc,"Die Anstalt wird bei jedem Besuch nach Etage 4 durchbrochen, nicht nur einmal."
+ui.kit.standard_issue.name,STANDARDAUSSTATTUNG
+ui.kit.standard_issue.desc,Nichts extra. Nur die Lampe.
+ui.kit.scavenger.name,PLÜNDERER
+ui.kit.scavenger.desc,Du startest mit einer Ersatzbatterie und einem Sternkompass.
+ui.kit.runner.name,LÄUFER
+ui.kit.runner.desc,"Etage 1 beginnt mit einem Ausdauertonikum und Leisen Schuhen, schon wirksam."
+ui.kit.cartographer.name,KARTOGRAF
+ui.kit.cartographer.desc,Du startest mit einem Grundriss.
+ui.campaign.tag.oath,EID {rank}
+ui.campaign.tag.assisted,UNTERSTÜTZT
+ui.ledger.oath,EID {rank}  ×{mult}
+ui.ledger.grade,NOTE
+ui.ledger.grade_new_best,NEUER REKORD
+ui.ledger.grade_bonus,BONUS NOTE {grade}
+ui.ledger.record_new,PATIENTENAKTE · {n} NEU
+ui.end.grades,NOTEN  {grades}
+ui.shop.forsworn,ABGESCHWOREN
+ui.record.title,PATIENTENAKTE
+ui.record.tab.record,AKTE
+ui.record.tab.unlocks,FREISCHALTUNGEN
+ui.record.tab.codex,KODEX
+ui.record.tab.assists,HILFEN
+ui.record.empty,KEINE AUFNAHMEN VERZEICHNET
+ui.record.started,BEGONNENE KAMPAGNEN
+ui.record.finished,BEENDETE KAMPAGNEN
+ui.record.endings,GESEHENE ENDEN
+ui.record.best_oath_a,BESTER EID · ENTLASSEN
+ui.record.best_oath_b,BESTER EID · LIGHTS OUT
+ui.record.shards,VERDIENTE SPLITTER
+ui.record.descent,TIEFSTER ABSTIEG
+ui.record.floors_header,BESTE ETAGEN
+ui.record.floor,ETAGE {floor}
+ui.record.floor_oath,EID {rank}
+ui.record.new,NEU
+ui.record.unlocked,FREIGESCHALTET
+ui.record.not_met,Noch nicht begegnet.
+ui.record.habits_header,WAS ER GELERNT HAT
+ui.record.assists_next_floor,ÄNDERUNGEN GELTEN FÜR DAS NÄCHSTE LABYRINTH.
+ui.record.assists_mark,JEDE AKTIVIERTE HILFE MARKIERT DIESE KAMPAGNE DAUERHAFT ALS UNTERSTÜTZT.
+ui.record.unlock.codex.name,KODEX UND AKTE IM PAUSEMENÜ
+ui.record.unlock.codex.cond,SCHLIESSE EINE ETAGE AB
+ui.record.unlock.kit_scavenger.name,SET: PLÜNDERER
+ui.record.unlock.kit_scavenger.cond,SCHLIESSE ETAGE 2 AB
+ui.record.unlock.card_stethoscope.name,LADENKARTE: STETHOSKOP
+ui.record.unlock.card_stethoscope.cond,SCHLIESSE ETAGE 4 AB
+ui.record.unlock.contract_unseen.name,AUFTRAG: UNGESEHEN
+ui.record.unlock.contract_unseen.cond,SCHLIESSE ETAGE 4 AB
+ui.record.unlock.oaths.name,DIE EIDLEITER
+ui.record.unlock.oaths.cond,ERREICHE EIN ENDE
+ui.record.unlock.colour_bone.name,LAMPENFARBE: KNOCHEN
+ui.record.unlock.colour_bone.cond,ERREICHE EIN ENDE
+ui.record.unlock.kit_runner.name,SET: LÄUFER
+ui.record.unlock.kit_runner.cond,BEENDE 2 KAMPAGNEN
+ui.record.unlock.card_archivist.name,LADENKARTE: LAMPE DES ARCHIVARS
+ui.record.unlock.card_archivist.cond,SIEH BEIDE ENDEN
+ui.record.unlock.card_dynamo.name,LADENKARTE: DYNAMO
+ui.record.unlock.card_dynamo.cond,VERDIENE INSGESAMT 1500 SPLITTER
+ui.record.unlock.kit_cartographer.name,SET: KARTOGRAF
+ui.record.unlock.kit_cartographer.cond,BEENDE 3 KAMPAGNEN
+ui.record.unlock.contracts_skill.name,"AUFTRÄGE: HÄNDE WEG, KNAPP GENUG"
+ui.record.unlock.contracts_skill.cond,ERREICHE EINE NOTE S AUF EINER ETAGE
+ui.record.unlock.colour_oath_red.name,LAMPENFARBE: EIDROT
+ui.record.unlock.colour_oath_red.cond,ERREICHE EIN ENDE MIT EID-RANG 5
+ui.record.unlock.colour_ward.name,LAMPENFARBE: STATIONSGRÜN
+ui.record.unlock.colour_ward.cond,BEGEGNE ALLEM IM KODEX
+ui.ledger.slip_subtitle.1,ZURÜCK VON STATION A. EINE TÜR MEHR ALS GESTERN.
+ui.ledger.slip_subtitle.2,ZURÜCK AUS DEM KESSELRAUM. ZWEIMAL KLOPFEN. ALLES RUHIG.
+ui.ledger.slip_subtitle.3,ZURÜCK AUS DER KÜHLKAMMER. EIN FACH BLIEB OFFEN.
+ui.ledger.slip_subtitle.4,ZURÜCK AUS DEM OPERATIONSSAAL. DOSIS NICHT VERMERKT.
+ui.end.wing.1,Hilde hat heute Nacht eine Tür mehr gezählt. Es war deine.
+ui.end.wing.2,Dreimal Klopfen. Dann nichts.
+ui.end.wing.3,Ein Fach ist bereit. Es trägt deine Nummer.
+ui.end.wing.4,Raum 4 ist nicht mehr leer.
+ui.end.wing.5,Der Schreiber hat deine Akte fertig getippt.

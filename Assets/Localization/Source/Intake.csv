@@ -14,8 +14,6 @@ intake.goal.hide_still,"Tutorial objective card, step 8 of 9, while hidden and s
 intake.goal.hide_leave,"Tutorial objective card, step 8 of 9, once the danger has passed (42 pt, one line, auto-size). IT = the creature, never named",IT IS GONE. LEAVE THE LOCKER
 intake.goal.star,"Tutorial objective card, step 9 of 9: pick up the star (42 pt, one line, auto-size)",TAKE THE STAR
 intake.goal.hatch,"Tutorial objective card, step 9 of 9, after the star: walk onto the hatch in the floor (42 pt, one line, auto-size)",STEP ONTO THE HATCH
-intake.key.mouse,"Key chip on the objective card: look around with the mouse (keyboard-and-mouse players). ALL CAPS, short, ~7 characters",MOUSE
-intake.key.rmb,"Key chip on the objective card: the right mouse button, hold to focus the torch beam. ALL CAPS, short, ~6 characters",RMB
 intake.key.right_thumb,"Key chip on the objective card for touch screens: look around with the right thumb. ALL CAPS, short, ~12 characters",RIGHT THUMB
 intake.key.left_thumb,"Key chip on the objective card for touch screens: move with the left thumb. ALL CAPS, short, ~12 characters",LEFT THUMB
 intake.key.torch,"Key chip on the objective card for touch screens: the on-screen torch button. Must match ui.touch.torch. ALL CAPS, short",TORCH

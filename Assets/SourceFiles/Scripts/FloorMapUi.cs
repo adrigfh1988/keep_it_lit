@@ -1,8 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
 
 /// <summary>
 /// F106/F110: the floor map. A panel in the top-right corner with a hand-inked picture of the maze built from MazeGenerator.BuildMapData: walls in
@@ -169,13 +166,13 @@ public class FloorMapUi : MonoBehaviour
         if (_hintPending && Available && _hud != null)
         {
             _hintPending = false;
-            _hud.ShowHintPrompt(TouchInput.Key("M", L10n.T("ui.pause.map")), "hud.prompt.map", hintSeconds);
+            _hud.ShowHintPrompt(GameAction.Map, L10n.T("ui.pause.map"), "hud.prompt.map", hintSeconds);
         }
 
         if (CanUsePlan && !_planHintShown && _hud != null)
         {
             _planHintShown = true;
-            _hud.ShowHintPrompt(TouchInput.Key("M", L10n.T("ui.pause.map")), "hud.prompt.use_floor_plan", hintSeconds);
+            _hud.ShowHintPrompt(GameAction.Map, L10n.T("ui.pause.map"), "hud.prompt.use_floor_plan", hintSeconds);
         }
 
         if (IsOpen && (!Available || (_pause != null && _pause.IsPaused)))
@@ -223,36 +220,16 @@ public class FloorMapUi : MonoBehaviour
         }
         else if (_hud != null)
         {
-            _hud.ShowHintPrompt(TouchInput.Key("M", L10n.T("ui.pause.map")), "hud.prompt.use_floor_plan", 0.3f, Mathf.RoundToInt(_hold / holdSeconds * 100f));
+            _hud.ShowHintPrompt(GameAction.Map, L10n.T("ui.pause.map"), "hud.prompt.use_floor_plan", 0.3f, Mathf.RoundToInt(_hold / holdSeconds * 100f));
         }
     }
 
-    private static bool HoldDown()
-    {
-#if ENABLE_INPUT_SYSTEM
-        if (Keyboard.current != null && Keyboard.current.mKey.isPressed) return true;
-        if (Gamepad.current != null && Gamepad.current.selectButton.isPressed) return true;
-#endif
-        return false;
-    }
+    private static bool HoldDown() => GameInput.Held(GameAction.Map);
 
-    private static bool OpenPressed()
-    {
-#if ENABLE_INPUT_SYSTEM
-        if (Keyboard.current != null && Keyboard.current.mKey.wasPressedThisFrame) return true;
-        if (Gamepad.current != null && Gamepad.current.selectButton.wasPressedThisFrame) return true;
-#endif
-        return false;
-    }
+    private static bool OpenPressed() => GameInput.Pressed(GameAction.Map);
 
-    private static bool ClosePressed()
-    {
-#if ENABLE_INPUT_SYSTEM
-        if (Keyboard.current != null && (Keyboard.current.mKey.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame)) return true;
-        if (Gamepad.current != null && (Gamepad.current.selectButton.wasPressedThisFrame || Gamepad.current.buttonEast.wasPressedThisFrame)) return true;
-#endif
-        return TouchInput.Pressed(TouchInput.TouchAction.Pause);
-    }
+    // F119: M again, Esc / pad B (MenuCancel, which also ORs the touch Pause button) closes it. Esc is also the Pause action, so MenuCancel alone covers it.
+    private static bool ClosePressed() => GameInput.Pressed(GameAction.Map) || GameInput.Pressed(GameAction.MenuCancel);
 
     private void OnDestroy()
     {

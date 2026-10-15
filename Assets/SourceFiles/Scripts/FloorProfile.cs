@@ -229,6 +229,8 @@ public class FloorProfile
     public float SearchBudget;
     /// <summary>F104 B2: the hunter's committed-chase speed as a fraction of the player's walk speed, before the hatch.</summary>
     public float ChaseWalkFraction;
+    /// <summary>F122: multiplies the seconds of unbroken sight before the hunter commits to a chase (AIFollower.IsCommitted). 1 = today; only CampaignRules changes it, so ToString (and STANDARD) is unaffected.</summary>
+    public float ChaseCommitScale = 1f;
 
     // ---- dread
     /// <summary>Seconds between relocations (F23). Also floored at a hard 20 s minimum in DreadDirector.</summary>

@@ -117,7 +117,7 @@ public class WorldShiftDirector : MonoBehaviour
     /// are blocked - and it is more than a couple of cells away, so nothing changes where it could be heard or glimpsed. Hits on the
     /// player, the hunter and `ignore` (the thing itself) do not block.
     /// </summary>
-    private bool IsUnobserved(Vector3 point, Transform ignore)
+    public bool IsUnobserved(Vector3 point, Transform ignore)
     {
         if (Vector3.Distance(_player.position, point) <= safeDistanceCells * _maze.CellSize) return false;
 
@@ -127,6 +127,23 @@ public class WorldShiftDirector : MonoBehaviour
 
         return IsBlocked(point + Vector3.up * sightLineHeights.x, ignore) && IsBlocked(point + Vector3.up * sightLineHeights.y, ignore);
     }
+
+    /// <summary>F123: true when `point` is inside the camera's view, within `maxDistance` and the 1.5 m sight line to it is not blocked (hits on `ignore`, the thing itself, do not block): the player can see it right now.</summary>
+    public bool IsInSight(Vector3 point, float maxDistance, Transform ignore = null)
+    {
+        if (_camera == null || _player == null) return false;
+        if (Vector3.Distance(_camera.transform.position, point) > maxDistance) return false;
+        Vector3 target = point + Vector3.up * sightLineHeights.x;
+        Vector3 viewport = _camera.WorldToViewportPoint(target);
+        if (viewport.z <= 0f || viewport.x < 0f || viewport.x > 1f || viewport.y < 0f || viewport.y > 1f) return false;
+        return !IsBlocked(target, ignore);
+    }
+
+    /// <summary>F123: when (Time.time) the player first stood in `cell` this floor, false if never.</summary>
+    public bool TryGetVisitedAt(Vector2Int cell, out float time) => _visitedAt.TryGetValue(cell, out time);
+
+    /// <summary>F123: every cell the player has stood in, in the order first visited.</summary>
+    public IReadOnlyList<Vector2Int> VisitedCells => _visitedCells;
 
     private bool IsBlocked(Vector3 to, Transform ignore)
     {

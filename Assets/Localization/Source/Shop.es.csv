@@ -80,3 +80,18 @@ shop.payout.consolation,CONSOLACIÓN  {percent}% de {stars} {stars:plural:estrel
 shop.temperament.final,No dejará que te vayas.
 shop.item.floor_plan.name,Plano
 shop.item.floor_plan.blurb,"Raro. Mantén {key} en el piso que lo necesite: el mapa solo muestra lo que has recorrido."
+shop.item.dynamo.name,Dinamo
+shop.item.dynamo.blurb,"La linterna se recarga mucho más rápido mientras está apagada, en la próxima planta."
+shop.item.archivist_lamp.name,Lámpara del Archivero
+shop.item.archivist_lamp.blurb,Las notas y los expedientes brillan débilmente en la próxima planta.
+shop.item.stethoscope.name,Estetoscopio
+shop.item.stethoscope.blurb,Los pasos del cazador se oyen claros a través de las paredes en la próxima planta.
+shop.palette.torch.4,HUESO
+shop.palette.torch.5,VERDE DE SALA
+shop.palette.torch.6,ROJO JURAMENTO
+shop.contract.unseen.name,Invisible
+shop.contract.unseen.text,Que nunca te persigan.
+shop.contract.hands_to_yourself.name,Sin lanzar nada
+shop.contract.hands_to_yourself.text,No lances nada.
+shop.contract.cut_it_close.name,Por un pelo
+shop.contract.cut_it_close.text,Llega a la salida con 20 segundos o menos de sobra.

@@ -2,9 +2,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
 
 /// <summary>
 /// The 3x3 item panel opened by talking to the salesman (E at the counter). Lazily built on first
@@ -80,6 +77,7 @@ public class ShopMenu : MonoBehaviour
 
         if (_panel != null) _panel.SetActive(false);
         if (_contractPanel != null) _contractPanel.SetActive(false);
+        MenuFocus.Release();
         PlayerLock.Freeze(_player, false);
         PlayerLock.SetCursorFree(false);
     }
@@ -233,15 +231,12 @@ public class ShopMenu : MonoBehaviour
         // Held every frame: StarterAssetsInputs re-locks the cursor on every focus change.
         PlayerLock.SetCursorFree(true);
 
-        bool pressed = false;
-#if ENABLE_INPUT_SYSTEM
-        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) pressed = true;
-        if (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame) pressed = true;
-#endif
-        // T11: the panel already has an on-screen BACK button (below) that Close()s on tap - this OR
-        // is for parity with the other 7 direct readers, and covers PAUSE overlapping the shop somehow.
-        if (TouchInput.Pressed(TouchInput.TouchAction.Pause)) pressed = true;
-        if (pressed) Close();
+        // F119: a gamepad always has a selected button (the first BUY, else BACK; TAKE on the contract board).
+        bool contracts = _contractPanel != null && _contractPanel.activeSelf;
+        MenuFocus.Keep(contracts ? _contractPanel : _panel, contracts ? FirstUsable(_offerButton) : FirstUsableBuy());
+
+        // F119: MenuCancel = Esc / pad B / touch Pause (the panel also has an on-screen BACK button).
+        if (GameInput.Pressed(GameAction.MenuCancel)) Close();
     }
 
     // ---------------------------------------------------------------- panel
@@ -270,11 +265,14 @@ public class ShopMenu : MonoBehaviour
         // F75: grew from 3x3 to 4x3 (12 items). Card width dropped from 540 to 420 so four columns still
         // fit inside the 1920-wide reference canvas with margin either side; every child offset inside
         // BuildCard/PlaceTopLeft was rescaled to match. Rows (ys) are untouched.
+        // F122: up to 16 cards. With 12 or fewer on the shelf (always, until the Patient Record unlocks one) this is today's exact layout; 13-16 use a compact 4x4 grid.
+        System.Collections.Generic.List<ShopItemDef> shelf = ShopCatalogue.Available();
+        bool compact = shelf.Count > 12;
         float[] xs = { -660f, -220f, 220f, 660f };
-        float[] ys = { 150f, -80f, -310f };
-        for (int i = 0; i < ShopCatalogue.Items.Length && i < 12; i++)
+        float[] ys = compact ? new[] { 175f, 7f, -161f, -329f } : new[] { 150f, -80f, -310f };
+        for (int i = 0; i < shelf.Count && i < 16; i++)
         {
-            BuildCard(ShopCatalogue.Items[i], new Vector2(xs[i % 4], ys[i / 4]));
+            BuildCard(shelf[i], new Vector2(xs[i % 4], ys[i / 4]), compact);
         }
 
         Button back = RuntimeUi.CreateButton(_panel.transform, L10n.T("ui.common.back"), new Vector2(0f, 40f), new Vector2(420f, 70f), 34f, ButtonIdle, ButtonHover, Color.white);
@@ -282,25 +280,30 @@ public class ShopMenu : MonoBehaviour
         RuntimeUi.BindButton(back, "ui.common.back");
     }
 
-    private void BuildCard(ShopItemDef def, Vector2 position)
+    private void BuildCard(ShopItemDef def, Vector2 position, bool compact = false)
     {
+        float cardH = compact ? 160f : 210f; // F122: the compact 4x4 grid
+        bool cosmetic = def.Kind == ItemKind.Cosmetic;
+        float nameY = compact ? -8f : -16f;
+        float blurbY = compact ? -42f : -52f, blurbH = compact ? (cosmetic ? 24f : 46f) : 60f, statusY = compact ? (cosmetic ? -70f : -94f) : -116f;
+        float lowY = compact ? 12f : 18f;
         GameObject cardObj = RuntimeUi.CreatePanel(_panel.transform, def.Name + " Card", CardColor);
-        RuntimeUi.Place(cardObj.GetComponent<Image>().rectTransform, new Vector2(0.5f, 0.5f), position, new Vector2(420f, 210f));
+        RuntimeUi.Place(cardObj.GetComponent<Image>().rectTransform, new Vector2(0.5f, 0.5f), position, new Vector2(420f, cardH));
 
         TextMeshProUGUI nameText = RuntimeUi.CreateText(cardObj.transform, "Name", def.Name, 26f, Color.white);
         nameText.fontStyle = FontStyles.Bold;
         nameText.alignment = TextAlignmentOptions.TopLeft;
-        PlaceTopLeft(nameText.rectTransform, new Vector2(16f, -16f), new Vector2(340f, 34f));
+        PlaceTopLeft(nameText.rectTransform, new Vector2(16f, nameY), new Vector2(340f, 34f));
         RuntimeUi.AutoFit(nameText, 0.65f); // D14
 
         TextMeshProUGUI blurbText = RuntimeUi.CreateText(cardObj.transform, "Blurb", def.Blurb, 19f, Grey);
         blurbText.alignment = TextAlignmentOptions.TopLeft;
-        PlaceTopLeft(blurbText.rectTransform, new Vector2(16f, -52f), new Vector2(388f, 60f));
+        PlaceTopLeft(blurbText.rectTransform, new Vector2(16f, blurbY), new Vector2(388f, blurbH));
         RuntimeUi.AutoFit(blurbText, 0.7f);
 
         TextMeshProUGUI statusText = RuntimeUi.CreateText(cardObj.transform, "Status", "", 19f, Grey);
         statusText.alignment = TextAlignmentOptions.TopLeft;
-        PlaceTopLeft(statusText.rectTransform, new Vector2(16f, -116f), new Vector2(340f, 30f));
+        PlaceTopLeft(statusText.rectTransform, new Vector2(16f, statusY), new Vector2(compact && def.Kind != ItemKind.Cosmetic ? 230f : 340f, 30f));
         RuntimeUi.AutoFit(statusText, 0.7f);
 
         ShopCard card = new ShopCard { Def = def, Status = statusText, NameText = nameText, BlurbText = blurbText };
@@ -318,7 +321,7 @@ public class ShopMenu : MonoBehaviour
                 int paletteIndex = i + 1;
                 Color swatch = palette[paletteIndex].Colour;
                 Button button = RuntimeUi.CreateButton(cardObj.transform, ShopCatalogue.PaletteName(def.Id == ShopItem.TorchColour, paletteIndex),
-                    new Vector2(xs[i], 18f), new Vector2(118f, 42f), 17f,
+                    new Vector2(xs[i], lowY), new Vector2(118f, 42f), 17f,
                     new Color(swatch.r, swatch.g, swatch.b, 0.35f), new Color(swatch.r, swatch.g, swatch.b, 0.6f), Color.white);
 
                 int capturedIndex = paletteIndex;
@@ -332,7 +335,7 @@ public class ShopMenu : MonoBehaviour
         }
         else
         {
-            Button buy = RuntimeUi.CreateButton(cardObj.transform, L10n.T("ui.shop.buy"), new Vector2(130f, 18f), new Vector2(160f, 46f), 22f, ButtonIdle, ButtonHover, Color.white);
+            Button buy = RuntimeUi.CreateButton(cardObj.transform, L10n.T("ui.shop.buy"), new Vector2(130f, lowY), new Vector2(160f, 46f), 22f, ButtonIdle, ButtonHover, Color.white);
             ShopItemDef capturedDef = def;
             buy.onClick.AddListener(() => TryBuy(capturedDef));
             card.BuyButton = buy;
@@ -341,6 +344,19 @@ public class ShopMenu : MonoBehaviour
         }
 
         _cards.Add(card);
+    }
+
+    // F119: the pad lands on the first BUY you can afford (the first TAKE on the contract board); with none, MenuFocus falls back to the first usable button.
+    private Button FirstUsableBuy()
+    {
+        foreach (ShopCard c in _cards) if (c.BuyButton != null && c.BuyButton.gameObject.activeInHierarchy && c.BuyButton.interactable) return c.BuyButton;
+        return null;
+    }
+
+    private static Button FirstUsable(Button[] buttons)
+    {
+        foreach (Button b in buttons) if (b != null && b.gameObject.activeInHierarchy && b.interactable) return b;
+        return null;
     }
 
     private static void PlaceTopLeft(RectTransform rect, Vector2 offset, Vector2 size)
@@ -380,6 +396,13 @@ public class ShopMenu : MonoBehaviour
                 case ItemKind.SecondWind:
                 {
                     bool held = PlayerInventory.Count(def.Id) > 0;
+                    if (!CampaignRules.SecondWindAllowed)
+                    {
+                        // F122 NO SECOND CHANCES: the card is sworn off for the whole campaign.
+                        card.Status.text = L10n.T("ui.shop.forsworn");
+                        SetBuyButton(card, false, L10n.T("ui.shop.forsworn"));
+                        break;
+                    }
                     card.Status.text = L10n.T(held ? "ui.shop.held" : "ui.shop.not_held");
                     bool canBuy = !held && PlayerWallet.Shards >= price;
                     SetBuyButton(card, canBuy, held ? L10n.T("ui.shop.held_max") : L10n.T("ui.shop.buy_price", ("price", price)));
@@ -435,6 +458,7 @@ public class ShopMenu : MonoBehaviour
                 PlayerInventory.Grant(def.Id);
                 break;
             case ItemKind.SecondWind:
+                if (!CampaignRules.SecondWindAllowed) return; // F122
                 if (PlayerInventory.Count(def.Id) > 0 || !PlayerWallet.TrySpend(price)) return;
                 PlayerInventory.Grant(def.Id);
                 break;

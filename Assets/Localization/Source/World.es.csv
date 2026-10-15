@@ -59,3 +59,14 @@ world.loop.wrong_turned,NADA ERA DISTINTO
 world.loop.wrong_missed,SE TE ESCAPÓ ALGO
 world.loop.continue,¿NADA HA CAMBIADO? SIGUE.
 world.loop.turn,¿ALGO DISTINTO? DA LA VUELTA.
+world.nightmare.drawer.elias,5 · E. VOGT
+world.nightmare.drawer.yours,PACIENTE {mark}
+world.nightmare.toetag,"E. VOGT
+CAJÓN 5
+HALLADO AL AMANECER"
+world.nightmare.director.rules,"NORMAS DE LA CASA
+1. LOS PACIENTES CAMINAN.
+2. LOS PACIENTES NO SE ESCONDEN.
+3. LOS PACIENTES NO TIRAN COSAS.
+EL CELADOR AYUDARÁ.
+- EL DIRECTOR"

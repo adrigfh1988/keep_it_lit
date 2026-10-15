@@ -20,7 +20,7 @@ public static partial class HunterSkinBuilder
     }
 
     /// <summary>Every painted hub robot: the six NPCs plus the patients Hilde and Elias.</summary>
-    private static readonly string[] NpcSkinNames = { "Agnes", "Bruno", "Josef", "Marta", "Weiss", "Clerk", "Hilde", "Elias" };
+    private static readonly string[] NpcSkinNames = { "Agnes", "Bruno", "Josef", "Marta", "Weiss", "Clerk", "Hilde", "Elias", "Lost" };
 
     private static NpcPalette PaletteFor(string who)
     {
@@ -40,6 +40,8 @@ public static partial class HunterSkinBuilder
             case "Hilde": return new NpcPalette { shell = new Color(0.55f, 0.5f, 0.6f), limb = new Color(0.5f, 0.49f, 0.5f), eyes = new Color(0.1f, 0.85f, 0.65f), grime = 0.6f, rust = 0.4f, chips = 0.6f };
             // the patient Elias: pale bone-blue, the most neglected of them, faint straw-coloured eyes
             case "Elias": return new NpcPalette { shell = new Color(0.6f, 0.64f, 0.66f), limb = new Color(0.44f, 0.45f, 0.45f), eyes = new Color(0.9f, 0.86f, 0.55f), grime = 0.9f, rust = 0.8f, chips = 0.85f, eyeGlow = 0.45f };
+            // F117: the lost at the Last Supper table: ash-grey enamel, grey limbs, filthy and rusted, a dead faint white-blue glow
+            case "Lost": return new NpcPalette { shell = new Color(0.46f, 0.47f, 0.46f), limb = new Color(0.3f, 0.3f, 0.3f), eyes = new Color(0.6f, 0.68f, 0.8f), grime = 1f, rust = 0.7f, chips = 0.8f, smooth = 0.2f, eyeGlow = 0.22f };
             // the clerk: khaki drab, brown limbs, dusty, phosphor-green eyes
             default: return new NpcPalette { shell = new Color(0.44f, 0.42f, 0.29f), limb = new Color(0.24f, 0.18f, 0.12f), eyes = new Color(0.25f, 1f, 0.4f), grime = 0.7f, rust = 0.35f, chips = 0.45f };
         }
