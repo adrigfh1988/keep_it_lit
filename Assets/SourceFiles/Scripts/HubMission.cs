@@ -256,8 +256,6 @@ public class HubMission : MonoBehaviour
         if (Current != Stage.Offered) return;
         Current = Stage.Active;
         Apply();
-        string text = Text("objective_active", objectiveActive);
-        if (Hub != null && !string.IsNullOrEmpty(text)) Hub.SubtitleLine(text, 3.2f);
     }
 
     private void Complete()
@@ -270,10 +268,9 @@ public class HubMission : MonoBehaviour
         if (!GameAudio.PlayAt(GameAudio.Library.keyJingle, at, 0.8f)) GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.12f, 900f, 0.2f), at, 0.8f);
         if (Hub != null)
         {
-            // F100: say which door, and where (not just "the door"). Floor 2's lift line (the stairs are chained) follows, queued behind it.
+            // F100: say which door, and where (not just "the door").
             WingDoor door = Door;
             Hub.SubtitleLine(door != null ? door.UnlockedLine : L10n.T("hub.mission.door_unlocked", ("key", KeyName)), 3.2f);
-            if (floor == 2) Hub.QueueSubtitleLine(LiftSetPiece.ChainedText, 4f);
         }
     }
 

@@ -1,0 +1,83 @@
+# Ignore non-code binary assets and caches for JetBrains Context
+
+# Unity caches and generated folders
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+/.vs/
+/.idea/
+/.vscode/
+
+# Unity metadata
+*.meta
+
+# 3D models and meshes
+*.fbx
+*.obj
+*.blend
+*.dae
+*.3ds
+*.max
+
+# Animations & rigs
+*.anim
+*.controller
+*.overrideController
+*.mask
+
+# Audio & Video
+*.wav
+*.mp3
+*.ogg
+*.aif
+*.aiff
+*.flac
+*.mp4
+*.mov
+*.webm
+
+# Textures & Images
+*.png
+*.jpg
+*.jpeg
+*.tga
+*.psd
+*.tiff
+*.tif
+*.exr
+*.hdr
+*.bmp
+*.svg
+*.ico
+
+# Unity serialized assets and scenes
+*.mat
+*.physicMaterial
+*.physicsMaterial2D
+*.renderTexture
+*.cubemap
+*.flare
+*.unity
+*.prefab
+*.asset
+
+# Fonts
+*.ttf
+*.otf
+*.fnt
+
+# Compressed archives & binaries
+*.zip
+*.tar
+*.gz
+*.7z
+*.rar
+*.dll
+*.exe
+*.pdb

@@ -144,7 +144,6 @@ public class AsylumHub : MonoBehaviour
 
     private Vector3 _returnPosition;
     private float _returnYaw;
-    private Coroutine _hint;
 
     private GameObject _blackoutRoot;
     private Image _blackout;
@@ -373,8 +372,7 @@ public class AsylumHub : MonoBehaviour
         WingDoor next = wingDoors[Mathf.Clamp(floor, 1, wingDoors.Length) - 1];
         if (_hud != null && next != null)
         {
-            _hud.ShowSubtitle(ArrivalText(next, floor), 5f);
-            // F100/F116: the Commissary gets its one mention, queued behind the first line (~6 s in), only when the slip would have offered it.
+            // F100/F116: the Commissary gets its one mention when the slip would have offered it (the floor objective itself is shown on HubObjectiveCard).
             if (!_shopLineShown && !_shopVisited && ShopWorthAVisit(floor - 1))
             {
                 _shopLineShown = true;
@@ -382,51 +380,9 @@ public class AsylumHub : MonoBehaviour
                 _hud.QueueSubtitle(string.IsNullOrEmpty(room) ? L10n.T("hub.shopdoor.open_line") : L10n.T("hub.shopdoor.open_line_room", ("room", room)), 4f);
             }
         }
-        if (_hint != null) StopCoroutine(_hint);
-        _hint = StartCoroutine(HintLoop(next, floor));
     }
 
-    /// <summary>
-    /// F100: the first line of an arrival. While the floor's door is story-locked it is the readmission slip's order (REPORT TO BRUNO ·
-    /// KITCHEN, or the current objective once the job is taken; KEY NOT ISSUED on floor 5) - never the locked-door line, which a player
-    /// without the key cannot act on. Only a door that is really usable says OPEN.
-    /// </summary>
-    private static string ArrivalText(WingDoor door, int floor)
-    {
-        if (door.StoryLocked)
-        {
-            HubMission mission = floor <= 4 ? HubMission.ForFloor(floor) : null;
-            string order = mission != null && mission.Current != HubMission.Stage.Offered ? HubMission.HintFor(floor) : HubMission.OrderFor(floor);
-            if (!string.IsNullOrEmpty(order)) return order;
-            return door.ArrivalLine(true);
-        }
-        return door.ArrivalLine(false);
-    }
-
-    // F100: the hint loop's cap survives a shop round trip (the loop restarts, the count does not); a scene reload resets it.
-    private int _hintStage = -2;
-    private int _hintRepeats;
     private bool _shopLineShown, _shopVisited;
-    private const int MaxHintRepeats = 3;
-
-    private IEnumerator HintLoop(WingDoor door, int floor)
-    {
-        while (!Leaving)
-        {
-            yield return new WaitForSeconds(hintEverySeconds);
-            if (Leaving || door == null) yield break;
-            if (_hud == null || Time.timeScale <= 0f) continue;
-            // F100: at most MaxHintRepeats per mission stage - a player who is deliberately exploring is not nagged for ever.
-            HubMission mission = floor <= 4 ? HubMission.ForFloor(floor) : null;
-            int stage = mission != null ? (int)mission.Current : -1;
-            if (stage != _hintStage) { _hintStage = stage; _hintRepeats = 0; }
-            if (_hintRepeats >= MaxHintRepeats) continue;
-            _hintRepeats++;
-            // F98: while a floor's mission is running the repeating hint is the objective, not the door.
-            string objective = floor <= 4 ? HubMission.HintFor(floor) : null;
-            _hud.ShowSubtitle(objective != null ? objective : door.HintLine, 4f);
-        }
-    }
 
     /// <summary>
     /// F100: the readmission slip and the arrival both offer the shop only when it is worth the walk: the Commissary will be open for the next
@@ -466,7 +422,6 @@ public class AsylumHub : MonoBehaviour
     {
         Leaving = true;
         IsTransitioning = true;
-        if (_hint != null) { StopCoroutine(_hint); _hint = null; }
 
         DoorPassage passage = door.GetComponent<DoorPassage>();
         yield return DoorWalk(door.transform);
