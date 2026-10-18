@@ -555,6 +555,7 @@ public partial class MazeGenerator : MonoBehaviour
         BuildDecals(new System.Random(usedSeed + 7));
         BuildDust();
         BuildFog(); // no rng draw: a chunk grid, the particle system randomises itself
+        BuildVoidAtmosphere(); // F125 D3: abyssal shaft walls, pit floor, mist and uplight for internal void regions
 
         DisableExistingPickups();
         SpawnStars(usedSeed);
@@ -830,6 +831,7 @@ public partial class MazeGenerator : MonoBehaviour
 
         // Recursive backtracker (iterative): always yields a perfect maze, so every cell is reachable.
         List<int> candidates = new List<int>(4);
+        int lastDir = -1;
         while (stack.Count > 0)
         {
             current = stack.Peek();
@@ -843,10 +845,12 @@ public partial class MazeGenerator : MonoBehaviour
             if (candidates.Count == 0)
             {
                 stack.Pop();
+                lastDir = -1;
                 continue;
             }
 
-            int direction = candidates[rng.Next(candidates.Count)];
+            int direction = PickShapeCarveDirection(current, candidates, lastDir, rng);
+            lastDir = direction;
             Vector2Int next = current;
             switch (direction)
             {
@@ -878,6 +882,7 @@ public partial class MazeGenerator : MonoBehaviour
 
         _keptDeadEnds.Clear();
         if (removeDeadEnds) RemoveDeadEnds(rng, new System.Random(usedSeed + 20));
+        CarveShapeAvenues(usedSeed); // F125 D2 (+28): shape-defining avenues, no-op on Rectangle
 
         ComputeDistances();
 
@@ -1052,7 +1057,7 @@ public partial class MazeGenerator : MonoBehaviour
     private HashSet<Vector2Int> ChooseDeadEndsToKeep(List<Vector2Int> deadEnds, System.Random keepRng)
     {
         HashSet<Vector2Int> kept = new HashSet<Vector2Int>();
-        float keep = terror.baitDeadEnds && _profile != null ? _profile.DeadEndKeep : 0f;
+        float keep = AdjustShapeDeadEndKeep(terror.baitDeadEnds && _profile != null ? _profile.DeadEndKeep : 0f);
         if (keep <= 0f) return kept;
 
         List<Vector2Int> candidates = new List<Vector2Int>();
@@ -1609,6 +1614,7 @@ public partial class MazeGenerator : MonoBehaviour
                 // makes (chance, wall pick, prop pick), same rule as the low-ceiling guard below, so an
                 // old scene (no set pieces) draws exactly as it always has.
                 if (_setPieceCells.Contains(cell)) continue;
+                if (IsVoidWindowWall(cell, dir)) continue; // F125 D3: never mount a wall prop across an iron-barred void window
 
                 Vector3 pos = CellCenter(x, z) + dir * backFaceDistance;
                 PropPiece clone = Instantiate(prop, pos, Quaternion.LookRotation(-dir), _propsGroup);
@@ -1647,14 +1653,15 @@ public partial class MazeGenerator : MonoBehaviour
                 PropPiece prop = PickWeightedProp(_dressing.Props, PropPiece.MountKind.Ceiling, rng);
                 if (prop == null) return; // no ceiling props in this theme, nothing more to try
 
-                Vector3 pos = CellCenter(x, z) + Vector3.up * wallHeight;
+                float cellCeil = CeilingHeightAt(x, z);
+                Vector3 pos = CellCenter(x, z) + Vector3.up * cellCeil;
                 Quaternion rotation = Quaternion.Euler(0f, rng.Next(4) * 90f, 0f);
 
                 // F40 slice A decision 6: a low ceiling (floor 3) can't fit every prop without brushing
                 // the player. Checked after every RNG draw this cell makes (chance, pick, rotation) so
                 // the seed stream is unchanged - a taller floor still gets exactly the props, in exactly
                 // the same rotations, it would have before this guard existed.
-                if (!prop.AllowLowHang && prop.Depth > wallHeight - 2.2f) continue;
+                if (!prop.AllowLowHang && prop.Depth > cellCeil - 2.2f) continue;
 
                 // F70: same rule as above - checked after every draw, so it never perturbs the stream.
                 if (_setPieceCells.Contains(cell)) continue;
@@ -1666,7 +1673,7 @@ public partial class MazeGenerator : MonoBehaviour
                 ApplyModelVariants(clone, x, z, 0x4B22);
                 RecordShiftable(clone, cell, Vector3.zero, false);
                 if (clone.GetComponentInChildren<HangingBodyFit>(true) != null) NoteLivingCandidate(clone, cell, true); // F107 D4: no rng draw
-                foreach (HangingBodyFit fit in clone.GetComponentsInChildren<HangingBodyFit>(true)) fit.Fit(wallHeight); // F85: rope cut to this floor's ceiling
+                foreach (HangingBodyFit fit in clone.GetComponentsInChildren<HangingBodyFit>(true)) fit.Fit(cellCeil); // F85: rope cut to this floor's ceiling
             }
         }
     }
@@ -1720,6 +1727,7 @@ public partial class MazeGenerator : MonoBehaviour
     {
         _setPieceCells.Clear();
         _propWalls.Clear();
+        RestoreVoidWindowPropWalls(); // F125 D3: keep barred void-window walls reserved in _propWalls
         _shiftables.Clear();
         if (_dressing.SetPieces == null || _dressing.SetPieces.Length == 0 || _dressing.SetPieceCount <= 0) return;
 
@@ -1768,10 +1776,10 @@ public partial class MazeGenerator : MonoBehaviour
             if (!ChebyshevFarEnough(cell, chosenCells, 3)) continue;
 
             walls.Clear();
-            if (_wallN[cell.x, cell.y]) walls.Add(Vector3.forward);
-            if (_wallE[cell.x, cell.y]) walls.Add(Vector3.right);
-            if (_wallS[cell.x, cell.y]) walls.Add(Vector3.back);
-            if (_wallW[cell.x, cell.y]) walls.Add(Vector3.left);
+            if (_wallN[cell.x, cell.y] && !IsVoidWindowWall(cell, Vector3.forward)) walls.Add(Vector3.forward);
+            if (_wallE[cell.x, cell.y] && !IsVoidWindowWall(cell, Vector3.right)) walls.Add(Vector3.right);
+            if (_wallS[cell.x, cell.y] && !IsVoidWindowWall(cell, Vector3.back)) walls.Add(Vector3.back);
+            if (_wallW[cell.x, cell.y] && !IsVoidWindowWall(cell, Vector3.left)) walls.Add(Vector3.left);
             if (walls.Count == 0) continue;
 
             Vector3 dir = walls[rng.Next(walls.Count)];
@@ -2100,6 +2108,7 @@ public partial class MazeGenerator : MonoBehaviour
         }
 
         Shuffle(others, rng);
+        PrioritiseShapeLampCells(others); // F125 D6: landmark cells first on custom shapes, no-op on Rectangle
         int extraCount = Mathf.Max(0, _playableCellCount / Mathf.Max(1, cellsPerLamp));
         for (int i = 0; i < extraCount && i < others.Count; i++)
         {
@@ -2115,6 +2124,7 @@ public partial class MazeGenerator : MonoBehaviour
         }
 
         BuildGalleryLamp(sharedMaterial, rng); // F105 C2: after every other lamp, so the +2 stream's earlier draws are untouched
+        ApplyShapeLampLandmarks(sharedMaterial, rng); // F125 D6: landmark lamp tints & Cross atrium pendant, no-op on Rectangle
     }
 
     private Material BuildLampMaterial()
@@ -2144,10 +2154,10 @@ public partial class MazeGenerator : MonoBehaviour
         }
 
         List<Vector3> options = new List<Vector3>();
-        if (_wallN[cell.x, cell.y]) options.Add(Vector3.forward);
-        if (_wallE[cell.x, cell.y]) options.Add(Vector3.right);
-        if (_wallS[cell.x, cell.y]) options.Add(Vector3.back);
-        if (_wallW[cell.x, cell.y]) options.Add(Vector3.left);
+        if (_wallN[cell.x, cell.y] && !IsVoidWindowWall(cell, Vector3.forward)) options.Add(Vector3.forward);
+        if (_wallE[cell.x, cell.y] && !IsVoidWindowWall(cell, Vector3.right)) options.Add(Vector3.right);
+        if (_wallS[cell.x, cell.y] && !IsVoidWindowWall(cell, Vector3.back)) options.Add(Vector3.back);
+        if (_wallW[cell.x, cell.y] && !IsVoidWindowWall(cell, Vector3.left)) options.Add(Vector3.left);
         if (options.Count == 0) return Vector3.zero; // every real cell has at least one wall
         return options[rng.Next(options.Count)];
     }
@@ -2187,7 +2197,9 @@ public partial class MazeGenerator : MonoBehaviour
         Vector3 wallDirection = forcedWall != Vector3.zero ? forcedWall : ResolveLampWallDirection(cell, isLockerCell, rng);
         if (wallDirection == Vector3.zero) return;
 
-        Vector3 position = cellCenter + wallDirection * (backFaceDistance - 0.08f) + Vector3.up * lampHeight;
+        float cellCeil = CeilingHeightAt(x, z);
+        float mountY = cellCeil < wallHeight ? Mathf.Min(lampHeight, cellCeil - 0.30f) : lampHeight;
+        Vector3 position = cellCenter + wallDirection * (backFaceDistance - 0.08f) + Vector3.up * mountY;
         Quaternion rotation = Quaternion.LookRotation(-wallDirection, Vector3.up);
 
         if (_theme != null && _theme.Lamp != null)
@@ -2257,6 +2269,7 @@ public partial class MazeGenerator : MonoBehaviour
 
     private void BuildGeometry()
     {
+        ResetVoidWindows();
         _mazeRoot = new GameObject("Maze").transform;
         _mazeRoot.position = origin;
 
@@ -2318,34 +2331,32 @@ public partial class MazeGenerator : MonoBehaviour
                 // east and north sides (and boundaries against a void cell) are added once on the last column / row or void edge.
                 if (_wallW[x, z] && !IsLoopOpening(x, z, 3) && !IsGateOpening(x, z, 3))
                 {
-                    SpawnThemedWall(
-                        $"Wall_W_{x}_{z}",
-                        new Vector3(origin.x + x * cellSize, FloorTop, origin.z + (z + 0.5f) * cellSize),
-                        Quaternion.Euler(0f, 90f, 0f));
+                    Vector3 pos = new Vector3(origin.x + x * cellSize, FloorTop, origin.z + (z + 0.5f) * cellSize);
+                    Quaternion rot = Quaternion.Euler(0f, 90f, 0f);
+                    if (ShouldBuildVoidWindow(x, z, 3)) SpawnVoidGrilleWall($"Wall_W_{x}_{z}", x, z, 3, pos, rot);
+                    else SpawnThemedWall($"Wall_W_{x}_{z}", pos, rot);
                 }
 
                 if (_wallS[x, z] && !IsLoopOpening(x, z, 2) && !IsGateOpening(x, z, 2))
                 {
-                    SpawnThemedWall(
-                        $"Wall_S_{x}_{z}",
-                        new Vector3(origin.x + (x + 0.5f) * cellSize, FloorTop, origin.z + z * cellSize),
-                        Quaternion.identity);
+                    Vector3 pos = new Vector3(origin.x + (x + 0.5f) * cellSize, FloorTop, origin.z + z * cellSize);
+                    if (ShouldBuildVoidWindow(x, z, 2)) SpawnVoidGrilleWall($"Wall_S_{x}_{z}", x, z, 2, pos, Quaternion.identity);
+                    else SpawnThemedWall($"Wall_S_{x}_{z}", pos, Quaternion.identity);
                 }
 
                 if ((x == width - 1 || IsVoid(x + 1, z)) && _wallE[x, z] && !IsLoopOpening(x, z, 1) && !IsGateOpening(x, z, 1))
                 {
-                    SpawnThemedWall(
-                        $"Wall_E_{x}_{z}",
-                        new Vector3(origin.x + (x + 1) * cellSize, FloorTop, origin.z + (z + 0.5f) * cellSize),
-                        Quaternion.Euler(0f, 90f, 0f));
+                    Vector3 pos = new Vector3(origin.x + (x + 1) * cellSize, FloorTop, origin.z + (z + 0.5f) * cellSize);
+                    Quaternion rot = Quaternion.Euler(0f, 90f, 0f);
+                    if (ShouldBuildVoidWindow(x, z, 1)) SpawnVoidGrilleWall($"Wall_E_{x}_{z}", x, z, 1, pos, rot);
+                    else SpawnThemedWall($"Wall_E_{x}_{z}", pos, rot);
                 }
 
                 if ((z == height - 1 || IsVoid(x, z + 1)) && _wallN[x, z] && !IsLoopOpening(x, z, 0) && !IsGateOpening(x, z, 0))
                 {
-                    SpawnThemedWall(
-                        $"Wall_N_{x}_{z}",
-                        new Vector3(origin.x + (x + 0.5f) * cellSize, FloorTop, origin.z + (z + 1) * cellSize),
-                        Quaternion.identity);
+                    Vector3 pos = new Vector3(origin.x + (x + 0.5f) * cellSize, FloorTop, origin.z + (z + 1) * cellSize);
+                    if (ShouldBuildVoidWindow(x, z, 0)) SpawnVoidGrilleWall($"Wall_N_{x}_{z}", x, z, 0, pos, Quaternion.identity);
+                    else SpawnThemedWall($"Wall_N_{x}_{z}", pos, Quaternion.identity);
                 }
             }
         }
@@ -2391,42 +2402,54 @@ public partial class MazeGenerator : MonoBehaviour
                 // east and north sides (and boundaries against a void cell) are added once on the last column / row or void edge.
                 if (_wallW[x, z] && !IsGateOpening(x, z, 3))
                 {
-                    CreateBox(
-                        $"Wall_W_{x}_{z}",
-                        new Vector3(origin.x + x * cellSize, wallCenterY, origin.z + (z + 0.5f) * cellSize),
-                        new Vector3(wallThickness, wallHeight, cellSize + wallThickness),
-                        _wallMat,
-                        _wallsGroup);
+                    if (ShouldBuildVoidWindow(x, z, 3))
+                        SpawnVoidGrilleWall($"Wall_W_{x}_{z}", x, z, 3, new Vector3(origin.x + x * cellSize, FloorTop, origin.z + (z + 0.5f) * cellSize), Quaternion.Euler(0f, 90f, 0f));
+                    else
+                        CreateBox(
+                            $"Wall_W_{x}_{z}",
+                            new Vector3(origin.x + x * cellSize, wallCenterY, origin.z + (z + 0.5f) * cellSize),
+                            new Vector3(wallThickness, wallHeight, cellSize + wallThickness),
+                            _wallMat,
+                            _wallsGroup);
                 }
 
                 if (_wallS[x, z] && !IsGateOpening(x, z, 2))
                 {
-                    CreateBox(
-                        $"Wall_S_{x}_{z}",
-                        new Vector3(origin.x + (x + 0.5f) * cellSize, wallCenterY, origin.z + z * cellSize),
-                        new Vector3(cellSize + wallThickness, wallHeight, wallThickness),
-                        _wallMat,
-                        _wallsGroup);
+                    if (ShouldBuildVoidWindow(x, z, 2))
+                        SpawnVoidGrilleWall($"Wall_S_{x}_{z}", x, z, 2, new Vector3(origin.x + (x + 0.5f) * cellSize, FloorTop, origin.z + z * cellSize), Quaternion.identity);
+                    else
+                        CreateBox(
+                            $"Wall_S_{x}_{z}",
+                            new Vector3(origin.x + (x + 0.5f) * cellSize, wallCenterY, origin.z + z * cellSize),
+                            new Vector3(cellSize + wallThickness, wallHeight, wallThickness),
+                            _wallMat,
+                            _wallsGroup);
                 }
 
                 if ((x == width - 1 || IsVoid(x + 1, z)) && _wallE[x, z] && !IsGateOpening(x, z, 1))
                 {
-                    CreateBox(
-                        $"Wall_E_{x}_{z}",
-                        new Vector3(origin.x + (x + 1) * cellSize, wallCenterY, origin.z + (z + 0.5f) * cellSize),
-                        new Vector3(wallThickness, wallHeight, cellSize + wallThickness),
-                        _wallMat,
-                        _wallsGroup);
+                    if (ShouldBuildVoidWindow(x, z, 1))
+                        SpawnVoidGrilleWall($"Wall_E_{x}_{z}", x, z, 1, new Vector3(origin.x + (x + 1) * cellSize, FloorTop, origin.z + (z + 0.5f) * cellSize), Quaternion.Euler(0f, 90f, 0f));
+                    else
+                        CreateBox(
+                            $"Wall_E_{x}_{z}",
+                            new Vector3(origin.x + (x + 1) * cellSize, wallCenterY, origin.z + (z + 0.5f) * cellSize),
+                            new Vector3(wallThickness, wallHeight, cellSize + wallThickness),
+                            _wallMat,
+                            _wallsGroup);
                 }
 
                 if ((z == height - 1 || IsVoid(x, z + 1)) && _wallN[x, z] && !IsGateOpening(x, z, 0))
                 {
-                    CreateBox(
-                        $"Wall_N_{x}_{z}",
-                        new Vector3(origin.x + (x + 0.5f) * cellSize, wallCenterY, origin.z + (z + 1) * cellSize),
-                        new Vector3(cellSize + wallThickness, wallHeight, wallThickness),
-                        _wallMat,
-                        _wallsGroup);
+                    if (ShouldBuildVoidWindow(x, z, 0))
+                        SpawnVoidGrilleWall($"Wall_N_{x}_{z}", x, z, 0, new Vector3(origin.x + (x + 0.5f) * cellSize, FloorTop, origin.z + (z + 1) * cellSize), Quaternion.identity);
+                    else
+                        CreateBox(
+                            $"Wall_N_{x}_{z}",
+                            new Vector3(origin.x + (x + 0.5f) * cellSize, wallCenterY, origin.z + (z + 1) * cellSize),
+                            new Vector3(cellSize + wallThickness, wallHeight, wallThickness),
+                            _wallMat,
+                            _wallsGroup);
                 }
             }
         }
@@ -2455,6 +2478,7 @@ public partial class MazeGenerator : MonoBehaviour
                     tile.transform.localScale = new Vector3(cellSize / 4.5f, 1f, cellSize / 4.5f);
                 }
             }
+            BuildShapeCeilingFascia(); // F125 D6: clerestory walls & arch lintels where ceiling height steps up/down
             return;
         }
 
@@ -2585,6 +2609,7 @@ public partial class MazeGenerator : MonoBehaviour
         Shuffle(preferred, rng);
         Shuffle(fallback, rng);
         preferred.AddRange(fallback);
+        PrioritiseShapeStarCandidates(preferred); // F125 D4: round-robin across wings/arms/quadrants on custom shapes, no-op on Rectangle
         PrioritiseBaitCells(preferred);
         // Super easy mode: the nearest cells to the start, side by side (after the shuffle, so the +1 stream is unchanged).
         if (superEasyMode) SortByStartDistance(preferred);
@@ -3253,6 +3278,7 @@ public partial class MazeGenerator : MonoBehaviour
         List<int> order = new List<int>(pool.Count);
         for (int i = 0; i < pool.Count; i++) order.Add(i);
         ShuffleInts(order, rng);
+        PrioritiseTwinWingsBridgeOrder(order, pool); // F125 D4: prefer gating the TwinWings central bridge, no-op otherwise
 
         int minSeparation = Mathf.Max(2, (width + height) / 6);
         foreach (int idx in order)
@@ -3570,6 +3596,7 @@ public partial class MazeGenerator : MonoBehaviour
         List<int> order = new List<int>(candidates.Count);
         for (int i = 0; i < candidates.Count; i++) order.Add(i);
         ShuffleInts(order, rng);
+        PrioritiseTwinWingsBridgeManualOrder(order, candidates); // F125 D4: prefer placing a manual door on the TwinWings bridge
 
         int minSeparation = Mathf.Max(2, (width + height) / 6);
         int placed = 0;

@@ -1843,6 +1843,11 @@ public class AIFollower : MonoBehaviour
             if (next >= 0) _terror.Log("Hunter heads for where you were noisy", this);
         }
 
+        if (next < 0 && _maze != null)
+        {
+            next = _maze.PickShapeWanderCellIndex(transform.position, target != null ? target.position : transform.position, _wanderIndex, _wanderPoints);
+        }
+
         if (next < 0)
         {
             next = Random.Range(0, _wanderPoints.Count);

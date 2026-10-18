@@ -537,10 +537,10 @@ public partial class MazeGenerator
         if (_squeezeZone != null) _squeezeZone.Bind(player, controller, stamina, flashlight, squeezeSpeedScale, squeezeTorchScale, squeezeBreathVolume);
     }
 
-    /// <summary>The ceiling height over a cell: lowered over the squeeze, the wall height anywhere else.</summary>
+    /// <summary>The ceiling height over a cell: lowered over the squeeze, shape-adjusted on DESCENT custom shapes (F125 D6), the wall height anywhere else.</summary>
     private float CeilingHeightAt(int x, int z)
     {
-        return _squeezeCells.Contains(new Vector2Int(x, z)) ? squeezeCeiling : wallHeight;
+        return _squeezeCells.Contains(new Vector2Int(x, z)) ? squeezeCeiling : ShapeCeilingHeightAt(x, z);
     }
 
     // ---------------------------------------------------------------- debug map extras
