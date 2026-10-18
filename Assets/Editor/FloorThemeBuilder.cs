@@ -858,7 +858,7 @@ public static partial class FloorThemeBuilder
         Material ceilingMat = LoadOrCreateMat(folder, "Lab_Ceiling", new Color(0.10f, 0.10f, 0.11f), null, null, Vector2.one, null);
         Material metalMat = LoadOrCreateMat(folder, "Lab_Metal", new Color(0.22f, 0.23f, 0.26f), null, null, Vector2.one, null, smoothness: 0.35f);
         Material pillarMat = LoadOrCreateMat(folder, "Lab_Pillar", new Color(0.15f, 0.16f, 0.18f), null, null, Vector2.one, null); // F90: wall panels at a column's tiling
-        Color glassColor = new Color(1.0f, 0.15f, 0.10f);
+        Color glassColor = new Color(1.0f, 0.45f, 0.20f);
         Material glassMat = LoadOrCreateMat(folder, "Lab_Glass", glassColor, null, null, Vector2.one, glassColor * 2.5f);
         Color ledColor = new Color(0.2f, 1.0f, 0.9f);
         Material ledMat = LoadOrCreateMat(folder, "Lab_Led", ledColor, null, null, Vector2.one, ledColor * 2f);
@@ -891,6 +891,8 @@ public static partial class FloorThemeBuilder
         Light labLight = labLightHolder.AddComponent<Light>();
         labLight.type = LightType.Point;
         labLight.shadows = LightShadows.None;
+        labLight.range = 14f;
+        labLight.intensity = 1.35f;
         WallLamp lamp = FinishLamp(lampRoot, folder, labLight, glassGo.GetComponent<Renderer>());
 
         // Locker: containment pod with an LED strip and a small screen.
@@ -930,9 +932,9 @@ public static partial class FloorThemeBuilder
         return new ThemeAssets
         {
             DisplayName = "The Lab",
-            Ambient = new Color(0.05f, 0.03f, 0.03f),
-            FogColor = new Color(0.02f, 0.008f, 0.008f),
-            FogDensityScale = 1.15f,
+            Ambient = new Color(0.036f, 0.032f, 0.038f),
+            FogColor = new Color(0.038f, 0.034f, 0.040f),
+            FogDensityScale = 0.40f,
             LampColor = glassColor,
             FaultyLampChance = 0.40f,
             WallPropChance = 0.4f,

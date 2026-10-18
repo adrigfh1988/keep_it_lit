@@ -111,6 +111,7 @@ public class GameAudioLibrary : ScriptableObject
     public AudioSlot candleSnuff = new AudioSlot();    // 34
     public AudioSlot stanTick = new AudioSlot();       // 35
     public AudioSlot stanSkitter = new AudioSlot();    // 35
+    public AudioSlot stanVoice = new AudioSlot();      // Stan's spoken/laughing voice clips (shuffle bag, 70 % chance)
     public AudioSlot relocationCue = new AudioSlot();  // 37
     public AudioSlot phantomWhisper = new AudioSlot(); // 38
     public AudioSlot captureSting = new AudioSlot();   // 39

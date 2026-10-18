@@ -508,7 +508,7 @@ namespace KeepItLit.Tests
             // RUNNER's perks flow into the profile
             FloorProfile p = FloorProfile.For(1, 5);
             PlayerInventory.ApplyActiveModifiers(p);
-            Assert.AreEqual(FloorProfile.For(1, 5).SprintSeconds + 4f, p.SprintSeconds);
+            Assert.AreEqual(FloorProfile.For(1, 5).SprintSeconds * 2f, p.SprintSeconds);
 
             StandardBaselineTests.Reset();
             CampaignRules.Begin(DifficultyPreset.Story, Assist.None, Oath.ShortFuse, StartingKit.StandardIssue, 0);

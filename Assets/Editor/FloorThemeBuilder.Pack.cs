@@ -147,12 +147,11 @@ public static partial class FloorThemeBuilder
     {
         string[] bedBodies = { "Bed_&_Body/Bed_Body (1)", "Bed_&_Body/Bed_Body (2)", "Bed_&_Body/Bed_Body (3)", "Bed_&_Body/Bed_Body (4)", "Bed_&_Body/Bed_Body (5)", "Bed_&_Body/Bed_Body (6)" };
         string[] beds = { "Bed_Only/Bed_Rusty (1)", "Bed_Only/Bed_Rusty (2)", "Bed_Only/Bed_Rusty (3)", "Bed_Only/Bed_Rusty (4)", "Bed_Only/Bed_Rusty (5)" };
-        string[] tubs = { "Bath_Tub/Bathtub_Blooded", "Bath_Tub/Bathtub With Bodies (2)", "Bath_Tub/Bathtub With Bodies (3)" };
+        string[] tubs = { "Assets/SourceFiles/Models/HorrorProps/Bathtub_Bodies_HP" };
         string[] stands = { "Hanging_Body/Standing/Deadbody_Stand (1)", "Hanging_Body/Standing/Deadbody_Stand (2)", "Hanging_Body/Standing/Deadbody_Stand (3)" };
         string[] hangs =
         {
-            "Hanging_Body/Hanging 1/Deadbody_Hanging", "Hanging_Body/Hanging 1/Deadbody_Hanging (1)", "Hanging_Body/Hanging 1/Deadbody_Hanging (2)", "Hanging_Body/Hanging 1/Deadbody_Hanging (3)",
-            "Hanging_Body/Hanging 2/Deadbody_HangingS2", "Hanging_Body/Hanging 2/Deadbody_HangingS2 (1)", "Hanging_Body/Hanging 2/Deadbody_HangingS2 (2)", "Hanging_Body/Hanging 2/Deadbody_HangingS2 (3)"
+            "Assets/SourceFiles/Models/HorrorProps/Deadbody_Hanging_HP"
         };
         string[] vents = { "Air_Vent_01", "Air_Vent_02", "Air_Vent_03", "Air_Vent_04", "Air_Vent_05" };
         string[] sockets = { "Socket_01", "Socket_02", "Socket_03", "Socket_04", "Socket_05", "Socket_06" };
@@ -392,15 +391,28 @@ public static partial class FloorThemeBuilder
         {
             GameObject holder = new GameObject($"Variant{i + 1}");
             holder.transform.SetParent(root.transform, false);
-            GameObject go = PackSpawn(holder.transform, $"{folder}{models[i]}.prefab");
+            string path = models[i].StartsWith("Assets/") ? $"{models[i]}.prefab" : $"{folder}{models[i]}.prefab";
+            GameObject go = PackSpawn(holder.transform, path);
             if (go == null) { UnityEngine.Object.DestroyImmediate(holder); continue; }
 
+            foreach (SkinnedMeshRenderer smr in go.GetComponentsInChildren<SkinnedMeshRenderer>(true)) smr.updateWhenOffscreen = true;
             go.transform.rotation = Quaternion.Euler(0f, yaw, 0f) * go.transform.rotation;
             Bounds b = AlchemistPack.RenderBounds(go);
             go.transform.position += new Vector3(-b.center.x, -b.min.y, 0.03f - b.min.z);
 
             b = AlchemistPack.RenderBounds(go);
             FitBox(holder, b);
+            Transform seatTorso = FindDeep(go.transform, "SeatedBody_Torso");
+            if (seatTorso != null)
+            {
+                HorrorPropAnimator anim = holder.AddComponent<HorrorPropAnimator>();
+                anim.BindBones(
+                    HorrorPropAnimator.PropKind.BathtubBodies,
+                    seatTorso,
+                    FindDeep(go.transform, "SeatedBody_Head"),
+                    FindDeep(go.transform, "SlumpedBody_Head"),
+                    FindDeep(go.transform, "SlumpedBody_Arm"));
+            }
             width = Mathf.Max(width, b.size.x);
             depth = Mathf.Max(depth, b.max.z);
             options.Add(holder);
@@ -458,7 +470,8 @@ public static partial class FloorThemeBuilder
         {
             GameObject holder = new GameObject($"Variant{i + 1}");
             holder.transform.SetParent(root.transform, false);
-            GameObject go = PackSpawn(holder.transform, $"{DeadBodyRoot}{models[i]}.prefab");
+            string path = models[i].StartsWith("Assets/") ? $"{models[i]}.prefab" : $"{DeadBodyRoot}{models[i]}.prefab";
+            GameObject go = PackSpawn(holder.transform, path);
             Transform rope = go != null ? FindDeep(go.transform, "Rope_Length") : null;
             if (go == null || rope == null)
             {
@@ -499,6 +512,18 @@ public static partial class FloorThemeBuilder
             fitSo.FindProperty("depth0").floatValue = depth;
             fitSo.FindProperty("feetClearance").floatValue = HangFeetClearance;
             fitSo.ApplyModifiedPropertiesWithoutUndo();
+
+            Transform hbTorso = FindDeep(go.transform, "Torso");
+            if (hbTorso != null)
+            {
+                HorrorPropAnimator anim = holder.AddComponent<HorrorPropAnimator>();
+                anim.BindBones(
+                    HorrorPropAnimator.PropKind.HangingBody,
+                    hbTorso,
+                    FindDeep(go.transform, "Head"),
+                    FindDeep(go.transform, "Legs"),
+                    null);
+            }
             options.Add(holder);
         }
 

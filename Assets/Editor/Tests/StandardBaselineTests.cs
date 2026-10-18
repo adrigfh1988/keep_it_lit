@@ -60,7 +60,7 @@ namespace KeepItLit.Tests
         }
 
         /// <summary>The same dump the fixture holds, with the F122 pipeline steps inserted.</summary>
-        private static string Dump()
+        internal static string Dump()
         {
             StringBuilder sb = new StringBuilder();
             Reset();

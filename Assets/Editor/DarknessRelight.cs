@@ -23,14 +23,14 @@ using UnityEngine.SceneManagement;
 public static class DarknessRelight
 {
     /// <summary>The brightest of ambient.r/g/b after relighting. See slice F71 step 2.</summary>
-    private const float TargetMaxChannel = 0.012f;
+    private const float TargetMaxChannel = 0.045f;
 
     // A row already this close to the target is left alone - without this, floating-point rounding in
     // the scale-down could nudge an already-relit row by a fraction of a stop every time the menu item
     // runs, which would defeat "idempotent".
     private const float Tolerance = 0.0001f;
 
-    /// <summary>True if any FloorTheme row in the open scene is brighter than the darkness pass allows. Read by ProjectSetup's check.</summary>
+    /// <summary>True if any FloorTheme row in the open scene is outside the target ambient channel range. Read by ProjectSetup's check.</summary>
     public static bool NeedsRelight()
     {
         foreach (FloorTheme theme in Object.FindObjectsByType<FloorTheme>(FindObjectsInactive.Include, FindObjectsSortMode.None))
@@ -38,7 +38,8 @@ public static class DarknessRelight
             SerializedProperty ambientProp = new SerializedObject(theme).FindProperty("ambient");
             if (ambientProp == null) continue;
             Color c = ambientProp.colorValue;
-            if (Mathf.Max(c.r, c.g, c.b) > TargetMaxChannel + Tolerance) return true;
+            float max = Mathf.Max(c.r, c.g, c.b);
+            if (max > 0f && Mathf.Abs(max - TargetMaxChannel) > Tolerance) return true;
         }
         return false;
     }
@@ -59,15 +60,15 @@ public static class DarknessRelight
         if (anyChanged)
         {
             EditorSceneManager.MarkSceneDirty(scene);
-            Debug.Log($"DarknessRelight: relit {themes.Length} FloorTheme row(s), max ambient channel now <= {TargetMaxChannel:0.###}.");
+            Debug.Log($"DarknessRelight: relit {themes.Length} FloorTheme row(s), max ambient channel now {TargetMaxChannel:0.###}.");
         }
         else
         {
-            Debug.Log("DarknessRelight: nothing to do - every FloorTheme row is already at or under the target.");
+            Debug.Log("DarknessRelight: nothing to do - every FloorTheme row is already at the target.");
         }
     }
 
-    /// <summary>Scales one row's ambient down to TargetMaxChannel if it is brighter. Returns whether it changed anything.</summary>
+    /// <summary>Scales one row's ambient to TargetMaxChannel while keeping its tint. Returns whether it changed anything.</summary>
     private static bool RelightOne(FloorTheme theme)
     {
         SerializedObject serialized = new SerializedObject(theme);
@@ -76,7 +77,7 @@ public static class DarknessRelight
 
         Color oldAmbient = ambientProp.colorValue;
         float max = Mathf.Max(oldAmbient.r, oldAmbient.g, oldAmbient.b);
-        if (max <= TargetMaxChannel + Tolerance) return false;
+        if (max <= 0f || Mathf.Abs(max - TargetMaxChannel) <= Tolerance) return false;
 
         float scale = TargetMaxChannel / max;
         Color newAmbient = new Color(oldAmbient.r * scale, oldAmbient.g * scale, oldAmbient.b * scale, oldAmbient.a);

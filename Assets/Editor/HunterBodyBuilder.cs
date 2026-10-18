@@ -117,14 +117,21 @@ public static partial class HunterBodyBuilder
         // The Starter clips are in place (root-locked, no travel to measure), so these are the Starter Assets design speeds; the hunter robot is
         // scaled by BodyScale, which does not change the stride a humanoid clip covers (measured: the same stance speed at scale 1.0 and 1.05).
         // Measured on the body that will wear them: the cyborg's legs are not the robot's (see HunterBodyBuilder.Cyborg.cs).
+        bool slender = CurrentLook == BodyLook.Slender;
         bool cyborg = CurrentLook == BodyLook.Cyborg;
+        GameObject slenderModel = slender ? EnsureSlenderModel() : null;
+        if (slender && slenderModel == null)
+        {
+            Debug.LogError($"HunterBodyBuilder: the Slender Hunter body is selected but {SlenderModelPath} is missing or not a valid Humanoid; nothing was changed.");
+            return;
+        }
         GameObject cyborgModel = cyborg ? EnsureCyborgModel() : null;
         if (cyborg && cyborgModel == null)
         {
             Debug.LogError($"HunterBodyBuilder: the cyborg body is selected but {CyborgModelPath} is missing or not a valid Humanoid; nothing was changed.");
             return;
         }
-        GameObject measureModel = cyborg ? cyborgModel : robotPrefab;
+        GameObject measureModel = slender ? slenderModel : (cyborg ? cyborgModel : robotPrefab);
         float walkSpeed = GetClipSpeed(walkClip, DefaultWalkSpeed, measureModel);
         float runSpeed = GetClipSpeed(runClip, DefaultRunSpeed, measureModel);
 
@@ -133,13 +140,14 @@ public static partial class HunterBodyBuilder
         AnimationClip lookClip = ResolveOptionalClip("look", true, out string lookSource);
         AnimationClip lurkClip = ResolveOptionalClip("lurk", true, out string lurkSource);
         AnimationClip stunClip = ResolveOptionalClip("stun", true, out string stunSource);
+        AnimationClip tantrumClip = ResolveOptionalClip("tantrum", false, out string tantrumSource);
         AnimationClip reachClip = ResolveOptionalClip("reach", false, out string reachSource);
 
         // ---------------------------------------------------------------- skin + controller (rebuilt every run)
 
-        Material skin = cyborg ? null : HunterSkinBuilder.EnsureSkin();
+        Material skin = (slender || cyborg) ? null : HunterSkinBuilder.EnsureSkin();
         AnimatorController controller = BuildController(idleClip, walkClip, runClip, turnClip, turnMirroredClip,
-            lookClip, lurkClip, stunClip, reachClip);
+            lookClip, lurkClip, stunClip, tantrumClip, reachClip);
 
         // ---------------------------------------------------------------- scene swap, one undo step
 
@@ -155,6 +163,14 @@ public static partial class HunterBodyBuilder
                 return;
             }
             Undo.DestroyObjectImmediate(existingBody.gameObject);
+        }
+        for (int i = aiRoot.childCount - 1; i >= 0; i--)
+        {
+            Transform ch = aiRoot.GetChild(i);
+            if (ch.name == BodyChildName || ch.name.StartsWith("Hunter_Slender"))
+            {
+                Undo.DestroyObjectImmediate(ch.gameObject);
+            }
         }
 
         Transform robotChild = FindRobotChild(aiRoot);
@@ -173,7 +189,12 @@ public static partial class HunterBodyBuilder
         aiRoot.gameObject.SetActive(true); // Animator.Rebind / Update need an active object
 
         GameObject bodyInstance;
-        if (cyborg)
+        if (slender)
+        {
+            bodyInstance = InstantiateSlender(slenderModel, aiRoot);
+            Undo.RegisterCreatedObjectUndo(bodyInstance, "Build Hunter Body");
+        }
+        else if (cyborg)
         {
             bodyInstance = InstantiateCyborg(cyborgModel, aiRoot);
             Undo.RegisterCreatedObjectUndo(bodyInstance, "Build Hunter Body");
@@ -210,6 +231,7 @@ public static partial class HunterBodyBuilder
 
             bodyAnimator.Rebind();
             bodyAnimator.Update(0f);
+            bodyInstance.GetComponent<HunterChainPhysics>()?.PoseAtRest();
             Transform head = bodyAnimator.isHuman ? bodyAnimator.GetBoneTransform(HumanBodyBones.Head) : null;
             float rise = head != null ? head.position.y - aiRoot.position.y : 0f;
             if (rise > 0.5f) eyeHeight = rise + EyeHeightPadding;
@@ -225,6 +247,15 @@ public static partial class HunterBodyBuilder
         SerializedObject gazeSo = new SerializedObject(gaze);
         gazeSo.FindProperty("follower").objectReferenceValue = aiFollower;
         gazeSo.ApplyModifiedProperties();
+
+        AIPresence presence = aiRoot.GetComponent<AIPresence>();
+        if (presence != null)
+        {
+            SerializedObject presenceSo = new SerializedObject(presence);
+            presenceSo.FindProperty("eyeColor").colorValue = slender ? Color.white : new Color(1f, 0.05f, 0.03f);
+            presenceSo.FindProperty("eyeSize").floatValue = slender ? 0.018f : 0.035f;
+            presenceSo.ApplyModifiedProperties();
+        }
 
         SerializedObject so = new SerializedObject(aiFollower);
         so.FindProperty("animator").objectReferenceValue = bodyAnimator;
@@ -247,10 +278,11 @@ public static partial class HunterBodyBuilder
         so.FindProperty("bodySweepsDuringSearch").boolValue = lookClip == null;
         so.ApplyModifiedProperties();
 
+        string skinLabel = slender ? "Slender" : (cyborg ? "Cyborg" : skin.name);
         Debug.Log($"HunterBodyBuilder: idle={StarterIdleName}, walk={StarterWalkName}, run={StarterRunName} " +
             $"(walkSpeed={walkSpeed:F2}, runSpeed={runSpeed:F2}), turn={turnSource}, " +
-            $"look={lookSource}, lurk={lurkSource}, stun={stunSource}, reach={reachSource}, " +
-            $"eyeHeight={eyeHeight:F2} m, skin={(cyborg ? "Cyborg" : skin.name)}, bodySweepsDuringSearch={(lookClip == null)}.", bodyInstance);
+            $"look={lookSource}, lurk={lurkSource}, stun={stunSource}, tantrum={tantrumSource}, reach={reachSource}, " +
+            $"eyeHeight={eyeHeight:F2} m, skin={skinLabel}, bodySweepsDuringSearch={(lookClip == null)}.", bodyInstance);
 
         Undo.CollapseUndoOperations(undoGroup);
 
@@ -264,14 +296,14 @@ public static partial class HunterBodyBuilder
         Debug.Log("Hunter body built. Save the scene (Ctrl+S) to keep it.", bodyInstance);
     }
 
-    /// <summary>True when the scene hunter wears the stripped Orderly robot (HunterBody child with the Orderly skin).</summary>
+    /// <summary>True when the scene hunter wears the body selected by Build > Hunter Body Look.</summary>
     internal static bool HasOrderlyBody(Transform aiRoot)
     {
         Transform body = aiRoot.Find(BodyChildName);
         if (body == null) return false;
-        // The body matching the selected look (Build > Hunter Body Look): the Orderly skin, or the cyborg's own materials.
         Renderer renderer = body.GetComponentInChildren<SkinnedMeshRenderer>(true);
         if (renderer == null || renderer.sharedMaterial == null) return false;
+        if (CurrentLook == BodyLook.Slender) return renderer.sharedMaterial.name.StartsWith(SlenderMaterialPrefix);
         return CurrentLook == BodyLook.Cyborg
             ? renderer.sharedMaterial.name.StartsWith(CyborgMaterialPrefix)
             : renderer.sharedMaterial.name == HunterSkinBuilder.MaterialName;
@@ -644,7 +676,7 @@ public static partial class HunterBodyBuilder
     private static AnimatorController BuildController(
         AnimationClip idleClip, AnimationClip walkClip, AnimationClip runClip,
         AnimationClip turnClip, AnimationClip turnMirroredClip,
-        AnimationClip lookClip, AnimationClip lurkClip, AnimationClip stunClip, AnimationClip reachClip)
+        AnimationClip lookClip, AnimationClip lurkClip, AnimationClip stunClip, AnimationClip tantrumClip, AnimationClip reachClip)
     {
         if (AssetDatabase.LoadAssetAtPath<AnimatorController>(ControllerPath) != null)
         {
@@ -672,6 +704,7 @@ public static partial class HunterBodyBuilder
         AddPoseState(root, locomotionState, "LookAround", lookClip, AIFollower.Pose.LookAround);
         AddPoseState(root, locomotionState, "Lurk", lurkClip, AIFollower.Pose.Lurk);
         AddPoseState(root, locomotionState, "Stunned", stunClip, AIFollower.Pose.Stunned);
+        AddPoseState(root, locomotionState, "Tantrum", tantrumClip, AIFollower.Pose.Tantrum);
         AddReachState(root, locomotionState, reachClip);
 
         EditorUtility.SetDirty(controller);

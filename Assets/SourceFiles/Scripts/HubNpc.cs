@@ -59,6 +59,7 @@ public class HubNpc : MonoBehaviour, IInteractable
     private float _lean;
 
     public bool IsPresent => _present && body != null && body.gameObject.activeInHierarchy;
+    public bool IsTalking => _talking;
     public bool IgnoresGaze => !playerFacesMe;
     public Vector3 HeadPosition => _head != null ? _head.position : (body != null ? body.position + Vector3.up * (lying ? 0.9f : 1.5f) : transform.position);
     // S9 (D10): the speaker's name by stable id (hub.npc.<who>, lower-case enum name); the serialized displayName, then the enum, are fallbacks.

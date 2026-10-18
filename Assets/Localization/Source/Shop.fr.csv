@@ -13,7 +13,7 @@ shop.item.quiet_shoes.blurb,"Vos pas portent un tiers moins loin, à l'étage su
 shop.item.extra_lamps.name,Lampes en plus
 shop.item.extra_lamps.blurb,Plus de lampes allumées à l'étage suivant.
 shop.item.stamina_tonic.name,Tonique d'endurance
-shop.item.stamina_tonic.blurb,"Quatre secondes de sprint en plus, à l'étage suivant."
+shop.item.stamina_tonic.blurb,"Endurance de sprint doublée (200 %), à l'étage suivant."
 shop.item.torch_colour.name,Couleur de lampe
 shop.item.torch_colour.blurb,Froid. Braise. Violet.
 shop.item.hud_tint.name,Teinte du HUD

@@ -18,7 +18,7 @@ public class PhantomBody
     private const string BodyChildName = "HunterBody";
     private const string HeadBoneName = "Head";
 
-    private static readonly string[] StrippedChildNames = { "LeftEye_Glow", "RightEye_Glow", "ChestStencil" };
+    private static readonly string[] StrippedChildNames = { "LeftEye_Glow", "RightEye_Glow", "Left_Eye_Mesh", "Right_Eye_Mesh", "ChestStencil" };
     private static readonly int AnimSpeed = Animator.StringToHash("Speed");
     private static readonly int AnimMotionSpeed = Animator.StringToHash("MotionSpeed");
     private static readonly int AnimGrounded = Animator.StringToHash("Grounded");

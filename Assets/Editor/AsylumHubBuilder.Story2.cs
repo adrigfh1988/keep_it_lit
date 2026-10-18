@@ -65,7 +65,8 @@ public static partial class AsylumHubBuilder
     {
         ("Look", "Look_Around"), ("Nervous", "Nervous_Look_Around"), ("Lie", "Laying_Idle"), ("SitIdle", "Sitting_Idle"),
         ("SitDisbelief", "Sitting_Disbelief"), ("Talking", "Talking"), ("StandUp", "Standing_Up"), ("StoopIdle", "Zombie_Idle"),
-        ("Walk", "Walking"), ("Typing", "Typing"),
+        ("Walk", "Walking"), ("Run", "Zombie_Run"), ("Typing", "Typing"),
+        ("Patrol", "Walking"), ("Warn", "Look_Around"), ("Scream", "Zombie_Scream"), ("Rush", "Zombie_Run"), ("Pin", "Zombie_Attack"),
     });
 
     /// <summary>The Intake's hide-step silhouette: one looping walk (IntakeRoom only toggles animator.speed, so the default state must walk).</summary>

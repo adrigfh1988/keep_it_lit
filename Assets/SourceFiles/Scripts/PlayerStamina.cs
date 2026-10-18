@@ -10,7 +10,7 @@ using UnityEngine;
 public class PlayerStamina : MonoBehaviour
 {
     [Tooltip("Seconds of continuous sprint from a full bar to empty")]
-    [SerializeField] private float sprintSeconds = 24f;
+    [SerializeField] private float sprintSeconds = 32f;
     [Tooltip("Seconds to refill from empty to full once recovery starts")]
     [SerializeField] private float recoverSeconds = 16f;
     [Tooltip("Pause after releasing sprint before recovery starts")]

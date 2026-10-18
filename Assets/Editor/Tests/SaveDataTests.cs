@@ -329,5 +329,79 @@ namespace KeepItLit.Tests
             }
             finally { HubState.ResetCampaign(); }
         }
+
+        [Test]
+        public void NightNurse_RosterRules_AndSaveDataRoundTrip()
+        {
+            NightNurse.ResetCampaign();
+            try
+            {
+                Assert.IsFalse(EntityRoster.IsKiller(EntityKind.NightNurse), "NightNurse is a non-lethal harasser/rule entity");
+
+                for (int i = 1; i <= 50; i++)
+                {
+                    int seed = i * 104729;
+
+                    // 1. Never on Floor 1 or Depth 1
+                    Assert.AreEqual(EntityKind.None, EntityRoster.For(false, 1, seed) & EntityKind.NightNurse, $"Story Floor 1 must never have NightNurse (seed {seed})");
+                    Assert.AreEqual(EntityKind.None, EntityRoster.For(true, 1, seed) & EntityKind.NightNurse, $"DESCENT Depth 1 must never have NightNurse (seed {seed})");
+
+                    // 2. At most 1 extra entity (so Hunter + at most 1 extra = max 2 entities total) on every Story floor and DESCENT depth
+                    NightNurse.SeenThisCampaign = true;
+                    for (int f = 1; f <= 5; f++)
+                    {
+                        EntityKind s = EntityRoster.For(false, f, seed);
+                        int bits = ((int)s & 1) + (((int)s >> 1) & 1) + (((int)s >> 2) & 1) + (((int)s >> 3) & 1) + (((int)s >> 4) & 1);
+                        Assert.LessOrEqual(bits, 1, $"Story Floor {f} must have at most 1 extra entity (seed {seed}, got {s})");
+                    }
+                    for (int d = 1; d <= 15; d++)
+                    {
+                        EntityKind s = EntityRoster.For(true, d, seed);
+                        int bits = ((int)s & 1) + (((int)s >> 1) & 1) + (((int)s >> 2) & 1) + (((int)s >> 3) & 1) + (((int)s >> 4) & 1);
+                        Assert.LessOrEqual(bits, 1, $"DESCENT Depth {d} must have at most 1 extra entity (seed {seed}, got {s})");
+                    }
+
+                    // 3. Guaranteed at least once across Floors 2-3 (and Depths 2-3) for any seed even when SeenThisCampaign is already true
+                    bool seenInStoryEarly = false;
+                    bool seenInDescentEarly = false;
+                    for (int f = 2; f <= 3; f++)
+                    {
+                        if ((EntityRoster.For(false, f, seed) & EntityKind.NightNurse) != 0) seenInStoryEarly = true;
+                        if ((EntityRoster.For(true, f, seed) & EntityKind.NightNurse) != 0) seenInDescentEarly = true;
+                    }
+                    Assert.IsTrue(seenInStoryEarly, $"Story Floors 2-3 must include NightNurse at least once (seed {seed})");
+                    Assert.IsTrue(seenInDescentEarly, $"DESCENT Depths 2-3 must include NightNurse at least once (seed {seed})");
+
+                    // 4. Campaign-state guarantee: if !SeenThisCampaign by Floor 4 / Depth 4, Floor 4 / Depth 4 forces NightNurse as the single extra entity
+                    NightNurse.SeenThisCampaign = false;
+                    Assert.AreEqual(EntityKind.NightNurse, EntityRoster.For(false, 4, seed), "Floor 4 must guarantee NightNurse when !SeenThisCampaign");
+                    Assert.AreEqual(EntityKind.NightNurse, EntityRoster.For(true, 4, seed), "Depth 4 must guarantee NightNurse when !SeenThisCampaign");
+                }
+
+                // 5. SaveData.nightNurseSeen round-trip
+                NightNurse.ResetCampaign();
+                SaveData data = new SaveData { version = SaveSystem.Version, floor = 3 };
+                NightNurse.CaptureTo(data);
+                Assert.IsFalse(data.nightNurseSeen);
+
+                NightNurse.SeenThisCampaign = true;
+                NightNurse.CaptureTo(data);
+                Assert.IsTrue(data.nightNurseSeen);
+                Assert.IsTrue(SaveSystem.TryParse(JsonUtility.ToJson(data), out SaveData back, out var problem, out _), problem.ToString());
+                Assert.IsTrue(back.nightNurseSeen);
+
+                NightNurse.ResetCampaign();
+                Assert.IsFalse(NightNurse.SeenThisCampaign);
+                NightNurse.RestoreFrom(back);
+                Assert.IsTrue(NightNurse.SeenThisCampaign);
+
+                NightNurse.RestoreFrom(new SaveData());
+                Assert.IsFalse(NightNurse.SeenThisCampaign);
+            }
+            finally
+            {
+                NightNurse.ResetCampaign();
+            }
+        }
     }
 }

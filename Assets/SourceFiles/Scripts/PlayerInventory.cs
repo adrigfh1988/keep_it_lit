@@ -100,7 +100,7 @@ public static class PlayerInventory
             p.EscapeSeconds += 10f;
             p.GateEscapeSeconds += 10f; // F111: a gate floor's fixed 120 s
         }
-        if (HasActive(ShopItem.StaminaTonic)) p.SprintSeconds += 4f;
+        if (HasActive(ShopItem.StaminaTonic)) p.SprintSeconds *= 2f;
         // F71: CellsPerLamp got sparser (5..8, was 2..3), so the old floor of 2 no longer reads as
         // "extra" - 3 is the new minimum spacing this perk guarantees.
         if (HasActive(ShopItem.ExtraLamps)) p.CellsPerLamp = Mathf.Max(3, Mathf.CeilToInt(p.CellsPerLamp * 0.6f));

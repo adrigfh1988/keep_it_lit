@@ -78,7 +78,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 375296013
-    m_Localized: "N\xE4chste Etage: vier Sekunden l\xE4nger sprinten."
+    m_Localized: "N\xE4chste Etage: doppelte Sprint-Ausdauer (200 %)."
     m_Metadata:
       m_Items: []
   - m_Id: 375296014

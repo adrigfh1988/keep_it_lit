@@ -93,6 +93,11 @@ public class ShopRoom : MonoBehaviour
 
     private void Awake()
     {
+        if (headPivot == null && shopkeeper != null)
+        {
+            Animator a = shopkeeper.GetComponentInChildren<Animator>();
+            if (a != null && a.isHuman) headPivot = a.GetBoneTransform(HumanBodyBones.Head);
+        }
         if (headPivot != null)
         {
             _headAnimator = headPivot.GetComponentInParent<Animator>();

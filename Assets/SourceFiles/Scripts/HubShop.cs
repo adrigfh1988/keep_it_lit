@@ -75,7 +75,7 @@ public class HubShop : MonoBehaviour
     public bool IsOpen => OpenFor(GameFlow.CurrentFloor);
 
     /// <summary>True once the builder has made every part the component needs.</summary>
-    public bool IsComplete => roomZone != null && counter != null && board != null && doorHinge != null && headPivot != null;
+    public bool IsComplete => roomZone != null && counter != null && board != null && doorHinge != null && (headPivot != null || shopkeeper != null);
 
     /// <summary>True while the shop menu (or the contract panel) is open.</summary>
     public bool MenuOpen => _menu != null && _menu.IsOpen;
@@ -135,6 +135,11 @@ public class HubShop : MonoBehaviour
 
     private void CaptureHead()
     {
+        if (headPivot == null && shopkeeper != null)
+        {
+            Animator a = shopkeeper.GetComponentInChildren<Animator>();
+            if (a != null && a.isHuman) headPivot = a.GetBoneTransform(HumanBodyBones.Head);
+        }
         if (_headCaptured || headPivot == null) return;
         _headCaptured = true;
         _headAnimator = headPivot.GetComponentInParent<Animator>();
@@ -213,8 +218,9 @@ public class HubShop : MonoBehaviour
     /// <summary>LateUpdate, so the turn lands after the Animator has written the idle pose for this frame.</summary>
     private void LateUpdate()
     {
-        if (headPivot == null || !Live) return;
+        if (!Live) return;
         CaptureHead();
+        if (headPivot == null) return;
         AsylumHub hub = Hub;
         if (hub == null || hub.Player == null) return;
         _headYawOffset = ShopRoom.TrackHead(headPivot, _headAnimator, _headBaseRotation, _headBaseYaw, _headYawOffset, hub.Player, headTurnSpeed, headYawLimit);

@@ -43359,7 +43359,7 @@ MonoBehaviour:
   counterZone: {fileID: 1047633588055979605}
   doorZone: {fileID: 4016840830563925198}
   contractZone: {fileID: 967145648550837471}
-  headPivot: {fileID: 158362331799660580}
+  headPivot: {fileID: 5667393395268555030}
   counterSign: {fileID: 5763161635812306775}
   doorSign: {fileID: 5371521050984671380}
   doorHinge: {fileID: 745345836975632858}
@@ -51175,14 +51175,14 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4360ce4da21b7b544a09d38281f8d3ff, type: 3}
---- !u!4 &158362331799660580 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3211846857575399862, guid: 4360ce4da21b7b544a09d38281f8d3ff, type: 3}
-  m_PrefabInstance: {fileID: 3359782081424271762}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5634107485159382761 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6958069020495935355, guid: 4360ce4da21b7b544a09d38281f8d3ff, type: 3}
+  m_PrefabInstance: {fileID: 3359782081424271762}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5667393395268555030 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6919490850613672068, guid: 4360ce4da21b7b544a09d38281f8d3ff, type: 3}
   m_PrefabInstance: {fileID: 3359782081424271762}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &6775439703237531345 stripped

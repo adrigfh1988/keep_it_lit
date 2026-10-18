@@ -126,6 +126,18 @@ public static class ProjectSetup
         },
         new Piece
         {
+            Name = "Stalker body (Stan_Model.fbx)",
+            FixMenu = "Build > Re-skin Templates > Stalker (Stan)",
+            Problem = () =>
+            {
+                InteractableKit kit = Object.FindAnyObjectByType<InteractableKit>(FindObjectsInactive.Include);
+                if (kit == null || kit.Stalker == null) return null; // reported by "Interactables kit"
+                return InteractableKitBuilder.HasStanModelBody(kit.Stalker) ? null : "the Stalker template is still wearing the old PlayerRobot body";
+            },
+            Build = InteractableKitBuilder.RebuildStalkerTemplate
+        },
+        new Piece
+        {
             Name = "Last untextured pieces (F90)",
             FixMenu = "Build Missing Pieces (or Build > Floor Themes)",
             Problem = () =>

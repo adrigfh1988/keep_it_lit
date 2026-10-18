@@ -63,6 +63,9 @@ public class SaveData
     public int campaignPreset, campaignAssists, campaignOaths, campaignKit;
     public bool campaignAssistedSticky;
     public int[] campaignGrades, floorDeaths;
+
+    // NightNurse.SeenThisCampaign: true once Sister Agnes has appeared on a floor this campaign. Missing in an older save (false), so no Version bump (P1.1).
+    public bool nightNurseSeen;
 }
 
 /// <summary>
@@ -317,6 +320,7 @@ public static class SaveSystem
             HubCaches.CaptureTo(d);
             HubState.CaptureTo(d);
             CampaignRules.CaptureTo(d); // F122
+            NightNurse.CaptureTo(d);
 
             Store.Write(JsonUtility.ToJson(d));
         }
@@ -357,6 +361,7 @@ public static class SaveSystem
         HubCaches.RestoreFrom(d);
         HubState.RestoreFrom(d);
         CampaignRules.RestoreFrom(d); // F122 (also derives the HubBreach / HunterGrab switches)
+        NightNurse.RestoreFrom(d);
         PatientRecord.ResetShardBaseline(PlayerWallet.TotalEarned); // F122: what the restored wallet already holds is not new earnings
 
         GameFlow.CurrentFloor = d.floor;

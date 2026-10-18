@@ -93,5 +93,12 @@ desktop.ini
 # Player builds (KEEP IT LIT > Build > Windows Player)
 /Builds/
 
-# Marketing screenshots (local only, for Firefly / image tools)
+# Marketing screenshots & local captures
 /MarketingShots/
+/Captures/
+
+# Unity crash recovery & Blender backup files
+/Assets/_Recovery/
+/Assets/_Recovery.meta
+*.blend1
+*.blend1.meta

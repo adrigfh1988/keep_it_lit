@@ -28,6 +28,41 @@ public class DroppedTorch : MonoBehaviour, IInteractable
     private float _baseIntensity;
     private Vector3 _landing;
 
+    private static readonly System.Collections.Generic.List<DroppedTorch> ActiveDropped = new System.Collections.Generic.List<DroppedTorch>();
+
+    private void OnEnable()
+    {
+        if (!ActiveDropped.Contains(this)) ActiveDropped.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        ActiveDropped.Remove(this);
+    }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics()
+    {
+        ActiveDropped.Clear();
+    }
+
+    /// <summary>Checks if any active dropped torch illuminates point unobstructed.</summary>
+    public static bool Illuminates(Vector3 point, System.Func<Vector3, Vector3, bool> lineCheck)
+    {
+        for (int i = 0; i < ActiveDropped.Count; i++)
+        {
+            DroppedTorch d = ActiveDropped[i];
+            if (d == null || !d.isActiveAndEnabled || d._torch == null || !d._torch.DroppedLit) continue;
+            Vector3 pos = d.transform.position + Vector3.up * 0.1f;
+            float dist = Vector3.Distance(pos, point);
+            if (dist < 4f)
+            {
+                if (lineCheck == null || lineCheck(pos, point)) return true;
+            }
+        }
+        return false;
+    }
+
     /// <summary>Where the torch comes to rest (valid after Throw).</summary>
     public Vector3 Landing => _landing;
 

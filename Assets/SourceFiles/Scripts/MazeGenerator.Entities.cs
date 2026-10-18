@@ -13,6 +13,7 @@ public partial class MazeGenerator
     public enum LivingBodyTest { Auto, Hanging, Floor }
 
     private const int EntitySalt = 25; // the +25 stream
+    private const int NightNurseSalt = 0x41474E53; // "AGNS": own salted stream so +25 draws for Listener/Tenant/LivingBody are untouched
 
     [Header("F107 - Entities (run 2)")]
     [Tooltip("Not None: forces exactly this entity set on any floor, in the story or a descent (the way to test one). None = the roster decides (EntityRoster). Restore to None before saving.")]
@@ -56,7 +57,9 @@ public partial class MazeGenerator
         {
             _entitySet = EntityRoster.For(GameFlow.IsDescent, GameFlow.IsDescent ? DescentRun.Depth : _profile.Floor, usedSeed);
             // F122 STAN WAKES EARLY: Stan from floor 2 instead of 4 (StalkerFromFloor is 4 without the Oath, i.e. the roster's own answer). Story only.
-            if (!GameFlow.IsDescent && _profile.Floor >= CampaignRules.StalkerFromFloor) _entitySet |= EntityKind.Stalker;
+            // Assigns rather than ORs when the Oath wakes Stan early on floors 2-3 so the floor still has at most 1 extra entity besides the Hunter.
+            if (!GameFlow.IsDescent && _profile.Floor < EntityRoster.StalkerFrom && _profile.Floor >= CampaignRules.StalkerFromFloor)
+                _entitySet = EntityKind.Stalker;
         }
 
         terror.Log($"Entities set for this level: {_entitySet}{(debugEntities != EntityKind.None ? " (debugEntities)" : "")}", this);
@@ -99,13 +102,13 @@ public partial class MazeGenerator
     /// <summary>
     /// F107 D1, post-BuildStalker, stream +25: spawns every entity in the level's set except the Stalker. The draws happen in a fixed order -
     /// the Listener's cell, the Tenant's locker, the living body's roll and pick, then its decoys - and only for kinds that are in the set.
-    /// After a living body has acted in this descent (DescentRun.BodiesWoke) every level also gets one or two decoys.
+    /// Capped at 1 extra entity besides the Hunter unless debugEntities explicitly forces multiple flags.
     /// </summary>
     private void BuildEntities(System.Random rng)
     {
         _entities.Clear();
         EntityKind set = _entitySet & ~EntityKind.Stalker;
-        bool decoys = GameFlow.IsDescent && DescentRun.BodiesWoke;
+        bool decoys = GameFlow.IsDescent && DescentRun.BodiesWoke && _entitySet == EntityKind.None;
         if (set == EntityKind.None && !decoys) return;
 
         if (interactableKit == null) interactableKit = FindAnyObjectByType<InteractableKit>(FindObjectsInactive.Include);
@@ -113,8 +116,117 @@ public partial class MazeGenerator
         if ((set & EntityKind.Listener) != 0) BuildListener(rng);
         if ((set & EntityKind.Tenant) != 0) BuildTenant(rng);
         if ((set & EntityKind.LivingBody) != 0 || decoys) BuildLivingBodies(rng, (set & EntityKind.LivingBody) != 0, decoys);
+        if ((set & EntityKind.NightNurse) != 0) BuildNightNurse(new System.Random(UsedSeed ^ NightNurseSalt));
 
         terror.Log($"Entities: {(_entities.Count == 0 ? "none" : string.Join(", ", _entities.ConvertAll(e => e.name + ":" + e.Kind)))}", this);
+    }
+
+    private void BuildNightNurse(System.Random rng)
+    {
+        Vector2Int start = Vector2Int.zero;
+        HashSet<Vector2Int> reachable = ReachableCells(start, null);
+        Dictionary<Vector2Int, int> fromStart = BfsWithin(start, reachable);
+        Dictionary<Vector2Int, int> fromHunter = BfsWithin(FarthestCell(), reachable);
+        HashSet<Vector2Int> starCells = new HashSet<Vector2Int>(_starCells);
+
+        List<Vector2Int> candidates = new List<Vector2Int>();
+        Vector2Int fallback = start;
+        int fallbackDistance = -1;
+        foreach (Vector2Int cell in reachable)
+        {
+            if (cell == start || starCells.Contains(cell) || _roomCells.Contains(cell) || IsLayoutReserved(cell)) continue;
+            if (!fromStart.TryGetValue(cell, out int ds)) continue;
+
+            if (ds > fallbackDistance) { fallbackDistance = ds; fallback = cell; }
+            if (ds < listenerMinStartSteps) continue;
+            if (!fromHunter.TryGetValue(cell, out int dh) || dh < listenerMinHunterSteps) continue;
+            candidates.Add(cell);
+        }
+
+        if (candidates.Count == 0)
+        {
+            if (fallbackDistance < 1)
+            {
+                Debug.LogWarning("MazeGenerator: no cell fits the Night Nurse on this small maze - skipping it.", this);
+                return;
+            }
+            candidates.Add(fallback);
+        }
+
+        Shuffle(candidates, rng);
+        Vector2Int chosen = candidates[0];
+        Vector3 position = CellCenter(chosen.x, chosen.y);
+        if (NavMesh.SamplePosition(position, out NavMeshHit hit, cellSize, NavMesh.AllAreas)) position = hit.position;
+
+        Quaternion rot = Quaternion.Euler(0f, rng.Next(4) * 90f, 0f);
+        GameObject instance = null;
+
+        if (interactableKit != null && interactableKit.HasNightNurse)
+        {
+            instance = Instantiate(interactableKit.NightNurse.gameObject, position, rot, _mazeRoot);
+        }
+        else
+        {
+            instance = BuildNightNurseFallbackFromScene(position, rot);
+            if (instance == null)
+            {
+                Debug.LogError("MazeGenerator: no InteractableKit (nightNurse) in the scene - skipping the Night Nurse this run. Run KEEP IT LIT > Build > Interactables in the Editor, then save the scene.", this);
+                return;
+            }
+        }
+
+        instance.name = "NightNurse";
+        instance.SetActive(true);
+
+        NavMeshAgent agent = instance.GetComponent<NavMeshAgent>();
+        if (agent == null) agent = instance.AddComponent<NavMeshAgent>();
+        agent.radius = 0.3f;
+        agent.speed = 1.85f;
+        agent.acceleration = 36f;
+        agent.angularSpeed = 360f;
+        if (!agent.Warp(position)) Debug.LogWarning($"MazeGenerator: could not warp the Night Nurse onto the navmesh at {position}.", this);
+
+        NightNurse nurse = instance.GetComponent<NightNurse>();
+        if (nurse == null) nurse = instance.AddComponent<NightNurse>();
+        _entities.Add(nurse);
+    }
+
+    private GameObject BuildNightNurseFallbackFromScene(Vector3 position, Quaternion rotation)
+    {
+        AsylumHub hub = FindAnyObjectByType<AsylumHub>(FindObjectsInactive.Include);
+        Transform hubAgnesBody = null;
+        if (hub != null && hub.life != null)
+        {
+            foreach (HubNpc npc in hub.life.GetComponentsInChildren<HubNpc>(true))
+            {
+                if (npc != null && npc.who == HubNpc.Who.Agnes && npc.body != null)
+                {
+                    hubAgnesBody = npc.body;
+                    break;
+                }
+            }
+        }
+
+        if (hubAgnesBody == null && interactableKit != null && interactableKit.HasListener)
+        {
+            Transform listenerBody = interactableKit.Listener.transform.Find("Body");
+            if (listenerBody != null) hubAgnesBody = listenerBody;
+        }
+        if (hubAgnesBody == null) return null;
+
+        GameObject root = new GameObject("NightNurse");
+        root.transform.SetParent(_mazeRoot, false);
+        root.transform.SetPositionAndRotation(position, rotation);
+
+        GameObject body = Instantiate(hubAgnesBody.gameObject, root.transform);
+        body.name = "Body_NurseAgnes";
+        body.transform.localPosition = Vector3.zero;
+        body.transform.localRotation = Quaternion.identity;
+        body.transform.localScale = Vector3.one;
+        body.SetActive(true);
+
+        root.AddComponent<NightNurse>();
+        return root;
     }
 
     private void BuildListener(System.Random rng)
@@ -298,6 +410,7 @@ public partial class MazeGenerator
 
             string cell = TryWorldToCell(entity.transform.position, out Vector2Int c) ? c.ToString() : "?";
             string detail = entity is Listener listener ? listener.CurrentMode.ToString()
+                : entity is NightNurse nurse ? nurse.CurrentMode.ToString()
                 : entity is LockerTenant tenant ? (tenant.Held ? "held" : "waiting")
                 : entity is LivingBody body ? $"{body.Mode}{(body.IsDecoy ? " decoy" : "")}{(body.HasActed ? " done" : "")}" : "";
             sb.Append($"\n  {entity.DebugGlyph} {entity.Kind} at {cell} {detail}");

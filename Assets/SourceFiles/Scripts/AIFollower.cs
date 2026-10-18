@@ -234,7 +234,8 @@ public class AIFollower : MonoBehaviour
         Idle,
         LookAround,
         Lurk,
-        Stunned
+        Stunned,
+        Tantrum
     }
 
     private enum State
@@ -289,6 +290,14 @@ public class AIFollower : MonoBehaviour
     private float _rushUntil = -1f;
     private float _rushSpeed;
     private float _nextListenTime;
+    // Flashlight tantrum on patrol: stomps and slams its clenched fists before sprinting at the player.
+    [Header("Flashlight tantrum")]
+    [Tooltip("Seconds the hunter stomps and slams its fists in rage when the player's torch beam hits it on patrol, before sprinting at the player.")]
+    [SerializeField] private float tantrumDuration = 2.15f;
+    [Tooltip("Minimum seconds between two flashlight tantrums.")]
+    [SerializeField] private float tantrumCooldown = 12f;
+    private float _tantrumUntil = -1f;
+    private float _nextTantrumTime;
     // F104 B1: the DreadMeter sent it away until this Time.time. -1 = not backing off.
     private float _backoffUntil = -1f;
     // F104 B2: Time.time sight began unbroken (-1 = no sight), and the player speeds / cap cached in Start.
@@ -792,10 +801,16 @@ public class AIFollower : MonoBehaviour
         // F72: applied after the state machine, so perception/targeting ran normally this frame and
         // only the actual movement is overridden - a closed door holds the body, not the senses.
         // F103 A7: a listen pause holds the body the same way.
-        if (Time.time < _stallUntil || Time.time < _listenUntil)
+        // Flashlight tantrum: holds the body in place facing the player while it stomps its foot and slams its fists before sprinting.
+        if (Time.time < _stallUntil || Time.time < _listenUntil || Time.time < _tantrumUntil)
         {
             _agent.isStopped = true;
             _agent.velocity = Vector3.zero;
+            if (Time.time < _tantrumUntil && target != null)
+            {
+                _lastKnownPosition = target.position;
+                UpdateRotation(FlatDirection(target.position - transform.position));
+            }
         }
 
         UpdateAnimator();
@@ -998,12 +1013,13 @@ public class AIFollower : MonoBehaviour
         _terror.Log($"Hunter heard you -> rush {rushSeconds:0.#}s at {_rushSpeed:0.0} m/s to {_lastKnownPosition}", this);
     }
 
-    /// <summary>F103 A7: true during the burst after the listening pause. The rush targets the spot it heard, never the live player: EnterSearch already queued it first.</summary>
-    private bool IsRushing => Time.time >= _listenUntil && Time.time < _rushUntil;
+    /// <summary>F103 A7: true during the burst after the listening pause (or after the flashlight tantrum).</summary>
+    private bool IsRushing => Time.time >= _listenUntil && Time.time >= _tantrumUntil && Time.time < _rushUntil;
 
     private void CancelHeardYouBeat()
     {
         _listenUntil = -1f;
+        _tantrumUntil = -1f;
         _rushUntil = -1f;
     }
 
@@ -1092,16 +1108,55 @@ public class AIFollower : MonoBehaviour
 
     /// <summary>
     /// F73 (B3.1): the hunter notices the player's torch beam landing on it, even without full sight.
-    /// Never overrides an active sighting (_hasSight already means something stronger than this), and is
-    /// cooled down so standing still in the beam does not spam HearNoise.
+    /// When patrolling (Wander or Ambush), being hit by the flashlight triggers its short rage foot-stomp
+    /// tantrum (2-3s) before sprinting in the player's direction.
     /// </summary>
     private void CheckTorchBeamNoise()
     {
-        if (!IsInTorchBeam || _hasSight || Time.time < _torchNoiseCooldownUntil) return;
-        if (_torchBeamDistance >= _torch.Range * 0.8f) return;
+        if (!IsInTorchBeam || _torch == null) return;
+        if (_torchBeamDistance >= _torch.Range * 0.85f) return;
+
+        // If the hunter is on patrol (Wander or Ambush) and hit by the player's flashlight, perform the rage tantrum before sprinting.
+        if ((_state == State.Wander || _state == State.Ambush) && Time.time >= _nextTantrumTime && Time.time >= _tantrumUntil)
+        {
+            TriggerTorchTantrum();
+            return;
+        }
+
+        if (_hasSight || Time.time < _torchNoiseCooldownUntil) return;
 
         _torchNoiseCooldownUntil = Time.time + torchBeamNoiseCooldown;
         HearNoiseInternal(target.position, torchBeamNoiseRadius); // F107 D2: the beam on the hunter is sight, not sound - it must not wake a Listener
+    }
+
+    /// <summary>Triggers the short rage foot-stomp tantrum (2-3s) before sprinting toward the player's position.</summary>
+    public void TriggerTorchTantrum()
+    {
+        if (_state == State.Captured || _agent == null || !_agent.isOnNavMesh) return;
+        if (_state == State.Ambush) LeaveAmbush();
+
+        _tantrumUntil = Time.time + tantrumDuration;
+        _listenUntil = -1f;
+        _rushUntil = _tantrumUntil + rushSeconds;
+        _nextTantrumTime = Time.time + tantrumCooldown;
+        _torchNoiseCooldownUntil = Time.time + torchBeamNoiseCooldown;
+
+        if (target != null)
+        {
+            _lastKnownPosition = target.position;
+            AddHeatNear(target.position);
+            AddCellHeat(target.position, cellHeatHeard, cellHeatHeardNeighbour);
+        }
+
+        if (_state != State.Chase)
+        {
+            EnterSearch();
+        }
+
+        _presence?.RevealEyes(tantrumDuration + rushSeconds);
+        _presence?.PlayAlert();
+        HeardYou?.Invoke();
+        _terror.Log($"Hunter flashlight tantrum ({tantrumDuration:0.00}s) -> sprint {rushSeconds:0.#}s at {_rushSpeed:0.0} m/s", this);
     }
 
     /// <summary>
@@ -2226,6 +2281,10 @@ public class AIFollower : MonoBehaviour
         if (Time.time < _stunnedUntil)
         {
             pose = Pose.Stunned;
+        }
+        else if (Time.time < _tantrumUntil)
+        {
+            pose = Pose.Tantrum;
         }
         else if (_state == State.Ambush && _ambushArrived)
         {

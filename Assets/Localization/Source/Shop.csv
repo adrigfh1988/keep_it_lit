@@ -13,7 +13,7 @@ shop.item.quiet_shoes.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 
 shop.item.extra_lamps.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Extra Lamps
 shop.item.extra_lamps.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)",More lamps lit on the next floor.
 shop.item.stamina_tonic.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size)",Stamina Tonic
-shop.item.stamina_tonic.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)","Four more seconds of sprint, next floor."
+shop.item.stamina_tonic.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size)","Double sprint stamina (200%), next floor."
 shop.item.torch_colour.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size). The colour of the torch beam",Torch Colour
 shop.item.torch_colour.blurb,"Shop card description (19 pt, up to 3 lines, 388 x 60 px, auto-size). Lists the three colours sold (see shop.palette.torch.1-3) in the same order",Cold. Ember. Violet.
 shop.item.hud_tint.name,"Shop card item name (26 pt bold, one line, 340 px, auto-size). The colour of the HUD text",HUD Tint

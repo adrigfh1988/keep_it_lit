@@ -6,8 +6,8 @@ using UnityEngine.AI;
 /// The second creature (F75, decision D7): the robot body (Assets/Prefabs/PlayerRobot.prefab),
 /// blackened, with pin-prick eyes, scaled 1.15 - deliberately not Adam, so the two killers still read
 /// differently once KEEP IT LIT &gt; Build &gt; Hunter Body has been run for the hunter. Appears on floors 4
-/// and 5 (EntityRoster). It moves only while unlit - not in the torch cone, not in a powered
-/// lamp/candle/lantern pool (LightPool) - and freezes mid-stride the instant a light finds it.
+/// and 5 (EntityRoster). It moves only while unlit - not in the torch cone, not in the floor lantern
+/// pool (Lantern) - and freezes mid-stride the instant one of those lights finds it. Wall lamps do not freeze it.
 ///
 /// It is not lethal: touching the player makes it shriek (the hunter hears the exact position from
 /// 40 m and its last-known position is forced to match), drains a quarter of the torch battery, and it
@@ -76,12 +76,12 @@ public class Stalker : MonoBehaviour
 
     [Header("Posture")]
     [Tooltip("Degrees pitched forward, applied in world space about the model's right axis.")]
-    [SerializeField] private float spineHunch = 10f;
-    [SerializeField] private float chestHunch = 12f;
-    [SerializeField] private float neckForward = 8f;
+    [SerializeField] private float spineHunch = 0f;
+    [SerializeField] private float chestHunch = 0f;
+    [SerializeField] private float neckForward = 0f;
     [Tooltip("Constant head roll; the side is picked at random per spawn.")]
-    [SerializeField] private float headTilt = 16f;
-    [SerializeField] private float lungeExtraHunch = 18f;
+    [SerializeField] private float headTilt = 0f;
+    [SerializeField] private float lungeExtraHunch = 12f;
     [Tooltip("Upper arms swing forward by this much during a lunge. If they go backwards on screen, flip the sign in ApplyPose.")]
     [SerializeField] private float lungeArmReach = 55f;
 
@@ -133,6 +133,49 @@ public class Stalker : MonoBehaviour
     [Header("Voice (F82)")]
     [Tooltip("Stan's lines (Assets/SourceFiles/Data/StanPhrases.asset). Assigned by KEEP IT LIT > Build > Phrase Books; empty = built-in defaults.")]
     [SerializeField] private StalkerPhraseBook phraseBook;
+    [Tooltip("Probability (0..1) that a recorded voice clip from the shuffle bag triggers on a Lit / Watch encounter (default 0.70 = 70 %).")]
+    [SerializeField, Range(0f, 1f)] private float voiceClipChance = 0.70f;
+    [Tooltip("Minimum seconds between recorded voice clip rolls/triggers.")]
+    [SerializeField] private float voiceClipCooldown = 14f;
+    [Tooltip("Max distance (m) within which Stan will roll to speak a recorded voice clip when lit or watching.")]
+    [SerializeField] private float voiceClipMaxRange = 16f;
+    [Tooltip("Optional extra voice clips on the template (merged into the shuffle bag alongside GameAudioLibrary.stanVoice).")]
+    [SerializeField] private AudioClip[] voiceClipBag = new AudioClip[0];
+    [Tooltip("Master volume multiplier for Stan's voice (e.g. 0.65 to keep heavy saturation from sounding too loud).")]
+    [SerializeField, Range(0.1f, 1.5f)] private float voiceVolume = 0.65f;
+    [Tooltip("Base pitch multiplier for Stan's voice (e.g. 0.86 for deeper, more guttural resonance).")]
+    [SerializeField] private float voiceBasePitch = 0.83f;
+    [Tooltip("Harmonic distortion level on Stan's voice (0 = clean, 1 = extreme fuzz/clip). 0.38 gives an uncanny, crunchy resonance.")]
+    [SerializeField, Range(0f, 1f)] private float voiceDistortion = 0.38f;
+    [Tooltip("Distortion overdrive gain (1 = clean, 3.5 = crunchy, 6 = heavy fuzz, 10 = demonic crush).")]
+    [SerializeField, Range(1f, 16f)] private float voiceDistortionDrive = 6.2f;
+    [Tooltip("Sample rate downsampling / decimation factor (1 = pristine, 4 = crunchy 12 kHz grit, 6 = lo-fi intercom).")]
+    [SerializeField, Range(1, 12)] private int voiceDistortionDownsample = 4;
+    [Tooltip("Distortion bitcrush / resolution reduction (0 = off, 0.5 = crunchy 6-bit quantization).")]
+    [SerializeField, Range(0f, 1f)] private float voiceDistortionBitcrush = 0.50f;
+    [Tooltip("Sub-buzz ring-modulation undertone frequency in Hz (0 = off, 45-55 = uncanny demonic buzz).")]
+    [SerializeField, Range(0f, 120f)] private float voiceDistortionSubBuzz = 50f;
+    [Tooltip("Distortion wet mix (0 = clean, 1 = fully processed).")]
+    [SerializeField, Range(0f, 1f)] private float voiceDistortionWet = 0.95f;
+    [Tooltip("Distortion output gain pad (compensates for RMS boost caused by heavy non-linear saturation).")]
+    [SerializeField, Range(0.1f, 1.5f)] private float voiceDistortionOutputGain = 0.65f;
+    [Tooltip("Sinister chorus filter for an unsettling detuned double-voice undertone.")]
+    [SerializeField] private bool voiceChorus = true;
+    [Tooltip("Eerie metallic resonance / slapback delay in milliseconds (0 = disabled).")]
+    [SerializeField] private float voiceEchoDelayMs = 65f;
+    [Tooltip("High-pass frequency to remove muddy bass rumble, making the voice sound like a strained speaker (Hz).")]
+    [SerializeField] private float voiceHighPassHz = 140f;
+
+    [Header("Red eye glow")]
+    [Tooltip("Eyes shift from pale white pinpricks to bright crimson red when Stan lunges, watches, creeps in the penumbra, or gets close.")]
+    [SerializeField] private bool redEyesOnThreat = true;
+    [Tooltip("Keep the eyes glowing bright red at all times.")]
+    [SerializeField] private bool forceRedEyes;
+    [Tooltip("Flat metres within which Stan's eyes burn bright red even while frozen in the light.")]
+    [SerializeField] private float redEyeCloseRange = 6.5f;
+    [SerializeField] private Color redEyeColor = Color.white;
+    [SerializeField] private float redEyeIntensity = 9f;
+    [SerializeField] private float redEyeLightIntensity = 1.8f;
 
     private MazeGenerator _maze;
     private Transform _player;
@@ -145,11 +188,24 @@ public class Stalker : MonoBehaviour
 
     // F82: the speech-bubble voice (added in Configure) and the eyes it flares while a letter blips.
     private StalkerVoice _voice;
+    private AudioSource _voiceAudio;
+    private float _activeVoicePitch = 0.86f;
+    private readonly List<AudioClip> _voicePool = new List<AudioClip>();
+    private readonly List<int> _voiceShuffleBag = new List<int>();
+    private int _lastVoiceClipIndex = -1;
+    private float _nextVoiceClipAllowedAt;
     private Renderer[] _eyeRenderers;
     private Color[] _eyeBaseEmission;
     private MaterialPropertyBlock _eyeBlock;
-    private float _appliedFlare;
+    private Light _eyeRedLight;
+    private float _redEyeBlend;
+    private float _appliedFlare = -1f;
+    private float _appliedRedBlend = -1f;
     private static readonly int EmissionColorId = Shader.PropertyToID("_EmissionColor");
+    private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
+
+    /// <summary>Forces Stan's eyes to glow bright red (or returns them to Threat-driven mode when false).</summary>
+    public void SetRedEyes(bool active) => forceRedEyes = active;
 
     private NavMeshAgent _agent;
     private Animator _animator;
@@ -222,6 +278,15 @@ public class Stalker : MonoBehaviour
     private Transform _head;
     private Transform _leftUpperArm;
     private Transform _rightUpperArm;
+    private Transform _leftLowerArm;
+    private Transform _rightLowerArm;
+    private Renderer _bodyRenderer;
+    private SkinnedMeshRenderer _bodySkinnedMesh;
+    private int _jawShapeIndex = -1;
+    private MaterialPropertyBlock _mouthBlock;
+    private readonly float[] _audioSamples = new float[128];
+    private float _speechBlend;
+    private float _speechAudioLevel;
     private float _tiltSign = 1f;
     private float _headYaw;
     private float _headPitch;
@@ -295,6 +360,8 @@ public class Stalker : MonoBehaviour
                 _head = _animator.GetBoneTransform(HumanBodyBones.Head);
                 _leftUpperArm = _animator.GetBoneTransform(HumanBodyBones.LeftUpperArm);
                 _rightUpperArm = _animator.GetBoneTransform(HumanBodyBones.RightUpperArm);
+                _leftLowerArm = _animator.GetBoneTransform(HumanBodyBones.LeftLowerArm);
+                _rightLowerArm = _animator.GetBoneTransform(HumanBodyBones.RightLowerArm);
             }
         }
 
@@ -319,15 +386,74 @@ public class Stalker : MonoBehaviour
         _audio.playOnAwake = false;
         _audio.spatialBlend = 1f;
         _audio.maxDistance = 22f;
+        GameSettings.RouteEffect(_audio);
         _tickClip = DoorAudio.BuildClunkClip(0.12f, 500f, 0.3f);
         _shriekClip = DoorAudio.BuildClunkClip(0.5f, 900f, 0.75f);
         _skitterClip = DoorAudio.BuildClunkClip(0.18f, 1300f, 0.85f);
+
+        GameObject voiceSpeaker = new GameObject("StanVoiceSpeaker");
+        voiceSpeaker.transform.SetParent(_head != null ? _head : transform, false);
+        if (_head == null) voiceSpeaker.transform.localPosition = new Vector3(0f, HeadHeight, 0f);
+        else voiceSpeaker.transform.localPosition = new Vector3(0f, -0.05f, 0.14f);
+        _voiceAudio = voiceSpeaker.AddComponent<AudioSource>();
+        _voiceAudio.playOnAwake = false;
+        _voiceAudio.spatialBlend = 1f;
+        _voiceAudio.rolloffMode = AudioRolloffMode.Linear;
+        _voiceAudio.minDistance = 0.8f;
+        _voiceAudio.maxDistance = 22f;
+        _voiceAudio.spread = 20f;
+        _voiceAudio.dopplerLevel = 0f;
+        GameSettings.RouteEffect(_voiceAudio);
+
+        if (voiceDistortionWet > 0.001f || voiceDistortion > 0.001f)
+        {
+            StanVoiceDistortion dist = voiceSpeaker.AddComponent<StanVoiceDistortion>();
+            dist.drive = voiceDistortionDrive;
+            dist.downsample = voiceDistortionDownsample;
+            dist.bitcrush = voiceDistortionBitcrush;
+            dist.subBuzzHz = voiceDistortionSubBuzz;
+            dist.wetMix = voiceDistortionWet;
+            dist.outputGain = voiceDistortionOutputGain;
+        }
+
+        if (voiceHighPassHz > 20f)
+        {
+            AudioHighPassFilter hp = voiceSpeaker.AddComponent<AudioHighPassFilter>();
+            hp.cutoffFrequency = voiceHighPassHz;
+        }
+
+        if (voiceChorus)
+        {
+            AudioChorusFilter chorus = voiceSpeaker.AddComponent<AudioChorusFilter>();
+            chorus.dryMix = 0.85f;
+            chorus.wetMix1 = 0.32f;
+            chorus.wetMix2 = 0.22f;
+            chorus.rate = 1.15f;
+            chorus.depth = 0.22f;
+        }
+
+        if (voiceEchoDelayMs > 1f)
+        {
+            AudioEchoFilter echo = voiceSpeaker.AddComponent<AudioEchoFilter>();
+            echo.delay = voiceEchoDelayMs;
+            echo.decayRatio = 0.22f;
+            echo.dryMix = 1.0f;
+            echo.wetMix = 0.20f;
+        }
+
+        BuildVoicePool();
 
         _mode = Mode.Roam;
         _nextStepIn = NextStepInterval();
         _lastStepTime = Time.time;
         _nextHeadTwitchAt = Time.time + Random.Range(headTwitchIntervalMin, headTwitchIntervalMax);
         _nextLitTwitchAt = 0f;
+
+        if (_torchCamera != null && _animator != null)
+        {
+            Vector3 fwd = FlatDirection(_animator.transform.forward);
+            if (fwd.sqrMagnitude > 0.0001f) UpdateHeadAim(fwd.normalized);
+        }
 
         // F75: registers as a silent door-breaker - it slips under a closed shutter with no slam, no
         // stall (contrast AIFollower's own registration).
@@ -350,6 +476,15 @@ public class Stalker : MonoBehaviour
         foreach (Renderer renderer in _renderers)
         {
             if (renderer != null && renderer.name.Contains("Eye_Glow")) eyes.Add(renderer);
+            if (renderer != null && renderer.name.Contains("Stan_Body"))
+            {
+                _bodyRenderer = renderer;
+                _bodySkinnedMesh = renderer as SkinnedMeshRenderer;
+                if (_bodySkinnedMesh != null && _bodySkinnedMesh.sharedMesh != null)
+                {
+                    _jawShapeIndex = _bodySkinnedMesh.sharedMesh.GetBlendShapeIndex("JawOpen");
+                }
+            }
         }
         _eyeRenderers = eyes.ToArray();
         _eyeBaseEmission = new Color[_eyeRenderers.Length];
@@ -359,6 +494,18 @@ public class Stalker : MonoBehaviour
             _eyeBaseEmission[i] = shared != null && shared.HasProperty(EmissionColorId) ? shared.GetColor(EmissionColorId) : Color.white;
         }
         _eyeBlock = new MaterialPropertyBlock();
+        _mouthBlock = new MaterialPropertyBlock();
+
+        foreach (Light l in GetComponentsInChildren<Light>(true))
+        {
+            if (l != null && (l.name == "EyeRedGlow" || l.name == "EyeWhiteGlow"))
+            {
+                l.enabled = false;
+                if (Application.isPlaying) Destroy(l.gameObject);
+                else DestroyImmediate(l.gameObject);
+            }
+        }
+        _eyeRedLight = null;
     }
 
     private void OnDestroy()
@@ -425,7 +572,11 @@ public class Stalker : MonoBehaviour
         if (_animator != null) _animator.speed = 0f;
         CancelBehaviours();
         // F82: an ending clears any open bubble at once (not on the title-screen freeze - nothing to clear there).
-        if (_voice != null && (GameOutcome.IsOver || (_outcome != null && _outcome.IsEnding))) _voice.Silence();
+        if (GameOutcome.IsOver || (_outcome != null && _outcome.IsEnding))
+        {
+            if (_voice != null) _voice.Silence();
+            if (_voiceAudio != null && _voiceAudio.isPlaying) _voiceAudio.Stop();
+        }
     }
 
     /// <summary>Ends any lunge/watch and returns to Roam; restores the agent's base acceleration.</summary>
@@ -453,17 +604,25 @@ public class Stalker : MonoBehaviour
         _cameraYaw = yaw;
     }
 
-    /// <summary>Core if a registered LightPool source reaches the chest strongly enough, or the torch is on, in range,
-    /// inside the bright core of its cone plus a few degrees of slack, and unobstructed. Penumbra if it is only inside the
-    /// outer cone (same slack).</summary>
+    /// <summary>Core if the torch is on, in range and aimed at Stan, or an active portable floor lantern
+    /// or dropped torch reaches Stan unobstructed. Wall lamps do NOT freeze Stan.</summary>
     private LitState ComputeLitState()
     {
         Vector3 chest = transform.position + Vector3.up * ChestHeight;
-        if (LightPool.ExposureAt(chest) > ExposureThreshold) return LitState.Core;
+        Vector3 head = transform.position + Vector3.up * HeadHeight;
+
+        // The lamp that we pick from the floor (Lantern) freezes Stan
+        if (Lantern.Illuminates(chest, HasClearLine) || Lantern.Illuminates(head, HasClearLine))
+            return LitState.Core;
+
+        // A dropped flashlight lying on the floor freezes Stan
+        if (DroppedTorch.Illuminates(chest, HasClearLine) || DroppedTorch.Illuminates(head, HasClearLine))
+            return LitState.Core;
+
+        // Wall lamps intentionally ignored: Stan only freezes from the player's flashlight or floor lantern.
 
         if (_torch == null || !_torch.IsBeamLit) return LitState.Dark;
 
-        Vector3 head = transform.position + Vector3.up * HeadHeight;
         float coreHalf = _torch.InnerAngle * 0.5f + TorchAngleSlack;
         float outerHalf = _torch.OuterAngle * 0.5f + TorchAngleSlack;
         float range = _torch.Range;
@@ -527,6 +686,11 @@ public class Stalker : MonoBehaviour
     {
         if (lit && !_wasLit)
         {
+            if (_torchCamera != null && _animator != null)
+            {
+                Vector3 fwdAim = FlatDirection(_animator.transform.forward);
+                if (fwdAim.sqrMagnitude > 0.0001f) UpdateHeadAim(fwdAim.normalized);
+            }
             // "a single tick when it freezes within 8 m" - the moment it goes from moving to lit-frozen.
             // F105 C7: not when he merely stopped again at the beam's edge (the hold/step flapping with the turn rate would spam it).
             if (!_wasPenumbra)
@@ -536,6 +700,10 @@ public class Stalker : MonoBehaviour
 
                 // F82: only remarks on it if he can see you - "too bright" at your back would be nonsense.
                 if (_voice != null && _voice.CanSeePlayer) _voice.Say(StalkerPhraseBook.Category.Lit);
+                if (d <= voiceClipMaxRange && (_torchCamera == null || HasClearLine(HeadWorldPosition, _torchCamera.position)))
+                {
+                    TryPlayVoiceClip();
+                }
             }
 
             _litSince = Time.time;
@@ -599,6 +767,15 @@ public class Stalker : MonoBehaviour
             // ApplyLitState(false) sets isStopped = false every unlit frame, so stop *after* it, here.
             _agent.isStopped = true;
             _agent.velocity = Vector3.zero;
+            if (_player != null)
+            {
+                Vector3 toPlayer = FlatDirection(_player.position - transform.position);
+                if (toPlayer.sqrMagnitude > 0.01f)
+                {
+                    _desiredRootRotation = Quaternion.LookRotation(toPlayer.normalized, Vector3.up) * Quaternion.Euler(0f, -_modelYawOffset, 0f);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, _desiredRootRotation, 720f * Time.deltaTime);
+                }
+            }
             if (Time.time >= _watchEndsAt || FlatDistanceToPlayer() < TouchRadius + 0.5f)
             {
                 StartLunge(); // the watch is the wind-up, so the lunge cooldown is ignored
@@ -671,6 +848,7 @@ public class Stalker : MonoBehaviour
             _mode = Mode.Watch;
             _watchEndsAt = Time.time + Random.Range(watchSecondsMin, watchSecondsMax);
             if (_voice != null) _voice.Say(StalkerPhraseBook.Category.Staring);
+            TryPlayVoiceClip();
         }
     }
 
@@ -868,30 +1046,103 @@ public class Stalker : MonoBehaviour
     private void LateUpdate()
     {
         if (!_configured || _animator == null || _hiddenAfterTouch) return;
+        UpdateSpeechState();
         ApplyPose();
         ApplyEyeFlare();
+        ApplyMouthPulse();
+        ApplyJaw();
     }
 
-    /// <summary>F82: eyes brighten x(1 + flare) while a speech letter blips - per-renderer property block
-    /// over the base emission read once from the shared material. Written only when the value changes.</summary>
+    /// <summary>Drives physical jaw drop via the JawOpen blend shape on Stan's body in real time with speech audio loudness.</summary>
+    private void ApplyJaw()
+    {
+        if (_bodySkinnedMesh == null || _jawShapeIndex < 0) return;
+        float jawWeight = Mathf.Clamp01(_speechAudioLevel * 2.5f) * 100f * _speechBlend;
+        _bodySkinnedMesh.SetBlendShapeWeight(_jawShapeIndex, jawWeight);
+    }
+
+    /// <summary>Measures live RMS audio amplitude from Stan's voice speaker to drive mouth chatter, head nods and arm reaches.</summary>
+    private void UpdateSpeechState()
+    {
+        bool speaking = _voiceAudio != null && _voiceAudio.isPlaying;
+        if (speaking)
+        {
+            float flutter = Mathf.Sin(Time.time * 6.5f) * 0.02f;
+            _voiceAudio.pitch = Mathf.Lerp(_voiceAudio.pitch, _activeVoicePitch + flutter, 8f * Time.deltaTime);
+
+            _voiceAudio.GetOutputData(_audioSamples, 0);
+            float sum = 0f;
+            for (int i = 0; i < _audioSamples.Length; i++)
+            {
+                float s = _audioSamples[i];
+                sum += s * s;
+            }
+            float rms = Mathf.Sqrt(sum / _audioSamples.Length);
+            _speechAudioLevel = Mathf.Lerp(_speechAudioLevel, rms * 4f, 25f * Time.deltaTime);
+        }
+        else
+        {
+            _speechAudioLevel = Mathf.MoveTowards(_speechAudioLevel, 0f, 10f * Time.deltaTime);
+        }
+        _speechBlend = Mathf.MoveTowards(_speechBlend, speaking ? 1f : 0f, 3.5f * Time.deltaTime);
+    }
+
+    /// <summary>Option A: pulses the white emission on Stan's teeth (material slot 3) with real-time vocal loudness.</summary>
+    private void ApplyMouthPulse()
+    {
+        if (_bodyRenderer == null) return;
+        if (_speechBlend <= 0.001f && _speechAudioLevel <= 0.001f)
+        {
+            _bodyRenderer.SetPropertyBlock(null, 3);
+            return;
+        }
+        _bodyRenderer.GetPropertyBlock(_mouthBlock, 3);
+        float pulse = 1f + Mathf.Clamp01(_speechAudioLevel * 1.6f);
+        Color teethEm = Color.white * (3.5f * pulse);
+        _mouthBlock.SetColor(EmissionColorId, teethEm);
+        _bodyRenderer.SetPropertyBlock(_mouthBlock, 3);
+    }
+
+    /// <summary>F82 + Red eye glow: eyes brighten x(1 + flare) while a speech letter blips or recorded voice plays, and shift to
+    /// bright crimson red when lunging, watching, speaking, creeping in the penumbra, within close range, or forced red.</summary>
     private void ApplyEyeFlare()
     {
-        if (_voice == null || _eyeRenderers == null) return;
-        float flare = _voice.EyeFlare;
-        if (Mathf.Approximately(flare, _appliedFlare)) return;
-        _appliedFlare = flare;
+        if (_eyeRenderers == null) return;
+        bool speaking = _voiceAudio != null && _voiceAudio.isPlaying;
+        float flare = _voice != null ? _voice.EyeFlare : 0f;
+        if (speaking)
+        {
+            float pulse = FlashSafety.On ? 0.35f : (0.25f + 0.35f * Mathf.Abs(Mathf.Sin(Time.time * 9.5f)));
+            if (pulse > flare) flare = pulse;
+        }
+        bool wantRed = forceRedEyes || speaking || (redEyesOnThreat && (
+            _mode == Mode.Lunge ||
+            _mode == Mode.Watch ||
+            _penumbraMoving ||
+            (_player != null && FlatDistanceToPlayer() <= redEyeCloseRange)));
 
+        _redEyeBlend = Mathf.MoveTowards(_redEyeBlend, wantRed ? 1f : 0f, 4f * Time.deltaTime);
+
+        if (Mathf.Approximately(flare, _appliedFlare) && Mathf.Approximately(_redEyeBlend, _appliedRedBlend)) return;
+        _appliedFlare = flare;
+        _appliedRedBlend = _redEyeBlend;
+
+
+        Color whiteHdr = Color.white * redEyeIntensity;
         for (int i = 0; i < _eyeRenderers.Length; i++)
         {
             Renderer eye = _eyeRenderers[i];
             if (eye == null) continue;
-            if (flare <= 0f)
+            if (flare <= 0f && _redEyeBlend <= 0f)
             {
                 eye.SetPropertyBlock(null);
                 continue;
             }
             eye.GetPropertyBlock(_eyeBlock);
-            _eyeBlock.SetColor(EmissionColorId, _eyeBaseEmission[i] * (1f + flare));
+            Color baseEm = _eyeBaseEmission[i];
+            Color em = Color.Lerp(baseEm, whiteHdr, _redEyeBlend) * (1f + flare);
+            _eyeBlock.SetColor(BaseColorId, Color.white);
+            _eyeBlock.SetColor(EmissionColorId, em);
             eye.SetPropertyBlock(_eyeBlock);
         }
     }
@@ -903,6 +1154,12 @@ public class Stalker : MonoBehaviour
         if (!litTwitch || _player == null) return;
         if (Time.time < _nextLitTwitchAt) return;
         if (FlatDistanceToPlayer() > litTwitchRange) return;
+
+        if (_torchCamera != null && _animator != null)
+        {
+            Vector3 fwdAim = FlatDirection(_animator.transform.forward);
+            if (fwdAim.sqrMagnitude > 0.0001f) UpdateHeadAim(fwdAim.normalized);
+        }
 
         _headYaw = Mathf.Clamp(_headYaw + Random.Range(-1f, 1f) * litTwitchAngle, -headYawLimit, headYawLimit);
         _litRoll = (Random.value < 0.5f ? -1f : 1f) * litTwitchAngle;
@@ -925,27 +1182,48 @@ public class Stalker : MonoBehaviour
         fwd.Normalize();
         Vector3 right = Vector3.Cross(Vector3.up, fwd);
 
-        if (_steppedThisFrame) AdvancePoseState(fwd);
+        if (_steppedThisFrame || _mode == Mode.Watch) AdvancePoseState(fwd);
         if (_litRoll != 0f && Time.time >= _litRollUntil) _litRoll = 0f;
 
         // Positive angle about 'right' pitches forward/down (Unity is left-handed: Euler(+x) looks down).
+        float bodyPitch = spineHunch + chestHunch + lungeExtraHunch * _lungeBlend + neckForward;
         Rot(_spine, right, spineHunch);
         Rot(_chest, right, chestHunch + lungeExtraHunch * _lungeBlend);
         Rot(_neck, right, neckForward);
 
-        // Negative pitch swings a hanging arm forward. If it goes backwards on screen, flip this sign.
-        float reach = -lungeArmReach * _lungeBlend;
+        // Negative pitch swings a hanging arm forward. Speech raises arms in a reaching / beckoning grasp.
+        float speechSway = Mathf.Sin(Time.time * 1.8f) * 2.5f * _speechBlend;
+        float speechReach = (-35f + speechSway) * _speechBlend;
+        float reach = -lungeArmReach * _lungeBlend + speechReach;
         Rot(_leftUpperArm, right, reach);
         Rot(_rightUpperArm, right, reach);
+
+        if (_speechBlend > 0.001f)
+        {
+            // Smooth, natural organic sway while speaking (no high-frequency shaking or tremor)
+            float armYawSway = Mathf.Cos(Time.time * 1.4f) * 2.0f * _speechBlend;
+            Rot(_leftUpperArm, Vector3.up, -14f * _speechBlend + armYawSway);
+            Rot(_rightUpperArm, Vector3.up, 14f * _speechBlend - armYawSway);
+
+            float elbowBend = (-22f - Mathf.Clamp01(_speechAudioLevel * 1.8f) * 8f + speechSway * 0.8f) * _speechBlend;
+            if (_leftLowerArm != null) Rot(_leftLowerArm, right, elbowBend);
+            if (_rightLowerArm != null) Rot(_rightLowerArm, right, elbowBend);
+        }
 
         if (_head != null)
         {
             float yaw = _headYaw + _twitchYaw;
             Rot(_head, Vector3.up, yaw);
             Vector3 yawedRight = Quaternion.AngleAxis(yaw, Vector3.up) * right;
-            Rot(_head, yawedRight, _headPitch);
+
+            // Smooth conversational speech nod tracking the player (jaw drop is handled by JawOpen blendshape)
+            float speechNod = _speechBlend * (Mathf.Sin(Time.time * 2.2f) * 2.0f + _speechAudioLevel * 6f);
+
+            // Subtract bodyPitch so the head is never dragged down by body hunch - it directly tracks the player
+            Rot(_head, yawedRight, _headPitch - bodyPitch + speechNod);
             Vector3 headForward = Quaternion.AngleAxis(yaw, Vector3.up) * fwd;
-            Rot(_head, headForward, _tiltSign * headTilt + _twitchRoll + _litRoll);
+            float speechTilt = _speechBlend * Mathf.Sin(Time.time * 1.2f) * 3.5f;
+            Rot(_head, headForward, _tiltSign * headTilt + _twitchRoll + _litRoll + speechTilt);
             // F82: the head dips on each blipped letter of a speech line (decays in StalkerVoice).
             if (_voice != null) Rot(_head, yawedRight, _voice.NodDegrees);
         }
@@ -974,17 +1252,23 @@ public class Stalker : MonoBehaviour
             _nextHeadTwitchAt = Time.time + Random.Range(headTwitchIntervalMin, headTwitchIntervalMax);
         }
 
+        UpdateHeadAim(fwd);
+    }
+
+    /// <summary>Aims head towards player camera, clamping yaw and pitch.</summary>
+    private void UpdateHeadAim(Vector3 fwd)
+    {
         float targetYaw = 0f;
         float targetPitch = 0f;
         if (_torchCamera != null)
         {
-            Vector3 head = transform.position + Vector3.up * HeadHeight;
+            Vector3 head = _head != null ? _head.position : (transform.position + Vector3.up * HeadHeight);
             Vector3 toCamera = _torchCamera.position - head;
             Vector3 flat = FlatDirection(toCamera);
             if (flat.magnitude <= headTrackRange && flat.sqrMagnitude > 0.0001f)
             {
                 targetYaw = Mathf.Clamp(Vector3.SignedAngle(fwd, flat, Vector3.up), -headYawLimit, headYawLimit);
-                // Positive = look down (camera lower than the head).
+                // Positive = look down (camera lower than the head). Negative = look up (camera higher than head).
                 targetPitch = Mathf.Clamp(Mathf.Atan2(-toCamera.y, flat.magnitude) * Mathf.Rad2Deg, -headPitchLimit, headPitchLimit);
             }
         }
@@ -1028,6 +1312,90 @@ public class Stalker : MonoBehaviour
         else if (fallback != null) _audio.PlayOneShot(fallback, volume);
     }
 
+    /// <summary>Combines GameAudioLibrary.stanVoice clips and any inspector voiceClipBag clips into a deduplicated pool.</summary>
+    private void BuildVoicePool()
+    {
+        _voicePool.Clear();
+        _voiceShuffleBag.Clear();
+        _lastVoiceClipIndex = -1;
+
+        AudioSlot slot = GameAudio.Library.stanVoice;
+        if (slot != null && slot.clips != null)
+        {
+            for (int i = 0; i < slot.clips.Length; i++)
+            {
+                AudioClip c = slot.clips[i];
+                if (c != null && !_voicePool.Contains(c)) _voicePool.Add(c);
+            }
+        }
+        if (voiceClipBag != null)
+        {
+            for (int i = 0; i < voiceClipBag.Length; i++)
+            {
+                AudioClip c = voiceClipBag[i];
+                if (c != null && !_voicePool.Contains(c)) _voicePool.Add(c);
+            }
+        }
+    }
+
+    /// <summary>Rolls voiceClipChance (default 70 %) to draw and play one clip from Stan's voice shuffle bag.</summary>
+    public bool TryPlayVoiceClip()
+    {
+        if (_voiceAudio == null || _voiceAudio.isPlaying) return false;
+        if (Time.time < _nextVoiceClipAllowedAt) return false;
+        if (_voicePool.Count == 0) BuildVoicePool();
+        if (_voicePool.Count == 0) return false;
+
+        // Start cooldown on every eligible roll so a 30 % miss does not re-roll on the next encounter a second later.
+        _nextVoiceClipAllowedAt = Time.time + voiceClipCooldown;
+        if (Random.value >= voiceClipChance) return false;
+
+        AudioClip clip = DrawVoiceClip();
+        if (clip == null) return false;
+
+        AudioSlot slot = GameAudio.Library.stanVoice;
+        float vol = (slot != null ? slot.volume : 1f) * voiceVolume;
+        float slotPitch = slot != null ? slot.PickPitch() : 1f;
+        _activeVoicePitch = voiceBasePitch * slotPitch;
+        _voiceAudio.pitch = _activeVoicePitch;
+        _voiceAudio.clip = clip;
+        _voiceAudio.volume = vol;
+        _voiceAudio.Play();
+        return true;
+    }
+
+    /// <summary>Draws one clip from the shuffle bag (every clip plays once before the bag refills, never repeating back-to-back).</summary>
+    private AudioClip DrawVoiceClip()
+    {
+        if (_voicePool.Count == 0) return null;
+        if (_voiceShuffleBag.Count == 0)
+        {
+            for (int i = 0; i < _voicePool.Count; i++) _voiceShuffleBag.Add(i);
+            for (int i = _voiceShuffleBag.Count - 1; i > 0; i--)
+            {
+                int j = Random.Range(0, i + 1);
+                (_voiceShuffleBag[i], _voiceShuffleBag[j]) = (_voiceShuffleBag[j], _voiceShuffleBag[i]);
+            }
+            if (_voiceShuffleBag.Count > 1 && _voiceShuffleBag[_voiceShuffleBag.Count - 1] == _lastVoiceClipIndex)
+            {
+                int swap = Random.Range(0, _voiceShuffleBag.Count - 1);
+                (_voiceShuffleBag[_voiceShuffleBag.Count - 1], _voiceShuffleBag[swap]) = (_voiceShuffleBag[swap], _voiceShuffleBag[_voiceShuffleBag.Count - 1]);
+            }
+        }
+
+        int pick = _voiceShuffleBag[_voiceShuffleBag.Count - 1];
+        _voiceShuffleBag.RemoveAt(_voiceShuffleBag.Count - 1);
+        _lastVoiceClipIndex = pick;
+        return _voicePool[pick];
+    }
+
+    [ContextMenu("Test: play Stan voice clip (70% bag)")]
+    private void TestVoiceClip()
+    {
+        _nextVoiceClipAllowedAt = 0f;
+        TryPlayVoiceClip();
+    }
+
     private void Touch()
     {
         PlayerTouched?.Invoke();
@@ -1045,6 +1413,7 @@ public class Stalker : MonoBehaviour
 
     private void HideAndRespawn()
     {
+        if (_voiceAudio != null && _voiceAudio.isPlaying) _voiceAudio.Stop();
         SetRenderersVisible(false);
         // Ends any lunge/watch (and restores acceleration) before the agent is disabled.
         CancelBehaviours();

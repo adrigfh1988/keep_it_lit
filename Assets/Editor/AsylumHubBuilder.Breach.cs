@@ -15,14 +15,22 @@ public static partial class AsylumHubBuilder
 {
     private const string BreachGroupName = "Breach";
     private const string BreachHunterName = "Hunter";
+    private const string BreachSlenderBody = "Body_Slender";
     private const string BreachCyborgBody = "Body_Cyborg";
     private const string BreachOrderlyBody = "Body_Orderly";
     private const string BreachController = "Assets/SourceFiles/StarterAssets/ThirdPersonController/Character/Animations/StarterAssetsThirdPerson.controller";
 
-    /// <summary>The body the breach hunter should wear now: the Cyborg when that is the look and its model exists, else the Orderly (dulled Timmy).</summary>
-    private static string BreachBodyWanted() =>
-        HunterBodyBuilder.CurrentLook == HunterBodyBuilder.BodyLook.Cyborg && AssetDatabase.LoadAssetAtPath<GameObject>(HunterBodyBuilder.CyborgModelPath) != null
-            ? BreachCyborgBody : BreachOrderlyBody;
+    /// <summary>The body the breach hunter should wear now: Slender, Cyborg, or Orderly.</summary>
+    private static string BreachBodyWanted()
+    {
+        if (HunterBodyBuilder.CurrentLook == HunterBodyBuilder.BodyLook.Slender
+            && AssetDatabase.LoadAssetAtPath<GameObject>(HunterBodyBuilder.SlenderModelPath) != null)
+            return BreachSlenderBody;
+        if (HunterBodyBuilder.CurrentLook == HunterBodyBuilder.BodyLook.Cyborg
+            && AssetDatabase.LoadAssetAtPath<GameObject>(HunterBodyBuilder.CyborgModelPath) != null)
+            return BreachCyborgBody;
+        return BreachOrderlyBody;
+    }
 
     /// <summary>ProjectSetup piece: null when there is no hub (that piece reports it) or the breach is complete and wearing the right body.</summary>
     public static string BreachProblem()
@@ -79,7 +87,8 @@ public static partial class AsylumHubBuilder
             if (holder.Find(wanted) == null)
             {
                 for (int i = holder.childCount - 1; i >= 0; i--) if (holder.GetChild(i).name.StartsWith("Body")) Object.DestroyImmediate(holder.GetChild(i).gameObject);
-                report.AppendLine(wanted == BreachCyborgBody ? BuildBreachCyborg(holder) : BuildBreachOrderly(holder));
+                report.AppendLine(wanted == BreachSlenderBody ? BuildBreachSlender(holder)
+                    : (wanted == BreachCyborgBody ? BuildBreachCyborg(holder) : BuildBreachOrderly(holder)));
             }
             holder.gameObject.SetActive(false);
 
@@ -91,6 +100,29 @@ public static partial class AsylumHubBuilder
         EditorUtility.SetDirty(hub);
         UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(UnityEngine.SceneManagement.SceneManager.GetActiveScene());
         Debug.Log("Asylum breach (F121):\n" + report + "Save the scene (Ctrl+S) - the prefab is already saved.");
+    }
+
+    private static string BuildBreachSlender(Transform holder)
+    {
+        GameObject model = HunterBodyBuilder.EnsureSlenderModel();
+        if (model == null) return BuildBreachOrderly(holder);
+        bool holderWasActive = holder.gameObject.activeSelf;
+        holder.gameObject.SetActive(true);
+        GameObject body = HunterBodyBuilder.InstantiateSlender(model, holder);
+        body.name = BreachSlenderBody;
+        body.transform.localPosition = Vector3.zero;
+        body.transform.localRotation = Quaternion.identity;
+        StripPhysics(body);
+        Animator animator = body.GetComponent<Animator>();
+        animator.runtimeAnimatorController = AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(BreachController);
+        animator.applyRootMotion = false;
+        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+        holder.gameObject.SetActive(holderWasActive);
+
+        SerializedObject so = new SerializedObject(holder.GetComponent<HubStalker>());
+        so.FindProperty("animator").objectReferenceValue = animator;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        return "Life/Breach/Hunter: the Slender Hunter body (Starter Assets locomotion controller, white emissive eyes)";
     }
 
     private static string BuildBreachCyborg(Transform holder)

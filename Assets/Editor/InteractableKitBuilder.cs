@@ -331,6 +331,19 @@ public static partial class InteractableKitBuilder
             }
         }
 
+        // Night Nurse (Sister Agnes), same build-missing-only rule.
+        SerializedProperty nightNurseProp = so.FindProperty("nightNurse");
+        if (nightNurseProp != null && nightNurseProp.objectReferenceValue == null)
+        {
+            NightNurse nurse = BuildNightNurseTemplate(root.transform, new Vector3(x, 0f, 0f));
+            if (nurse != null)
+            {
+                nightNurseProp.objectReferenceValue = nurse;
+                x += PieceSpacing;
+                built++;
+            }
+        }
+
         // F120: the dropped torch, same build-missing-only rule.
         SerializedProperty droppedTorchProp = so.FindProperty("droppedTorch");
         if (droppedTorchProp.objectReferenceValue == null)
@@ -409,6 +422,37 @@ public static partial class InteractableKitBuilder
         so.ApplyModifiedPropertiesWithoutUndo();
 
         Build();
+    }
+
+    /// <summary>
+    /// KEEP IT LIT &gt; Build &gt; Re-skin Templates &gt; Stalker (Stan). Empties the stalker slot on InteractableKit
+    /// and runs Build() so the template is recreated from Assets/SourceFiles/Models/Stan/Stan_Model.fbx.
+    /// </summary>
+    [MenuItem("KEEP IT LIT/Build/Re-skin Templates/Stalker (Stan)", priority = 151)]
+    public static void RebuildStalkerTemplate()
+    {
+        InteractableKit kit = Object.FindAnyObjectByType<InteractableKit>(FindObjectsInactive.Include);
+        if (kit == null)
+        {
+            Build();
+            return;
+        }
+
+        SerializedObject so = new SerializedObject(kit);
+        SerializedProperty prop = so.FindProperty("stalker");
+        Component old = prop.objectReferenceValue as Component;
+        prop.objectReferenceValue = null;
+        if (old != null) Undo.DestroyObjectImmediate(old.gameObject);
+        so.ApplyModifiedPropertiesWithoutUndo();
+
+        Build();
+    }
+
+    /// <summary>True when the kit's Stalker template uses the dedicated sculpted Stan_Model.fbx (Stan_Body mesh).</summary>
+    public static bool HasStanModelBody(Stalker stalker)
+    {
+        if (stalker == null) return false;
+        return stalker.transform.Find("Stan_Body") != null;
     }
 
     /// <summary>
@@ -1307,24 +1351,136 @@ public static partial class InteractableKitBuilder
 
     // ---------------------------------------------------------------- F75 template (the Stalker)
 
+    private const string StanModelPath = "Assets/SourceFiles/Models/Stan/Stan_Model.fbx";
+
+    private static GameObject EnsureStanModel()
+    {
+        ModelImporter importer = AssetImporter.GetAtPath(StanModelPath) as ModelImporter;
+        if (importer == null) return null;
+        if (importer.animationType != ModelImporterAnimationType.Human ||
+            importer.avatarSetup != ModelImporterAvatarSetup.CreateFromThisModel ||
+            importer.importAnimation)
+        {
+            importer.animationType = ModelImporterAnimationType.Human;
+            importer.avatarSetup = ModelImporterAvatarSetup.CreateFromThisModel;
+            importer.importAnimation = false;
+            importer.SaveAndReimport();
+        }
+        GameObject model = AssetDatabase.LoadAssetAtPath<GameObject>(StanModelPath);
+        Avatar avatar = null;
+        foreach (Object o in AssetDatabase.LoadAllAssetsAtPath(StanModelPath))
+        {
+            if (o is Avatar a) avatar = a;
+        }
+        if (model == null || avatar == null || !avatar.isValid || !avatar.isHuman)
+        {
+            Debug.LogError($"InteractableKitBuilder: {StanModelPath} did not import as a valid Humanoid avatar.");
+            return null;
+        }
+        return model;
+    }
+
+    private static Material LoadOrCreateStanMat(string name, Color color, Color? emission, float smoothness, float metallic)
+    {
+        Material mat = LoadOrCreateMat(name, color, emission, smoothness);
+        if (mat != null)
+        {
+            if (mat.HasProperty("_BaseColor")) mat.SetColor("_BaseColor", color);
+            if (mat.HasProperty("_Color")) mat.SetColor("_Color", color);
+            if (mat.HasProperty("_Smoothness")) mat.SetFloat("_Smoothness", smoothness);
+            if (mat.HasProperty("_Metallic")) mat.SetFloat("_Metallic", metallic);
+            if (mat.HasProperty("_SpecularHighlights")) mat.SetFloat("_SpecularHighlights", smoothness > 0.05f ? 1f : 0f);
+            if (mat.HasProperty("_EnvironmentReflections")) mat.SetFloat("_EnvironmentReflections", smoothness > 0.05f ? 1f : 0f);
+            if (emission.HasValue)
+            {
+                mat.EnableKeyword("_EMISSION");
+                mat.SetColor("_EmissionColor", emission.Value);
+                mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+            }
+            else
+            {
+                mat.DisableKeyword("_EMISSION");
+                mat.SetColor("_EmissionColor", Color.black);
+            }
+            EditorUtility.SetDirty(mat);
+        }
+        return mat;
+    }
+
     /// <summary>
-    /// Decision D7/F75: the Stalker's body is the player's own robot, blackened, with pin-prick eyes -
-    /// deliberately not Adam. Instantiates PlayerRobot.prefab, unpacks it (the prefab asset itself is
-    /// never touched), then strips everything that is not visual: movement/input, the player's own
-    /// stealth/stamina components, and every camera/listener/CinemachineBrain the prefab carries (its
-    /// MainCamera lives inside it - leaving it would give the scene two MainCameras). Keeps the Animator,
-    /// its controller and the skinned meshes. Returns null (and skips the slot) if the prefab is missing.
+    /// Builds the Stalker (Stan) template from the dedicated sculpted Humanoid model (Assets/SourceFiles/Models/Stan/Stan_Model.fbx)
+    /// when present, wired to PlayerRobot.prefab's locomotion AnimatorController and the 5 URP materials (Shell, Joint, Socket, Teeth,
+    /// Stalker_Eyes). The body is pitch-black and matte (no white specular glare when lit); only the emissive white eyes and smile glow.
+    /// Falls back to the blackened PlayerRobot only if Stan_Model.fbx is missing.
     /// </summary>
     private static Stalker BuildStalkerTemplate(Transform parent, Vector3 localPosition)
     {
-        GameObject prefabAsset = AssetDatabase.LoadAssetAtPath<GameObject>(RobotPrefabPath);
-        if (prefabAsset == null)
+        GameObject robotPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(RobotPrefabPath);
+        GameObject stanModel = EnsureStanModel();
+        if (stanModel != null)
+        {
+            GameObject stanRoot = (GameObject)PrefabUtility.InstantiatePrefab(stanModel, parent);
+            PrefabUtility.UnpackPrefabInstance(stanRoot, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+            stanRoot.name = "Stalker";
+            stanRoot.transform.SetParent(parent, false);
+            stanRoot.transform.localPosition = localPosition;
+            stanRoot.transform.localRotation = Quaternion.identity;
+            stanRoot.transform.localScale = Vector3.one;
+
+            DestroyAllOfType<Collider>(stanRoot);
+
+            Animator anim = stanRoot.GetComponent<Animator>();
+            if (anim == null) anim = stanRoot.AddComponent<Animator>();
+            if (robotPrefab != null)
+            {
+                Animator robotAnim = robotPrefab.GetComponentInChildren<Animator>(true);
+                if (robotAnim != null) anim.runtimeAnimatorController = robotAnim.runtimeAnimatorController;
+            }
+            anim.applyRootMotion = false;
+            anim.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+
+            Material shellMat = LoadOrCreateStanMat("Stan_Mat_Shell", new Color(0.14f, 0.145f, 0.155f), null, 0.25f, 0f);
+            Material jointMat = LoadOrCreateStanMat("Stan_Mat_Joint", new Color(0.06f, 0.062f, 0.068f), null, 0.35f, 0f);
+            Material socketMat = LoadOrCreateStanMat("Stan_Mat_Socket", new Color(0.02f, 0.02f, 0.025f), null, 0.10f, 0f);
+            Material teethMat = LoadOrCreateStanMat("Stan_Mat_Teeth", Color.white, Color.white * 3.5f, 0.95f, 0.05f);
+            Material eyeMat = LoadOrCreateMat("Stalker_Eyes", Color.white, Color.white * 4.5f, 0.95f);
+
+            foreach (Renderer renderer in stanRoot.GetComponentsInChildren<Renderer>(true))
+            {
+                if (renderer.name.Contains("Eye_Glow"))
+                {
+                    renderer.sharedMaterial = eyeMat;
+                }
+                else
+                {
+                    Material[] mats = renderer.sharedMaterials;
+                    for (int i = 0; i < mats.Length; i++)
+                    {
+                        string mName = mats[i] != null ? mats[i].name : "";
+                        if (mName.Contains("Socket")) mats[i] = socketMat;
+                        else if (mName.Contains("Joint")) mats[i] = jointMat;
+                        else if (mName.Contains("Teeth")) mats[i] = teethMat;
+                        else mats[i] = shellMat;
+                    }
+                    renderer.sharedMaterials = mats;
+                }
+                renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                if (renderer is SkinnedMeshRenderer smr) smr.updateWhenOffscreen = true;
+            }
+
+            Stalker stanStalker = stanRoot.AddComponent<Stalker>();
+            StanPhraseBookBuilder.AssignTo(stanStalker);
+            stanRoot.SetActive(false);
+            return stanStalker;
+        }
+
+        if (robotPrefab == null)
         {
             Debug.LogError($"InteractableKitBuilder: {RobotPrefabPath} not found - the stalker template was skipped.");
             return null;
         }
 
-        GameObject root = (GameObject)PrefabUtility.InstantiatePrefab(prefabAsset, parent);
+        GameObject root = (GameObject)PrefabUtility.InstantiatePrefab(robotPrefab, parent);
         root.name = "Stalker";
         root.transform.SetParent(parent, false);
         root.transform.localPosition = localPosition;
@@ -1333,7 +1489,9 @@ public static partial class InteractableKitBuilder
 
         StripRobotToVisuals(root);
 
-        Material bodyMat = LoadOrCreateMat("Stalker_Body", new Color(0.02f, 0.02f, 0.025f), null, 0.75f);
+        Material bodyMat = LoadOrCreateMat("Stalker_Body", new Color(0.005f, 0.005f, 0.006f), null, 0f);
+        if (bodyMat.HasProperty("_SpecularHighlights")) bodyMat.SetFloat("_SpecularHighlights", 0f);
+        if (bodyMat.HasProperty("_EnvironmentReflections")) bodyMat.SetFloat("_EnvironmentReflections", 0f);
         foreach (Renderer renderer in root.GetComponentsInChildren<Renderer>(true))
         {
             Material[] mats = renderer.sharedMaterials;

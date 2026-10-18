@@ -80,6 +80,7 @@ public static class GameAudioLibraryBuilder
         R("candleSnuff", new[] { SB + "jw3_whoosh_fire-008" }, 1f),
         R("stanTick", new[] { SB + "glitchfx_02_percussion_019" }, 0.6f, 0.1f),
         R("stanSkitter", new[] { SB + "jw4_friction-organic-030" }, 1f, 0.06f),
+        R("stanVoice", new[] { "Assets/SourceFiles/Audio/Generated/Voices/Stan_WhyAreYouLookingAtMe", "Assets/SourceFiles/Audio/Generated/Voices/Stan_StayStill", "Assets/SourceFiles/Audio/Generated/Voices/Stan_LightDying" }, 1f, 0.02f),
         R("relocationCue", new[] { FP + "Ghost Manifestation 1", FP + "Ghost Manifestation 2" }, 0.7f, 0f, 0f, 6f, mono: false),
         R("phantomWhisper", new[] { HE + "Misc/Misc_Whisper", HE + "Misc/Misc_Shh" }, 3f, 0f, 0.3f, 5f),
         R("captureSting", new[] { HE + "Hits/Hit_Drama" }, 0.9f, mono: false),

@@ -158,7 +158,7 @@ public partial class MazeGenerator : MonoBehaviour
 
     [Header("Ground fog")]
     [Tooltip("Fog banks alive per m² of maze floor (the hub uses 0.24). 0 = no fog. Clones InteractableKit.fogBank per chunk of cells.")]
-    [SerializeField, Min(0f)] private float fogDensity = 0.24f;
+    [SerializeField, Min(0f)] private float fogDensity = 0.12f;
     [Tooltip("Cells per side of one fog emitter. Smaller chunks pause more of the fog off screen; more emitters cost more draw calls.")]
     [SerializeField, Min(1)] private int fogChunkCells = 4;
     [Tooltip("Cap on fog banks alive in the whole maze (overdraw is the cost, on the web build most of all); the density is scaled down to fit.")]
@@ -182,7 +182,7 @@ public partial class MazeGenerator : MonoBehaviour
 
     [Header("F105 C9 - narrow beam")]
     [Tooltip("The floor's fog density is multiplied by this while TerrorSettings.narrowBeam is on, so a narrower beam also sees a little less far")]
-    [SerializeField, Min(1f)] private float narrowBeamFogScale = 1.15f;
+    [SerializeField, Min(1f)] private float narrowBeamFogScale = 1.05f;
 
     [Header("Door buttons")]
     [Tooltip("A door's button goes on a wall the player can see from in front of the door: a cell in a straight open line from it, at most this many cells away (10 Oct 2026 - a button out of sight turned a Lockdown floor into a hunt for a switch). Only when no such wall is free does it go anywhere farther.")]
@@ -1902,7 +1902,7 @@ public partial class MazeGenerator : MonoBehaviour
             return;
         }
 
-        float density = Mathf.Min(fogDensity, fogMaxParticles / Mathf.Max(1f, width * cellSize * height * cellSize));
+        float density = Mathf.Min(fogDensity * 0.5f, fogMaxParticles / Mathf.Max(1f, width * cellSize * height * cellSize));
         _fogBuilt = true;
         Transform group = new GameObject("Fog").transform;
         group.SetParent(_mazeRoot, false);
@@ -4706,7 +4706,15 @@ public partial class MazeGenerator : MonoBehaviour
             {
                 if (_theme != null)
                 {
-                    atmosphere.ApplyProfile(_theme.Ambient, _profile.FogDensity * _theme.FogDensityScale, _theme.FogColor);
+                    Color themeAmbient = _theme.Ambient;
+                    float themeMax = Mathf.Max(themeAmbient.r, themeAmbient.g, themeAmbient.b);
+                    float profileMax = Mathf.Max(_profile.Ambient.r, _profile.Ambient.g, _profile.Ambient.b);
+                    if (themeMax > 0.0001f && themeMax < profileMax)
+                    {
+                        float s = profileMax / themeMax;
+                        themeAmbient = new Color(themeAmbient.r * s, themeAmbient.g * s, themeAmbient.b * s, themeAmbient.a);
+                    }
+                    atmosphere.ApplyProfile(themeAmbient, _profile.FogDensity * _theme.FogDensityScale, _theme.FogColor);
                 }
                 else
                 {
@@ -5106,7 +5114,11 @@ public partial class MazeGenerator : MonoBehaviour
         GameSettings.SweepToEffects();
 
         // Campaign cosmetics (F35), applied on every scene build so the choice survives a reload.
-        if (flashlight != null) flashlight.SetBeamColor(ShopCatalogue.TorchColours[PlayerInventory.TorchColourIndex].Colour);
+        if (flashlight != null)
+        {
+            flashlight.SetBeamColor(ShopCatalogue.TorchColours[PlayerInventory.TorchColourIndex].Colour);
+            if (_profile != null && _profile.CellSize > 4.5f) flashlight.SetBeamBoost(1.5f, 1.25f);
+        }
         if (hud != null) hud.SetTint(ShopCatalogue.HudTints[0].Colour); // F110: the HUD tint is retired, always the default
         tension.SetCalmColor(ShopCatalogue.HudTints[0].Colour);
         if (_profile != null && stealth != null) stealth.NoiseScale = _profile.NoiseScale;

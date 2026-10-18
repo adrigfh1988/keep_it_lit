@@ -361,16 +361,22 @@ public class FloorProfile
         // has real pockets of dark between lamp pools (the torch is optional there) and floor 5 is
         // unreadable without it. Ambient/fog follow the same curve. See
         // plannings/darkness-and-interactivity-spec.md, decision D2 and slice F71.
-        p.CellsPerLamp = Blend(5, 8, t);
-        p.LampIntensity = Blend(1.0f, 0.7f, t);
-        p.LampRange = Blend(5.0f, 4.0f, t);
+        p.CellsPerLamp = Blend(4, 5, t);
+        p.LampIntensity = Blend(2.2f, 1.8f, t);
+        p.LampRange = Blend(8.5f, 7.5f, t);
+        if (p.CellSize > 4.5f)
+        {
+            p.LampRange = Mathf.Max(p.LampRange * (p.CellSize / 4.5f), 10f);
+            p.LampIntensity = 2.5f;
+            p.CellsPerLamp = 4;
+        }
 
-        float ambient = Blend(0.015f, 0.006f, t);
+        float ambient = Blend(0.045f, 0.030f, t);
         p.Ambient = new Color(ambient, ambient, ambient * 1.25f);
-        p.FogDensity = Blend(0.07f, 0.12f, t);
+        p.FogDensity = Blend(0.035f, 0.055f, t);
 
-        // 3x slower drain than the original 14 -> 8 s tuning (bar-flavor unchanged, just lasts longer).
-        p.SprintSeconds = Blend(42f, 24f, t);
+        // +33% sprint budget (was 42 -> 24 s).
+        p.SprintSeconds = Blend(56f, 32f, t);
         p.EscapeSeconds = Blend(120f, 60f, t);
 
         // The hunter's walking pace on floor 1 is below the player's own walk (2.0 m/s), and it does
@@ -470,9 +476,9 @@ public class FloorProfile
     public int RequiredItems => StarCount + KeyCount + FuseCount;
 
     private const float DescentRunSpeedCap = 4.3f;   // the player sprints at 5.3 m/s; the hunter must stay beatable
-    private const float DescentMinAmbient = 0.004f;
-    private const int DescentCellsPerLampCap = 11;
-    private const float DescentFogCap = 0.16f;
+    private const float DescentMinAmbient = 0.020f;
+    private const int DescentCellsPerLampCap = 7;
+    private const float DescentFogCap = 0.075f;
     private const float DescentPhantomFloor = 12f;
     private const float DescentChaseWalkCap = 1.15f;
     private const int DescentBossEvery = 5;
@@ -594,8 +600,8 @@ public class FloorProfile
         p.HearingScale *= 1f + 0.5f * c;
         p.ViewDistance *= 1f + 0.25f * c;
         p.ChaseWalkFraction = Mathf.Min(DescentChaseWalkCap, p.ChaseWalkFraction + 0.05f * c);
-        p.CellsPerLamp = Mathf.Min(DescentCellsPerLampCap, Mathf.RoundToInt(p.CellsPerLamp + 4f * c));
-        p.FogDensity = Mathf.Min(DescentFogCap, p.FogDensity + 0.04f * c);
+        p.CellsPerLamp = Mathf.Min(DescentCellsPerLampCap, Mathf.RoundToInt(p.CellsPerLamp + 2f * c));
+        p.FogDensity = Mathf.Min(DescentFogCap, p.FogDensity + 0.02f * c);
 
         float scale = 1f - 0.4f * c;
         Color a = p.Ambient;

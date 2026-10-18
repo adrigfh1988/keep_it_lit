@@ -13,8 +13,43 @@ public static partial class AsylumHubBuilder
 {
     /// <summary>The name of a robot NPC / patient body; the Problem checks key on it.</summary>
     public const string NpcRobotBodyName = "Body_Timmy";
+    /// <summary>The name of Sister Agnes's custom 5-part 3D humanoid nurse body when <see cref="NurseAgnesModelPath"/> is present.</summary>
+    public const string NurseAgnesBodyName = "Body_NurseAgnes";
+    public const string NurseAgnesModelDir = "Assets/SourceFiles/Models/NurseAgnes";
+    public const string NurseAgnesModelPath = NurseAgnesModelDir + "/NurseAgnes_Model.fbx";
+    private const string NurseAgnesMatFolder = "Assets/SourceFiles/Materials/Asylum/Npcs";
 
-    /// <summary>What still has a non-robot body (null = all six are robots, or no hub / no NPCs yet - the F98 piece reports that).</summary>
+    private static string ExpectedNpcBodyName(HubNpc npc) =>
+        npc != null && npc.who == HubNpc.Who.Agnes && System.IO.File.Exists(NurseAgnesModelPath)
+            ? NurseAgnesBodyName
+            : NpcRobotBodyName;
+
+    [MenuItem("KEEP IT LIT/Build/Re-skin Templates/Sister Agnes (Nurse)", priority = 137)]
+    public static void MenuSwapSisterAgnes()
+    {
+        AsylumHub hub = Object.FindAnyObjectByType<AsylumHub>(FindObjectsInactive.Include);
+        Transform npcs = hub != null && hub.life != null ? hub.life.Find(NpcsName) : null;
+        if (npcs == null)
+        {
+            Debug.LogError("Sister Agnes: the hub has no Life/Npcs in the open scene.");
+            return;
+        }
+        foreach (HubNpc npc in npcs.GetComponentsInChildren<HubNpc>(true))
+        {
+            if (npc.who != HubNpc.Who.Agnes) continue;
+            string msg = SwapNpcBody(npc);
+            if (Object.FindAnyObjectByType<InteractableKit>(FindObjectsInactive.Include) != null)
+            {
+                InteractableKitBuilder.RebuildNightNurseTemplate();
+            }
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(hub.gameObject.scene);
+            ApplyHubToPrefab(hub);
+            Debug.Log(msg + " Save the scene (Ctrl+S) to keep it.", npc);
+            return;
+        }
+    }
+
+    /// <summary>What still has the wrong NPC body (null = all six match their expected body, or no hub / no NPCs yet - the F98 piece reports that).</summary>
     public static string NpcRobotProblem()
     {
         AsylumHub hub = Object.FindAnyObjectByType<AsylumHub>(FindObjectsInactive.Include);
@@ -23,36 +58,51 @@ public static partial class AsylumHubBuilder
         List<string> missing = new List<string>();
         foreach (HubNpc npc in npcs.GetComponentsInChildren<HubNpc>(true))
         {
-            if (npc.body == null || npc.body.name != NpcRobotBodyName) missing.Add(npc.name);
+            string expected = ExpectedNpcBodyName(npc);
+            if (npc.body == null || npc.body.name != expected) missing.Add(npc.name);
         }
-        return missing.Count == 0 ? null : "not a robot yet: " + string.Join(", ", missing);
+        return missing.Count == 0 ? null : "NPC body needs update: " + string.Join(", ", missing);
     }
 
-    /// <summary>ProjectSetup's fix: swap every non-robot NPC body in the scene hub and apply it to the prefab. Marks the scene dirty.</summary>
+    /// <summary>ProjectSetup's fix: swap every outdated NPC body in the scene hub and apply it to the prefab. Marks the scene dirty.</summary>
     public static void NpcRobotRepair()
     {
         AsylumHub hub = Object.FindAnyObjectByType<AsylumHub>(FindObjectsInactive.Include);
         Transform npcs = hub != null && hub.life != null ? hub.life.Find(NpcsName) : null;
-        if (npcs == null) { Debug.LogError("Asylum NPC robots: the hub has no Life/Npcs (run Build Missing Pieces for the F98 NPCs first)."); return; }
+        if (npcs == null) { Debug.LogError("Asylum NPC bodies: the hub has no Life/Npcs (run Build Missing Pieces for the F98 NPCs first)."); return; }
 
         System.Text.StringBuilder report = new System.Text.StringBuilder();
         foreach (HubNpc npc in npcs.GetComponentsInChildren<HubNpc>(true))
         {
-            if (npc.body != null && npc.body.name == NpcRobotBodyName) continue;
+            string expected = ExpectedNpcBodyName(npc);
+            if (npc.body != null && npc.body.name == expected) continue;
             report.AppendLine(SwapNpcBody(npc));
         }
         UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(hub.gameObject.scene);
         ApplyHubToPrefab(hub);
-        Debug.Log("Asylum NPC robots:\n" + report.ToString().Trim());
+        Debug.Log("Asylum NPC bodies:\n" + report.ToString().Trim());
     }
 
     /// <summary>
-    /// Replaces the NPC's body with Timmy in its own skin. The robot's Animator node (whose forward is the mesh's visual facing) becomes
-    /// the body itself - HubNpc reads the Animator straight off <see cref="HubNpc.body"/> - and takes over the old body's position,
-    /// rotation and scale, so each NPC still stands, sits or lies where it did, facing the same way.
+    /// Replaces the NPC's body with Sister Agnes's 5-part custom 3D humanoid nurse model (<see cref="NurseAgnesModelPath"/>) when
+    /// <paramref name="npc"/> is <see cref="HubNpc.Who.Agnes"/>, or Timmy in its own skin otherwise.
     /// </summary>
     public static string SwapNpcBody(HubNpc npc)
     {
+        if (npc.who == HubNpc.Who.Agnes && System.IO.File.Exists(NurseAgnesModelPath))
+        {
+            Transform oldAgnes = npc.body;
+            Transform agnes = NurseAgnesBodyLike(npc.transform, oldAgnes);
+            if (agnes != null)
+            {
+                npc.body = agnes;
+                npc.controller = PeopleController();
+                if (oldAgnes != null) Object.DestroyImmediate(oldAgnes.gameObject);
+                EditorUtility.SetDirty(npc);
+                return $"{npc.name}: body swapped to 5-part 3D NurseAgnes_Model.fbx (Body, Head, Hair, Hat, Apron + NurseAgnesPhysics)";
+            }
+        }
+
         Material skin = HunterSkinBuilder.EnsureNpcSkin(npc.who);
         if (skin == null) return $"{npc.name}: no skin was painted";
 
@@ -65,6 +115,171 @@ public static partial class AsylumHubBuilder
         if (old != null) Object.DestroyImmediate(old.gameObject);
         EditorUtility.SetDirty(npc);
         return $"{npc.name}: body swapped to Timmy in the {skin.name} skin";
+    }
+
+    private static GameObject EnsureNurseAgnesModel()
+    {
+        if (!System.IO.File.Exists(NurseAgnesModelPath)) return null;
+        ModelImporter importer = AssetImporter.GetAtPath(NurseAgnesModelPath) as ModelImporter;
+        if (importer == null)
+        {
+            AssetDatabase.ImportAsset(NurseAgnesModelPath, ImportAssetOptions.ForceUpdate);
+            importer = AssetImporter.GetAtPath(NurseAgnesModelPath) as ModelImporter;
+        }
+        if (importer == null) return null;
+        if (importer.animationType != ModelImporterAnimationType.Human ||
+            importer.avatarSetup != ModelImporterAvatarSetup.CreateFromThisModel ||
+            importer.importAnimation ||
+            !importer.importBlendShapes)
+        {
+            importer.animationType = ModelImporterAnimationType.Human;
+            importer.avatarSetup = ModelImporterAvatarSetup.CreateFromThisModel;
+            importer.importAnimation = false;
+            importer.importBlendShapes = true;
+            importer.SaveAndReimport();
+        }
+        GameObject model = AssetDatabase.LoadAssetAtPath<GameObject>(NurseAgnesModelPath);
+        Avatar avatar = null;
+        foreach (Object o in AssetDatabase.LoadAllAssetsAtPath(NurseAgnesModelPath))
+        {
+            if (o is Avatar a) avatar = a;
+        }
+        if (model == null || avatar == null || !avatar.isValid || !avatar.isHuman)
+        {
+            Debug.LogError($"AsylumHubBuilder: {NurseAgnesModelPath} did not import as a valid Humanoid avatar.");
+            return null;
+        }
+        EnsureNurseAgnesMaterials();
+        return model;
+    }
+
+    private static Material EnsureNursePbrMaterial(string matName, string matPath, string diffFile, string normFile, float smoothness, float metallic = 0f, bool doubleSided = false)
+    {
+        if (!string.IsNullOrEmpty(diffFile))
+        {
+            string diffPath = $"{NurseAgnesModelDir}/{diffFile}";
+            if (AssetDatabase.LoadAssetAtPath<Texture2D>(diffPath) == null && System.IO.File.Exists(diffPath))
+                AssetDatabase.ImportAsset(diffPath, ImportAssetOptions.ForceUpdate);
+        }
+        if (!string.IsNullOrEmpty(normFile))
+        {
+            string normPath = $"{NurseAgnesModelDir}/{normFile}";
+            if (AssetDatabase.LoadAssetAtPath<Texture2D>(normPath) == null && System.IO.File.Exists(normPath))
+                AssetDatabase.ImportAsset(normPath, ImportAssetOptions.ForceUpdate);
+            TextureImporter normImp = AssetImporter.GetAtPath(normPath) as TextureImporter;
+            if (normImp != null && normImp.textureType != TextureImporterType.NormalMap)
+            {
+                normImp.textureType = TextureImporterType.NormalMap;
+                normImp.SaveAndReimport();
+            }
+        }
+
+        Texture2D diff = !string.IsNullOrEmpty(diffFile) ? AssetDatabase.LoadAssetAtPath<Texture2D>($"{NurseAgnesModelDir}/{diffFile}") : null;
+        Texture2D nrm  = !string.IsNullOrEmpty(normFile) ? AssetDatabase.LoadAssetAtPath<Texture2D>($"{NurseAgnesModelDir}/{normFile}") : null;
+
+        Material mat = AssetDatabase.LoadAssetAtPath<Material>(matPath);
+        if (mat == null)
+        {
+            mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = matName };
+            AssetDatabase.CreateAsset(mat, matPath);
+        }
+
+        if (diff != null)
+        {
+            mat.SetTexture("_BaseMap", diff);
+            mat.SetTexture("_MainTex", diff);
+        }
+        mat.SetColor("_BaseColor", Color.white);
+        mat.SetFloat("_Smoothness", smoothness);
+        mat.SetFloat("_Metallic", metallic);
+        mat.SetFloat("_Cull", doubleSided ? 0f : 2f);
+        if (nrm != null)
+        {
+            mat.EnableKeyword("_NORMALMAP");
+            mat.SetTexture("_BumpMap", nrm);
+            mat.SetFloat("_BumpScale", 1.0f);
+        }
+        EditorUtility.SetDirty(mat);
+        return mat;
+    }
+
+    private static void EnsureNurseAgnesMaterials()
+    {
+        if (!AssetDatabase.IsValidFolder("Assets/SourceFiles/Materials"))
+            AssetDatabase.CreateFolder("Assets/SourceFiles", "Materials");
+        if (!AssetDatabase.IsValidFolder("Assets/SourceFiles/Materials/Asylum"))
+            AssetDatabase.CreateFolder("Assets/SourceFiles/Materials", "Asylum");
+        if (!AssetDatabase.IsValidFolder(NurseAgnesMatFolder))
+            AssetDatabase.CreateFolder("Assets/SourceFiles/Materials/Asylum", "Npcs");
+
+        EnsureNursePbrMaterial("NurseAgnes_Body",  $"{NurseAgnesMatFolder}/NurseAgnes_Body.mat",  "NurseAgnes_Body_Diffuse.png",  "NurseAgnes_Body_Normal.png",  0.22f, 0f, false);
+        EnsureNursePbrMaterial("NurseAgnes_Head",  $"{NurseAgnesMatFolder}/NurseAgnes_Head.mat",  "NurseAgnes_Head_Diffuse.png",  "NurseAgnes_Head_Normal.png",  0.28f, 0f, false);
+        EnsureNursePbrMaterial("NurseAgnes_Eyes",  $"{NurseAgnesMatFolder}/NurseAgnes_Eyes.mat",  "NurseAgnes_Eyes_Diffuse.png",  "NurseAgnes_Eyes_Normal.png",  0.92f, 0f, false);
+        EnsureNursePbrMaterial("NurseAgnes_Hair",  $"{NurseAgnesMatFolder}/NurseAgnes_Hair.mat",  "NurseAgnes_Hair_Diffuse.png",  "NurseAgnes_Hair_Normal.png",  0.20f, 0f, true);
+        EnsureNursePbrMaterial("NurseAgnes_Hat",   $"{NurseAgnesMatFolder}/NurseAgnes_Hat.mat",   "NurseAgnes_Hat_Diffuse.png",   "NurseAgnes_Hat_Normal.png",   0.18f, 0f, true);
+        EnsureNursePbrMaterial("NurseAgnes_Apron", $"{NurseAgnesMatFolder}/NurseAgnes_Apron.mat", "NurseAgnes_Apron_Diffuse.png", "NurseAgnes_Apron_Normal.png", 0.16f, 0f, true);
+        AssetDatabase.SaveAssets();
+    }
+
+    private static Transform NurseAgnesBodyLike(Transform holder, Transform old)
+    {
+        GameObject customModel = EnsureNurseAgnesModel();
+        if (customModel == null) return null;
+
+        GameObject body = (GameObject)PrefabUtility.InstantiatePrefab(customModel, holder);
+        PrefabUtility.UnpackPrefabInstance(body, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+        body.name = NurseAgnesBodyName;
+        body.tag = "Untagged";
+        body.transform.SetPositionAndRotation(old != null ? old.position : holder.position, old != null ? old.rotation : holder.rotation);
+        body.transform.localScale = Vector3.one * (old != null ? old.localScale.x : 1f);
+
+        Material bodyMat  = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/NurseAgnes_Body.mat");
+        Material headMat  = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/NurseAgnes_Head.mat");
+        Material eyesMat  = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/NurseAgnes_Eyes.mat");
+        Material hairMat  = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/NurseAgnes_Hair.mat");
+        Material hatMat   = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/NurseAgnes_Hat.mat");
+        Material apronMat = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/NurseAgnes_Apron.mat");
+
+        foreach (Renderer r in body.GetComponentsInChildren<Renderer>(true))
+        {
+            Material targetMat = bodyMat;
+            string rName = r.gameObject.name;
+            if (rName.Contains("Head") && headMat != null) targetMat = headMat;
+            else if (rName.Contains("Eyes") && eyesMat != null) targetMat = eyesMat;
+            else if (rName.Contains("Hair") && hairMat != null) targetMat = hairMat;
+            else if (rName.Contains("Hat") && hatMat != null) targetMat = hatMat;
+            else if (rName.Contains("Apron") && apronMat != null) targetMat = apronMat;
+
+            if (targetMat != null)
+            {
+                Material[] mats = r.sharedMaterials;
+                for (int i = 0; i < mats.Length; i++) mats[i] = targetMat;
+                r.sharedMaterials = mats;
+            }
+            r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            if (r is SkinnedMeshRenderer smr) smr.updateWhenOffscreen = true;
+        }
+
+        Animator animator = body.GetComponent<Animator>();
+        if (animator == null) animator = body.AddComponent<Animator>();
+        if (animator.avatar == null)
+        {
+            foreach (Object o in AssetDatabase.LoadAllAssetsAtPath(NurseAgnesModelPath))
+            {
+                if (o is Avatar a) animator.avatar = a;
+            }
+        }
+        animator.runtimeAnimatorController = PeopleController();
+        animator.applyRootMotion = false;
+        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+
+        if (body.GetComponent<NurseAgnesPhysics>() == null)
+        {
+            body.AddComponent<NurseAgnesPhysics>();
+        }
+
+        body.SetActive(old == null || old.gameObject.activeSelf);
+        return body.transform;
     }
 
     /// <summary>

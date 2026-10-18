@@ -15,7 +15,7 @@ using UnityEngine;
 /// </summary>
 public static partial class HunterBodyBuilder
 {
-    public enum BodyLook { Orderly, Cyborg }
+    public enum BodyLook { Orderly, Cyborg, Slender }
 
     private const string LookPref = "KeepItLit.HunterBodyLook";
     internal const string CyborgModelPath = "Assets/Cyborg/Cyborg_APose.fbx";
@@ -25,10 +25,10 @@ public static partial class HunterBodyBuilder
     private const float CyborgScale = 1f; // 1.94 m as modelled: a head taller than the player
     private static readonly string[] CyborgDropped = { "Katana", "base" }; // "base" is the pistol (mag, slide and trigger are its children)
 
-    /// <summary>The look Build Hunter Body uses (Editor preference, default Cyborg since 11 Oct 2026).</summary>
+    /// <summary>The look Build Hunter Body uses (Editor preference, default Slender).</summary>
     public static BodyLook CurrentLook
     {
-        get => (BodyLook)EditorPrefs.GetInt(LookPref, (int)BodyLook.Cyborg);
+        get => (BodyLook)EditorPrefs.GetInt(LookPref, (int)BodyLook.Slender);
         set => EditorPrefs.SetInt(LookPref, (int)value);
     }
 

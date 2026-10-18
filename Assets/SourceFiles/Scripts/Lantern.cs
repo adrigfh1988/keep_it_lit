@@ -33,6 +33,42 @@ public class Lantern : MonoBehaviour, IInteractable
     private float _unattendedTimer;
     private float _lureAt;
 
+    private static readonly System.Collections.Generic.List<Lantern> ActiveLanterns = new System.Collections.Generic.List<Lantern>();
+
+    private void OnEnable()
+    {
+        if (!ActiveLanterns.Contains(this)) ActiveLanterns.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        ActiveLanterns.Remove(this);
+    }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics()
+    {
+        ActiveLanterns.Clear();
+    }
+
+    /// <summary>Checks if any active lantern illuminates point unobstructed.</summary>
+    public static bool Illuminates(Vector3 point, System.Func<Vector3, Vector3, bool> lineCheck)
+    {
+        for (int i = 0; i < ActiveLanterns.Count; i++)
+        {
+            Lantern l = ActiveLanterns[i];
+            if (l == null || !l.isActiveAndEnabled) continue;
+            float radius = l.lanternLight != null ? l.lanternLight.range : LightRadius;
+            Vector3 lanternPos = l.transform.position + Vector3.up * 0.25f;
+            float dist = Vector3.Distance(lanternPos, point);
+            if (dist < radius && (1f - dist / radius) > 0.15f)
+            {
+                if (lineCheck == null || lineCheck(lanternPos, point)) return true;
+            }
+        }
+        return false;
+    }
+
     /// <summary>Called right after Instantiate by MazeGenerator.BuildLantern.</summary>
     public void Configure(System.Random rng)
     {

@@ -14,26 +14,85 @@ public static class EntityRoster
     public const int TenantFrom = 3;
     /// <summary>First depth where a body may be alive (the roll itself is MazeGenerator.BuildEntities's, on the +25 stream).</summary>
     public const int LivingBodyFrom = 5;
+    /// <summary>First floor/depth where Sister Agnes ("The Night Nurse") can patrol the halls.</summary>
+    public const int NightNurseFrom = 2;
 
     /// <summary>"LSTN": salts the Stalker-or-Listener pick apart from every other roll of the seed.</summary>
     private const int PickSalt = 0x4C53544E;
+    /// <summary>"AGNS": salts the Night Nurse roster roll apart from every other roll of the seed.</summary>
+    private const int NightNursePickSalt = 0x41474E53;
 
     /// <summary>
-    /// The set for a story floor (`descent` false: the Stalker on floors 4-5 and nothing else, as before) or a descent level
-    /// (`floorOrDepth` is the real depth). At most one killer besides the hunter: the Listener is the only one, Stan never captures.
+    /// The set for a story floor (`descent` false) or a descent level (`floorOrDepth` is the real depth).
+    /// HARD CAP: at most ONE extra entity besides the Hunter on any floor or DESCENT depth (max 2 entities total at the same time).
     /// </summary>
     public static EntityKind For(bool descent, int floorOrDepth, int seed)
     {
-        if (!descent) return floorOrDepth >= StalkerFrom ? EntityKind.Stalker : EntityKind.None;
+        if (floorOrDepth <= 1) return EntityKind.None;
 
-        EntityKind set = EntityKind.None;
-        if (floorOrDepth >= BothFrom) set |= EntityKind.Stalker | EntityKind.Listener;
-        else if (floorOrDepth >= OneOfFrom) set |= PickListener(seed, floorOrDepth) ? EntityKind.Listener : EntityKind.Stalker;
-        else if (floorOrDepth >= StalkerFrom) set |= EntityKind.Stalker;
+        if (!descent)
+        {
+            if (floorOrDepth < StalkerFrom)
+            {
+                return RollsNightNurse(false, floorOrDepth, seed) ? EntityKind.NightNurse : EntityKind.None;
+            }
 
-        if (floorOrDepth >= TenantFrom) set |= EntityKind.Tenant;
-        if (floorOrDepth >= LivingBodyFrom) set |= EntityKind.LivingBody;
-        return set;
+            // Story floors 4-5: at most 1 extra entity alongside the Hunter (either Stalker or NightNurse, never both).
+            if (floorOrDepth == 4 && !NightNurse.SeenThisCampaign) return EntityKind.NightNurse;
+            if (!RollsNightNurse(false, floorOrDepth, seed)) return EntityKind.Stalker;
+            return PickListener(seed, floorOrDepth) ? EntityKind.NightNurse : EntityKind.Stalker;
+        }
+
+        // DESCENT mode: at most 1 extra entity alongside the Hunter on any depth.
+        if (floorOrDepth < TenantFrom)
+        {
+            return RollsNightNurse(true, floorOrDepth, seed) ? EntityKind.NightNurse : EntityKind.None;
+        }
+
+        if (floorOrDepth == 3)
+        {
+            return GuaranteedEarlyFloor(seed) == 3 ? EntityKind.NightNurse
+                : PickListener(seed, floorOrDepth) && RollsNightNurse(true, floorOrDepth, seed) ? EntityKind.NightNurse
+                : EntityKind.Tenant;
+        }
+
+        if (floorOrDepth == 4 && !NightNurse.SeenThisCampaign) return EntityKind.NightNurse;
+
+        // Build candidate list of single entities eligible at this depth and pick exactly 1 deterministically.
+        System.Span<EntityKind> pool = stackalloc EntityKind[5];
+        int count = 0;
+        if (floorOrDepth >= StalkerFrom) pool[count++] = EntityKind.Stalker;
+        if (floorOrDepth >= OneOfFrom) pool[count++] = EntityKind.Listener;
+        if (floorOrDepth >= TenantFrom) pool[count++] = EntityKind.Tenant;
+        if (floorOrDepth >= LivingBodyFrom) pool[count++] = EntityKind.LivingBody;
+        if (RollsNightNurse(true, floorOrDepth, seed)) pool[count++] = EntityKind.NightNurse;
+
+        if (count == 0) return EntityKind.None;
+        int h = RunRules.HashSeedFloor(seed ^ PickSalt, floorOrDepth) & 0x7fffffff;
+        return pool[h % count];
+    }
+
+    /// <summary>
+    /// Deterministic floor in {2, 3} guaranteed to roll Sister Agnes for a given seed, alongside the campaign-state
+    /// fallback (<see cref="NightNurse.SeenThisCampaign"/>) when each floor rolls a fresh seed.
+    /// </summary>
+    public static int GuaranteedEarlyFloor(int seed)
+    {
+        int h = RunRules.HashSeedFloor(seed ^ NightNursePickSalt, 0) & 0x7fffffff;
+        return 2 + (h % 2);
+    }
+
+    /// <summary>
+    /// True when Sister Agnes ("The Night Nurse") is eligible for this floor/depth:
+    /// never on Floor/Depth 1, guaranteed on at least one of Floors/Depths 2-3, fallback on Floor/Depth 4 if not yet seen,
+    /// and 50% on other floors/depths >= 2.
+    /// </summary>
+    public static bool RollsNightNurse(bool descent, int floorOrDepth, int seed)
+    {
+        if (floorOrDepth < NightNurseFrom) return false;
+        if (floorOrDepth == 4 && !NightNurse.SeenThisCampaign) return true;
+        if (floorOrDepth >= 2 && floorOrDepth <= 3 && floorOrDepth == GuaranteedEarlyFloor(seed)) return true;
+        return (RunRules.HashSeedFloor(seed ^ NightNursePickSalt, floorOrDepth) & 1) == 1;
     }
 
     /// <summary>True for the kinds that can end the run themselves (only the Listener today).</summary>

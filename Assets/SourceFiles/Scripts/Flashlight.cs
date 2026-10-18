@@ -18,16 +18,17 @@ public class Flashlight : MonoBehaviour
     [SerializeField] private float wideOuterAngle = 60f;
     [Tooltip("Width of the bright core when not focused. The gap to wideOuterAngle is the soft edge.")]
     [SerializeField] private float wideInnerAngle = 28f;
-    [SerializeField] private float wideIntensity = 9f;
+    [SerializeField] private float wideIntensity = 18f;
     [Tooltip("How far the wide beam reaches. Keep it near the fog distance, or the cone ends in fog you cannot see through anyway.")]
-    [SerializeField] private float wideRange = 26f;
+    [SerializeField] private float wideRange = 34f;
 
     [Header("Beam - focused (RMB / gamepad LT held)")]
     [Tooltip("A narrow, punchier beam for peering down a corridor - less light spilled sideways, more thrown forward.")]
     [SerializeField] private float focusedOuterAngle = 24f;
+    [Tooltip("Width of the bright core when not focused. The gap to wideOuterAngle is the soft edge.")]
     [SerializeField] private float focusedInnerAngle = 12f;
-    [SerializeField] private float focusedIntensity = 16f;
-    [SerializeField] private float focusedRange = 38f;
+    [SerializeField] private float focusedIntensity = 32f;
+    [SerializeField] private float focusedRange = 46f;
     [Tooltip("Seconds to blend fully in or out of the focused beam")]
     [SerializeField] private float focusBlendSeconds = 0.15f;
     [Tooltip("Battery drains this much faster while focused")]
@@ -72,11 +73,11 @@ public class Flashlight : MonoBehaviour
 
     [Header("F105 C9 - narrow beam")]
     [Tooltip("Wide beam width while TerrorSettings.narrowBeam is on (the Beam - wide values above apply when it is off)")]
-    [SerializeField] private float narrowOuterAngle = 45f;
+    [SerializeField] private float narrowOuterAngle = 55f;
     [Tooltip("Wide beam bright-core width while narrowBeam is on")]
-    [SerializeField] private float narrowInnerAngle = 14f;
+    [SerializeField] private float narrowInnerAngle = 24f;
     [Tooltip("Wide beam intensity while narrowBeam is on")]
-    [SerializeField] private float narrowIntensity = 7f;
+    [SerializeField] private float narrowIntensity = 16f;
 
     private float _baseWideOuterAngle;
     private float _baseWideInnerAngle;
@@ -117,9 +118,10 @@ public class Flashlight : MonoBehaviour
     /// <summary>Full width of the current (blended) lit cone.</summary>
     public float OuterAngle => CurrentOuterAngle;
 
+    private float _intensityScale = 1f;
     private float CurrentOuterAngle => Mathf.Lerp(wideOuterAngle, focusedOuterAngle, FocusBlend);
     private float CurrentInnerAngle => Mathf.Lerp(wideInnerAngle, focusedInnerAngle, FocusBlend);
-    private float CurrentIntensity => Mathf.Lerp(wideIntensity, focusedIntensity, FocusBlend);
+    private float CurrentIntensity => Mathf.Lerp(wideIntensity, focusedIntensity, FocusBlend) * _intensityScale;
 
     // The multiplier only scales the focused end of the blend, so the Focus Lens shop item (F75) makes
     // focusing reach further without changing the wide, default beam at all.
@@ -294,6 +296,13 @@ public class Flashlight : MonoBehaviour
     public void SetRangeScale(float scale)
     {
         _rangeScale = Mathf.Max(0.01f, scale);
+    }
+
+    /// <summary>Scales beam intensity and range (e.g. on wide-corridor floors where light dissipates in giant open spaces).</summary>
+    public void SetBeamBoost(float intensityScale, float rangeScale)
+    {
+        _intensityScale = Mathf.Max(0.1f, intensityScale);
+        _rangeScale = Mathf.Max(0.1f, rangeScale);
     }
 
     /// <summary>Focus Lens shop hook (F75): overrides how much faster the battery drains while focused - the Lens sets this to 1 (no penalty at all) instead of the default 1.5x. Pass a negative value to go back to the serialized default.</summary>

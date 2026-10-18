@@ -13,5 +13,7 @@ public enum EntityKind
     /// <summary>One locker per level is already occupied: hiding in it shoves you back out with a slam (LockerTenant.cs).</summary>
     Tenant = 4,
     /// <summary>One hanging body drops on you if you pass unlit, or one corpse crawls toward your beam (LivingBody.cs).</summary>
-    LivingBody = 8
+    LivingBody = 8,
+    /// <summary>Sister Agnes ("The Night Nurse"): anti-torch curfew patrol and anti-sprint/noise triage harasser (NightNurse.cs).</summary>
+    NightNurse = 16
 }
