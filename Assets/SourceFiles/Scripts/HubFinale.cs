@@ -213,8 +213,73 @@ public class HubFinale : MonoBehaviour
         if (hub != null) foreach (AudioSource a in hub.GetComponentsInChildren<AudioSource>(true)) if (a.isPlaying) a.Stop();
         if (lever) yield return new WaitForSecondsRealtime(0.6f);
         GameAudio.PlayAt(GameAudio.Library.powerDown, switchAt, 1f);
-        yield return new WaitForSecondsRealtime(lever ? 1.9f : 2.5f);
+        yield return new WaitForSecondsRealtime(lever ? 0.5f : 1.1f);
+
+        // F126: 5 sequential electromagnetic wing-door unlatch clunks echoing down the dark asylum halls.
+        AudioClip unlatch = DoorAudio.BuildClunkClip(0.32f, 95f, 0.7f);
+        for (int i = 0; i < 5; i++)
+        {
+            Vector3 doorPos = switchAt;
+            if (hub != null && hub.wingDoors != null && i < hub.wingDoors.Length && hub.wingDoors[i] != null)
+                doorPos = hub.wingDoors[i].transform.position;
+            GameAudio.ClipAtPoint(unlatch, doorPos, 0.75f);
+            yield return new WaitForSecondsRealtime(0.24f);
+        }
+
+        // F126: two faint amber eye spheres 2.2m across the Director's desk in the dark for 1.4s.
+        GameObject eyesRoot = SpawnDeskEyes(hub, switchAt);
+        if (hub != null && hub.Hud != null) hub.Hud.ShowSubtitle(L10n.T("hub.finale.doors_open"), 2.2f);
+        yield return new WaitForSecondsRealtime(1.4f);
+        if (eyesRoot != null) Destroy(eyesRoot);
+
         CompleteWith(GameOutcome.FinaleEnding.LightsOut);
+    }
+
+    private static GameObject SpawnDeskEyes(AsylumHub hub, Vector3 fallbackOrigin)
+    {
+        Camera cam = Camera.main;
+        Vector3 origin = cam != null ? cam.transform.position : (hub != null && hub.Player != null ? hub.Player.position + Vector3.up * 1.6f : fallbackOrigin);
+        Vector3 forward = cam != null ? cam.transform.forward : Vector3.forward;
+        forward.y = 0f;
+        if (forward.sqrMagnitude < 0.0001f) forward = Vector3.forward;
+        else forward.Normalize();
+        Vector3 right = Vector3.Cross(Vector3.up, forward).normalized;
+        Vector3 center = origin + forward * 2.2f - Vector3.up * 0.05f;
+
+        GameObject root = new GameObject("FinaleDeskEyes");
+        root.transform.position = center;
+        Color amber = new Color(1f, 0.62f, 0.18f, 1f);
+        Shader shader = Shader.Find("Universal Render Pipeline/Unlit") ?? Shader.Find("Unlit/Color") ?? Shader.Find("Standard");
+        Material mat = shader != null ? new Material(shader) : null;
+        if (mat != null)
+        {
+            mat.color = amber;
+            if (mat.HasProperty("_BaseColor")) mat.SetColor("_BaseColor", amber);
+            if (mat.HasProperty("_EmissionColor"))
+            {
+                mat.EnableKeyword("_EMISSION");
+                mat.SetColor("_EmissionColor", amber * 2.2f);
+            }
+        }
+
+        for (int s = -1; s <= 1; s += 2)
+        {
+            GameObject eye = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            eye.name = s < 0 ? "LeftEye" : "RightEye";
+            Collider col = eye.GetComponent<Collider>();
+            if (col != null) Destroy(col);
+            eye.transform.SetParent(root.transform, false);
+            eye.transform.position = center + right * (s * 0.068f);
+            eye.transform.localScale = Vector3.one * 0.028f;
+            Renderer rend = eye.GetComponent<Renderer>();
+            if (rend != null)
+            {
+                rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                rend.receiveShadows = false;
+                if (mat != null) rend.sharedMaterial = mat;
+            }
+        }
+        return root;
     }
 
     private void CompleteWith(GameOutcome.FinaleEnding ending)

@@ -93,12 +93,19 @@ public static class OathCatalogue
     /// <summary>All Oath bits the game knows.</summary>
     public static readonly Oath AllOaths = Oath.OldBattery | Oath.NoWaiting | Oath.WeldedLockers | Oath.StanWakesEarly | Oath.NoSecondChances | Oath.FailingGrid | Oath.ShortFuse | Oath.HearsEverything | Oath.DoorsDontHold;
 
-    /// <summary>The assists a preset switches on (STORY = the five that soften the game plus comfort; the others none).</summary>
+    /// <summary>The assists a preset switches on (STORY = all assists; the others none).</summary>
     public static Assist PresetAssists(DifficultyPreset preset)
     {
-        return preset == DifficultyPreset.Story
-            ? Assist.LongerTimer | Assist.GentleTorch | Assist.SlowHunter | Assist.HonestCues | Assist.BrighterHalls | Assist.NoReplay
-            : Assist.None;
+        return preset == DifficultyPreset.Story ? AllAssists : Assist.None;
+    }
+
+    /// <summary>The Oaths a preset switches on (NIGHTMARE = all available Oaths; the others none).</summary>
+    public static Oath PresetOaths(DifficultyPreset preset)
+    {
+        if (preset != DifficultyPreset.Nightmare) return Oath.None;
+        Oath oaths = AllOaths;
+        if (!IsAvailable(Oath.DoorsDontHold)) oaths &= ~Oath.DoorsDontHold;
+        return oaths;
     }
 
     public static string PresetSlug(DifficultyPreset preset)

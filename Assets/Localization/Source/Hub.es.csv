@@ -207,3 +207,10 @@ hub.breach.followed,TE HA SEGUIDO HASTA AQUÍ.
 hub.breach.run,LA PUERTA DEL DIRECTOR. CORRE.
 hub.breach.locker,TE HA VISTO ENTRAR.
 hub.breach.grab,TE TENÍA. BUSCA TU LUZ. CORRE.
+hub.supper.sit_prompt,OCUPAR TU LUGAR EN LA MESA
+hub.supper.sit_refuse,EL SEXTO LUGAR ESTÁ PUESTO  ·  EL PLATO SIGUE TIBIO
+hub.supper.seated_line,CINCO CABEZAS SE ALZAN A LA LUZ DE LA VELA. EL RECUENTO ES SEIS.
+hub.records.corroborated,EXPEDIENTES CORROBORADOS  ·  CINTA DE OBSERVACIÓN BORRADA ({habit})
+hub.records.corroborated_clean,EXPEDIENTES CORROBORADOS  ·  REGISTRO DE OBSERVACIÓN SELLADO
+hub.finale.doors_open,LAS PUERTAS ESTÁN ABIERTAS AHORA.
+hub.finale.readmitted,READMITIDO  ·  INGRESO N.º 16

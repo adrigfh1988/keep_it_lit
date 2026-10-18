@@ -1523,6 +1523,14 @@ MonoBehaviour:
     m_Localized: El Escribiente ha terminado de mecanografiar tu expediente.
     m_Metadata:
       m_Items: []
+  - m_Id: 3001634424524800
+    m_Localized: PRESENTE EN EL RECUENTO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3001634533576704
+    m_Localized: "La sexta silla siempre fue la tuya. Al otro lado del mantel, cinco cabezas se alzan a la luz de la vela y no apartan la mirada. Al fondo del pasillo, el timbre de Admisi\xF3n suena una vez y se detiene. Nadie sale esta noche. El recuento de la ma\xF1ana es seis."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

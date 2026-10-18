@@ -525,5 +525,18 @@ namespace KeepItLit.Tests
             Assert.IsFalse(t.muffledHunter);
             Assert.IsTrue(original.muffledHunter);
         }
+
+        [Test]
+        public void PresetRules_StoryEnablesAllAssists_AndNightmareEnablesAllOaths()
+        {
+            Assert.AreEqual(OathCatalogue.AllAssists, OathCatalogue.PresetAssists(DifficultyPreset.Story));
+            Assert.AreEqual(Oath.None, OathCatalogue.PresetOaths(DifficultyPreset.Story));
+
+            Assert.AreEqual(Assist.None, OathCatalogue.PresetAssists(DifficultyPreset.Standard));
+            Assert.AreEqual(Oath.None, OathCatalogue.PresetOaths(DifficultyPreset.Standard));
+
+            Assert.AreEqual(Assist.None, OathCatalogue.PresetAssists(DifficultyPreset.Nightmare));
+            Assert.AreEqual(OathCatalogue.AllOaths, OathCatalogue.PresetOaths(DifficultyPreset.Nightmare));
+        }
     }
 }

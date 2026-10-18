@@ -20,156 +20,156 @@ MonoBehaviour:
     - rid: 4707331672703763207
   m_TableData:
   - m_Id: 295604224
-    m_Localized: ne cligne pas.
+    m_Localized: patient sept... hors du lit.
     m_Metadata:
       m_Items: []
   - m_Id: 379490304
-    m_Localized: "voil\xE0 ma petite lumi\xE8re."
+    m_Localized: "lampe allum\xE9e dans le couloir."
     m_Metadata:
       m_Items: []
   - m_Id: 379490305
-    m_Localized: cours.
+    m_Localized: ne courez pas dans le pavillon.
     m_Metadata:
       m_Items: []
   - m_Id: 379490306
-    m_Localized: "tu es \xE0 moi."
+    m_Localized: retour aux admissions.
     m_Metadata:
       m_Items: []
   - m_Id: 379490307
-    m_Localized: pas assez vite.
+    m_Localized: "pouls \xE9lev\xE9. ne bougez pas."
     m_Metadata:
       m_Items: []
   - m_Id: 379490308
-    m_Localized: je sens ta pile.
+    m_Localized: "source lumineuse non autoris\xE9e."
     m_Metadata:
       m_Items: []
   - m_Id: 379490309
-    m_Localized: bonsoir, voleur.
+    m_Localized: on te voit, sept.
     m_Metadata:
       m_Items: []
   - m_Id: 379490310
-    m_Localized: cours plus vite.
+    m_Localized: "courir ne fait que fatiguer le c\u0153ur."
     m_Metadata:
       m_Items: []
   - m_Id: 379490311
-    m_Localized: tes jambes fatiguent.
+    m_Localized: "la proc\xE9dure un... ne s'arr\xEAte pas."
     m_Metadata:
       m_Items: []
   - m_Id: 379490312
-    m_Localized: moi, je ne fatigue pas.
+    m_Localized: "restez o\xF9 vous \xEAtes."
     m_Metadata:
       m_Items: []
   - m_Id: 379490313
-    m_Localized: "plus pr\xE8s\u2026"
+    m_Localized: "quatorze admissions. le m\xEAme couloir."
     m_Metadata:
       m_Items: []
   - m_Id: 379490314
-    m_Localized: "les \xE9toiles ne te sauveront pas."
+    m_Localized: "les \xE9toiles ne m\xE8nent qu'en bas."
     m_Metadata:
       m_Items: []
   - m_Id: 379490315
-    m_Localized: "cours encore. j'aime \xE7a."
+    m_Localized: "infirmiers vers l'aile inf\xE9rieure."
     m_Metadata:
       m_Items: []
   - m_Id: 379490316
-    m_Localized: tu ne te cacheras pas toujours.
+    m_Localized: le sujet est sorti du faisceau.
     m_Metadata:
       m_Items: []
   - m_Id: 379490317
-    m_Localized: je te trouverai.
+    m_Localized: "le pavillon est un syst\xE8me ferm\xE9."
     m_Metadata:
       m_Items: []
   - m_Id: 379490318
-    m_Localized: je connais mieux ce labyrinthe.
+    m_Localized: nous connaissons chaque porte ici-bas.
     m_Metadata:
       m_Items: []
   - m_Id: 379490319
-    m_Localized: tu te caches? bien.
+    m_Localized: "souffle retenu... not\xE9."
     m_Metadata:
       m_Items: []
   - m_Id: 379490320
-    m_Localized: "o\xF9 es-tu\u2026"
+    m_Localized: ronde des lits... chambre vide.
     m_Metadata:
       m_Items: []
   - m_Id: 379490321
-    m_Localized: sors.
+    m_Localized: avancez pour l'appel.
     m_Metadata:
       m_Items: []
   - m_Id: 379490322
-    m_Localized: "j'entends ton c\u0153ur."
+    m_Localized: respiration audible dans le noir.
     m_Metadata:
       m_Items: []
   - m_Id: 379490323
-    m_Localized: "petite lumi\xE8re, petite lumi\xE8re\u2026"
+    m_Localized: "le patient continue de dessiner des \xE9toiles..."
     m_Metadata:
       m_Items: []
   - m_Id: 379490324
-    m_Localized: "le noir est \xE0 moi."
+    m_Localized: "proc\xE9dure un : ablation de la peur."
     m_Metadata:
       m_Items: []
   - m_Id: 379490325
-    m_Localized: "\xE9tage {floor}. tu n'en sortiras pas."
+    m_Localized: "\xE9tage {floor}. ronde de nuit."
     m_Metadata:
       m_Items:
       - rid: 4707331672703763207
   - m_Id: 379490326
-    m_Localized: SURPRISE.
+    m_Localized: IMMOBILE POUR LE TRAITEMENT.
     m_Metadata:
       m_Items: []
   - m_Id: 379490327
-    m_Localized: J'AI TANT ATTENDU.
+    m_Localized: CONFINEMENT DU PAVILLON.
     m_Metadata:
       m_Items: []
   - m_Id: 379490328
-    m_Localized: PAR ICI? PARFAIT.
+    m_Localized: "AVANCEZ DANS LA LUMI\xC8RE."
     m_Metadata:
       m_Items: []
   - m_Id: 379490329
-    m_Localized: COUCOU.
+    m_Localized: PATIENT SEPT.
     m_Metadata:
       m_Items: []
   - m_Id: 379490330
-    m_Localized: "il y a quelqu'un l\xE0-dedans?"
+    m_Localized: "loquet de casier ti\xE8de."
     m_Metadata:
       m_Items: []
   - m_Id: 379490331
-    m_Localized: je te sens.
+    m_Localized: "respiration derri\xE8re la t\xF4le."
     m_Metadata:
       m_Items: []
   - m_Id: 379490332
-    m_Localized: ouvre.
+    m_Localized: ouvre l'armoire, sept.
     m_Metadata:
       m_Items: []
   - m_Id: 379490333
-    m_Localized: "l'un de ceux-l\xE0\u2026"
+    m_Localized: "\xE7a se souvient duquel."
     m_Metadata:
       m_Items: []
   - m_Id: 379490334
-    m_Localized: "m\xE9tal ti\xE8de."
+    m_Localized: le fer garde la chaleur.
     m_Metadata:
       m_Items: []
   - m_Id: 379490335
-    m_Localized: "les portes ne m'arr\xEAtent pas."
+    m_Localized: obstruction dans le couloir.
     m_Metadata:
       m_Items: []
   - m_Id: 379490336
-    m_Localized: laisse-moi entrer.
+    m_Localized: "d\xE9gagez le volet."
     m_Metadata:
       m_Items: []
   - m_Id: 379490337
-    m_Localized: toc toc.
+    m_Localized: quarante et une portes...
     m_Metadata:
       m_Items: []
   - m_Id: 379490338
-    m_Localized: plus de portes.
+    m_Localized: "acc\xE8s au pavillon forc\xE9."
     m_Metadata:
       m_Items: []
   - m_Id: 379490339
-    m_Localized: JE TE TIENS.
+    m_Localized: "R\xC9ADMIS."
     m_Metadata:
       m_Items: []
   - m_Id: 379490340
-    m_Localized: "\xC0 MOI."
+    m_Localized: "PROC\xC9DURE TERMIN\xC9E."
     m_Metadata:
       m_Items: []
   - m_Id: 379490341
@@ -177,7 +177,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 379490342
-    m_Localized: "TE VOIL\xC0."
+    m_Localized: "LIT PR\xCAT AUX ADMISSIONS."
     m_Metadata:
       m_Items: []
   - m_Id: 379490343

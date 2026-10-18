@@ -1,44 +1,44 @@
 key,text
-voice.hunter.spotted.0,ne cligne pas.
-voice.hunter.spotted.1,voilà ma petite lumière.
-voice.hunter.spotted.2,cours.
-voice.hunter.spotted.3,tu es à moi.
-voice.hunter.spotted.4,pas assez vite.
-voice.hunter.spotted.5,je sens ta pile.
-voice.hunter.spotted.6,"bonsoir, voleur."
-voice.hunter.chasing.0,cours plus vite.
-voice.hunter.chasing.1,tes jambes fatiguent.
-voice.hunter.chasing.2,"moi, je ne fatigue pas."
-voice.hunter.chasing.3,plus près…
-voice.hunter.chasing.4,les étoiles ne te sauveront pas.
-voice.hunter.chasing.5,cours encore. j'aime ça.
-voice.hunter.lost.0,tu ne te cacheras pas toujours.
-voice.hunter.lost.1,je te trouverai.
-voice.hunter.lost.2,je connais mieux ce labyrinthe.
-voice.hunter.lost.3,tu te caches? bien.
-voice.hunter.searching.0,où es-tu…
-voice.hunter.searching.1,sors.
-voice.hunter.searching.2,j'entends ton cœur.
-voice.hunter.searching.3,"petite lumière, petite lumière…"
-voice.hunter.searching.4,le noir est à moi.
-voice.hunter.searching.5,étage {floor}. tu n'en sortiras pas.
-voice.hunter.ambush.0,SURPRISE.
-voice.hunter.ambush.1,J'AI TANT ATTENDU.
-voice.hunter.ambush.2,PAR ICI? PARFAIT.
-voice.hunter.ambush.3,COUCOU.
-voice.hunter.locker.0,il y a quelqu'un là-dedans?
-voice.hunter.locker.1,je te sens.
-voice.hunter.locker.2,ouvre.
-voice.hunter.locker.3,l'un de ceux-là…
-voice.hunter.locker.4,métal tiède.
-voice.hunter.door.0,les portes ne m'arrêtent pas.
-voice.hunter.door.1,laisse-moi entrer.
-voice.hunter.door.2,toc toc.
-voice.hunter.door.3,plus de portes.
-voice.hunter.caught.0,JE TE TIENS.
-voice.hunter.caught.1,À MOI.
+voice.hunter.spotted.0,patient sept... hors du lit.
+voice.hunter.spotted.1,lampe allumée dans le couloir.
+voice.hunter.spotted.2,ne courez pas dans le pavillon.
+voice.hunter.spotted.3,retour aux admissions.
+voice.hunter.spotted.4,pouls élevé. ne bougez pas.
+voice.hunter.spotted.5,source lumineuse non autorisée.
+voice.hunter.spotted.6,"on te voit, sept."
+voice.hunter.chasing.0,courir ne fait que fatiguer le cœur.
+voice.hunter.chasing.1,la procédure un... ne s'arrête pas.
+voice.hunter.chasing.2,restez où vous êtes.
+voice.hunter.chasing.3,quatorze admissions. le même couloir.
+voice.hunter.chasing.4,les étoiles ne mènent qu'en bas.
+voice.hunter.chasing.5,infirmiers vers l'aile inférieure.
+voice.hunter.lost.0,le sujet est sorti du faisceau.
+voice.hunter.lost.1,le pavillon est un système fermé.
+voice.hunter.lost.2,nous connaissons chaque porte ici-bas.
+voice.hunter.lost.3,souffle retenu... noté.
+voice.hunter.searching.0,ronde des lits... chambre vide.
+voice.hunter.searching.1,avancez pour l'appel.
+voice.hunter.searching.2,respiration audible dans le noir.
+voice.hunter.searching.3,le patient continue de dessiner des étoiles...
+voice.hunter.searching.4,"procédure un : ablation de la peur."
+voice.hunter.searching.5,étage {floor}. ronde de nuit.
+voice.hunter.ambush.0,IMMOBILE POUR LE TRAITEMENT.
+voice.hunter.ambush.1,CONFINEMENT DU PAVILLON.
+voice.hunter.ambush.2,AVANCEZ DANS LA LUMIÈRE.
+voice.hunter.ambush.3,PATIENT SEPT.
+voice.hunter.locker.0,loquet de casier tiède.
+voice.hunter.locker.1,respiration derrière la tôle.
+voice.hunter.locker.2,"ouvre l'armoire, sept."
+voice.hunter.locker.3,ça se souvient duquel.
+voice.hunter.locker.4,le fer garde la chaleur.
+voice.hunter.door.0,obstruction dans le couloir.
+voice.hunter.door.1,dégagez le volet.
+voice.hunter.door.2,quarante et une portes...
+voice.hunter.door.3,accès au pavillon forcé.
+voice.hunter.caught.0,RÉADMIS.
+voice.hunter.caught.1,PROCÉDURE TERMINÉE.
 voice.hunter.caught.2,LIGHTS OUT.
-voice.hunter.caught.3,TE VOILÀ.
+voice.hunter.caught.3,LIT PRÊT AUX ADMISSIONS.
 voice.stan.spotted.0,te voilà.
 voice.stan.spotted.1,je te vois.
 voice.stan.spotted.2,je sais où tu es.

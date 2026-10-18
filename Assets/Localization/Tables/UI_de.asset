@@ -1527,6 +1527,14 @@ MonoBehaviour:
     m_Localized: Der Schreiber hat deine Akte fertig getippt.
     m_Metadata:
       m_Items: []
+  - m_Id: 3001634424524800
+    m_Localized: ANWESEND BEIM APPELL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3001634533576704
+    m_Localized: "Der sechste Stuhl war schon immer deiner. \xDCber dem Tischtuch heben sich f\xFCnf K\xF6pfe im Kerzenlicht und wenden den Blick nicht ab. Den Gang hinunter l\xE4utet einmal die Klingel der Aufnahme und verstummt. Heute Nacht geht niemand hinaus. Die Morgenz\xE4hlung ist bei sechs."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

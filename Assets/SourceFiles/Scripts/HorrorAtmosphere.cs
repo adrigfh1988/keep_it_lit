@@ -321,6 +321,28 @@ public class HorrorAtmosphere : MonoBehaviour
                 fringe.intensity.value = 0f;
                 _aberrations.Add(fringe);
             }
+
+            // F126: URP Bloom halation on emissive bulbs/eyes (skipped on mobile) and institutional SplitToning color script.
+            if (!MobilePerformance.IsMobileProfile)
+            {
+                if (!volume.profile.TryGet(out Bloom bloom)) bloom = volume.profile.Add<Bloom>(true);
+                bloom.threshold.overrideState = true;
+                bloom.threshold.value = 1.05f;
+                bloom.intensity.overrideState = true;
+                bloom.intensity.value = 0.42f * GameSettings.EffectsIntensity;
+                bloom.scatter.overrideState = true;
+                bloom.scatter.value = 0.65f;
+                bloom.tint.overrideState = true;
+                bloom.tint.value = new Color(1.0f, 0.93f, 0.82f);
+            }
+
+            if (!volume.profile.TryGet(out SplitToning splitToning)) splitToning = volume.profile.Add<SplitToning>(true);
+            splitToning.shadows.overrideState = true;
+            splitToning.shadows.value = new Color(0.38f, 0.45f, 0.56f);
+            splitToning.highlights.overrideState = true;
+            splitToning.highlights.value = new Color(1.0f, 0.90f, 0.72f);
+            splitToning.balance.overrideState = true;
+            splitToning.balance.value = -18f;
         }
     }
 }

@@ -207,3 +207,10 @@ hub.breach.followed,ÇA T'A SUIVI JUSQU'ICI.
 hub.breach.run,LA PORTE DU DIRECTEUR. COURS.
 hub.breach.locker,ÇA T'A VU ENTRER.
 hub.breach.grab,ÇA TE TENAIT. RETROUVE TA LAMPE. COURS.
+hub.supper.sit_prompt,PRENDRE VOTRE PLACE À TABLE
+hub.supper.sit_refuse,LE SIXIÈME COUVERT EST MIS  ·  L'ASSIETTE EST ENCORE TIÈDE
+hub.supper.seated_line,CINQ TÊTES SE LÈVENT À LA LUEUR DE LA BOUGIE. LE COMPTE EST À SIX.
+hub.records.corroborated,DOSSIERS CORROBORÉS  ·  BANDE D'OBSERVATION EFFACÉE ({habit})
+hub.records.corroborated_clean,DOSSIERS CORROBORÉS  ·  REGISTRE D'OBSERVATION SCELLÉ
+hub.finale.doors_open,LES PORTES SONT OUVERTES MAINTENANT.
+hub.finale.readmitted,RÉADMIS  ·  ADMISSION N° 16

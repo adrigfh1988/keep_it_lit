@@ -52,35 +52,73 @@ public class HunterPhraseBook : ScriptableObject
         return book;
     }
 
-    /// <summary>Voice: slow, patient, certain - an adult predator, where Stan is a broken toy.</summary>
+    /// <summary>F126: spliced magnetic-tape echoes of asylum staff orders, Procedure 1, and Patient 7's prior admissions.</summary>
     public void FillDefaults()
     {
         spotted = new[]
         {
-            "i see you now.", "there's my little light.", "run.", "you're mine.", "too slow.",
-            "i smell your battery.", "hello, thief.",
+            "patient seven... out of bed.",
+            "lamp on in the corridor.",
+            "do not run in the ward.",
+            "returning to intake.",
+            "pulse elevated. hold still.",
+            "unauthorized light source.",
+            "we see you, seven.",
         };
         chasing = new[]
         {
-            "run faster.", "your legs are tired.", "i don't get tired.", "closer…",
-            "the stars won't save you.", "keep running. i like it.",
+            "running only tires the heart.",
+            "procedure one... does not stop.",
+            "remain where you are.",
+            "fourteen admissions. same corridor.",
+            "the stars only lead back down.",
+            "orderlies to the lower wing.",
         };
         lost = new[]
         {
-            "you can't hide forever.", "i'll find you.", "i know this maze better.", "hiding? good.",
+            "subject stepped out of the beam.",
+            "the ward is a closed system.",
+            "we know every door down here.",
+            "holding breath... noted.",
         };
         searching = new[]
         {
-            "where are you…", "come out.", "i can hear your heart.", "little light, little light…",
-            "the dark is mine.", "floor {floor}. you won't leave it.",
+            "bed check... room empty.",
+            "step forward for the count.",
+            "respiration audible in the dark.",
+            "patient keeps drawing stars...",
+            "procedure one: removal of fear.",
+            "floor {floor}. night rounds.",
         };
-        ambush = new[] { "SURPRISE.", "WAITED SO LONG.", "THIS WAY? GOOD.", "HELLO." };
+        ambush = new[]
+        {
+            "HOLD FOR TREATMENT.",
+            "WARD LOCKDOWN.",
+            "STEP INTO THE LIGHT.",
+            "PATIENT SEVEN.",
+        };
         locker = new[]
         {
-            "is someone in there?", "i smell you.", "open up.", "one of these…", "warm metal.",
+            "locker latch warm.",
+            "breathing behind the tin.",
+            "open the cabinet, seven.",
+            "it remembers which one.",
+            "iron holds the heat.",
         };
-        door = new[] { "doors don't stop me.", "let me in.", "knock knock.", "no more doors." };
-        caught = new[] { "GOTCHA.", "MINE.", "LIGHTS OUT.", "FOUND YOU." };
+        door = new[]
+        {
+            "obstruction in the corridor.",
+            "clear the shutter.",
+            "forty-one doors...",
+            "ward access forced.",
+        };
+        caught = new[]
+        {
+            "READMITTED.",
+            "PROCEDURE COMPLETE.",
+            "LIGHTS OUT.",
+            "BED READY IN INTAKE.",
+        };
     }
 
     private void Reset() => FillDefaults();

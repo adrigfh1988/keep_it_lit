@@ -1835,6 +1835,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331789613957370
+  - m_Id: 3001634424524800
+    m_Key: ui.outcome.ending_c_title
+    m_Metadata:
+      m_Items:
+      - rid: 4707331851231167194
+  - m_Id: 3001634533576704
+    m_Key: ui.outcome.ending_c_sub
+    m_Metadata:
+      m_Items:
+      - rid: 4707331851231167195
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -3302,3 +3312,11 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Second line of the end screen after a loss on floor 5 (the Director)
+    - rid: 4707331851231167194
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen title of ending C, taking your seat at the Last Supper table in the finale (one line, large, ALL CAPS)
+    - rid: 4707331851231167195
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen body of ending C (wraps over ~6 lines, 1400 px). Five patients sit at the table; the sixth place was yours

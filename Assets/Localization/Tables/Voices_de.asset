@@ -20,156 +20,156 @@ MonoBehaviour:
     - rid: 4707331672703763206
   m_TableData:
   - m_Id: 295604224
-    m_Localized: nicht blinzeln.
+    m_Localized: patient sieben... nicht im bett.
     m_Metadata:
       m_Items: []
   - m_Id: 379490304
-    m_Localized: da ist mein kleines licht.
+    m_Localized: lampe an im korridor.
     m_Metadata:
       m_Items: []
   - m_Id: 379490305
-    m_Localized: lauf.
+    m_Localized: nicht auf der station rennen.
     m_Metadata:
       m_Items: []
   - m_Id: 379490306
-    m_Localized: "du geh\xF6rst mir."
+    m_Localized: "zur\xFCck zur aufnahme."
     m_Metadata:
       m_Items: []
   - m_Id: 379490307
-    m_Localized: zu langsam.
+    m_Localized: "puls erh\xF6ht. stillhalten."
     m_Metadata:
       m_Items: []
   - m_Id: 379490308
-    m_Localized: ich rieche deine batterie.
+    m_Localized: unbefugte lichtquelle.
     m_Metadata:
       m_Items: []
   - m_Id: 379490309
-    m_Localized: hallo, dieb.
+    m_Localized: wir sehen dich, sieben.
     m_Metadata:
       m_Items: []
   - m_Id: 379490310
-    m_Localized: lauf schneller.
+    m_Localized: "rennen erm\xFCdet nur das herz."
     m_Metadata:
       m_Items: []
   - m_Id: 379490311
-    m_Localized: "deine beine sind m\xFCde."
+    m_Localized: "prozedur eins... h\xF6rt nicht auf."
     m_Metadata:
       m_Items: []
   - m_Id: 379490312
-    m_Localized: "ich werde nicht m\xFCde."
+    m_Localized: bleiben sie wo sie sind.
     m_Metadata:
       m_Items: []
   - m_Id: 379490313
-    m_Localized: "n\xE4her\u2026"
+    m_Localized: vierzehn aufnahmen. derselbe gang.
     m_Metadata:
       m_Items: []
   - m_Id: 379490314
-    m_Localized: die sterne retten dich nicht.
+    m_Localized: "die sterne f\xFChren nur wieder hinab."
     m_Metadata:
       m_Items: []
   - m_Id: 379490315
-    m_Localized: "lauf weiter. das gef\xE4llt mir."
+    m_Localized: pfleger in den unteren trakt.
     m_Metadata:
       m_Items: []
   - m_Id: 379490316
-    m_Localized: du kannst dich nicht ewig verstecken.
+    m_Localized: subjekt aus dem lichtkegel getreten.
     m_Metadata:
       m_Items: []
   - m_Id: 379490317
-    m_Localized: ich finde dich.
+    m_Localized: die station ist ein geschlossenes system.
     m_Metadata:
       m_Items: []
   - m_Id: 379490318
-    m_Localized: ich kenne das labyrinth besser.
+    m_Localized: "wir kennen jede t\xFCr hier unten."
     m_Metadata:
       m_Items: []
   - m_Id: 379490319
-    m_Localized: versteckst du dich? gut.
+    m_Localized: atem angehalten... vermerkt.
     m_Metadata:
       m_Items: []
   - m_Id: 379490320
-    m_Localized: "wo bist du\u2026"
+    m_Localized: bettenkontrolle... zimmer leer.
     m_Metadata:
       m_Items: []
   - m_Id: 379490321
-    m_Localized: komm raus.
+    m_Localized: vortreten zum appell.
     m_Metadata:
       m_Items: []
   - m_Id: 379490322
-    m_Localized: "ich h\xF6re dein herz."
+    m_Localized: "atmung im dunkeln h\xF6rbar."
     m_Metadata:
       m_Items: []
   - m_Id: 379490323
-    m_Localized: "kleines licht, kleines licht\u2026"
+    m_Localized: patient zeichnet weiter sterne...
     m_Metadata:
       m_Items: []
   - m_Id: 379490324
-    m_Localized: "das dunkel geh\xF6rt mir."
+    m_Localized: 'prozedur eins: entfernung der furcht.'
     m_Metadata:
       m_Items: []
   - m_Id: 379490325
-    m_Localized: "etage {floor}. die verl\xE4sst du nicht."
+    m_Localized: etage {floor}. nachtrunde.
     m_Metadata:
       m_Items:
       - rid: 4707331672703763206
   - m_Id: 379490326
-    m_Localized: "\xDCBERRASCHUNG."
+    m_Localized: STILLHALTEN ZUR BEHANDLUNG.
     m_Metadata:
       m_Items: []
   - m_Id: 379490327
-    m_Localized: SO LANGE GEWARTET.
+    m_Localized: STATIONSSPERRE.
     m_Metadata:
       m_Items: []
   - m_Id: 379490328
-    m_Localized: HIER ENTLANG? GUT.
+    m_Localized: TRETEN SIE INS LICHT.
     m_Metadata:
       m_Items: []
   - m_Id: 379490329
-    m_Localized: HALLO.
+    m_Localized: PATIENT SIEBEN.
     m_Metadata:
       m_Items: []
   - m_Id: 379490330
-    m_Localized: ist da jemand drin?
+    m_Localized: spindriegel noch warm.
     m_Metadata:
       m_Items: []
   - m_Id: 379490331
-    m_Localized: ich rieche dich.
+    m_Localized: atmen hinter dem blech.
     m_Metadata:
       m_Items: []
   - m_Id: 379490332
-    m_Localized: mach auf.
+    m_Localized: mach den schrank auf, sieben.
     m_Metadata:
       m_Items: []
   - m_Id: 379490333
-    m_Localized: "einer von denen\u2026"
+    m_Localized: es merkt sich welchen.
     m_Metadata:
       m_Items: []
   - m_Id: 379490334
-    m_Localized: warmes metall.
+    m_Localized: "eisen h\xE4lt die w\xE4rme."
     m_Metadata:
       m_Items: []
   - m_Id: 379490335
-    m_Localized: "t\xFCren halten mich nicht auf."
+    m_Localized: hindernis im korridor.
     m_Metadata:
       m_Items: []
   - m_Id: 379490336
-    m_Localized: lass mich rein.
+    m_Localized: rolltor freimachen.
     m_Metadata:
       m_Items: []
   - m_Id: 379490337
-    m_Localized: klopf, klopf.
+    m_Localized: "einundvierzig t\xFCren..."
     m_Metadata:
       m_Items: []
   - m_Id: 379490338
-    m_Localized: "keine t\xFCren mehr."
+    m_Localized: stationszugang aufgebrochen.
     m_Metadata:
       m_Items: []
   - m_Id: 379490339
-    m_Localized: HAB DICH.
+    m_Localized: WIEDERAUFGENOMMEN.
     m_Metadata:
       m_Items: []
   - m_Id: 379490340
-    m_Localized: MEINS.
+    m_Localized: PROZEDUR ABGESCHLOSSEN.
     m_Metadata:
       m_Items: []
   - m_Id: 379490341
@@ -177,7 +177,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 379490342
-    m_Localized: GEFUNDEN.
+    m_Localized: BETT IN DER AUFNAHME BEREIT.
     m_Metadata:
       m_Items: []
   - m_Id: 379490343

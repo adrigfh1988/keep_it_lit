@@ -207,3 +207,10 @@ hub.breach.followed,"Subtitle (3 s) at the second bang on the Surgery wing door:
 hub.breach.run,"Subtitle (3 s) the first time the hunter spots the player during the breach: the way out is the Director's door. ALL CAPS","THE DIRECTOR'S DOOR. RUN."
 hub.breach.locker,"Subtitle (3 s) when the hunter, having learned the lockers, comes for the locker it saw the player enter. ALL CAPS",IT WATCHED YOU GET IN.
 hub.breach.grab,"Subtitle (3.5 s) after the breach's free grab: the torch was knocked away, the hunter is stunned for a moment. ALL CAPS",IT HAD YOU. FIND YOUR LIGHT. RUN.
+hub.supper.sit_prompt,"Prompt on the empty sixth place setting at the Last Supper table in the dining room (after E / hold E in the finale). ALL CAPS",TAKE YOUR PLACE AT THE TABLE
+hub.supper.sit_refuse,"Subtitle (3.8 s) when inspecting the sixth place at the Last Supper table before the finale. ALL CAPS",THE SIXTH PLACE IS LAID  ·  THE PLATE IS STILL WARM
+hub.supper.seated_line,"Subtitle (3.8 s) when sitting in the sixth chair at the Last Supper table during the finale (Ending C). ALL CAPS",FIVE HEADS RISE IN THE CANDLELIGHT. THE COUNT IS SIX.
+hub.records.corroborated,"Subtitle (4.2 s) when corroborating 2+ case files on the RecordsBoard scrubs one level off the hunter's highest learned habit. {habit} = habit short name. ALL CAPS",CASE FILES CORROBORATED  ·  OBSERVATION TAPE SCRUBBED ({habit})
+hub.records.corroborated_clean,"Subtitle (4.2 s) when corroborating 2+ case files on the RecordsBoard while the hunter has learned no habits yet. ALL CAPS",CASE FILES CORROBORATED  ·  WARD OBSERVATION LOG SEALED
+hub.finale.doors_open,"Subtitle (2.2 s) in the dark after the 5 wing doors unlatch during the Lights Out finale (Ending B). ALL CAPS",THE DOORS ARE OPEN NOW.
+hub.finale.readmitted,"Subtitle (2.2 s) over the cold white light as the main doors close in the Discharged finale (Ending A). ALL CAPS",READMITTED  ·  ADMISSION #16

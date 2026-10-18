@@ -20,156 +20,156 @@ MonoBehaviour:
     - rid: 4707331672703762443
   m_TableData:
   - m_Id: 295604224
-    m_Localized: don't blink.
+    m_Localized: patient seven... out of bed.
     m_Metadata:
       m_Items: []
   - m_Id: 379490304
-    m_Localized: there's my little light.
+    m_Localized: lamp on in the corridor.
     m_Metadata:
       m_Items: []
   - m_Id: 379490305
-    m_Localized: run.
+    m_Localized: do not run in the ward.
     m_Metadata:
       m_Items: []
   - m_Id: 379490306
-    m_Localized: you're mine.
+    m_Localized: returning to intake.
     m_Metadata:
       m_Items: []
   - m_Id: 379490307
-    m_Localized: too slow.
+    m_Localized: pulse elevated. hold still.
     m_Metadata:
       m_Items: []
   - m_Id: 379490308
-    m_Localized: i smell your battery.
+    m_Localized: unauthorized light source.
     m_Metadata:
       m_Items: []
   - m_Id: 379490309
-    m_Localized: hello, thief.
+    m_Localized: we see you, seven.
     m_Metadata:
       m_Items: []
   - m_Id: 379490310
-    m_Localized: run faster.
+    m_Localized: running only tires the heart.
     m_Metadata:
       m_Items: []
   - m_Id: 379490311
-    m_Localized: your legs are tired.
+    m_Localized: procedure one... does not stop.
     m_Metadata:
       m_Items: []
   - m_Id: 379490312
-    m_Localized: i don't get tired.
+    m_Localized: remain where you are.
     m_Metadata:
       m_Items: []
   - m_Id: 379490313
-    m_Localized: "closer\u2026"
+    m_Localized: fourteen admissions. same corridor.
     m_Metadata:
       m_Items: []
   - m_Id: 379490314
-    m_Localized: the stars won't save you.
+    m_Localized: the stars only lead back down.
     m_Metadata:
       m_Items: []
   - m_Id: 379490315
-    m_Localized: keep running. i like it.
+    m_Localized: orderlies to the lower wing.
     m_Metadata:
       m_Items: []
   - m_Id: 379490316
-    m_Localized: you can't hide forever.
+    m_Localized: subject stepped out of the beam.
     m_Metadata:
       m_Items: []
   - m_Id: 379490317
-    m_Localized: i'll find you.
+    m_Localized: the ward is a closed system.
     m_Metadata:
       m_Items: []
   - m_Id: 379490318
-    m_Localized: i know this maze better.
+    m_Localized: we know every door down here.
     m_Metadata:
       m_Items: []
   - m_Id: 379490319
-    m_Localized: hiding? good.
+    m_Localized: holding breath... noted.
     m_Metadata:
       m_Items: []
   - m_Id: 379490320
-    m_Localized: "where are you\u2026"
+    m_Localized: bed check... room empty.
     m_Metadata:
       m_Items: []
   - m_Id: 379490321
-    m_Localized: come out.
+    m_Localized: step forward for the count.
     m_Metadata:
       m_Items: []
   - m_Id: 379490322
-    m_Localized: i can hear your heart.
+    m_Localized: respiration audible in the dark.
     m_Metadata:
       m_Items: []
   - m_Id: 379490323
-    m_Localized: "little light, little light\u2026"
+    m_Localized: patient keeps drawing stars...
     m_Metadata:
       m_Items: []
   - m_Id: 379490324
-    m_Localized: the dark is mine.
+    m_Localized: 'procedure one: removal of fear.'
     m_Metadata:
       m_Items: []
   - m_Id: 379490325
-    m_Localized: floor {floor}. you won't leave it.
+    m_Localized: floor {floor}. night rounds.
     m_Metadata:
       m_Items:
       - rid: 4707331672703762443
   - m_Id: 379490326
-    m_Localized: SURPRISE.
+    m_Localized: HOLD FOR TREATMENT.
     m_Metadata:
       m_Items: []
   - m_Id: 379490327
-    m_Localized: WAITED SO LONG.
+    m_Localized: WARD LOCKDOWN.
     m_Metadata:
       m_Items: []
   - m_Id: 379490328
-    m_Localized: THIS WAY? GOOD.
+    m_Localized: STEP INTO THE LIGHT.
     m_Metadata:
       m_Items: []
   - m_Id: 379490329
-    m_Localized: HELLO.
+    m_Localized: PATIENT SEVEN.
     m_Metadata:
       m_Items: []
   - m_Id: 379490330
-    m_Localized: is someone in there?
+    m_Localized: locker latch warm.
     m_Metadata:
       m_Items: []
   - m_Id: 379490331
-    m_Localized: i smell you.
+    m_Localized: breathing behind the tin.
     m_Metadata:
       m_Items: []
   - m_Id: 379490332
-    m_Localized: open up.
+    m_Localized: open the cabinet, seven.
     m_Metadata:
       m_Items: []
   - m_Id: 379490333
-    m_Localized: "one of these\u2026"
+    m_Localized: it remembers which one.
     m_Metadata:
       m_Items: []
   - m_Id: 379490334
-    m_Localized: warm metal.
+    m_Localized: iron holds the heat.
     m_Metadata:
       m_Items: []
   - m_Id: 379490335
-    m_Localized: doors don't stop me.
+    m_Localized: obstruction in the corridor.
     m_Metadata:
       m_Items: []
   - m_Id: 379490336
-    m_Localized: let me in.
+    m_Localized: clear the shutter.
     m_Metadata:
       m_Items: []
   - m_Id: 379490337
-    m_Localized: knock knock.
+    m_Localized: forty-one doors...
     m_Metadata:
       m_Items: []
   - m_Id: 379490338
-    m_Localized: no more doors.
+    m_Localized: ward access forced.
     m_Metadata:
       m_Items: []
   - m_Id: 379490339
-    m_Localized: GOTCHA.
+    m_Localized: READMITTED.
     m_Metadata:
       m_Items: []
   - m_Id: 379490340
-    m_Localized: MINE.
+    m_Localized: PROCEDURE COMPLETE.
     m_Metadata:
       m_Items: []
   - m_Id: 379490341
@@ -177,7 +177,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 379490342
-    m_Localized: FOUND YOU.
+    m_Localized: BED READY IN INTAKE.
     m_Metadata:
       m_Items: []
   - m_Id: 379490343

@@ -40,7 +40,10 @@ public class HubExitDoor : MonoBehaviour, IInteractable
         if (!GameAudio.PlayAt(GameAudio.Library.exitDoorCreak, doorway, 1f)) GameAudio.ClipAtPoint(DoorAudio.BuildCreakClip(1.4f, 120f, 4), doorway, 1f); // F97: the ending's own door sound
 
         yield return hub.PassThrough(transform); // returns at full cold grey-white, the leaf open
-        yield return new WaitForSecondsRealtime(0.5f);
+        Vector3 playerPos = hub.Player != null ? hub.Player.position : doorway;
+        GameAudio.ClipAtPoint(DoorAudio.BuildCreakClip(0.65f, 240f, 2), playerPos, 0.75f);
+        if (hub.Hud != null) hub.Hud.ShowSubtitle(L10n.T("hub.finale.readmitted"), 2.2f);
+        yield return new WaitForSecondsRealtime(1.2f);
         done?.Invoke();
     }
 }

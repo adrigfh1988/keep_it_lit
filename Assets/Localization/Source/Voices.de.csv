@@ -1,44 +1,44 @@
 key,text
-voice.hunter.spotted.0,nicht blinzeln.
-voice.hunter.spotted.1,da ist mein kleines licht.
-voice.hunter.spotted.2,lauf.
-voice.hunter.spotted.3,du gehörst mir.
-voice.hunter.spotted.4,zu langsam.
-voice.hunter.spotted.5,ich rieche deine batterie.
-voice.hunter.spotted.6,"hallo, dieb."
-voice.hunter.chasing.0,lauf schneller.
-voice.hunter.chasing.1,deine beine sind müde.
-voice.hunter.chasing.2,ich werde nicht müde.
-voice.hunter.chasing.3,näher…
-voice.hunter.chasing.4,die sterne retten dich nicht.
-voice.hunter.chasing.5,lauf weiter. das gefällt mir.
-voice.hunter.lost.0,du kannst dich nicht ewig verstecken.
-voice.hunter.lost.1,ich finde dich.
-voice.hunter.lost.2,ich kenne das labyrinth besser.
-voice.hunter.lost.3,versteckst du dich? gut.
-voice.hunter.searching.0,wo bist du…
-voice.hunter.searching.1,komm raus.
-voice.hunter.searching.2,ich höre dein herz.
-voice.hunter.searching.3,"kleines licht, kleines licht…"
-voice.hunter.searching.4,das dunkel gehört mir.
-voice.hunter.searching.5,etage {floor}. die verlässt du nicht.
-voice.hunter.ambush.0,ÜBERRASCHUNG.
-voice.hunter.ambush.1,SO LANGE GEWARTET.
-voice.hunter.ambush.2,HIER ENTLANG? GUT.
-voice.hunter.ambush.3,HALLO.
-voice.hunter.locker.0,ist da jemand drin?
-voice.hunter.locker.1,ich rieche dich.
-voice.hunter.locker.2,mach auf.
-voice.hunter.locker.3,einer von denen…
-voice.hunter.locker.4,warmes metall.
-voice.hunter.door.0,türen halten mich nicht auf.
-voice.hunter.door.1,lass mich rein.
-voice.hunter.door.2,"klopf, klopf."
-voice.hunter.door.3,keine türen mehr.
-voice.hunter.caught.0,HAB DICH.
-voice.hunter.caught.1,MEINS.
+voice.hunter.spotted.0,patient sieben... nicht im bett.
+voice.hunter.spotted.1,lampe an im korridor.
+voice.hunter.spotted.2,nicht auf der station rennen.
+voice.hunter.spotted.3,zurück zur aufnahme.
+voice.hunter.spotted.4,puls erhöht. stillhalten.
+voice.hunter.spotted.5,unbefugte lichtquelle.
+voice.hunter.spotted.6,"wir sehen dich, sieben."
+voice.hunter.chasing.0,rennen ermüdet nur das herz.
+voice.hunter.chasing.1,prozedur eins... hört nicht auf.
+voice.hunter.chasing.2,bleiben sie wo sie sind.
+voice.hunter.chasing.3,vierzehn aufnahmen. derselbe gang.
+voice.hunter.chasing.4,die sterne führen nur wieder hinab.
+voice.hunter.chasing.5,pfleger in den unteren trakt.
+voice.hunter.lost.0,subjekt aus dem lichtkegel getreten.
+voice.hunter.lost.1,die station ist ein geschlossenes system.
+voice.hunter.lost.2,wir kennen jede tür hier unten.
+voice.hunter.lost.3,atem angehalten... vermerkt.
+voice.hunter.searching.0,bettenkontrolle... zimmer leer.
+voice.hunter.searching.1,vortreten zum appell.
+voice.hunter.searching.2,atmung im dunkeln hörbar.
+voice.hunter.searching.3,patient zeichnet weiter sterne...
+voice.hunter.searching.4,"prozedur eins: entfernung der furcht."
+voice.hunter.searching.5,etage {floor}. nachtrunde.
+voice.hunter.ambush.0,STILLHALTEN ZUR BEHANDLUNG.
+voice.hunter.ambush.1,STATIONSSPERRE.
+voice.hunter.ambush.2,TRETEN SIE INS LICHT.
+voice.hunter.ambush.3,PATIENT SIEBEN.
+voice.hunter.locker.0,spindriegel noch warm.
+voice.hunter.locker.1,atmen hinter dem blech.
+voice.hunter.locker.2,"mach den schrank auf, sieben."
+voice.hunter.locker.3,es merkt sich welchen.
+voice.hunter.locker.4,eisen hält die wärme.
+voice.hunter.door.0,hindernis im korridor.
+voice.hunter.door.1,rolltor freimachen.
+voice.hunter.door.2,einundvierzig türen...
+voice.hunter.door.3,stationszugang aufgebrochen.
+voice.hunter.caught.0,WIEDERAUFGENOMMEN.
+voice.hunter.caught.1,PROZEDUR ABGESCHLOSSEN.
 voice.hunter.caught.2,LIGHTS OUT.
-voice.hunter.caught.3,GEFUNDEN.
+voice.hunter.caught.3,BETT IN DER AUFNAHME BEREIT.
 voice.stan.spotted.0,da bist du ja.
 voice.stan.spotted.1,ich seh dich.
 voice.stan.spotted.2,gefunden.

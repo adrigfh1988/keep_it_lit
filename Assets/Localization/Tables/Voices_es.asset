@@ -20,156 +20,156 @@ MonoBehaviour:
     - rid: 4707331672703763195
   m_TableData:
   - m_Id: 295604224
-    m_Localized: no parpadees.
+    m_Localized: paciente siete... fuera de la cama.
     m_Metadata:
       m_Items: []
   - m_Id: 379490304
-    m_Localized: "ah\xED est\xE1 mi lucecita."
+    m_Localized: "l\xE1mpara encendida en el pasillo."
     m_Metadata:
       m_Items: []
   - m_Id: 379490305
-    m_Localized: corre.
+    m_Localized: "no corra en el pabell\xF3n."
     m_Metadata:
       m_Items: []
   - m_Id: 379490306
-    m_Localized: me perteneces.
+    m_Localized: "regresando a admisi\xF3n."
     m_Metadata:
       m_Items: []
   - m_Id: 379490307
-    m_Localized: vas muy despacio.
+    m_Localized: pulso elevado. no se mueva.
     m_Metadata:
       m_Items: []
   - m_Id: 379490308
-    m_Localized: huelo tu pila.
+    m_Localized: fuente de luz no autorizada.
     m_Metadata:
       m_Items: []
   - m_Id: 379490309
-    m_Localized: "hola, ladr\xF3n."
+    m_Localized: te vemos, siete.
     m_Metadata:
       m_Items: []
   - m_Id: 379490310
-    m_Localized: "corre m\xE1s."
+    m_Localized: "correr solo cansa el coraz\xF3n."
     m_Metadata:
       m_Items: []
   - m_Id: 379490311
-    m_Localized: te pesan las piernas.
+    m_Localized: el procedimiento uno... no se detiene.
     m_Metadata:
       m_Items: []
   - m_Id: 379490312
-    m_Localized: yo no me canso.
+    m_Localized: "permanezca donde est\xE1."
     m_Metadata:
       m_Items: []
   - m_Id: 379490313
-    m_Localized: "m\xE1s cerca\u2026"
+    m_Localized: catorce ingresos. el mismo pasillo.
     m_Metadata:
       m_Items: []
   - m_Id: 379490314
-    m_Localized: "las estrellas no te salvar\xE1n."
+    m_Localized: las estrellas solo llevan hacia abajo.
     m_Metadata:
       m_Items: []
   - m_Id: 379490315
-    m_Localized: sigue corriendo. me gusta.
+    m_Localized: celadores al ala inferior.
     m_Metadata:
       m_Items: []
   - m_Id: 379490316
-    m_Localized: no puedes esconderte para siempre.
+    m_Localized: "el sujeto sali\xF3 del haz de luz."
     m_Metadata:
       m_Items: []
   - m_Id: 379490317
-    m_Localized: "te encontrar\xE9."
+    m_Localized: "el pabell\xF3n es un sistema cerrado."
     m_Metadata:
       m_Items: []
   - m_Id: 379490318
-    m_Localized: conozco mejor este laberinto.
+    m_Localized: "conocemos cada puerta aqu\xED abajo."
     m_Metadata:
       m_Items: []
   - m_Id: 379490319
-    m_Localized: "\xBFte escondes? bien."
+    m_Localized: conteniendo el aliento... anotado.
     m_Metadata:
       m_Items: []
   - m_Id: 379490320
-    m_Localized: "\xBFd\xF3nde est\xE1s\u2026?"
+    m_Localized: "control de camas... habitaci\xF3n vac\xEDa."
     m_Metadata:
       m_Items: []
   - m_Id: 379490321
-    m_Localized: sal.
+    m_Localized: "d\xE9 un paso al frente para el recuento."
     m_Metadata:
       m_Items: []
   - m_Id: 379490322
-    m_Localized: "oigo tu coraz\xF3n."
+    m_Localized: "respiraci\xF3n audible en la oscuridad."
     m_Metadata:
       m_Items: []
   - m_Id: 379490323
-    m_Localized: "lucecita, lucecita\u2026"
+    m_Localized: el paciente sigue dibujando estrellas...
     m_Metadata:
       m_Items: []
   - m_Id: 379490324
-    m_Localized: "la oscuridad es m\xEDa."
+    m_Localized: "procedimiento uno: eliminaci\xF3n del miedo."
     m_Metadata:
       m_Items: []
   - m_Id: 379490325
-    m_Localized: "planta {floor}. no saldr\xE1s de ella."
+    m_Localized: planta {floor}. ronda nocturna.
     m_Metadata:
       m_Items:
       - rid: 4707331672703763195
   - m_Id: 379490326
-    m_Localized: SORPRESA.
+    m_Localized: QUIETO PARA EL TRATAMIENTO.
     m_Metadata:
       m_Items: []
   - m_Id: 379490327
-    m_Localized: TANTO TIEMPO ESPERANDO.
+    m_Localized: "CIERRE DE PABELL\xD3N."
     m_Metadata:
       m_Items: []
   - m_Id: 379490328
-    m_Localized: "\xBFPOR AQU\xCD? BIEN."
+    m_Localized: PASE A LA LUZ.
     m_Metadata:
       m_Items: []
   - m_Id: 379490329
-    m_Localized: HOLA.
+    m_Localized: PACIENTE SIETE.
     m_Metadata:
       m_Items: []
   - m_Id: 379490330
-    m_Localized: "\xBFhay alguien ah\xED dentro?"
+    m_Localized: pestillo de taquilla tibio.
     m_Metadata:
       m_Items: []
   - m_Id: 379490331
-    m_Localized: te huelo.
+    m_Localized: "respiraci\xF3n tras la chapa."
     m_Metadata:
       m_Items: []
   - m_Id: 379490332
-    m_Localized: abre.
+    m_Localized: abre el armario, siete.
     m_Metadata:
       m_Items: []
   - m_Id: 379490333
-    m_Localized: "uno de estos\u2026"
+    m_Localized: "recuerda cu\xE1l es."
     m_Metadata:
       m_Items: []
   - m_Id: 379490334
-    m_Localized: metal tibio.
+    m_Localized: el hierro guarda el calor.
     m_Metadata:
       m_Items: []
   - m_Id: 379490335
-    m_Localized: las puertas no me detienen.
+    m_Localized: "obstrucci\xF3n en el pasillo."
     m_Metadata:
       m_Items: []
   - m_Id: 379490336
-    m_Localized: "d\xE9jame entrar."
+    m_Localized: despejen el cierre.
     m_Metadata:
       m_Items: []
   - m_Id: 379490337
-    m_Localized: toc, toc.
+    m_Localized: cuarenta y una puertas...
     m_Metadata:
       m_Items: []
   - m_Id: 379490338
-    m_Localized: se acabaron las puertas.
+    m_Localized: "acceso al pabell\xF3n forzado."
     m_Metadata:
       m_Items: []
   - m_Id: 379490339
-    m_Localized: "TE ATRAP\xC9."
+    m_Localized: READMITIDO.
     m_Metadata:
       m_Items: []
   - m_Id: 379490340
-    m_Localized: TE TENGO.
+    m_Localized: PROCEDIMIENTO COMPLETADO.
     m_Metadata:
       m_Items: []
   - m_Id: 379490341
@@ -177,7 +177,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 379490342
-    m_Localized: "TE ENCONTR\xC9."
+    m_Localized: "CAMA LISTA EN ADMISI\xD3N."
     m_Metadata:
       m_Items: []
   - m_Id: 379490343

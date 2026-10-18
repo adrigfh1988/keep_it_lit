@@ -72,6 +72,12 @@ public class HubSupper : MonoBehaviour
     /// <summary>The name card of seat n is readable: filled or not, the card names the file once it has been read.</summary>
     public bool CardNamed(int seat) => seat >= 1 && seat <= seats.Length && IsNamed(seat);
 
+    private HubSupperSixthSeat _sixthSeat;
+    private bool _endingStarted;
+    private float _communionLookTimer;
+
+    public bool CanInteractSixthSeat => Live && !_endingStarted && Hub != null && Hub.Hud != null && !Hub.PursuerAfterPlayer();
+
     private void OnEnable() => L10n.Changed += Refresh;
 
     private void OnDisable() => L10n.Changed -= Refresh;
@@ -99,6 +105,127 @@ public class HubSupper : MonoBehaviour
             if (litT != null) litT.gameObject.SetActive(lit);
             if (unlit != null) unlit.gameObject.SetActive(!lit);
         }
+        EnsureSixthSeat();
+    }
+
+    private void EnsureSixthSeat()
+    {
+        if (_sixthSeat == null) _sixthSeat = GetComponentInChildren<HubSupperSixthSeat>(true);
+        if (_sixthSeat == null)
+        {
+            Transform target = transform.Find("Chair_6") ?? transform.Find("Plate_6") ?? transform.Find("SixthSeat");
+            if (target == null)
+            {
+                GameObject go = new GameObject("SixthSeat");
+                go.transform.SetParent(transform, false);
+                Vector3 pos = ResolveSixthPlacePosition();
+                go.transform.position = pos;
+                BoxCollider box = go.AddComponent<BoxCollider>();
+                box.isTrigger = true;
+                box.size = new Vector3(0.95f, 1.35f, 0.95f);
+                target = go.transform;
+            }
+            else if (target.GetComponent<Collider>() == null)
+            {
+                BoxCollider box = target.gameObject.AddComponent<BoxCollider>();
+                box.isTrigger = true;
+                box.size = new Vector3(0.95f, 1.35f, 0.95f);
+            }
+            _sixthSeat = target.GetComponent<HubSupperSixthSeat>();
+            if (_sixthSeat == null) _sixthSeat = target.gameObject.AddComponent<HubSupperSixthSeat>();
+        }
+        _sixthSeat.Bind(this);
+    }
+
+    private Vector3 ResolveSixthPlacePosition()
+    {
+        float centerX = directorChair != null ? directorChair.transform.position.x
+            : candle != null ? candle.transform.position.x
+            : transform.position.x;
+        if (seats != null && seats.Length >= 5 && seats[4] != null && seats[4].body != null)
+        {
+            Vector3 s5 = seats[4].body.position;
+            float dx = Mathf.Abs(centerX - s5.x);
+            if (dx < 0.2f) dx = 0.72f;
+            return new Vector3(centerX + dx, s5.y + 0.65f, s5.z);
+        }
+        return transform.position + new Vector3(0.72f, 0.65f, -2.6f);
+    }
+
+    public void InteractSixthSeat()
+    {
+        if (!CanInteractSixthSeat) return;
+        AsylumHub hub = Hub;
+        if (hub == null) return;
+
+        if (HubState.IsFinale)
+        {
+            _endingStarted = true;
+            StartCoroutine(SitEndingCRoutine(hub));
+            return;
+        }
+
+        Vector3 at = _sixthSeat != null ? _sixthSeat.transform.position : transform.position;
+        GameAudio.PlayAt(GameAudio.Library.paper, at, 0.55f);
+        GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.18f, 140f, 0.45f), at, 0.5f);
+        _communionLookTimer = 2.4f;
+        if (HubState.Floor >= 5 && hub.Torch != null) hub.Torch.Refill();
+        if (hub.Hud != null) hub.Hud.ShowSubtitle(L10n.T("hub.supper.sit_refuse"), 3.8f);
+    }
+
+    private System.Collections.IEnumerator SitEndingCRoutine(AsylumHub hub)
+    {
+        if (hub.Reader != null) hub.Reader.Close();
+        hub.SetScripted(true);
+        if (hub.Controller != null) hub.Controller.MovementLocked = true;
+        PlayerLock.Freeze(hub.Player, true);
+        if (hub.Torch != null) { hub.Torch.InputEnabled = false; hub.Torch.ForceOff(); }
+        if (hub.Hud != null)
+        {
+            hub.Hud.SetPrompt(null);
+            hub.Hud.SetFocusPrompt(null);
+            hub.Hud.ShowSubtitle(L10n.T("hub.supper.seated_line"), 3.8f);
+        }
+
+        Vector3 seatPos = ResolveSixthPlacePosition();
+        Vector3 targetPlayerPos = new Vector3(seatPos.x + 0.12f, hub.Player != null ? hub.Player.position.y : seatPos.y - 0.65f, seatPos.z);
+        Vector3 lookTarget = candle != null ? candle.transform.position + Vector3.up * 0.25f : new Vector3(seatPos.x - 1.2f, seatPos.y + 0.2f, seatPos.z);
+        Vector3 startPos = hub.Player != null ? hub.Player.position : targetPlayerPos;
+
+        GameAudio.ClipAtPoint(DoorAudio.BuildCreakClip(0.55f, 165f, 2), seatPos, 0.7f);
+        _communionLookTimer = 6f;
+
+        float elapsed = 0f;
+        int knocksFired = 0;
+        while (elapsed < 2.2f)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float k = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(elapsed / 1.3f));
+            if (hub.Player != null) hub.MovePlayerTo(Vector3.Lerp(startPos, targetPlayerPos, k));
+            if (hub.Controller != null) hub.Controller.LookAt(lookTarget, 1f - Mathf.Exp(-6f * Time.unscaledDeltaTime));
+
+            if (knocksFired == 0 && elapsed >= 0.45f)
+            {
+                knocksFired = 1;
+                GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.22f, 125f, 0.6f), seatPos, 0.65f);
+            }
+            else if (knocksFired == 1 && elapsed >= 0.90f)
+            {
+                knocksFired = 2;
+                GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.22f, 120f, 0.65f), seatPos, 0.70f);
+            }
+            else if (knocksFired == 2 && elapsed >= 1.35f)
+            {
+                knocksFired = 3;
+                GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.28f, 95f, 0.75f), seatPos, 0.80f);
+            }
+            yield return null;
+        }
+
+        yield return hub.BlackoutTo(1f, 1.0f);
+        if (hub.Controller != null) hub.Controller.enabled = false;
+        GameOutcome outcome = FindAnyObjectByType<GameOutcome>();
+        if (outcome != null) outcome.CompleteFinale(GameOutcome.FinaleEnding.Seated);
     }
 
     private bool Live
@@ -106,7 +233,7 @@ public class HubSupper : MonoBehaviour
         get
         {
             AsylumHub hub = Hub;
-            return GameFlow.IsInHub && hub != null && hub.ContentActive && !hub.IsTransitioning && !hub.Leaving;
+            return GameFlow.IsInHub && hub != null && hub.ContentActive && (!hub.IsTransitioning || _endingStarted) && !hub.Leaving;
         }
     }
 
@@ -125,13 +252,14 @@ public class HubSupper : MonoBehaviour
         if (seats == null || !Live) return;
         AsylumHub hub = Hub;
         Transform player = hub != null ? hub.Player : null;
-        bool follow = HubState.IsFinale && player != null && Inside(player);
-        float dt = Time.deltaTime;
+        if (_communionLookTimer > 0f) _communionLookTimer = Mathf.Max(0f, _communionLookTimer - Time.unscaledDeltaTime);
+        bool follow = ((HubState.IsFinale && Inside(player)) || _communionLookTimer > 0f) && player != null;
+        float dt = Time.deltaTime > 0f ? Time.deltaTime : Time.unscaledDeltaTime;
 
         foreach (Seat s in seats)
         {
             if (s == null || s.body == null || s.head == null || !s.body.gameObject.activeInHierarchy) continue;
-            s.look = Mathf.MoveTowards(s.look, follow ? 1f : 0f, lookBlendSpeed * dt);
+            s.look = Mathf.MoveTowards(s.look, follow ? 1f : 0f, ( _endingStarted ? 1.4f : lookBlendSpeed) * dt);
 
             float wantYaw = 0f;
             if (follow)

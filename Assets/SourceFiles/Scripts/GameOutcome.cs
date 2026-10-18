@@ -619,8 +619,10 @@ public partial class GameOutcome : MonoBehaviour
         if (group != null) group.alpha = 0f;
     }
 
-    /// <summary>The two ways out of the Director's office (F93).</summary>
-    public enum FinaleEnding { Discharged, LightsOut }
+    /// <summary>The ways out of the finale (F93, F126 Ending C at the Last Supper table).</summary>
+    public enum FinaleEnding { Discharged = 0, LightsOut = 1, Seated = 2 }
+
+    private Color? _endingTitleColorOverride;
 
     /// <summary>
     /// F93 (E10): floor 5 was cleared and the asylum can host the finale. Everything Win() does up to the end screen - the payout is read and
@@ -668,7 +670,7 @@ public partial class GameOutcome : MonoBehaviour
         if (blackout != null) Destroy(blackout.gameObject);
     }
 
-    /// <summary>One of the two endings was reached in the Director's office. Single-shot; deletes the save and shows the ending over the campaign total.</summary>
+    /// <summary>One of the endings was reached in the asylum finale. Single-shot; deletes the save and shows the ending over the campaign total.</summary>
     public void CompleteFinale(FinaleEnding ending)
     {
         if (IsOver) return;
@@ -679,6 +681,12 @@ public partial class GameOutcome : MonoBehaviour
         if (_flashlight != null) _flashlight.InputEnabled = false;
         bool a = ending == FinaleEnding.Discharged;
         NoteEndingReached(a); // F122
+        if (ending == FinaleEnding.Seated)
+        {
+            _endingTitleColorOverride = new Color(1f, 0.72f, 0.25f, 1f);
+            ShowEndScreen(true, LoseReason.Caught, false, L10n.T("ui.outcome.ending_c_title"), L10n.T("ui.outcome.ending_c_sub"));
+            return;
+        }
         string endKey = a ? "lore.ending.discharged" : "lore.ending.lights_out"; // S9: the two ending texts live in the Lore table
         ShowEndScreen(true, LoseReason.Caught, false, L10n.T(endKey + ".title"), L10n.T(endKey + ".body"));
     }
@@ -868,7 +876,8 @@ public partial class GameOutcome : MonoBehaviour
 
         string title;
         string subtitle;
-        Color titleColor = won ? Green : Red;
+        Color titleColor = _endingTitleColorOverride ?? (won ? Green : Red);
+        _endingTitleColorOverride = null;
 
         if (won)
         {

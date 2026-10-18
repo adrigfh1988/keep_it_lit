@@ -877,6 +877,35 @@ MonoBehaviour:
     m_Localized: "\xC7A TE TENAIT. RETROUVE TA LAMPE. COURS."
     m_Metadata:
       m_Items: []
+  - m_Id: 2975284053577728
+    m_Localized: "PRENDRE VOTRE PLACE \xC0 TABLE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269504
+    m_Localized: "LE SIXI\xC8ME COUVERT EST MIS  \xB7  L'ASSIETTE EST ENCORE TI\xC8DE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269505
+    m_Localized: "CINQ T\xCATES SE L\xC8VENT \xC0 LA LUEUR DE LA BOUGIE. LE COMPTE EST \xC0 SIX."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269506
+    m_Localized: "DOSSIERS CORROBOR\xC9S  \xB7  BANDE D'OBSERVATION EFFAC\xC9E ({habit})"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763192
+  - m_Id: 2975284133269507
+    m_Localized: "DOSSIERS CORROBOR\xC9S  \xB7  REGISTRE D'OBSERVATION SCELL\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269508
+    m_Localized: LES PORTES SONT OUVERTES MAINTENANT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269509
+    m_Localized: "R\xC9ADMIS  \xB7  ADMISSION N\xB0 16"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -919,3 +948,4 @@ MonoBehaviour:
         - id: 1812604141432837
         - id: 1812604141432841
         - id: 1856707763892224
+        - id: 2975284133269506

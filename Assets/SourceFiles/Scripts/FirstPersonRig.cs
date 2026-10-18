@@ -88,9 +88,10 @@ public class FirstPersonRig : MonoBehaviour
         cameraObject.transform.localRotation = Quaternion.identity;
 
         PlayerCamera = cameraObject.GetComponent<Camera>();
+        _baseFov = GameSettings.FieldOfView;
         if (PlayerCamera != null)
         {
-            PlayerCamera.fieldOfView = GameSettings.FieldOfView; // S2: the setting owns the FOV now (its default, GameSettings.DefaultFov, mirrors the 70 serialized above)
+            PlayerCamera.fieldOfView = _baseFov; // S2: the setting owns the FOV now (its default, GameSettings.DefaultFov, mirrors the 70 serialized above)
         }
 
         MoveAudioListener(cameraObject);
@@ -108,13 +109,26 @@ public class FirstPersonRig : MonoBehaviour
         }
     }
 
+    private float _baseFov = 70f;
+
     private void OnEnable() => GameSettings.Changed += ApplyFieldOfView;
     private void OnDisable() => GameSettings.Changed -= ApplyFieldOfView;
 
-    /// <summary>S2: the player camera's base FOV follows the Field of view setting. Scripted camera moves in this project never touch fieldOfView, so nothing fights it.</summary>
+    /// <summary>S2: the player camera's base FOV follows the Field of view setting. F126: LateUpdate offsets from _baseFov for focused beam and locker hiding.</summary>
     private void ApplyFieldOfView()
     {
-        if (PlayerCamera != null) PlayerCamera.fieldOfView = GameSettings.FieldOfView;
+        _baseFov = GameSettings.FieldOfView;
+        if (PlayerCamera != null) PlayerCamera.fieldOfView = _baseFov;
+    }
+
+    private void LateUpdate()
+    {
+        if (PlayerCamera == null) return;
+        _baseFov = GameSettings.FieldOfView;
+        float focusOffset = Flashlight != null ? -8f * Flashlight.FocusBlend : 0f;
+        float hideOffset = Stealth != null && Stealth.Hidden ? -5f : 0f;
+        float targetFov = _baseFov + (focusOffset + hideOffset) * GameSettings.EffectsIntensity;
+        PlayerCamera.fieldOfView = Mathf.Lerp(PlayerCamera.fieldOfView, targetFov, 1f - Mathf.Exp(-14f * Time.deltaTime));
     }
 
     private void ConfigureController()

@@ -879,6 +879,35 @@ MonoBehaviour:
     m_Localized: "TE TEN\xCDA. BUSCA TU LUZ. CORRE."
     m_Metadata:
       m_Items: []
+  - m_Id: 2975284053577728
+    m_Localized: OCUPAR TU LUGAR EN LA MESA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269504
+    m_Localized: "EL SEXTO LUGAR EST\xC1 PUESTO  \xB7  EL PLATO SIGUE TIBIO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269505
+    m_Localized: CINCO CABEZAS SE ALZAN A LA LUZ DE LA VELA. EL RECUENTO ES SEIS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269506
+    m_Localized: "EXPEDIENTES CORROBORADOS  \xB7  CINTA DE OBSERVACI\xD3N BORRADA ({habit})"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763214
+  - m_Id: 2975284133269507
+    m_Localized: "EXPEDIENTES CORROBORADOS  \xB7  REGISTRO DE OBSERVACI\xD3N SELLADO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269508
+    m_Localized: "LAS PUERTAS EST\xC1N ABIERTAS AHORA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269509
+    m_Localized: "READMITIDO  \xB7  INGRESO N.\xBA 16"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -921,3 +950,4 @@ MonoBehaviour:
         - id: 1812604141432837
         - id: 1812604141432841
         - id: 1856707763892224
+        - id: 2975284133269506

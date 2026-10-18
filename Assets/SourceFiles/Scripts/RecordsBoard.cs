@@ -49,4 +49,33 @@ public class RecordsBoard : MonoBehaviour
             if (slot != null) slot.Refresh();
         }
     }
+
+    /// <summary>
+    /// F126: once 2+ case files are read, inspecting the RecordsBoard corroborates the files, scrubs one level off the
+    /// hunter's highest learned habit, refreshes the classroom lesson board, and notifies the player.
+    /// </summary>
+    public static bool TryCorroborate(PlayerHud hud)
+    {
+        if (HunterMemory.Corroborated || HubState.FilesRead < 2) return false;
+        HunterMemory.Corroborated = true;
+
+        bool erasedAny = HunterMemory.EraseHighestHabit(out HunterMemory.Habit erased);
+        HubLesson lesson = FindFirstObjectByType<HubLesson>();
+        if (lesson != null) lesson.Refresh();
+
+        AsylumHub hub = AsylumHub.Active;
+        Vector3 soundPos = hub != null && hub.Player != null ? hub.Player.position : Vector3.zero;
+        GameAudio.PlayAt(GameAudio.Library.paper, soundPos, 0.7f);
+        GameAudio.ClipAtPoint(DoorAudio.BuildClunkClip(0.24f, 165f, 0.7f), soundPos, 0.75f);
+
+        if (hud == null && hub != null) hud = hub.Hud;
+        if (hud != null)
+        {
+            string line = erasedAny
+                ? L10n.T("hub.records.corroborated", ("habit", HunterMemory.NameText(erased)))
+                : L10n.T("hub.records.corroborated_clean");
+            hud.ShowSubtitle(line, 4.2f);
+        }
+        return true;
+    }
 }

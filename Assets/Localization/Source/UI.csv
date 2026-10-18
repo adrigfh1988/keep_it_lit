@@ -365,3 +365,5 @@ ui.end.wing.2,Second line of the end screen after a loss on floor 2 (Tomas),Thre
 ui.end.wing.3,Second line of the end screen after a loss on floor 3 (Elias),They have a drawer ready. It has your number on it.
 ui.end.wing.4,Second line of the end screen after a loss on floor 4 (Dr. Weiss),Room 4 is not empty any more.
 ui.end.wing.5,Second line of the end screen after a loss on floor 5 (the Director),The Clerk has finished typing your file.
+ui.outcome.ending_c_title,"End screen title of ending C, taking your seat at the Last Supper table in the finale (one line, large, ALL CAPS)",PRESENT AT ROLL CALL
+ui.outcome.ending_c_sub,"End screen body of ending C (wraps over ~6 lines, 1400 px). Five patients sit at the table; the sixth place was yours","The sixth chair was always yours. Across the cloth, five heads rise in the candlelight and do not look away. Down the hall, the Intake bell rings once and stops. Nobody walks out tonight. The morning count is six."

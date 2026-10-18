@@ -878,6 +878,35 @@ MonoBehaviour:
     m_Localized: IT HAD YOU. FIND YOUR LIGHT. RUN.
     m_Metadata:
       m_Items: []
+  - m_Id: 2975284053577728
+    m_Localized: TAKE YOUR PLACE AT THE TABLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269504
+    m_Localized: "THE SIXTH PLACE IS LAID  \xB7  THE PLATE IS STILL WARM"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269505
+    m_Localized: FIVE HEADS RISE IN THE CANDLELIGHT. THE COUNT IS SIX.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269506
+    m_Localized: "CASE FILES CORROBORATED  \xB7  OBSERVATION TAPE SCRUBBED ({habit})"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703762543
+  - m_Id: 2975284133269507
+    m_Localized: "CASE FILES CORROBORATED  \xB7  WARD OBSERVATION LOG SEALED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269508
+    m_Localized: THE DOORS ARE OPEN NOW.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269509
+    m_Localized: "READMITTED  \xB7  ADMISSION #16"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -919,3 +948,4 @@ MonoBehaviour:
         - id: 1812604141432837
         - id: 1812604141432841
         - id: 1856707763892224
+        - id: 2975284133269506

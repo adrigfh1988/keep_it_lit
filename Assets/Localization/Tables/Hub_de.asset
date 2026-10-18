@@ -879,6 +879,35 @@ MonoBehaviour:
     m_Localized: ES HATTE DICH. FINDE DEIN LICHT. LAUF.
     m_Metadata:
       m_Items: []
+  - m_Id: 2975284053577728
+    m_Localized: DEINEN PLATZ AM TISCH EINNEHMEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269504
+    m_Localized: "DER SECHSTE PLATZ IST GEDECKT  \xB7  DER TELLER IST NOCH WARM"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269505
+    m_Localized: "F\xDCNF K\xD6PFE HEBEN SICH IM KERZENLICHT. DIE Z\xC4HLUNG IST BEI SECHS."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269506
+    m_Localized: "AKTEN ABGEGLICHEN  \xB7  BEOBACHTUNGSBAND GEL\xD6SCHT ({habit})"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763208
+  - m_Id: 2975284133269507
+    m_Localized: "AKTEN ABGEGLICHEN  \xB7  BEOBACHTUNGSPROTOKOLL VERSIEGELT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269508
+    m_Localized: "DIE T\xDCREN SIND JETZT OFFEN."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2975284133269509
+    m_Localized: "WIEDERAUFGENOMMEN  \xB7  AUFNAHME NR. 16"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -921,3 +950,4 @@ MonoBehaviour:
         - id: 1812604141432837
         - id: 1812604141432841
         - id: 1856707763892224
+        - id: 2975284133269506

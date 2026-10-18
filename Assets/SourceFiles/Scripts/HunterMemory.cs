@@ -91,6 +91,33 @@ public static class HunterMemory
         return taken;
     }
 
+    /// <summary>F126: true once the player has corroborated the case files on the OfficeA RecordsBoard this campaign.</summary>
+    public static bool Corroborated { get; set; }
+
+    /// <summary>
+    /// F126: erases one level from the highest learned habit (ties broken by enum order) when the player corroborates
+    /// 2+ case files on the RecordsBoard. Returns false if no habit had a level above 0.
+    /// </summary>
+    public static bool EraseHighestHabit(out Habit erased)
+    {
+        erased = Habit.Lockers;
+        int bestIndex = -1;
+        int bestLevel = 0;
+        for (int i = 0; i < HabitCount; i++)
+        {
+            if (Levels[i] > bestLevel)
+            {
+                bestLevel = Levels[i];
+                bestIndex = i;
+            }
+        }
+        if (bestIndex < 0) return false;
+        Levels[bestIndex] = Mathf.Max(0, Levels[bestIndex] - 1);
+        _pendingMask &= ~(1 << bestIndex);
+        erased = (Habit)bestIndex;
+        return true;
+    }
+
     /// <summary>True while a lesson is waiting to be announced.</summary>
     public static bool HasPending => _pendingMask != 0;
 
@@ -98,6 +125,7 @@ public static class HunterMemory
     {
         System.Array.Clear(Levels, 0, Levels.Length);
         _pendingMask = 0;
+        Corroborated = false;
     }
 
     public static void CaptureTo(SaveData data)

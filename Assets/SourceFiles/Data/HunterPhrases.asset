@@ -13,50 +13,50 @@ MonoBehaviour:
   m_Name: HunterPhrases
   m_EditorClassIdentifier: Assembly-CSharp::HunterPhraseBook
   spotted:
-  - don't blink.
-  - there's my little light.
-  - run.
-  - you're mine.
-  - too slow.
-  - i smell your battery.
-  - hello, thief.
+  - patient seven... out of bed.
+  - lamp on in the corridor.
+  - do not run in the ward.
+  - returning to intake.
+  - pulse elevated. hold still.
+  - unauthorized light source.
+  - we see you, seven.
   chasing:
-  - run faster.
-  - your legs are tired.
-  - i don't get tired.
-  - "closer\u2026"
-  - the stars won't save you.
-  - keep running. i like it.
+  - running only tires the heart.
+  - procedure one... does not stop.
+  - remain where you are.
+  - fourteen admissions. same corridor.
+  - the stars only lead back down.
+  - orderlies to the lower wing.
   lost:
-  - you can't hide forever.
-  - i'll find you.
-  - i know this maze better.
-  - hiding? good.
+  - subject stepped out of the beam.
+  - the ward is a closed system.
+  - we know every door down here.
+  - holding breath... noted.
   searching:
-  - "where are you\u2026"
-  - come out.
-  - i can hear your heart.
-  - "little light, little light\u2026"
-  - the dark is mine.
-  - floor {floor}. you won't leave it.
+  - bed check... room empty.
+  - step forward for the count.
+  - respiration audible in the dark.
+  - patient keeps drawing stars...
+  - 'procedure one: removal of fear.'
+  - floor {floor}. night rounds.
   ambush:
-  - SURPRISE.
-  - WAITED SO LONG.
-  - THIS WAY? GOOD.
-  - HELLO.
+  - HOLD FOR TREATMENT.
+  - WARD LOCKDOWN.
+  - STEP INTO THE LIGHT.
+  - PATIENT SEVEN.
   locker:
-  - is someone in there?
-  - i smell you.
-  - open up.
-  - "one of these\u2026"
-  - warm metal.
+  - locker latch warm.
+  - breathing behind the tin.
+  - open the cabinet, seven.
+  - it remembers which one.
+  - iron holds the heat.
   door:
-  - doors don't stop me.
-  - let me in.
-  - knock knock.
-  - no more doors.
+  - obstruction in the corridor.
+  - clear the shutter.
+  - forty-one doors...
+  - ward access forced.
   caught:
-  - GOTCHA.
-  - MINE.
+  - READMITTED.
+  - PROCEDURE COMPLETE.
   - LIGHTS OUT.
-  - FOUND YOU.
+  - BED READY IN INTAKE.

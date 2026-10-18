@@ -207,3 +207,10 @@ hub.breach.followed,ES IST DIR NACH OBEN GEFOLGT.
 hub.breach.run,DIE TÜR DES DIREKTORS. LAUF.
 hub.breach.locker,ES HAT DICH HINEINGEHEN SEHEN.
 hub.breach.grab,ES HATTE DICH. FINDE DEIN LICHT. LAUF.
+hub.supper.sit_prompt,DEINEN PLATZ AM TISCH EINNEHMEN
+hub.supper.sit_refuse,DER SECHSTE PLATZ IST GEDECKT  ·  DER TELLER IST NOCH WARM
+hub.supper.seated_line,FÜNF KÖPFE HEBEN SICH IM KERZENLICHT. DIE ZÄHLUNG IST BEI SECHS.
+hub.records.corroborated,AKTEN ABGEGLICHEN  ·  BEOBACHTUNGSBAND GELÖSCHT ({habit})
+hub.records.corroborated_clean,AKTEN ABGEGLICHEN  ·  BEOBACHTUNGSPROTOKOLL VERSIEGELT
+hub.finale.doors_open,DIE TÜREN SIND JETZT OFFEN.
+hub.finale.readmitted,WIEDERAUFGENOMMEN  ·  AUFNAHME NR. 16
