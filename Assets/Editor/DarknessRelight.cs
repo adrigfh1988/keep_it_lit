@@ -23,7 +23,7 @@ using UnityEngine.SceneManagement;
 public static class DarknessRelight
 {
     /// <summary>The brightest of ambient.r/g/b after relighting. See slice F71 step 2.</summary>
-    private const float TargetMaxChannel = 0.045f;
+    private const float TargetMaxChannel = 0.160f;
 
     // A row already this close to the target is left alone - without this, floating-point rounding in
     // the scale-down could nudge an already-relit row by a fraction of a stop every time the menu item

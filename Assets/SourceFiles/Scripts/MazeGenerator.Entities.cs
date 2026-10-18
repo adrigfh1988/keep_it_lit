@@ -16,10 +16,6 @@ public partial class MazeGenerator
     private const int NightNurseSalt = 0x41474E53; // "AGNS": own salted stream so +25 draws for Listener/Tenant/LivingBody are untouched
 
     [Header("F107 - Entities (run 2)")]
-    [Tooltip("Not None: forces exactly this entity set on any floor, in the story or a descent (the way to test one). None = the roster decides (EntityRoster). Restore to None before saving.")]
-    [SerializeField] private EntityKind debugEntities = EntityKind.None;
-    [Tooltip("With the living body in the set: use only a hanging body or only a floor corpse (Auto = whichever the level has)")]
-    [SerializeField] private LivingBodyTest debugLivingBody = LivingBodyTest.Auto;
     [Tooltip("The Listener spawns at least this many BFS steps from the start")]
     [SerializeField, Min(0)] private int listenerMinStartSteps = 6;
     [Tooltip("... and at least this many from the hunter's spawn cell")]
@@ -123,7 +119,7 @@ public partial class MazeGenerator
 
     private void BuildNightNurse(System.Random rng)
     {
-        Vector2Int start = Vector2Int.zero;
+        Vector2Int start = _startCell;
         HashSet<Vector2Int> reachable = ReachableCells(start, null);
         Dictionary<Vector2Int, int> fromStart = BfsWithin(start, reachable);
         Dictionary<Vector2Int, int> fromHunter = BfsWithin(FarthestCell(), reachable);
@@ -237,7 +233,7 @@ public partial class MazeGenerator
             return;
         }
 
-        Vector2Int start = Vector2Int.zero;
+        Vector2Int start = _startCell;
         HashSet<Vector2Int> reachable = ReachableCells(start, null);
         Dictionary<Vector2Int, int> fromStart = BfsWithin(start, reachable);
         Dictionary<Vector2Int, int> fromHunter = BfsWithin(FarthestCell(), reachable);

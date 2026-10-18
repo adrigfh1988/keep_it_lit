@@ -19,8 +19,6 @@ public partial class MazeGenerator
     private const int ItemCacheSalt = 24; // the +24 stream
 
     [Header("F107 - DESCENT")]
-    [Tooltip("With Debug Start In Maze, Debug Floor = n starts a DESCENT at depth n (the smoke-test entry point). No effect otherwise.")]
-    [SerializeField] private bool debugDescent = false;
     [Tooltip("An item cache prefers a cell at least this many BFS steps from the start (dead ends first)")]
     [SerializeField, Min(0)] private int itemCacheMinStartSteps = 4;
 
@@ -34,7 +32,7 @@ public partial class MazeGenerator
     private void BeginDebugDescent()
     {
         DescentRun.Begin();
-        DescentRun.Depth = debugFloor;
+        DescentRun.Depth = Mathf.Max(1, debugFloor);
         GameFlow.IsDescent = true;
         Debug.Log($"[Descent] debug start at depth {debugFloor}", this);
     }
@@ -106,8 +104,9 @@ public partial class MazeGenerator
         {
             for (int z = 0; z < height; z++)
             {
+                if (IsVoid(x, z)) continue;
                 Vector2Int cell = new Vector2Int(x, z);
-                if (cell == Vector2Int.zero || used.Contains(cell)) continue;
+                if (cell == _startCell || used.Contains(cell)) continue;
                 if (starCells.Contains(cell) || lockerCells.Contains(cell) || _setPieceCells.Contains(cell) || _doorUsedCells.Contains(cell)) continue;
                 if (IsLayoutReserved(cell) || HasCeilingProp(cell) || !HasFreeWall(cell)) continue;
 

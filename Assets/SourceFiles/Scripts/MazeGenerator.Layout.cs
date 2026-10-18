@@ -75,6 +75,29 @@ public partial class MazeGenerator
         _galleryCells.Clear();
         if (!terror.roomsAndGalleries || _theme == null || _profile == null || _profile.Floor < roomFromFloor) return;
 
+        if (_profile.Shape == FloorProfile.FloorShape.Cross)
+        {
+            Vector2Int anchor = new Vector2Int(_startCell.x - 1, _startCell.y - 1);
+            OpenBlock(anchor, 3);
+            for (int x = anchor.x; x < anchor.x + 3; x++)
+            {
+                for (int z = anchor.y; z < anchor.y + 3; z++)
+                {
+                    Vector2Int c = new Vector2Int(x, z);
+                    if (c != _startCell) _roomCells.Add(c);
+                }
+            }
+            for (int vx = anchor.x + 1; vx < anchor.x + 3; vx++)
+            {
+                for (int vz = anchor.y + 1; vz < anchor.y + 3; vz++) _roomPillarVertices.Add(new Vector2Int(vx, vz));
+            }
+            ComputeDistances();
+            terror.Log($"Cross atrium 3x3 at {anchor}", this);
+            System.Random crossRng = new System.Random(usedSeed + 21);
+            if (_profile.Floor >= galleryFromFloor) FindOrCarveGallery(crossRng);
+            return;
+        }
+
         System.Random rng = new System.Random(usedSeed + 21);
         CarveRoom(rng);
         if (_profile.Floor >= galleryFromFloor) FindOrCarveGallery(rng);
@@ -153,14 +176,14 @@ public partial class MazeGenerator
         terror.Log("No room fits on this floor", this);
     }
 
-    /// <summary>A block is free when it does not touch the start (Chebyshev distance 2 or more) and holds none of the avoided cells.</summary>
-    private static bool BlockIsFree(Vector2Int anchor, int size, HashSet<Vector2Int> avoid)
+    /// <summary>A block is free when it does not touch the start (Chebyshev distance 2 or more), holds no void cell, and holds none of the avoided cells.</summary>
+    private bool BlockIsFree(Vector2Int anchor, int size, HashSet<Vector2Int> avoid)
     {
         for (int x = anchor.x; x < anchor.x + size; x++)
         {
             for (int z = anchor.y; z < anchor.y + size; z++)
             {
-                if (Mathf.Max(x, z) < 2 || avoid.Contains(new Vector2Int(x, z))) return false;
+                if (IsVoid(x, z) || Mathf.Max(Mathf.Abs(x - _startCell.x), Mathf.Abs(z - _startCell.y)) < 2 || avoid.Contains(new Vector2Int(x, z))) return false;
             }
         }
 
@@ -189,7 +212,7 @@ public partial class MazeGenerator
     {
         HashSet<Vector2Int> blocked = DeadEndCells();
         blocked.UnionWith(_roomCells);
-        blocked.Add(Vector2Int.zero);
+        blocked.Add(_startCell);
         blocked.Add(FarthestCell());
 
         List<Vector2Int> run = LongestStraightRun(blocked, rng);
@@ -226,13 +249,13 @@ public partial class MazeGenerator
                 {
                     Vector2Int cell = axis == 0 ? new Vector2Int(i, line) : new Vector2Int(line, i);
                     bool joined = run.Count > 0 && !IsWallClosed(run[run.Count - 1].x, run[run.Count - 1].y, dir);
-                    if (blocked.Contains(cell) || !joined)
+                    if (IsVoid(cell) || blocked.Contains(cell) || !joined)
                     {
                         Consider(run);
                         run = new List<Vector2Int>();
                     }
 
-                    if (!blocked.Contains(cell)) run.Add(cell);
+                    if (!IsVoid(cell) && !blocked.Contains(cell)) run.Add(cell);
                 }
 
                 Consider(run);
@@ -303,7 +326,7 @@ public partial class MazeGenerator
     {
         foreach (Vector2Int cell in WindowCells(anchor, axis))
         {
-            if (blocked.Contains(cell)) return true;
+            if (IsVoid(cell) || blocked.Contains(cell)) return true;
         }
 
         return false;
@@ -395,7 +418,7 @@ public partial class MazeGenerator
         HashSet<Vector2Int> avoid = DeadEndCells();
         avoid.UnionWith(_roomCells);
         avoid.UnionWith(_galleryCells);
-        avoid.Add(Vector2Int.zero);
+        avoid.Add(_startCell);
         avoid.Add(FarthestCell());
 
         List<(Vector2Int a, Vector2Int b)> pairs = new List<(Vector2Int, Vector2Int)>();
@@ -419,7 +442,7 @@ public partial class MazeGenerator
 
         foreach ((Vector2Int a, Vector2Int b) pair in pairs)
         {
-            if (ReachableCellsAvoiding(Vector2Int.zero, pair.a, pair.b).Count != width * height - 2) continue;
+            if (ReachableCellsAvoiding(_startCell, pair.a, pair.b).Count != _playableCellCount - 2) continue;
 
             _squeezeCells.Add(pair.a);
             _squeezeCells.Add(pair.b);
@@ -433,7 +456,7 @@ public partial class MazeGenerator
 
     private bool SqueezePairFits(Vector2Int a, Vector2Int b, bool northSouth, HashSet<Vector2Int> avoid)
     {
-        if (b.x >= width || b.y >= height || avoid.Contains(a) || avoid.Contains(b)) return false;
+        if (b.x >= width || b.y >= height || IsVoid(a) || IsVoid(b) || avoid.Contains(a) || avoid.Contains(b)) return false;
         return IsStraight(a.x, a.y, northSouth) && IsStraight(b.x, b.y, northSouth);
     }
 
@@ -556,7 +579,7 @@ public partial class MazeGenerator
     private void AppendReachability(StringBuilder sb)
     {
         ReachabilityReport report = CheckReachability();
-        sb.Append($"reachability (locked doors are walls until their button is reached): {report.CellsBeforeButtons} of {width * height} cells before any button, {report.CellsReached} after; ");
+        sb.Append($"reachability (locked doors are walls until their button is reached): {report.CellsBeforeButtons} of {_playableCellCount} cells before any button, {report.CellsReached} after; ");
         sb.Append(report.Missing.Count == 0 ? $"all {report.Targets} targets reachable\n" : $"UNREACHABLE: {string.Join(", ", report.Missing)}\n");
     }
 
@@ -577,7 +600,7 @@ public partial class MazeGenerator
         // NavMesh leg setup.
         NavMeshQueryFilter filter = new NavMeshQueryFilter { agentTypeID = MazeAgentTypeId, areaMask = NavMesh.AllAreas };
         float snap = cellSize * 0.45f;
-        bool haveStart = NavMesh.SamplePosition(CellCenter(0, 0), out NavMeshHit startHit, snap, filter);
+        bool haveStart = NavMesh.SamplePosition(CellCenter(_startCell.x, _startCell.y), out NavMeshHit startHit, snap, filter);
         Dictionary<Vector2Int, Vector2Int> parents = null;
 
         void Check(Vector3 world, string label)
@@ -606,7 +629,7 @@ public partial class MazeGenerator
 
             if (_squeezeCells.Count > 0)
             {
-                if (parents == null) parents = BfsParents(Vector2Int.zero);
+                if (parents == null) parents = BfsParents(_startCell);
                 for (Vector2Int c = cell; parents.TryGetValue(c, out Vector2Int prev); c = prev)
                 {
                     if (_squeezeCells.Contains(c))
@@ -649,7 +672,7 @@ public partial class MazeGenerator
             if (door != null && !door.IsUnlocked) LockPassage(locked, door, true);
         }
 
-        HashSet<Vector2Int> reached = FloodFrom(Vector2Int.zero, locked);
+        HashSet<Vector2Int> reached = FloodFrom(_startCell, locked);
         cellsBeforeButtons = reached.Count;
         for (bool changed = true; changed;)
         {
@@ -662,7 +685,7 @@ public partial class MazeGenerator
                 for (MazeDoor door = button.Door; door != null && hops++ <= _doors.Count; door = door.LinkedDoor) changed |= LockPassage(locked, door, false);
             }
 
-            if (changed) reached = FloodFrom(Vector2Int.zero, locked);
+            if (changed) reached = FloodFrom(_startCell, locked);
         }
 
         return reached;
@@ -673,7 +696,7 @@ public partial class MazeGenerator
     /// still reachable from the start? Each locked door set is validated alone by its placer, so two sets that are fine apart can still lock each
     /// other away from their buttons (floor 5, seed 505); the placers call this right after a set button lands and roll the set back on false.
     /// </summary>
-    private bool DoorsStayCompletable() => FloodWithButtons(out _).Count == width * height;
+    private bool DoorsStayCompletable() => FloodWithButtons(out _).Count == _playableCellCount;
 
     /// <summary>Open-passage BFS tree from <paramref name="from"/> (child cell to parent cell), every door treated as open.</summary>
     private Dictionary<Vector2Int, Vector2Int> BfsParents(Vector2Int from)
@@ -701,10 +724,10 @@ public partial class MazeGenerator
     /// <summary>F118 (benchmark route): the centre of the cell farthest from the start cell by open-passage distance.</summary>
     public Vector3 FarthestCellCenter()
     {
-        Dictionary<Vector2Int, int> dist = new Dictionary<Vector2Int, int> { { Vector2Int.zero, 0 } };
+        Dictionary<Vector2Int, int> dist = new Dictionary<Vector2Int, int> { { _startCell, 0 } };
         Queue<Vector2Int> queue = new Queue<Vector2Int>();
-        queue.Enqueue(Vector2Int.zero);
-        Vector2Int best = Vector2Int.zero;
+        queue.Enqueue(_startCell);
+        Vector2Int best = _startCell;
         while (queue.Count > 0)
         {
             Vector2Int cell = queue.Dequeue();

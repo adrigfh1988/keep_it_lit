@@ -71,6 +71,7 @@ public class FloorMapUi : MonoBehaviour
     private bool _dirty;
     private int _closedFrame = -1;
     private bool _hintPending;
+    private bool _openPending;
     private bool _planHintShown;
 
     /// <summary>True once the map is on for this floor (a used Floor Plan or the loop corridor's reward).</summary>
@@ -109,16 +110,27 @@ public class FloorMapUi : MonoBehaviour
         _hintPending = announce;
     }
 
-    /// <summary>F110: marks every cell as walked, so the whole layout (walls, doors, switches - never objectives) shows. Does not unlock by itself.</summary>
+    /// <summary>F110: marks every playable cell as walked, so the whole layout (walls, doors, switches - never objectives or void cells) shows. Does not unlock by itself.</summary>
     public void RevealAll()
     {
         if (!EnsureMasks()) return;
 
         for (int x = 0; x < _visited.GetLength(0); x++)
         {
-            for (int z = 0; z < _visited.GetLength(1); z++) _visited[x, z] = true;
+            for (int z = 0; z < _visited.GetLength(1); z++)
+            {
+                if (_maze != null && _maze.IsVoidCell(x, z)) continue;
+                _visited[x, z] = true;
+            }
         }
         _dirty = true;
+    }
+
+    /// <summary>Opens the map immediately if in a maze run, or on the first frame the run becomes active.</summary>
+    public void OpenWhenAvailable()
+    {
+        if (Available && (_pause == null || !_pause.IsPaused)) Open();
+        else _openPending = true;
     }
 
     /// <summary>F110: spends the held Floor Plan, turns the map on for this floor and opens it. Does nothing unless <see cref="CanUsePlan"/>.</summary>
@@ -167,6 +179,12 @@ public class FloorMapUi : MonoBehaviour
         {
             _hintPending = false;
             _hud.ShowHintPrompt(GameAction.Map, L10n.T("ui.pause.map"), "hud.prompt.map", hintSeconds);
+        }
+
+        if (_openPending && Available && (_pause == null || !_pause.IsPaused))
+        {
+            _openPending = false;
+            Open();
         }
 
         if (CanUsePlan && !_planHintShown && _hud != null)

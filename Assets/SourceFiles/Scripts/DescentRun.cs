@@ -28,6 +28,9 @@ public static class DescentRun
     /// <summary>The previous level's rolled mechanics pair (a FloorProfile.Objective mask). GameFlow.RolledObjectives stops at floor 5, so a descent keeps its own.</summary>
     public static int PreviousObjectives { get; set; }
 
+    /// <summary>F124: the previous level's floor footprint shape, so two consecutive DESCENT levels never share the same void footprint.</summary>
+    public static FloorProfile.FloorShape PreviousShape { get; set; } = FloorProfile.FloorShape.Rectangle;
+
     /// <summary>Depth of the last level that had the looping corridor (set where the story sets LoopCorridor.UsedThisCampaign).</summary>
     public static int LastLoopDepth { get; set; } = Never;
 
@@ -78,6 +81,7 @@ public static class DescentRun
         StarsTaken = 0;
         LevelSeed = 0;
         PreviousObjectives = 0;
+        PreviousShape = FloorProfile.FloorShape.Rectangle;
         LastLoopDepth = Never;
         LastSecondWindDepth = Never;
         Cause = DescentCause.Hunter;

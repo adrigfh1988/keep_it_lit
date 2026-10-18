@@ -312,6 +312,27 @@ MonoBehaviour:
     m_Localized: AMPULLE NEHMEN
     m_Metadata:
       m_Items: []
+  - m_Id: 2921090558889984
+    m_Localized: "EBENE -{n}  \xB7  {shape}"
+    m_Metadata:
+      m_Items:
+      - rid: 4707331672703763209
+  - m_Id: 2921090642776064
+    m_Localized: DER INNENHOF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2921090642776065
+    m_Localized: DER STEG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2921090642776066
+    m_Localized: DAS PANOPTIKUM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2921090642776067
+    m_Localized: DER ABGRUND
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -345,3 +366,4 @@ MonoBehaviour:
         - id: 171011926298630
         - id: 171011926298631
         - id: 405334386446336
+        - id: 2921090558889984

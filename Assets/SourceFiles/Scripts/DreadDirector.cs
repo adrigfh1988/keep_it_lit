@@ -86,8 +86,8 @@ public class DreadDirector : MonoBehaviour
     [Tooltip("Fraction of the ORIGINAL live, non-locker lamp count killed at each death wave")]
     [SerializeField] private float deathWaveFraction = 0.1f;
     [SerializeField] private float deathFadeSeconds = 1.5f;
-    [SerializeField] private float firstDarkenFraction = 0.35f;
-    [SerializeField] private float secondDarkenFraction = 0.6f;
+    [SerializeField] private float firstDarkenFraction = 0.15f;
+    [SerializeField] private float secondDarkenFraction = 0.25f;
     [SerializeField] private float darkenSeconds = 2f;
     [SerializeField] private float eyeEmissionAtSecondDeath = 6f;
     [SerializeField] private float breathSeconds = 1.6f;

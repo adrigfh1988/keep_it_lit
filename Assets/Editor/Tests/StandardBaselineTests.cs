@@ -188,5 +188,25 @@ namespace KeepItLit.Tests
                 }
             }
         }
+
+        [Test]
+        public void DescentVoidShapesAndScalingAreMonotonic()
+        {
+            DescentRun.Begin();
+            int prevArea = 0;
+            FloorProfile.FloorShape prevShape = FloorProfile.FloorShape.Rectangle;
+            for (int depth = 1; depth <= 15; depth++)
+            {
+                FloorProfile p = FloorProfile.ForDescent(depth, 1000 + depth * 37);
+                int minExpected = Mathf.Min(42 + (depth - 1) * 6, 16 * 13);
+                if (depth == 1) Assert.AreEqual(FloorProfile.FloorShape.Rectangle, p.Shape, "Depth 1 must be Rectangle");
+                if (depth >= 2 && prevShape != FloorProfile.FloorShape.Rectangle)
+                    Assert.AreNotEqual(prevShape, p.Shape, $"Depth {depth} repeated shape {p.Shape}");
+                Assert.GreaterOrEqual(p.Width * p.Height, minExpected, $"Depth {depth} bounding area too small");
+                prevShape = p.Shape;
+                prevArea = p.Width * p.Height;
+            }
+            DescentRun.ResetState();
+        }
     }
 }

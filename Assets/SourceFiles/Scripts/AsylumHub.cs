@@ -61,9 +61,9 @@ public class AsylumHub : MonoBehaviour
     public WingDoor[] wingDoors = new WingDoor[0];
 
     [Header("Atmosphere while the player is inside (D9)")]
-    public Color hubAmbient = new Color(0.035f, 0.035f, 0.04f);
-    public float hubFogDensity = 0.03f;
-    public Color hubFogColor = new Color(0.01f, 0.012f, 0.02f);
+    public Color hubAmbient = new Color(0.15f, 0.15f, 0.18f);
+    public float hubFogDensity = 0.016f;
+    public Color hubFogColor = new Color(0.02f, 0.024f, 0.035f);
 
     [Header("Walk-in")]
     public float doorOpenAngle = 95f;
@@ -640,10 +640,21 @@ public class AsylumHub : MonoBehaviour
     private void ApplyHubAtmosphere()
     {
         RenderSettings.ambientMode = AmbientMode.Flat;
-        RenderSettings.ambientLight = hubAmbient;
+        Color amb = hubAmbient;
+        float max = Mathf.Max(amb.r, amb.g, amb.b);
+        if (max > 0.0001f && max < 0.15f)
+        {
+            float s = 0.15f / max;
+            amb = new Color(amb.r * s, amb.g * s, amb.b * s, 1f);
+        }
+        else if (max <= 0.0001f)
+        {
+            amb = new Color(0.15f, 0.15f, 0.18f, 1f);
+        }
+        RenderSettings.ambientLight = amb;
         RenderSettings.fog = true;
         RenderSettings.fogMode = FogMode.ExponentialSquared;
-        RenderSettings.fogDensity = hubFogDensity;
+        RenderSettings.fogDensity = Mathf.Min(hubFogDensity, 0.018f);
         RenderSettings.fogColor = hubFogColor;
     }
 

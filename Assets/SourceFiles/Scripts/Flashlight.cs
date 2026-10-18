@@ -15,20 +15,20 @@ public class Flashlight : MonoBehaviour
 {
     [Header("Beam - wide (default)")]
     [Tooltip("Width of the lit circle when not focused. A wide floodlight rather than a torch beam.")]
-    [SerializeField] private float wideOuterAngle = 60f;
+    [SerializeField] private float wideOuterAngle = 72f;
     [Tooltip("Width of the bright core when not focused. The gap to wideOuterAngle is the soft edge.")]
-    [SerializeField] private float wideInnerAngle = 28f;
-    [SerializeField] private float wideIntensity = 18f;
+    [SerializeField] private float wideInnerAngle = 36f;
+    [SerializeField] private float wideIntensity = 38f;
     [Tooltip("How far the wide beam reaches. Keep it near the fog distance, or the cone ends in fog you cannot see through anyway.")]
-    [SerializeField] private float wideRange = 34f;
+    [SerializeField] private float wideRange = 44f;
 
     [Header("Beam - focused (RMB / gamepad LT held)")]
     [Tooltip("A narrow, punchier beam for peering down a corridor - less light spilled sideways, more thrown forward.")]
-    [SerializeField] private float focusedOuterAngle = 24f;
+    [SerializeField] private float focusedOuterAngle = 28f;
     [Tooltip("Width of the bright core when not focused. The gap to wideOuterAngle is the soft edge.")]
-    [SerializeField] private float focusedInnerAngle = 12f;
-    [SerializeField] private float focusedIntensity = 32f;
-    [SerializeField] private float focusedRange = 46f;
+    [SerializeField] private float focusedInnerAngle = 14f;
+    [SerializeField] private float focusedIntensity = 64f;
+    [SerializeField] private float focusedRange = 58f;
     [Tooltip("Seconds to blend fully in or out of the focused beam")]
     [SerializeField] private float focusBlendSeconds = 0.15f;
     [Tooltip("Battery drains this much faster while focused")]
@@ -39,6 +39,7 @@ public class Flashlight : MonoBehaviour
     [Header("Flicker")]
     [Tooltip("How much the beam wavers, 0 = steady")]
     [SerializeField] private float flickerAmount = 0.06f;
+    [Tooltip("FlickerSpeed")]
     [SerializeField] private float flickerSpeed = 7f;
 
     [Header("Battery")]
@@ -73,11 +74,11 @@ public class Flashlight : MonoBehaviour
 
     [Header("F105 C9 - narrow beam")]
     [Tooltip("Wide beam width while TerrorSettings.narrowBeam is on (the Beam - wide values above apply when it is off)")]
-    [SerializeField] private float narrowOuterAngle = 55f;
+    [SerializeField] private float narrowOuterAngle = 66f;
     [Tooltip("Wide beam bright-core width while narrowBeam is on")]
-    [SerializeField] private float narrowInnerAngle = 24f;
+    [SerializeField] private float narrowInnerAngle = 32f;
     [Tooltip("Wide beam intensity while narrowBeam is on")]
-    [SerializeField] private float narrowIntensity = 16f;
+    [SerializeField] private float narrowIntensity = 32f;
 
     private float _baseWideOuterAngle;
     private float _baseWideInnerAngle;
@@ -446,6 +447,17 @@ public class Flashlight : MonoBehaviour
         // defaults (0.1 / 0.5) leave a visible gap at the wall/floor seam.
         _light.shadowBias = 0.05f;
         _light.shadowNormalBias = 0.35f;
+
+        // Soft close-range player fill light so nearby corridor walls, doors, and props remain readable even outside direct beam/lamp pools.
+        GameObject fillObj = new GameObject("PlayerFillLight");
+        fillObj.transform.SetParent(transform, false);
+        fillObj.transform.localPosition = Vector3.zero;
+        Light fill = fillObj.AddComponent<Light>();
+        fill.type = LightType.Point;
+        fill.color = new Color(0.92f, 0.94f, 1.0f);
+        fill.range = 8.5f;
+        fill.intensity = 1.8f;
+        fill.shadows = LightShadows.None;
 
         ApplyShadowSetting();
         ApplyState();

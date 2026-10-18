@@ -66,3 +66,8 @@ hud.locker.welded,SOUDÉ.
 hud.prompt.welded,SOUDÉ
 hud.prompt.drawer,OUVRIR LE TIROIR
 hud.prompt.ampoule,PRENDRE L'AMPOULE
+hud.descent.level_shape,NIVEAU -{n}  ·  {shape}
+hud.descent.shape.ring,LA COUR
+hud.descent.shape.twin_wings,LA PASSERELLE
+hud.descent.shape.cross,LE PANOPTIQUE
+hud.descent.shape.l_chasm,LE GOUFFRE

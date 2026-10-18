@@ -167,7 +167,15 @@ public class ContractTracker : MonoBehaviour
 
     private void Update()
     {
-        if (_line != null) _line.gameObject.SetActive(_id >= 0 && !GameFlow.IsInSafeRoom && (_menu == null || !_menu.IsOpen));
+        if (_line != null)
+        {
+            bool show = _id >= 0 && !GameFlow.IsInSafeRoom && !GameFlow.IsInIntake && (_menu == null || !_menu.IsOpen);
+            _line.gameObject.SetActive(show);
+            if (show)
+            {
+                _line.rectTransform.anchoredPosition = new Vector2(28f, TensionDirector.CardBottomY - 8f);
+            }
+        }
 
         if (!Counting || Time.timeScale <= 0f) return;
 
@@ -286,16 +294,17 @@ public class ContractTracker : MonoBehaviour
         Canvas canvas = RuntimeUi.ResolveCanvas();
         if (canvas == null) return;
 
-        _line = RuntimeUi.CreateText(canvas.transform, "ContractLine", "", 26f, Amber);
+        _line = RuntimeUi.CreateText(canvas.transform, "ContractLine", "", 22f, Amber);
         _line.alignment = TextAlignmentOptions.TopLeft;
+        _line.fontStyle = FontStyles.Bold;
         _line.textWrappingMode = TextWrappingModes.NoWrap;
         RuntimeUi.AutoFit(_line, 0.7f); // D14
         RectTransform rect = _line.rectTransform;
         rect.anchorMin = new Vector2(0f, 1f);
         rect.anchorMax = new Vector2(0f, 1f);
         rect.pivot = new Vector2(0f, 1f);
-        rect.anchoredPosition = new Vector2(36f, -150f);
-        rect.sizeDelta = new Vector2(1100f, 40f);
+        rect.anchoredPosition = new Vector2(28f, TensionDirector.CardBottomY - 8f);
+        rect.sizeDelta = new Vector2(600f, 34f);
     }
 
     private void RefreshLine()
@@ -307,10 +316,10 @@ public class ContractTracker : MonoBehaviour
         Color color;
         switch (_state)
         {
-            case State.Complete: text = L10n.T("hud.contract.done", ("name", name)); color = Green; break;
-            case State.Failed: text = L10n.T("hud.contract.failed", ("name", name)); color = Red; break;
+            case State.Complete: text = "✓  " + L10n.T("hud.contract.done", ("name", name)); color = Green; break;
+            case State.Failed: text = "✗  " + L10n.T("hud.contract.failed", ("name", name)); color = Red; break;
             case State.Void: text = L10n.T("hud.contract.void", ("name", name)); color = Grey; break;
-            default: text = Progress(name); color = Amber; break;
+            default: text = "•  " + Progress(name); color = Amber; break;
         }
         _line.text = text;
         _line.color = color;

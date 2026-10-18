@@ -189,10 +189,22 @@ public class FloorProfile
         return chosen;
     }
 
+    public enum FloorShape
+    {
+        Rectangle = 0,
+        Ring = 1,
+        TwinWings = 2,
+        Cross = 3,
+        LChasm = 4
+    }
+
     public int Floor { get; private set; }
 
     /// <summary>0 on the first floor, 1 on the final one.</summary>
     public float Progress { get; private set; }
+
+    public FloorShape Shape { get; set; } = FloorShape.Rectangle;
+    public int ShapeVariant { get; set; }
 
     /// <summary>Which FloorThemeSet row the maze clones. Set from <see cref="FloorThemes"/> in For() - the themes' looks are authored in the scene; this is only the floor-to-theme mapping.</summary>
     public int ThemeIndex;
@@ -361,19 +373,19 @@ public class FloorProfile
         // has real pockets of dark between lamp pools (the torch is optional there) and floor 5 is
         // unreadable without it. Ambient/fog follow the same curve. See
         // plannings/darkness-and-interactivity-spec.md, decision D2 and slice F71.
-        p.CellsPerLamp = Blend(4, 5, t);
-        p.LampIntensity = Blend(2.2f, 1.8f, t);
-        p.LampRange = Blend(8.5f, 7.5f, t);
+        p.CellsPerLamp = Blend(3, 4, t);
+        p.LampIntensity = Blend(4.5f, 3.6f, t);
+        p.LampRange = Blend(11.5f, 10.0f, t);
         if (p.CellSize > 4.5f)
         {
-            p.LampRange = Mathf.Max(p.LampRange * (p.CellSize / 4.5f), 10f);
-            p.LampIntensity = 2.5f;
-            p.CellsPerLamp = 4;
+            p.LampRange = Mathf.Max(p.LampRange * (p.CellSize / 4.5f), 14f);
+            p.LampIntensity = 5.0f;
+            p.CellsPerLamp = 3;
         }
 
-        float ambient = Blend(0.045f, 0.030f, t);
+        float ambient = Blend(0.18f, 0.12f, t);
         p.Ambient = new Color(ambient, ambient, ambient * 1.25f);
-        p.FogDensity = Blend(0.035f, 0.055f, t);
+        p.FogDensity = Blend(0.020f, 0.032f, t);
 
         // +33% sprint budget (was 42 -> 24 s).
         p.SprintSeconds = Blend(56f, 32f, t);
@@ -476,9 +488,9 @@ public class FloorProfile
     public int RequiredItems => StarCount + KeyCount + FuseCount;
 
     private const float DescentRunSpeedCap = 4.3f;   // the player sprints at 5.3 m/s; the hunter must stay beatable
-    private const float DescentMinAmbient = 0.020f;
-    private const int DescentCellsPerLampCap = 7;
-    private const float DescentFogCap = 0.075f;
+    private const float DescentMinAmbient = 0.09f;
+    private const int DescentCellsPerLampCap = 5;
+    private const float DescentFogCap = 0.045f;
     private const float DescentPhantomFloor = 12f;
     private const float DescentChaseWalkCap = 1.15f;
     private const int DescentBossEvery = 5;
@@ -507,9 +519,52 @@ public class FloorProfile
         Footprint footprint = Footprints[DescentFootprintIndex(cycle, depth)];
         p.CellSize = footprint.CellSize;
         p.WallHeight = footprint.WallHeight;
-        DescentGrid(p.RequiredItems, usedSeed, out p.Width, out p.Height);
 
-        int cells = p.Width * p.Height;
+        // F124: Roll floor shape (Level 1 is always Rectangle; Level 2+ cycles through the 4 void shapes without consecutive repeats).
+        FloorShape shape = FloorShape.Rectangle;
+        int shapeVariant = 0;
+        if (depth >= 2)
+        {
+            int hShape = RunRules.HashSeedFloor(usedSeed, depth * 73 + 19) & 0x7FFFFFFF;
+            FloorShape prev = DescentRun.PreviousShape;
+            FloorShape[] pool = { FloorShape.Ring, FloorShape.TwinWings, FloorShape.Cross, FloorShape.LChasm };
+            int pick = hShape % pool.Length;
+            shape = pool[pick];
+            if (shape == prev)
+                shape = pool[(pick + 1 + (hShape / pool.Length) % (pool.Length - 1)) % pool.Length];
+            shapeVariant = 1 + ((RunRules.HashSeedFloor(usedSeed, depth * 109 + 7) & 0x7FFFFFFF) % 3); // 1=NE, 2=NW, 3=SE for LChasm
+        }
+        DescentRun.PreviousShape = shape;
+        p.Shape = shape;
+        p.ShapeVariant = shapeVariant;
+
+        // F124: Monotonic playable cell target + bounding box compensation for void masks.
+        int required = p.StarCount + p.FuseCount + p.KeyCount + 1;
+        int minForDepth = 42 + (depth - 1) * 6;
+        int targetPlayable = Mathf.Clamp(Mathf.Max(18 + 7 * required, minForDepth), 42, 160);
+
+        float fill = shape switch
+        {
+            FloorShape.Ring      => 0.78f,
+            FloorShape.TwinWings => 0.76f,
+            FloorShape.Cross     => 0.68f,
+            FloorShape.LChasm    => 0.76f,
+            _                    => 1.00f
+        };
+        int rawCells = Mathf.RoundToInt(targetPlayable / fill);
+        int minW = shape == FloorShape.Rectangle ? 7 : 9;
+        int minH = shape == FloorShape.Rectangle ? 6 : 8;
+        int width = Mathf.Clamp(Mathf.RoundToInt(Mathf.Sqrt(rawCells * 1.25f)), minW, 16);
+        int height = Mathf.Clamp(Mathf.RoundToInt((float)rawCells / width), minH, 13);
+        if (shape == FloorShape.Cross)
+        {
+            width = Mathf.Max(width, 10);
+            height = Mathf.Max(height, 9);
+        }
+        p.Width = width;
+        p.Height = height;
+
+        int cells = targetPlayable;
         int lockers = Mathf.Max(5, Mathf.RoundToInt(cells * 10f / 121f)); // the story's floor-5 lockers per cell
         if (depth >= 15) lockers = Mathf.Max(5, lockers - (depth - 10) / 5);
         p.LockerCount = lockers;

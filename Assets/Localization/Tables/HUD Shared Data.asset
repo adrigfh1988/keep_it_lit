@@ -350,6 +350,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331789613957361
+  - m_Id: 2921090558889984
+    m_Key: hud.descent.level_shape
+    m_Metadata:
+      m_Items:
+      - rid: 4707331851231166997
+  - m_Id: 2921090642776064
+    m_Key: hud.descent.shape.ring
+    m_Metadata:
+      m_Items:
+      - rid: 4707331851231166998
+  - m_Id: 2921090642776065
+    m_Key: hud.descent.shape.twin_wings
+    m_Metadata:
+      m_Items:
+      - rid: 4707331851231166999
+  - m_Id: 2921090642776066
+    m_Key: hud.descent.shape.cross
+    m_Metadata:
+      m_Items:
+      - rid: 4707331851231167000
+  - m_Id: 2921090642776067
+    m_Key: hud.descent.shape.l_chasm
+    m_Metadata:
+      m_Items:
+      - rid: 4707331851231167001
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -629,3 +654,23 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Prompt after the E key cap while looking at a blue-capped ampoule on the floor, floor 4 (ALL CAPS)
+    - rid: 4707331851231166997
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: DESCENT level intro banner title when a non-rectangular shape is rolled (38 pt). {n} = depth, {shape} = shape name
+    - rid: 4707331851231166998
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: DESCENT floor shape name for Ring (courtyard void)
+    - rid: 4707331851231166999
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: DESCENT floor shape name for TwinWings (catwalk bridge)
+    - rid: 4707331851231167000
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: DESCENT floor shape name for Cross (panopticon cross)
+    - rid: 4707331851231167001
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: DESCENT floor shape name for LChasm (collapsed corner)

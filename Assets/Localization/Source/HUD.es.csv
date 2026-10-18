@@ -66,3 +66,8 @@ hud.locker.welded,SOLDADA.
 hud.prompt.welded,SOLDADA
 hud.prompt.drawer,ABRIR EL CAJÓN
 hud.prompt.ampoule,TOMAR LA AMPOLLA
+hud.descent.level_shape,NIVEL -{n}  ·  {shape}
+hud.descent.shape.ring,EL PATIO
+hud.descent.shape.twin_wings,LA PASARELA
+hud.descent.shape.cross,EL PANÓPTICO
+hud.descent.shape.l_chasm,LA SIMA

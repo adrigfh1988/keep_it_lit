@@ -21,8 +21,6 @@ public partial class MazeGenerator
     private static readonly Color GateLitColor = new Color(0.25f, 1f, 0.7f);
 
     [Header("F111 - exit gates")]
-    [Tooltip("Testing: gates on any themed floor (one gate on floors below the final, as the profile says; the +17 roll is still drawn). KEEP IT LIT > Debug > Go To Exit Gate takes you there in Play")]
-    [SerializeField] private bool debugForceGates = false;
     [Tooltip("A gate's cell is at least this many steps (x + z) from the start cell")]
     [SerializeField, Min(0)] private int gateMinStartSteps = 4;
 
@@ -97,7 +95,7 @@ public partial class MazeGenerator
         avoid.UnionWith(_roomCells);
         avoid.UnionWith(_galleryCells);
         avoid.UnionWith(_squeezeCells);
-        avoid.Add(Vector2Int.zero);
+        avoid.Add(_startCell);
         avoid.Add(FarthestCell());
         if (_loopActive) avoid.Add(_loopEntrance);
 
@@ -123,8 +121,8 @@ public partial class MazeGenerator
         List<GateSlot> valid = new List<GateSlot>();
         foreach (GateSlot edge in edges)
         {
-            if (avoid.Contains(edge.Cell) || !IsWallClosed(edge.Cell.x, edge.Cell.y, edge.Dir)) continue;
-            if (edge.Cell.x + edge.Cell.y < gateMinStartSteps) continue;
+            if (IsVoid(edge.Cell) || avoid.Contains(edge.Cell) || !IsWallClosed(edge.Cell.x, edge.Cell.y, edge.Dir)) continue;
+            if (Mathf.Abs(edge.Cell.x - _startCell.x) + Mathf.Abs(edge.Cell.y - _startCell.y) < gateMinStartSteps) continue;
             if (_loopActive && edge.Dir == _loopOut) continue; // never on the loop opening's side of the maze
             if (!GateHasRoom(edge.Cell, edge.Dir)) continue;
             valid.Add(edge);

@@ -66,3 +66,8 @@ hud.locker.welded,ZUGESCHWEISST.
 hud.prompt.welded,ZUGESCHWEISST
 hud.prompt.drawer,FACH ÖFFNEN
 hud.prompt.ampoule,AMPULLE NEHMEN
+hud.descent.level_shape,EBENE -{n}  ·  {shape}
+hud.descent.shape.ring,DER INNENHOF
+hud.descent.shape.twin_wings,DER STEG
+hud.descent.shape.cross,DAS PANOPTIKUM
+hud.descent.shape.l_chasm,DER ABGRUND

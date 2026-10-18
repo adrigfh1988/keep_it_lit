@@ -66,3 +66,8 @@ hud.locker.welded,Subtitle when E is pressed at a welded locker (WELDED LOCKERS 
 hud.prompt.welded,Interaction prompt at a welded locker (one short line),WELDED SHUT
 hud.prompt.drawer,"Prompt after the E key cap (hold) while looking at a morgue drawer bank, floor 3 (ALL CAPS)",OPEN THE DRAWER
 hud.prompt.ampoule,"Prompt after the E key cap while looking at a blue-capped ampoule on the floor, floor 4 (ALL CAPS)",TAKE THE AMPOULE
+hud.descent.level_shape,"DESCENT level intro banner title when a non-rectangular shape is rolled (38 pt). {n} = depth, {shape} = shape name",LEVEL -{n}  ·  {shape}
+hud.descent.shape.ring,"DESCENT floor shape name for Ring (courtyard void)",THE COURTYARD
+hud.descent.shape.twin_wings,"DESCENT floor shape name for TwinWings (catwalk bridge)",THE CATWALK
+hud.descent.shape.cross,"DESCENT floor shape name for Cross (panopticon cross)",THE PANOPTICON
+hud.descent.shape.l_chasm,"DESCENT floor shape name for LChasm (collapsed corner)",THE CHASM

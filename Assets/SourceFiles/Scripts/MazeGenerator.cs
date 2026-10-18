@@ -98,11 +98,61 @@ public partial class MazeGenerator : MonoBehaviour
     [Tooltip("Jumping out of the maze would trivialise it")]
     [SerializeField] private bool disablePlayerJump = true;
 
+    public enum DebugFloorShape
+    {
+        Auto = -1,
+        Rectangle = 0,
+        Ring = 1,
+        TwinWings = 2,
+        Cross = 3,
+        LChasm = 4
+    }
+
+    [Header("Debug — Start & Mode")]
+    [Tooltip("For testing a maze: skip the title screen, the Intake and the hub and start the run straight away in Debug Floor's maze (floor 1 when Debug Floor is 0). Fresh start only; the shop, hub and finale debug starts take priority.")]
+    [SerializeField] private bool debugStartInMaze = false;
+    [Tooltip("With Debug Start In Maze, starts a DESCENT at depth Debug Floor (depth 1 if Debug Floor is 0). No effect otherwise.")]
+    [SerializeField] private bool debugDescent = false;
+    [Tooltip("For testing the Asylum hub: skip the title screen and the Intake and arrive in the hub as if the previous floor had just been cleared - the wings before Debug Floor are CLEARED, its wing is OPEN (and leads to that floor's maze), the hub has that floor's decay, patients and set piece. Debug Floor 0 = floor 1, at the front door. Fresh start only; ignored while Debug Start In Shop is on.")]
+    [SerializeField] private bool debugStartInHub = false;
+    [Tooltip("For testing: skip the title screen and open the floor as if the hatch had just been reached.")]
+    [SerializeField] private bool debugStartInShop = false;
+    [Tooltip("For testing the ending: skip the title screen and the Intake and arrive at the Director's desk in the hub, as if floor 5 had just been cleared (the finale). Takes priority over Debug Start In Hub; ignored while Debug Start In Shop is on. Fresh start only.")]
+    [SerializeField] private bool debugStartInFinale = false;
+    [Tooltip("With Debug Start In Finale: mark the five maze case files read first, so file 105 is in the desk drawer and ending B (the master switch) is possible. Off = ending A only.")]
+    [SerializeField] private bool debugFinaleAllFiles = true;
+
+    [Header("Debug — Floor, Shape & Mechanics")]
+    [Tooltip("For testing: start a fresh run on this floor (1 to 5) without playing up to it. The game carries on from there - the shop door still leads to the next floor. 0 = start on floor 1. With Debug Start In Maze + Debug Descent: the DESCENT depth to start at (any n, e.g. 12 = LEVEL -12).")]
+    [SerializeField] private int debugFloor = 0;
+    [Tooltip("Editor convenience: Auto uses the profile's rolled shape; otherwise forces Rectangle, Ring (The Courtyard), TwinWings, Cross (The Panopticon), or LChasm (The Chasm).")]
+    [SerializeField] private DebugFloorShape debugFloorShape = DebugFloorShape.Auto;
+    [Tooltip("For testing: forces this floor's mechanics instead of rolling them. None = roll normally.")]
+    [SerializeField] private FloorProfile.Objective debugObjectives = FloorProfile.Objective.None;
+    [Tooltip("Testing: build the loop on any themed floor, skipping the first-floor rule, the once-per-campaign rule and the roll (the roll is still drawn, so the maze is unchanged). KEEP IT LIT > Debug > Go To Loop Entrance takes you there in Play")]
+    [SerializeField] private bool debugForceLoop = false;
+    [Tooltip("Testing: gates on any themed floor (one gate on floors below the final, as the profile says; the +17 roll is still drawn). KEEP IT LIT > Debug > Go To Exit Gate takes you there in Play")]
+    [SerializeField] private bool debugForceGates = false;
+
+    [Header("Debug — Entities & Cheats")]
+    [Tooltip("For testing / getting through floors fast: every star, key, fuse box and the floor's case file go in the cells nearest the start, the hatch opens next to the player, and no shutters, security doors or vaults are built. The hunter still starts in the farthest cell.")]
+    [SerializeField] private bool superEasyMode = false;
+    [Tooltip("For testing the floor map: unlocks and reveals the entire floor map (all non-void cells, walls, doors and switches, just like clearing the loop corridor) and opens it automatically.")]
+    [SerializeField] private bool debugFullMap = false;
+    [Tooltip("Not None: forces exactly this entity set on any floor, in the story or a descent (the way to test one). None = the roster decides (EntityRoster). Restore to None before saving.")]
+    [SerializeField] private EntityKind debugEntities = EntityKind.None;
+    [Tooltip("With the living body in the set: use only a hanging body or only a floor corpse (Auto = whichever the level has)")]
+    [SerializeField] private LivingBodyTest debugLivingBody = LivingBodyTest.Auto;
+    [Tooltip("For testing the shop: deposited into the wallet when the maze is built.")]
+    [SerializeField] private int debugShards = 0;
+    [Tooltip("F76: forces TouchInput.Active on regardless of Mode, so the on-screen controls show in the Editor without a touchscreen - click them with the mouse, or use the Device Simulator.")]
+    [SerializeField] private bool debugForceTouchControls = false;
+    [Tooltip("Log which library slots are filled and which clip each sound played (once per clip).")]
+    [SerializeField] private bool logAudioResolution = false;
+
     [Header("Floors")]
     [Tooltip("Scale the maze, hunter, light and timers to how far into the game the player is (see FloorProfile). Off = use the values in this Inspector as they are.")]
     [SerializeField] private bool useFloorProfile = true;
-    [Tooltip("For testing: start a fresh run on this floor (1 to 5) without playing up to it. The game carries on from there - the shop door still leads to the next floor. 0 = start on floor 1. With Debug Start In Maze + Debug Descent: the DESCENT depth to start at (any n, e.g. 12 = LEVEL -12).")]
-    [SerializeField] private int debugFloor = 0;
 
     [Header("Lockers")]
     [SerializeField] private int lockerCount = 10;
@@ -113,27 +163,9 @@ public partial class MazeGenerator : MonoBehaviour
     [SerializeField] private float lockerHeight = 2.1f;
     [SerializeField] private Color lockerTint = new Color(0.16f, 0.17f, 0.19f);
 
-    [Header("Debug")]
-    [Tooltip("For testing the shop: deposited into the wallet when the maze is built.")]
-    [SerializeField] private int debugShards = 0;
-    [Tooltip("For testing: skip the title screen and open the floor as if the hatch had just been reached.")]
-    [SerializeField] private bool debugStartInShop = false;
-    [Tooltip("For testing the Asylum hub: skip the title screen and the Intake and arrive in the hub as if the previous floor had just been cleared - the wings before Debug Floor are CLEARED, its wing is OPEN (and leads to that floor's maze), the hub has that floor's decay, patients and set piece. Debug Floor 0 = floor 1, at the front door. Fresh start only; ignored while Debug Start In Shop is on.")]
-    [SerializeField] private bool debugStartInHub = false;
-    [Tooltip("For testing the ending: skip the title screen and the Intake and arrive at the Director's desk in the hub, as if floor 5 had just been cleared (the finale). Takes priority over Debug Start In Hub; ignored while Debug Start In Shop is on. Fresh start only.")]
-    [SerializeField] private bool debugStartInFinale = false;
-    [Tooltip("With Debug Start In Finale: mark the five maze case files read first, so file 105 is in the desk drawer and ending B (the master switch) is possible. Off = ending A only.")]
-    [SerializeField] private bool debugFinaleAllFiles = true;
-    [Tooltip("For testing a maze: skip the title screen, the Intake and the hub and start the run straight away in Debug Floor's maze (floor 1 when Debug Floor is 0). Fresh start only; the shop, hub and finale debug starts take priority.")]
-    [SerializeField] private bool debugStartInMaze = false;
-
     [Header("Creature voices")]
     [Tooltip("F82 speech bubbles over the maze hunter and Stan. Off since 10 Oct 2026: they read as goofy; recorded voices (OrderlyPa) replace them.")]
     [SerializeField] private bool creatureSpeechBubbles = false;
-    [Tooltip("For testing / getting through floors fast: every star, key, fuse box and the floor's case file go in the cells nearest the start, the hatch opens next to the player, and no shutters, security doors or vaults are built. The hunter still starts in the farthest cell.")]
-    [SerializeField] private bool superEasyMode = false;
-    [Tooltip("F76: forces TouchInput.Active on regardless of Mode, so the on-screen controls show in the Editor without a touchscreen - click them with the mouse, or use the Device Simulator.")]
-    [SerializeField] private bool debugForceTouchControls = false;
 
     [Header("Wall lamps")]
     [SerializeField] private bool wallLamps = true;
@@ -169,12 +201,6 @@ public partial class MazeGenerator : MonoBehaviour
     [SerializeField] private GameAudioLibrary audioLibrary;
     [Tooltip("S2: GameMixer.mixer (Master > Music, Effects; the three volumes exposed). Assigned by KEEP IT LIT > Build Missing Pieces. Empty = only the Master volume works.")]
     [SerializeField] private UnityEngine.Audio.AudioMixer gameMixer;
-    [Tooltip("Log which library slots are filled and which clip each sound played (once per clip).")]
-    [SerializeField] private bool logAudioResolution = false;
-
-    [Header("Key Hunt (F77)")]
-    [Tooltip("For testing: forces this floor's mechanics instead of rolling them. None = roll normally.")]
-    [SerializeField] private FloorProfile.Objective debugObjectives = FloorProfile.Objective.None;
 
     [Header("F103 - Maze terror (Tier A)")]
     [Tooltip("One switch per Tier A terror feature, plus the [Terror] Console log. Spec: plannings/maze-terror-spec.md")]
@@ -213,6 +239,12 @@ public partial class MazeGenerator : MonoBehaviour
     private bool[,] _wallE;
     private bool[,] _wallS;
     private bool[,] _wallW;
+    private bool[,] _void;
+    private int _playableCellCount;
+    private Vector2Int _startCell;
+
+    private bool IsVoid(int x, int z) => _void != null && x >= 0 && x < width && z >= 0 && z < height && _void[x, z];
+    private bool IsVoid(Vector2Int c) => IsVoid(c.x, c.y);
 
     // Step distance from the start cell through open passages, used to place the stars and the AI far away.
     private int[,] _distance;
@@ -324,6 +356,12 @@ public partial class MazeGenerator : MonoBehaviour
     public float CellSize => cellSize;
     /// <summary>Debug: everything to collect is packed next to the start (see the Inspector tooltip). MazeEscape reads it to open the hatch next to the player.</summary>
     public bool SuperEasyMode => superEasyMode;
+    /// <summary>F124: the active floor footprint shape built this run.</summary>
+    public FloorProfile.FloorShape ActiveShape => _profile != null ? _profile.Shape : FloorProfile.FloorShape.Rectangle;
+    /// <summary>F124: non-void playable cells in the current maze.</summary>
+    public int PlayableCellCount => _playableCellCount;
+    /// <summary>F124: true if cell (x, z) is masked out as part of a non-rectangular void footprint.</summary>
+    public bool IsVoidCell(int x, int z) => IsVoid(x, z);
 
     private float FloorTop => origin.y + 0.02f;
 
@@ -348,7 +386,7 @@ public partial class MazeGenerator : MonoBehaviour
         cell = new Vector2Int(
             Mathf.FloorToInt((worldPosition.x - origin.x) / cellSize),
             Mathf.FloorToInt((worldPosition.z - origin.z) / cellSize));
-        return _wallN != null && cell.x >= 0 && cell.x < width && cell.y >= 0 && cell.y < height;
+        return _wallN != null && cell.x >= 0 && cell.x < width && cell.y >= 0 && cell.y < height && !IsVoid(cell);
     }
 
     /// <summary>
@@ -447,7 +485,7 @@ public partial class MazeGenerator : MonoBehaviour
         UsedSeed = usedSeed;
 
         // F107 B3: the Inspector entry into a descent at depth debugFloor (fresh starts only, so a reload keeps the run going).
-        if (debugDescent && debugStartInMaze && !debugStartInShop && freshStart && debugFloor > 0 && !GameFlow.IsDescent) BeginDebugDescent();
+        if (debugDescent && debugStartInMaze && !debugStartInShop && freshStart && !GameFlow.IsDescent) BeginDebugDescent();
 
         // F122: the campaign rules. A CLONE of the serialized terror settings when an assist / Oath / card changes any (the same reference otherwise);
         // before ApplyFloorProfile so its narrowBeam read, and every ApplyTerror downstream, see the clone. Also derives HubBreach.Mode / HunterGrab.DisabledByRules.
@@ -711,6 +749,17 @@ public partial class MazeGenerator : MonoBehaviour
         // F105 C9: runs before SetUpAtmosphere, so the flag is read here directly rather than through ApplyTerror.
         if (terror.narrowBeam) _profile.FogDensity *= narrowBeamFogScale;
 
+        if (Application.isEditor && debugFloorShape != DebugFloorShape.Auto)
+        {
+            _profile.Shape = (FloorProfile.FloorShape)debugFloorShape;
+            if (_profile.ShapeVariant == 0) _profile.ShapeVariant = 1 + ((RunRules.HashSeedFloor(usedSeed, 7919) & 0x7FFFFFFF) % 3);
+            if (_profile.Shape != FloorProfile.FloorShape.Rectangle)
+            {
+                _profile.Width = Mathf.Max(_profile.Width, _profile.Shape == FloorProfile.FloorShape.Cross ? 10 : 9);
+                _profile.Height = Mathf.Max(_profile.Height, _profile.Shape == FloorProfile.FloorShape.Cross ? 9 : 8);
+            }
+        }
+
         width = _profile.Width;
         height = _profile.Height;
         cellSize = _profile.CellSize;
@@ -773,9 +822,10 @@ public partial class MazeGenerator : MonoBehaviour
         System.Random rng = new System.Random(usedSeed);
 
         bool[,] visited = new bool[width, height];
+        ApplyVoidMask(visited);
         Stack<Vector2Int> stack = new Stack<Vector2Int>();
-        Vector2Int current = Vector2Int.zero;
-        visited[0, 0] = true;
+        Vector2Int current = _startCell;
+        visited[current.x, current.y] = true;
         stack.Push(current);
 
         // Recursive backtracker (iterative): always yields a perfect maze, so every cell is reachable.
@@ -839,6 +889,85 @@ public partial class MazeGenerator : MonoBehaviour
         ChooseGates(usedSeed); // F111 (+26): the exit gates, picked after the loop so they keep clear of its entrance and side
     }
 
+    private void ApplyVoidMask(bool[,] visited)
+    {
+        _void = new bool[width, height];
+        _startCell = Vector2Int.zero;
+        FloorProfile.FloorShape shape = _profile != null ? _profile.Shape : FloorProfile.FloorShape.Rectangle;
+
+        switch (shape)
+        {
+            case FloorProfile.FloorShape.Ring:
+            {
+                int vw = Mathf.Clamp(width - 6, 2, 6);
+                int vh = Mathf.Clamp(height - 6, 2, 5);
+                int x0 = (width - vw) / 2;
+                int z0 = (height - vh) / 2;
+                for (int x = x0; x < x0 + vw; x++)
+                    for (int z = z0; z < z0 + vh; z++)
+                        _void[x, z] = true;
+                _startCell = Vector2Int.zero;
+                break;
+            }
+            case FloorProfile.FloorShape.TwinWings:
+            {
+                int vw = Mathf.Clamp(width - 6, 2, 4);
+                int nh = Mathf.Clamp((height - 3) / 2, 2, 4);
+                int x0 = (width - vw) / 2;
+                for (int x = x0; x < x0 + vw; x++)
+                {
+                    for (int z = 0; z < nh; z++) _void[x, z] = true;
+                    for (int z = height - nh; z < height; z++) _void[x, z] = true;
+                }
+                _startCell = Vector2Int.zero;
+                break;
+            }
+            case FloorProfile.FloorShape.Cross:
+            {
+                int cw = Mathf.Clamp((width - 4) / 2, 2, 4);
+                int ch = Mathf.Clamp((height - 4) / 2, 2, 3);
+                for (int x = 0; x < width; x++)
+                {
+                    bool xCorner = x < cw || x >= width - cw;
+                    if (!xCorner) continue;
+                    for (int z = 0; z < height; z++)
+                    {
+                        if (z < ch || z >= height - ch)
+                            _void[x, z] = true;
+                    }
+                }
+                _startCell = new Vector2Int(width / 2, height / 2);
+                _void[_startCell.x, _startCell.y] = false;
+                break;
+            }
+            case FloorProfile.FloorShape.LChasm:
+            {
+                int cw = Mathf.Clamp(width / 2 - 1, 3, 6);
+                int ch = Mathf.Clamp(height / 2 - 1, 3, 5);
+                int variant = _profile != null && _profile.ShapeVariant >= 1 && _profile.ShapeVariant <= 3 ? _profile.ShapeVariant : 1;
+                int xStart = (variant == 2) ? 0 : width - cw; // 1=NE, 2=NW, 3=SE
+                int zStart = (variant == 3) ? 0 : height - ch;
+                for (int x = xStart; x < xStart + cw; x++)
+                    for (int z = zStart; z < zStart + ch; z++)
+                        _void[x, z] = true;
+                _startCell = Vector2Int.zero;
+                _void[0, 0] = false;
+                break;
+            }
+            default:
+                _startCell = Vector2Int.zero;
+                break;
+        }
+
+        _playableCellCount = 0;
+        for (int x = 0; x < width; x++)
+            for (int z = 0; z < height; z++)
+            {
+                if (_void[x, z]) visited[x, z] = true;
+                else _playableCellCount++;
+            }
+    }
+
     private int WallCount(int x, int z)
     {
         return (_wallN[x, z] ? 1 : 0) + (_wallE[x, z] ? 1 : 0) + (_wallS[x, z] ? 1 : 0) + (_wallW[x, z] ? 1 : 0);
@@ -862,6 +991,7 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
+                if (IsVoid(x, z)) continue;
                 if (WallCount(x, z) == 3) deadEnds.Add(new Vector2Int(x, z));
             }
         }
@@ -886,7 +1016,7 @@ public partial class MazeGenerator : MonoBehaviour
                 if (!IsWallClosed(cell.x, cell.y, direction)) continue;
 
                 Vector2Int neighbour = Neighbour(cell, direction);
-                if (neighbour.x < 0 || neighbour.x >= width || neighbour.y < 0 || neighbour.y >= height) continue;
+                if (neighbour.x < 0 || neighbour.x >= width || neighbour.y < 0 || neighbour.y >= height || IsVoid(neighbour)) continue;
                 // F103 A10: a kept dead end must not be opened from the other side either...
                 if (kept.Contains(neighbour))
                 {
@@ -928,7 +1058,7 @@ public partial class MazeGenerator : MonoBehaviour
         List<Vector2Int> candidates = new List<Vector2Int>();
         foreach (Vector2Int cell in deadEnds)
         {
-            if (cell.x + cell.y >= deadEndStartClearance) candidates.Add(cell);
+            if (Mathf.Abs(cell.x - _startCell.x) + Mathf.Abs(cell.y - _startCell.y) >= deadEndStartClearance) candidates.Add(cell);
         }
 
         Shuffle(candidates, keepRng);
@@ -952,6 +1082,7 @@ public partial class MazeGenerator : MonoBehaviour
         List<int> interiorWalls = new List<int>(4);
         foreach (Vector2Int cell in ordered)
         {
+            if (IsVoid(cell)) continue;
             // Defensive: a neighbouring trim may already have opened this one.
             if (WallCount(cell.x, cell.y) != 3) continue;
 
@@ -965,7 +1096,7 @@ public partial class MazeGenerator : MonoBehaviour
             for (int direction = 0; direction < 4; direction++)
             {
                 Vector2Int neighbour = Neighbour(cell, direction);
-                if (IsWallClosed(cell.x, cell.y, direction) && neighbour.x >= 0 && neighbour.x < width && neighbour.y >= 0 && neighbour.y < height)
+                if (IsWallClosed(cell.x, cell.y, direction) && neighbour.x >= 0 && neighbour.x < width && neighbour.y >= 0 && neighbour.y < height && !IsVoid(neighbour))
                 {
                     interiorWalls.Add(direction);
                 }
@@ -1032,7 +1163,7 @@ public partial class MazeGenerator : MonoBehaviour
             if (cell == aiCell) continue;
 
             Vector2Int mouth = MouthOf(cell);
-            if (mouth == aiCell || mouth == Vector2Int.zero || WallCount(mouth.x, mouth.y) < 1) continue;
+            if (mouth == aiCell || mouth == _startCell || WallCount(mouth.x, mouth.y) < 1) continue;
             _baitDeadEnds.Add(cell);
         }
     }
@@ -1084,8 +1215,8 @@ public partial class MazeGenerator : MonoBehaviour
         }
 
         Queue<Vector2Int> queue = new Queue<Vector2Int>();
-        _distance[0, 0] = 0;
-        queue.Enqueue(Vector2Int.zero);
+        _distance[_startCell.x, _startCell.y] = 0;
+        queue.Enqueue(_startCell);
 
         while (queue.Count > 0)
         {
@@ -1101,7 +1232,7 @@ public partial class MazeGenerator : MonoBehaviour
 
     private void TryVisit(int x, int z, int distance, Queue<Vector2Int> queue)
     {
-        if (x < 0 || x >= width || z < 0 || z >= height) return;
+        if (x < 0 || x >= width || z < 0 || z >= height || IsVoid(x, z)) return;
         if (_distance[x, z] >= 0) return;
 
         _distance[x, z] = distance;
@@ -1115,6 +1246,7 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {
+                if (IsVoid(x, z)) continue;
                 _cellCenters.Add(CellCenter(x, z));
             }
         }
@@ -1142,7 +1274,7 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
-                if (x == 0 && z == 0) continue;
+                if (IsVoid(x, z) || (x == _startCell.x && z == _startCell.y)) continue;
                 if (x == aiCell.x && z == aiCell.y) continue;
                 if (_baitDeadEnds.Contains(new Vector2Int(x, z))) continue; // F103 A10: a bait dead end never hosts a locker, its mouth does
                 if (IsLayoutReserved(new Vector2Int(x, z))) continue; // F105 C3 (squeeze), C4 (loop entrance)
@@ -1411,18 +1543,22 @@ public partial class MazeGenerator : MonoBehaviour
     private bool HorizontalWallClosed(int x, int zBoundary)
     {
         if (x < 0 || x >= width) return false;
-        if (zBoundary <= 0) return _wallS[x, 0];
-        if (zBoundary >= height) return _wallN[x, height - 1];
-        return _wallS[x, zBoundary]; // == _wallN[x, zBoundary - 1], kept in sync by the carving code
+        bool southPlayable = zBoundary > 0 && zBoundary <= height && !IsVoid(x, zBoundary - 1);
+        bool northPlayable = zBoundary >= 0 && zBoundary < height && !IsVoid(x, zBoundary);
+        if (!southPlayable && !northPlayable) return false;
+        if (northPlayable) return _wallS[x, zBoundary];
+        return _wallN[x, zBoundary - 1];
     }
 
     /// <summary>Is the vertical (north-south running) wall segment at grid column xBoundary, spanning cell row z to z+1, closed? Out-of-range z means no such segment.</summary>
     private bool VerticalWallClosed(int xBoundary, int z)
     {
         if (z < 0 || z >= height) return false;
-        if (xBoundary <= 0) return _wallW[0, z];
-        if (xBoundary >= width) return _wallE[width - 1, z];
-        return _wallW[xBoundary, z]; // == _wallE[xBoundary - 1, z], kept in sync by the carving code
+        bool westPlayable = xBoundary > 0 && xBoundary <= width && !IsVoid(xBoundary - 1, z);
+        bool eastPlayable = xBoundary >= 0 && xBoundary < width && !IsVoid(xBoundary, z);
+        if (!westPlayable && !eastPlayable) return false;
+        if (eastPlayable) return _wallW[xBoundary, z];
+        return _wallE[xBoundary - 1, z];
     }
 
     // ---------------------------------------------------------------- props
@@ -1451,7 +1587,7 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
-                if (x == 0 && z == 0) continue;
+                if (IsVoid(x, z) || (x == _startCell.x && z == _startCell.y)) continue;
                 if (x == aiCell.x && z == aiCell.y) continue;
 
                 Vector2Int cell = new Vector2Int(x, z);
@@ -1501,7 +1637,7 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
-                if (x == 0 && z == 0) continue;
+                if (IsVoid(x, z) || (x == _startCell.x && z == _startCell.y)) continue;
 
                 Vector2Int cell = new Vector2Int(x, z);
                 if (_lockerCells.Contains(cell)) continue;
@@ -1608,7 +1744,7 @@ public partial class MazeGenerator : MonoBehaviour
             for (int z = 0; z < height; z++)
             {
                 Vector2Int cell = new Vector2Int(x, z);
-                if (x == 0 && z == 0) continue;
+                if (IsVoid(x, z) || (x == _startCell.x && z == _startCell.y)) continue;
                 if (cell == aiCell) continue;
                 if (lockerCellSet.Contains(cell)) continue;
                 if (_distance[x, z] < minDistance || _distance[x, z] > maxAllowedDistance) continue;
@@ -1727,7 +1863,7 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
-                if (x == 0 && z == 0) continue;
+                if (IsVoid(x, z) || (x == _startCell.x && z == _startCell.y)) continue;
                 if (x == aiCell.x && z == aiCell.y) continue;
 
                 Vector2Int cell = new Vector2Int(x, z);
@@ -1786,7 +1922,7 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
-                if (x == 0 && z == 0) continue;
+                if (IsVoid(x, z) || (x == _startCell.x && z == _startCell.y)) continue;
 
                 Vector2Int cell = new Vector2Int(x, z);
                 if (_setPieceCells.Contains(cell)) continue;
@@ -1956,6 +2092,7 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
+                if (IsVoid(x, z)) continue;
                 Vector2Int c = new Vector2Int(x, z);
                 if (lockerCellSet.Contains(c)) continue;
                 others.Add(c);
@@ -1963,7 +2100,7 @@ public partial class MazeGenerator : MonoBehaviour
         }
 
         Shuffle(others, rng);
-        int extraCount = Mathf.Max(0, (width * height) / Mathf.Max(1, cellsPerLamp));
+        int extraCount = Mathf.Max(0, _playableCellCount / Mathf.Max(1, cellsPerLamp));
         for (int i = 0; i < extraCount && i < others.Count; i++)
         {
             cells.Add(others[i]);
@@ -2163,6 +2300,7 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
+                if (IsVoid(x, z)) continue;
                 GameObject tile = Instantiate(_theme.FloorTile, CellCenter(x, z), Quaternion.identity, _floorGroup);
                 tile.SetActive(true);
                 tile.name = $"Floor_{x}_{z}";
@@ -2174,8 +2312,10 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
+                if (IsVoid(x, z)) continue;
+
                 // Walls are shared, so only the west and south sides are built per cell; the outer
-                // east and north sides are added once on the last column / row.
+                // east and north sides (and boundaries against a void cell) are added once on the last column / row or void edge.
                 if (_wallW[x, z] && !IsLoopOpening(x, z, 3) && !IsGateOpening(x, z, 3))
                 {
                     SpawnThemedWall(
@@ -2192,7 +2332,7 @@ public partial class MazeGenerator : MonoBehaviour
                         Quaternion.identity);
                 }
 
-                if (x == width - 1 && _wallE[x, z] && !IsLoopOpening(x, z, 1) && !IsGateOpening(x, z, 1))
+                if ((x == width - 1 || IsVoid(x + 1, z)) && _wallE[x, z] && !IsLoopOpening(x, z, 1) && !IsGateOpening(x, z, 1))
                 {
                     SpawnThemedWall(
                         $"Wall_E_{x}_{z}",
@@ -2200,7 +2340,7 @@ public partial class MazeGenerator : MonoBehaviour
                         Quaternion.Euler(0f, 90f, 0f));
                 }
 
-                if (z == height - 1 && _wallN[x, z] && !IsLoopOpening(x, z, 0) && !IsGateOpening(x, z, 0))
+                if ((z == height - 1 || IsVoid(x, z + 1)) && _wallN[x, z] && !IsLoopOpening(x, z, 0) && !IsGateOpening(x, z, 0))
                 {
                     SpawnThemedWall(
                         $"Wall_N_{x}_{z}",
@@ -2245,8 +2385,10 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
+                if (IsVoid(x, z)) continue;
+
                 // Walls are shared, so only the west and south sides are built per cell; the outer
-                // east and north sides are added once on the last column / row.
+                // east and north sides (and boundaries against a void cell) are added once on the last column / row or void edge.
                 if (_wallW[x, z] && !IsGateOpening(x, z, 3))
                 {
                     CreateBox(
@@ -2267,7 +2409,7 @@ public partial class MazeGenerator : MonoBehaviour
                         _wallsGroup);
                 }
 
-                if (x == width - 1 && _wallE[x, z] && !IsGateOpening(x, z, 1))
+                if ((x == width - 1 || IsVoid(x + 1, z)) && _wallE[x, z] && !IsGateOpening(x, z, 1))
                 {
                     CreateBox(
                         $"Wall_E_{x}_{z}",
@@ -2277,7 +2419,7 @@ public partial class MazeGenerator : MonoBehaviour
                         _wallsGroup);
                 }
 
-                if (z == height - 1 && _wallN[x, z] && !IsGateOpening(x, z, 0))
+                if ((z == height - 1 || IsVoid(x, z + 1)) && _wallN[x, z] && !IsGateOpening(x, z, 0))
                 {
                     CreateBox(
                         $"Wall_N_{x}_{z}",
@@ -2305,6 +2447,7 @@ public partial class MazeGenerator : MonoBehaviour
             {
                 for (int z = 0; z < height; z++)
                 {
+                    if (IsVoid(x, z)) continue;
                     Vector3 position = CellCenter(x, z) + Vector3.up * CeilingHeightAt(x, z); // F105 C3: lower over the squeeze
                     GameObject tile = Instantiate(_theme.CeilingTile, position, Quaternion.identity, _ceilingGroup);
                     tile.SetActive(true);
@@ -2426,7 +2569,8 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
-                if (x == 0 && z == 0) continue;
+                if (IsVoid(x, z)) continue;
+                if (x == _startCell.x && z == _startCell.y) continue;
                 if (x == aiCell.x && z == aiCell.y) continue;
                 if (_lockerCells.Contains(new Vector2Int(x, z))) continue;
                 if (IsLayoutReserved(new Vector2Int(x, z))) continue; // F105 C3: nothing is ever worth the squeeze; C4: nor the loop entrance
@@ -2608,8 +2752,9 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
+                if (IsVoid(x, z)) continue;
                 Vector2Int cell = new Vector2Int(x, z);
-                if (x == 0 && z == 0) continue;
+                if (cell == _startCell) continue;
                 if (cell == aiCell) continue;
                 if (starCellSet.Contains(cell)) continue;
                 if (lockerCellSet.Contains(cell)) continue;
@@ -2936,8 +3081,9 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
-                if (z + 1 < height && !_wallN[x, z]) list.Add(new Passage { CellA = new Vector2Int(x, z), Dir = 0, CellB = new Vector2Int(x, z + 1) });
-                if (x + 1 < width && !_wallE[x, z]) list.Add(new Passage { CellA = new Vector2Int(x, z), Dir = 1, CellB = new Vector2Int(x + 1, z) });
+                if (IsVoid(x, z)) continue;
+                if (z + 1 < height && !IsVoid(x, z + 1) && !_wallN[x, z]) list.Add(new Passage { CellA = new Vector2Int(x, z), Dir = 0, CellB = new Vector2Int(x, z + 1) });
+                if (x + 1 < width && !IsVoid(x + 1, z) && !_wallE[x, z]) list.Add(new Passage { CellA = new Vector2Int(x, z), Dir = 1, CellB = new Vector2Int(x + 1, z) });
             }
         }
         return list;
@@ -3079,8 +3225,8 @@ public partial class MazeGenerator : MonoBehaviour
         List<(MazeDoor door, Vector2Int startCell)> result = new List<(MazeDoor, Vector2Int)>();
         if (want <= 0) return result;
 
-        Vector2Int start = Vector2Int.zero;
-        int totalCells = width * height;
+        Vector2Int start = _startCell;
+        int totalCells = _playableCellCount;
 
         List<(Passage passage, HashSet<Vector2Int> startSide, float cutFraction)> candidates =
             new List<(Passage, HashSet<Vector2Int>, float)>();
@@ -3152,7 +3298,7 @@ public partial class MazeGenerator : MonoBehaviour
             foreach (Vector2Int starCell in starCells)
             {
                 if (result.Count >= want) break;
-                if (Mathf.Max(Mathf.Abs(starCell.x), Mathf.Abs(starCell.y)) <= 1) continue;
+                if (Mathf.Max(Mathf.Abs(starCell.x - start.x), Mathf.Abs(starCell.y - start.y)) <= 1) continue;
                 if (usedCells.Contains(starCell)) continue;
                 if (TooCloseToPlacedDoors(starCell, placedDoorPassages, minSeparation)) continue;
 
@@ -3213,7 +3359,7 @@ public partial class MazeGenerator : MonoBehaviour
     {
         if (want <= 0) return;
 
-        Vector2Int start = Vector2Int.zero;
+        Vector2Int start = _startCell;
         // The hunter spawns in the farthest cell (PlaceAI), which is usually a dead end - and since F103 A10 keeps some dead ends,
         // a vault kept landing on it: the hunter started the floor locked in, bashed its way out and (before the TickAmbush fix)
         // froze for good on that stall (seed 26249140, floor 5, 10 Oct 2026). Never vault the spawn cell.
@@ -3226,6 +3372,7 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
+                if (IsVoid(x, z)) continue;
                 Vector2Int cell = new Vector2Int(x, z);
                 if (cell == start || cell == hunterCell || WallCount(x, z) != 3) continue;
                 if (starCellSet.Contains(cell) || lockerCellSet.Contains(cell) || _setPieceCells.Contains(cell)) continue;
@@ -3285,9 +3432,10 @@ public partial class MazeGenerator : MonoBehaviour
             {
                 for (int z = 0; z < height; z++)
                 {
+                    if (IsVoid(x, z)) continue;
                     Vector2Int cell = new Vector2Int(x, z);
                     if (cell == start || cell == hunterCell || WallCount(x, z) != 2) continue;
-                    if (Mathf.Max(Mathf.Abs(x), Mathf.Abs(z)) <= 1) continue; // not beside the start
+                    if (Mathf.Max(Mathf.Abs(x - start.x), Mathf.Abs(z - start.y)) <= 1) continue; // not beside the start
                     if (starCellSet.Contains(cell) || lockerCellSet.Contains(cell) || _setPieceCells.Contains(cell)) continue;
                     if (usedCells.Contains(cell)) continue;
                     corridors.Add(cell);
@@ -3311,7 +3459,7 @@ public partial class MazeGenerator : MonoBehaviour
                 if (usedCells.Contains(outsideA) || usedCells.Contains(outsideB)) continue;
 
                 HashSet<Vector2Int> startSide = ReachableCellsAvoiding(start, vaultCell);
-                if (startSide.Count != width * height - 1) continue; // sealing it would cut the maze
+                if (startSide.Count != _playableCellCount - 1) continue; // sealing it would cut the maze
 
                 Passage pA = new Passage { CellA = vaultCell, Dir = openDirs[0], CellB = outsideA };
                 Passage pB = new Passage { CellA = vaultCell, Dir = openDirs[1], CellB = outsideB };
@@ -3408,7 +3556,7 @@ public partial class MazeGenerator : MonoBehaviour
     {
         if (want <= 0) return;
 
-        Vector2Int start = Vector2Int.zero;
+        Vector2Int start = _startCell;
         HashSet<Vector2Int> starCellSet = new HashSet<Vector2Int>(_starCells);
 
         List<Passage> candidates = new List<Passage>();
@@ -3637,7 +3785,7 @@ public partial class MazeGenerator : MonoBehaviour
 
         if (aiFollower == null) aiFollower = FindAnyObjectByType<AIFollower>();
 
-        Vector2Int start = Vector2Int.zero;
+        Vector2Int start = _startCell;
         HashSet<Vector2Int> starCellSet = new HashSet<Vector2Int>(_starCells);
 
         List<Vector2Int> candidates = new List<Vector2Int>();
@@ -3645,6 +3793,7 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
+                if (IsVoid(x, z)) continue;
                 Vector2Int cell = new Vector2Int(x, z);
                 if (cell == start || (!superEasyMode && starCellSet.Contains(cell)) || _lockerCells.Contains(cell)) continue;
                 if (_setPieceCells.Contains(cell) || _doorUsedCells.Contains(cell)) continue;
@@ -3750,7 +3899,7 @@ public partial class MazeGenerator : MonoBehaviour
     {
         twin = null;
         if (!source.IsSetPiece || source.Root == null || dir < 0 || dir > 3) return false;
-        if (cell == Vector2Int.zero || _starCells.Contains(cell) || _lockerCells.Contains(cell) || _setPieceCells.Contains(cell) || _doorUsedCells.Contains(cell)) return false;
+        if (IsVoid(cell) || cell == _startCell || _starCells.Contains(cell) || _lockerCells.Contains(cell) || _setPieceCells.Contains(cell) || _doorUsedCells.Contains(cell)) return false;
         if (!IsFreeWall(cell, dir)) return false;
 
         Vector3 dirVec = DirVector(dir);
@@ -3871,7 +4020,7 @@ public partial class MazeGenerator : MonoBehaviour
             return;
         }
 
-        Vector2Int start = Vector2Int.zero;
+        Vector2Int start = _startCell;
         HashSet<Vector2Int> starCellSet = new HashSet<Vector2Int>(_starCells);
         HashSet<Vector2Int> lockerCellSet = new HashSet<Vector2Int>(_lockerCells);
 
@@ -3880,6 +4029,7 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
+                if (IsVoid(x, z)) continue;
                 Vector2Int cell = new Vector2Int(x, z);
                 if (cell == start || (!superEasyMode && starCellSet.Contains(cell)) || lockerCellSet.Contains(cell)) continue;
                 if (_setPieceCells.Contains(cell) || _doorUsedCells.Contains(cell)) continue;
@@ -3948,8 +4098,9 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
+                if (IsVoid(x, z)) continue;
                 Vector2Int c = new Vector2Int(x, z);
-                if (c == Vector2Int.zero) continue;
+                if (c == _startCell) continue;
                 if (_starCells.Contains(c) || lockerCellSet.Contains(c) || _setPieceCells.Contains(c)) continue;
                 if (_doorUsedCells.Contains(c) || (localUsed != null && localUsed.Contains(c))) continue;
                 if (HasFreeWall(c)) candidates.Add(c);
@@ -4002,8 +4153,9 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
+                if (IsVoid(x, z)) continue;
                 Vector2Int cell = new Vector2Int(x, z);
-                if (cell == Vector2Int.zero) continue;
+                if (cell == _startCell) continue;
                 if (_starCells.Contains(cell) || lockerCellSet.Contains(cell) || _setPieceCells.Contains(cell) || _doorUsedCells.Contains(cell)) continue;
                 candidates.Add(cell);
             }
@@ -4053,8 +4205,9 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
+                if (IsVoid(x, z)) continue;
                 Vector2Int cell = new Vector2Int(x, z);
-                if (cell == Vector2Int.zero) continue;
+                if (cell == _startCell) continue;
                 if (_starCells.Contains(cell) || lockerCellSet.Contains(cell)) continue;
                 candidates.Add(cell);
             }
@@ -4096,8 +4249,9 @@ public partial class MazeGenerator : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
+                if (IsVoid(x, z)) continue;
                 Vector2Int cell = new Vector2Int(x, z);
-                if (cell == Vector2Int.zero) continue;
+                if (cell == _startCell) continue;
                 if (_starCells.Contains(cell) || lockerCellSet.Contains(cell) || _setPieceCells.Contains(cell) || _doorUsedCells.Contains(cell)) continue;
                 if (blackout && _distance[x, z] > 2) continue;
                 candidates.Add(cell);
@@ -4180,11 +4334,14 @@ public partial class MazeGenerator : MonoBehaviour
         HashSet<Vector2Int> everything = new HashSet<Vector2Int>();
         for (int x = 0; x < width; x++)
         {
-            for (int z = 0; z < height; z++) everything.Add(new Vector2Int(x, z));
+            for (int z = 0; z < height; z++)
+            {
+                if (!IsVoid(x, z)) everything.Add(new Vector2Int(x, z));
+            }
         }
         HashSet<Vector2Int> localUsed = new HashSet<Vector2Int>();
         // Super easy mode turns that around: the far cells are claimed, so the file lands within 3 steps of the start.
-        foreach (KeyValuePair<Vector2Int, int> kv in BfsWithin(Vector2Int.zero, everything))
+        foreach (KeyValuePair<Vector2Int, int> kv in BfsWithin(_startCell, everything))
         {
             if (superEasyMode ? kv.Value >= 4 : kv.Value < 4) localUsed.Add(kv.Key);
         }
@@ -4484,17 +4641,18 @@ public partial class MazeGenerator : MonoBehaviour
             return;
         }
 
-        // Facing the middle of the maze from the corner cell - computed so it holds on any rectangle
+        // Facing the middle of the maze from the start cell - computed so it holds on any rectangle
         // (F40 slice A decision 7), not just the square grids this used to be a constant 45f for.
         Vector3 mazeCentre = new Vector3(origin.x + width * cellSize * 0.5f, 0f, origin.z + height * cellSize * 0.5f);
-        Vector3 toCentre = mazeCentre - CellCenter(0, 0);
-        float startYaw = Mathf.Atan2(toCentre.x, toCentre.z) * Mathf.Rad2Deg;
+        Vector3 startPos = CellCenter(_startCell.x, _startCell.y);
+        Vector3 toCentre = mazeCentre - startPos;
+        float startYaw = toCentre.sqrMagnitude > 0.001f ? Mathf.Atan2(toCentre.x, toCentre.z) * Mathf.Rad2Deg : 45f;
 
         // The CharacterController overwrites transform.position, so it has to be off while teleporting.
         CharacterController controller = player.GetComponent<CharacterController>();
         if (controller != null) controller.enabled = false;
 
-        player.position = CellCenter(0, 0);
+        player.position = startPos;
         player.rotation = Quaternion.Euler(0f, startYaw, 0f);
 
         if (controller != null) controller.enabled = true;
@@ -4603,7 +4761,7 @@ public partial class MazeGenerator : MonoBehaviour
             return;
         }
 
-        Vector2Int start = Vector2Int.zero;
+        Vector2Int start = _startCell;
         Vector2Int hunterCell = FarthestCell();
 
         HashSet<Vector2Int> reachable = ReachableCells(start, null);
@@ -5054,6 +5212,12 @@ public partial class MazeGenerator : MonoBehaviour
 
         pause.Configure(player, flashlight, menu, outcome, UsedSeed, shopMenu, floorMap);
         floorMap.Configure(this, hud, outcome, pause);
+        if (debugFullMap)
+        {
+            floorMap.Unlock();
+            floorMap.RevealAll();
+            floorMap.OpenWhenAvailable();
+        }
 
         // F87: checks the contract taken in the shop for this floor (an instance component, like KeyRing: a reload recreates it).
         ContractTracker contracts = player != null ? player.GetComponent<ContractTracker>() : null;
@@ -5142,7 +5306,25 @@ public partial class MazeGenerator : MonoBehaviour
     /// <summary>F74 FloorIntroBanner title line. The primitive fallback has no FloorTheme to name, so it gets a generic text.</summary>
     private string FloorTitleText()
     {
-        if (GameFlow.IsDescent) return L10n.T("hud.descent.level", ("n", DescentRun.Depth)); // F107
+        if (GameFlow.IsDescent)
+        {
+            if (_profile != null && _profile.Shape != FloorProfile.FloorShape.Rectangle)
+            {
+                string shapeKey = _profile.Shape switch
+                {
+                    FloorProfile.FloorShape.Ring => "hud.descent.shape.ring",
+                    FloorProfile.FloorShape.TwinWings => "hud.descent.shape.twin_wings",
+                    FloorProfile.FloorShape.Cross => "hud.descent.shape.cross",
+                    FloorProfile.FloorShape.LChasm => "hud.descent.shape.l_chasm",
+                    _ => null
+                };
+                if (shapeKey != null && L10n.Has("hud.descent.level_shape") && L10n.Has(shapeKey))
+                {
+                    return L10n.T("hud.descent.level_shape", ("n", DescentRun.Depth), ("shape", L10n.T(shapeKey)));
+                }
+            }
+            return L10n.T("hud.descent.level", ("n", DescentRun.Depth)); // F107
+        }
         int floor = GameFlow.CurrentFloor;
         if (_theme != null)
         {
@@ -5273,14 +5455,15 @@ public partial class MazeGenerator : MonoBehaviour
         }
         foreach (MazeMapData.ButtonInfo button in data.Buttons) marks[button.Cell.x, button.Cell.y] += "b" + button.DoorId;
         if (data.HatchOpen) marks[data.HatchCell.x, data.HatchCell.y] += "E";
-        marks[0, 0] += "S";
+        marks[_startCell.x, _startCell.y] += "S";
         AddLayoutMarks(marks); // F105 C2/C3: r / g / q, only on a cell with no other mark
         AddLoopMark(marks); // F105 C4: L
         AddEntityMarks(marks); // F107 D: l t b d
         AddNightmareMarks(marks); // F123: m a h
 
         System.Text.StringBuilder sb = new System.Text.StringBuilder();
-        sb.Append($"Maze seed {UsedSeed}, floor {GameFlow.CurrentFloor}, {width}x{height}, north up, start S = (0,0) bottom-left.\n");
+        FloorProfile.FloorShape shape = _profile != null ? _profile.Shape : FloorProfile.FloorShape.Rectangle;
+        sb.Append($"Maze seed {UsedSeed}, floor {GameFlow.CurrentFloor}, {width}x{height} ({_playableCellCount} playable, shape {shape}), north up, start S = ({_startCell.x},{_startCell.y}).\n");
 
         // Column numbers over each cell's interior, row numbers beside it.
         sb.Append("    ");
@@ -5294,8 +5477,15 @@ public partial class MazeGenerator : MonoBehaviour
             for (int x = 0; x < width; x++)
             {
                 sb.Append(DebugWallGlyph(x, z, 3, '|', doorGlyphs));
-                string m = marks[x, z] ?? string.Empty;
-                sb.Append(m.Length > 3 ? m.Substring(0, 3) : m.PadRight(3));
+                if (IsVoid(x, z))
+                {
+                    sb.Append(" · ");
+                }
+                else
+                {
+                    string m = marks[x, z] ?? string.Empty;
+                    sb.Append(m.Length > 3 ? m.Substring(0, 3) : m.PadRight(3));
+                }
             }
             sb.Append(DebugWallGlyph(width - 1, z, 1, '|', doorGlyphs)).Append('\n');
         }

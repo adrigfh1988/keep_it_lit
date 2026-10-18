@@ -55,7 +55,7 @@ namespace KeepItLit.Tests
         public static string NonDefaultDebugField(MazeGenerator mg)
         {
             SerializedObject so = new SerializedObject(mg);
-            string[] bools = { "superEasyMode", "debugForceGates", "debugForceLoop", "debugDescent", "debugStartInMaze", "debugStartInHub", "debugStartInShop", "debugStartInIntake" };
+            string[] bools = { "superEasyMode", "debugFullMap", "debugForceGates", "debugForceLoop", "debugDescent", "debugStartInMaze", "debugStartInHub", "debugStartInShop", "debugStartInIntake" };
             foreach (string name in bools)
             {
                 SerializedProperty p = so.FindProperty(name);
@@ -63,6 +63,10 @@ namespace KeepItLit.Tests
             }
             SerializedProperty obj = so.FindProperty("debugObjectives");
             if (obj != null && obj.propertyType == SerializedPropertyType.Enum && obj.intValue != 0) return "debugObjectives";
+            SerializedProperty shape = so.FindProperty("debugFloorShape");
+            if (shape != null && shape.intValue != -1) return "debugFloorShape";
+            SerializedProperty ent = so.FindProperty("debugEntities");
+            if (ent != null && ent.intValue != 0) return "debugEntities";
             return null;
         }
 

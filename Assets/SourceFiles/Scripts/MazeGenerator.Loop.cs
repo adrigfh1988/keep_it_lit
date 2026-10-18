@@ -48,8 +48,6 @@ public partial class MazeGenerator
     [SerializeField, Min(1)] private int loopFromFloor = 3;
     [Tooltip("Chance per eligible floor. The loop appears on at most one floor of a campaign (set when that floor is cleared); 1 forces it for testing")]
     [SerializeField, Range(0f, 1f)] private float loopChance = 0.6f;
-    [Tooltip("Testing: build the loop on any themed floor, skipping the first-floor rule, the once-per-campaign rule and the roll (the roll is still drawn, so the maze is unchanged). KEEP IT LIT > Debug > Go To Loop Entrance takes you there in Play")]
-    [SerializeField] private bool debugForceLoop = false;
     [Tooltip("The entrance cell is at least this many steps (x + z) from the start cell, so the corridor is found deeper in the floor")]
     [SerializeField, Min(0)] private int loopMinStartDistance = 4;
     [Tooltip("How far along the second leg the player is carried back to the same place in the first, in cells from the start of the leg. The return line (walking back down the first leg) mirrors it: as far from the vestibule as this is from the end cell")]
@@ -202,7 +200,7 @@ public partial class MazeGenerator
         avoid.UnionWith(_roomCells);
         avoid.UnionWith(_galleryCells);
         avoid.UnionWith(_squeezeCells);
-        avoid.Add(Vector2Int.zero);
+        avoid.Add(_startCell);
         avoid.Add(FarthestCell());
 
         List<(Vector2Int cell, int dir)> edges = new List<(Vector2Int, int)>();
@@ -226,9 +224,9 @@ public partial class MazeGenerator
 
         foreach ((Vector2Int cell, int dir) edge in edges)
         {
-            if (avoid.Contains(edge.cell) || !IsWallClosed(edge.cell.x, edge.cell.y, edge.dir)) continue;
+            if (IsVoid(edge.cell) || avoid.Contains(edge.cell) || !IsWallClosed(edge.cell.x, edge.cell.y, edge.dir)) continue;
             // Never beside the start: the corridor is a discovery deeper in the floor, not the first thing in view.
-            if (edge.cell.x + edge.cell.y < loopMinStartDistance) continue;
+            if (Mathf.Abs(edge.cell.x - _startCell.x) + Mathf.Abs(edge.cell.y - _startCell.y) < loopMinStartDistance) continue;
 
             int firstTurn = rng.Next(2) == 0 ? 1 : 3; // a right or a left turn first; the other if there is no room
             for (int attempt = 0; attempt < 2; attempt++)
