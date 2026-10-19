@@ -35,6 +35,14 @@ public class WorldShiftDirector : MonoBehaviour
     [Tooltip("Random visited cells tried per check when looking for a spot for the twin")]
     [SerializeField] private int twinAttemptsPerCheck = 8;
 
+    [Header("F127 - unobserved wall shifts")]
+    [Tooltip("Seconds into the run before the first shifting passage pair may swap")]
+    [SerializeField] private float wallShiftMinRunSeconds = 45f;
+    [Tooltip("Seconds between wall shifts when multiple pairs exist")]
+    [SerializeField] private float wallShiftInterval = 65f;
+    [Tooltip("Seconds before trying again when no pair is currently unobserved")]
+    [SerializeField] private float wallShiftRetry = 8f;
+
     [Header("Observation")]
     [Tooltip("Seconds between recording which cell the player is in, and between B10 checks")]
     [SerializeField] private float sampleSeconds = 0.5f;
@@ -59,6 +67,7 @@ public class WorldShiftDirector : MonoBehaviour
 
     private float _nextSample;
     private float _nextDisplacement;
+    private float _nextWallShift;
     private bool _twinPlaced;
 
     /// <summary>Called by MazeGenerator.SetUpAtmosphere once the world, the camera and the hunter exist.</summary>
@@ -70,6 +79,7 @@ public class WorldShiftDirector : MonoBehaviour
         _follower = follower;
         _outcome = outcome;
         _nextDisplacement = Time.time + displacementInterval;
+        _nextWallShift = Time.time + wallShiftMinRunSeconds;
     }
 
     /// <summary>F104: which Tier B features run, and the [Terror] log.</summary>
@@ -95,6 +105,25 @@ public class WorldShiftDirector : MonoBehaviour
         }
 
         if (_terror.displacement && Time.time >= _nextDisplacement) TryDisplace();
+        if (_terror.wallShifts && Time.time >= _nextWallShift) TryShiftWall();
+    }
+
+    private void TryShiftWall()
+    {
+        if (Time.time - GameFlow.RunStartTime < wallShiftMinRunSeconds || HunterChasing())
+        {
+            _nextWallShift = Time.time + wallShiftRetry;
+            return;
+        }
+
+        if (_maze.TryTriggerWallShift(this, _player.position))
+        {
+            _nextWallShift = Time.time + wallShiftInterval;
+        }
+        else
+        {
+            _nextWallShift = Time.time + wallShiftRetry;
+        }
     }
 
     private void RecordVisit()

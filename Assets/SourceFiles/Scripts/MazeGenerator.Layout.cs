@@ -73,6 +73,7 @@ public partial class MazeGenerator
         _roomPillarVertices.Clear();
         _galleryRun.Clear();
         _galleryCells.Clear();
+        _carvedRooms.Clear();
         if (!terror.roomsAndGalleries || _theme == null || _profile == null || _profile.Floor < roomFromFloor) return;
 
         if (_profile.Shape == FloorProfile.FloorShape.Cross)
@@ -93,10 +94,13 @@ public partial class MazeGenerator
             }
             ComputeDistances();
             terror.Log($"Cross atrium 3x3 at {anchor}", this);
+            if (BuildMorphologyRooms(usedSeed)) return;
             System.Random crossRng = new System.Random(usedSeed + 21);
             if (_profile.Floor >= galleryFromFloor) FindOrCarveGallery(crossRng);
             return;
         }
+
+        if (BuildMorphologyRooms(usedSeed)) return;
 
         System.Random rng = new System.Random(usedSeed + 21);
         CarveRoom(rng);
@@ -155,6 +159,7 @@ public partial class MazeGenerator
             ComputeDistances();
             if (!InBlock(FarthestCell(), anchor, size))
             {
+                _carvedRooms.Add(new RectInt(anchor.x, anchor.y, size, size));
                 for (int x = anchor.x; x < anchor.x + size; x++)
                 {
                     for (int z = anchor.y; z < anchor.y + size; z++) _roomCells.Add(new Vector2Int(x, z));
@@ -347,7 +352,10 @@ public partial class MazeGenerator
     /// <summary>Pillar at every room vertex, from BuildPillars: a room's interior has no wall to meet, so the vertex rule would give it nothing.</summary>
     private void BuildRoomPillars()
     {
-        foreach (Vector2Int vertex in _roomPillarVertices) SpawnPillar(vertex.x, vertex.y);
+        foreach (Vector2Int vertex in _roomPillarVertices)
+        {
+            if (!VertexNeedsPillar(vertex.x, vertex.y)) SpawnPillar(vertex.x, vertex.y);
+        }
     }
 
     /// <summary>
@@ -537,10 +545,11 @@ public partial class MazeGenerator
         if (_squeezeZone != null) _squeezeZone.Bind(player, controller, stamina, flashlight, squeezeSpeedScale, squeezeTorchScale, squeezeBreathVolume);
     }
 
-    /// <summary>The ceiling height over a cell: lowered over the squeeze, shape-adjusted on DESCENT custom shapes (F125 D6), the wall height anywhere else.</summary>
+    /// <summary>The ceiling height over a cell: lowered over the squeeze, raised inside carved rooms (F127 D3), shape-adjusted on DESCENT custom shapes (F125 D6), the wall height anywhere else.</summary>
     private float CeilingHeightAt(int x, int z)
     {
-        return _squeezeCells.Contains(new Vector2Int(x, z)) ? squeezeCeiling : ShapeCeilingHeightAt(x, z);
+        if (_squeezeCells.Contains(new Vector2Int(x, z))) return squeezeCeiling;
+        return MorphologyRoomCeilingHeightAt(x, z, ShapeCeilingHeightAt(x, z));
     }
 
     // ---------------------------------------------------------------- debug map extras

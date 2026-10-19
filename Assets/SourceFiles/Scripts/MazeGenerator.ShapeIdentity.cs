@@ -97,9 +97,13 @@ public partial class MazeGenerator
 
     private int PickShapeCarveDirection(Vector2Int current, List<int> candidates, int lastDir, System.Random rng)
     {
-        if (!HasCustomShape || candidates.Count <= 1)
+        if (candidates.Count <= 1)
         {
             return candidates[rng.Next(candidates.Count)];
+        }
+        if (!HasCustomShape)
+        {
+            return PickMorphologyCarveDirection(candidates, lastDir, rng);
         }
 
         FloorProfile.FloorShape shape = _profile.Shape;
@@ -824,7 +828,12 @@ public partial class MazeGenerator
     /// </summary>
     public int PickShapeWanderCellIndex(Vector3 hunterPos, Vector3 playerPos, int currentIndex, IReadOnlyList<Vector3> wanderPoints)
     {
-        if (!HasCustomShape || wanderPoints == null || wanderPoints.Count <= 1) return -1;
+        if (wanderPoints == null || wanderPoints.Count <= 1) return -1;
+
+        int morphIdx = PickMorphologyWanderCellIndex(hunterPos, currentIndex, wanderPoints);
+        if (morphIdx >= 0) return morphIdx;
+
+        if (!HasCustomShape) return -1;
 
         System.Random rng = new System.Random(System.Environment.TickCount ^ currentIndex ^ (int)(Time.time * 100f));
         if (!TryPickShapeWanderPoint(hunterPos, playerPos, cellSize * 2.2f, rng, out Vector3 worldTarget)) return -1;
@@ -1003,12 +1012,12 @@ public partial class MazeGenerator
     }
 
     /// <summary>
-    /// F125 D6: Seals vertical ceiling height transitions (Cross raised atrium clerestory walls & arch lintels,
+    /// F125 D6 / F127 D3: Seals vertical ceiling height transitions (Cross raised atrium, F127 raised room ceilings,
     /// TwinWings lowered bridge bulkheads) so no skybox gaps are visible where ceiling heights step up or down.
     /// </summary>
     private void BuildShapeCeilingFascia()
     {
-        if (!HasCustomShape || !buildCeiling) return;
+        if ((!HasCustomShape && _roomCells.Count == 0) || !buildCeiling) return;
 
         Material fasciaMat = ResolveVoidMasonryMaterial();
         for (int x = 0; x < width; x++)

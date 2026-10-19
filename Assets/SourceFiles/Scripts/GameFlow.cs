@@ -75,6 +75,9 @@ public static class GameFlow
     /// same pair. Campaign-scoped: reset here and in ResetStatics.</summary>
     public static int[] RolledObjectives = new int[FloorProfile.FinalFloor + 1];
 
+    /// <summary>F127: the MazeMorphology each story floor rolled this campaign, by floor, so two consecutive floors never share the same morphology. Reset in ReturnToMenu, ResetStatics and DescentRun.Begin.</summary>
+    public static int[] RolledMorphologies = new int[FloorProfile.FinalFloor + 1];
+
     /// <summary>F83: set by SaveSystem.ResumeCampaign for a save taken in the shop; consumed by MainMenu.Start (together with
     /// SkipMenuOnLoad), which enters the shop via GameOutcome.EnterShopDirectly instead of starting a run. Reset here, in ResetStatics and in ReturnToMenu.</summary>
     public static bool ResumeInShop;
@@ -157,6 +160,7 @@ public static class GameFlow
         CampaignRules.ResetCampaign(); // F122 (re-derives HubBreach.Mode)
         NightNurse.ResetCampaign();
         System.Array.Clear(RolledObjectives, 0, RolledObjectives.Length);
+        System.Array.Clear(RolledMorphologies, 0, RolledMorphologies.Length);
         Reload();
     }
 
@@ -205,5 +209,6 @@ public static class GameFlow
         IsDescent = false; // F107
         BeginCampaignOnLoad = false; // F122
         System.Array.Clear(RolledObjectives, 0, RolledObjectives.Length);
+        System.Array.Clear(RolledMorphologies, 0, RolledMorphologies.Length);
     }
 }

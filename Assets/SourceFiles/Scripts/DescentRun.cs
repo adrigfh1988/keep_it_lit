@@ -31,6 +31,9 @@ public static class DescentRun
     /// <summary>F124: the previous level's floor footprint shape, so two consecutive DESCENT levels never share the same void footprint.</summary>
     public static FloorProfile.FloorShape PreviousShape { get; set; } = FloorProfile.FloorShape.Rectangle;
 
+    /// <summary>F127: the previous level's spatial morphology, so two consecutive DESCENT levels never share the same morphology.</summary>
+    public static FloorProfile.MazeMorphology PreviousMorphology { get; set; } = FloorProfile.MazeMorphology.Standard;
+
     /// <summary>Depth of the last level that had the looping corridor (set where the story sets LoopCorridor.UsedThisCampaign).</summary>
     public static int LastLoopDepth { get; set; } = Never;
 
@@ -64,6 +67,7 @@ public static class DescentRun
         CampaignRules.ResetCampaign(); // F122: a descent stays outside presets, Oaths and grades
         NightNurse.ResetCampaign();
         System.Array.Clear(GameFlow.RolledObjectives, 0, GameFlow.RolledObjectives.Length);
+        System.Array.Clear(GameFlow.RolledMorphologies, 0, GameFlow.RolledMorphologies.Length);
     }
 
     /// <summary>A level ended (cleared, or the player died in it): its run time and stars join the totals.</summary>
@@ -82,6 +86,7 @@ public static class DescentRun
         LevelSeed = 0;
         PreviousObjectives = 0;
         PreviousShape = FloorProfile.FloorShape.Rectangle;
+        PreviousMorphology = FloorProfile.MazeMorphology.Standard;
         LastLoopDepth = Never;
         LastSecondWindDepth = Never;
         Cause = DescentCause.Hunter;

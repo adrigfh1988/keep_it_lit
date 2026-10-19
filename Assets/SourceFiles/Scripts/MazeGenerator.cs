@@ -127,6 +127,8 @@ public partial class MazeGenerator : MonoBehaviour
     [SerializeField] private int debugFloor = 0;
     [Tooltip("Editor convenience: Auto uses the profile's rolled shape; otherwise forces Rectangle, Ring (The Courtyard), TwinWings, Cross (The Panopticon), or LChasm (The Chasm).")]
     [SerializeField] private DebugFloorShape debugFloorShape = DebugFloorShape.Auto;
+    [Tooltip("Editor convenience: Auto uses the floor's rolled morphology; otherwise forces Standard, CompactWarren, CavernousHalls, or ChambersAndChokepoints.")]
+    [SerializeField] private DebugMazeMorphology debugMorphology = DebugMazeMorphology.Auto;
     [Tooltip("For testing: forces this floor's mechanics instead of rolling them. None = roll normally.")]
     [SerializeField] private FloorProfile.Objective debugObjectives = FloorProfile.Objective.None;
     [Tooltip("Testing: build the loop on any themed floor, skipping the first-floor rule, the once-per-campaign rule and the roll (the roll is still drawn, so the maze is unchanged). KEEP IT LIT > Debug > Go To Loop Entrance takes you there in Play")]
@@ -499,10 +501,13 @@ public partial class MazeGenerator : MonoBehaviour
         ResolveEntitySet(usedSeed); // F107 D1: before the dressing passes record their living-body candidates
 
         // Saved scenes carry their own cellSize, so the width rule is enforced here rather than trusted
-        float minCellSize = minCorridorWidth + wallThickness;
+        float effectiveMinCorridor = (_profile != null && _profile.Morphology == FloorProfile.MazeMorphology.CompactWarren)
+            ? Mathf.Min(minCorridorWidth, 3.5f)
+            : minCorridorWidth;
+        float minCellSize = effectiveMinCorridor + wallThickness;
         if (cellSize < minCellSize)
         {
-            Debug.LogWarning($"MazeGenerator: cellSize {cellSize} gives halls {cellSize - wallThickness:0.0} m wide; raised to {minCellSize} for {minCorridorWidth} m halls.", this);
+            Debug.LogWarning($"MazeGenerator: cellSize {cellSize} gives halls {cellSize - wallThickness:0.0} m wide; raised to {minCellSize} for {effectiveMinCorridor} m halls.", this);
             cellSize = minCellSize;
         }
 
@@ -600,6 +605,7 @@ public partial class MazeGenerator : MonoBehaviour
         BuildNightmarePostBake(usedSeed);
 
         SpawnShards(usedSeed);
+        BuildShiftingPassages(usedSeed); // F127 D5 (+29): linked open/closed shutter pairs on loop passages
         PlacePlayer();
         PlaceAI();
 
@@ -760,6 +766,8 @@ public partial class MazeGenerator : MonoBehaviour
                 _profile.Height = Mathf.Max(_profile.Height, _profile.Shape == FloorProfile.FloorShape.Cross ? 9 : 8);
             }
         }
+
+        ResolveAndApplyMorphology(usedSeed); // F127 D1/D2: roll & apply spatial morphology on Floor 2+ / DESCENT Level 2+
 
         width = _profile.Width;
         height = _profile.Height;
@@ -2125,6 +2133,7 @@ public partial class MazeGenerator : MonoBehaviour
 
         BuildGalleryLamp(sharedMaterial, rng); // F105 C2: after every other lamp, so the +2 stream's earlier draws are untouched
         ApplyShapeLampLandmarks(sharedMaterial, rng); // F125 D6: landmark lamp tints & Cross atrium pendant, no-op on Rectangle
+        BuildMorphologyRoomLamps(sharedMaterial); // F127 D3: overhead pendant lamp in each carved room
     }
 
     private Material BuildLampMaterial()
@@ -3279,6 +3288,7 @@ public partial class MazeGenerator : MonoBehaviour
         for (int i = 0; i < pool.Count; i++) order.Add(i);
         ShuffleInts(order, rng);
         PrioritiseTwinWingsBridgeOrder(order, pool); // F125 D4: prefer gating the TwinWings central bridge, no-op otherwise
+        PrioritiseMorphologySecurityOrder(order, pool); // F127 D4: prefer gating chamber thresholds on ChambersAndChokepoints
 
         int minSeparation = Mathf.Max(2, (width + height) / 6);
         foreach (int idx in order)
@@ -3597,6 +3607,7 @@ public partial class MazeGenerator : MonoBehaviour
         for (int i = 0; i < candidates.Count; i++) order.Add(i);
         ShuffleInts(order, rng);
         PrioritiseTwinWingsBridgeManualOrder(order, candidates); // F125 D4: prefer placing a manual door on the TwinWings bridge
+        PrioritiseMorphologyManualOrder(order, candidates); // F127 D4: prefer gating chamber thresholds on ChambersAndChokepoints
 
         int minSeparation = Mathf.Max(2, (width + height) / 6);
         int placed = 0;
@@ -5490,7 +5501,8 @@ public partial class MazeGenerator : MonoBehaviour
 
         System.Text.StringBuilder sb = new System.Text.StringBuilder();
         FloorProfile.FloorShape shape = _profile != null ? _profile.Shape : FloorProfile.FloorShape.Rectangle;
-        sb.Append($"Maze seed {UsedSeed}, floor {GameFlow.CurrentFloor}, {width}x{height} ({_playableCellCount} playable, shape {shape}), north up, start S = ({_startCell.x},{_startCell.y}).\n");
+        FloorProfile.MazeMorphology morph = _profile != null ? _profile.Morphology : FloorProfile.MazeMorphology.Standard;
+        sb.Append($"Maze seed {UsedSeed}, floor {GameFlow.CurrentFloor}, {width}x{height} ({_playableCellCount} playable, shape {shape}, morphology {morph}), north up, start S = ({_startCell.x},{_startCell.y}).\n");
 
         // Column numbers over each cell's interior, row numbers beside it.
         sb.Append("    ");
@@ -5520,6 +5532,7 @@ public partial class MazeGenerator : MonoBehaviour
 
         sb.Append("\n* star   k key   bN button for door N   S start   @ you   H hunter   E hatch   G exit gate   digit/letter on a wall = door\n");
         AppendDebugLegend(sb, data);
+        AppendMorphologyLegend(sb); // F127
         AppendLayoutLegend(sb);
         AppendLoopLegend(sb);
         AppendGateLegend(sb); // F111

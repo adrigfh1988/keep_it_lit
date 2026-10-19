@@ -85,6 +85,9 @@ public class MazeDoor : MonoBehaviour, IInteractable
     /// <summary>F75 Fuse Map shop item: true for a vault's security door(s), set by MazeGenerator.PlaceVaults.</summary>
     public bool IsVaultDoor { get; set; }
 
+    /// <summary>F127: true for a linked shifting passage shutter pair placed by MazeGenerator.BuildShiftingPassages.</summary>
+    public bool IsShiftDoor { get; set; }
+
     /// <summary>Which kind of door this is (MazeGenerator.DebugMap's legend).</summary>
     public Kind DoorKind => _kind;
 
@@ -398,6 +401,28 @@ public class MazeDoor : MonoBehaviour, IInteractable
         _panelOffset = 0f;
         ApplyPanelOffset();
         _open = false;
+    }
+
+    /// <summary>F127: starts a manual or shifting shutter open from the moment the maze is built, with its solid blocker disabled.</summary>
+    public void SetOpenImmediate()
+    {
+        if (_slideRoutine != null)
+        {
+            StopCoroutine(_slideRoutine);
+            _slideRoutine = null;
+        }
+        _panelOffset = _doorHeight;
+        ApplyPanelOffset();
+        _open = true;
+        _permanentlyOpen = true;
+    }
+
+    /// <summary>F127: quietly rolls a shifting passage shutter open or closed out of sight over 1.1 s.</summary>
+    public void ShiftToggle(bool open)
+    {
+        if (open == _open) return;
+        _permanentlyOpen = open;
+        StartSlide(open, 1.1f, true);
     }
 
     private void UpdateStatusLight()

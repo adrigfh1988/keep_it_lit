@@ -47,6 +47,7 @@ namespace KeepItLit.Tests
             PlayerWallet.ResetCampaign();
             FloorGrade.ResetCampaign();
             Array.Clear(GameFlow.RolledObjectives, 0, GameFlow.RolledObjectives.Length);
+            Array.Clear(GameFlow.RolledMorphologies, 0, GameFlow.RolledMorphologies.Length);
         }
 
         private static string Fmt(object v)
@@ -105,9 +106,9 @@ namespace KeepItLit.Tests
             TerrorSettings original = new TerrorSettings();
             TerrorSettings terror = CampaignRules.ApplyTerror(original); // F122
             Assert.AreSame(original, terror, "plain STANDARD must get the very same TerrorSettings instance, not a clone");
-            // F123 added six wing-nightmare switches after the fixture was captured: skipped in the dump, asserted at their defaults here.
-            string[] f123 = { "extraDoors", "pipeKnocks", "lyingKnocks", "morgueDrawers", "ampoules", "houseRules" };
-            foreach (string name in f123) Assert.IsTrue((bool)typeof(TerrorSettings).GetField(name).GetValue(terror), "F123 switch " + name + " defaults to true");
+            // F123 and F127 switches added after the fixture was captured: skipped in the dump, asserted at their defaults here.
+            string[] f123 = { "extraDoors", "pipeKnocks", "lyingKnocks", "morgueDrawers", "ampoules", "houseRules", "dynamicMorphologies", "wallShifts" };
+            foreach (string name in f123) Assert.IsTrue((bool)typeof(TerrorSettings).GetField(name).GetValue(terror), "Post-F122 switch " + name + " defaults to true");
             foreach (FieldInfo fi in typeof(TerrorSettings).GetFields(BindingFlags.Public | BindingFlags.Instance))
             {
                 if (Array.IndexOf(f123, fi.Name) >= 0) continue;
@@ -207,6 +208,48 @@ namespace KeepItLit.Tests
                 prevArea = p.Width * p.Height;
             }
             DescentRun.ResetState();
+        }
+
+        [Test]
+        public void DynamicMorphologies_RollWithoutConsecutiveRepeatsAndScaleProfiles()
+        {
+            for (int s = 1; s <= 30; s++)
+            {
+                Array.Clear(GameFlow.RolledMorphologies, 0, GameFlow.RolledMorphologies.Length);
+                FloorProfile.MazeMorphology prev = FloorProfile.MazeMorphology.Standard;
+                for (int floor = 1; floor <= FloorProfile.FinalFloor; floor++)
+                {
+                    var m = MazeGenerator.RollMorphologyForFloor(floor, s * 1337 + floor * 31, false);
+                    if (floor == 1) Assert.AreEqual(FloorProfile.MazeMorphology.Standard, m, "Floor 1 must be Standard");
+                    else
+                    {
+                        if (floor == 2) Assert.AreNotEqual(FloorProfile.MazeMorphology.Standard, m, "Floor 2 must roll non-Standard morphology");
+                        Assert.AreNotEqual(prev, m, $"Floor {floor} repeated morphology {m}");
+                    }
+                    prev = m;
+                }
+            }
+
+            FloorProfile baseProf = FloorProfile.For(3, 12345);
+            int baseW = baseProf.Width, baseH = baseProf.Height;
+
+            FloorProfile pCompact = FloorProfile.For(3, 12345);
+            MazeGenerator.ApplyMorphologyToProfile(pCompact, FloorProfile.MazeMorphology.CompactWarren, false);
+            Assert.AreEqual(4.0f, pCompact.CellSize, 1e-4f);
+            Assert.LessOrEqual(pCompact.Width, baseW);
+            Assert.LessOrEqual(pCompact.Height, baseH);
+
+            FloorProfile pCavern = FloorProfile.For(3, 12345);
+            MazeGenerator.ApplyMorphologyToProfile(pCavern, FloorProfile.MazeMorphology.CavernousHalls, false);
+            Assert.GreaterOrEqual(pCavern.CellSize, 5.0f);
+            Assert.GreaterOrEqual(pCavern.Width, baseW);
+            Assert.GreaterOrEqual(pCavern.Height, baseH);
+
+            FloorProfile pChambers = FloorProfile.For(3, 12345);
+            int baseDoors = pChambers.ManualDoors;
+            MazeGenerator.ApplyMorphologyToProfile(pChambers, FloorProfile.MazeMorphology.ChambersAndChokepoints, false);
+            Assert.Greater(pChambers.ManualDoors, baseDoors);
+            Assert.GreaterOrEqual(pChambers.DeadEndKeep, 0.50f);
         }
     }
 }

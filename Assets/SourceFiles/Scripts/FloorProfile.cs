@@ -198,6 +198,14 @@ public class FloorProfile
         LChasm = 4
     }
 
+    public enum MazeMorphology
+    {
+        Standard = 0,
+        CompactWarren = 1,
+        CavernousHalls = 2,
+        ChambersAndChokepoints = 3
+    }
+
     public int Floor { get; private set; }
 
     /// <summary>0 on the first floor, 1 on the final one.</summary>
@@ -205,6 +213,7 @@ public class FloorProfile
 
     public FloorShape Shape { get; set; } = FloorShape.Rectangle;
     public int ShapeVariant { get; set; }
+    public MazeMorphology Morphology { get; set; } = MazeMorphology.Standard;
 
     /// <summary>Which FloorThemeSet row the maze clones. Set from <see cref="FloorThemes"/> in For() - the themes' looks are authored in the scene; this is only the floor-to-theme mapping.</summary>
     public int ThemeIndex;

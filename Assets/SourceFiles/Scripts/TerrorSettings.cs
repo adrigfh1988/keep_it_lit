@@ -96,6 +96,12 @@ public class TerrorSettings
     [Tooltip("F123 floor 5 (the Director): the house rules are posted and the PA reports the patient who breaks them")]
     public bool houseRules = true;
 
+    [Header("F127 - dynamic maze morphologies & wall shifts")]
+    [Tooltip("F127: Floor 2+ and DESCENT Level 2+ roll non-repeating spatial morphologies (Standard, CompactWarren, CavernousHalls, ChambersAndChokepoints) with distinct grid sizes, room clusters, internal cover baffles and wall density")]
+    public bool dynamicMorphologies = true;
+    [Tooltip("F127: unobserved loop passages swap open/closed shutters mid-run to quietly alter routes without trapping the player")]
+    public bool wallShifts = true;
+
     /// <summary>F122: a shallow copy (every field is a bool). CampaignRules.ApplyTerror edits the copy, never the serialized instance.</summary>
     public TerrorSettings Clone() => (TerrorSettings)MemberwiseClone();
 
