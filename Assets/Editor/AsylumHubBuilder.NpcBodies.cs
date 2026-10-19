@@ -17,12 +17,20 @@ public static partial class AsylumHubBuilder
     public const string NurseAgnesBodyName = "Body_NurseAgnes";
     public const string NurseAgnesModelDir = "Assets/SourceFiles/Models/NurseAgnes";
     public const string NurseAgnesModelPath = NurseAgnesModelDir + "/NurseAgnes_Model.fbx";
+    /// <summary>The name of Cook Bruno's custom Indie Horror 2-piece + props 3D humanoid body when <see cref="CookBrunoModelPath"/> is present.</summary>
+    public const string CookBrunoBodyName = "Body_CookBruno";
+    public const string CookBrunoModelDir = "Assets/SourceFiles/Models/CookBruno";
+    public const string CookBrunoModelPath = CookBrunoModelDir + "/CookBruno_Model.fbx";
     private const string NurseAgnesMatFolder = "Assets/SourceFiles/Materials/Asylum/Npcs";
 
-    private static string ExpectedNpcBodyName(HubNpc npc) =>
-        npc != null && npc.who == HubNpc.Who.Agnes && System.IO.File.Exists(NurseAgnesModelPath)
-            ? NurseAgnesBodyName
-            : NpcRobotBodyName;
+    private static string ExpectedNpcBodyName(HubNpc npc)
+    {
+        if (npc != null && npc.who == HubNpc.Who.Agnes && System.IO.File.Exists(NurseAgnesModelPath))
+            return NurseAgnesBodyName;
+        if (npc != null && npc.who == HubNpc.Who.Bruno && System.IO.File.Exists(CookBrunoModelPath))
+            return CookBrunoBodyName;
+        return NpcRobotBodyName;
+    }
 
     [MenuItem("KEEP IT LIT/Build/Re-skin Templates/Sister Agnes (Nurse)", priority = 137)]
     public static void MenuSwapSisterAgnes()
@@ -42,6 +50,27 @@ public static partial class AsylumHubBuilder
             {
                 InteractableKitBuilder.RebuildNightNurseTemplate();
             }
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(hub.gameObject.scene);
+            ApplyHubToPrefab(hub);
+            Debug.Log(msg + " Save the scene (Ctrl+S) to keep it.", npc);
+            return;
+        }
+    }
+
+    [MenuItem("KEEP IT LIT/Build/Re-skin Templates/Cook Bruno (Chef)", priority = 138)]
+    public static void MenuSwapCookBruno()
+    {
+        AsylumHub hub = Object.FindAnyObjectByType<AsylumHub>(FindObjectsInactive.Include);
+        Transform npcs = hub != null && hub.life != null ? hub.life.Find(NpcsName) : null;
+        if (npcs == null)
+        {
+            Debug.LogError("Cook Bruno: the hub has no Life/Npcs in the open scene.");
+            return;
+        }
+        foreach (HubNpc npc in npcs.GetComponentsInChildren<HubNpc>(true))
+        {
+            if (npc.who != HubNpc.Who.Bruno) continue;
+            string msg = SwapNpcBody(npc);
             UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(hub.gameObject.scene);
             ApplyHubToPrefab(hub);
             Debug.Log(msg + " Save the scene (Ctrl+S) to keep it.", npc);
@@ -84,8 +113,8 @@ public static partial class AsylumHubBuilder
     }
 
     /// <summary>
-    /// Replaces the NPC's body with Sister Agnes's 5-part custom 3D humanoid nurse model (<see cref="NurseAgnesModelPath"/>) when
-    /// <paramref name="npc"/> is <see cref="HubNpc.Who.Agnes"/>, or Timmy in its own skin otherwise.
+    /// Replaces the NPC's body with Sister Agnes's 5-part custom 3D humanoid nurse model (<see cref="NurseAgnesModelPath"/>),
+    /// Cook Bruno's Indie Horror 2-piece + props 3D model (<see cref="CookBrunoModelPath"/>), or Timmy in its own skin otherwise.
     /// </summary>
     public static string SwapNpcBody(HubNpc npc)
     {
@@ -100,6 +129,20 @@ public static partial class AsylumHubBuilder
                 if (oldAgnes != null) Object.DestroyImmediate(oldAgnes.gameObject);
                 EditorUtility.SetDirty(npc);
                 return $"{npc.name}: body swapped to 5-part 3D NurseAgnes_Model.fbx (Body, Head, Hair, Hat, Apron + NurseAgnesPhysics)";
+            }
+        }
+
+        if (npc.who == HubNpc.Who.Bruno && System.IO.File.Exists(CookBrunoModelPath))
+        {
+            Transform oldBruno = npc.body;
+            Transform bruno = CookBrunoBodyLike(npc.transform, oldBruno);
+            if (bruno != null)
+            {
+                npc.body = bruno;
+                npc.controller = PeopleController();
+                if (oldBruno != null) Object.DestroyImmediate(oldBruno.gameObject);
+                EditorUtility.SetDirty(npc);
+                return $"{npc.name}: body swapped to Indie Horror 3D CookBruno_Model.fbx (Head, Body, 3-part Cleaver, 2-part Ladle + CookBrunoPhysics)";
             }
         }
 
@@ -276,6 +319,195 @@ public static partial class AsylumHubBuilder
         if (body.GetComponent<NurseAgnesPhysics>() == null)
         {
             body.AddComponent<NurseAgnesPhysics>();
+        }
+
+        body.SetActive(old == null || old.gameObject.activeSelf);
+        return body.transform;
+    }
+
+    private static GameObject EnsureCookBrunoModel()
+    {
+        if (!System.IO.File.Exists(CookBrunoModelPath)) return null;
+        ModelImporter importer = AssetImporter.GetAtPath(CookBrunoModelPath) as ModelImporter;
+        if (importer == null)
+        {
+            AssetDatabase.ImportAsset(CookBrunoModelPath, ImportAssetOptions.ForceUpdate);
+            importer = AssetImporter.GetAtPath(CookBrunoModelPath) as ModelImporter;
+        }
+        if (importer == null) return null;
+        if (importer.animationType != ModelImporterAnimationType.Human ||
+            importer.avatarSetup != ModelImporterAvatarSetup.CreateFromThisModel ||
+            importer.importAnimation ||
+            !importer.importBlendShapes)
+        {
+            importer.animationType = ModelImporterAnimationType.Human;
+            importer.avatarSetup = ModelImporterAvatarSetup.CreateFromThisModel;
+            importer.importAnimation = false;
+            importer.importBlendShapes = true;
+            importer.SaveAndReimport();
+        }
+        GameObject model = AssetDatabase.LoadAssetAtPath<GameObject>(CookBrunoModelPath);
+        Avatar avatar = null;
+        foreach (Object o in AssetDatabase.LoadAllAssetsAtPath(CookBrunoModelPath))
+        {
+            if (o is Avatar a) avatar = a;
+        }
+        if (model == null || avatar == null || !avatar.isValid || !avatar.isHuman)
+        {
+            Debug.LogError($"AsylumHubBuilder: {CookBrunoModelPath} did not import as a valid Humanoid avatar.");
+            return null;
+        }
+        EnsureCookBrunoMaterials();
+        return model;
+    }
+
+    private static Material EnsureCookBrunoPbrMaterial(string matName, string matPath, string diffFile, string normFile, string msFile, float smoothness, float metallic = 0f, bool doubleSided = false)
+    {
+        if (!string.IsNullOrEmpty(diffFile))
+        {
+            string diffPath = $"{CookBrunoModelDir}/{diffFile}";
+            if (AssetDatabase.LoadAssetAtPath<Texture2D>(diffPath) == null && System.IO.File.Exists(diffPath))
+                AssetDatabase.ImportAsset(diffPath, ImportAssetOptions.ForceUpdate);
+        }
+        if (!string.IsNullOrEmpty(normFile))
+        {
+            string normPath = $"{CookBrunoModelDir}/{normFile}";
+            if (AssetDatabase.LoadAssetAtPath<Texture2D>(normPath) == null && System.IO.File.Exists(normPath))
+                AssetDatabase.ImportAsset(normPath, ImportAssetOptions.ForceUpdate);
+            TextureImporter normImp = AssetImporter.GetAtPath(normPath) as TextureImporter;
+            if (normImp != null && normImp.textureType != TextureImporterType.NormalMap)
+            {
+                normImp.textureType = TextureImporterType.NormalMap;
+                normImp.SaveAndReimport();
+            }
+        }
+        if (!string.IsNullOrEmpty(msFile))
+        {
+            string msPath = $"{CookBrunoModelDir}/{msFile}";
+            if (AssetDatabase.LoadAssetAtPath<Texture2D>(msPath) == null && System.IO.File.Exists(msPath))
+                AssetDatabase.ImportAsset(msPath, ImportAssetOptions.ForceUpdate);
+            TextureImporter msImp = AssetImporter.GetAtPath(msPath) as TextureImporter;
+            if (msImp != null && msImp.sRGBTexture)
+            {
+                msImp.sRGBTexture = false;
+                msImp.SaveAndReimport();
+            }
+        }
+
+        Texture2D diff = !string.IsNullOrEmpty(diffFile) ? AssetDatabase.LoadAssetAtPath<Texture2D>($"{CookBrunoModelDir}/{diffFile}") : null;
+        Texture2D nrm  = !string.IsNullOrEmpty(normFile) ? AssetDatabase.LoadAssetAtPath<Texture2D>($"{CookBrunoModelDir}/{normFile}") : null;
+        Texture2D ms   = !string.IsNullOrEmpty(msFile)   ? AssetDatabase.LoadAssetAtPath<Texture2D>($"{CookBrunoModelDir}/{msFile}")   : null;
+
+        Material mat = AssetDatabase.LoadAssetAtPath<Material>(matPath);
+        if (mat == null)
+        {
+            mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = matName };
+            AssetDatabase.CreateAsset(mat, matPath);
+        }
+
+        if (diff != null)
+        {
+            mat.SetTexture("_BaseMap", diff);
+            mat.SetTexture("_MainTex", diff);
+        }
+        mat.SetColor("_BaseColor", Color.white);
+        mat.SetFloat("_Smoothness", smoothness);
+        mat.SetFloat("_Metallic", metallic);
+        mat.SetFloat("_Cull", doubleSided ? 0f : 2f);
+        if (ms != null && metallic < 0.05f)
+        {
+            mat.EnableKeyword("_METALLICSPECGLOSSMAP");
+            mat.SetTexture("_MetallicGlossMap", ms);
+            mat.SetFloat("_Smoothness", 1.0f);
+        }
+        else
+        {
+            mat.DisableKeyword("_METALLICSPECGLOSSMAP");
+            mat.SetTexture("_MetallicGlossMap", null);
+        }
+        if (nrm != null)
+        {
+            mat.EnableKeyword("_NORMALMAP");
+            mat.SetTexture("_BumpMap", nrm);
+            mat.SetFloat("_BumpScale", 1.0f);
+        }
+        EditorUtility.SetDirty(mat);
+        return mat;
+    }
+
+    private static void EnsureCookBrunoMaterials()
+    {
+        if (!AssetDatabase.IsValidFolder("Assets/SourceFiles/Materials"))
+            AssetDatabase.CreateFolder("Assets/SourceFiles", "Materials");
+        if (!AssetDatabase.IsValidFolder("Assets/SourceFiles/Materials/Asylum"))
+            AssetDatabase.CreateFolder("Assets/SourceFiles/Materials", "Asylum");
+        if (!AssetDatabase.IsValidFolder(NurseAgnesMatFolder))
+            AssetDatabase.CreateFolder("Assets/SourceFiles/Materials/Asylum", "Npcs");
+
+        EnsureCookBrunoPbrMaterial("CookBruno_Head",           $"{NurseAgnesMatFolder}/CookBruno_Head.mat",           "CookBruno_Head_Diffuse.png",           "CookBruno_Head_Normal.png",           "CookBruno_Head_MetalSmooth.png",           0.26f, 0.0f,  false);
+        EnsureCookBrunoPbrMaterial("CookBruno_Body",           $"{NurseAgnesMatFolder}/CookBruno_Body.mat",           "CookBruno_Body_Diffuse.png",           "CookBruno_Body_Normal.png",           "CookBruno_Body_MetalSmooth.png",           0.22f, 0.0f,  false);
+        EnsureCookBrunoPbrMaterial("CookBruno_Cleaver_Blade",  $"{NurseAgnesMatFolder}/CookBruno_Cleaver_Blade.mat",  "CookBruno_CleaverBlade_Diffuse.png",   "CookBruno_CleaverBlade_Normal.png",   "CookBruno_CleaverBlade_MetalSmooth.png",   0.68f, 0.88f, false);
+        EnsureCookBrunoPbrMaterial("CookBruno_Cleaver_Handle", $"{NurseAgnesMatFolder}/CookBruno_Cleaver_Handle.mat", "CookBruno_CleaverHandle_Diffuse.png",  "CookBruno_CleaverHandle_Normal.png",  "CookBruno_CleaverHandle_MetalSmooth.png",  0.32f, 0.0f,  false);
+        EnsureCookBrunoPbrMaterial("CookBruno_Cleaver_Rivets", $"{NurseAgnesMatFolder}/CookBruno_Cleaver_Rivets.mat", "CookBruno_CleaverRivets_Diffuse.png",  "CookBruno_CleaverRivets_Normal.png",  "CookBruno_CleaverRivets_MetalSmooth.png",  0.72f, 0.90f, false);
+        EnsureCookBrunoPbrMaterial("CookBruno_Ladle",          $"{NurseAgnesMatFolder}/CookBruno_Ladle.mat",          "CookBruno_Ladle_Diffuse.png",          "CookBruno_Ladle_Normal.png",          "CookBruno_Ladle_MetalSmooth.png",          0.58f, 0.85f, false);
+        AssetDatabase.SaveAssets();
+    }
+
+    private static Transform CookBrunoBodyLike(Transform holder, Transform old)
+    {
+        GameObject customModel = EnsureCookBrunoModel();
+        if (customModel == null) return null;
+
+        GameObject body = (GameObject)PrefabUtility.InstantiatePrefab(customModel, holder);
+        PrefabUtility.UnpackPrefabInstance(body, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+        body.name = CookBrunoBodyName;
+        body.tag = "Untagged";
+        body.transform.SetPositionAndRotation(old != null ? old.position : holder.position, old != null ? old.rotation : holder.rotation);
+        body.transform.localScale = Vector3.one * (old != null ? old.localScale.x : 1f);
+
+        Material headMat   = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/CookBruno_Head.mat");
+        Material bodyMat   = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/CookBruno_Body.mat");
+        Material cBladeMat = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/CookBruno_Cleaver_Blade.mat");
+        Material cHandMat  = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/CookBruno_Cleaver_Handle.mat");
+        Material cRivMat   = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/CookBruno_Cleaver_Rivets.mat");
+        Material ladleMat  = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/CookBruno_Ladle.mat");
+
+        foreach (Renderer r in body.GetComponentsInChildren<Renderer>(true))
+        {
+            Material targetMat = bodyMat;
+            string rName = r.gameObject.name;
+            if (rName.Contains("Head") && headMat != null) targetMat = headMat;
+            else if (rName.Contains("Cleaver_Blade") && cBladeMat != null) targetMat = cBladeMat;
+            else if (rName.Contains("Cleaver_Handle") && cHandMat != null) targetMat = cHandMat;
+            else if (rName.Contains("Cleaver_Rivets") && cRivMat != null) targetMat = cRivMat;
+            else if (rName.Contains("Ladle") && ladleMat != null) targetMat = ladleMat;
+
+            if (targetMat != null)
+            {
+                Material[] mats = r.sharedMaterials;
+                for (int i = 0; i < mats.Length; i++) mats[i] = targetMat;
+                r.sharedMaterials = mats;
+            }
+            r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            if (r is SkinnedMeshRenderer smr) smr.updateWhenOffscreen = true;
+        }
+
+        Animator animator = body.GetComponent<Animator>();
+        if (animator == null) animator = body.AddComponent<Animator>();
+        if (animator.avatar == null)
+        {
+            foreach (Object o in AssetDatabase.LoadAllAssetsAtPath(CookBrunoModelPath))
+            {
+                if (o is Avatar a) animator.avatar = a;
+            }
+        }
+        animator.runtimeAnimatorController = PeopleController();
+        animator.applyRootMotion = false;
+        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+
+        if (body.GetComponent<CookBrunoPhysics>() == null)
+        {
+            body.AddComponent<CookBrunoPhysics>();
         }
 
         body.SetActive(old == null || old.gameObject.activeSelf);
