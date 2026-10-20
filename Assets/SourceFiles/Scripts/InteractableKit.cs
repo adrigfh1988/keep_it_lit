@@ -79,6 +79,10 @@ public class InteractableKit : MonoBehaviour
     [Tooltip("Sister Agnes ('The Night Nurse'): 5-part 3D NurseAgnes_Model.fbx with NurseAgnesPhysics on Animation/Descent/NightNurse.controller, and NightNurse on the root. MazeGenerator.BuildEntities clones it on its own salted RNG stream.")]
     [SerializeField] private NightNurse nightNurse;
 
+    [Header("The Butcher - Dark Bruno")]
+    [Tooltip("Cook Bruno ('The Butcher'): Indie Horror 3D CookBruno_Model.fbx with CookBrunoPhysics on Animation/Descent/DarkBruno.controller, and DarkBruno on the root. MazeGenerator.BuildEntities clones it on its own salted RNG stream.")]
+    [SerializeField] private DarkBruno darkBruno;
+
     [Header("F120 - survivable grab")]
     [Tooltip("The player's torch lying on the floor after the hunter's shove: DroppedTorch on the root (solid collider, local +Z = the beam axis) and a disabled spot light child \"Beam\". HunterGrab clones it; Flashlight.CopyBeamTo copies the live beam onto it. Without it a catch is always a death.")]
     [SerializeField] private DroppedTorch droppedTorch;
@@ -131,6 +135,7 @@ public class InteractableKit : MonoBehaviour
     public DescentItem ItemCache => itemCache;
     public Listener Listener => listener;
     public NightNurse NightNurse => nightNurse;
+    public DarkBruno DarkBruno => darkBruno;
     public DroppedTorch DroppedTorch => droppedTorch;
     public MorgueDrawerBank MorgueDrawerBank => morgueDrawerBank;
     public NightmareAmpoule NightmareAmpoule => nightmareAmpoule;
@@ -179,4 +184,7 @@ public class InteractableKit : MonoBehaviour
 
     /// <summary>True once the Night Nurse (Sister Agnes) template is assigned.</summary>
     public bool HasNightNurse => nightNurse != null;
+
+    /// <summary>True once the Dark Bruno (Maze Butcher) template is assigned.</summary>
+    public bool HasDarkBruno => darkBruno != null;
 }

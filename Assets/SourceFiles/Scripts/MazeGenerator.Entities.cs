@@ -14,6 +14,7 @@ public partial class MazeGenerator
 
     private const int EntitySalt = 25; // the +25 stream
     private const int NightNurseSalt = 0x41474E53; // "AGNS": own salted stream so +25 draws for Listener/Tenant/LivingBody are untouched
+    private const int DarkBrunoSalt = 0x4252554E; // "BRUN": own salted stream so +25 draws for Listener/Tenant/LivingBody are untouched
 
     [Header("F107 - Entities (run 2)")]
     [Tooltip("The Listener spawns at least this many BFS steps from the start")]
@@ -113,6 +114,7 @@ public partial class MazeGenerator
         if ((set & EntityKind.Tenant) != 0) BuildTenant(rng);
         if ((set & EntityKind.LivingBody) != 0 || decoys) BuildLivingBodies(rng, (set & EntityKind.LivingBody) != 0, decoys);
         if ((set & EntityKind.NightNurse) != 0) BuildNightNurse(new System.Random(UsedSeed ^ NightNurseSalt));
+        if ((set & EntityKind.Butcher) != 0) BuildDarkBruno(new System.Random(UsedSeed ^ DarkBrunoSalt));
 
         terror.Log($"Entities: {(_entities.Count == 0 ? "none" : string.Join(", ", _entities.ConvertAll(e => e.name + ":" + e.Kind)))}", this);
     }
@@ -178,7 +180,7 @@ public partial class MazeGenerator
         if (agent == null) agent = instance.AddComponent<NavMeshAgent>();
         agent.radius = 0.3f;
         agent.speed = 1.85f;
-        agent.acceleration = 36f;
+        agent.acceleration = 6f;
         agent.angularSpeed = 360f;
         if (!agent.Warp(position)) Debug.LogWarning($"MazeGenerator: could not warp the Night Nurse onto the navmesh at {position}.", this);
 
@@ -223,6 +225,219 @@ public partial class MazeGenerator
 
         root.AddComponent<NightNurse>();
         return root;
+    }
+
+    private void BuildDarkBruno(System.Random rng)
+    {
+        Vector2Int start = _startCell;
+        HashSet<Vector2Int> reachable = ReachableCells(start, null);
+        Dictionary<Vector2Int, int> fromStart = BfsWithin(start, reachable);
+        Dictionary<Vector2Int, int> fromHunter = BfsWithin(FarthestCell(), reachable);
+        HashSet<Vector2Int> starCells = new HashSet<Vector2Int>(_starCells);
+
+        List<Vector2Int> roomCandidates = new List<Vector2Int>();
+        List<Vector2Int> corridorCandidates = new List<Vector2Int>();
+        Vector2Int fallback = start;
+        int fallbackDistance = -1;
+        foreach (Vector2Int cell in reachable)
+        {
+            if (cell == start || starCells.Contains(cell) || IsLayoutReserved(cell)) continue;
+            if (!fromStart.TryGetValue(cell, out int ds)) continue;
+
+            if (ds > fallbackDistance) { fallbackDistance = ds; fallback = cell; }
+            if (ds < listenerMinStartSteps) continue;
+            if (!fromHunter.TryGetValue(cell, out int dh) || dh < listenerMinHunterSteps) continue;
+            if (_roomCells.Contains(cell)) roomCandidates.Add(cell);
+            else corridorCandidates.Add(cell);
+        }
+
+        List<Vector2Int> candidates = roomCandidates.Count > 0 ? roomCandidates : corridorCandidates;
+        if (candidates.Count == 0)
+        {
+            if (fallbackDistance < 1)
+            {
+                Debug.LogWarning("MazeGenerator: no cell fits Dark Bruno on this small maze - skipping it.", this);
+                return;
+            }
+            candidates.Add(fallback);
+        }
+
+        Shuffle(candidates, rng);
+        Vector2Int chosen = candidates[0];
+        Vector3 position = CellCenter(chosen.x, chosen.y);
+        if (NavMesh.SamplePosition(position, out NavMeshHit hit, cellSize, NavMesh.AllAreas)) position = hit.position;
+
+        Quaternion rot = Quaternion.Euler(0f, rng.Next(4) * 90f, 0f);
+        GameObject instance = null;
+
+        if (interactableKit != null && interactableKit.HasDarkBruno)
+        {
+            instance = Instantiate(interactableKit.DarkBruno.gameObject, position, rot, _mazeRoot);
+        }
+        else
+        {
+            instance = BuildDarkBrunoFallbackFromScene(position, rot);
+            if (instance == null)
+            {
+                Debug.LogError("MazeGenerator: no InteractableKit (darkBruno) in the scene - skipping Dark Bruno this run. Run KEEP IT LIT > Build > Interactables in the Editor, then save the scene.", this);
+                return;
+            }
+        }
+
+        instance.name = "DarkBruno";
+        instance.SetActive(true);
+
+        NavMeshAgent agent = instance.GetComponent<NavMeshAgent>();
+        if (agent == null) agent = instance.AddComponent<NavMeshAgent>();
+        agent.radius = 0.32f;
+        agent.speed = 1.95f;
+        agent.acceleration = 8f;
+        agent.angularSpeed = 360f;
+        if (!agent.Warp(position)) Debug.LogWarning($"MazeGenerator: could not warp Dark Bruno onto the navmesh at {position}.", this);
+
+        DarkBruno butcher = instance.GetComponent<DarkBruno>();
+        if (butcher == null) butcher = instance.AddComponent<DarkBruno>();
+        _entities.Add(butcher);
+    }
+
+    private GameObject BuildDarkBrunoFallbackFromScene(Vector3 position, Quaternion rotation)
+    {
+        AsylumHub hub = FindAnyObjectByType<AsylumHub>(FindObjectsInactive.Include);
+        Transform hubBrunoBody = null;
+        if (hub != null && hub.life != null)
+        {
+            foreach (HubNpc npc in hub.life.GetComponentsInChildren<HubNpc>(true))
+            {
+                if (npc != null && npc.who == HubNpc.Who.Bruno && npc.body != null)
+                {
+                    hubBrunoBody = npc.body;
+                    break;
+                }
+            }
+        }
+
+        if (hubBrunoBody == null && interactableKit != null && interactableKit.HasNightNurse)
+        {
+            Transform nurseBody = interactableKit.NightNurse.transform.Find("Body_NurseAgnes");
+            if (nurseBody != null) hubBrunoBody = nurseBody;
+        }
+        if (hubBrunoBody == null) return null;
+
+        GameObject root = new GameObject("DarkBruno");
+        root.transform.SetParent(_mazeRoot, false);
+        root.transform.SetPositionAndRotation(position, rotation);
+
+        GameObject body = Instantiate(hubBrunoBody.gameObject, root.transform);
+        body.name = "Body_CookBruno";
+        body.transform.localPosition = Vector3.zero;
+        body.transform.localRotation = Quaternion.identity;
+        body.transform.localScale = Vector3.one;
+        body.SetActive(true);
+
+        root.AddComponent<DarkBruno>();
+        return root;
+    }
+
+    /// <summary>
+    /// Collects 3-5 Chopping Block station world positions for Dark Bruno ("The Butcher").
+    /// Prioritises carved rooms (<see cref="_carvedRooms"/> / <see cref="_roomCells"/>) far enough from the player start,
+    /// then supplements with well-spaced junctions/dead-ends when a floor has fewer than 3 carved rooms.
+    /// </summary>
+    public void CollectButcherStations(List<Vector3> stations)
+    {
+        if (stations == null) return;
+        stations.Clear();
+
+        System.Random rng = new System.Random(UsedSeed ^ (DarkBrunoSalt + 17));
+        Vector2Int start = _startCell;
+        HashSet<Vector2Int> reachable = ReachableCells(start, null);
+        Dictionary<Vector2Int, int> fromStart = BfsWithin(start, reachable);
+
+        const int targetMinStations = 3;
+        const int targetMaxStations = 5;
+        float minSeparation = Mathf.Max(cellSize * 2.5f, 8.5f);
+
+        // 1. Primary stations: one cell inside each carved room.
+        List<RectInt> rooms = new List<RectInt>(_carvedRooms);
+        for (int i = rooms.Count - 1; i > 0; i--)
+        {
+            int j = rng.Next(i + 1);
+            (rooms[i], rooms[j]) = (rooms[j], rooms[i]);
+        }
+        foreach (RectInt r in rooms)
+        {
+            if (stations.Count >= targetMaxStations) break;
+            Vector2Int center = new Vector2Int(r.xMin + r.width / 2, r.yMin + r.height / 2);
+            if (!reachable.Contains(center)) continue;
+            if (fromStart.TryGetValue(center, out int ds) && ds < 3) continue;
+
+            Vector3 world = CellCenter(center.x, center.y);
+            if (NavMesh.SamplePosition(world, out NavMeshHit hit, cellSize, NavMesh.AllAreas)) world = hit.position;
+            if (IsFarEnoughFromStations(world, stations, minSeparation * 0.7f))
+                stations.Add(world);
+        }
+
+        // 2. If _roomCells exist without enough RectInt entries, sample from _roomCells.
+        if (stations.Count < targetMinStations && _roomCells.Count > 0)
+        {
+            List<Vector2Int> roomPool = new List<Vector2Int>(_roomCells);
+            Shuffle(roomPool, rng);
+            foreach (Vector2Int cell in roomPool)
+            {
+                if (stations.Count >= targetMaxStations) break;
+                if (!reachable.Contains(cell) || cell == start || IsLayoutReserved(cell)) continue;
+                if (fromStart.TryGetValue(cell, out int ds) && ds < 3) continue;
+
+                Vector3 world = CellCenter(cell.x, cell.y);
+                if (NavMesh.SamplePosition(world, out NavMeshHit hit, cellSize, NavMesh.AllAreas)) world = hit.position;
+                if (IsFarEnoughFromStations(world, stations, minSeparation))
+                    stations.Add(world);
+            }
+        }
+
+        // 3. Supplement with well-spaced reachable maze cells so Bruno always has at least 3 stations to rotate between every 2 minutes.
+        if (stations.Count < targetMinStations)
+        {
+            List<Vector2Int> fallbackPool = new List<Vector2Int>(reachable);
+            Shuffle(fallbackPool, rng);
+            foreach (Vector2Int cell in fallbackPool)
+            {
+                if (stations.Count >= targetMinStations + 1) break;
+                if (cell == start || IsLayoutReserved(cell) || _squeezeCells.Contains(cell)) continue;
+                if (fromStart.TryGetValue(cell, out int ds) && ds < 4) continue;
+
+                Vector3 world = CellCenter(cell.x, cell.y);
+                if (NavMesh.SamplePosition(world, out NavMeshHit hit, cellSize, NavMesh.AllAreas)) world = hit.position;
+                if (IsFarEnoughFromStations(world, stations, minSeparation * 0.8f))
+                    stations.Add(world);
+            }
+        }
+
+        // 4. Ultimate fallback on tiny test mazes: add any reachable cell not equal to start.
+        if (stations.Count < 2)
+        {
+            foreach (Vector2Int cell in reachable)
+            {
+                if (stations.Count >= 2) break;
+                if (cell == start) continue;
+                Vector3 world = CellCenter(cell.x, cell.y);
+                if (NavMesh.SamplePosition(world, out NavMeshHit hit, cellSize, NavMesh.AllAreas)) world = hit.position;
+                if (IsFarEnoughFromStations(world, stations, cellSize * 0.8f))
+                    stations.Add(world);
+            }
+        }
+    }
+
+    private static bool IsFarEnoughFromStations(Vector3 candidate, List<Vector3> existing, float minDistance)
+    {
+        float minSq = minDistance * minDistance;
+        for (int i = 0; i < existing.Count; i++)
+        {
+            Vector3 d = existing[i] - candidate;
+            d.y = 0f;
+            if (d.sqrMagnitude < minSq) return false;
+        }
+        return true;
     }
 
     private void BuildListener(System.Random rng)
@@ -407,6 +622,7 @@ public partial class MazeGenerator
             string cell = TryWorldToCell(entity.transform.position, out Vector2Int c) ? c.ToString() : "?";
             string detail = entity is Listener listener ? listener.CurrentMode.ToString()
                 : entity is NightNurse nurse ? nurse.CurrentMode.ToString()
+                : entity is DarkBruno butcher ? butcher.CurrentMode.ToString()
                 : entity is LockerTenant tenant ? (tenant.Held ? "held" : "waiting")
                 : entity is LivingBody body ? $"{body.Mode}{(body.IsDecoy ? " decoy" : "")}{(body.HasActed ? " done" : "")}" : "";
             sb.Append($"\n  {entity.DebugGlyph} {entity.Kind} at {cell} {detail}");

@@ -345,11 +345,19 @@ public class MazeDoor : MonoBehaviour, IInteractable
     private void Bash(DoorBreakers.Entry entry)
     {
         _bashHoldUntil = Time.time + bashHoldSeconds;
-        StartSlide(true, bashOpenSeconds, entry.Silent);
+        float slideDuration = entry.InstantCleave ? 0.08f : bashOpenSeconds;
+        StartSlide(true, slideDuration, entry.Silent);
         if (!entry.Silent)
         {
             if (!GameAudio.PlayAt(GameAudio.Library.shutterSlam, transform.position, 1f)) PlayClip(_slamClip, 1f); // F97
-            entry.Stall?.Invoke(bashStallSeconds);
+            if (entry.InstantCleave && _hunter != null)
+            {
+                _hunter.HearNoise(transform.position, 32f);
+            }
+            if (!entry.InstantCleave)
+            {
+                entry.Stall?.Invoke(bashStallSeconds);
+            }
         }
     }
 

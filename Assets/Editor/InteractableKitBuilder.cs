@@ -344,6 +344,19 @@ public static partial class InteractableKitBuilder
             }
         }
 
+        // Dark Bruno (The Butcher), same build-missing-only rule.
+        SerializedProperty darkBrunoProp = so.FindProperty("darkBruno");
+        if (darkBrunoProp != null && darkBrunoProp.objectReferenceValue == null)
+        {
+            DarkBruno butcher = BuildDarkBrunoTemplate(root.transform, new Vector3(x, 0f, 0f));
+            if (butcher != null)
+            {
+                darkBrunoProp.objectReferenceValue = butcher;
+                x += PieceSpacing;
+                built++;
+            }
+        }
+
         // F120: the dropped torch, same build-missing-only rule.
         SerializedProperty droppedTorchProp = so.FindProperty("droppedTorch");
         if (droppedTorchProp.objectReferenceValue == null)

@@ -159,6 +159,7 @@ public static class GameFlow
         HunterGrab.DisabledByRules = false; // F120
         CampaignRules.ResetCampaign(); // F122 (re-derives HubBreach.Mode)
         NightNurse.ResetCampaign();
+        DarkBruno.ResetCampaign();
         System.Array.Clear(RolledObjectives, 0, RolledObjectives.Length);
         System.Array.Clear(RolledMorphologies, 0, RolledMorphologies.Length);
         Reload();

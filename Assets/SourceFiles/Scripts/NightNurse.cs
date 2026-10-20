@@ -104,21 +104,46 @@ public class NightNurse : MazeEntity
     [Tooltip("Cooldown (s) between calm 'Good patient' pass lines.")]
     [SerializeField, Min(4f)] private float politePassCooldown = 15f;
 
-    [Header("Animator States (Animation/Descent/NightNurse.controller)")]
+    [Header("Animator & Locomotion (Hunter-Matched, Animation/Descent/NightNurse.controller)")]
+    [SerializeField] private string locomotionState = "Locomotion";
     [SerializeField] private string patrolState = "Patrol";
     [SerializeField] private string warnState = "Warn";
     [SerializeField] private string screamState = "Scream";
     [SerializeField] private string rushState = "Rush";
     [SerializeField] private string pinState = "Pin";
+    [Tooltip("Ground speed (m/s) the walk and run clips cover at normal playback, measured from stance foot travel by InteractableKitBuilder. The clip in use plays at body speed / this (MotionSpeed) so the feet keep up instead of sliding.")]
+    [SerializeField] private float locomotionWalkSpeed = 1.94f;
+    [SerializeField] private float locomotionRunSpeed = 5.33f;
+    [Tooltip("Cap on how much faster than recorded a walk/run clip may play to keep up with the agent.")]
+    [SerializeField] private float maxLocomotionPlayback = 2f;
+    [Tooltip("The walk clip plays up to this much faster than recorded before the run clip takes over.")]
+    [SerializeField] private float maxWalkPlayback = 1.75f;
+    [SerializeField] private float animationBlendRate = 6f;
+    [Tooltip("NavMeshAgent.acceleration - how hard she leans into a change of speed, matching AIFollower.")]
+    [SerializeField] private float acceleration = 6f;
+    [Tooltip("How fast MoveSpeedTowards ramps the agent's target speed (m/s^2), matching AIFollower.")]
+    [SerializeField] private float speedRampRate = 14f;
+    [Tooltip("Turn rate while rushing (deg/s), matching AIFollower.turnSpeed.")]
+    [SerializeField] private float turnSpeedRush = 540f;
+    [Tooltip("Turn rate while moving on patrol/cooldown (deg/s), matching AIFollower.turnSpeedMoving.")]
+    [SerializeField] private float turnSpeedMoving = 200f;
+    [Tooltip("Turn rate while stationary (deg/s), matching AIFollower.turnSpeedStationary.")]
+    [SerializeField] private float turnSpeedStationary = 120f;
 
+    private const float MinLocomotionPlayback = 0.4f;
     private const float ChestHeight = 1.25f;
     private const float EyeHeight = 1.6f;
     private const float PinMaxVerticalDelta = 1.6f;
     private const float ArriveDistance = 0.75f;
     private const float RepathInterval = 0.25f;
     private const float SnapRadius = 2f;
-    private const float TurnDegreesPerSecond = 300f;
     private const float StateFadeSeconds = 0.18f;
+
+    private static readonly int AnimSpeed = Animator.StringToHash("Speed");
+    private static readonly int AnimMotionSpeed = Animator.StringToHash("MotionSpeed");
+    private static readonly int AnimGrounded = Animator.StringToHash("Grounded");
+    private static readonly int AnimTurn = Animator.StringToHash("Turn");
+    private static readonly int LocomotionHash = Animator.StringToHash("Locomotion");
 
     private static readonly string[] WarnLines =
     {
@@ -164,7 +189,17 @@ public class NightNurse : MazeEntity
     private SpeechBubble _bubble;
     private bool _configured;
     private bool _subscribed;
-    private bool _groundedOnce;
+
+    private bool _hasSpeedParam;
+    private bool _hasMotionSpeedParam;
+    private bool _hasGroundedParam;
+    private bool _hasTurnParam;
+    private bool _hasLocomotionState;
+    private float _animationBlend;
+    private float _gait;
+    private bool _gaitRunning;
+    private float _turnRaw;
+    private float _turnBlend;
 
     private Mode _mode = Mode.Patrol;
     private int _currentStateHash;
@@ -184,8 +219,7 @@ public class NightNurse : MazeEntity
     private float _speakUntil = -999f;
     private float _headYaw;
 
-    private const float MaxGroundOffset = 0.35f;
-    private const float GroundRate = 2.5f;
+    private const float MaxGroundOffset = 0.20f;
 
     public override EntityKind Kind => EntityKind.NightNurse;
 
@@ -237,11 +271,37 @@ public class NightNurse : MazeEntity
         BuildSpeechBubble();
 
         _agent.speed = patrolSpeed;
+        _agent.acceleration = acceleration;
+        _agent.updateRotation = false;
+        CacheAnimatorParameters();
+
         DoorBreakers.Register(transform, _agent, true, null);
         _configured = true;
         Subscribe();
         SetMode(Mode.Patrol, force: true);
         _nextJingleAt = Time.time + Random.Range(0.4f, patrolJingleInterval);
+    }
+
+    private void CacheAnimatorParameters()
+    {
+        _hasSpeedParam = false;
+        _hasMotionSpeedParam = false;
+        _hasGroundedParam = false;
+        _hasTurnParam = false;
+        _hasLocomotionState = false;
+        if (_animator == null || _animator.runtimeAnimatorController == null) return;
+
+        foreach (AnimatorControllerParameter p in _animator.parameters)
+        {
+            if (p.nameHash == AnimSpeed) _hasSpeedParam = true;
+            else if (p.nameHash == AnimMotionSpeed) _hasMotionSpeedParam = true;
+            else if (p.nameHash == AnimGrounded) _hasGroundedParam = true;
+            else if (p.nameHash == AnimTurn) _hasTurnParam = true;
+        }
+
+        _hasLocomotionState = _animator.HasState(0, LocomotionHash);
+        if (_hasGroundedParam) _animator.SetBool(AnimGrounded, true);
+        if (_hasMotionSpeedParam) _animator.SetFloat(AnimMotionSpeed, 1f);
     }
 
     private void OnEnable() => Subscribe();
@@ -288,7 +348,9 @@ public class NightNurse : MazeEntity
         {
             _agent.isStopped = true;
             if (_animator != null) _animator.speed = 1f;
-            PlayAnim(warnState);
+            if (_hasSpeedParam) _animator.SetFloat(AnimSpeed, 0f);
+            if (_hasMotionSpeedParam) _animator.SetFloat(AnimMotionSpeed, 1f);
+            PlayAnim(_hasLocomotionState ? locomotionState : warnState);
             _physics?.SetSpeaking(false);
             return;
         }
@@ -325,25 +387,10 @@ public class NightNurse : MazeEntity
     {
         if (!_configured || _body == null) return;
 
-        // Ground the lowest point of her shoes onto the floor so Mixamo clips + NavMesh voxel offset never make her float.
-        if (_renderers != null)
-        {
-            float lowest = float.PositiveInfinity;
-            foreach (Renderer r in _renderers)
-            {
-                if (r != null && r.enabled && r is SkinnedMeshRenderer) lowest = Mathf.Min(lowest, r.bounds.min.y);
-            }
-            if (!float.IsInfinity(lowest))
-            {
-                float floorY = Maze != null ? Maze.FloorTopY : transform.position.y;
-                float parentScale = _body.parent != null ? Mathf.Max(0.01f, _body.parent.lossyScale.y) : 1f;
-                float offset = _body.localPosition.y + (floorY - lowest) / parentScale;
-                offset = Mathf.Clamp(offset, -MaxGroundOffset, MaxGroundOffset);
-                float y = _groundedOnce ? Mathf.MoveTowards(_body.localPosition.y, offset, GroundRate * Time.deltaTime) : offset;
-                _groundedOnce = true;
-                _body.localPosition = new Vector3(0f, y, 0f);
-            }
-        }
+        // Keep her body root aligned to the exact floor top height (compensating for any NavMesh voxel Y offset)
+        // without per-frame bounds.min.y pulling her down when both feet lift during a run stride.
+        float floorOffset = Maze != null ? Mathf.Clamp(Maze.FloorTopY - transform.position.y, -MaxGroundOffset, MaxGroundOffset) : 0f;
+        _body.localPosition = new Vector3(0f, floorOffset, 0f);
 
         if (_head == null || Player == null) return;
 
@@ -375,7 +422,8 @@ public class NightNurse : MazeEntity
     private void TickPatrol(bool inStartGrace)
     {
         _agent.isStopped = false;
-        _agent.speed = patrolSpeed;
+        MoveSpeedTowards(patrolSpeed);
+        UpdateRotation(CurrentHeading());
         _physics?.SetFingerCurl(0.1f, 0.1f);
 
         if (!_agent.pathPending && (_agent.remainingDistance <= ArriveDistance || !_agent.hasPath || _agent.pathStatus == NavMeshPathStatus.PathInvalid))
@@ -405,7 +453,7 @@ public class NightNurse : MazeEntity
     {
         _agent.isStopped = true;
         _physics?.SetFingerCurl(0.55f, 0.55f);
-        if (Player != null) FaceTowards(Player.position);
+        if (Player != null) UpdateRotation(Player.position - transform.position);
 
         if (CheckNoiseViolation(out Vector3 noiseSpot))
         {
@@ -436,7 +484,7 @@ public class NightNurse : MazeEntity
     {
         _agent.isStopped = true;
         _physics?.SetFingerCurl(1f, 1f);
-        if (Player != null) FaceTowards(Player.position);
+        if (Player != null) UpdateRotation(Player.position - transform.position);
 
         if (Time.time >= _stateUntil)
         {
@@ -447,7 +495,8 @@ public class NightNurse : MazeEntity
     private void TickRush()
     {
         _agent.isStopped = false;
-        _agent.speed = rushSpeed;
+        MoveSpeedTowards(rushSpeed);
+        UpdateRotation(CurrentHeading());
         _physics?.SetFingerCurl(1f, 1f);
 
         if (Player != null && Stealth != null && !Stealth.Hidden)
@@ -478,7 +527,7 @@ public class NightNurse : MazeEntity
     {
         _agent.isStopped = true;
         _physics?.SetFingerCurl(1f, 1f);
-        if (Player != null) FaceTowards(Player.position);
+        if (Player != null) UpdateRotation(Player.position - transform.position);
 
         if (Time.time >= _stateUntil)
         {
@@ -489,7 +538,8 @@ public class NightNurse : MazeEntity
     private void TickCooldown()
     {
         _agent.isStopped = false;
-        _agent.speed = cooldownSpeed;
+        MoveSpeedTowards(cooldownSpeed);
+        UpdateRotation(CurrentHeading());
         _physics?.SetFingerCurl(0.15f, 0.15f);
 
         if (!_agent.pathPending && (_agent.remainingDistance <= ArriveDistance || !_agent.hasPath))
@@ -629,9 +679,8 @@ public class NightNurse : MazeEntity
         {
             case Mode.Patrol:
                 _agent.isStopped = false;
-                _agent.speed = patrolSpeed;
                 if (_patrolPoints.Count > 0) GoTo(_patrolPoints[_patrolIndex % _patrolPoints.Count]);
-                PlayAnim(patrolState);
+                PlayAnim(_hasLocomotionState ? locomotionState : patrolState);
                 break;
 
             case Mode.Warn:
@@ -654,10 +703,9 @@ public class NightNurse : MazeEntity
 
             case Mode.Rush:
                 _agent.isStopped = false;
-                _agent.speed = rushSpeed;
                 _stateUntil = Time.time + rushMaxSeconds;
                 GoTo(_target);
-                PlayAnim(rushState);
+                PlayAnim(_hasLocomotionState ? locomotionState : rushState);
                 break;
 
             case Mode.Pin:
@@ -668,14 +716,13 @@ public class NightNurse : MazeEntity
 
             case Mode.Cooldown:
                 _agent.isStopped = false;
-                _agent.speed = cooldownSpeed;
                 _stateUntil = Time.time + postPinCooldownSeconds;
                 if (Maze != null && Player != null)
                 {
                     _target = Maze.FarthestCellCenterFrom(Player.position);
                     GoTo(_target);
                 }
-                PlayAnim(patrolState);
+                PlayAnim(_hasLocomotionState ? locomotionState : patrolState);
                 break;
         }
 
@@ -736,29 +783,122 @@ public class NightNurse : MazeEntity
         else _agent.SetDestination(point);
     }
 
-    private void FaceTowards(Vector3 point)
+    private void MoveSpeedTowards(float targetSpeed)
     {
-        Vector3 d = point - transform.position;
-        d.y = 0f;
-        if (d.sqrMagnitude < 0.001f) return;
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(d), TurnDegreesPerSecond * Time.deltaTime);
+        _agent.speed = Mathf.MoveTowards(_agent.speed, targetSpeed, speedRampRate * Time.deltaTime);
+    }
+
+    private Vector3 CurrentHeading()
+    {
+        Vector3 v = _agent.velocity;
+        v.y = 0f;
+        if (v.sqrMagnitude > 0.04f) return v;
+
+        if (_agent.hasPath)
+        {
+            Vector3 steer = _agent.steeringTarget - transform.position;
+            steer.y = 0f;
+            if (steer.sqrMagnitude > 0.01f) return steer;
+        }
+
+        return Vector3.zero;
+    }
+
+    private void UpdateRotation(Vector3 desiredDirection)
+    {
+        desiredDirection.y = 0f;
+        if (desiredDirection.sqrMagnitude < 0.001f)
+        {
+            _turnRaw = 0f;
+            return;
+        }
+
+        Vector3 forward = transform.forward;
+        forward.y = 0f;
+        float signedAngle = Vector3.SignedAngle(forward, desiredDirection, Vector3.up);
+        _turnRaw = Mathf.Clamp(signedAngle / 90f, -1f, 1f);
+
+        float planarSpeed = new Vector2(_agent.velocity.x, _agent.velocity.z).magnitude;
+        float rate;
+        if (_mode == Mode.Rush)
+        {
+            rate = turnSpeedRush;
+        }
+        else if (planarSpeed > 0.25f)
+        {
+            rate = turnSpeedMoving;
+        }
+        else
+        {
+            rate = turnSpeedStationary;
+        }
+
+        Quaternion targetRot = Quaternion.LookRotation(desiredDirection);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rate * Time.deltaTime);
     }
 
     // ---------------------------------------------------------------- Audio, Speech Bubble & Cosmetics
+
+    /// <summary>
+    /// Ground speed (m/s) at which the walk clip hits <see cref="maxWalkPlayback"/> and the run clip takes over,
+    /// matching <see cref="AIFollower.WalkToRunSpeed"/>.
+    /// </summary>
+    private float WalkToRunSpeed()
+    {
+        float walkCap = Mathf.Max(0.25f, locomotionWalkSpeed) * Mathf.Max(1f, maxWalkPlayback);
+        return Mathf.Clamp(walkCap, 1.5f, Mathf.Max(2f, rushSpeed - 0.1f));
+    }
 
     private void UpdateLocomotionAndMouth()
     {
         if (_animator != null && _animator.isActiveAndEnabled && _animator.runtimeAnimatorController != null)
         {
-            float planarSpeed = new Vector2(_agent.velocity.x, _agent.velocity.z).magnitude;
+            float v = _agent.isStopped ? 0f : new Vector2(_agent.velocity.x, _agent.velocity.z).magnitude;
+            _animationBlend = Mathf.MoveTowards(_animationBlend, v, Time.deltaTime * animationBlendRate);
+            if (_animationBlend < 0.01f) _animationBlend = 0f;
+
+            // Choose gait (0 = Idle, 1 = Walk, 2 = Run) with hysteresis and smooth crossfade,
+            // matching AIFollower.UpdateAnimation exactly so her feet never slide.
+            float runSwitch = WalkToRunSpeed();
+            if (_mode == Mode.Rush && v >= 0.15f) _gaitRunning = true;
+            else if (v >= runSwitch + 0.15f) _gaitRunning = true;
+            else if (v <= runSwitch - 0.25f) _gaitRunning = false;
+
+            bool moving = v >= 0.08f || _animationBlend >= 0.08f;
+            float targetGait = !moving ? 0f : (_gaitRunning ? 2f : 1f);
+            _gait = Mathf.MoveTowards(_gait, targetGait, Time.deltaTime * 4f);
+
+            // Match foot travel to ground speed: the active clip's stance foot travels at clipSpeed at 1x,
+            // so playing the state at v / clipSpeed locks the shoe to the floor.
+            float walkSpeed = Mathf.Max(0.25f, locomotionWalkSpeed);
+            float runSpeed = Mathf.Max(walkSpeed, locomotionRunSpeed);
+            float runWeight = Mathf.Clamp01(_gait - 1f);
+            float clipSpeed = Mathf.Lerp(walkSpeed, runSpeed, runWeight);
+            float playback = moving
+                ? Mathf.Clamp(v / clipSpeed, MinLocomotionPlayback, maxLocomotionPlayback)
+                : 1f;
+
+            if (_hasSpeedParam) _animator.SetFloat(AnimSpeed, _gait);
+            if (_hasMotionSpeedParam) _animator.SetFloat(AnimMotionSpeed, playback);
+            if (_hasTurnParam)
+            {
+                _turnBlend = Mathf.Lerp(_turnBlend, _turnRaw, Time.deltaTime * animationBlendRate);
+                _animator.SetFloat(AnimTurn, _turnBlend);
+            }
+
             switch (_mode)
             {
                 case Mode.Patrol:
                 case Mode.Cooldown:
-                    if (!_agent.isStopped && planarSpeed > 0.12f)
+                    if (_hasLocomotionState)
+                    {
+                        PlayAnim(locomotionState);
+                        _animator.speed = _hasMotionSpeedParam ? 1f : playback;
+                    }
+                    else if (moving)
                     {
                         PlayAnim(patrolState);
-                        _animator.speed = Mathf.Clamp(planarSpeed / Mathf.Max(0.5f, patrolSpeed), 0.78f, 1.38f);
+                        _animator.speed = _hasMotionSpeedParam ? 1f : Mathf.Clamp(v / walkSpeed, MinLocomotionPlayback, maxLocomotionPlayback);
                     }
                     else
                     {
@@ -768,23 +908,34 @@ public class NightNurse : MazeEntity
                     break;
 
                 case Mode.Rush:
-                    PlayAnim(rushState);
-                    _animator.speed = Mathf.Clamp(planarSpeed / Mathf.Max(1f, rushSpeed), 0.85f, 1.35f);
+                    if (_hasLocomotionState)
+                    {
+                        PlayAnim(locomotionState);
+                        _animator.speed = _hasMotionSpeedParam ? 1f : playback;
+                    }
+                    else
+                    {
+                        PlayAnim(rushState);
+                        _animator.speed = _hasMotionSpeedParam ? 1f : Mathf.Clamp(v / runSpeed, MinLocomotionPlayback, maxLocomotionPlayback);
+                    }
                     break;
 
                 case Mode.Warn:
                     PlayAnim(warnState);
                     _animator.speed = 1f;
+                    if (_hasMotionSpeedParam) _animator.SetFloat(AnimMotionSpeed, 1f);
                     break;
 
                 case Mode.Scream:
                     PlayAnim(screamState);
                     _animator.speed = 1f;
+                    if (_hasMotionSpeedParam) _animator.SetFloat(AnimMotionSpeed, 1f);
                     break;
 
                 case Mode.Pin:
                     PlayAnim(pinState);
                     _animator.speed = 1f;
+                    if (_hasMotionSpeedParam) _animator.SetFloat(AnimMotionSpeed, 1f);
                     break;
             }
         }

@@ -1845,6 +1845,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331851231167195
+  - m_Id: 3626662748917760
+    m_Key: ui.descent.cause.butcher
+    m_Metadata:
+      m_Items:
+      - rid: 4707331896125948165
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -3320,3 +3325,7 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: End screen body of ending C (wraps over ~6 lines, 1400 px). Five patients sit at the table; the sixth place was yours
+    - rid: 4707331896125948165
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'DESCENT cause word: Dark Bruno (the Butcher) caught and carved you at his chopping block. Ends the sentence ''CAUSE: ...'' (a single word, all caps)'

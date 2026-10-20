@@ -149,6 +149,7 @@ ui.descent.cause.visitor,RETENIDO
 ui.descent.cause.timer,LUCES RESTAURADAS
 ui.descent.cause.entity,LLEVADO
 ui.descent.cause.listener,OÍDO
+ui.descent.cause.butcher,DESCUARTIZADO
 ui.descent.end.learned,HABÍA APRENDIDO: {habits}
 ui.descent.habit.lockers,CASILLEROS
 ui.descent.habit.throws,LANZAMIENTOS

@@ -15,5 +15,7 @@ public enum EntityKind
     /// <summary>One hanging body drops on you if you pass unlit, or one corpse crawls toward your beam (LivingBody.cs).</summary>
     LivingBody = 8,
     /// <summary>Sister Agnes ("The Night Nurse"): anti-torch curfew patrol and anti-sprint/noise triage harasser (NightNurse.cs).</summary>
-    NightNurse = 16
+    NightNurse = 16,
+    /// <summary>Cook Bruno ("The Butcher"): claims chopping block stations in rooms, rotates every 2 minutes, cleaves shutters, and charges intruders/starers (DarkBruno.cs).</summary>
+    Butcher = 32
 }

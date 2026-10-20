@@ -1535,6 +1535,10 @@ MonoBehaviour:
     m_Localized: The sixth chair was always yours. Across the cloth, five heads rise in the candlelight and do not look away. Down the hall, the Intake bell rings once and stops. Nobody walks out tonight. The morning count is six.
     m_Metadata:
       m_Items: []
+  - m_Id: 3626662748917760
+    m_Localized: CARVED
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

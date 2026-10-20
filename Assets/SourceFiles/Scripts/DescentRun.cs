@@ -66,6 +66,7 @@ public static class DescentRun
         HubState.ResetCampaign(); // F117
         CampaignRules.ResetCampaign(); // F122: a descent stays outside presets, Oaths and grades
         NightNurse.ResetCampaign();
+        DarkBruno.ResetCampaign();
         System.Array.Clear(GameFlow.RolledObjectives, 0, GameFlow.RolledObjectives.Length);
         System.Array.Clear(GameFlow.RolledMorphologies, 0, GameFlow.RolledMorphologies.Length);
     }
@@ -93,6 +94,7 @@ public static class DescentRun
         CauseEntity = EntityKind.None;
         BodiesWoke = false;
         NightNurse.ResetCampaign();
+        DarkBruno.ResetCampaign();
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]

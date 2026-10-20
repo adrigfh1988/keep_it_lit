@@ -149,6 +149,7 @@ ui.descent.cause.visitor,"DESCENT cause word: the looping corridor's visitor cau
 ui.descent.cause.timer,"DESCENT cause word: the escape timer ran out",LIGHTS RESTORED
 ui.descent.cause.entity,"DESCENT cause word: another entity took you",TAKEN
 ui.descent.cause.listener,"DESCENT cause word: the blind listener that follows sound found you. Ends the sentence 'CAUSE: ...' (a single word, all caps; it means you were heard)",HEARD
+ui.descent.cause.butcher,"DESCENT cause word: Dark Bruno (the Butcher) caught and carved you at his chopping block. Ends the sentence 'CAUSE: ...' (a single word, all caps)",CARVED
 ui.descent.end.learned,"DESCENT end screen line, shown only if the hunter learned a habit (32 pt, one line, 1500 px). {habits} = e.g. LOCKERS ▮▮▯ · DARK ▮▯▯",IT HAD LEARNED: {habits}
 ui.descent.habit.lockers,"Habit name inside the IT HAD LEARNED line: you hid in lockers (one word, all caps)",LOCKERS
 ui.descent.habit.throws,"Habit name inside the IT HAD LEARNED line: you threw things (one word, all caps)",THROWS

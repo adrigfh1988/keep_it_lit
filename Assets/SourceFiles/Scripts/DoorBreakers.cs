@@ -22,6 +22,8 @@ public static class DoorBreakers
         public NavMeshAgent Agent;
         /// <summary>True for a breaker that opens a door with no slam and no stall (the Stalker).</summary>
         public bool Silent;
+        /// <summary>True for a breaker that cleaves a closed shutter open almost instantaneously (0.08 s) with a loud slam and zero stall (Dark Bruno).</summary>
+        public bool InstantCleave;
         /// <summary>Called with the bash-stall duration for a non-silent breaker (the hunter's AIFollower.Stall). Null for a silent one.</summary>
         public System.Action<float> Stall;
     }
@@ -30,11 +32,11 @@ public static class DoorBreakers
 
     public static IReadOnlyList<Entry> All => _entries;
 
-    public static void Register(Transform actor, NavMeshAgent agent, bool silent, System.Action<float> stall)
+    public static void Register(Transform actor, NavMeshAgent agent, bool silent, System.Action<float> stall, bool instantCleave = false)
     {
         if (actor == null) return;
         Unregister(actor); // idempotent: a re-Configure never leaves a duplicate entry
-        _entries.Add(new Entry { Actor = actor, Agent = agent, Silent = silent, Stall = stall });
+        _entries.Add(new Entry { Actor = actor, Agent = agent, Silent = silent, InstantCleave = instantCleave, Stall = stall });
     }
 
     public static void Unregister(Transform actor)

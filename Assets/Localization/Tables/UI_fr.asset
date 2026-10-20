@@ -1531,6 +1531,10 @@ MonoBehaviour:
     m_Localized: "La sixi\xE8me chaise a toujours \xE9t\xE9 la v\xF4tre. De l'autre c\xF4t\xE9 de la nappe, cinq t\xEAtes se l\xE8vent \xE0 la lueur de la bougie sans d\xE9tourner le regard. Au bout du couloir, la sonnette des Admissions tinte une fois puis se tait. Personne ne sort ce soir. Le compte du matin est \xE0 six."
     m_Metadata:
       m_Items: []
+  - m_Id: 3626662748917760
+    m_Localized: "D\xC9COUP\xC9"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
