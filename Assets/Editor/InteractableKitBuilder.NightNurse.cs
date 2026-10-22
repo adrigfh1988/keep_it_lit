@@ -138,6 +138,13 @@ public static partial class InteractableKitBuilder
         SerializedProperty runProp = nurseSo.FindProperty("locomotionRunSpeed");
         if (walkProp != null) walkProp.floatValue = walkSpeed;
         if (runProp != null) runProp.floatValue = runSpeed;
+
+        SerializedProperty chaseProp = nurseSo.FindProperty("franticChaseClip");
+        if (chaseProp != null)
+        {
+            chaseProp.objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Horror Elements/Ambient/Amb_Run_2.wav");
+        }
+
         nurseSo.ApplyModifiedPropertiesWithoutUndo();
 
         root.SetActive(false);

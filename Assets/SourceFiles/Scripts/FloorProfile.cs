@@ -382,17 +382,17 @@ public class FloorProfile
         // has real pockets of dark between lamp pools (the torch is optional there) and floor 5 is
         // unreadable without it. Ambient/fog follow the same curve. See
         // plannings/darkness-and-interactivity-spec.md, decision D2 and slice F71.
-        p.CellsPerLamp = Blend(3, 4, t);
-        p.LampIntensity = Blend(4.5f, 3.6f, t);
-        p.LampRange = Blend(11.5f, 10.0f, t);
+        p.CellsPerLamp = Blend(5, 8, t);
+        p.LampIntensity = Blend(1.2f, 0.8f, t);
+        p.LampRange = Blend(5.5f, 4.2f, t);
         if (p.CellSize > 4.5f)
         {
-            p.LampRange = Mathf.Max(p.LampRange * (p.CellSize / 4.5f), 14f);
-            p.LampIntensity = 5.0f;
-            p.CellsPerLamp = 3;
+            p.LampRange = Mathf.Max(p.LampRange * (p.CellSize / 4.5f), 7.0f);
+            p.LampIntensity = 1.4f;
+            p.CellsPerLamp = 5;
         }
 
-        float ambient = Blend(0.18f, 0.12f, t);
+        float ambient = Blend(0.016f, 0.007f, t);
         p.Ambient = new Color(ambient, ambient, ambient * 1.25f);
         p.FogDensity = Blend(0.020f, 0.032f, t);
 
@@ -497,8 +497,8 @@ public class FloorProfile
     public int RequiredItems => StarCount + KeyCount + FuseCount;
 
     private const float DescentRunSpeedCap = 4.3f;   // the player sprints at 5.3 m/s; the hunter must stay beatable
-    private const float DescentMinAmbient = 0.09f;
-    private const int DescentCellsPerLampCap = 5;
+    private const float DescentMinAmbient = 0.005f;
+    private const int DescentCellsPerLampCap = 10;
     private const float DescentFogCap = 0.045f;
     private const float DescentPhantomFloor = 12f;
     private const float DescentChaseWalkCap = 1.15f;

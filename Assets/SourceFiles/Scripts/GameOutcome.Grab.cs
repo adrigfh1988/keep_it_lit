@@ -23,29 +23,15 @@ public partial class GameOutcome
     /// </summary>
     public bool TryGrab()
     {
-        if (IsOver || IsEnding || _grab == null || !_grab.CanGrab()) return false;
-        StartCoroutine(GrabSequence(_follower.transform, _follower.EyeHeight, false, (hunterPos, back, landing) =>
-        {
-            // Captured -> Wander, stunned; the half-step back stays on the mesh (Release samples within 3 m).
-            if (_follower.Release(hunterPos + back * _grab.HunterStepBack, _grab.StunSeconds))
-            {
-                // After the stun it searches around the lit torch - the one place the player has to go back to.
-                _follower.ForceLastKnownPosition(landing, false);
-            }
-        }, null));
-        return true;
+        return false;
     }
 
     /// <summary>
-    /// F121: a grab for a catch in the asylum hub (the breach's HubStalker). The caller keeps the "once per attempt" flag; this only plays the
-    /// sequence. `onRelease(captorPosition, directionAwayFromPlayer, torchLanding)` lets the captor step back and stun itself; `onDone` runs when the
-    /// player has control again. False (nothing done) when a grab is impossible - the caller then treats the catch as a real one.
+    /// F121: a grab for a catch in the asylum hub (the breach's HubStalker). Disabled: catches go directly to Second Wind or death.
     /// </summary>
     public bool TryGrabInHub(Transform captor, float eyeHeight, System.Action<Vector3, Vector3, Vector3> onRelease, System.Action onDone)
     {
-        if (IsOver || IsEnding || captor == null || _grab == null || !_grab.CanGrabInHub()) return false;
-        StartCoroutine(GrabSequence(captor, eyeHeight, true, onRelease, onDone));
-        return true;
+        return false;
     }
 
     /// <summary>F120: a same-scene transition (floor cleared) with the torch on the floor or the player limping: put it right. Safe with no grab bound.</summary>

@@ -144,9 +144,6 @@ public partial class GameOutcome : MonoBehaviour
     {
         if (IsOver || IsEnding) return;
 
-        // F120: the first catch on a floor is a shove (torch knocked away, hunter stunned, you limp). Before Second Wind: a Second Wind is never spent while the free grab is available.
-        if (TryGrab()) return;
-
         // F36 Second Wind: a release, not an invulnerability. Consumed automatically, once.
         if (PlayerInventory.Count(ShopItem.SecondWind) > 0 && _follower != null && _maze != null)
         {

@@ -608,7 +608,7 @@ public class HubBreachSetPiece : HubSetPiece
 
     // ---------------------------------------------------------------- the catch
 
-    /// <summary>HubStalker.TryCatch asks this instead of the soft hub catch. True = taken. One free grab per attempt, then the real thing.</summary>
+    /// <summary>HubStalker.TryCatch asks this instead of the soft hub catch. True = taken. Directly triggers Second Wind if held, else the CAUGHT screen.</summary>
     private bool OnHunterCatch(Vector3 head)
     {
         AsylumHub hub = Hub;
@@ -619,19 +619,6 @@ public class HubBreachSetPiece : HubSetPiece
         ForceLeaveLockers(hub);
         _lockerSpot = null;
         _lockerWaiting = false;
-
-        if (!_grabUsed)
-        {
-            bool started = _outcome.TryGrabInHub(hunter.transform, 1.8f, OnGrabRelease, () => { if (Hub != null) Hub.SetScripted(false); });
-            if (started)
-            {
-                _grabUsed = true;
-                _catchBlockedUntil = Time.time + 4f;
-                hub.SetScripted(true);
-                GameAudio.Play2D(GameAudio.Library.caught, 0.8f);
-                return true;
-            }
-        }
 
         // the real thing: Second Wind if held, else the CAUGHT screen
         hub.SetScripted(true);

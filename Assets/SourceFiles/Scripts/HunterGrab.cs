@@ -78,46 +78,19 @@ public class HunterGrab : MonoBehaviour
     }
 
     /// <summary>
-    /// Can the catch that just happened be a grab? False for: the free grab already spent, the switches off, a locker bust (cornered), no run in
-    /// progress or the player in a safe room, a missing hunter / torch, or a missing kit template (logged once).
+    /// Survivable grab / dropped torch feature has been removed: catches go directly to Second Wind or death.
     /// </summary>
     public bool CanGrab()
     {
-        if (_used || DisabledByRules || !_terror.survivableGrab) return false;
-        if (!GameFlow.IsRunActive || GameFlow.IsInSafeRoom) return false;
-        if (_hunter == null || _flashlight == null || _player == null) return false;
-        if (_hunter.LastCaptureWasBust) return false;
-        if (_template == null)
-        {
-            if (!_warnedMissingTemplate)
-            {
-                _warnedMissingTemplate = true;
-                Debug.LogError("HunterGrab: InteractableKit has no droppedTorch template - run KEEP IT LIT > Build > Interactables. The grab is skipped (a catch kills).", this);
-            }
-            return false;
-        }
-        return true;
+        return false;
     }
 
     /// <summary>
-    /// F121: can a catch inside the asylum hub be a grab? The same switches as <see cref="CanGrab"/> (survivableGrab, DisabledByRules, the kit template,
-    /// a torch and a player) but not the maze-only ones: the hub has no active run, no safe room and no AIFollower. The breach keeps its own once-per-attempt
-    /// flag, so the floor-5 maze's free grab (<see cref="Used"/>) is never spent by it.
+    /// Survivable grab / dropped torch feature has been removed: catches in the hub breach go directly to Second Wind or death.
     /// </summary>
     public bool CanGrabInHub()
     {
-        if (DisabledByRules || !_terror.survivableGrab) return false;
-        if (_flashlight == null || _player == null || _flashlight.IsDropped) return false;
-        if (_template == null)
-        {
-            if (!_warnedMissingTemplate)
-            {
-                _warnedMissingTemplate = true;
-                Debug.LogError("HunterGrab: InteractableKit has no droppedTorch template - run KEEP IT LIT > Build > Interactables. The grab is skipped (a catch kills).", this);
-            }
-            return false;
-        }
-        return true;
+        return false;
     }
 
     /// <summary>Spends the free grab.</summary>

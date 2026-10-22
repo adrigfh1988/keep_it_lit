@@ -10,13 +10,13 @@ using UnityEngine.Rendering.Universal;
 public class HorrorAtmosphere : MonoBehaviour
 {
     [Header("Ambient")]
-    [SerializeField] private Color ambientLight = new Color(0.18f, 0.18f, 0.22f);
+    [SerializeField] private Color ambientLight = new Color(0.016f, 0.016f, 0.020f);
 
     [Header("Fog")]
     [SerializeField] private bool enableFog = true;
-    [SerializeField] private Color fogColor = new Color(0.025f, 0.028f, 0.038f);
+    [SerializeField] private Color fogColor = new Color(0.01f, 0.01f, 0.015f);
     [Tooltip("Exponential-squared fog reaches near-total opacity around 3/density metres. 0.07 ~ 43 m, 0.12 ~ 25 m. Lower = you see further.")]
-    [SerializeField] private float fogDensity = 0.020f;
+    [SerializeField] private float fogDensity = 0.035f;
 
     [Header("Lights")]
     [Tooltip("Intensity for the scene's directional light. Raise it at runtime to see the maze while tuning.")]
@@ -24,13 +24,13 @@ public class HorrorAtmosphere : MonoBehaviour
 
     [Header("Post")]
     [Tooltip("The scene profile ships +0.2 exposure, which fights all of the above. This neutralises it on a runtime copy of the profile - the asset on disk is not touched.")]
-    [SerializeField] private float postExposure = 0.85f;
+    [SerializeField] private float postExposure = -0.15f;
     [Tooltip("F71: crushes mid-tones so the ambient floor reads as inky rather than grey, on the same runtime profile copy as postExposure above.")]
-    [SerializeField] private float contrast = 0f;
+    [SerializeField] private float contrast = 18f;
     [Tooltip("F71: Neutral keeps the torch's hot core readable against the crushed shadows below - ACES' filmic roll-off reads muddier once everything is this dark.")]
     [SerializeField] private TonemappingMode tonemappingMode = TonemappingMode.Neutral;
     [Tooltip("F71: darkens the screen edges so the beam's small lit circle reads as a circle, not a rectangle")]
-    [SerializeField] private float vignetteIntensity = 0.14f;
+    [SerializeField] private float vignetteIntensity = 0.30f;
     [Tooltip("How gradual the vignette's falloff is - low is a hard-edged circle, high fades in gently")]
     [SerializeField] private float vignetteSmoothness = 0.4f;
     [Tooltip("Tint of the vignette - black reads as darkness, not a colour cast")]
@@ -270,10 +270,6 @@ public class HorrorAtmosphere : MonoBehaviour
 
     private void NeutraliseExposure()
     {
-        postExposure = Mathf.Max(postExposure, 0.85f);
-        contrast = Mathf.Min(contrast, 0f);
-        vignetteIntensity = Mathf.Min(vignetteIntensity, 0.14f);
-
         foreach (Volume volume in FindObjectsByType<Volume>(FindObjectsInactive.Include))
         {
             // volume.profile (not sharedProfile) lazily clones the asset, so every edit below lives only
@@ -338,7 +334,7 @@ public class HorrorAtmosphere : MonoBehaviour
 
             if (!volume.profile.TryGet(out SplitToning splitToning)) splitToning = volume.profile.Add<SplitToning>(true);
             splitToning.shadows.overrideState = true;
-            splitToning.shadows.value = new Color(0.38f, 0.45f, 0.56f);
+            splitToning.shadows.value = new Color(0.42f, 0.45f, 0.50f);
             splitToning.highlights.overrideState = true;
             splitToning.highlights.value = new Color(1.0f, 0.90f, 0.72f);
             splitToning.balance.overrideState = true;

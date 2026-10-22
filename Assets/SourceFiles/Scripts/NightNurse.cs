@@ -103,6 +103,9 @@ public class NightNurse : MazeEntity
     [SerializeField, Min(1.5f)] private float politePassRange = 3.8f;
     [Tooltip("Cooldown (s) between calm 'Good patient' pass lines.")]
     [SerializeField, Min(4f)] private float politePassCooldown = 15f;
+    [Tooltip("Looping frantic chase music track while Agnes is screaming, rushing or pinning the player (empty = GameAudio.Library.chaseMusic).")]
+    [SerializeField] private AudioClip franticChaseClip;
+    [SerializeField, Range(0f, 1f)] private float franticChaseMaxVolume = 0.42f;
 
     [Header("Animator & Locomotion (Hunter-Matched, Animation/Descent/NightNurse.controller)")]
     [SerializeField] private string locomotionState = "Locomotion";
@@ -187,6 +190,7 @@ public class NightNurse : MazeEntity
     private Transform _body;
     private Transform _head;
     private SpeechBubble _bubble;
+    private AudioSource _chaseMusicSource;
     private bool _configured;
     private bool _subscribed;
 
@@ -269,6 +273,7 @@ public class NightNurse : MazeEntity
 
         BuildPatrolRoute();
         BuildSpeechBubble();
+        BuildAudioSources();
 
         _agent.speed = patrolSpeed;
         _agent.acceleration = acceleration;
@@ -352,6 +357,7 @@ public class NightNurse : MazeEntity
             if (_hasMotionSpeedParam) _animator.SetFloat(AnimMotionSpeed, 1f);
             PlayAnim(_hasLocomotionState ? locomotionState : warnState);
             _physics?.SetSpeaking(false);
+            UpdateChaseMusic();
             return;
         }
 
@@ -381,6 +387,7 @@ public class NightNurse : MazeEntity
 
         UpdateLocomotionAndMouth();
         UpdateKeyJingle();
+        UpdateChaseMusic();
     }
 
     private void LateUpdate()
@@ -1034,6 +1041,55 @@ public class NightNurse : MazeEntity
         };
         _bubble = SpeechBubble.Create(canvas, 18f, nursePalette);
         _bubble.gameObject.name = "NightNurseSpeechBubble";
+    }
+
+    private void BuildAudioSources()
+    {
+        if (_chaseMusicSource == null)
+        {
+            GameObject musicGo = new GameObject("NurseFranticChaseMusic");
+            musicGo.transform.SetParent(transform, false);
+            musicGo.transform.localPosition = new Vector3(0f, ChestHeight, 0f);
+            _chaseMusicSource = musicGo.AddComponent<AudioSource>();
+            _chaseMusicSource.playOnAwake = false;
+            _chaseMusicSource.loop = true;
+            _chaseMusicSource.spatialBlend = 0.35f;
+            _chaseMusicSource.rolloffMode = AudioRolloffMode.Linear;
+            _chaseMusicSource.minDistance = 4f;
+            _chaseMusicSource.maxDistance = 28f;
+            _chaseMusicSource.volume = 0f;
+            AudioClip loopClip = franticChaseClip != null ? franticChaseClip : GameAudio.Library.chaseMusic.First();
+            _chaseMusicSource.clip = loopClip;
+            GameSettings.RouteMusic(_chaseMusicSource);
+        }
+    }
+
+    private void UpdateChaseMusic()
+    {
+        if (_chaseMusicSource == null) return;
+        if (_chaseMusicSource.clip == null)
+        {
+            AudioClip loopClip = franticChaseClip != null ? franticChaseClip : GameAudio.Library.chaseMusic.First();
+            if (loopClip == null) return;
+            _chaseMusicSource.clip = loopClip;
+        }
+
+        bool activeChase = (_mode == Mode.Scream || _mode == Mode.Rush || _mode == Mode.Pin)
+                           && !GameOutcome.IsOver
+                           && (CanAct || _mode == Mode.Pin);
+
+        float targetVol = activeChase ? franticChaseMaxVolume : 0f;
+        float fadeRate = activeChase ? 2.4f : 0.65f;
+        _chaseMusicSource.volume = Mathf.MoveTowards(_chaseMusicSource.volume, targetVol, fadeRate * Time.deltaTime);
+
+        if (_chaseMusicSource.volume > 0.005f)
+        {
+            if (!_chaseMusicSource.isPlaying) _chaseMusicSource.Play();
+        }
+        else if (_chaseMusicSource.isPlaying)
+        {
+            _chaseMusicSource.Pause();
+        }
     }
 
     private void Speak(string[] pool, SpeechBubble.Style style)

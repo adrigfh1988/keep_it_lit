@@ -158,8 +158,8 @@ public partial class MazeGenerator
                 p.SprintSeconds *= 1.20f;
                 p.EscapeSeconds *= 1.20f;
                 p.GateEscapeSeconds *= 1.15f;
-                p.LampRange = Mathf.Max(p.LampRange * 1.20f, 14.0f);
-                p.LampIntensity = Mathf.Max(p.LampIntensity, 4.8f);
+                p.LampRange = Mathf.Max(p.LampRange * 1.20f, 7.5f);
+                p.LampIntensity = Mathf.Max(p.LampIntensity, 1.5f);
                 p.ViewDistance *= 1.15f;
                 p.LockerCount = Mathf.Max(p.LockerCount, Mathf.RoundToInt(p.LockerCount * 1.20f));
                 break;

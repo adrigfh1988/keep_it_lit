@@ -18,17 +18,17 @@ public class Flashlight : MonoBehaviour
     [SerializeField] private float wideOuterAngle = 72f;
     [Tooltip("Width of the bright core when not focused. The gap to wideOuterAngle is the soft edge.")]
     [SerializeField] private float wideInnerAngle = 36f;
-    [SerializeField] private float wideIntensity = 38f;
+    [SerializeField] private float wideIntensity = 14f;
     [Tooltip("How far the wide beam reaches. Keep it near the fog distance, or the cone ends in fog you cannot see through anyway.")]
-    [SerializeField] private float wideRange = 44f;
+    [SerializeField] private float wideRange = 28f;
 
     [Header("Beam - focused (RMB / gamepad LT held)")]
     [Tooltip("A narrow, punchier beam for peering down a corridor - less light spilled sideways, more thrown forward.")]
     [SerializeField] private float focusedOuterAngle = 28f;
     [Tooltip("Width of the bright core when not focused. The gap to wideOuterAngle is the soft edge.")]
     [SerializeField] private float focusedInnerAngle = 14f;
-    [SerializeField] private float focusedIntensity = 64f;
-    [SerializeField] private float focusedRange = 58f;
+    [SerializeField] private float focusedIntensity = 26f;
+    [SerializeField] private float focusedRange = 40f;
     [Tooltip("Seconds to blend fully in or out of the focused beam")]
     [SerializeField] private float focusBlendSeconds = 0.15f;
     [Tooltip("Battery drains this much faster while focused")]
@@ -78,7 +78,7 @@ public class Flashlight : MonoBehaviour
     [Tooltip("Wide beam bright-core width while narrowBeam is on")]
     [SerializeField] private float narrowInnerAngle = 32f;
     [Tooltip("Wide beam intensity while narrowBeam is on")]
-    [SerializeField] private float narrowIntensity = 32f;
+    [SerializeField] private float narrowIntensity = 11f;
 
     private float _baseWideOuterAngle;
     private float _baseWideInnerAngle;
@@ -448,16 +448,16 @@ public class Flashlight : MonoBehaviour
         _light.shadowBias = 0.05f;
         _light.shadowNormalBias = 0.35f;
 
-        // Soft close-range player fill light so nearby corridor walls, doors, and props remain readable even outside direct beam/lamp pools.
-        GameObject fillObj = new GameObject("PlayerFillLight");
-        fillObj.transform.SetParent(transform, false);
-        fillObj.transform.localPosition = Vector3.zero;
-        Light fill = fillObj.AddComponent<Light>();
-        fill.type = LightType.Point;
-        fill.color = new Color(0.92f, 0.94f, 1.0f);
-        fill.range = 8.5f;
-        fill.intensity = 1.8f;
-        fill.shadows = LightShadows.None;
+
+
+
+
+
+
+
+
+
+
 
         ApplyShadowSetting();
         ApplyState();
