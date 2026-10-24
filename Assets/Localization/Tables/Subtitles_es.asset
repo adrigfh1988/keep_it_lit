@@ -362,6 +362,38 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763196
+  - m_Id: 4814051127234560
+    m_Localized: "TU ALIENTO SE VUELVE BLANCO. \xC9L NO QUIERE LAS LUCES ENCENDIDAS."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4814051202732032
+    m_Localized: "LA ESCARCHA SE HACE M\xC1S PROFUNDA. M\xC1S L\xC1MPARAS SE APAGAN."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4814051202732033
+    m_Localized: "LAS L\xC1MPARAS DE LOS REFUGIOS SE EST\xC1N CONGELANDO."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4814051202732034
+    m_Localized: "APAG\xD3N TOTAL. LA OSCURIDAD ES SUYA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4814051202732035
+    m_Localized: "UNA L\xC1MPARA ESTALLA EN EL FR\xCDO."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4814051202732036
+    m_Localized: EL HAZ CONCENTRADO LE QUEMA LOS OJOS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4814051202732037
+    m_Localized: OYE TU ALIENTO HELADO.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4814051202732038
+    m_Localized: ENTUMECIDO POR EL HIELO. CORRE ANTES DE QUE VUELVA TU LINTERNA.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

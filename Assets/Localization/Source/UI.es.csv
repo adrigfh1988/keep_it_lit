@@ -368,3 +368,14 @@ ui.end.wing.4,La habitación 4 ya no está vacía.
 ui.end.wing.5,El Escribiente ha terminado de mecanografiar tu expediente.
 ui.outcome.ending_c_title,PRESENTE EN EL RECUENTO
 ui.outcome.ending_c_sub,"La sexta silla siempre fue la tuya. Al otro lado del mantel, cinco cabezas se alzan a la luz de la vela y no apartan la mirada. Al fondo del pasillo, el timbre de Admisión suena una vez y se detiene. Nadie sale esta noche. El recuento de la mañana es seis."
+ui.end.caught_elias,"LA ESCARCHA SE LLEVÓ EL ÚLTIMO RESTO DE TU CALOR."
+ui.descent.cause.elias,"CONGELADO"
+outcome.caught.elias,"LA ESCARCHA SE LLEVÓ EL ÚLTIMO RESTO DE TU CALOR."
+sub.elias.first_sight,"TU ALIENTO SE VUELVE BLANCO. ÉL NO QUIERE LAS LUCES ENCENDIDAS."
+sub.elias.stage2,"LA ESCARCHA SE HACE MÁS PROFUNDA. MÁS LÁMPARAS SE APAGAN."
+sub.elias.stage3,"LAS LÁMPARAS DE LOS REFUGIOS SE ESTÁN CONGELANDO."
+sub.elias.stage4,"APAGÓN TOTAL. LA OSCURIDAD ES SUYA."
+sub.elias.lamp_snuffed,"UNA LÁMPARA ESTALLA EN EL FRÍO."
+sub.elias.beam_recoil,"EL HAZ CONCENTRADO LE QUEMA LOS OJOS."
+sub.elias.hears_breath,"OYE TU ALIENTO HELADO."
+sub.elias.frost_shove,"ENTUMECIDO POR EL HIELO. CORRE ANTES DE QUE VUELVA TU LINTERNA."

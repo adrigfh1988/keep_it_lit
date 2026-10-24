@@ -190,12 +190,12 @@ namespace KeepItLit.Tests
         [Test]
         public void Met_NeedsTwentySeconds_AndFollowsTheRoster()
         {
-            PatientRecord.NoteMet(EntityKind.Stalker | EntityKind.Listener, false, 5f);
+            PatientRecord.NoteMet(EntityKind.Stalker, false, 5f);
             Assert.AreEqual(0, PatientRecord.Data.metMask, "too short a level");
             PatientRecord.NoteMet(EntityKind.Stalker | EntityKind.Tenant, false, 60f);
             Assert.IsTrue(PatientRecord.Met(CodexEntry.Hunter) && PatientRecord.Met(CodexEntry.Stan) && PatientRecord.Met(CodexEntry.Tenant));
-            Assert.IsFalse(PatientRecord.Met(CodexEntry.Listener) || PatientRecord.Met(CodexEntry.Visitor) || PatientRecord.Met(CodexEntry.LivingBody));
-            PatientRecord.NoteMet(EntityKind.Listener | EntityKind.LivingBody, true, 90f);
+            Assert.IsFalse(PatientRecord.Met(CodexEntry.Visitor));
+            PatientRecord.NoteMet(EntityKind.Elias, true, 90f);
             Assert.AreEqual(PatientRecord.AllCodexMask, PatientRecord.Data.metMask);
             Assert.IsTrue(PatientRecord.IsUnlocked(Unlock.ColourWard));
         }

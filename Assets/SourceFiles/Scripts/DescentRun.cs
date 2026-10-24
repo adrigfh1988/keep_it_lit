@@ -47,7 +47,7 @@ public static class DescentRun
     public static EntityKind CauseEntity { get; set; } = EntityKind.None;
 
     /// <summary>F107 D4: a living body has acted in this descent. From then on every level also gives other bodies a harmless twitch, so the player can never again tell which one is real.</summary>
-    public static bool BodiesWoke { get; set; }
+
 
     /// <summary>A new descent: everything back to depth 1, and the campaign statics reset the way GameFlow.ReturnToMenu does. HunterMemory is reset here and then persists across the levels of this descent, which is the point of it.</summary>
     public static void Begin()
@@ -67,6 +67,7 @@ public static class DescentRun
         CampaignRules.ResetCampaign(); // F122: a descent stays outside presets, Oaths and grades
         NightNurse.ResetCampaign();
         DarkBruno.ResetCampaign();
+        Elias.ResetCampaign();
         System.Array.Clear(GameFlow.RolledObjectives, 0, GameFlow.RolledObjectives.Length);
         System.Array.Clear(GameFlow.RolledMorphologies, 0, GameFlow.RolledMorphologies.Length);
     }
@@ -92,9 +93,10 @@ public static class DescentRun
         LastSecondWindDepth = Never;
         Cause = DescentCause.Hunter;
         CauseEntity = EntityKind.None;
-        BodiesWoke = false;
+
         NightNurse.ResetCampaign();
         DarkBruno.ResetCampaign();
+        Elias.ResetCampaign();
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]

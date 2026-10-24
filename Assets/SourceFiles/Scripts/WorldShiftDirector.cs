@@ -220,7 +220,6 @@ public class WorldShiftDirector : MonoBehaviour
         {
             ShiftablePlacement placement = shiftables[i];
             if (placement.Variants == null || placement.Variants.Count < 2 || placement.Root == null || !placement.Root.gameObject.activeInHierarchy) continue;
-            if (placement.Root.GetComponent<LivingBody>() != null) continue; // F107 D4: a living body (or its decoy) must keep the figure it was built around
             if (!_visitedAt.TryGetValue(placement.Cell, out float visitedAt) || Time.time - visitedAt < displacementMinSeenAge) continue;
             if (!IsUnobserved(placement.Root.position, placement.Root)) continue;
 

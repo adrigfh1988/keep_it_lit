@@ -897,6 +897,10 @@ public partial class GameOutcome : MonoBehaviour
             {
                 subtitle = L10n.T("ui.end.caught_hub"); // F121: it followed you up
             }
+            else if (DescentRun.Cause == DescentCause.Entity && DescentRun.CauseEntity == EntityKind.Elias)
+            {
+                subtitle = L10n.T("ui.end.caught_elias");
+            }
             else if (_flashlight != null && _flashlight.IsDropped)
             {
                 subtitle = L10n.T("ui.end.caught_dropped"); // F120: killed while the torch lay on the floor

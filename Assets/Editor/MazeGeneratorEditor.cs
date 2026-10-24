@@ -25,7 +25,6 @@ public class MazeGeneratorEditor : Editor
         "superEasyMode",
         "debugFullMap",
         "debugEntities",
-        "debugLivingBody",
         "debugShards",
         "debugForceTouchControls",
         "logAudioResolution"
@@ -91,7 +90,6 @@ public class MazeGeneratorEditor : Editor
         SerializedProperty pSuperEasy = serializedObject.FindProperty("superEasyMode");
         SerializedProperty pFullMap = serializedObject.FindProperty("debugFullMap");
         SerializedProperty pEntities = serializedObject.FindProperty("debugEntities");
-        SerializedProperty pLivingBody = serializedObject.FindProperty("debugLivingBody");
         SerializedProperty pShards = serializedObject.FindProperty("debugShards");
         SerializedProperty pTouch = serializedObject.FindProperty("debugForceTouchControls");
         SerializedProperty pLogAudio = serializedObject.FindProperty("logAudioResolution");
@@ -116,7 +114,7 @@ public class MazeGeneratorEditor : Editor
             ResetAllDebugFlags(
                 pSeed, pStartMaze, pDescent, pStartHub, pStartShop, pStartFinale, pFinaleFiles,
                 pFloor, pShape, pObjectives, pForceLoop, pForceGates,
-                pSuperEasy, pFullMap, pEntities, pLivingBody, pShards, pTouch, pLogAudio);
+                pSuperEasy, pFullMap, pEntities, pShards, pTouch, pLogAudio);
         }
         GUI.backgroundColor = prevBg;
         GUI.enabled = true;
@@ -240,10 +238,6 @@ public class MazeGeneratorEditor : Editor
 
         EditorGUILayout.BeginHorizontal();
         EditorGUIUtility.labelWidth = 85f;
-        if ((pEntities.intValue & (int)EntityKind.LivingBody) != 0)
-        {
-            EditorGUILayout.PropertyField(pLivingBody, new GUIContent("Living Body"));
-        }
         EditorGUILayout.PropertyField(pShards, new GUIContent("Give Shards"));
         EditorGUIUtility.labelWidth = 0f;
         EditorGUILayout.EndHorizontal();
@@ -417,7 +411,7 @@ public class MazeGeneratorEditor : Editor
         SerializedProperty pFinaleFiles,
         SerializedProperty pFloor, SerializedProperty pShape, SerializedProperty pObjectives,
         SerializedProperty pForceLoop, SerializedProperty pForceGates,
-        SerializedProperty pSuperEasy, SerializedProperty pFullMap, SerializedProperty pEntities, SerializedProperty pLivingBody,
+        SerializedProperty pSuperEasy, SerializedProperty pFullMap, SerializedProperty pEntities,
         SerializedProperty pShards, SerializedProperty pTouch, SerializedProperty pLogAudio)
     {
         pSeed.intValue = 0;
@@ -435,7 +429,6 @@ public class MazeGeneratorEditor : Editor
         pSuperEasy.boolValue = false;
         pFullMap.boolValue = false;
         pEntities.intValue = 0;
-        pLivingBody.intValue = 0;
         pShards.intValue = 0;
         pTouch.boolValue = false;
         pLogAudio.boolValue = false;

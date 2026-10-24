@@ -143,8 +143,8 @@ public partial class MazeGenerator : MonoBehaviour
     [SerializeField] private bool debugFullMap = false;
     [Tooltip("Not None: forces exactly this entity set on any floor, in the story or a descent (the way to test one). None = the roster decides (EntityRoster). Restore to None before saving.")]
     [SerializeField] private EntityKind debugEntities = EntityKind.None;
-    [Tooltip("With the living body in the set: use only a hanging body or only a floor corpse (Auto = whichever the level has)")]
-    [SerializeField] private LivingBodyTest debugLivingBody = LivingBodyTest.Auto;
+
+
     [Tooltip("For testing the shop: deposited into the wallet when the maze is built.")]
     [SerializeField] private int debugShards = 0;
     [Tooltip("F76: forces TouchInput.Active on regardless of Mode, so the on-screen controls show in the Editor without a touchscreen - click them with the mouse, or use the Device Simulator.")]
@@ -1680,7 +1680,7 @@ public partial class MazeGenerator : MonoBehaviour
                 _ceilingPropCells.Add(cell); // F107 A: after every draw, so no stream moves
                 ApplyModelVariants(clone, x, z, 0x4B22);
                 RecordShiftable(clone, cell, Vector3.zero, false);
-                if (clone.GetComponentInChildren<HangingBodyFit>(true) != null) NoteLivingCandidate(clone, cell, true); // F107 D4: no rng draw
+
                 foreach (HangingBodyFit fit in clone.GetComponentsInChildren<HangingBodyFit>(true)) fit.Fit(cellCeil); // F85: rope cut to this floor's ceiling
             }
         }
@@ -1801,7 +1801,7 @@ public partial class MazeGenerator : MonoBehaviour
             // Look-alike models (the FallenRunner's corpses), picked by a hash of the cell - no rng draw.
             if (clone.TryGetComponent(out ModelVariants models)) models.Apply((cell.x * 73856093) ^ (cell.y * 19349663) ^ 0x5EED);
             RecordShiftable(clone, cell, dir, true);
-            if (clone.transform.Find("Bodies") != null) NoteLivingCandidate(clone, cell, false); // F107 D4: the FallenRunner's corpses; no rng draw
+
 
             foreach (FlickerLight flicker in clone.GetComponentsInChildren<FlickerLight>(true))
             {
@@ -3948,7 +3948,7 @@ public partial class MazeGenerator : MonoBehaviour
 
         foreach (Collider collider in twin.GetComponentsInChildren<Collider>(true)) Destroy(collider);
         foreach (FlickerLight flicker in twin.GetComponentsInChildren<FlickerLight>(true)) Destroy(flicker);
-        foreach (LivingBody living in twin.GetComponentsInChildren<LivingBody>(true)) Destroy(living); // F107 D4: a twin is only a look-alike, never a second living body
+
 
         if (!_propWalls.TryGetValue(cell, out List<Vector3> taken))
         {
@@ -5061,6 +5061,7 @@ public partial class MazeGenerator : MonoBehaviour
         if (RunRules.Has(RunRules.Rule.DyingGrid)) StartCoroutine(DyingGridRoutine());
 
         // F73: lets the hunter notice the torch beam itself, not just what it lights up.
+        aiFollower?.SetDormantForSoloEntity((_entitySet & EntityKind.Elias) != 0);
         aiFollower?.BindTorch(flashlight);
         flashlight?.ApplyTerror(terror); // F103 A4
 

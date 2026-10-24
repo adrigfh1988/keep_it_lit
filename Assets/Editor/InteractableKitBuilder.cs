@@ -317,19 +317,7 @@ public static partial class InteractableKitBuilder
             }
         }
 
-        // F107 D2: the Listener, same build-missing-only rule. Needs Char_Subject.fbx and the Mixamo clips; without them the slot stays empty and
-        // MazeGenerator.BuildEntities logs an error naming this menu item (the level plays without a Listener).
-        SerializedProperty listenerProp = so.FindProperty("listener");
-        if (listenerProp.objectReferenceValue == null)
-        {
-            Listener listener = BuildListenerTemplate(root.transform, new Vector3(x, 0f, 0f));
-            if (listener != null)
-            {
-                listenerProp.objectReferenceValue = listener;
-                x += PieceSpacing;
-                built++;
-            }
-        }
+
 
         // Night Nurse (Sister Agnes), same build-missing-only rule.
         SerializedProperty nightNurseProp = so.FindProperty("nightNurse");
@@ -352,6 +340,19 @@ public static partial class InteractableKitBuilder
             if (butcher != null)
             {
                 darkBrunoProp.objectReferenceValue = butcher;
+                x += PieceSpacing;
+                built++;
+            }
+        }
+
+        // Elias ("The Frost" / Subject #5), same build-missing-only rule.
+        SerializedProperty eliasProp = so.FindProperty("elias");
+        if (eliasProp != null && eliasProp.objectReferenceValue == null)
+        {
+            Elias elias = BuildEliasTemplate(root.transform, new Vector3(x, 0f, 0f));
+            if (elias != null)
+            {
+                eliasProp.objectReferenceValue = elias;
                 x += PieceSpacing;
                 built++;
             }

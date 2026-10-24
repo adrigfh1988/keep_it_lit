@@ -368,3 +368,14 @@ ui.end.wing.4,La chambre 4 n'est plus vide.
 ui.end.wing.5,Le Greffier a fini de taper votre dossier.
 ui.outcome.ending_c_title,PRÉSENT À L'APPEL
 ui.outcome.ending_c_sub,"La sixième chaise a toujours été la vôtre. De l'autre côté de la nappe, cinq têtes se lèvent à la lueur de la bougie sans détourner le regard. Au bout du couloir, la sonnette des Admissions tinte une fois puis se tait. Personne ne sort ce soir. Le compte du matin est à six."
+ui.end.caught_elias,"LE GEL A EMPORTÉ VOTRE DERNIÈRE CHALEUR."
+ui.descent.cause.elias,"GELÉ"
+outcome.caught.elias,"LE GEL A EMPORTÉ VOTRE DERNIÈRE CHALEUR."
+sub.elias.first_sight,"VOTRE SOUFFLE DEVIENT BLANC. IL NE VEUT AUCUNE LUMIÈRE."
+sub.elias.stage2,"LE GEL S'ÉPAISSIT. D'AUTRES LAMPES S'ÉTEIGNENT."
+sub.elias.stage3,"LES LAMPES DES REFUGES GÈLENT À LEUR TOUR."
+sub.elias.stage4,"BLACK-OUT TOTAL. L'OBSCURITÉ LUI APPARTIENT."
+sub.elias.lamp_snuffed,"UNE LAMPE ÉCLATE DANS LE FROID."
+sub.elias.beam_recoil,"LE FAISCEAU CONCENTRÉ LUI BRÛLE LES YEUX."
+sub.elias.hears_breath,"IL ENTEND VOTRE SOUFFLE GLACÉ."
+sub.elias.frost_shove,"ENGOURDI PAR LE GEL. COUREZ AVANT QUE VOTRE LAMPE NE REVIENNE."

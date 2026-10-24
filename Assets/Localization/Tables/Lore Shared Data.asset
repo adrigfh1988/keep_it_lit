@@ -305,6 +305,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331789613957190
+  - m_Id: 4806058725773312
+    m_Key: lore.codex.elias.name
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026328
+  - m_Id: 4806058805465088
+    m_Key: lore.codex.elias.body
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026329
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -545,6 +555,14 @@ MonoBehaviour:
       data:
         m_CommentText: Codex entry name (40 pt title and 30 pt list button)
     - rid: 4707331789613957190
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Codex entry text (28 pt, up to 8 lines, 1000 px)
+    - rid: 4707331972392026328
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Codex entry title (40 pt)
+    - rid: 4707331972392026329
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Codex entry text (28 pt, up to 8 lines, 1000 px)

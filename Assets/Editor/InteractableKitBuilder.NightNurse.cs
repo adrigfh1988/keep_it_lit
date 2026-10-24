@@ -13,6 +13,10 @@ using UnityEngine;
 /// </summary>
 public static partial class InteractableKitBuilder
 {
+    private const string ListenerModelPath = "Assets/SourceFiles/Characters/Mixamo/Char_Subject.fbx";
+    private const string ListenerAnimDir = "Assets/SourceFiles/Animation/Descent";
+    private const string MixamoClipDir = "Assets/SourceFiles/Animation/Mixamo/";
+
     private const string NightNurseModelPath = "Assets/SourceFiles/Models/NurseAgnes/NurseAgnes_Model.fbx";
     private const string NightNurseMatFolder = "Assets/SourceFiles/Materials/Asylum/Npcs";
     private const string NightNurseControllerPath = ListenerAnimDir + "/NightNurse.controller";

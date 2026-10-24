@@ -716,6 +716,7 @@ public class DreadDirector : MonoBehaviour
     private bool PassesCoreRules(float distance, bool requireProgress = true)
     {
         if (_maze == null || _player == null || _follower == null) return false;
+        if (_follower.IsDormantForSoloEntity) return false;
         if (!GameFlow.IsRunActive || GameOutcome.IsOver || (_outcome != null && _outcome.IsEnding)) return false;
 
         if (requireProgress && Progress < startProgress) return false;
@@ -868,7 +869,7 @@ public class DreadDirector : MonoBehaviour
     /// <summary>F103 A6: the player is standing in a dead end with the hunter close but not chasing - the torch dies on them there.</summary>
     private void CheckDeadEndFailure()
     {
-        if (!_terror.torchFailures || _maze == null || _player == null || _follower == null) return;
+        if (!_terror.torchFailures || _maze == null || _player == null || _follower == null || _follower.IsDormantForSoloEntity) return;
         if (_follower.IsChasing || _follower.FlatDistanceToTarget > deadEndFailureHunterDistance) return;
         if (!_maze.IsDeadEndAt(_player.position, out Vector3 cell)) return;
         if (_hasLastDeadEndCell && (cell - _lastDeadEndCell).sqrMagnitude < 0.01f) return;
@@ -893,7 +894,7 @@ public class DreadDirector : MonoBehaviour
     /// </summary>
     private bool TryTorchFailure(float seconds, string reason)
     {
-        if (!_terror.torchFailures || BailedOut() || _flashlight == null || _player == null || _follower == null) return false;
+        if (!_terror.torchFailures || BailedOut() || _flashlight == null || _player == null || _follower == null || _follower.IsDormantForSoloEntity) return false;
         if (_torchFailures >= maxTorchFailuresPerFloor || Time.time - _lastTorchFailureTime < torchFailureSpacing) return false;
         if (!_flashlight.IsBeamLit || _isTelegraphing) return false;
         if (_stealth != null && _stealth.Hidden) return false;

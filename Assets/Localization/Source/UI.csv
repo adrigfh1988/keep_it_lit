@@ -368,3 +368,14 @@ ui.end.wing.4,Second line of the end screen after a loss on floor 4 (Dr. Weiss),
 ui.end.wing.5,Second line of the end screen after a loss on floor 5 (the Director),The Clerk has finished typing your file.
 ui.outcome.ending_c_title,"End screen title of ending C, taking your seat at the Last Supper table in the finale (one line, large, ALL CAPS)",PRESENT AT ROLL CALL
 ui.outcome.ending_c_sub,"End screen body of ending C (wraps over ~6 lines, 1400 px). Five patients sit at the table; the sixth place was yours","The sixth chair was always yours. Across the cloth, five heads rise in the candlelight and do not look away. Down the hall, the Intake bell rings once and stops. Nobody walks out tonight. The morning count is six."
+ui.end.caught_elias,"End screen subtitle when caught by Elias (The Frost)","THE FROST TOOK THE LAST OF YOUR WARMTH."
+ui.descent.cause.elias,"DESCENT death cause word for Elias (The Frost)","FROZEN"
+outcome.caught.elias,"End screen subtitle when caught by Elias (The Frost)","THE FROST TOOK THE LAST OF YOUR WARMTH."
+sub.elias.first_sight,"Elias first sighted on a DESCENT floor","YOUR BREATH TURNS WHITE. HE DOES NOT WANT THE LIGHTS ON."
+sub.elias.stage2,"Elias blackout stage 2 transition","THE FROST DEEPENS. MORE LAMPS ARE DYING."
+sub.elias.stage3,"Elias blackout stage 3 transition","THE SANCTUARY LAMPS ARE FREEZING OVER."
+sub.elias.stage4,"Elias blackout stage 4 transition","TOTAL BLACKOUT. HE OWNS THE DARK."
+sub.elias.lamp_snuffed,"Elias snuffs out a wall lamp nearby","A LAMP SHATTERS IN THE COLD."
+sub.elias.beam_recoil,"Elias recoils from focused flashlight beam","THE FOCUSED BEAM BURNS HIS EYES."
+sub.elias.hears_breath,"Elias hears the player's exhausted breathing","HE HEARS YOUR FROZEN BREATH."
+sub.elias.frost_shove,"Elias first-catch frost shove","FROSTNUMB. RUN BEFORE YOUR TORCH COMES BACK."

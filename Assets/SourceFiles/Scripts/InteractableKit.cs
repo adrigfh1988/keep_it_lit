@@ -71,10 +71,6 @@ public class InteractableKit : MonoBehaviour
              "Lamp0/Lamp1/Lamp2 (each a Bulb renderer and a disabled Light), Chain (padlock look, hidden), Stairwell (outside the wall) and StubLight (disabled).")]
     [SerializeField] private GameObject escapeGate;
 
-    [Header("DESCENT Listener (F107 D2)")]
-    [Tooltip("The blind second killer: Char_Subject (pale, gaunt, no emission) on Animation/Descent/Listener.controller, with a Listener on the root. MazeGenerator.BuildEntities clones it, adds a NavMeshAgent and warps it onto the mesh.")]
-    [SerializeField] private Listener listener;
-
     [Header("Night Nurse - Sister Agnes")]
     [Tooltip("Sister Agnes ('The Night Nurse'): 5-part 3D NurseAgnes_Model.fbx with NurseAgnesPhysics on Animation/Descent/NightNurse.controller, and NightNurse on the root. MazeGenerator.BuildEntities clones it on its own salted RNG stream.")]
     [SerializeField] private NightNurse nightNurse;
@@ -82,6 +78,10 @@ public class InteractableKit : MonoBehaviour
     [Header("The Butcher - Dark Bruno")]
     [Tooltip("Cook Bruno ('The Butcher'): Indie Horror 3D CookBruno_Model.fbx with CookBrunoPhysics on Animation/Descent/DarkBruno.controller, and DarkBruno on the root. MazeGenerator.BuildEntities clones it on its own salted RNG stream.")]
     [SerializeField] private DarkBruno darkBruno;
+
+    [Header("The Frost - Elias (Subject #5)")]
+    [Tooltip("Elias ('The Frost' / Subject #5): solo blackout predator for DESCENT level 5+. MazeGenerator.BuildEntities clones it on its own salted RNG stream.")]
+    [SerializeField] private Elias elias;
 
     [Header("F120 - survivable grab")]
     [Tooltip("The player's torch lying on the floor after the hunter's shove: DroppedTorch on the root (solid collider, local +Z = the beam axis) and a disabled spot light child \"Beam\". HunterGrab clones it; Flashlight.CopyBeamTo copies the live beam onto it. Without it a catch is always a death.")]
@@ -133,7 +133,6 @@ public class InteractableKit : MonoBehaviour
     public ParticleSystem FogBank => fogBank;
     public LoreNote PatientFile => patientFile;
     public DescentItem ItemCache => itemCache;
-    public Listener Listener => listener;
     public NightNurse NightNurse => nightNurse;
     public DarkBruno DarkBruno => darkBruno;
     public DroppedTorch DroppedTorch => droppedTorch;
@@ -179,12 +178,15 @@ public class InteractableKit : MonoBehaviour
     /// <summary>F123: true once the ampoule template is assigned - MazeGenerator.BuildAmpoules logs and skips otherwise.</summary>
     public bool HasNightmareAmpoule => nightmareAmpoule != null;
 
-    /// <summary>F107 D2: true once the Listener template is assigned - MazeGenerator.BuildEntities logs and skips the Listener otherwise.</summary>
-    public bool HasListener => listener != null;
-
     /// <summary>True once the Night Nurse (Sister Agnes) template is assigned.</summary>
     public bool HasNightNurse => nightNurse != null;
 
     /// <summary>True once the Dark Bruno (Maze Butcher) template is assigned.</summary>
     public bool HasDarkBruno => darkBruno != null;
+
+    /// <summary>The Elias ("The Frost" / Subject #5) template.</summary>
+    public Elias Elias => elias;
+
+    /// <summary>True once the Elias template is assigned.</summary>
+    public bool HasElias => elias != null;
 }

@@ -362,6 +362,38 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331672703763191
+  - m_Id: 4814051127234560
+    m_Localized: DEIN ATEM WIRD WEISS. ER WILL KEIN LICHT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4814051202732032
+    m_Localized: DER FROST WIRD TIEFER. IMMER MEHR LAMPEN STERBEN.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4814051202732033
+    m_Localized: AUCH DIE SCHUTZLAMPEN GEFRIEREN.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4814051202732034
+    m_Localized: "VOLLST\xC4NDIGER BLACKOUT. DIE DUNKELHEIT GEH\xD6RT IHM."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4814051202732035
+    m_Localized: "EINE LAMPE ZERSPRINGT IN DER K\xC4LTE."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4814051202732036
+    m_Localized: "DER GEB\xDCNDELTE STRAHL BRENNT IN SEINEN AUGEN."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4814051202732037
+    m_Localized: "ER H\xD6RT DEINEN EISIGEN ATEM."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4814051202732038
+    m_Localized: "K\xC4LTESTARR. LAUF, BEVOR DEINE LAMPE WIEDER ANGEHT."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

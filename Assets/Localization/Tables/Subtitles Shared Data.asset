@@ -420,6 +420,46 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331789613957395
+  - m_Id: 4814051127234560
+    m_Key: sub.elias.first_sight
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026330
+  - m_Id: 4814051202732032
+    m_Key: sub.elias.stage2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026331
+  - m_Id: 4814051202732033
+    m_Key: sub.elias.stage3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026332
+  - m_Id: 4814051202732034
+    m_Key: sub.elias.stage4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026333
+  - m_Id: 4814051202732035
+    m_Key: sub.elias.lamp_snuffed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026334
+  - m_Id: 4814051202732036
+    m_Key: sub.elias.beam_recoil
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026335
+  - m_Id: 4814051202732037
+    m_Key: sub.elias.hears_breath
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026336
+  - m_Id: 4814051202732038
+    m_Key: sub.elias.frost_shove
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026337
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -755,3 +795,35 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: 'Floor 5 PA: a later throwing breach, the orderly is sent. {mark} = the redaction glyph'
+    - rid: 4707331972392026330
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Elias first sighted on a DESCENT floor
+    - rid: 4707331972392026331
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Elias blackout stage 2 transition
+    - rid: 4707331972392026332
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Elias blackout stage 3 transition
+    - rid: 4707331972392026333
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Elias blackout stage 4 transition
+    - rid: 4707331972392026334
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Elias snuffs out a wall lamp nearby
+    - rid: 4707331972392026335
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Elias recoils from focused flashlight beam
+    - rid: 4707331972392026336
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Elias hears the player's exhausted breathing
+    - rid: 4707331972392026337
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Elias first-catch frost shove

@@ -368,3 +368,14 @@ ui.end.wing.4,Raum 4 ist nicht mehr leer.
 ui.end.wing.5,Der Schreiber hat deine Akte fertig getippt.
 ui.outcome.ending_c_title,ANWESEND BEIM APPELL
 ui.outcome.ending_c_sub,"Der sechste Stuhl war schon immer deiner. Über dem Tischtuch heben sich fünf Köpfe im Kerzenlicht und wenden den Blick nicht ab. Den Gang hinunter läutet einmal die Klingel der Aufnahme und verstummt. Heute Nacht geht niemand hinaus. Die Morgenzählung ist bei sechs."
+ui.end.caught_elias,"DER FROST HAT DIR DIE LETZTE WÄRME GENOMMEN."
+ui.descent.cause.elias,"ERFROREN"
+outcome.caught.elias,"DER FROST HAT DIR DIE LETZTE WÄRME GENOMMEN."
+sub.elias.first_sight,"DEIN ATEM WIRD WEISS. ER WILL KEIN LICHT."
+sub.elias.stage2,"DER FROST WIRD TIEFER. IMMER MEHR LAMPEN STERBEN."
+sub.elias.stage3,"AUCH DIE SCHUTZLAMPEN GEFRIEREN."
+sub.elias.stage4,"VOLLSTÄNDIGER BLACKOUT. DIE DUNKELHEIT GEHÖRT IHM."
+sub.elias.lamp_snuffed,"EINE LAMPE ZERSPRINGT IN DER KÄLTE."
+sub.elias.beam_recoil,"DER GEBÜNDELTE STRAHL BRENNT IN SEINEN AUGEN."
+sub.elias.hears_breath,"ER HÖRT DEINEN EISIGEN ATEM."
+sub.elias.frost_shove,"KÄLTESTARR. LAUF, BEVOR DEINE LAMPE WIEDER ANGEHT."

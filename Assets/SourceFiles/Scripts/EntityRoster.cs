@@ -6,25 +6,23 @@ public static class EntityRoster
 {
     /// <summary>First depth with the Stalker in a descent, the same as the story's floor 4.</summary>
     public const int StalkerFrom = 4;
-    /// <summary>From here a descent level has exactly one of the Stalker and the Listener.</summary>
-    public const int OneOfFrom = 6;
-    /// <summary>From here a descent level has both.</summary>
-    public const int BothFrom = 12;
     /// <summary>First depth with an occupied locker.</summary>
     public const int TenantFrom = 3;
-    /// <summary>First depth where a body may be alive (the roll itself is MazeGenerator.BuildEntities's, on the +25 stream).</summary>
-    public const int LivingBodyFrom = 5;
     /// <summary>First floor/depth where Sister Agnes ("The Night Nurse") can patrol the halls.</summary>
     public const int NightNurseFrom = 2;
     /// <summary>First floor/depth where Cook Bruno ("The Butcher") can claim Chopping Block stations.</summary>
     public const int ButcherFrom = 2;
+    /// <summary>First floor/depth where Elias ("The Frost" / Subject #5) can take over as the solo blackout predator.</summary>
+    public const int EliasFrom = 4;
 
-    /// <summary>"LSTN": salts the Stalker-or-Listener pick apart from every other roll of the seed.</summary>
+    /// <summary>"LSTN": salts the entity pool pick apart from every other roll of the seed.</summary>
     private const int PickSalt = 0x4C53544E;
     /// <summary>"AGNS": salts the Night Nurse roster roll apart from every other roll of the seed.</summary>
     private const int NightNursePickSalt = 0x41474E53;
     /// <summary>"BRUN": salts Dark Bruno's roster roll apart from every other roll of the seed.</summary>
     private const int ButcherPickSalt = 0x4252554E;
+    /// <summary>"ELIS": salts Elias's roster roll apart from every other roll of the seed.</summary>
+    private const int EliasPickSalt = 0x454C4953;
 
     /// <summary>
     /// The set for a story floor (`descent` false) or a descent level (`floorOrDepth` is the real depth).
@@ -43,15 +41,16 @@ public static class EntityRoster
                 return EntityKind.None;
             }
 
-            // Story floors 4-5: at most 1 extra entity alongside the Hunter.
+            // Story floors 4-5: at most 1 extra entity alongside the Hunter (or Elias solo).
             if (floorOrDepth == 4 && !NightNurse.SeenThisCampaign) return EntityKind.NightNurse;
             if (floorOrDepth == 5 && !DarkBruno.SeenThisCampaign) return EntityKind.Butcher;
 
-            System.Span<EntityKind> storyPool = stackalloc EntityKind[3];
+            System.Span<EntityKind> storyPool = stackalloc EntityKind[4];
             int storyCount = 0;
             storyPool[storyCount++] = EntityKind.Stalker;
             if (RollsNightNurse(false, floorOrDepth, seed)) storyPool[storyCount++] = EntityKind.NightNurse;
             if (RollsButcher(false, floorOrDepth, seed)) storyPool[storyCount++] = EntityKind.Butcher;
+            if (RollsElias(false, floorOrDepth, seed)) storyPool[storyCount++] = EntityKind.Elias;
             int sh = RunRules.HashSeedFloor(seed ^ PickSalt, floorOrDepth) & 0x7fffffff;
             return storyPool[sh % storyCount];
         }
@@ -66,23 +65,23 @@ public static class EntityRoster
         if (floorOrDepth == 3)
         {
             return GuaranteedEarlyFloor(seed) == 3 ? EntityKind.NightNurse
-                : PickListener(seed, floorOrDepth) && RollsNightNurse(true, floorOrDepth, seed) ? EntityKind.NightNurse
+                : RollsNightNurse(true, floorOrDepth, seed) ? EntityKind.NightNurse
                 : RollsButcher(true, floorOrDepth, seed) ? EntityKind.Butcher
                 : EntityKind.Tenant;
         }
 
         if (floorOrDepth == 4 && !NightNurse.SeenThisCampaign) return EntityKind.NightNurse;
         if (floorOrDepth == 5 && !DarkBruno.SeenThisCampaign) return EntityKind.Butcher;
+        if (floorOrDepth == 6 && !Elias.SeenThisCampaign) return EntityKind.Elias;
 
         // Build candidate list of single entities eligible at this depth and pick exactly 1 deterministically.
-        System.Span<EntityKind> pool = stackalloc EntityKind[6];
+        System.Span<EntityKind> pool = stackalloc EntityKind[5];
         int count = 0;
         if (floorOrDepth >= StalkerFrom) pool[count++] = EntityKind.Stalker;
-        if (floorOrDepth >= OneOfFrom) pool[count++] = EntityKind.Listener;
         if (floorOrDepth >= TenantFrom) pool[count++] = EntityKind.Tenant;
-        if (floorOrDepth >= LivingBodyFrom) pool[count++] = EntityKind.LivingBody;
         if (RollsNightNurse(true, floorOrDepth, seed)) pool[count++] = EntityKind.NightNurse;
         if (RollsButcher(true, floorOrDepth, seed)) pool[count++] = EntityKind.Butcher;
+        if (RollsElias(true, floorOrDepth, seed)) pool[count++] = EntityKind.Elias;
 
         if (count == 0) return EntityKind.None;
         int h = RunRules.HashSeedFloor(seed ^ PickSalt, floorOrDepth) & 0x7fffffff;
@@ -130,8 +129,18 @@ public static class EntityRoster
         return (RunRules.HashSeedFloor(seed ^ ButcherPickSalt, floorOrDepth) & 1) == 1;
     }
 
-    /// <summary>True for the kinds that can end the run themselves (the Listener and the Butcher).</summary>
-    public static bool IsKiller(EntityKind kind) => (kind & (EntityKind.Listener | EntityKind.Butcher)) != 0;
+    /// <summary>
+    /// True when Elias ("The Frost" / Subject #5) is eligible to take over a floor/depth as the solo blackout predator:
+    /// never below floor/depth 4, guaranteed on DESCENT depth 6 if not yet seen in this campaign, and 35% on floors/depths >= 4.
+    /// </summary>
+    public static bool RollsElias(bool descent, int floorOrDepth, int seed)
+    {
+        if (floorOrDepth < EliasFrom) return false;
+        if (descent && floorOrDepth == 6 && !Elias.SeenThisCampaign) return true;
+        int roll = (RunRules.HashSeedFloor(seed ^ EliasPickSalt, floorOrDepth) & 0x7fffffff) % 100;
+        return roll < 35;
+    }
 
-    private static bool PickListener(int seed, int depth) => (RunRules.HashSeedFloor(seed ^ PickSalt, depth) & 1) == 1;
+    /// <summary>True for the kinds that can end the run themselves (the Butcher, Elias).</summary>
+    public static bool IsKiller(EntityKind kind) => (kind & (EntityKind.Butcher | EntityKind.Elias)) != 0;
 }

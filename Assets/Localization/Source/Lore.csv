@@ -89,3 +89,5 @@ lore.codex.tenant.name,Codex entry name (40 pt title and 30 pt list button),THE 
 lore.codex.tenant.body,"Codex entry text (28 pt, up to 8 lines, 1000 px)",One locker is already taken. Listen before you hide: it breathes.
 lore.codex.living_body.name,Codex entry name (40 pt title and 30 pt list button),THE BODIES
 lore.codex.living_body.body,"Codex entry text (28 pt, up to 8 lines, 1000 px)",Not all of them are dead. A hanging one drops on whoever passes in the dark; one on the floor crawls toward your light.
+lore.codex.elias.name,"Codex entry title (40 pt)",ELIAS — THE FROST (SUBJECT #5)
+lore.codex.elias.body,"Codex entry text (28 pt, up to 8 lines, 1000 px)","Pronounced dead on Ward C and wheeled down to Drawer #5 before his chest stopped moving. In the deep DESCENT levels he walks alone: the Orderly does not enter a floor he has claimed. He extinguishes the corridor lamps one by one, turning the remaining bulbs ice-blue as he nears, and tracks the white plume of exhausted breath in the dark. A focused beam held on his face makes him flinch back, for a moment."

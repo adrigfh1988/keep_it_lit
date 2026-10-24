@@ -460,7 +460,36 @@ public class AIFollower : MonoBehaviour
     public Transform Target => target;
 
     /// <summary>Flat (Y-ignoring) distance to the target, or float.MaxValue with no target.</summary>
-    public float FlatDistanceToTarget => target != null ? FlatDirection(target.position - transform.position).magnitude : float.MaxValue;
+    public float FlatDistanceToTarget => IsDormantForSoloEntity ? float.MaxValue : (target != null ? FlatDirection(target.position - transform.position).magnitude : float.MaxValue);
+
+    /// <summary>True on DESCENT floors where a solo boss predator (Elias) replaces the baseline Hunter.</summary>
+    public bool IsDormantForSoloEntity { get; private set; }
+
+    /// <summary>Parks or unparks the baseline Hunter for a solo-predator DESCENT floor.</summary>
+    public void SetDormantForSoloEntity(bool dormant)
+    {
+        IsDormantForSoloEntity = dormant;
+        if (dormant)
+        {
+            DoorBreakers.Unregister(transform);
+            if (_agent != null)
+            {
+                if (_agent.isOnNavMesh) _agent.isStopped = true;
+                _agent.enabled = false;
+            }
+            transform.position = new Vector3(0f, -500f, 0f);
+            foreach (Renderer r in GetComponentsInChildren<Renderer>(true))
+                r.enabled = false;
+            foreach (AudioSource a in GetComponentsInChildren<AudioSource>(true))
+                a.Stop();
+        }
+        else
+        {
+            if (_agent != null && !_agent.enabled) _agent.enabled = true;
+            foreach (Renderer r in GetComponentsInChildren<Renderer>(true))
+                r.enabled = true;
+        }
+    }
 
     // ---------------------------------------------------------------- escalation (effective values)
     //
@@ -702,7 +731,7 @@ public class AIFollower : MonoBehaviour
             _speedCap = runSpeed;
         }
 
-        if (!_agent.isOnNavMesh)
+        if (!IsDormantForSoloEntity && !_agent.isOnNavMesh)
         {
             PlaceOnNavMesh(transform.position, 20f);
         }
@@ -732,7 +761,8 @@ public class AIFollower : MonoBehaviour
     {
         Pickup.OnCollectedAt += HandleStarTakenAt;
         // F75: registers as a loud door-breaker (slam + Stall) - see DoorBreakers and MazeDoor.CheckBash.
-        DoorBreakers.Register(transform, _agent, false, Stall);
+        if (!IsDormantForSoloEntity)
+            DoorBreakers.Register(transform, _agent, false, Stall);
     }
 
     private void OnDisable()
@@ -746,6 +776,7 @@ public class AIFollower : MonoBehaviour
 
     void Update()
     {
+        if (IsDormantForSoloEntity) return;
         if (GameFlow.IsInIntake || GameFlow.IsInHub) // F92: the hub is held like the Intake
         {
             if (_agent != null && _agent.isOnNavMesh) _agent.isStopped = true;
@@ -767,7 +798,7 @@ public class AIFollower : MonoBehaviour
             }
         }
 
-        if (!_agent.isOnNavMesh)
+        if (!IsDormantForSoloEntity && !_agent.isOnNavMesh)
         {
             PlaceOnNavMesh(transform.position, 20f);
             UpdateRotation(FlatDirection(target.position - transform.position));
@@ -830,7 +861,7 @@ public class AIFollower : MonoBehaviour
     /// </summary>
     public void ForceLastKnownPosition(Vector3 position, bool reactAsHeard = true)
     {
-        if (_state == State.Captured) return;
+        if (IsDormantForSoloEntity || _state == State.Captured) return;
         _lastKnownPosition = position;
         if (_state != State.Chase)
         {
@@ -848,7 +879,7 @@ public class AIFollower : MonoBehaviour
     /// </summary>
     public bool StartLureChase(Vector3 playerPosition)
     {
-        if (_agent == null || !_agent.isOnNavMesh || _state == State.Captured || _state == State.Chase || GameFlow.IsInIntake || GameFlow.IsInHub) return false;
+        if (IsDormantForSoloEntity || _agent == null || !_agent.isOnNavMesh || _state == State.Captured || _state == State.Chase || GameFlow.IsInIntake || GameFlow.IsInHub) return false;
 
         if (_state == State.Ambush) LeaveAmbush();
         CancelHeardYouBeat();
@@ -872,7 +903,7 @@ public class AIFollower : MonoBehaviour
     /// </summary>
     public bool BackOff(float seconds, Vector3 farPoint)
     {
-        if (_agent == null || _state == State.Chase || _state == State.Captured || _hunting || Time.time < _stunnedUntil) return false;
+        if (IsDormantForSoloEntity || _agent == null || _state == State.Chase || _state == State.Captured || _hunting || Time.time < _stunnedUntil) return false;
 
         if (_state == State.Ambush) LeaveAmbush();
         _agent.isStopped = false;
@@ -1233,7 +1264,7 @@ public class AIFollower : MonoBehaviour
     /// <summary>F107 D2: the hunter's half of HearNoise, without the MazeNoise broadcast. The torch-beam check calls this directly.</summary>
     private bool HearNoiseInternal(Vector3 at, float radius)
     {
-        if (_agent == null || !_agent.isOnNavMesh || _state == State.Captured || GameFlow.IsInIntake || GameFlow.IsInHub) return false;
+        if (IsDormantForSoloEntity || _agent == null || !_agent.isOnNavMesh || _state == State.Captured || GameFlow.IsInIntake || GameFlow.IsInHub) return false;
 
         // Unconditional, not gated by hearing: TensionDirector's own Pickup.OnCollectedAt subscription
         // (added earlier, in MazeGenerator.Awake) calls this for the very same position before this
@@ -2159,7 +2190,7 @@ public class AIFollower : MonoBehaviour
     /// </summary>
     public bool RelocateTo(Vector3 position, Vector3 towards)
     {
-        if (_agent == null || _state == State.Captured || _state == State.Chase) return false;
+        if (IsDormantForSoloEntity || _agent == null || _state == State.Captured || _state == State.Chase) return false;
         if (!NavMesh.SamplePosition(position, out NavMeshHit hit, 1.5f, NavMesh.AllAreas)) return false;
         if (!_agent.Warp(hit.position)) return false;
 

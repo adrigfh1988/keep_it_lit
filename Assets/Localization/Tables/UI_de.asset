@@ -1539,6 +1539,50 @@ MonoBehaviour:
     m_Localized: ZERTEILT
     m_Metadata:
       m_Items: []
+  - m_Id: 4836215909945344
+    m_Localized: "DER FROST HAT DIR DIE LETZTE W\xC4RME GENOMMEN."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054208
+    m_Localized: ERFROREN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054209
+    m_Localized: "DER FROST HAT DIR DIE LETZTE W\xC4RME GENOMMEN."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054210
+    m_Localized: DEIN ATEM WIRD WEISS. ER WILL KEIN LICHT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054211
+    m_Localized: DER FROST WIRD TIEFER. IMMER MEHR LAMPEN STERBEN.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054212
+    m_Localized: AUCH DIE SCHUTZLAMPEN GEFRIEREN.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054213
+    m_Localized: "VOLLST\xC4NDIGER BLACKOUT. DIE DUNKELHEIT GEH\xD6RT IHM."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054214
+    m_Localized: "EINE LAMPE ZERSPRINGT IN DER K\xC4LTE."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054215
+    m_Localized: "DER GEB\xDCNDELTE STRAHL BRENNT IN SEINEN AUGEN."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054216
+    m_Localized: "ER H\xD6RT DEINEN EISIGEN ATEM."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054217
+    m_Localized: "K\xC4LTESTARR. LAUF, BEVOR DEINE LAMPE WIEDER ANGEHT."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

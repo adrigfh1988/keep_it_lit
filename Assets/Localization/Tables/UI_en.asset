@@ -1539,6 +1539,50 @@ MonoBehaviour:
     m_Localized: CARVED
     m_Metadata:
       m_Items: []
+  - m_Id: 4836215909945344
+    m_Localized: THE FROST TOOK THE LAST OF YOUR WARMTH.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054208
+    m_Localized: FROZEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054209
+    m_Localized: THE FROST TOOK THE LAST OF YOUR WARMTH.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054210
+    m_Localized: YOUR BREATH TURNS WHITE. HE DOES NOT WANT THE LIGHTS ON.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054211
+    m_Localized: THE FROST DEEPENS. MORE LAMPS ARE DYING.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054212
+    m_Localized: THE SANCTUARY LAMPS ARE FREEZING OVER.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054213
+    m_Localized: TOTAL BLACKOUT. HE OWNS THE DARK.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054214
+    m_Localized: A LAMP SHATTERS IN THE COLD.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054215
+    m_Localized: THE FOCUSED BEAM BURNS HIS EYES.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054216
+    m_Localized: HE HEARS YOUR FROZEN BREATH.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054217
+    m_Localized: FROSTNUMB. RUN BEFORE YOUR TORCH COMES BACK.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -160,6 +160,7 @@ public static class GameFlow
         CampaignRules.ResetCampaign(); // F122 (re-derives HubBreach.Mode)
         NightNurse.ResetCampaign();
         DarkBruno.ResetCampaign();
+        Elias.ResetCampaign();
         System.Array.Clear(RolledObjectives, 0, RolledObjectives.Length);
         System.Array.Clear(RolledMorphologies, 0, RolledMorphologies.Length);
         Reload();

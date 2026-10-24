@@ -254,6 +254,14 @@ MonoBehaviour:
     m_Localized: "Tous ne sont pas morts. Un pendu tombe sur qui passe dans le noir ; un corps au sol rampe vers votre lumi\xE8re."
     m_Metadata:
       m_Items: []
+  - m_Id: 4806058725773312
+    m_Localized: "ELIAS \u2014 LE GEL (SUJET N\xB0 5)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4806058805465088
+    m_Localized: "D\xE9clar\xE9 mort dans l'Aile C et descendu au Tiroir n\xB0 5 avant m\xEAme que sa poitrine ne cesse de se soulever. Dans les niveaux profonds de DESCENT, il marche seul : l'Aide-soignant n'entre jamais \xE0 un \xE9tage qu'il a r\xE9clam\xE9. Il \xE9teint les lampes des couloirs une \xE0 une, teintant de bleu glac\xE9 les ampoules restantes \xE0 son approche, et traque le panache blanc d'un souffle \xE9puis\xE9 dans le noir. Un faisceau concentr\xE9 maintenu sur son visage le fait reculer un court instant."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

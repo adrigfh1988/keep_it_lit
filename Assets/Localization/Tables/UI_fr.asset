@@ -1535,6 +1535,50 @@ MonoBehaviour:
     m_Localized: "D\xC9COUP\xC9"
     m_Metadata:
       m_Items: []
+  - m_Id: 4836215909945344
+    m_Localized: "LE GEL A EMPORT\xC9 VOTRE DERNI\xC8RE CHALEUR."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054208
+    m_Localized: "GEL\xC9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054209
+    m_Localized: "LE GEL A EMPORT\xC9 VOTRE DERNI\xC8RE CHALEUR."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054210
+    m_Localized: "VOTRE SOUFFLE DEVIENT BLANC. IL NE VEUT AUCUNE LUMI\xC8RE."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054211
+    m_Localized: "LE GEL S'\xC9PAISSIT. D'AUTRES LAMPES S'\xC9TEIGNENT."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054212
+    m_Localized: "LES LAMPES DES REFUGES G\xC8LENT \xC0 LEUR TOUR."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054213
+    m_Localized: "BLACK-OUT TOTAL. L'OBSCURIT\xC9 LUI APPARTIENT."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054214
+    m_Localized: "UNE LAMPE \xC9CLATE DANS LE FROID."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054215
+    m_Localized: "LE FAISCEAU CONCENTR\xC9 LUI BR\xDBLE LES YEUX."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054216
+    m_Localized: "IL ENTEND VOTRE SOUFFLE GLAC\xC9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054217
+    m_Localized: ENGOURDI PAR LE GEL. COUREZ AVANT QUE VOTRE LAMPE NE REVIENNE.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

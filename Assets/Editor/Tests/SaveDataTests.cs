@@ -339,6 +339,7 @@ namespace KeepItLit.Tests
             {
                 Assert.IsFalse(EntityRoster.IsKiller(EntityKind.NightNurse), "NightNurse is a non-lethal harasser/rule entity");
                 Assert.IsTrue(EntityRoster.IsKiller(EntityKind.Butcher), "DarkBruno (Butcher) is a lethal room-rotating killer entity");
+                Assert.IsTrue(EntityRoster.IsKiller(EntityKind.Elias), "Elias (The Frost) is a lethal solo blackout predator");
 
                 for (int i = 1; i <= 50; i++)
                 {
@@ -356,13 +357,13 @@ namespace KeepItLit.Tests
                     for (int f = 1; f <= 5; f++)
                     {
                         EntityKind s = EntityRoster.For(false, f, seed);
-                        int bits = ((int)s & 1) + (((int)s >> 1) & 1) + (((int)s >> 2) & 1) + (((int)s >> 3) & 1) + (((int)s >> 4) & 1) + (((int)s >> 5) & 1);
+                        int bits = ((int)s & 1) + (((int)s >> 1) & 1) + (((int)s >> 2) & 1) + (((int)s >> 3) & 1) + (((int)s >> 4) & 1) + (((int)s >> 5) & 1) + (((int)s >> 6) & 1);
                         Assert.LessOrEqual(bits, 1, $"Story Floor {f} must have at most 1 extra entity (seed {seed}, got {s})");
                     }
                     for (int d = 1; d <= 15; d++)
                     {
                         EntityKind s = EntityRoster.For(true, d, seed);
-                        int bits = ((int)s & 1) + (((int)s >> 1) & 1) + (((int)s >> 2) & 1) + (((int)s >> 3) & 1) + (((int)s >> 4) & 1) + (((int)s >> 5) & 1);
+                        int bits = ((int)s & 1) + (((int)s >> 1) & 1) + (((int)s >> 2) & 1) + (((int)s >> 3) & 1) + (((int)s >> 4) & 1) + (((int)s >> 5) & 1) + (((int)s >> 6) & 1);
                         Assert.LessOrEqual(bits, 1, $"DESCENT Depth {d} must have at most 1 extra entity (seed {seed}, got {s})");
                     }
 

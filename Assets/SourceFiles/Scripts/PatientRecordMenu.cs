@@ -365,9 +365,10 @@ public class PatientRecordMenu : MonoBehaviour
             case CodexEntry.Hunter: return "hunter";
             case CodexEntry.Stan: return "stan";
             case CodexEntry.Visitor: return "visitor";
-            case CodexEntry.Listener: return "listener";
+
             case CodexEntry.Tenant: return "tenant";
-            default: return "living_body";
+            case CodexEntry.Elias: return "elias";
+            default: return "tenant";
         }
     }
 

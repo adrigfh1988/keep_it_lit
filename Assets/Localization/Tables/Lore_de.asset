@@ -256,6 +256,14 @@ MonoBehaviour:
     m_Localized: "Nicht alle sind tot. Ein h\xE4ngender f\xE4llt auf den, der im Dunkeln vorbeigeht; einer am Boden kriecht zu deinem Licht."
     m_Metadata:
       m_Items: []
+  - m_Id: 4806058725773312
+    m_Localized: "ELIAS \u2014 DER FROST (SUBJEKT NR. 5)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4806058805465088
+    m_Localized: "Auf Station C f\xFCr tot erkl\xE4rt und in Schublade Nr. 5 geschoben, noch bevor sich sein Brustkorb nicht mehr hob. In den tiefen DESCENT-Ebenen geht er allein umher: Der Pfleger betritt kein Stockwerk, das er beansprucht hat. Er l\xF6scht die Ganglampen eine nach der anderen, f\xE4rbt die verbleibenden Gl\xFChbirnen eisblau, wenn er sich n\xE4hert, und folgt im Dunkeln den wei\xDFen Wolken ersch\xF6pften Atems. Ein geb\xFCndelter Lichtstrahl ins Gesicht l\xE4sst ihn kurz zur\xFCckweichen."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

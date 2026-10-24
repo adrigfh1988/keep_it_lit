@@ -254,6 +254,14 @@ MonoBehaviour:
     m_Localized: "No todos est\xE1n muertos. Uno colgado cae sobre quien pasa en la oscuridad; uno en el suelo se arrastra hacia tu luz."
     m_Metadata:
       m_Items: []
+  - m_Id: 4806058725773312
+    m_Localized: "ELIAS \u2014 LA ESCARCHA (SUJETO N.\xBA 5)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4806058805465088
+    m_Localized: "Declarado muerto en el Pabell\xF3n C y llevado al Caj\xF3n n.\xBA 5 antes de que su pecho dejara de moverse. En los niveles profundos de DESCENT camina solo: el Celador no entra en una planta que \xE9l haya reclamado. Apaga las l\xE1mparas del pasillo una tras otra, ti\xF1endo de azul hielo las bombillas restantes al acercarse, y rastrea el vaho blanco del aliento agotado en la oscuridad. Un haz concentrado sostenido sobre su rostro lo hace retroceder por un instante."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

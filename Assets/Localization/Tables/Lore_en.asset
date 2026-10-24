@@ -262,6 +262,14 @@ MonoBehaviour:
     m_Localized: Not all of them are dead. A hanging one drops on whoever passes in the dark; one on the floor crawls toward your light.
     m_Metadata:
       m_Items: []
+  - m_Id: 4806058725773312
+    m_Localized: "ELIAS \u2014 THE FROST (SUBJECT #5)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4806058805465088
+    m_Localized: 'Pronounced dead on Ward C and wheeled down to Drawer #5 before his chest stopped moving. In the deep DESCENT levels he walks alone: the Orderly does not enter a floor he has claimed. He extinguishes the corridor lamps one by one, turning the remaining bulbs ice-blue as he nears, and tracks the white plume of exhausted breath in the dark. A focused beam held on his face makes him flinch back, for a moment.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

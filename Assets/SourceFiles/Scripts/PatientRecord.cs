@@ -9,7 +9,7 @@ public enum Unlock
 }
 
 /// <summary>F122: codex pages, one bit each in <see cref="PatientRecordData.metMask"/>. Append only.</summary>
-public enum CodexEntry { Hunter = 0, Stan = 1, Visitor = 2, Listener = 3, Tenant = 4, LivingBody = 5 }
+public enum CodexEntry { Hunter = 0, Stan = 1, Visitor = 2, Tenant = 3, Elias = 4 }
 
 /// <summary>The persisted record (one JSON blob). Every field is zero-safe, "best" values are stored +1 where 0 must mean none. Never rename or remove a field.</summary>
 [Serializable]
@@ -334,10 +334,19 @@ public static class PatientRecord
         if (runSeconds < 20f) return;
         int mask = 1 << (int)CodexEntry.Hunter;
         if ((set & EntityKind.Stalker) != 0) mask |= 1 << (int)CodexEntry.Stan;
-        if ((set & EntityKind.Listener) != 0) mask |= 1 << (int)CodexEntry.Listener;
+
         if ((set & EntityKind.Tenant) != 0) mask |= 1 << (int)CodexEntry.Tenant;
-        if ((set & EntityKind.LivingBody) != 0) mask |= 1 << (int)CodexEntry.LivingBody;
+        if ((set & EntityKind.Elias) != 0) mask |= 1 << (int)CodexEntry.Elias;
+
         if (visitor) mask |= 1 << (int)CodexEntry.Visitor;
+        if ((Data.metMask | mask) == Data.metMask) return;
+        Data.metMask |= mask;
+        Save();
+    }
+
+    public static void NoteMet(CodexEntry e)
+    {
+        int mask = 1 << (int)e;
         if ((Data.metMask | mask) == Data.metMask) return;
         Data.metMask |= mask;
         Save();

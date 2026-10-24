@@ -129,10 +129,10 @@ public class WallLamp : MonoBehaviour
         _blinks.Add(new BlinkRequest { Delay = Mathf.Max(0f, delay), Duration = seconds });
     }
 
-    /// <summary>Starts a fade to permanently off. No-op on a locker lamp or one already dead/dying. Allowed while unpowered - it stays dead once powered back on (Update's unpowered branch returns before the dying fade runs).</summary>
-    public void Kill(float fadeSeconds)
+    /// <summary>Starts a fade to permanently off. No-op on a locker lamp (unless <paramref name="allowLockerLamp"/> is true) or one already dead/dying. Allowed while unpowered - it stays dead once powered back on (Update's unpowered branch returns before the dying fade runs).</summary>
+    public void Kill(float fadeSeconds, bool allowLockerLamp = false)
     {
-        if (IsLockerLamp || IsDead || _dying) return;
+        if ((IsLockerLamp && !allowLockerLamp) || IsDead || _dying) return;
         _dying = true;
         _killFadeSeconds = Mathf.Max(0.1f, fadeSeconds);
         _killTimer = 0f;

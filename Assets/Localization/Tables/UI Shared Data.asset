@@ -1850,6 +1850,61 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4707331896125948165
+  - m_Id: 4836215909945344
+    m_Key: ui.end.caught_elias
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026317
+  - m_Id: 4836215977054208
+    m_Key: ui.descent.cause.elias
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026318
+  - m_Id: 4836215977054209
+    m_Key: outcome.caught.elias
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026319
+  - m_Id: 4836215977054210
+    m_Key: sub.elias.first_sight
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026320
+  - m_Id: 4836215977054211
+    m_Key: sub.elias.stage2
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026321
+  - m_Id: 4836215977054212
+    m_Key: sub.elias.stage3
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026322
+  - m_Id: 4836215977054213
+    m_Key: sub.elias.stage4
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026323
+  - m_Id: 4836215977054214
+    m_Key: sub.elias.lamp_snuffed
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026324
+  - m_Id: 4836215977054215
+    m_Key: sub.elias.beam_recoil
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026325
+  - m_Id: 4836215977054216
+    m_Key: sub.elias.hears_breath
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026326
+  - m_Id: 4836215977054217
+    m_Key: sub.elias.frost_shove
+    m_Metadata:
+      m_Items:
+      - rid: 4707331972392026327
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -3329,3 +3384,47 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: 'DESCENT cause word: Dark Bruno (the Butcher) caught and carved you at his chopping block. Ends the sentence ''CAUSE: ...'' (a single word, all caps)'
+    - rid: 4707331972392026317
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen subtitle when caught by Elias (The Frost)
+    - rid: 4707331972392026318
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: DESCENT death cause word for Elias (The Frost)
+    - rid: 4707331972392026319
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: End screen subtitle when caught by Elias (The Frost)
+    - rid: 4707331972392026320
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Elias first sighted on a DESCENT floor
+    - rid: 4707331972392026321
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Elias blackout stage 2 transition
+    - rid: 4707331972392026322
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Elias blackout stage 3 transition
+    - rid: 4707331972392026323
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Elias blackout stage 4 transition
+    - rid: 4707331972392026324
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Elias snuffs out a wall lamp nearby
+    - rid: 4707331972392026325
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Elias recoils from focused flashlight beam
+    - rid: 4707331972392026326
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Elias hears the player's exhausted breathing
+    - rid: 4707331972392026327
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Elias first-catch frost shove

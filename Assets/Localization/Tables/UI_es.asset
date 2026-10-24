@@ -1535,6 +1535,50 @@ MonoBehaviour:
     m_Localized: DESCUARTIZADO
     m_Metadata:
       m_Items: []
+  - m_Id: 4836215909945344
+    m_Localized: "LA ESCARCHA SE LLEV\xD3 EL \xDALTIMO RESTO DE TU CALOR."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054208
+    m_Localized: CONGELADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054209
+    m_Localized: "LA ESCARCHA SE LLEV\xD3 EL \xDALTIMO RESTO DE TU CALOR."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054210
+    m_Localized: "TU ALIENTO SE VUELVE BLANCO. \xC9L NO QUIERE LAS LUCES ENCENDIDAS."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054211
+    m_Localized: "LA ESCARCHA SE HACE M\xC1S PROFUNDA. M\xC1S L\xC1MPARAS SE APAGAN."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054212
+    m_Localized: "LAS L\xC1MPARAS DE LOS REFUGIOS SE EST\xC1N CONGELANDO."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054213
+    m_Localized: "APAG\xD3N TOTAL. LA OSCURIDAD ES SUYA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054214
+    m_Localized: "UNA L\xC1MPARA ESTALLA EN EL FR\xCDO."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054215
+    m_Localized: EL HAZ CONCENTRADO LE QUEMA LOS OJOS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054216
+    m_Localized: OYE TU ALIENTO HELADO.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836215977054217
+    m_Localized: ENTUMECIDO POR EL HIELO. CORRE ANTES DE QUE VUELVA TU LINTERNA.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
