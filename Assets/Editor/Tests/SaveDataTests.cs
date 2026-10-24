@@ -432,5 +432,136 @@ namespace KeepItLit.Tests
                 DarkBruno.ResetCampaign();
             }
         }
+
+        [Test]
+        public void CampaignLifecycle_ResetAllCampaignState_ClearsHubAndEntityState()
+        {
+            try
+            {
+                // Dirty all campaign-scoped and per-floor static state across subsystems (Bugs B1 & B2).
+                HubState.BreachDone = true;
+                HubState.MealFloor = 4;
+                HubState.IsFinale = true;
+                HubBreach.Retrying = true;
+                HubBreach.InProgress = true;
+                PlayerWallet.AwardBonus(50);
+                HunterMemory.Learn(HunterMemory.Habit.Lockers);
+                NightNurse.SeenThisCampaign = true;
+                DarkBruno.SeenThisCampaign = true;
+                Elias.RestoreFrom(new SaveData { eliasSeen = true });
+                GameFlow.CurrentFloor = 4;
+
+                CampaignLifecycle.ResetAllCampaignState();
+
+                Assert.IsFalse(HubState.BreachDone, "HubState.BreachDone must be cleared");
+                Assert.AreEqual(0, HubState.MealFloor, "HubState.MealFloor must be cleared");
+                Assert.IsFalse(HubState.IsFinale, "HubState.IsFinale must be cleared");
+                Assert.IsFalse(HubBreach.Retrying, "HubBreach.Retrying must be cleared");
+                Assert.IsFalse(HubBreach.InProgress, "HubBreach.InProgress must be cleared");
+                Assert.AreEqual(0, PlayerWallet.Shards, "PlayerWallet.Shards must be cleared");
+                Assert.AreEqual(0, HunterMemory.Level(HunterMemory.Habit.Lockers), "HunterMemory must be cleared");
+                Assert.IsFalse(NightNurse.SeenThisCampaign, "NightNurse.SeenThisCampaign must be cleared");
+                Assert.IsFalse(DarkBruno.SeenThisCampaign, "DarkBruno.SeenThisCampaign must be cleared");
+                Assert.IsFalse(Elias.SeenThisCampaign, "Elias.SeenThisCampaign must be cleared");
+                Assert.AreEqual(1, GameFlow.CurrentFloor, "GameFlow.CurrentFloor must reset to 1");
+                Assert.AreEqual(RunPhase.TitleMenu, GameFlow.Phase, "GameFlow.Phase must reset to TitleMenu");
+                Assert.AreEqual(RunLoadIntent.ShowTitleMenu, GameFlow.LoadIntent, "GameFlow.LoadIntent must reset to ShowTitleMenu");
+            }
+            finally
+            {
+                GameFlow.IsDescent = false;
+                CampaignLifecycle.ResetAllCampaignState();
+            }
+        }
+
+        [Test]
+        public void GameFlow_PhaseAndLoadIntent_StaySynchronizedWithLegacyFlags()
+        {
+            try
+            {
+                CampaignLifecycle.ResetAllCampaignState();
+                Assert.AreEqual(RunPhase.TitleMenu, GameFlow.Phase);
+                Assert.AreEqual(RunLoadIntent.ShowTitleMenu, GameFlow.LoadIntent);
+
+                // Intake transition
+                GameFlow.IsInIntake = true;
+                Assert.AreEqual(RunPhase.Intake, GameFlow.Phase);
+                Assert.IsTrue(GameFlow.IsInIntake);
+                Assert.IsFalse(GameFlow.IsRunActive);
+
+                // MazeActive transition via BeginRun()
+                GameFlow.BeginRun();
+                Assert.AreEqual(RunPhase.MazeActive, GameFlow.Phase);
+                Assert.IsTrue(GameFlow.IsRunActive);
+                Assert.IsFalse(GameFlow.IsInIntake);
+                Assert.IsFalse(GameFlow.IsInHub);
+                Assert.IsFalse(GameFlow.IsInShop);
+
+                // Hub and Finale transitions
+                GameFlow.IsRunActive = false;
+                GameFlow.IsInHub = true;
+                Assert.AreEqual(RunPhase.Hub, GameFlow.Phase);
+                Assert.IsTrue(GameFlow.IsInHub);
+                Assert.IsFalse(GameFlow.IsRunActive);
+
+                HubState.IsFinale = true;
+                Assert.AreEqual(RunPhase.HubFinale, GameFlow.Phase);
+                Assert.IsTrue(GameFlow.IsInHub, "IsInHub remains true during Finale");
+
+                HubState.IsFinale = false;
+                Assert.AreEqual(RunPhase.Hub, GameFlow.Phase);
+
+                // Shop transition
+                GameFlow.IsInHub = false;
+                GameFlow.IsInShop = true;
+                Assert.AreEqual(RunPhase.LegacyShop, GameFlow.Phase);
+                Assert.IsTrue(GameFlow.IsInShop);
+                Assert.IsFalse(GameFlow.IsInHub);
+
+                // Back to Title
+                GameFlow.IsInShop = false;
+                Assert.AreEqual(RunPhase.TitleMenu, GameFlow.Phase);
+
+                // RunLoadIntent synchronization with legacy flags
+                GameFlow.SkipMenuOnLoad = true;
+                GameFlow.ArriveInHub = true;
+                Assert.AreEqual(RunLoadIntent.ArriveInHub, GameFlow.LoadIntent);
+                Assert.IsTrue(GameFlow.ArriveInHub);
+                Assert.IsTrue(GameFlow.SkipMenuOnLoad);
+
+                GameFlow.ArriveInHub = false;
+                GameFlow.ResumeInShop = true;
+                Assert.AreEqual(RunLoadIntent.ResumeInShop, GameFlow.LoadIntent);
+                Assert.IsTrue(GameFlow.ResumeInShop);
+                Assert.IsFalse(GameFlow.ArriveInHub);
+
+                GameFlow.ResumeInShop = false;
+                Assert.AreEqual(RunLoadIntent.StartFloor, GameFlow.LoadIntent);
+
+                GameFlow.SkipMenuOnLoad = false;
+                GameFlow.BeginCampaignOnLoad = true;
+                Assert.AreEqual(RunLoadIntent.BeginNewCampaign, GameFlow.LoadIntent);
+                Assert.IsTrue(GameFlow.BeginCampaignOnLoad);
+
+                GameFlow.BeginCampaignOnLoad = false;
+                Assert.AreEqual(RunLoadIntent.ShowTitleMenu, GameFlow.LoadIntent);
+                Assert.IsFalse(GameFlow.SkipMenuOnLoad);
+                Assert.IsFalse(GameFlow.ArriveInHub);
+                Assert.IsFalse(GameFlow.ResumeInShop);
+                Assert.IsFalse(GameFlow.BeginCampaignOnLoad);
+            }
+            finally
+            {
+                GameFlow.SkipMenuOnLoad = false;
+                GameFlow.ArriveInHub = false;
+                GameFlow.ResumeInShop = false;
+                GameFlow.BeginCampaignOnLoad = false;
+                GameFlow.IsRunActive = false;
+                GameFlow.IsInIntake = false;
+                GameFlow.IsInHub = false;
+                GameFlow.IsInShop = false;
+                CampaignLifecycle.ResetAllCampaignState();
+            }
+        }
     }
 }

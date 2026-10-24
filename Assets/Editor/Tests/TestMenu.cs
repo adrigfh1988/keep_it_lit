@@ -25,6 +25,9 @@ namespace KeepItLit.Tests
         /// <summary>For -executeMethod if EnterPlayMode misbehaves under -runTests: same job, exits with the result.</summary>
         public static void RunAllFromCommandLine() => Run(new[] { "Fast", "Maze" }, true);
 
+        /// <summary>Runs the Fast unit test suite in batch mode and exits with the result.</summary>
+        public static void RunFastFromCommandLine() => Run(new[] { "Fast" }, true);
+
         private static void Run(string[] categories, bool exitWhenDone)
         {
             string path = Path.Combine(Path.GetDirectoryName(Application.dataPath) ?? ".", "Logs", "TestResults.txt");

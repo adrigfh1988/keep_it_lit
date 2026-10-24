@@ -30,8 +30,8 @@ Batch-mode compilation (`Unity.exe -batchmode -quit ...`) fails whenever the Uni
 
 When you need a direct compiler verdict in seconds without waiting on an Editor domain reload (Editor `6000.6.2f1`):
 
-1. Parse `Assembly-CSharp.csproj` (or `Assembly-CSharp-Editor.csproj` for Editor scripts) for `<DefineConstants>`, `<HintPath>` references, and the `<Compile Include>` list.
-2. Union the `<Compile Include>` list with `Assets/SourceFiles/Scripts/*.cs` (and `Assets/Editor/*.cs` for Editor scripts) because `.csproj` may be stale for brand-new files.
+1. Parse `KeepItLit.Runtime.csproj` / `Assembly-CSharp.csproj` (or `KeepItLit.Editor.csproj` / `Assembly-CSharp-Editor.csproj` for Editor scripts) for `<DefineConstants>`, `<HintPath>` references, and the `<Compile Include>` list.
+2. Union the `<Compile Include>` list with `Get-ChildItem -Path "Assets/Scripts" -Recurse -Filter "*.cs"` (and `Get-ChildItem -Path "Assets/Editor" -Recurse -Filter "*.cs"` for Editor scripts) because `.csproj` may be stale for brand-new files.
 3. Add every `Library/ScriptAssemblies/*.dll` (except `Assembly-CSharp*.dll`) as `-r:` references — package dependencies (`Unity.InputSystem`, `Unity.AI.Navigation`, `Unity.Cinemachine`) are `<ProjectReference>`s in `.csproj`, so omitting `Library/ScriptAssemblies/*.dll` causes spurious `CS0246`/`CS0234` errors.
 4. Write a `.rsp` response file with:
    - `-target:library`
