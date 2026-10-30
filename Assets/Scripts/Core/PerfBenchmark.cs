@@ -304,7 +304,7 @@ public sealed class PerfBenchmark : MonoBehaviour
     private static List<Vector3> MazeRoute(MazeGenerator mg)
     {
         NavMeshQueryFilter filter = new NavMeshQueryFilter { agentTypeID = mg.MazeAgentTypeId, areaMask = NavMesh.AllAreas };
-        return Corners(mg.CellCenter(0, 0), mg.FarthestCellCenter(), filter);
+        return Corners(mg.StartCellCenter, mg.FarthestCellCenter(), filter);
     }
 
     private static List<Vector3> HubRoute(Vector3 from)

@@ -272,21 +272,24 @@ public partial class MazeGenerator
             if (atmosphere == null) atmosphere = gameObject.AddComponent<HorrorAtmosphere>();
             if (_profile != null)
             {
+                const float ambientScale = 0.55f;
+                const float fogScale = 0.75f;
                 if (_theme != null)
                 {
                     Color themeAmbient = _theme.Ambient;
                     float themeMax = Mathf.Max(themeAmbient.r, themeAmbient.g, themeAmbient.b);
-                    float profileMax = Mathf.Max(_profile.Ambient.r, _profile.Ambient.g, _profile.Ambient.b);
-                    if (themeMax > 0.0001f && themeMax < profileMax)
+                    float profileMax = Mathf.Max(_profile.Ambient.r, _profile.Ambient.g, _profile.Ambient.b) * ambientScale;
+                    if (themeMax > 0.0001f)
                     {
                         float s = profileMax / themeMax;
                         themeAmbient = new Color(themeAmbient.r * s, themeAmbient.g * s, themeAmbient.b * s, themeAmbient.a);
                     }
-                    atmosphere.ApplyProfile(themeAmbient, _profile.FogDensity * _theme.FogDensityScale, _theme.FogColor);
+                    atmosphere.ApplyProfile(themeAmbient, _profile.FogDensity * _theme.FogDensityScale * fogScale, _theme.FogColor);
                 }
                 else
                 {
-                    atmosphere.ApplyProfile(_profile.Ambient, _profile.FogDensity);
+                    Color a = _profile.Ambient;
+                    atmosphere.ApplyProfile(new Color(a.r * ambientScale, a.g * ambientScale, a.b * ambientScale, a.a), _profile.FogDensity * fogScale);
                 }
             }
         }
@@ -294,7 +297,7 @@ public partial class MazeGenerator
         HorrorAudioDirector director = FindAnyObjectByType<HorrorAudioDirector>();
         if (director == null) director = gameObject.AddComponent<HorrorAudioDirector>();
 
-        AudioClip music = PickBaseMusic();
+        AudioClip music = PickMazeMusic();
         director.Bind(FindPlayer(), aiFollower, stingClip, music != null ? music : droneClip, panicClip, droneIsMusic: music != null, spotted: spottedClip);
         director.ApplyTerror(terror); // F103 A9
 
@@ -817,6 +820,21 @@ public partial class MazeGenerator
         string oaths = OathBannerText(); // F122
         string rule = RunRules.Current == RunRules.Rule.None ? "" : L10n.T("sub.banner.rule", ("name", RunRules.Name), ("description", RunRules.Description));
         return rule.Length == 0 ? oaths : oaths.Length == 0 ? rule : rule + " · " + oaths;
+    }
+
+    /// <summary>
+    /// Picks the background music bed for the maze itself: when the maze has Elias (<see cref="EntityKind.Elias"/>),
+    /// plays his dedicated soundtrack ("Arya of Terror - Dolls Of Nagoro" from <see cref="GameAudioLibrary.eliasMazeMusic"/>);
+    /// otherwise returns <see cref="PickBaseMusic"/>.
+    /// </summary>
+    private AudioClip PickMazeMusic()
+    {
+        if ((_entitySet & EntityKind.Elias) != 0)
+        {
+            AudioClip eliasTrack = GameAudio.Library.eliasMazeMusic.First();
+            if (eliasTrack != null) return eliasTrack;
+        }
+        return PickBaseMusic();
     }
 
     /// <summary>One of baseMusic for this floor, from the seed (a Retry of the same maze keeps it), or null if none are set.</summary>

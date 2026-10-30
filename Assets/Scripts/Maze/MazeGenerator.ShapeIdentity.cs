@@ -664,18 +664,20 @@ public partial class MazeGenerator
 
                 if (fogTemplate != null && fogDensity > 0f && fogMaxParticles > 0)
                 {
-                    ParticleSystem mist = Instantiate(fogTemplate, regionCenter + Vector3.down * 0.6f, Quaternion.identity, voidGroup);
+                    ParticleSystem mist = Instantiate(fogTemplate, regionCenter + Vector3.down * 0.85f, Quaternion.identity, voidGroup);
                     mist.name = $"VoidMist_{regionIndex}";
                     mist.gameObject.SetActive(true);
                     mist.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                     ParticleSystem.MainModule main = mist.main;
                     int alive = Mathf.Clamp(Mathf.RoundToInt(spanX * spanZ * 0.25f), 4, 24);
                     main.maxParticles = alive + 2;
+                    main.startSizeY = new ParticleSystem.MinMaxCurve(0.35f, 0.60f);
                     ParticleSystem.EmissionModule emission = mist.emission;
                     float life = (main.startLifetime.constantMin + main.startLifetime.constantMax) * 0.5f;
                     emission.rateOverTime = alive / Mathf.Max(1f, life);
                     ParticleSystem.ShapeModule shape = mist.shape;
-                    shape.scale = new Vector3(spanX, 1.2f, spanZ);
+                    shape.scale = new Vector3(spanX, 0.5f, spanZ);
+                    shape.position = new Vector3(0f, 0.15f, 0f);
                     mist.Simulate(life, true, true);
                     mist.gameObject.AddComponent<FogScale>();
                     mist.Play();

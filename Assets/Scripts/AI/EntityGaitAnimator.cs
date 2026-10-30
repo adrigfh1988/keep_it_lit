@@ -388,20 +388,34 @@ public sealed class EntityGaitAnimator
         }
     }
 
-    /// <summary>Mirrors updated meshes/materials/avatar from the scene's <see cref="AsylumHub"/> NPC counterpart onto this maze instance.</summary>
-    public static void SyncCosmeticsFromHub(Transform body, Animator animator, HubNpc.Who who, string hubBodyName)
+    /// <summary>Mirrors updated meshes/materials/avatar from the scene's <see cref="AsylumHub"/> NPC or Patient counterpart onto this maze instance.</summary>
+    public static void SyncCosmeticsFromHub(Transform body, Animator animator, HubNpc.Who? who, string hubBodyName)
     {
         if (body == null) return;
         AsylumHub hub = Object.FindAnyObjectByType<AsylumHub>(FindObjectsInactive.Include);
         if (hub == null || hub.life == null) return;
 
         Transform hubBody = null;
-        foreach (HubNpc npc in hub.life.GetComponentsInChildren<HubNpc>(true))
+        if (who.HasValue)
         {
-            if (npc != null && npc.who == who && npc.body != null && npc.body.name == hubBodyName)
+            foreach (HubNpc npc in hub.life.GetComponentsInChildren<HubNpc>(true))
             {
-                hubBody = npc.body;
-                break;
+                if (npc != null && npc.who == who.Value && npc.body != null && npc.body.name == hubBodyName)
+                {
+                    hubBody = npc.body;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            foreach (HubPatient patient in hub.life.GetComponentsInChildren<HubPatient>(true))
+            {
+                if (patient != null && patient.body != null && patient.body.name == hubBodyName)
+                {
+                    hubBody = patient.body;
+                    break;
+                }
             }
         }
         if (hubBody == null) return;

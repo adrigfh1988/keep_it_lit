@@ -190,7 +190,11 @@ public class Locker : MonoBehaviour, IHidingSpot
         }
 
         CharacterController cc = _player.GetComponent<CharacterController>();
-        if (cc != null) cc.enabled = false;
+        if (cc != null)
+        {
+            cc.enabled = false;
+            SetIgnoreLockerColliders(cc, true);
+        }
         _player.position = _insidePosition;
         _player.rotation = Quaternion.Euler(0f, _facingYaw, 0f);
         if (cc != null) cc.enabled = true;
@@ -258,7 +262,11 @@ public class Locker : MonoBehaviour, IHidingSpot
         if (cc != null) cc.enabled = false;
         _player.position = FrontPosition;
         _player.rotation = Quaternion.Euler(0f, _facingYaw, 0f);
-        if (cc != null) cc.enabled = true;
+        if (cc != null)
+        {
+            SetIgnoreLockerColliders(cc, false);
+            cc.enabled = true;
+        }
 
         _controller.MovementLocked = false;
         _controller.ClearYawClamp();
@@ -350,7 +358,7 @@ public class Locker : MonoBehaviour, IHidingSpot
 
     private IEnumerator BurstRoutine()
     {
-        yield return TurnDoor(_doorClosed * Quaternion.Euler(0f, doorOpenDegrees, 0f), burstOpenSeconds);
+        yield return TurnDoor(_doorClosed * Quaternion.Euler(0f, -doorOpenDegrees, 0f), burstOpenSeconds);
         yield return new WaitForSeconds(burstHoldSeconds);
         yield return TurnDoor(_doorClosed, burstOpenSeconds * 1.5f);
         _doorMotion = null;
@@ -419,7 +427,7 @@ public class Locker : MonoBehaviour, IHidingSpot
 
     private IEnumerator JoltRoutine()
     {
-        Quaternion jolted = _doorClosed * Quaternion.Euler(0f, joltDegrees, 0f);
+        Quaternion jolted = _doorClosed * Quaternion.Euler(0f, -joltDegrees, 0f);
         yield return TurnDoor(jolted, joltSeconds * 0.5f);
         yield return TurnDoor(_doorClosed, joltSeconds * 0.5f);
         _doorMotion = null;
@@ -441,7 +449,7 @@ public class Locker : MonoBehaviour, IHidingSpot
     {
         _peeking = true;
         GameAudio.PlayAt(GameAudio.Library.lockerDoor, transform.position, 0.6f);
-        yield return TurnDoor(_doorClosed * Quaternion.Euler(0f, peekDegrees, 0f), peekOpenSeconds);
+        yield return TurnDoor(_doorClosed * Quaternion.Euler(0f, -peekDegrees, 0f), peekOpenSeconds);
         yield return new WaitForSeconds(seconds);
         yield return TurnDoor(_doorClosed, peekOpenSeconds);
         GameAudio.PlayAt(GameAudio.Library.lockerDoor, transform.position, 0.5f);
@@ -465,7 +473,7 @@ public class Locker : MonoBehaviour, IHidingSpot
     private IEnumerator OpenDoor()
     {
         Quaternion start = _door.localRotation;
-        Quaternion end = start * Quaternion.Euler(0f, doorOpenDegrees, 0f);
+        Quaternion end = _doorClosed * Quaternion.Euler(0f, -doorOpenDegrees, 0f);
         float t = 0f;
 
         while (t < doorOpenSeconds)
@@ -476,5 +484,17 @@ public class Locker : MonoBehaviour, IHidingSpot
         }
 
         _door.localRotation = end;
+    }
+
+    private void SetIgnoreLockerColliders(CharacterController cc, bool ignore)
+    {
+        if (cc == null) return;
+        Collider[] colliders = GetComponentsInChildren<Collider>(true);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            Collider col = colliders[i];
+            if (col != null && !col.isTrigger && col != cc)
+                Physics.IgnoreCollision(cc, col, ignore);
+        }
     }
 }

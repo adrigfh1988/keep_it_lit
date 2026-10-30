@@ -29,7 +29,8 @@ public partial class PhantomDirector : MonoBehaviour
         Whisper,
         WrongSound,
         Shadow,
-        Peripheral
+        Peripheral,
+        AttachedPresence
     }
 
     [Header("Scheduling")]
@@ -176,6 +177,41 @@ public partial class PhantomDirector : MonoBehaviour
     [SerializeField] private float doubleSpotAngle = 40f;
     [SerializeField] private Color doubleSpotColor = new Color(1f, 0.93f, 0.8f);
 
+    [Header("F128 - attached presence (P.T. tether)")]
+    [Tooltip("Seconds the presence stays tethered behind the player's back (min..max)")]
+    [SerializeField] private float attachedDurationMin = 8f;
+    [SerializeField] private float attachedDurationMax = 15f;
+    [Tooltip("Distance behind the player's back where the unseen figure walks and stands (m)")]
+    [SerializeField] private float attachedDistanceBehind = 1.25f;
+    [Tooltip("Radius within which a powered WallLamp behind the player casts the presence's shadow forward (m)")]
+    [SerializeField] private float attachedLampShadowRadius = 6.5f;
+    [Tooltip("How far ahead of the player's feet the rear lamp shadow is aimed (m)")]
+    [SerializeField] private float attachedLampShadowForwardAim = 1.8f;
+    [Tooltip("How strongly the unseen figure biases toward the lamp-to-forward-floor line (0..1)")]
+    [Range(0f, 1f)]
+    [SerializeField] private float attachedLampBias = 0.65f;
+    [Tooltip("Camera yaw speed above which a turn counts as a whip-turn (deg/s)")]
+    [SerializeField] private float whipTurnSpeedThreshold = 115f;
+    [Tooltip("Cumulative fast-turn yaw required to catch the peripheral glimpse before it vanishes (deg)")]
+    [SerializeField] private float whipTurnMinAngle = 35f;
+    [Tooltip("Seconds the figure remains frozen in view during a whip-turn before vanishing (s)")]
+    [SerializeField] private float whipGlimpseDuration = 0.15f;
+    [Tooltip("Distance at which the whip-turn glimpse figure freezes (m)")]
+    [SerializeField] private float whipGlimpseDistance = 1.65f;
+    [Tooltip("Cumulative backward walking distance that bumps into the presence and triggers a startle (m)")]
+    [SerializeField] private float backpedalBumpDistance = 0.75f;
+    [Tooltip("DreadMeter value above which keeping the presence behind you too long triggers a startle")]
+    [SerializeField] private float highDreadStartleThreshold = 0.82f;
+    [Tooltip("Seconds at high dread before the attached presence triggers a close startle (s)")]
+    [SerializeField] private float highDreadStartleSeconds = 5.5f;
+    [Tooltip("Seconds the torch cuts out during an attached startle when torchFailures is enabled (s)")]
+    [SerializeField] private float startleBlackoutSeconds = 0.85f;
+    [Tooltip("Delay after the late footstep before the neck breath plays behind one ear (s)")]
+    [SerializeField] private float neckBreathDelay = 0.45f;
+    [Tooltip("Distance behind the player's ear for the close neck breath (m)")]
+    [SerializeField] private float neckBreathDistance = 0.65f;
+    [SerializeField] private float neckBreathVolume = 0.28f;
+
     private MazeGenerator _maze;
     private Transform _player;
     private Camera _camera;
@@ -196,6 +232,8 @@ public partial class PhantomDirector : MonoBehaviour
     private bool _bodyMissingLogged;
     private PhantomBody _doubleBody; // F105 C8: the player's own robot, built on first use
     private bool _doubleMissingLogged;
+    private bool _attachedActive; // F128: true while an AttachedPresence routine is running
+    private WallLamp _shadowLamp; // F128: the single rear WallLamp currently casting soft shadows for the attached presence
 
     private readonly RaycastHit[] _rayHits = new RaycastHit[16];
 
@@ -265,6 +303,8 @@ public partial class PhantomDirector : MonoBehaviour
         GameManager.ProgressChanged -= HandleProgress;
 
         StopAllCoroutines();
+        ClearShadowLamp();
+        _attachedActive = false;
         _body = null; // destroyed with the phantoms below; rebuilt on the next use
         _doubleBody = null;
         if (_phantomsRoot != null)
@@ -328,19 +368,20 @@ public partial class PhantomDirector : MonoBehaviour
 
     private static bool IsAudioType(PhantomType type)
     {
-        return type == PhantomType.Footsteps || type == PhantomType.Whisper || type == PhantomType.WrongSound;
+        return type == PhantomType.Footsteps || type == PhantomType.Whisper || type == PhantomType.WrongSound || type == PhantomType.AttachedPresence;
     }
 
     /// <summary>F104 B3: a locker stops being a refuge. Once the player has been hidden for lockerQuietSeconds, sounds may reach them there; figures never do.</summary>
     private bool HiddenAllowsAudio(PhantomType type)
     {
-        return _terror.sanctuaryDecay && IsAudioType(type) && Time.time - _stealth.HiddenSince >= lockerQuietSeconds;
+        return _terror.sanctuaryDecay && IsAudioType(type) && type != PhantomType.AttachedPresence && Time.time - _stealth.HiddenSince >= lockerQuietSeconds;
     }
 
     private bool PassesGate(PhantomType type)
     {
         if (_maze == null || _player == null || _follower == null) return false;
         if (BailedOut()) return false;
+        if (type == PhantomType.AttachedPresence && (_attachedActive || (_stealth != null && _stealth.Hidden))) return false;
         if (_maze.Loop != null && _maze.Loop.IsInside) return false; // F106: the looping corridor has its own horrors (the Visitor); no phantom fires inside it
         if (_follower.IsChasing) return false;
         // F103 A2: a sound may come from a hunter that is close; a figure may not. Otherwise every phantom proves the hunter is far away.
@@ -380,6 +421,9 @@ public partial class PhantomDirector : MonoBehaviour
             case PhantomType.Shadow:
                 fired = TrySpawnShadow();
                 break;
+            case PhantomType.AttachedPresence:
+                fired = TryStartAttachedPresence();
+                break;
             default:
                 fired = TrySpawnPeripheral();
                 break;
@@ -394,21 +438,26 @@ public partial class PhantomDirector : MonoBehaviour
         float silhouette = silhouetteWeight * (_flashlight != null && !_flashlight.IsOn ? silhouetteTorchOffMultiplier : 1f);
         float wrongSound = _terror.wrongSounds ? wrongSoundWeight : 0f;
         float shadow = ShadowPhantomPossible() ? shadowWeight : 0f;
-        float peripheral = _terror.peripheralPhantoms ? peripheralWeight : 0f;
-        float total = silhouette + footstepsWeight + lampBlinkWeight + whisperWeight + wrongSound + shadow + peripheral;
+        bool useAttached = _terror.attachedPresence && !_attachedActive;
+        float footsteps = useAttached ? 0f : footstepsWeight;
+        float peripheral = !useAttached && _terror.peripheralPhantoms ? peripheralWeight : 0f;
+        float attached = useAttached ? footstepsWeight + (_terror.peripheralPhantoms ? peripheralWeight : 0f) : 0f;
+        float total = silhouette + footsteps + lampBlinkWeight + whisperWeight + wrongSound + shadow + peripheral + attached;
 
         float r = Random.value * total;
         if (r < silhouette) return PhantomType.Silhouette;
         r -= silhouette;
-        if (r < footstepsWeight) return PhantomType.Footsteps;
-        r -= footstepsWeight;
+        if (r < footsteps) return PhantomType.Footsteps;
+        r -= footsteps;
         if (r < lampBlinkWeight) return PhantomType.LampBlink;
         r -= lampBlinkWeight;
         if (r < whisperWeight) return PhantomType.Whisper;
         r -= whisperWeight;
         if (r < wrongSound) return PhantomType.WrongSound;
         r -= wrongSound;
-        return r < shadow ? PhantomType.Shadow : PhantomType.Peripheral;
+        if (r < shadow) return PhantomType.Shadow;
+        r -= shadow;
+        return r < peripheral ? PhantomType.Peripheral : PhantomType.AttachedPresence;
     }
 
     // ---------------------------------------------------------------- footsteps behind you

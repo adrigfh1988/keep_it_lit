@@ -34,9 +34,9 @@ public static partial class AsylumHubBuilder
         if (shader == null) return null;
         mat = new Material(shader) { name = "HubFog" };
         mat.SetTexture("_BaseMap", tex);
-        mat.SetColor("_BaseColor", new Color(0.7f, 0.74f, 0.8f, 0.7f));
+        mat.SetColor("_BaseColor", new Color(0.55f, 0.58f, 0.64f, 0.42f));
         // a faint glow of its own: the light the haze scatters, so it reads as fog (not darkness) away from the lamps
-        mat.SetColor("_EmissionColor", new Color(0.07f, 0.077f, 0.09f));
+        mat.SetColor("_EmissionColor", new Color(0.018f, 0.020f, 0.024f));
         mat.EnableKeyword("_EMISSION");
         // transparent, alpha blended, no depth write
         mat.SetFloat("_Surface", 1f);
@@ -182,13 +182,13 @@ public static partial class AsylumHubBuilder
         main.playOnAwake = true;
         main.startLifetime = new ParticleSystem.MinMaxCurve(lifeMin, lifeMax);
         main.startSpeed = 0f; // any upward speed over a 14-20 s life lifts a bank to window height
-        // wide, flat banks (a tall round puff reads as smoke from a fire), barely tilted
+        // wide, flat banks hugging the floor (a tall puff blocks the flashlight beam), barely tilted
         main.startSize3D = true;
         main.startSizeX = new ParticleSystem.MinMaxCurve(3f, 5f);
-        main.startSizeY = new ParticleSystem.MinMaxCurve(0.9f, 1.4f);
+        main.startSizeY = new ParticleSystem.MinMaxCurve(0.35f, 0.60f);
         main.startSizeZ = 1f;
         main.startRotation = new ParticleSystem.MinMaxCurve(-0.06f, 0.06f);
-        main.startColor = new ParticleSystem.MinMaxGradient(new Color(1f, 1f, 1f, 1f), new Color(1f, 1f, 1f, 0.55f));
+        main.startColor = new ParticleSystem.MinMaxGradient(new Color(1f, 1f, 1f, 0.75f), new Color(1f, 1f, 1f, 0.40f));
         main.simulationSpace = ParticleSystemSimulationSpace.World;
         main.scalingMode = ParticleSystemScalingMode.Hierarchy;
         main.maxParticles = alive + 4;
@@ -201,14 +201,14 @@ public static partial class AsylumHubBuilder
         shape.enabled = true;
         shape.shapeType = ParticleSystemShapeType.Box;
         shape.scale = new Vector3(4f, 0f, 4f);
-        shape.position = new Vector3(0f, 0.45f, 0f); // on the floor: the lower part sinks in and the soft edge fades it out
-        shape.randomPositionAmount = 0.15f;
+        shape.position = new Vector3(0f, 0.18f, 0f); // ankle-hugging on the floor so it never rises into the flashlight beam
+        shape.randomPositionAmount = 0.06f;
 
         ParticleSystem.NoiseModule noise = ps.noise;
         noise.enabled = true;
         noise.separateAxes = true; // drift sideways, not up
         noise.strengthX = 0.12f;
-        noise.strengthY = 0.008f;
+        noise.strengthY = 0.003f;
         noise.strengthZ = 0.12f;
         noise.frequency = 0.08f;
         noise.scrollSpeed = 0.04f;

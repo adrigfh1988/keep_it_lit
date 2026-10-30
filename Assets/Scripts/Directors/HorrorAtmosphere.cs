@@ -10,13 +10,13 @@ using UnityEngine.Rendering.Universal;
 public class HorrorAtmosphere : MonoBehaviour
 {
     [Header("Ambient")]
-    [SerializeField] private Color ambientLight = new Color(0.016f, 0.016f, 0.020f);
+    [SerializeField] private Color ambientLight = new Color(0.009f, 0.009f, 0.011f);
 
     [Header("Fog")]
     [SerializeField] private bool enableFog = true;
     [SerializeField] private Color fogColor = new Color(0.01f, 0.01f, 0.015f);
     [Tooltip("Exponential-squared fog reaches near-total opacity around 3/density metres. 0.07 ~ 43 m, 0.12 ~ 25 m. Lower = you see further.")]
-    [SerializeField] private float fogDensity = 0.035f;
+    [SerializeField] private float fogDensity = 0.024f;
 
     [Header("Lights")]
     [Tooltip("Intensity for the scene's directional light. Raise it at runtime to see the maze while tuning.")]
@@ -24,9 +24,9 @@ public class HorrorAtmosphere : MonoBehaviour
 
     [Header("Post")]
     [Tooltip("The scene profile ships +0.2 exposure, which fights all of the above. This neutralises it on a runtime copy of the profile - the asset on disk is not touched.")]
-    [SerializeField] private float postExposure = -0.15f;
+    [SerializeField] private float postExposure = -0.25f;
     [Tooltip("F71: crushes mid-tones so the ambient floor reads as inky rather than grey, on the same runtime profile copy as postExposure above.")]
-    [SerializeField] private float contrast = 18f;
+    [SerializeField] private float contrast = 22f;
     [Tooltip("F71: Neutral keeps the torch's hot core readable against the crushed shadows below - ACES' filmic roll-off reads muddier once everything is this dark.")]
     [SerializeField] private TonemappingMode tonemappingMode = TonemappingMode.Neutral;
     [Tooltip("F71: darkens the screen edges so the beam's small lit circle reads as a circle, not a rectangle")]

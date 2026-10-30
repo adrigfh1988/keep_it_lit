@@ -135,6 +135,7 @@ public class GameAudioLibrary : ScriptableObject
     public AudioSlot chaseMusic = new AudioSlot();     // F93 floor-4 chase, loop
     public AudioSlot chaseEnd = new AudioSlot();       // the chase's last bars (fades out by itself)
     public AudioSlot shopMusic = new AudioSlot();      // shop, loop
+    public AudioSlot eliasMazeMusic = new AudioSlot(); // background music bed when a maze has Elias ("Arya of Terror - Dolls Of Nagoro", loop)
     public AudioSlot typewriter = new AudioSlot();     // F100: one key tap of the readmission slip typing out (optional; empty = a generated click)
     public AudioSlot doorLatch = new AudioSlot();      // F112: a walk-through door's latch letting go (empty = a generated clunk)
     public AudioSlot doorDraft = new AudioSlot();      // F112: cold air out of an opened doorway, a soft whoosh (empty = generated noise)

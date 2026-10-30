@@ -15,20 +15,20 @@ public class Flashlight : MonoBehaviour
 {
     [Header("Beam - wide (default)")]
     [Tooltip("Width of the lit circle when not focused. A wide floodlight rather than a torch beam.")]
-    [SerializeField] private float wideOuterAngle = 72f;
+    [SerializeField] private float wideOuterAngle = 74f;
     [Tooltip("Width of the bright core when not focused. The gap to wideOuterAngle is the soft edge.")]
-    [SerializeField] private float wideInnerAngle = 36f;
-    [SerializeField] private float wideIntensity = 14f;
+    [SerializeField] private float wideInnerAngle = 40f;
+    [SerializeField] private float wideIntensity = 28f;
     [Tooltip("How far the wide beam reaches. Keep it near the fog distance, or the cone ends in fog you cannot see through anyway.")]
-    [SerializeField] private float wideRange = 28f;
+    [SerializeField] private float wideRange = 34f;
 
     [Header("Beam - focused (RMB / gamepad LT held)")]
     [Tooltip("A narrow, punchier beam for peering down a corridor - less light spilled sideways, more thrown forward.")]
-    [SerializeField] private float focusedOuterAngle = 28f;
+    [SerializeField] private float focusedOuterAngle = 30f;
     [Tooltip("Width of the bright core when not focused. The gap to wideOuterAngle is the soft edge.")]
-    [SerializeField] private float focusedInnerAngle = 14f;
-    [SerializeField] private float focusedIntensity = 26f;
-    [SerializeField] private float focusedRange = 40f;
+    [SerializeField] private float focusedInnerAngle = 16f;
+    [SerializeField] private float focusedIntensity = 52f;
+    [SerializeField] private float focusedRange = 48f;
     [Tooltip("Seconds to blend fully in or out of the focused beam")]
     [SerializeField] private float focusBlendSeconds = 0.15f;
     [Tooltip("Battery drains this much faster while focused")]
@@ -74,11 +74,11 @@ public class Flashlight : MonoBehaviour
 
     [Header("F105 C9 - narrow beam")]
     [Tooltip("Wide beam width while TerrorSettings.narrowBeam is on (the Beam - wide values above apply when it is off)")]
-    [SerializeField] private float narrowOuterAngle = 66f;
+    [SerializeField] private float narrowOuterAngle = 68f;
     [Tooltip("Wide beam bright-core width while narrowBeam is on")]
-    [SerializeField] private float narrowInnerAngle = 32f;
+    [SerializeField] private float narrowInnerAngle = 36f;
     [Tooltip("Wide beam intensity while narrowBeam is on")]
-    [SerializeField] private float narrowIntensity = 11f;
+    [SerializeField] private float narrowIntensity = 24f;
 
     private float _baseWideOuterAngle;
     private float _baseWideInnerAngle;

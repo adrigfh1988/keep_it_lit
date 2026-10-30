@@ -133,7 +133,7 @@ public partial class MazeGenerator
         if (material.HasProperty("_Color")) material.SetColor("_Color", lampColor);
         // F71: was 2.5, same as the star. Dimmer fixture glow so a lamp pool reads as a pool rather than
         // a second sun - the star keeps 2.5 so it still reads as the thing worth finding in the dark.
-        material.SetColor("_EmissionColor", lampColor * 1.2f);
+        material.SetColor("_EmissionColor", lampColor * 1.8f);
 
         _runtimeMaterials.Add(material);
         return material;

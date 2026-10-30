@@ -172,8 +172,8 @@ public partial class MazeGenerator : MonoBehaviour
     [SerializeField] private int cellsPerLamp = 5;
     [SerializeField] private float lampHeight = 2.6f;
     [SerializeField] private Color lampColor = new Color(1f, 0.72f, 0.42f);
-    [SerializeField] private float lampRange = 7f;
-    [SerializeField] private float lampIntensity = 1.1f;
+    [SerializeField] private float lampRange = 9.5f;
+    [SerializeField] private float lampIntensity = 3.2f;
     [Range(0f, 1f)]
     [SerializeField] private float faultyLampChance = 0.25f;
 
@@ -360,6 +360,8 @@ public partial class MazeGenerator : MonoBehaviour
     public float CellSize => cellSize;
     /// <summary>Debug: everything to collect is packed next to the start (see the Inspector tooltip). MazeEscape reads it to open the hatch next to the player.</summary>
     public bool SuperEasyMode => superEasyMode;
+    /// <summary>Floor-level world centre of the maze's start cell (<c>(width/2, height/2)</c> on <c>Cross</c>, <c>(0, 0)</c> on other shapes).</summary>
+    public Vector3 StartCellCenter => CellCenter(_startCell.x, _startCell.y);
     /// <summary>F124: the active floor footprint shape built this run.</summary>
     public FloorProfile.FloorShape ActiveShape => _profile != null ? _profile.Shape : FloorProfile.FloorShape.Rectangle;
     /// <summary>F124: non-void playable cells in the current maze.</summary>
@@ -718,8 +720,8 @@ public partial class MazeGenerator : MonoBehaviour
         starCount = _profile.StarCount;
         lockerCount = _profile.LockerCount;
         cellsPerLamp = _profile.CellsPerLamp;
-        lampIntensity = _profile.LampIntensity;
-        lampRange = _profile.LampRange;
+        lampIntensity = _profile.LampIntensity * 2.6f;
+        lampRange = _profile.LampRange * 1.65f;
 
         // F40 slice A decision 5: lamps scale with wall height so a low ceiling (floor 3) doesn't hide
         // its lamps in the torch beam and a tall one (floor 4) doesn't leave them looking stranded low.

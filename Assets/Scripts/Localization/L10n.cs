@@ -76,11 +76,19 @@ public static class L10n
     /// <summary>True when the localization system is ready; blocks on initialisation where the platform allows it.</summary>
     public static bool Ensure()
     {
-        var init = LocalizationSettings.InitializationOperation;
-        if (init.IsDone) return true;
-        if (Application.platform == RuntimePlatform.WebGLPlayer) return false;
-        init.WaitForCompletion();
-        return init.IsDone;
+        try
+        {
+            var init = LocalizationSettings.InitializationOperation;
+            if (init.IsDone) return true;
+            if (Application.platform == RuntimePlatform.WebGLPlayer) return false;
+            init.WaitForCompletion();
+            return init.IsDone;
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"[L10n] Ensure failed: {e.Message}");
+            return false;
+        }
     }
 
     /// <summary>Code of the selected locale ("en", "es", "fr", "de"); "en" if the system is not ready.</summary>

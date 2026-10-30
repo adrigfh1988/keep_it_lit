@@ -72,7 +72,8 @@ public class HubCache : MonoBehaviour, IInteractable
 
     private void Capture()
     {
-        if (_closedPos != null || openParts == null) return;
+        if (openParts == null || openParts.Length == 0) return;
+        if (_closedPos != null && _closedPos.Length == openParts.Length) return;
         _closedPos = new Vector3[openParts.Length];
         _closedRot = new Quaternion[openParts.Length];
         for (int i = 0; i < openParts.Length; i++)
@@ -86,7 +87,7 @@ public class HubCache : MonoBehaviour, IInteractable
     /// <summary>Puts every part at its closed (false) or fully open (true) pose.</summary>
     private void Pose(bool open)
     {
-        if (_closedPos == null) return;
+        if (_closedPos == null || openParts == null || _closedPos.Length != openParts.Length) return;
         for (int i = 0; i < openParts.Length; i++)
         {
             if (openParts[i] == null) continue;

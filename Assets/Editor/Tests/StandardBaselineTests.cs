@@ -107,7 +107,7 @@ namespace KeepItLit.Tests
             TerrorSettings terror = CampaignRules.ApplyTerror(original); // F122
             Assert.AreSame(original, terror, "plain STANDARD must get the very same TerrorSettings instance, not a clone");
             // F123 and F127 switches added after the fixture was captured: skipped in the dump, asserted at their defaults here.
-            string[] f123 = { "extraDoors", "pipeKnocks", "lyingKnocks", "morgueDrawers", "ampoules", "houseRules", "dynamicMorphologies", "wallShifts" };
+            string[] f123 = { "extraDoors", "pipeKnocks", "lyingKnocks", "morgueDrawers", "ampoules", "houseRules", "dynamicMorphologies", "wallShifts", "attachedPresence" };
             foreach (string name in f123) Assert.IsTrue((bool)typeof(TerrorSettings).GetField(name).GetValue(terror), "Post-F122 switch " + name + " defaults to true");
             foreach (FieldInfo fi in typeof(TerrorSettings).GetFields(BindingFlags.Public | BindingFlags.Instance))
             {

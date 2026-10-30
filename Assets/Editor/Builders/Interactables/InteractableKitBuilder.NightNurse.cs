@@ -225,7 +225,23 @@ public static partial class InteractableKitBuilder
 
     private static AnimationClip LoadNightNurseMixamoClip(string clipName)
     {
-        return AssetDatabase.LoadAllAssetsAtPath(MixamoClipDir + clipName + ".fbx")
+        string fbxPath = MixamoClipDir + clipName + ".fbx";
+        if (System.IO.File.Exists(fbxPath))
+        {
+            ModelImporter imp = AssetImporter.GetAtPath(fbxPath) as ModelImporter;
+            if (imp == null)
+            {
+                AssetDatabase.ImportAsset(fbxPath, ImportAssetOptions.ForceUpdate);
+                imp = AssetImporter.GetAtPath(fbxPath) as ModelImporter;
+            }
+            if (imp != null && imp.animationType != ModelImporterAnimationType.Human)
+            {
+                imp.animationType = ModelImporterAnimationType.Human;
+                imp.avatarSetup = ModelImporterAvatarSetup.CreateFromThisModel;
+                imp.SaveAndReimport();
+            }
+        }
+        return AssetDatabase.LoadAllAssetsAtPath(fbxPath)
             .OfType<AnimationClip>()
             .FirstOrDefault(c => !c.name.StartsWith("__preview__"));
     }

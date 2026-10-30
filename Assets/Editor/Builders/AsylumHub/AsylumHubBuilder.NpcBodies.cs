@@ -21,7 +21,33 @@ public static partial class AsylumHubBuilder
     public const string CookBrunoBodyName = "Body_CookBruno";
     public const string CookBrunoModelDir = "Assets/SourceFiles/Models/CookBruno";
     public const string CookBrunoModelPath = CookBrunoModelDir + "/CookBruno_Model.fbx";
+    /// <summary>The name of Elias Vogt's custom Indie Horror 2-piece + #5 morgue tag 3D humanoid body when <see cref="EliasVogtModelPath"/> is present.</summary>
+    public const string EliasVogtBodyName = "Body_EliasVogt";
+    public const string EliasVogtModelDir = "Assets/SourceFiles/Models/EliasVogt";
+    public const string EliasVogtModelPath = EliasVogtModelDir + "/EliasVogt_Model.fbx";
+    /// <summary>The name of Hilde Brandt's custom Indie Horror 2-piece + props 3D humanoid body when <see cref="HildeBrandtModelPath"/> is present.</summary>
+    public const string HildeBrandtBodyName = "Body_HildeBrandt";
+    public const string HildeBrandtModelDir = "Assets/SourceFiles/Models/HildeBrandt";
+    public const string HildeBrandtModelPath = HildeBrandtModelDir + "/HildeBrandt_Model.fbx";
+    /// <summary>The name of the custom 3D shrouded corpse in the morgue when <see cref="SheetedMorgueModelPath"/> is present.</summary>
+    public const string SheetedMorgueBodyName = "Body_Sheeted_Morgue";
+    public const string SheetedMorgueModelDir = "Assets/SourceFiles/Models/HorrorProps";
+    public const string SheetedMorgueModelPath = SheetedMorgueModelDir + "/SheetedMorgueBody_HP.fbx";
     private const string NurseAgnesMatFolder = "Assets/SourceFiles/Materials/Asylum/Npcs";
+
+    private static string ExpectedPatientBodyName(string patientName)
+    {
+        if (patientName == "Hilde" && System.IO.File.Exists(HildeBrandtModelPath))
+            return HildeBrandtBodyName;
+        if (patientName == "Elias" && System.IO.File.Exists(EliasVogtModelPath))
+            return EliasVogtBodyName;
+        return NpcRobotBodyName;
+    }
+
+    private static string ExpectedMorgueBodyName()
+    {
+        return System.IO.File.Exists(SheetedMorgueModelPath) ? SheetedMorgueBodyName : MorgueRobotName;
+    }
 
     private static string ExpectedNpcBodyName(HubNpc npc)
     {
@@ -514,6 +540,464 @@ public static partial class AsylumHubBuilder
         return body.transform;
     }
 
+    public static GameObject EnsureEliasVogtModel()
+    {
+        if (!System.IO.File.Exists(EliasVogtModelPath)) return null;
+        ModelImporter importer = AssetImporter.GetAtPath(EliasVogtModelPath) as ModelImporter;
+        if (importer == null)
+        {
+            AssetDatabase.ImportAsset(EliasVogtModelPath, ImportAssetOptions.ForceUpdate);
+            importer = AssetImporter.GetAtPath(EliasVogtModelPath) as ModelImporter;
+        }
+        if (importer == null) return null;
+        if (importer.animationType != ModelImporterAnimationType.Human ||
+            importer.avatarSetup != ModelImporterAvatarSetup.CreateFromThisModel ||
+            importer.importAnimation ||
+            !importer.importBlendShapes)
+        {
+            importer.animationType = ModelImporterAnimationType.Human;
+            importer.avatarSetup = ModelImporterAvatarSetup.CreateFromThisModel;
+            importer.importAnimation = false;
+            importer.importBlendShapes = true;
+            importer.SaveAndReimport();
+        }
+        GameObject model = AssetDatabase.LoadAssetAtPath<GameObject>(EliasVogtModelPath);
+        Avatar avatar = null;
+        foreach (Object o in AssetDatabase.LoadAllAssetsAtPath(EliasVogtModelPath))
+        {
+            if (o is Avatar a) avatar = a;
+        }
+        if (model == null || avatar == null || !avatar.isValid || !avatar.isHuman)
+        {
+            Debug.LogError($"AsylumHubBuilder: {EliasVogtModelPath} did not import as a valid Humanoid avatar.");
+            return null;
+        }
+        EnsureEliasVogtMaterials();
+        return model;
+    }
+
+    private static Material EnsureEliasVogtPbrMaterial(string matName, string matPath, string diffFile, string normFile, string msFile, string emisFile, float smoothness, float metallic = 0f, bool doubleSided = false)
+    {
+        if (!string.IsNullOrEmpty(diffFile))
+        {
+            string diffPath = $"{EliasVogtModelDir}/{diffFile}";
+            if (AssetDatabase.LoadAssetAtPath<Texture2D>(diffPath) == null && System.IO.File.Exists(diffPath))
+                AssetDatabase.ImportAsset(diffPath, ImportAssetOptions.ForceUpdate);
+        }
+        if (!string.IsNullOrEmpty(normFile))
+        {
+            string normPath = $"{EliasVogtModelDir}/{normFile}";
+            if (AssetDatabase.LoadAssetAtPath<Texture2D>(normPath) == null && System.IO.File.Exists(normPath))
+                AssetDatabase.ImportAsset(normPath, ImportAssetOptions.ForceUpdate);
+            TextureImporter normImp = AssetImporter.GetAtPath(normPath) as TextureImporter;
+            if (normImp != null && normImp.textureType != TextureImporterType.NormalMap)
+            {
+                normImp.textureType = TextureImporterType.NormalMap;
+                normImp.SaveAndReimport();
+            }
+        }
+        if (!string.IsNullOrEmpty(msFile))
+        {
+            string msPath = $"{EliasVogtModelDir}/{msFile}";
+            if (AssetDatabase.LoadAssetAtPath<Texture2D>(msPath) == null && System.IO.File.Exists(msPath))
+                AssetDatabase.ImportAsset(msPath, ImportAssetOptions.ForceUpdate);
+            TextureImporter msImp = AssetImporter.GetAtPath(msPath) as TextureImporter;
+            if (msImp != null && msImp.sRGBTexture)
+            {
+                msImp.sRGBTexture = false;
+                msImp.SaveAndReimport();
+            }
+        }
+        if (!string.IsNullOrEmpty(emisFile))
+        {
+            string emisPath = $"{EliasVogtModelDir}/{emisFile}";
+            if (AssetDatabase.LoadAssetAtPath<Texture2D>(emisPath) == null && System.IO.File.Exists(emisPath))
+                AssetDatabase.ImportAsset(emisPath, ImportAssetOptions.ForceUpdate);
+        }
+
+        Texture2D diff = !string.IsNullOrEmpty(diffFile) ? AssetDatabase.LoadAssetAtPath<Texture2D>($"{EliasVogtModelDir}/{diffFile}") : null;
+        Texture2D nrm  = !string.IsNullOrEmpty(normFile) ? AssetDatabase.LoadAssetAtPath<Texture2D>($"{EliasVogtModelDir}/{normFile}") : null;
+        Texture2D ms   = !string.IsNullOrEmpty(msFile)   ? AssetDatabase.LoadAssetAtPath<Texture2D>($"{EliasVogtModelDir}/{msFile}")   : null;
+        Texture2D emis = !string.IsNullOrEmpty(emisFile) ? AssetDatabase.LoadAssetAtPath<Texture2D>($"{EliasVogtModelDir}/{emisFile}") : null;
+
+        Material mat = AssetDatabase.LoadAssetAtPath<Material>(matPath);
+        if (mat == null)
+        {
+            mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = matName };
+            AssetDatabase.CreateAsset(mat, matPath);
+        }
+
+        if (diff != null)
+        {
+            mat.SetTexture("_BaseMap", diff);
+            mat.SetTexture("_MainTex", diff);
+        }
+        mat.SetColor("_BaseColor", Color.white);
+        mat.SetFloat("_Smoothness", smoothness);
+        mat.SetFloat("_Metallic", metallic);
+        mat.SetFloat("_Cull", doubleSided ? 0f : 2f);
+        if (ms != null && metallic < 0.05f)
+        {
+            mat.EnableKeyword("_METALLICSPECGLOSSMAP");
+            mat.SetTexture("_MetallicGlossMap", ms);
+            mat.SetFloat("_Smoothness", 1.0f);
+        }
+        else
+        {
+            mat.DisableKeyword("_METALLICSPECGLOSSMAP");
+            mat.SetTexture("_MetallicGlossMap", null);
+        }
+        if (nrm != null)
+        {
+            mat.EnableKeyword("_NORMALMAP");
+            mat.SetTexture("_BumpMap", nrm);
+            mat.SetFloat("_BumpScale", 1.0f);
+        }
+        if (emis != null)
+        {
+            mat.EnableKeyword("_EMISSION");
+            mat.SetTexture("_EmissionMap", emis);
+            mat.SetColor("_EmissionColor", Color.white * 0.55f);
+        }
+        else
+        {
+            mat.DisableKeyword("_EMISSION");
+            mat.SetTexture("_EmissionMap", null);
+            mat.SetColor("_EmissionColor", Color.black);
+        }
+        EditorUtility.SetDirty(mat);
+        return mat;
+    }
+
+    public static void EnsureEliasVogtMaterials()
+    {
+        if (!AssetDatabase.IsValidFolder("Assets/SourceFiles/Materials"))
+            AssetDatabase.CreateFolder("Assets/SourceFiles", "Materials");
+        if (!AssetDatabase.IsValidFolder("Assets/SourceFiles/Materials/Asylum"))
+            AssetDatabase.CreateFolder("Assets/SourceFiles/Materials", "Asylum");
+        if (!AssetDatabase.IsValidFolder(NurseAgnesMatFolder))
+            AssetDatabase.CreateFolder("Assets/SourceFiles/Materials/Asylum", "Npcs");
+
+        EnsureEliasVogtPbrMaterial("EliasVogt_Head",      $"{NurseAgnesMatFolder}/EliasVogt_Head.mat",      "EliasVogt_Head_Diffuse.png",      "EliasVogt_Head_Normal.png",      "EliasVogt_Head_MetalSmooth.png",      "EliasVogt_Head_Emission.png", 0.28f, 0.0f,  false);
+        EnsureEliasVogtPbrMaterial("EliasVogt_Body",      $"{NurseAgnesMatFolder}/EliasVogt_Body.mat",      "EliasVogt_Body_Diffuse.png",      "EliasVogt_Body_Normal.png",      "EliasVogt_Body_MetalSmooth.png",      null,                          0.22f, 0.0f,  false);
+        EnsureEliasVogtPbrMaterial("EliasVogt_Wristband", $"{NurseAgnesMatFolder}/EliasVogt_Wristband.mat", "EliasVogt_Wristband_Diffuse.png", "EliasVogt_Wristband_Normal.png", "EliasVogt_Wristband_MetalSmooth.png", null,                          0.32f, 0.0f,  false);
+        EnsureEliasVogtPbrMaterial("EliasVogt_MorgueTag", $"{NurseAgnesMatFolder}/EliasVogt_MorgueTag.mat", "EliasVogt_MorgueTag_Diffuse.png", "EliasVogt_MorgueTag_Normal.png", "EliasVogt_MorgueTag_MetalSmooth.png", null,                          0.68f, 0.88f, false);
+        AssetDatabase.SaveAssets();
+    }
+
+    private static Transform EliasVogtBodyLike(Transform holder, Transform old)
+    {
+        GameObject customModel = EnsureEliasVogtModel();
+        if (customModel == null) return null;
+
+        GameObject body = (GameObject)PrefabUtility.InstantiatePrefab(customModel, holder);
+        PrefabUtility.UnpackPrefabInstance(body, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+        body.name = EliasVogtBodyName;
+        body.tag = "Untagged";
+        body.transform.SetPositionAndRotation(old != null ? old.position : holder.position, old != null ? old.rotation : holder.rotation);
+        body.transform.localScale = Vector3.one * (old != null ? old.localScale.x : 1f);
+
+        Material headMat = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/EliasVogt_Head.mat");
+        Material bodyMat = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/EliasVogt_Body.mat");
+        Material wbMat   = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/EliasVogt_Wristband.mat");
+        Material tagMat  = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/EliasVogt_MorgueTag.mat");
+
+        foreach (Renderer r in body.GetComponentsInChildren<Renderer>(true))
+        {
+            Material targetMat = bodyMat;
+            string rName = r.gameObject.name;
+            if (rName.Contains("Head") && headMat != null) targetMat = headMat;
+            else if (rName.Contains("Wristband") && wbMat != null) targetMat = wbMat;
+            else if (rName.Contains("MorgueTag") && tagMat != null) targetMat = tagMat;
+
+            if (targetMat != null)
+            {
+                Material[] mats = r.sharedMaterials;
+                for (int i = 0; i < mats.Length; i++) mats[i] = targetMat;
+                r.sharedMaterials = mats;
+            }
+            r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            if (r is SkinnedMeshRenderer smr) smr.updateWhenOffscreen = true;
+        }
+
+        Animator animator = body.GetComponent<Animator>();
+        if (animator == null) animator = body.AddComponent<Animator>();
+        if (animator.avatar == null)
+        {
+            foreach (Object o in AssetDatabase.LoadAllAssetsAtPath(EliasVogtModelPath))
+            {
+                if (o is Avatar a) animator.avatar = a;
+            }
+        }
+        animator.runtimeAnimatorController = PeopleController();
+        animator.applyRootMotion = false;
+        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+
+        if (body.GetComponent<EliasPhysics>() == null)
+        {
+            body.AddComponent<EliasPhysics>();
+        }
+
+        body.SetActive(old == null || old.gameObject.activeSelf);
+        return body.transform;
+    }
+
+    [MenuItem("KEEP IT LIT/Build/Re-skin Templates/Elias Vogt (Patient #5 & The Frost)", priority = 139)]
+    public static void MenuSwapEliasVogt()
+    {
+        AsylumHub hub = Object.FindAnyObjectByType<AsylumHub>(FindObjectsInactive.Include);
+        if (hub != null && hub.life != null)
+        {
+            HubPatient eliasPatient = FindPatient(hub.life, "Elias");
+            if (eliasPatient != null)
+            {
+                string msg = SwapPatientToRobot(eliasPatient);
+                UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(hub.gameObject.scene);
+                ApplyHubToPrefab(hub);
+                Debug.Log(msg, eliasPatient);
+            }
+        }
+
+        if (Object.FindAnyObjectByType<InteractableKit>(FindObjectsInactive.Include) != null)
+        {
+            InteractableKitBuilder.RebuildEliasTemplate();
+        }
+    }
+
+    public static GameObject EnsureHildeBrandtModel()
+    {
+        if (!System.IO.File.Exists(HildeBrandtModelPath)) return null;
+        ModelImporter importer = AssetImporter.GetAtPath(HildeBrandtModelPath) as ModelImporter;
+        if (importer == null)
+        {
+            AssetDatabase.ImportAsset(HildeBrandtModelPath, ImportAssetOptions.ForceUpdate);
+            importer = AssetImporter.GetAtPath(HildeBrandtModelPath) as ModelImporter;
+        }
+        if (importer == null) return null;
+        if (importer.animationType != ModelImporterAnimationType.Human ||
+            importer.avatarSetup != ModelImporterAvatarSetup.CreateFromThisModel ||
+            importer.importAnimation ||
+            !importer.importBlendShapes)
+        {
+            importer.animationType = ModelImporterAnimationType.Human;
+            importer.avatarSetup = ModelImporterAvatarSetup.CreateFromThisModel;
+            importer.importAnimation = false;
+            importer.importBlendShapes = true;
+            importer.SaveAndReimport();
+        }
+        GameObject model = AssetDatabase.LoadAssetAtPath<GameObject>(HildeBrandtModelPath);
+        Avatar avatar = null;
+        foreach (Object o in AssetDatabase.LoadAllAssetsAtPath(HildeBrandtModelPath))
+        {
+            if (o is Avatar a) avatar = a;
+        }
+        if (model == null || avatar == null || !avatar.isValid || !avatar.isHuman)
+        {
+            Debug.LogError($"AsylumHubBuilder: {HildeBrandtModelPath} did not import as a valid Humanoid avatar.");
+            return null;
+        }
+        EnsureHildeBrandtMaterials();
+        return model;
+    }
+
+    private static Material EnsureDirPbrMaterial(string modelDir, string matName, string matPath, string diffFile, string normFile, string msFile, string emisFile, float smoothness, float metallic = 0f, bool doubleSided = false)
+    {
+        if (!string.IsNullOrEmpty(diffFile))
+        {
+            string diffPath = $"{modelDir}/{diffFile}";
+            if (AssetDatabase.LoadAssetAtPath<Texture2D>(diffPath) == null && System.IO.File.Exists(diffPath))
+                AssetDatabase.ImportAsset(diffPath, ImportAssetOptions.ForceUpdate);
+        }
+        if (!string.IsNullOrEmpty(normFile))
+        {
+            string normPath = $"{modelDir}/{normFile}";
+            if (AssetDatabase.LoadAssetAtPath<Texture2D>(normPath) == null && System.IO.File.Exists(normPath))
+                AssetDatabase.ImportAsset(normPath, ImportAssetOptions.ForceUpdate);
+            TextureImporter normImp = AssetImporter.GetAtPath(normPath) as TextureImporter;
+            if (normImp != null && normImp.textureType != TextureImporterType.NormalMap)
+            {
+                normImp.textureType = TextureImporterType.NormalMap;
+                normImp.SaveAndReimport();
+            }
+        }
+        if (!string.IsNullOrEmpty(msFile))
+        {
+            string msPath = $"{modelDir}/{msFile}";
+            if (AssetDatabase.LoadAssetAtPath<Texture2D>(msPath) == null && System.IO.File.Exists(msPath))
+                AssetDatabase.ImportAsset(msPath, ImportAssetOptions.ForceUpdate);
+            TextureImporter msImp = AssetImporter.GetAtPath(msPath) as TextureImporter;
+            if (msImp != null && msImp.sRGBTexture)
+            {
+                msImp.sRGBTexture = false;
+                msImp.SaveAndReimport();
+            }
+        }
+        if (!string.IsNullOrEmpty(emisFile))
+        {
+            string emisPath = $"{modelDir}/{emisFile}";
+            if (AssetDatabase.LoadAssetAtPath<Texture2D>(emisPath) == null && System.IO.File.Exists(emisPath))
+                AssetDatabase.ImportAsset(emisPath, ImportAssetOptions.ForceUpdate);
+        }
+
+        Texture2D diff = !string.IsNullOrEmpty(diffFile) ? AssetDatabase.LoadAssetAtPath<Texture2D>($"{modelDir}/{diffFile}") : null;
+        Texture2D nrm  = !string.IsNullOrEmpty(normFile) ? AssetDatabase.LoadAssetAtPath<Texture2D>($"{modelDir}/{normFile}") : null;
+        Texture2D ms   = !string.IsNullOrEmpty(msFile)   ? AssetDatabase.LoadAssetAtPath<Texture2D>($"{modelDir}/{msFile}")   : null;
+        Texture2D emis = !string.IsNullOrEmpty(emisFile) ? AssetDatabase.LoadAssetAtPath<Texture2D>($"{modelDir}/{emisFile}") : null;
+
+        Material mat = AssetDatabase.LoadAssetAtPath<Material>(matPath);
+        if (mat == null)
+        {
+            mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = matName };
+            AssetDatabase.CreateAsset(mat, matPath);
+        }
+
+        if (diff != null)
+        {
+            mat.SetTexture("_BaseMap", diff);
+            mat.SetTexture("_MainTex", diff);
+        }
+        mat.SetColor("_BaseColor", Color.white);
+        mat.SetFloat("_Smoothness", smoothness);
+        mat.SetFloat("_Metallic", metallic);
+        mat.SetFloat("_Cull", doubleSided ? 0f : 2f);
+        if (ms != null && metallic < 0.05f)
+        {
+            mat.EnableKeyword("_METALLICSPECGLOSSMAP");
+            mat.SetTexture("_MetallicGlossMap", ms);
+            mat.SetFloat("_Smoothness", 1.0f);
+        }
+        else
+        {
+            mat.DisableKeyword("_METALLICSPECGLOSSMAP");
+            mat.SetTexture("_MetallicGlossMap", null);
+        }
+        if (nrm != null)
+        {
+            mat.EnableKeyword("_NORMALMAP");
+            mat.SetTexture("_BumpMap", nrm);
+            mat.SetFloat("_BumpScale", 1.0f);
+        }
+        if (emis != null)
+        {
+            mat.EnableKeyword("_EMISSION");
+            mat.SetTexture("_EmissionMap", emis);
+            mat.SetColor("_EmissionColor", Color.white * 0.45f);
+        }
+        else
+        {
+            mat.DisableKeyword("_EMISSION");
+            mat.SetTexture("_EmissionMap", null);
+            mat.SetColor("_EmissionColor", Color.black);
+        }
+        EditorUtility.SetDirty(mat);
+        return mat;
+    }
+
+    public static void EnsureHildeBrandtMaterials()
+    {
+        if (!AssetDatabase.IsValidFolder("Assets/SourceFiles/Materials"))
+            AssetDatabase.CreateFolder("Assets/SourceFiles", "Materials");
+        if (!AssetDatabase.IsValidFolder("Assets/SourceFiles/Materials/Asylum"))
+            AssetDatabase.CreateFolder("Assets/SourceFiles/Materials", "Asylum");
+        if (!AssetDatabase.IsValidFolder(NurseAgnesMatFolder))
+            AssetDatabase.CreateFolder("Assets/SourceFiles/Materials/Asylum", "Npcs");
+
+        EnsureDirPbrMaterial(HildeBrandtModelDir, "HildeBrandt_Head",         $"{NurseAgnesMatFolder}/HildeBrandt_Head.mat",         "HildeBrandt_Head_Diffuse.png",         "HildeBrandt_Head_Normal.png",         "HildeBrandt_Head_MetalSmooth.png",         "HildeBrandt_Head_Emission.png", 0.26f, 0.0f,  false);
+        EnsureDirPbrMaterial(HildeBrandtModelDir, "HildeBrandt_Body",         $"{NurseAgnesMatFolder}/HildeBrandt_Body.mat",         "HildeBrandt_Body_Diffuse.png",         "HildeBrandt_Body_Normal.png",         "HildeBrandt_Body_MetalSmooth.png",         null,                            0.20f, 0.0f,  false);
+        EnsureDirPbrMaterial(HildeBrandtModelDir, "HildeBrandt_RestraintTag", $"{NurseAgnesMatFolder}/HildeBrandt_RestraintTag.mat", "HildeBrandt_RestraintTag_Diffuse.png", "HildeBrandt_RestraintTag_Normal.png", "HildeBrandt_RestraintTag_MetalSmooth.png", null,                            0.62f, 0.78f, false);
+        EnsureDirPbrMaterial(HildeBrandtModelDir, "HildeBrandt_Chalk",        $"{NurseAgnesMatFolder}/HildeBrandt_Chalk.mat",        "HildeBrandt_Chalk_Diffuse.png",        "HildeBrandt_Chalk_Normal.png",        "HildeBrandt_Chalk_MetalSmooth.png",        null,                            0.08f, 0.0f,  false);
+        AssetDatabase.SaveAssets();
+    }
+
+    private static Transform HildeBrandtBodyLike(Transform holder, Transform old)
+    {
+        GameObject customModel = EnsureHildeBrandtModel();
+        if (customModel == null) return null;
+
+        GameObject body = (GameObject)PrefabUtility.InstantiatePrefab(customModel, holder);
+        PrefabUtility.UnpackPrefabInstance(body, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+        body.name = HildeBrandtBodyName;
+        body.tag = "Untagged";
+        body.transform.SetPositionAndRotation(old != null ? old.position : holder.position, old != null ? old.rotation : holder.rotation);
+        body.transform.localScale = Vector3.one * (old != null ? old.localScale.x : 1f);
+
+        Material headMat  = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/HildeBrandt_Head.mat");
+        Material bodyMat  = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/HildeBrandt_Body.mat");
+        Material tagMat   = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/HildeBrandt_RestraintTag.mat");
+        Material chalkMat = AssetDatabase.LoadAssetAtPath<Material>($"{NurseAgnesMatFolder}/HildeBrandt_Chalk.mat");
+
+        foreach (Renderer r in body.GetComponentsInChildren<Renderer>(true))
+        {
+            Material targetMat = bodyMat;
+            string rName = r.gameObject.name;
+            if (rName.Contains("Head") && headMat != null) targetMat = headMat;
+            else if (rName.Contains("RestraintTag") && tagMat != null) targetMat = tagMat;
+            else if (rName.Contains("Chalk") && chalkMat != null) targetMat = chalkMat;
+
+            if (targetMat != null)
+            {
+                Material[] mats = r.sharedMaterials;
+                for (int i = 0; i < mats.Length; i++) mats[i] = targetMat;
+                r.sharedMaterials = mats;
+            }
+            r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            if (r is SkinnedMeshRenderer smr) smr.updateWhenOffscreen = true;
+        }
+
+        Animator animator = body.GetComponent<Animator>();
+        if (animator == null) animator = body.AddComponent<Animator>();
+        if (animator.avatar == null)
+        {
+            foreach (Object o in AssetDatabase.LoadAllAssetsAtPath(HildeBrandtModelPath))
+            {
+                if (o is Avatar a) animator.avatar = a;
+            }
+        }
+        animator.runtimeAnimatorController = PeopleController();
+        animator.applyRootMotion = false;
+        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+
+        HildePhysics hp = body.GetComponent<HildePhysics>();
+        if (hp == null) hp = body.AddComponent<HildePhysics>();
+        hp.BindRig();
+
+        body.SetActive(old == null || old.gameObject.activeSelf);
+        return body.transform;
+    }
+
+    [MenuItem("KEEP IT LIT/Build/Re-skin Templates/Hilde Brandt (Patient #3 & Morgue Body)", priority = 140)]
+    public static void MenuSwapHildeAndMorgue()
+    {
+        AsylumHub hub = Object.FindAnyObjectByType<AsylumHub>(FindObjectsInactive.Include);
+        if (hub == null || hub.life == null)
+        {
+            Debug.LogError("Hilde Brandt & Morgue Body: no hub with a Life group in the open scene.");
+            return;
+        }
+        _building = hub.building;
+        bool wasActive = hub.ContentActive;
+        hub.SetContentActive(true);
+        Physics.SyncTransforms();
+
+        HubPatient hildePatient = FindPatient(hub.life, "Hilde");
+        if (hildePatient != null)
+        {
+            string msg = SwapPatientToRobot(hildePatient);
+            Debug.Log(msg, hildePatient);
+        }
+
+        Transform morgue = hub.life.Find(EliasMorgueName);
+        if (morgue != null)
+        {
+            string morgueMsg = SwapMorgueBody(morgue);
+            Debug.Log(morgueMsg, morgue);
+        }
+
+        if (!wasActive) hub.SetContentActive(false);
+        UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(hub.gameObject.scene);
+        ApplyHubToPrefab(hub);
+    }
+
     /// <summary>
     /// Timmy in <paramref name="skin"/> under <paramref name="holder"/>, named <see cref="NpcRobotBodyName"/>, on the HubPeople controller,
     /// taking <paramref name="old"/>'s position, rotation, uniform scale and active state (the holder's own pose when there is no old body).
@@ -550,7 +1034,7 @@ public static partial class AsylumHubBuilder
         return t != null ? t.GetComponent<HubPatient>() : null;
     }
 
-    /// <summary>ProjectSetup: the patients Hilde and Elias and the morgue's sheeted body are Timmy robots (null = done, or no hub).</summary>
+    /// <summary>ProjectSetup: the patients Hilde and Elias and the morgue's sheeted body match their expected bodies (null = done, or no hub).</summary>
     public static string PatientRobotProblem()
     {
         AsylumHub hub = Object.FindAnyObjectByType<AsylumHub>(FindObjectsInactive.Include);
@@ -559,11 +1043,12 @@ public static partial class AsylumHubBuilder
         foreach (string who in RobotPatients)
         {
             HubPatient p = FindPatient(hub.life, who);
-            if (p != null && (p.body == null || p.body.name != NpcRobotBodyName)) missing.Add(who);
+            string expected = ExpectedPatientBodyName(who);
+            if (p != null && (p.body == null || p.body.name != expected)) missing.Add(who);
         }
         Transform morgue = hub.life.Find(EliasMorgueName);
-        if (morgue != null && morgue.Find(MorgueRobotName) == null) missing.Add("the morgue body");
-        return missing.Count == 0 ? null : "not a robot yet: " + string.Join(", ", missing);
+        if (morgue != null && morgue.Find(ExpectedMorgueBodyName()) == null) missing.Add("the morgue body");
+        return missing.Count == 0 ? null : "patient body needs update: " + string.Join(", ", missing);
     }
 
     /// <summary>ProjectSetup's fix: swaps what <see cref="PatientRobotProblem"/> lists and applies the hub to its prefab. Marks the scene dirty.</summary>
@@ -579,19 +1064,52 @@ public static partial class AsylumHubBuilder
         foreach (string who in RobotPatients)
         {
             HubPatient p = FindPatient(hub.life, who);
-            if (p != null && (p.body == null || p.body.name != NpcRobotBodyName)) report.AppendLine(SwapPatientToRobot(p));
+            string expected = ExpectedPatientBodyName(who);
+            if (p != null && (p.body == null || p.body.name != expected)) report.AppendLine(SwapPatientToRobot(p));
         }
         Transform morgue = hub.life.Find(EliasMorgueName);
-        if (morgue != null && morgue.Find(MorgueRobotName) == null) report.AppendLine(SwapMorgueBody(morgue));
+        if (morgue != null && morgue.Find(ExpectedMorgueBodyName()) == null) report.AppendLine(SwapMorgueBody(morgue));
         UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(hub.gameObject.scene);
         if (!wasActive) hub.SetContentActive(false);
         ApplyHubToPrefab(hub);
         Debug.Log("Asylum robot patients:\n" + report.ToString().Trim());
     }
 
-    /// <summary>A patient's body becomes Timmy in that patient's skin, on the HubPeople controller (it has the Lie state), with the fitted capsule the human body had.</summary>
+    /// <summary>A patient's body becomes Hilde's (<see cref="HildeBrandtModelPath"/>) or Elias's (<see cref="EliasVogtModelPath"/>) custom 3D model, or Timmy in that patient's skin, on the HubPeople controller (it has the Lie state), with the fitted capsule the human body had.</summary>
     public static string SwapPatientToRobot(HubPatient patient)
     {
+        if (patient != null && patient.name == "Hilde" && System.IO.File.Exists(HildeBrandtModelPath))
+        {
+            Transform oldHilde = patient.body;
+            Transform hildeBody = HildeBrandtBodyLike(patient.transform, oldHilde);
+            if (hildeBody != null)
+            {
+                AddPatientCapsule(hildeBody.gameObject);
+                patient.body = hildeBody;
+                patient.controller = PeopleController();
+                if (oldHilde != null) Object.DestroyImmediate(oldHilde.gameObject);
+                EditorUtility.SetDirty(patient);
+                patient.Refresh();
+                return $"{patient.name}: body swapped to Indie Horror 3D HildeBrandt_Model.fbx (Head, Body, #3 RestraintTag & Chalk + HildePhysics)";
+            }
+        }
+
+        if (patient != null && patient.name == "Elias" && System.IO.File.Exists(EliasVogtModelPath))
+        {
+            Transform oldElias = patient.body;
+            Transform eliasBody = EliasVogtBodyLike(patient.transform, oldElias);
+            if (eliasBody != null)
+            {
+                AddPatientCapsule(eliasBody.gameObject);
+                patient.body = eliasBody;
+                patient.controller = PeopleController();
+                if (oldElias != null) Object.DestroyImmediate(oldElias.gameObject);
+                EditorUtility.SetDirty(patient);
+                patient.Refresh();
+                return $"{patient.name}: body swapped to Indie Horror 3D EliasVogt_Model.fbx (Head, Body, Wristband & #5 MorgueTag + EliasPhysics)";
+            }
+        }
+
         Material skin = HunterSkinBuilder.EnsureNpcSkin(patient.name);
         if (skin == null) return $"{patient.name}: no skin was painted";
         Transform old = patient.body;
@@ -616,22 +1134,85 @@ public static partial class AsylumHubBuilder
     }
 
     /// <summary>
-    /// The sheeted body on the morgue gurney becomes Timmy under the sheet: the old body's pose (lying on its back along the gurney), every
-    /// renderer in the sheet material, centred on the gurney. The old body is deleted.
+    /// The sheeted body on the morgue gurney becomes the custom 3D <see cref="SheetedMorgueModelPath"/> corpse (with frostbitten feet and #5 tag)
+    /// or Timmy under the sheet as fallback, centred on the gurney. The old body is deleted.
     /// </summary>
     private static string SwapMorgueBody(Transform morgue)
     {
         Transform old = morgue.Find("Body_Sheeted");
-        Transform robot = BuildMorgueRobot(morgue, old != null ? old.position : morgue.position, old != null ? old.rotation : morgue.rotation);
-        if (robot == null) return "EliasMorgue: the robot could not be built";
+        if (old == null) old = morgue.Find(MorgueRobotName);
+        if (old == null) old = morgue.Find(SheetedMorgueBodyName);
+        Vector3 pos = old != null ? old.position : morgue.position;
+        Quaternion rot = old != null ? old.rotation : morgue.rotation;
         if (old != null) Object.DestroyImmediate(old.gameObject);
-        return "EliasMorgue: the sheeted body is Timmy";
+        Transform body = BuildMorgueRobot(morgue, pos, rot);
+        if (body == null) return "EliasMorgue: the morgue body could not be built";
+        return $"EliasMorgue: the sheeted body is {body.name}";
     }
 
     private static Transform BuildMorgueRobot(Transform morgue, Vector3 position, Quaternion rotation)
     {
         bool morgueWasActive = morgue.gameObject.activeSelf;
         morgue.gameObject.SetActive(true); // the fit below needs live renderer bounds
+
+        if (System.IO.File.Exists(SheetedMorgueModelPath))
+        {
+            ModelImporter morgueImp = AssetImporter.GetAtPath(SheetedMorgueModelPath) as ModelImporter;
+            if (morgueImp == null)
+            {
+                AssetDatabase.ImportAsset(SheetedMorgueModelPath, ImportAssetOptions.ForceUpdate);
+                morgueImp = AssetImporter.GetAtPath(SheetedMorgueModelPath) as ModelImporter;
+            }
+            if (morgueImp != null && (morgueImp.animationType != ModelImporterAnimationType.None || morgueImp.importAnimation))
+            {
+                morgueImp.animationType = ModelImporterAnimationType.None;
+                morgueImp.importAnimation = false;
+                morgueImp.SaveAndReimport();
+            }
+
+            if (!AssetDatabase.IsValidFolder(NurseAgnesMatFolder))
+                EnsureHildeBrandtMaterials();
+            Material morgueMat = EnsureDirPbrMaterial(
+                SheetedMorgueModelDir,
+                "SheetedMorgueBody_HP",
+                $"{NurseAgnesMatFolder}/SheetedMorgueBody_HP.mat",
+                "SheetedMorgueBody_HP_Diffuse.png",
+                "SheetedMorgueBody_HP_Normal.png",
+                "SheetedMorgueBody_HP_MetalSmooth.png",
+                null,
+                0.18f,
+                0.0f,
+                false);
+            AssetDatabase.SaveAssets();
+
+            GameObject morgueAsset = AssetDatabase.LoadAssetAtPath<GameObject>(SheetedMorgueModelPath);
+            if (morgueAsset != null)
+            {
+                GameObject morgueGo = (GameObject)PrefabUtility.InstantiatePrefab(morgueAsset, morgue);
+                PrefabUtility.UnpackPrefabInstance(morgueGo, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+                morgueGo.name = SheetedMorgueBodyName;
+                Renderer bed = _building != null ? NearestRenderer("MorgueWheelBed", new Vector3(126.4f, 1.6f, -52.6f), 2.0f) : null;
+                Vector3 along = (bed == null || bed.bounds.size.z >= bed.bounds.size.x) ? Vector3.forward : Vector3.right;
+                Quaternion lieFlatRot = Quaternion.LookRotation(-along, Vector3.down);
+                morgueGo.transform.SetPositionAndRotation(position, lieFlatRot);
+                morgueGo.transform.localScale = Vector3.one;
+                StripPhysics(morgueGo);
+                foreach (Renderer r in morgueGo.GetComponentsInChildren<Renderer>(true))
+                {
+                    if (morgueMat != null)
+                    {
+                        Material[] mats = new Material[r.sharedMaterials.Length];
+                        for (int i = 0; i < mats.Length; i++) mats[i] = morgueMat;
+                        r.sharedMaterials = mats;
+                    }
+                    r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                }
+                FitOnGurney(morgueGo.transform);
+                morgue.gameObject.SetActive(morgueWasActive);
+                return morgueGo.transform;
+            }
+        }
+
         Transform robot = InteractableKitBuilder.InstantiateRobotNode(morgue);
         if (robot == null) { morgue.gameObject.SetActive(morgueWasActive); return null; }
         robot.name = MorgueRobotName;

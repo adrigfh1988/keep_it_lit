@@ -35,16 +35,101 @@ public class Elias : MazeEntity
     private static readonly int AnimPose = Animator.StringToHash("Pose");
     private static readonly int AnimReach = Animator.StringToHash("Reach");
 
+    [Header("Animator & Locomotion (Animation/Descent/Elias.controller)")]
+    [SerializeField] private string locomotionState = "Locomotion";
+    [SerializeField] private string patrolState = "Patrol";
+    [SerializeField] private string rushState = "Rush";
+    [SerializeField] private string harvestState = "Harvest";
+    [SerializeField] private string surgeState = "Surge";
+    [SerializeField] private string recoilState = "Recoil";
+    [SerializeField] private string shoveState = "Shove";
+    [SerializeField] private string pinState = "Pin";
+    [Tooltip("Ground speed (m/s) the walk and run clips cover at normal playback, measured from stance foot travel by InteractableKitBuilder.")]
+    [SerializeField] private float locomotionWalkSpeed = 1.98f;
+    [SerializeField] private float locomotionRunSpeed = 5.45f;
+    [SerializeField] private float maxLocomotionPlayback = 2.0f;
+    [SerializeField] private float maxWalkPlayback = 1.75f;
+    [SerializeField] private float animationBlendRate = 6f;
+    [SerializeField] private float acceleration = 7f;
+    [SerializeField] private float speedRampRate = 14f;
+    [SerializeField] private float turnSpeedChase = 520f;
+    [SerializeField] private float turnSpeedMoving = 210f;
+    [SerializeField] private float turnSpeedStationary = 150f;
+
+    private const float EyeHeight = 1.68f;
+    private const float MaxGroundOffset = 0.20f;
+    private const float StateFadeSeconds = 0.16f;
+
+    private static readonly string[] PatrolMutterLines =
+    {
+        "Drawer five... leave the door shut.",
+        "Too warm in this corridor...",
+        "I walk at night. I don't remember where.",
+        "The drawers are cold. Mine is number five."
+    };
+
+    private static readonly string[] HarvestLampLines =
+    {
+        "Out. All of them out.",
+        "The filaments burn my eyes...",
+        "Better in the cold.",
+        "No lights after lights-out."
+    };
+
+    private static readonly string[] BreathAndNoiseLines =
+    {
+        "I see your breath in the dark...",
+        "Warm lungs... this way.",
+        "Don't pant. It fogs the air.",
+        "Who's shivering down here?"
+    };
+
+    private static readonly string[] SpottedShoutLines =
+    {
+        "PUT THAT TORCH OUT!",
+        "BACK TO THE DRAWERS!",
+        "THE LIGHT BURNS!",
+        "WARM BLOOD IN THE HALL!"
+    };
+
+    private static readonly string[] ColdSurgeLines =
+    {
+        "FREEZE THE GRID!",
+        "NO MORE WARMTH DOWN HERE!",
+        "LIGHTS OUT IN COLD STORAGE!"
+    };
+
+    private static readonly string[] BeamRecoilLines =
+    {
+        "TURN IT OFF! TURN IT OFF!",
+        "TOO BRIGHT—STOP!",
+        "GET THAT BEAM OFF MY EYES!"
+    };
+
+    private static readonly string[] LostSightLines =
+    {
+        "You're still shivering somewhere...",
+        "The cold will find you first.",
+        "Hold your breath all you want..."
+    };
+
+    private static readonly string[] CaptureLines =
+    {
+        "DRAWER FIVE IS WAITING!",
+        "HOLD STILL ON THE SLAB!",
+        "COLD STORAGE FOR YOU!"
+    };
+
     [Header("Blackout Stage Speeds & Time Thresholds")]
-    [SerializeField] private float[] stageWalkSpeeds = { 2.6f, 3.1f, 3.6f, 4.1f };
-    [SerializeField] private float[] stageChaseSpeeds = { 3.8f, 4.4f, 4.9f, 5.35f };
-    [SerializeField] private float[] stageHarvestCooldowns = { 28f, 18f, 11f, 6f };
-    [SerializeField] private float[] stageSurgeIntervals = { 0f, 45f, 28f, 16f };
-    [SerializeField] private float[] stageTorchDrainMultipliers = { 1.0f, 1.45f, 1.85f, 2.35f };
+    [SerializeField] private float[] stageWalkSpeeds = { 3.0f, 3.35f, 3.75f, 4.15f };
+    [SerializeField] private float[] stageChaseSpeeds = { 4.2f, 4.6f, 5.0f, 5.4f };
+    [SerializeField] private float[] stageHarvestCooldowns = { 10f, 8f, 6f, 4.5f };
+    [SerializeField] private float[] stageSurgeIntervals = { 30f, 24f, 18f, 13f };
+    [SerializeField] private float[] stageTorchDrainMultipliers = { 1.40f, 1.70f, 2.05f, 2.45f };
     [Tooltip("Elapsed floor seconds at which Elias escalates to Stages 2, 3, and 4 even if no stars are collected.")]
-    [SerializeField] private float stage2TimeSeconds = 70f;
-    [SerializeField] private float stage3TimeSeconds = 140f;
-    [SerializeField] private float stage4TimeSeconds = 210f;
+    [SerializeField] private float stage2TimeSeconds = 55f;
+    [SerializeField] private float stage3TimeSeconds = 110f;
+    [SerializeField] private float stage4TimeSeconds = 165f;
 
     [Header("Frost Aura & Lamp Harvesting")]
     [SerializeField] private float frostAuraInnerRadius = 5f;
@@ -68,12 +153,29 @@ public class Elias : MazeEntity
     [SerializeField] private float frostLimpSeconds = 6.0f;
     [SerializeField] private float frostLimpSpeedScale = 0.62f;
 
-    [Header("Audio Keys (GameAudioLibrary)")]
+    [Header("Audio Keys (GameAudioLibrary) & Chase Music")]
     [SerializeField] private string[] stageWaveSoundKeys = { "elias_stage_wave", "hunter_relocate_cue", "dread_lamp_pop" };
     [SerializeField] private string[] lampKillSoundKeys = { "elias_lamp_snuff", "dread_lamp_pop", "fuse_off" };
     [SerializeField] private string[] staggerSoundKeys = { "elias_stagger", "hunter_stun", "torch_click" };
     [SerializeField] private string[] shoveSoundKeys = { "elias_shove", "hunter_grab_shove", "hunter_catch" };
     [SerializeField] private string[] captureSoundKeys = { "elias_capture", "hunter_catch" };
+    [Tooltip("Looping frantic frost-chase music track while Elias is chasing, surging, busting a locker, or capturing.")]
+    [SerializeField] private AudioClip franticChaseClip;
+    [SerializeField] private float franticChaseMaxVolume = 0.65f;
+    [SerializeField] private float chaseMusicOuterDistance = 22f;
+    [SerializeField] private float chaseMusicInnerDistance = 3.0f;
+    [SerializeField] private float chaseMusicRiseRate = 0.42f;
+    [SerializeField] private float chaseMusicFallRate = 0.32f;
+
+    [Header("Voice Audio (Assets/SourceFiles/Audio/Generated/Voices/Elias)")]
+    [SerializeField] private AudioClip[] patrolMutterClips;
+    [SerializeField] private AudioClip[] harvestLampClips;
+    [SerializeField] private AudioClip[] breathAndNoiseClips;
+    [SerializeField] private AudioClip[] spottedShoutClips;
+    [SerializeField] private AudioClip[] coldSurgeClips;
+    [SerializeField] private AudioClip[] beamRecoilClips;
+    [SerializeField] private AudioClip[] lostSightClips;
+    [SerializeField] private AudioClip[] captureClips;
 
     /// <summary>Campaign-scoped flag saved in <see cref="SaveData.eliasSeen"/>.</summary>
     public static bool SeenThisCampaign { get; private set; }
@@ -111,6 +213,9 @@ public class Elias : MazeEntity
 
     public bool IsSearching => _mode == Mode.Search || _mode == Mode.InvestigateNoise || _mode == Mode.ColdSurge;
 
+    /// <summary>World-space head position for <see cref="MazeEntity.PinPlayer"/> and speech bubbles.</summary>
+    public Vector3 HeadPosition => _head != null ? _head.position : transform.position + Vector3.up * EyeHeight;
+
     public override void Configure(MazeGenerator maze, Transform player, AIFollower hunter)
     {
         BindSystems(maze, player, hunter);
@@ -136,6 +241,12 @@ public class Elias : MazeEntity
 
     private NavMeshAgent _agent;
     private Animator _animator;
+    private EliasPhysics _physics;
+    private Transform _body;
+    private Transform _head;
+    private Renderer[] _renderers;
+    private readonly EntityGaitAnimator _locomotion = new EntityGaitAnimator();
+    private readonly EntityVoiceAndMusic _voiceMusic = new EntityVoiceAndMusic();
     private bool _hasPoseParam;
     private bool _hasReachParam;
     private PlayerStamina _stamina;
@@ -157,15 +268,22 @@ public class Elias : MazeEntity
     private float _surgeEndTime;
     private float _stunnedUntil = -1f;
     private float _stallUntil = -1f;
+    private float _harvestPoseUntil = -1f;
+    private Vector3 _harvestLampPos;
+    private float _shovePoseUntil = -1f;
+    private float _beamRecoilUntil = -1f;
     private float _nextAuraTick;
     private float _nextBreathSenseTime;
     private float _nextFocusStaggerTime;
     private float _focusBeamExposure;
     private float _lastLampSubtitleTime = -999f;
+    private float _nextPatrolMutterTime = -999f;
+    private float _nextBreathNoiseLineTime = -999f;
 
     private bool _endgameHunting;
+    private bool _runPrimed;
     private bool _shownFirstSightSubtitle;
-    private bool _usedFrostShoveThisFloor;
+    private bool _wasHidden;
     private bool _limpActive;
     private float _limpEndTime;
 
@@ -173,18 +291,43 @@ public class Elias : MazeEntity
     {
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponentInChildren<Animator>();
+        _physics = GetComponentInChildren<EliasPhysics>();
         _stamina = Player != null ? Player.GetComponent<PlayerStamina>() : null;
 
         if (_animator != null)
         {
-            _animator.SetBool(AnimGrounded, true);
-            _animator.SetFloat(AnimMotionSpeed, 1f);
+            _body = _animator.transform;
             _animator.fireEvents = false;
+            _animator.applyRootMotion = false;
+            _animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+            if (_animator.isHuman) _head = _animator.GetBoneTransform(HumanBodyBones.Head);
+            if (_head == null) _head = EntityGaitAnimator.FindDeepChild(_body, "mixamorig:Head");
+
+            EntityGaitAnimator.SyncCosmeticsFromHub(_body, _animator, null, "Body_EliasVogt");
+
             foreach (AnimatorControllerParameter param in _animator.parameters)
             {
                 if (param.type == AnimatorControllerParameterType.Int && param.name == "Pose") _hasPoseParam = true;
                 else if (param.type == AnimatorControllerParameterType.Trigger && param.name == "Reach") _hasReachParam = true;
+                else if (param.type == AnimatorControllerParameterType.Bool && param.name == "Grounded") _animator.SetBool(AnimGrounded, true);
             }
+            _locomotion.Bind(_animator);
+        }
+
+        _renderers = GetComponentsInChildren<Renderer>(true);
+        foreach (Renderer r in _renderers)
+        {
+            if (r is SkinnedMeshRenderer smr) smr.updateWhenOffscreen = true;
+        }
+
+        _physics?.BindRig();
+        BuildSpeechBubble();
+        _voiceMusic.BuildAudioSources(transform, EyeHeight, 1.25f, franticChaseClip, "EliasVoiceAudio", "EliasChaseMusic", createVoiceSource: true);
+
+        if (_agent != null)
+        {
+            _agent.acceleration = acceleration;
+            _agent.updateRotation = false;
         }
 
         if (Maze != null && Maze.CellCenters != null)
@@ -200,8 +343,10 @@ public class Elias : MazeEntity
         }
 
         CurrentStage = 1;
-        _nextHarvestTime = Time.time + 10f;
-        _nextSurgeTime = Time.time + 35f;
+        _runPrimed = false;
+        _nextHarvestTime = Time.time + 1.0f;
+        _nextSurgeTime = Time.time + 18f;
+        _nextPatrolMutterTime = Time.time + Random.Range(10f, 18f);
 
         GameManager.ProgressChanged += OnProgressChanged;
         GameManager.AllStarsCollected += OnAllStarsCollected;
@@ -232,6 +377,7 @@ public class Elias : MazeEntity
         DoorBreakers.Unregister(transform);
         ClearAllLampTints();
         EndFrostLimp();
+        _voiceMusic.DestroyBubble();
     }
 
     public void Stall(float seconds)
@@ -243,10 +389,21 @@ public class Elias : MazeEntity
     {
         UpdateFrostLimp();
 
+        if (_mode == Mode.Captured && !GameOutcome.IsOver)
+        {
+            if (_agent != null && _agent.isOnNavMesh) _agent.isStopped = true;
+            if (Player != null) UpdateRotation(Player.position - transform.position);
+            UpdateAnimator(0f);
+            UpdateChaseMusic();
+            return;
+        }
+
         if (!CanAct)
         {
             if (_agent != null && _agent.isOnNavMesh) _agent.isStopped = true;
-            UpdateAnimator(0f);
+            _locomotion.PauseToIdle(locomotionState, patrolState, rushState, recoilState);
+            _physics?.SetPoseState(false, Vector3.zero, false, false, false, false);
+            UpdateChaseMusic();
             return;
         }
 
@@ -254,6 +411,7 @@ public class Elias : MazeEntity
         {
             if (_agent != null && _agent.isOnNavMesh) _agent.isStopped = true;
             UpdateAnimator(0f);
+            UpdateChaseMusic();
             return;
         }
 
@@ -262,6 +420,25 @@ public class Elias : MazeEntity
             if (_agent != null && NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 12f, NavMesh.AllAreas))
                 _agent.Warp(hit.position);
             return;
+        }
+
+        if (!_runPrimed)
+        {
+            _runPrimed = true;
+            _nextHarvestTime = Time.time + 0.5f;
+            _nextSurgeTime = Time.time + 18f;
+            WallLamp initialLamp = PickLampToHarvest();
+            if (initialLamp != null)
+            {
+                _targetLamp = initialLamp;
+                _mode = Mode.HarvestLamp;
+                _agent.isStopped = false;
+                _agent.SetDestination(_targetLamp.transform.position);
+            }
+            else
+            {
+                PickNextPatrolPoint();
+            }
         }
 
         if (Time.time >= _nextAuraTick)
@@ -275,7 +452,9 @@ public class Elias : MazeEntity
             if (Time.time < _stunnedUntil)
             {
                 _agent.isStopped = true;
+                if (Player != null) UpdateRotation(Player.position - transform.position);
                 UpdateAnimator(0f);
+                UpdateChaseMusic();
                 return;
             }
             _mode = Mode.Search;
@@ -293,8 +472,69 @@ public class Elias : MazeEntity
             _agent.isStopped = true;
             _agent.velocity = Vector3.zero;
         }
+        else if (!_agent.isStopped)
+        {
+            UpdateRotation(EntityGaitAnimator.CurrentHeading(_agent, transform));
+        }
 
         UpdateAnimator(_agent.velocity.magnitude);
+        UpdateChaseMusic();
+    }
+
+    private void UpdateChaseMusic()
+    {
+        if (!CanAct || _mode == Mode.Stunned || Player == null)
+        {
+            _voiceMusic.UpdateProximityChaseMusic(0f, franticChaseClip, franticChaseMaxVolume, chaseMusicRiseRate, chaseMusicFallRate, false);
+            return;
+        }
+
+        float dist = FlatDistanceToPlayer(transform.position);
+        float closeness01 = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(chaseMusicOuterDistance, chaseMusicInnerDistance, dist));
+        float stageBoost = 0.03f * Mathf.Clamp(CurrentStage - 1, 0, 3);
+        bool los = HasClearLine(transform.position + Vector3.up * EyeHeight, Player.position + Vector3.up * 1.45f, Player);
+
+        float targetIntensity01;
+        switch (_mode)
+        {
+            case Mode.Captured:
+                targetIntensity01 = 1.0f;
+                break;
+            case Mode.Chase:
+            case Mode.BustLocker:
+                // Starts at 22% intensity at outer chase edge (22m) and builds gradually to 100% as Elias closes in (<= 3m)
+                targetIntensity01 = Mathf.Clamp01(Mathf.Lerp(0.22f, 1.0f, closeness01) + stageBoost);
+                break;
+            case Mode.ColdSurge:
+                targetIntensity01 = Mathf.Clamp01(Mathf.Lerp(0.16f, 0.85f, closeness01) + stageBoost);
+                break;
+            case Mode.Search:
+            case Mode.InvestigateNoise:
+                // Creeping muffled pulse when Elias is searching nearby (< 16m)
+                targetIntensity01 = Mathf.SmoothStep(0f, 0.34f, Mathf.InverseLerp(16f, 3.5f, dist));
+                break;
+            default:
+                // Faint sub-bass cryo-undertone when Elias silently patrols within 12m
+                targetIntensity01 = Mathf.SmoothStep(0f, 0.18f, Mathf.InverseLerp(12f, 3.5f, dist));
+                break;
+        }
+
+        _voiceMusic.UpdateProximityChaseMusic(
+            targetIntensity01,
+            franticChaseClip,
+            franticChaseMaxVolume,
+            chaseMusicRiseRate,
+            chaseMusicFallRate,
+            los);
+    }
+
+    private void LateUpdate()
+    {
+        if (_body == null) return;
+        bool lookAtPlayer = _mode == Mode.Chase || _mode == Mode.BustLocker || _mode == Mode.Stunned || _mode == Mode.Captured
+                            || (_mode == Mode.Search && FlatDistanceToPlayer(transform.position) <= 8f);
+        bool fastTrack = _mode == Mode.Chase || _mode == Mode.BustLocker || _mode == Mode.Captured;
+        _locomotion.UpdateBodyGroundAndHeadTrack(transform, _body, _head, Maze, Player, lookAtPlayer, fastTrack, MaxGroundOffset);
     }
 
     // ---------------------------------------------------------------- Blackout Escalation (Stages 1..4)
@@ -455,7 +695,7 @@ public class Elias : MazeEntity
             float dElias = FlatDistance(myPos, lamp.transform.position);
             float dPlayer = FlatDistance(playerPos, lamp.transform.position);
 
-            if (dPlayer >= 10f && dPlayer <= 38f && dElias < bestMidScore)
+            if (dPlayer <= 38f && dElias < bestMidScore)
             {
                 bestMidScore = dElias;
                 bestMidBand = lamp;
@@ -518,8 +758,10 @@ public class Elias : MazeEntity
             {
                 _focusBeamExposure = 0f;
                 _nextFocusStaggerTime = Time.time + focusStaggerCooldownSeconds;
+                _beamRecoilUntil = Time.time + 1.35f;
                 Stall(1.35f);
                 PlayFirst(transform.position, 0.9f, 0.92f, GameAudio.Library.flickerCrackle, GameAudio.Library.bulbPop);
+                Speak(BeamRecoilLines, SpeechBubble.Style.Shout);
                 Hud?.ShowSubtitle(L10n.T("sub.elias.beam_recoil"), 2.2f);
                 LogEvent("Focused-beam stagger");
             }
@@ -546,6 +788,11 @@ public class Elias : MazeEntity
             _mode = Mode.InvestigateNoise;
             _agent.isStopped = false;
             _agent.SetDestination(_lastKnownPlayerPos);
+            if (Time.time >= _nextBreathNoiseLineTime)
+            {
+                _nextBreathNoiseLineTime = Time.time + 6.0f;
+                Speak(BreathAndNoiseLines, SpeechBubble.Style.Normal);
+            }
         }
     }
 
@@ -563,21 +810,31 @@ public class Elias : MazeEntity
             }
         }
 
-        // Check if player just hid in a locker while Elias was watching or close behind
-        if (Stealth != null && Stealth.Hidden && Stealth.CurrentHidingSpot != null)
+        // Check if player just hid in a locker while Elias had direct line of sight
+        bool hiddenNow = Stealth != null && Stealth.Hidden && Stealth.CurrentHidingSpot != null;
+        if (hiddenNow)
         {
-            bool sawHide = (Time.time - _lastSeenPlayerTime) <= 1.75f
-                || (_mode == Mode.Chase && FlatDistanceToPlayer(transform.position) <= 8f);
-            if (sawHide && _mode != Mode.BustLocker)
+            if (!_wasHidden && _mode != Mode.BustLocker)
             {
-                _targetHidingSpot = Stealth.CurrentHidingSpot;
-                _mode = Mode.BustLocker;
-                _agent.isStopped = false;
-                _agent.SetDestination(_targetHidingSpot.FrontPosition);
-                LogEvent("Busting locker");
+                Vector3 eye = transform.position + Vector3.up * 1.6f;
+                Vector3 lockerFront = Stealth.CurrentHidingSpot.FrontPosition + Vector3.up * 1.2f;
+                bool sawHide = _mode == Mode.Chase
+                    && (Time.time - _lastSeenPlayerTime) <= 0.15f
+                    && HasClearLine(eye, lockerFront, transform);
+                if (sawHide)
+                {
+                    _targetHidingSpot = Stealth.CurrentHidingSpot;
+                    _mode = Mode.BustLocker;
+                    _agent.isStopped = false;
+                    _agent.SetDestination(_targetHidingSpot.FrontPosition);
+                    Speak(CaptureLines, SpeechBubble.Style.Shout);
+                    LogEvent("Busting locker");
+                }
             }
+            _wasHidden = true;
             return;
         }
+        _wasHidden = false;
 
         bool canSee = CanSeePlayer();
         if (canSee)
@@ -592,6 +849,7 @@ public class Elias : MazeEntity
                 _mode = Mode.Chase;
                 _agent.isStopped = false;
                 PulseDread();
+                Speak(SpottedShoutLines, SpeechBubble.Style.Shout);
                 LogEvent("Chase started");
             }
             return;
@@ -609,14 +867,16 @@ public class Elias : MazeEntity
                 _mode = Mode.InvestigateNoise;
                 _agent.isStopped = false;
                 _agent.SetDestination(_lastKnownPlayerPos);
+                _nextBreathNoiseLineTime = Time.time + 6.0f;
+                Speak(BreathAndNoiseLines, SpeechBubble.Style.Normal);
                 Hud?.ShowSubtitle(L10n.T("sub.elias.hears_breath"), 2.5f);
             }
         }
     }
 
-    private bool CanSeePlayer()
+    private bool CanSeePlayer(bool ignoreHidden = false)
     {
-        if (Player == null || (Stealth != null && Stealth.Hidden)) return false;
+        if (Player == null || (!ignoreHidden && Stealth != null && Stealth.Hidden)) return false;
 
         float dist = FlatDistanceToPlayer(transform.position);
         float maxRange = darkSightRange;
@@ -735,6 +995,12 @@ public class Elias : MazeEntity
         _agent.speed = GetWalkSpeed(CurrentStage);
         _agent.isStopped = false;
 
+        if (Time.time >= _nextPatrolMutterTime)
+        {
+            _nextPatrolMutterTime = Time.time + Random.Range(14f, 24f);
+            Speak(PatrolMutterLines, SpeechBubble.Style.Normal);
+        }
+
         if (Time.time >= _nextHarvestTime)
         {
             WallLamp candidate = PickLampToHarvest();
@@ -747,8 +1013,29 @@ public class Elias : MazeEntity
                 return;
             }
         }
+        else if (Time.time >= _nextHarvestTime - 4f && Maze != null && Maze.Lamps != null)
+        {
+            // Opportunistically harvest any lit lamp Elias walks right past
+            IReadOnlyList<WallLamp> lamps = Maze.Lamps;
+            bool allowLocker = CurrentStage >= 3;
+            Vector3 myPos = transform.position;
+            for (int i = 0; i < lamps.Count; i++)
+            {
+                WallLamp lamp = lamps[i];
+                if (lamp == null || lamp.IsDead || !lamp.IsPowered) continue;
+                if (lamp.IsLockerLamp && !allowLocker) continue;
+                if (FlatDistance(myPos, lamp.transform.position) <= harvestReachDistance + 0.5f)
+                {
+                    _targetLamp = lamp;
+                    _nextHarvestTime = Time.time + GetHarvestCooldown(CurrentStage);
+                    _mode = Mode.HarvestLamp;
+                    UpdateHarvestLamp();
+                    return;
+                }
+            }
+        }
 
-        if (!_agent.pathPending && _agent.remainingDistance <= 1.1f)
+        if (!_agent.hasPath || _agent.pathStatus == NavMeshPathStatus.PathInvalid || (!_agent.pathPending && _agent.remainingDistance <= 1.1f))
         {
             PickNextPatrolPoint();
         }
@@ -779,9 +1066,12 @@ public class Elias : MazeEntity
         if (_animator != null && _hasReachParam)
             _animator.SetTrigger(AnimReach);
 
+        _harvestLampPos = _targetLamp.transform.position;
+        _harvestPoseUntil = Time.time + 0.90f;
         _targetLamp.Kill(lampKillFadeSeconds, allowLockerLamp: CurrentStage >= 3);
         PlayFirst(transform.position, 0.95f, 0.88f, GameAudio.Library.bulbPop, GameAudio.Library.powerDown);
-        Stall(0.65f);
+        Speak(HarvestLampLines, SpeechBubble.Style.Normal);
+        Stall(0.90f);
 
         if (FlatDistanceToPlayer(transform.position) <= 22f && Time.time - _lastLampSubtitleTime >= 10f)
         {
@@ -801,7 +1091,7 @@ public class Elias : MazeEntity
         _nextSurgeTime = Time.time + interval;
         _agent.isStopped = true;
 
-        int killQuota = Mathf.Max(1, CurrentStage - 1);
+        int killQuota = Mathf.Max(1, CurrentStage);
         int killed = 0;
         bool allowLocker = CurrentStage >= 3;
 
@@ -832,6 +1122,7 @@ public class Elias : MazeEntity
         }
 
         PlayFirst(transform.position, 0.9f, 0.82f, GameAudio.Library.powerDown, GameAudio.Library.bulbPop);
+        Speak(ColdSurgeLines, SpeechBubble.Style.Shout);
         LogEvent($"ColdSurge (killed {killed} lamps)");
     }
 
@@ -866,6 +1157,7 @@ public class Elias : MazeEntity
             {
                 _mode = Mode.Search;
                 _searchEndTime = Time.time + searchDurationSeconds;
+                Speak(LostSightLines, SpeechBubble.Style.Normal);
                 PickSearchPointAround(_lastKnownPlayerPos);
             }
         }
@@ -897,30 +1189,15 @@ public class Elias : MazeEntity
 
     private void HandlePlayerCaught(bool wasLockerBust)
     {
-        if (!wasLockerBust && !_usedFrostShoveThisFloor)
-        {
-            _usedFrostShoveThisFloor = true;
-            _mode = Mode.Stunned;
-            _stunnedUntil = Time.time + frostShoveStunSeconds;
-            _agent.isStopped = true;
-            _agent.velocity = Vector3.zero;
-
-            Torch?.Blackout(3.5f);
-            BeginFrostLimp(frostLimpSeconds);
-            StartCoroutine(ShakeView(0.45f, 0.35f));
-            PlayFirst(transform.position, 1.0f, 0.9f, GameAudio.Library.caught, GameAudio.Library.bulbPop);
-            Hud?.ShowSubtitle(L10n.T("sub.elias.frost_shove"), 3.0f);
-            LogEvent("First-catch Frost Shove");
-            return;
-        }
-
+        // Survivable first-catch Frost Shove / slow-limp removed: catches go directly to Second Wind or lethal capture.
         _mode = Mode.Captured;
         _agent.isStopped = true;
         _agent.velocity = Vector3.zero;
         StartCoroutine(PinPlayer(transform.position + Vector3.up * 1.55f, 0.65f));
         StartCoroutine(ShakeView(0.55f, 0.45f));
         PlayFirst(transform.position, 1.0f, 0.85f, GameAudio.Library.caught, GameAudio.Library.caughtLayer);
-        LogEvent("Lethal capture");
+        Speak(CaptureLines, SpeechBubble.Style.Shout);
+        LogEvent(wasLockerBust ? "Lethal locker-bust capture" : "Lethal capture");
         Outcome?.CaughtByEntity(transform.position + Vector3.up * 1.55f, () => WarpAway(6f), EntityKind.Elias);
     }
 
@@ -961,10 +1238,17 @@ public class Elias : MazeEntity
     {
         if (_agent == null || !_agent.isOnNavMesh || _patrolPoints.Count == 0) return;
 
-        // During endgame hatch/gate phase, patrol closer to the player to keep blackout pressure high
+        // During endgame hatch/gate phase, patrol close to the player to keep blackout pressure high
         if (_endgameHunting && Player != null)
         {
             PickSearchPointAround(Player.position, 18f);
+            return;
+        }
+
+        // Bias patrol points toward the player's general sector even from the start of the maze
+        if (Player != null && Random.value < 0.65f)
+        {
+            PickSearchPointAround(Player.position, 24f);
             return;
         }
 
@@ -988,17 +1272,119 @@ public class Elias : MazeEntity
         PickNextPatrolPoint();
     }
 
+    private void UpdateRotation(Vector3 desiredDirection)
+    {
+        bool chasing = _mode == Mode.Chase || _mode == Mode.BustLocker;
+        _locomotion.UpdateRotation(transform, _agent, desiredDirection, chasing, turnSpeedChase, turnSpeedMoving, turnSpeedStationary);
+    }
+
     private void UpdateAnimator(float speed)
     {
+        bool harvestingNow = Time.time < _harvestPoseUntil;
+        Vector3 harvestPos = _harvestLampPos;
+        bool recoilingNow = Time.time < _beamRecoilUntil
+            || (_mode == Mode.Stunned && Time.time >= _shovePoseUntil);
+        bool shovingNow = Time.time < _shovePoseUntil;
+        bool surgingNow = _mode == Mode.ColdSurge || _mode == Mode.Captured;
+
+        _physics?.SetPoseState(harvestingNow, harvestPos, harvestingNow, recoilingNow, surgingNow, shovingNow);
+
         if (_animator == null) return;
-        float gait = speed < 0.15f ? 0f : (_mode == Mode.Chase || _mode == Mode.BustLocker ? 6f : 2f);
-        _animator.SetFloat(AnimSpeed, gait);
-        _animator.SetFloat(AnimMotionSpeed, 1f);
+
+        bool chasing = _mode == Mode.Chase || _mode == Mode.BustLocker;
+        if (_locomotion.StepPursuerGait(
+            _agent,
+            chasing,
+            locomotionWalkSpeed,
+            locomotionRunSpeed,
+            maxWalkPlayback,
+            maxLocomotionPlayback,
+            GetChaseSpeed(CurrentStage),
+            animationBlendRate,
+            out bool moving,
+            out float v,
+            out float walkSpeed,
+            out float runSpeed,
+            out float playback))
+        {
+            if (_mode == Mode.Captured)
+            {
+                _locomotion.PlayActionState(pinState, 1.25f, patrolState, rushState, recoilState, surgeState, pinState, harvestState);
+            }
+            else if (shovingNow)
+            {
+                _locomotion.PlayActionState(shoveState, 1.15f, patrolState, rushState, recoilState, surgeState, pinState, shoveState);
+            }
+            else if (recoilingNow)
+            {
+                _locomotion.PlayActionState(recoilState, 1.0f, patrolState, rushState, recoilState, surgeState, pinState, harvestState);
+            }
+            else if (_mode == Mode.ColdSurge)
+            {
+                _locomotion.PlayActionState(surgeState, 1.0f, patrolState, rushState, recoilState, surgeState, pinState, harvestState);
+            }
+            else if (harvestingNow)
+            {
+                _locomotion.PlayActionState(harvestState, 1.15f, patrolState, rushState, recoilState, surgeState, pinState, harvestState);
+            }
+            else if (chasing)
+            {
+                _locomotion.PlayChargeLocomotion(v, runSpeed, playback, maxLocomotionPlayback, locomotionState, patrolState, rushState, recoilState);
+            }
+            else
+            {
+                _locomotion.PlayPatrolLocomotion(moving, v, walkSpeed, playback, maxLocomotionPlayback, locomotionState, patrolState, recoilState, rushState);
+            }
+        }
+        else
+        {
+            float gait = speed < 0.15f ? 0f : (chasing ? 6f : 2f);
+            _animator.SetFloat(AnimSpeed, gait);
+            _animator.SetFloat(AnimMotionSpeed, 1f);
+        }
+
         if (_hasPoseParam)
         {
             int pose = _mode == Mode.Search || _mode == Mode.ColdSurge ? 1 : 0;
             _animator.SetInteger(AnimPose, pose);
         }
+    }
+
+    private void BuildSpeechBubble()
+    {
+        SpeechBubble.Palette frostPalette = new SpeechBubble.Palette
+        {
+            Fill = new Color(0.05f, 0.09f, 0.13f, 0.92f),
+            Outline = new Color(0.35f, 0.78f, 1.0f, 1.0f),
+            Text = new Color(0.86f, 0.94f, 1.0f, 1.0f),
+            Shout = new Color(0.45f, 0.88f, 1.0f, 1.0f)
+        };
+        _voiceMusic.BuildSpeechBubble(Hud, frostPalette, "EliasSpeechBubble");
+    }
+
+    private AudioClip[] ResolveVoiceClips(string[] pool)
+    {
+        if (ReferenceEquals(pool, PatrolMutterLines)) return patrolMutterClips;
+        if (ReferenceEquals(pool, HarvestLampLines)) return harvestLampClips;
+        if (ReferenceEquals(pool, BreathAndNoiseLines)) return breathAndNoiseClips;
+        if (ReferenceEquals(pool, SpottedShoutLines)) return spottedShoutClips;
+        if (ReferenceEquals(pool, ColdSurgeLines)) return coldSurgeClips;
+        if (ReferenceEquals(pool, BeamRecoilLines)) return beamRecoilClips;
+        if (ReferenceEquals(pool, LostSightLines)) return lostSightClips;
+        if (ReferenceEquals(pool, CaptureLines)) return captureClips;
+        return null;
+    }
+
+    private void Speak(string[] pool, SpeechBubble.Style style)
+    {
+        _voiceMusic.Speak(
+            FlatDistanceToPlayer(transform.position),
+            pool,
+            ResolveVoiceClips(pool),
+            style,
+            () => HeadPosition + Vector3.up * 0.40f,
+            shoutMaxRange: 24f,
+            normalMaxRange: 18f);
     }
 
     private static float FlatDistance(Vector3 a, Vector3 b)

@@ -454,4 +454,488 @@ public partial class PhantomDirector
 
         return copy;
     }
+
+    // ---------------------------------------------------------------- F128: P.T.-style attached presence
+
+    /// <summary>
+    /// F128: tethers an unseen presence behind the player's back for 8-15 s. It walks in lockstep behind the player,
+    /// lands a half-beat late step and neck breath when stopping, projects a real shadow forward when passing in front
+    /// of a powered WallLamp, freezes for a split-second peripheral glimpse on a fast whip-turn, and triggers a non-lethal
+    /// startle if the player backs into it or stays at critical dread too long.
+    /// </summary>
+    private bool TryStartAttachedPresence()
+    {
+        if (!_terror.attachedPresence || _attachedActive || _camera == null || _player == null || _maze == null) return false;
+        if (_footstepClips == null || _footstepClips.Length == 0) return false;
+
+        PhantomBody body = null;
+        if (_terror.doubles && GameFlow.CurrentFloor >= doubleFromFloor && Random.value < doubleChance && !StalkerNear(_player.position))
+        {
+            body = TryGetDoubleBody();
+        }
+        if (body == null) body = TryGetBody();
+
+        // Fall back to the legacy audio-only footsteps routine if the shared figure body is busy or unavailable.
+        if (body == null) return TryStartFootsteps();
+
+        GameObject holder = new GameObject("Phantom_AttachedPresence");
+        holder.transform.SetParent(_phantomsRoot.transform, false);
+
+        AudioSource source = holder.AddComponent<AudioSource>();
+        source.playOnAwake = false;
+        source.loop = false;
+        source.spatialBlend = 1f;
+        source.rolloffMode = AudioRolloffMode.Linear;
+        source.minDistance = footstepMinDistance;
+        source.maxDistance = footstepMaxDistance;
+        source.pitch = footstepPitch;
+
+        bool honest = RollHonestFootsteps();
+        bool hunterPitched = honest || (_terror.contaminatedPhantoms && Random.value < hunterPitchedChance);
+
+        Vector3 camForwardFlat = FlatForward(_camera.transform);
+        Vector3 initialPos = _player.position - camForwardFlat * attachedDistanceBehind;
+        body.Show(initialPos, camForwardFlat);
+        body.SetShadowMode(ShadowCastingMode.ShadowsOnly);
+        body.Freeze(AIFollower.Pose.Lurk);
+
+        _attachedActive = true;
+        StartCoroutine(AttachedPresenceRoutine(body, holder, source, hunterPitched, honest));
+        _terror.Log("Attached presence tethered", this);
+        return true;
+    }
+
+    private IEnumerator AttachedPresenceRoutine(PhantomBody body, GameObject holder, AudioSource source, bool hunterPitched, bool honest)
+    {
+        float duration = Random.Range(attachedDurationMin, attachedDurationMax);
+        float elapsed = 0f;
+        float distanceSinceStep = footstepStrideLength * 0.5f;
+        Vector3 lastPlayerPos = _player.position;
+        float prevYaw = _camera.transform.eulerAngles.y;
+        float fastTurnAccum = 0f;
+        float fastTurnSign = 0f;
+        float backpedalDistance = 0f;
+        float highDreadTimer = 0f;
+        float timeSinceStopped = 0f;
+        bool isWalking = false;
+        bool lateStepPending = false;
+        bool neckBreathPending = false;
+
+        while (elapsed < duration)
+        {
+            if (BailedOut() || _camera == null || _player == null || _follower == null
+                || _follower.IsChasing || _follower.FlatDistanceToTarget < 4.5f
+                || (_stealth != null && _stealth.Hidden)
+                || (_maze.Loop != null && _maze.Loop.IsInside))
+            {
+                CleanupAttachedPresence(body, holder);
+                yield break;
+            }
+
+            float dt = Mathf.Max(Time.deltaTime, 1e-4f);
+            Vector3 camForwardFlat = FlatForward(_camera.transform);
+            Vector3 backDir = -camForwardFlat;
+
+            // 1. Slow turn orbit vs. fast whip-turn peripheral glimpse
+            float currentYaw = _camera.transform.eulerAngles.y;
+            float dyaw = Mathf.DeltaAngle(prevYaw, currentYaw);
+            prevYaw = currentYaw;
+            float yawSpeed = Mathf.Abs(dyaw) / dt;
+
+            if (yawSpeed >= whipTurnSpeedThreshold)
+            {
+                float sign = Mathf.Sign(dyaw);
+                if (fastTurnSign != 0f && sign != fastTurnSign) fastTurnAccum = 0f;
+                fastTurnSign = sign;
+                fastTurnAccum += Mathf.Abs(dyaw);
+            }
+            else
+            {
+                fastTurnAccum = Mathf.Max(0f, fastTurnAccum - 90f * dt);
+                if (fastTurnAccum <= 0f) fastTurnSign = 0f;
+            }
+
+            if (fastTurnAccum >= whipTurnMinAngle && _terror.peripheralPhantoms && _silhouetteMaterial != null)
+            {
+                yield return WhipGlimpseRoutine(body, holder, fastTurnSign, honest);
+                yield break;
+            }
+
+            // 2. Player movement tracking: lockstep footsteps, half-beat late step, neck breath & back-pedal detection
+            Vector3 playerPos = _player.position;
+            Vector3 move = playerPos - lastPlayerPos;
+            move.y = 0f;
+            lastPlayerPos = playerPos;
+            float moveDist = move.magnitude;
+            bool movingNow = moveDist > 0.002f && (_stealth == null || _stealth.NoiseRadius > 0f);
+
+            if (movingNow)
+            {
+                Vector3 moveDir = move / moveDist;
+                float backDot = Vector3.Dot(moveDir, backDir);
+                if (backDot > 0.35f)
+                {
+                    backpedalDistance += Vector3.Dot(move, backDir);
+                }
+                else
+                {
+                    backpedalDistance = Mathf.Max(0f, backpedalDistance - moveDist * 0.5f);
+                }
+
+                distanceSinceStep += moveDist;
+                if (!isWalking)
+                {
+                    isWalking = true;
+                    body.Show(body.Root.transform.position, camForwardFlat);
+                    body.SetShadowMode(ShadowCastingMode.ShadowsOnly);
+                    body.Walk();
+                }
+
+                timeSinceStopped = 0f;
+                neckBreathPending = false;
+
+                if (distanceSinceStep >= footstepStrideLength)
+                {
+                    distanceSinceStep = 0f;
+                    lateStepPending = true;
+                    if (holder != null)
+                    {
+                        Vector3 stepPos = _camera.transform.position + backDir * 1.6f;
+                        stepPos.y = playerPos.y;
+                        holder.transform.position = stepPos;
+                    }
+                    PlayFootstep(source, hunterPitched);
+                }
+            }
+            else
+            {
+                timeSinceStopped += dt;
+                if (isWalking)
+                {
+                    isWalking = false;
+                    body.Freeze(AIFollower.Pose.Lurk);
+                }
+
+                if (lateStepPending && timeSinceStopped >= footstepLateStepDelay)
+                {
+                    lateStepPending = false;
+                    neckBreathPending = true;
+                    if (holder != null)
+                    {
+                        Vector3 stepPos = _camera.transform.position + backDir * 1.15f;
+                        stepPos.y = playerPos.y;
+                        holder.transform.position = stepPos;
+                    }
+                    PlayFootstep(source, hunterPitched);
+                }
+
+                if (neckBreathPending && timeSinceStopped >= footstepLateStepDelay + neckBreathDelay)
+                {
+                    neckBreathPending = false;
+                    PlayNeckBreath(_camera.transform.position, camForwardFlat, _camera.transform.right);
+                }
+            }
+
+            // 3. Hybrid escalation check: walking backward into it or sustaining critical dread
+            if (_meter != null && _meter.IsActive && _meter.Value >= highDreadStartleThreshold)
+            {
+                highDreadTimer += dt;
+            }
+            else
+            {
+                highDreadTimer = Mathf.Max(0f, highDreadTimer - dt * 0.5f);
+            }
+
+            if (backpedalDistance >= backpedalBumpDistance || highDreadTimer >= highDreadStartleSeconds)
+            {
+                yield return TriggerAttachedStartle(body, holder, source, backpedalDistance >= backpedalBumpDistance);
+                yield break;
+            }
+
+            // 4. Blind-spot positioning & rear WallLamp forward shadow projection
+            Vector3 anchor = playerPos + backDir * attachedDistanceBehind;
+            UpdateShadowLamp(playerPos, camForwardFlat, ref anchor);
+            anchor.y = playerPos.y;
+
+            body.Root.transform.SetPositionAndRotation(anchor, Quaternion.LookRotation(camForwardFlat, Vector3.up));
+            body.SetShadowMode(ShadowCastingMode.ShadowsOnly);
+
+            elapsed += dt;
+            yield return null;
+        }
+
+        // Natural expiry: land any pending half-beat step before detaching
+        if (lateStepPending && !BailedOut() && (_follower == null || !_follower.IsChasing))
+        {
+            float wait = Mathf.Max(0f, footstepLateStepDelay - timeSinceStopped);
+            for (float t = 0f; t < wait; t += Time.deltaTime)
+            {
+                if (BailedOut() || (_follower != null && _follower.IsChasing))
+                {
+                    CleanupAttachedPresence(body, holder);
+                    yield break;
+                }
+                yield return null;
+            }
+
+            if (_camera != null && _player != null && holder != null)
+            {
+                Vector3 backDir = -FlatForward(_camera.transform);
+                Vector3 stepPos = _camera.transform.position + backDir * 1.15f;
+                stepPos.y = _player.position.y;
+                holder.transform.position = stepPos;
+                PlayFootstep(source, hunterPitched);
+            }
+        }
+
+        if (honest)
+        {
+            bool relocated = _dread != null && _dread.TryRelocateOnTrail(honestRelocateDistance);
+            _terror.Log($"Honest attached presence -> relocated: {relocated}", this);
+        }
+
+        ClearShadowLamp();
+        body.Hide();
+        _attachedActive = false;
+
+        yield return new WaitForSeconds(0.8f);
+        if (holder != null) Destroy(holder);
+    }
+
+    private IEnumerator WhipGlimpseRoutine(PhantomBody body, GameObject holder, float turnSign, bool honest)
+    {
+        ClearShadowLamp();
+
+        Vector3 playerPos = _player.position;
+        Vector3 camForwardFlat = FlatForward(_camera.transform);
+        Vector3 camRightFlat = Vector3.Cross(Vector3.up, camForwardFlat).normalized;
+        Vector3 sideDir = camRightFlat * (turnSign >= 0f ? 1f : -1f);
+        Vector3 glimpseDir = (-camForwardFlat * 0.55f + sideDir * 0.85f).normalized;
+        Vector3 glimpsePos = FindClearOffset(playerPos, glimpseDir, whipGlimpseDistance);
+
+        Vector3 facing = playerPos - glimpsePos;
+        facing.y = 0f;
+        if (facing.sqrMagnitude < 1e-4f) facing = camForwardFlat;
+
+        body.Show(glimpsePos, facing);
+        if (_silhouetteMaterial != null) body.SetMaterial(_silhouetteMaterial);
+        body.SetShadowMode(ShadowCastingMode.On);
+        body.Freeze(AIFollower.Pose.Lurk);
+        _terror.Log("Attached presence whip-turn glimpse", this);
+
+        Vector3 testPoint = glimpsePos + Vector3.up * figureTestHeight;
+
+        // Wait briefly for the whip-turn to bring the frozen figure into the viewport
+        for (float wait = 0f; wait < 0.25f; wait += Time.deltaTime)
+        {
+            if (BailedOut() || _camera == null || (_follower != null && _follower.IsChasing) || IsInTorchBeam(testPoint)) break;
+            Vector3 vp = _camera.WorldToViewportPoint(testPoint);
+            if (vp.z > 0f && vp.x >= 0.03f && vp.x <= 0.97f) break;
+            yield return null;
+        }
+
+        // Hold for a split-second peripheral/rear glimpse before vanishing cleanly
+        for (float hold = 0f; hold < whipGlimpseDuration; hold += Time.deltaTime)
+        {
+            if (BailedOut() || (_follower != null && _follower.IsChasing) || IsInTorchBeam(testPoint)) break;
+            yield return null;
+        }
+
+        body.Hide();
+        _attachedActive = false;
+
+        if (!BailedOut())
+        {
+            MaybeKillLampNear(glimpsePos);
+            if (honest)
+            {
+                bool relocated = _dread != null && _dread.TryRelocateOnTrail(honestRelocateDistance);
+                _terror.Log($"Honest attached presence -> relocated: {relocated}", this);
+            }
+        }
+
+        if (holder != null) Destroy(holder);
+    }
+
+    private IEnumerator TriggerAttachedStartle(PhantomBody body, GameObject holder, AudioSource source, bool fromBackpedal)
+    {
+        ClearShadowLamp();
+
+        Vector3 playerPos = _player.position;
+        Vector3 camForwardFlat = FlatForward(_camera.transform);
+        Vector3 camRightFlat = Vector3.Cross(Vector3.up, camForwardFlat).normalized;
+        float side = Random.value < 0.5f ? -1f : 1f;
+        Vector3 startleDir = (-camForwardFlat * 0.65f + camRightFlat * (side * 0.75f)).normalized;
+        Vector3 startlePos = FindClearOffset(playerPos, startleDir, 0.95f);
+
+        Vector3 facing = playerPos - startlePos;
+        facing.y = 0f;
+        if (facing.sqrMagnitude < 1e-4f) facing = camForwardFlat;
+
+        body.Show(startlePos, facing);
+        if (_silhouetteMaterial != null) body.SetMaterial(_silhouetteMaterial);
+        body.SetShadowMode(ShadowCastingMode.On);
+        body.Freeze(AIFollower.Pose.Lurk);
+
+        if (holder != null) holder.transform.position = startlePos;
+        PlayFootstep(source, true);
+        PlayNeckBreath(_camera.transform.position, camForwardFlat, camRightFlat, 1.35f);
+
+        _meter?.Spike();
+        if (_flashlight != null && _flashlight.IsOn)
+        {
+            if (_terror.torchFailures) _flashlight.Blackout(startleBlackoutSeconds);
+            else _flashlight.Stutter(1.1f);
+        }
+
+        _terror.Log(fromBackpedal ? "Attached presence startle (back-pedal bump)" : "Attached presence startle (high dread)", this);
+
+        for (float t = 0f; t < 0.18f; t += Time.deltaTime)
+        {
+            if (BailedOut() || (_follower != null && _follower.IsChasing)) break;
+            yield return null;
+        }
+
+        body.Hide();
+        _attachedActive = false;
+
+        yield return new WaitForSeconds(0.6f);
+        if (holder != null) Destroy(holder);
+    }
+
+    /// <summary>
+    /// F128: finds the nearest powered WallLamp behind the player within attachedLampShadowRadius, temporarily enables
+    /// soft shadows on it, and biases the unseen body's anchor toward the line from the lamp to the floor ahead of the player.
+    /// </summary>
+    private void UpdateShadowLamp(Vector3 playerPos, Vector3 camForwardFlat, ref Vector3 anchor)
+    {
+        if (_maze == null || GameSettings.Shadows == GameSettings.ShadowTier.Off)
+        {
+            ClearShadowLamp();
+            return;
+        }
+
+        IReadOnlyList<WallLamp> lamps = _maze.Lamps;
+        WallLamp best = null;
+        float bestDist = attachedLampShadowRadius;
+        Vector3 playerChest = playerPos + Vector3.up * 1.2f;
+
+        for (int i = 0; i < lamps.Count; i++)
+        {
+            WallLamp lamp = lamps[i];
+            if (lamp == null || lamp.IsDead || !lamp.IsPowered || lamp.CurrentIntensity01 <= 0.05f) continue;
+
+            Vector3 lampPos = lamp.transform.position;
+            float dist = Vector3.Distance(lampPos, playerPos);
+            if (dist > bestDist || dist < 0.8f) continue;
+
+            Vector3 lampToPlayer = playerPos - lampPos;
+            lampToPlayer.y = 0f;
+            if (lampToPlayer.sqrMagnitude < 0.01f) continue;
+
+            // Lamp must be behind the player so its light projects the shadow forward ahead of the player's feet
+            if (Vector3.Dot(camForwardFlat, lampToPlayer.normalized) <= 0.15f) continue;
+            if (!IsRayClear(lampPos, playerChest)) continue;
+
+            bestDist = dist;
+            best = lamp;
+        }
+
+        if (best != _shadowLamp)
+        {
+            if (_shadowLamp != null) _shadowLamp.SetShadowCasting(false);
+            _shadowLamp = best;
+            if (_shadowLamp != null) _shadowLamp.SetShadowCasting(true);
+        }
+
+        if (_shadowLamp != null)
+        {
+            Vector3 lampFlat = _shadowLamp.transform.position;
+            lampFlat.y = playerPos.y;
+            Vector3 forwardFloor = playerPos + camForwardFlat * attachedLampShadowForwardAim;
+            Vector3 rayToAim = forwardFloor - lampFlat;
+            rayToAim.y = 0f;
+            float rayLen = rayToAim.magnitude;
+            if (rayLen > 0.1f)
+            {
+                Vector3 rayDir = rayToAim / rayLen;
+                float backFromAim = Mathf.Min(rayLen * 0.7f, attachedDistanceBehind + attachedLampShadowForwardAim);
+                Vector3 shadowCasterPos = forwardFloor - rayDir * backFromAim;
+                Vector3 targetAnchor = Vector3.Lerp(anchor, shadowCasterPos, attachedLampBias);
+                Vector3 fromPlayer = targetAnchor - playerPos;
+                fromPlayer.y = 0f;
+                if (fromPlayer.sqrMagnitude > 0.01f)
+                {
+                    anchor = FindClearOffset(playerPos, fromPlayer.normalized, fromPlayer.magnitude);
+                }
+            }
+        }
+    }
+
+    private void ClearShadowLamp()
+    {
+        if (_shadowLamp != null)
+        {
+            _shadowLamp.SetShadowCasting(false);
+            _shadowLamp = null;
+        }
+    }
+
+    private void CleanupAttachedPresence(PhantomBody body, GameObject holder)
+    {
+        ClearShadowLamp();
+        body?.Hide();
+        _attachedActive = false;
+        if (holder != null) Destroy(holder);
+    }
+
+    private void PlayNeckBreath(Vector3 camPos, Vector3 camForwardFlat, Vector3 camRight, float volumeScale = 1f)
+    {
+        float earSide = Random.value < 0.5f ? -0.35f : 0.35f;
+        Vector3 pos = camPos - camForwardFlat * neckBreathDistance + camRight * earSide;
+
+        GameAudioLibrary library = GameAudio.Library;
+        AudioSlot slot = library != null && library.lockerBreath.Has
+            ? library.lockerBreath
+            : (library != null ? library.phantomWhisper : null);
+
+        if (slot != null && slot.Has)
+        {
+            AudioSource s = GameAudio.SpawnAt(slot, pos, neckBreathVolume * volumeScale, 0.8f, 4.5f);
+            if (s != null && slot.lowPassHz <= 0f)
+            {
+                s.gameObject.AddComponent<AudioLowPassFilter>().cutoffFrequency = 1600f;
+            }
+            return;
+        }
+
+        _audio?.PlayWhisper(earSide < 0f ? -0.85f : 0.85f);
+    }
+
+    private Vector3 FindClearOffset(Vector3 origin, Vector3 flatDir, float desiredDistance)
+    {
+        Vector3 chestOrigin = origin + Vector3.up * 1.1f;
+        int count = Physics.RaycastNonAlloc(chestOrigin, flatDir, _rayHits, desiredDistance + 0.35f, ~0, QueryTriggerInteraction.Ignore);
+        float nearest = desiredDistance;
+        for (int i = 0; i < count; i++)
+        {
+            Transform hit = _rayHits[i].transform;
+            if ((_player != null && IsPartOf(hit, _player)) || (_follower != null && IsPartOf(hit, _follower.transform))) continue;
+            float safeDist = Mathf.Max(0.55f, _rayHits[i].distance - 0.35f);
+            if (safeDist < nearest) nearest = safeDist;
+        }
+
+        Vector3 result = origin + flatDir * nearest;
+        result.y = origin.y;
+        return result;
+    }
+
+    private static Vector3 FlatForward(Transform t)
+    {
+        Vector3 fwd = t.forward;
+        fwd.y = 0f;
+        if (fwd.sqrMagnitude < 1e-4f) fwd = t.right;
+        fwd.y = 0f;
+        return fwd.sqrMagnitude > 1e-4f ? fwd.normalized : Vector3.forward;
+    }
 }

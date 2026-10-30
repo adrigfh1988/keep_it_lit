@@ -194,7 +194,7 @@ MonoBehaviour:
         - d
         - 
     - rid: 4707331669776663147
-      type: {class: SavedLocaleSelector, ns: , asm: Assembly-CSharp}
+      type: {class: SavedLocaleSelector, ns: , asm: KeepItLit.Runtime}
       data: 
     - rid: 4707331669776663148
       type: {class: SystemLocaleSelector, ns: UnityEngine.Localization.Settings, asm: Unity.Localization}

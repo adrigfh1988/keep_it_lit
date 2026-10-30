@@ -11,7 +11,10 @@ public sealed class EntityVoiceAndMusic
     public SpeechBubble Bubble { get; private set; }
     public AudioSource VoiceSource { get; private set; }
     public AudioSource ChaseMusicSource { get; private set; }
+    public AudioLowPassFilter ChaseLowPass { get; private set; }
     public float SpeakUntil { get; set; } = -999f;
+
+    private float _smoothedIntensity01;
 
     /// <summary>True while a voice clip or timed speech bubble is actively speaking.</summary>
     public bool IsSpeaking => Time.time < SpeakUntil;
@@ -91,6 +94,60 @@ public sealed class EntityVoiceAndMusic
         float targetVol = activeChase ? maxVolume : 0f;
         float fadeRate = activeChase ? 2.4f : 0.65f;
         ChaseMusicSource.volume = Mathf.MoveTowards(ChaseMusicSource.volume, targetVol, fadeRate * Time.deltaTime);
+
+        if (ChaseMusicSource.volume > 0.005f)
+        {
+            if (!ChaseMusicSource.isPlaying) ChaseMusicSource.Play();
+        }
+        else if (ChaseMusicSource.isPlaying)
+        {
+            ChaseMusicSource.Pause();
+        }
+    }
+
+    /// <summary>
+    /// Gradually modulates chase music intensity, low-pass cutoff, and heartbeat tempo/pitch
+    /// based on proximity/threat (<paramref name="targetIntensity01"/> in 0..1) and line-of-sight occlusion.
+    /// </summary>
+    public void UpdateProximityChaseMusic(
+        float targetIntensity01,
+        AudioClip franticChaseClip,
+        float maxVolume,
+        float riseRate = 0.42f,
+        float fallRate = 0.32f,
+        bool hasLineOfSight = true,
+        float minPitch = 0.93f,
+        float maxPitch = 1.06f)
+    {
+        if (ChaseMusicSource == null) return;
+        if (ChaseMusicSource.clip == null)
+        {
+            AudioClip loopClip = franticChaseClip != null ? franticChaseClip : GameAudio.Library.chaseMusic.First();
+            if (loopClip == null) return;
+            ChaseMusicSource.clip = loopClip;
+        }
+
+        if (ChaseLowPass == null)
+        {
+            ChaseLowPass = ChaseMusicSource.GetComponent<AudioLowPassFilter>();
+            if (ChaseLowPass == null)
+            {
+                ChaseLowPass = ChaseMusicSource.gameObject.AddComponent<AudioLowPassFilter>();
+                ChaseLowPass.cutoffFrequency = 520f;
+                ChaseLowPass.lowpassResonanceQ = 1.0f;
+            }
+        }
+
+        targetIntensity01 = Mathf.Clamp01(targetIntensity01);
+        float rate = targetIntensity01 > _smoothedIntensity01 ? riseRate : fallRate;
+        _smoothedIntensity01 = Mathf.MoveTowards(_smoothedIntensity01, targetIntensity01, rate * Time.deltaTime);
+
+        ChaseMusicSource.volume = _smoothedIntensity01 * maxVolume;
+        ChaseMusicSource.pitch = Mathf.Lerp(minPitch, maxPitch, _smoothedIntensity01);
+
+        float maxCutoff = hasLineOfSight ? 18500f : 3400f;
+        float targetCutoff = Mathf.Lerp(460f, maxCutoff, _smoothedIntensity01 * _smoothedIntensity01);
+        ChaseLowPass.cutoffFrequency = Mathf.MoveTowards(ChaseLowPass.cutoffFrequency, targetCutoff, 9500f * Time.deltaTime);
 
         if (ChaseMusicSource.volume > 0.005f)
         {

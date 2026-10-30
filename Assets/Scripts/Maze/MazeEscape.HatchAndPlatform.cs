@@ -82,17 +82,83 @@ public partial class MazeEscape
     {
         // Debug (MazeGenerator.superEasyMode): the stars are packed round the start, so the hatch opens in the start cell itself -
         // a step or two from wherever the last star was (never in a star cell, so never underfoot).
-        if (_maze.SuperEasyMode) return _maze.CellCenter(0, 0);
+        if (_maze.SuperEasyMode) return _maze.StartCellCenter;
 
         // F104 B4: a hatch a walk of 25-40 m away that is not next to the hunter (falls through to the old rule when nothing fits).
         if (_terror.escapeHunt && TryChooseHuntedHatchCell(out Vector3 hunted)) return hunted;
 
-        var cells = _maze.CellCenters;
-        var candidates = new System.Collections.Generic.List<Vector3>();
+        return ChooseFallbackHatchCell(_maze.CellCenters, _player.position, minimumDistanceFromPlayer, Random.Range(0, int.MaxValue), HasCeilingPropAt);
+    }
 
-        foreach (Vector3 cell in cells)
+    /// <summary>
+    /// Pure-C# testable helper for <see cref="ChooseHatchCell"/>: evaluates superEasyMode, the two-pass F104 B4 walking-path window
+    /// (with hunter clearance), and the distance fallback over a <see cref="MazeGrid"/>.
+    /// </summary>
+    internal static Vector3 ChooseHatchPositionForGrid(
+        MazeGrid grid,
+        bool superEasyMode,
+        bool escapeHunt,
+        Vector3 playerPos,
+        Vector3? hunterPos,
+        Vector2 pathWindowMetres,
+        float windowWiden,
+        float minHunterDistance,
+        float minPlayerDistance,
+        int randomPickSeed,
+        System.Func<Vector3, bool> hasCeilingProp = null)
+    {
+        if (superEasyMode)
         {
-            if (Vector3.Distance(cell, _player.position) >= minimumDistanceFromPlayer && !HasCeilingPropAt(cell)) // F107 A
+            return grid.CellCenter(grid.StartCell.x, grid.StartCell.y);
+        }
+
+        if (escapeHunt && grid.TryWorldToCell(playerPos, out int px, out int py))
+        {
+            int[,] steps = ComputeStepsFrom(grid, new Vector2Int(px, py));
+            var candidates = new System.Collections.Generic.List<Vector3>();
+            for (int pass = 0; pass < 2; pass++)
+            {
+                float min = pass == 0 ? pathWindowMetres.x : pathWindowMetres.x * windowWiden;
+                float max = pass == 0 ? pathWindowMetres.y : pathWindowMetres.y / windowWiden;
+
+                candidates.Clear();
+                System.Collections.Generic.IReadOnlyList<Vector3> cells = grid.CellCenters;
+                for (int i = 0; i < cells.Count; i++)
+                {
+                    Vector3 cell = cells[i];
+                    if (!grid.TryWorldToCell(cell, out int cx, out int cy) || steps[cx, cy] < 0) continue;
+
+                    float path = steps[cx, cy] * grid.CellSize;
+                    if (path < min || path > max) continue;
+                    if (hunterPos.HasValue && FlatDistance(cell, hunterPos.Value) < minHunterDistance) continue;
+                    if (hasCeilingProp != null && hasCeilingProp(cell)) continue;
+
+                    candidates.Add(cell);
+                }
+
+                if (candidates.Count > 0)
+                {
+                    int idx = ((randomPickSeed & 0x7FFFFFFF) % candidates.Count);
+                    return candidates[idx];
+                }
+            }
+        }
+
+        return ChooseFallbackHatchCell(grid.CellCenters, playerPos, minPlayerDistance, randomPickSeed, hasCeilingProp);
+    }
+
+    private static Vector3 ChooseFallbackHatchCell(
+        System.Collections.Generic.IReadOnlyList<Vector3> cells,
+        Vector3 playerPos,
+        float minPlayerDistance,
+        int randomPickSeed,
+        System.Func<Vector3, bool> hasCeilingProp)
+    {
+        var candidates = new System.Collections.Generic.List<Vector3>();
+        for (int i = 0; i < cells.Count; i++)
+        {
+            Vector3 cell = cells[i];
+            if (Vector3.Distance(cell, playerPos) >= minPlayerDistance && (hasCeilingProp == null || !hasCeilingProp(cell)))
             {
                 candidates.Add(cell);
             }
@@ -101,10 +167,39 @@ public partial class MazeEscape
         // A very small maze may have nowhere far enough; anywhere but underfoot will do then
         if (candidates.Count == 0)
         {
-            return cells[Random.Range(0, cells.Count)];
+            return cells[(randomPickSeed & 0x7FFFFFFF) % cells.Count];
         }
 
-        return candidates[Random.Range(0, candidates.Count)];
+        return candidates[(randomPickSeed & 0x7FFFFFFF) % candidates.Count];
+    }
+
+    private static int[,] ComputeStepsFrom(MazeGrid grid, Vector2Int from)
+    {
+        int w = grid.Width;
+        int h = grid.Height;
+        int[,] steps = new int[w, h];
+        for (int x = 0; x < w; x++)
+        {
+            for (int z = 0; z < h; z++) steps[x, z] = -1;
+        }
+
+        steps[from.x, from.y] = 0;
+        var queue = new System.Collections.Generic.Queue<Vector2Int>();
+        queue.Enqueue(from);
+        while (queue.Count > 0)
+        {
+            Vector2Int cell = queue.Dequeue();
+            int next = steps[cell.x, cell.y] + 1;
+            for (int dir = 0; dir < 4; dir++)
+            {
+                if (grid.IsWallClosed(cell.x, cell.y, dir)) continue;
+                if (!grid.Neighbour(cell.x, cell.y, dir, out int nx, out int ny) || steps[nx, ny] >= 0) continue;
+                steps[nx, ny] = next;
+                queue.Enqueue(new Vector2Int(nx, ny));
+            }
+        }
+
+        return steps;
     }
 
     private void BuildHatch(Vector3 position)

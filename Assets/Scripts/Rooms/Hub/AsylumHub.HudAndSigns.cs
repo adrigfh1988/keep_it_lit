@@ -46,19 +46,19 @@ public partial class AsylumHub
         RenderSettings.ambientMode = AmbientMode.Flat;
         Color amb = hubAmbient;
         float max = Mathf.Max(amb.r, amb.g, amb.b);
-        if (max > 0.0001f && max < 0.15f)
+        if (max <= 0.0001f)
         {
-            float s = 0.15f / max;
-            amb = new Color(amb.r * s, amb.g * s, amb.b * s, 1f);
+            amb = new Color(0.018f, 0.018f, 0.022f, 1f);
         }
-        else if (max <= 0.0001f)
+        else if (max > 0.028f)
         {
-            amb = new Color(0.15f, 0.15f, 0.18f, 1f);
+            float s = 0.022f / max;
+            amb = new Color(amb.r * s, amb.g * s, amb.b * s, 1f);
         }
         RenderSettings.ambientLight = amb;
         RenderSettings.fog = true;
         RenderSettings.fogMode = FogMode.ExponentialSquared;
-        RenderSettings.fogDensity = Mathf.Min(hubFogDensity, 0.018f);
+        RenderSettings.fogDensity = Mathf.Min(hubFogDensity, 0.014f);
         RenderSettings.fogColor = hubFogColor;
     }
 

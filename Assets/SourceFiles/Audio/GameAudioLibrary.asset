@@ -574,6 +574,14 @@ MonoBehaviour:
     startOffset: 0
     maxSeconds: 0
     lowPassHz: 0
+  eliasMazeMusic:
+    clips:
+    - {fileID: 8300000, guid: 4a5dfaf7c9c3a48e7a9d0336fb3372fd, type: 3}
+    volume: 1
+    pitchJitter: 0
+    startOffset: 0
+    maxSeconds: 0
+    lowPassHz: 0
   typewriter:
     clips: []
     volume: 1

@@ -102,6 +102,10 @@ public class TerrorSettings
     [Tooltip("F127: unobserved loop passages swap open/closed shutters mid-run to quietly alter routes without trapping the player")]
     public bool wallShifts = true;
 
+    [Header("F128 - P.T.-style attached presence")]
+    [Tooltip("F128: a P.T.-style presence attaches behind the player's back (rear footsteps, neck breathing, forward lamp shadows, whip-turn glimpse, back-pedal/high-dread startle)")]
+    public bool attachedPresence = true;
+
     /// <summary>F122: a shallow copy (every field is a bool). CampaignRules.ApplyTerror edits the copy, never the serialized instance.</summary>
     public TerrorSettings Clone() => (TerrorSettings)MemberwiseClone();
 

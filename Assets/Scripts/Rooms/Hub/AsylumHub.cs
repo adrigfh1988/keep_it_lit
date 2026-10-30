@@ -72,7 +72,7 @@ public partial class AsylumHub : MonoBehaviour
     public WingDoor[] wingDoors = new WingDoor[0];
 
     [Header("Atmosphere while the player is inside (D9)")]
-    public Color hubAmbient = new Color(0.15f, 0.15f, 0.18f);
+    public Color hubAmbient = new Color(0.018f, 0.018f, 0.022f);
     public float hubFogDensity = 0.016f;
     public Color hubFogColor = new Color(0.02f, 0.024f, 0.035f);
 
@@ -229,6 +229,13 @@ public partial class AsylumHub : MonoBehaviour
         if (fog == null) return;
         foreach (ParticleSystem ps in fog.GetComponentsInChildren<ParticleSystem>(true))
         {
+            ParticleSystem.MainModule main = ps.main;
+            main.startSizeY = new ParticleSystem.MinMaxCurve(0.35f, 0.60f);
+            ParticleSystem.ShapeModule shape = ps.shape;
+            shape.position = new Vector3(0f, 0.18f, 0f);
+            shape.randomPositionAmount = 0.06f;
+            ParticleSystem.NoiseModule noise = ps.noise;
+            noise.strengthY = 0.003f;
             if (ps.GetComponent<FogScale>() == null) ps.gameObject.AddComponent<FogScale>();
         }
     }

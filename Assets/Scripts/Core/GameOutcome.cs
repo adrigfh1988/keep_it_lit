@@ -196,7 +196,18 @@ public partial class GameOutcome : MonoBehaviour
         if (PlayerInventory.TryConsume(ShopItem.SecondWind))
         {
             if (_grades != null) _grades.NoteSecondWind(); // F122
-            StartCoroutine(SecondWindSequence(onSecondWind, secondWindLineKey));
+            StartCoroutine(SecondWindSequence(() =>
+            {
+                onSecondWind?.Invoke();
+                if (_maze != null && _maze.Lockers != null)
+                {
+                    foreach (Locker locker in _maze.Lockers)
+                    {
+                        if (locker != null && locker.Occupied) locker.ForceLeave();
+                    }
+                }
+                PlayerLock.Freeze(_player, true);
+            }, secondWindLineKey));
             return;
         }
 

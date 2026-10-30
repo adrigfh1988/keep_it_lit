@@ -155,6 +155,27 @@ public class WallLamp : MonoBehaviour
         if (_light != null) _light.color = _lightBaseColor;
     }
 
+    /// <summary>
+    /// F128: temporarily enables soft shadow casting on this lamp while the attached presence stands between it and the player,
+    /// so the unseen body behind the player projects a real shadow forward without adding a new Light component.
+    /// </summary>
+    public void SetShadowCasting(bool on)
+    {
+        if (_light == null) return;
+        if (on && !IsDead && _powered && GameSettings.Shadows != GameSettings.ShadowTier.Off)
+        {
+            _light.shadows = LightShadows.Soft;
+            _light.shadowStrength = 0.88f;
+            _light.shadowNearPlane = 0.1f;
+            _light.shadowBias = 0.04f;
+            _light.shadowNormalBias = 0.35f;
+        }
+        else
+        {
+            _light.shadows = LightShadows.None;
+        }
+    }
+
     /// <summary>The glass's emission at full brightness: the material's own, or the tint at the same strength.</summary>
     private Color EmissionColor()
     {
@@ -199,6 +220,7 @@ public class WallLamp : MonoBehaviour
         else
         {
             _powered = false;
+            if (_light != null) _light.shadows = LightShadows.None;
         }
     }
 
@@ -229,6 +251,7 @@ public class WallLamp : MonoBehaviour
             CurrentIntensity01 = 0f;
             _shown = 0f;
             _light.intensity = 0f;
+            _light.shadows = LightShadows.None;
             _light.enabled = false;
 
             if (_renderer != null)
@@ -299,6 +322,7 @@ public class WallLamp : MonoBehaviour
                 IsDead = true;
                 _dying = false;
                 k = 0f;
+                _light.shadows = LightShadows.None;
                 _light.enabled = false;
             }
         }

@@ -3,9 +3,9 @@ name: neural-3d-asset-pipeline
 description: >-
   Generate stylized-gritty Indie Horror 3D characters and props (.glb, .blend, rigged .fbx + 2048x2048 PBR Albedo/Normal/Roughness maps)
   locally without paid external 3D API keys. Combines Nano Banana 2D-to-Orthographic Turnaround generation, locally cached
-  neural 3D engines on D:\AI_Models (Tencent Hunyuan3D-2.1 / 2mv / PaintPBR / FlashVDM, VAST-AI TripoSG, Microsoft TRELLIS-image-large),
-  local U2Net (rembg) foreground segmentation & isotropic edge diffusion, and Blender 5.2 Cycles GPU (OptiX/CUDA) Tri-Planar PBR
-  projection, double-wall cleanup, cohesive Indie 2-piece character assembly, and Mixamo skeletal rigging.
+  neural 3D engines on D:\AI_Models (Tencent Hunyuan3D-2.1 / 2mv / Part / PaintPBR / FlashVDM, VAST-AI TripoSG / TripoSF / SkinTokens / UniRig,
+  Microsoft TRELLIS.2-4B / TRELLIS-image-large), local RMBG-2.0 / U2Net (rembg) foreground segmentation & isotropic edge diffusion, and
+  Blender 5.2 Cycles GPU (OptiX/CUDA) Tri-Planar PBR projection, double-wall cleanup, cohesive Indie 2-piece character assembly, and skeletal rigging.
 ---
 
 # Neural 3D Indie Horror Character & Prop Pipeline (Zero Paid API Keys)
@@ -13,7 +13,7 @@ description: >-
 ## Core Philosophy: Cohesive Indie Horror Over Surgical AAA Splicing
 
 1. **Work WITH Neural 3D Reconstructors, Never Against Them:**
-   - Local 3D Diffusion Transformers (`Hunyuan3D-2mv`, `Hunyuan3D-2.1`, `TRELLIS-image-large`, `TripoSG`) excel at **cohesive, bold, readable Indie Horror silhouettes** with strong primary and secondary forms (chunky stylized-gritty proportions, deep shadowed eye sockets, heavy furrowed brows, bold beards/mustaches, iconic hats/masks, and heavy weathered coats/aprons).
+   - Local 3D Diffusion Transformers (`Hunyuan3D-2mv`, `Hunyuan3D-2.1`, `TRELLIS.2-4B`, `TRELLIS-image-large`, `TripoSG`) excel at **cohesive, bold, readable Indie Horror silhouettes** with strong primary and secondary forms (chunky stylized-gritty proportions, deep shadowed eye sockets, heavy furrowed brows, bold beards/mustaches, iconic hats/masks, and heavy weathered coats/aprons).
    - **NEVER attempt "AAA surgical splicing" of 15–20 tiny anatomical sub-meshes** (never generate separate neural `.glb` files for bare skin head + separate ears + separate eyebrows + separate mustache + separate beard + procedural eyelids + 28 procedural teeth + raycast-wrapped apron shells). Because neural 3D models have slight nonlinear coordinate drift (`~15–25 mm`) between independent runs, stitching 19 separate anatomical pieces produces uncanny alignment flaws, raycast spikes, and double-baked features while taking 10× longer.
 2. **Cohesive 2-Piece Indie Character Architecture + Standalone Handheld Props:**
    - **Piece 1 — `<Character>_Head` (Unified Head + Beard + Ears + Hat Bust, `15K–24K` Tris, `2048×2048` UV):**
@@ -30,37 +30,57 @@ description: >-
 ## Local Storage & Models Zoo (`D:\AI_Models`)
 
 - **All models and repositories MUST live on the `D:` drive (`D:\AI_Models\`)**, where over 3 TB of storage is available:
-  - **HuggingFace Cache:** `D:\AI_Models\huggingface\hub` (`HF_HOME=D:\AI_Models\huggingface`, with an NTFS directory junction at `C:\Users\adria\.cache\huggingface` $\rightarrow$ `D:\AI_Models\huggingface` so zero weights consume `C:` drive space).
-  - **GitHub Repositories:**
-    - `D:\AI_Models\3d-models\Hunyuan3D-2`
-    - `D:\AI_Models\3d-models\TripoSG`
-    - `D:\AI_Models\3d-models\TRELLIS`
+  - **HuggingFace Cache:** `D:\AI_Models\huggingface\hub` (`HF_HOME=D:\AI_Models\huggingface`, with an NTFS directory junction at `C:\Users\adria\.cache\huggingface` $\rightarrow$ `D:\AI_Models\huggingface`).
+  - **Hunyuan3D Cache:** `D:\AI_Models\hy3dgen` (`HY3DGEN_MODELS=D:\AI_Models\hy3dgen`, with an NTFS directory junction at `C:\Users\adria\.cache\hy3dgen` $\rightarrow$ `D:\AI_Models\hy3dgen`).
+  - **Rembg / RMBG-2.0 Cache:** `D:\AI_Models\rembg` (NTFS directory junction at `C:\Users\adria\.rembg` $\rightarrow$ `D:\AI_Models\rembg`, containing `briaai/RMBG-2.0` `bria-rmbg.onnx` and `u2net.onnx`).
+  - **Python Virtual Environment:** `D:\Unity\essentials\Models\Hunyuan3D-2\.venv\Scripts\python.exe` (PyTorch + CUDA 12, `hy3dgen`, `huggingface_hub`, `hf_xet`, `trimesh`, `pymeshlab`, `rembg`, `onnxruntime`).
+  - **GitHub Repositories (`D:\AI_Models\3d-models\`):**
+    - `D:\AI_Models\3d-models\Hunyuan3D-2` (`Tencent-Hunyuan/Hunyuan3D-2`)
+    - `D:\AI_Models\3d-models\Hunyuan3D-2.1` (`Tencent-Hunyuan/Hunyuan3D-2.1`)
+    - `D:\AI_Models\3d-models\Hunyuan3D-Part` (`Tencent-Hunyuan/Hunyuan3D-Part`)
+    - `D:\AI_Models\3d-models\TripoSG` (`VAST-AI-Research/TripoSG`)
+    - `D:\AI_Models\3d-models\TripoSF` (`VAST-AI-Research/TripoSF`)
+    - `D:\AI_Models\3d-models\SkinTokens` (`VAST-AI-Research/SkinTokens`)
+    - `D:\AI_Models\3d-models\UniRig` (`VAST-AI-Research/UniRig`)
+    - `D:\AI_Models\3d-models\TRELLIS` (`microsoft/TRELLIS`)
+    - `D:\AI_Models\3d-models\TRELLIS.2` (`microsoft/TRELLIS.2`)
 - **VRAM Budgeting (16 GB RTX 5080):**
-  - **Shape generation only:** ~**6 GB–8 GB VRAM** (`Hunyuan3D-DiT` / `TripoSG`).
-  - **Shape + neural texture generation together:** ~**16 GB VRAM** (`--low_vram_mode --enable_flashvdm`).
-  - **Best practice on 16 GB VRAM:** Save the untextured `.glb` and call `del pipeline_shapegen; torch.cuda.empty_cache()` before loading `Hunyuan3DPaintPipeline` or running Blender Cycles GPU Tri-Planar PBR baking.
+  - **Shape generation only:** ~**6 GB–10 GB VRAM** (`Hunyuan3D-DiT` / `TripoSG` / `TRELLIS`).
+  - **Shape + neural texture generation together:** ~**16 GB VRAM** (`--low_vram_mode --enable_flashvdm` or `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`).
+  - **Best practice on 16 GB VRAM:** Save the untextured `.glb` and call `del pipeline_shapegen; torch.cuda.empty_cache()` before loading `Hunyuan3DPaintPipeline`, `SkinTokens`, or running Blender Cycles GPU Tri-Planar PBR baking.
 
-### 1. Tencent Hunyuan3D Series (`D:\AI_Models\3d-models\Hunyuan3D-2`)
+### 1. Tencent Hunyuan3D Series (`D:\AI_Models\3d-models\Hunyuan3D-2`, `Hunyuan3D-2.1`, `Hunyuan3D-Part`)
 
 | Series | Model / Subfolder | Repo ID | Params | Purpose & Notes |
 |---|---|---|---|---|
 | **Hunyuan3D-2mv** | `hunyuan3d-dit-v2-mv` | `tencent/Hunyuan3D-2mv` | 1.1B | **Recommended Full-Quality Multi-View (Front/Left/Back) -> Shape** (30–50 steps) |
 | **Hunyuan3D-2mv** | `hunyuan3d-dit-v2-mv-turbo` | `tencent/Hunyuan3D-2mv` | 1.1B | Fast step-distilled Multi-View -> Shape (5–15 steps with `enable_flashvdm()`) |
-| **Hunyuan3D-2.1** | `hunyuan3d-dit-v2-1` | `tencent/Hunyuan3D-2.1` | 3.0B | High-capacity single-image-to-shape DiT + VAE |
-| **Hunyuan3D-2.1** | `hunyuan3d-paintpbr-v2-1` | `tencent/Hunyuan3D-2.1` | 1.3B | Native PBR texture synthesis (Albedo, Metallic, Roughness) |
-| **Hunyuan3D-2** | `hunyuan3d-paint-v2-0-turbo` | `tencent/Hunyuan3D-2` | 1.3B | Distilled Multi-View Texture Synthesizer (accepts `[front, left, back]` list) |
+| **Hunyuan3D-2.1** | `hunyuan3d-dit-v2-1` + `hunyuan3d-vae-v2-1` | `tencent/Hunyuan3D-2.1` | 3.3B | High-capacity single-image-to-shape DiT + ShapeVAE (`Hunyuan3D-2.1/hy3dshape`) |
+| **Hunyuan3D-2.1** | `hunyuan3d-paintpbr-v2-1` | `tencent/Hunyuan3D-2.1` | 2.0B | Native PBR texture synthesis (Albedo, Metallic, Roughness via `Hunyuan3D-2.1/hy3dpaint`) |
+| **Hunyuan3D-Part** | `p3sam` + `model` | `tencent/Hunyuan3D-Part` | 1.5B | Native 3D part segmentation (`P3-SAM`) and structure-coherent part decomposition (`X-Part`) |
 
-### 2. VAST-AI TripoSG Series (`D:\AI_Models\3d-models\TripoSG`)
+### 2. VAST-AI Tripo & Auto-Rigging Series (`D:\AI_Models\3d-models\TripoSG`, `TripoSF`, `SkinTokens`, `UniRig`)
 
 | Model | Repo ID | Params | Purpose & Key README Features |
 |---|---|---|---|
 | **TripoSG** | `VAST-AI/TripoSG` (+ `briaai/RMBG-1.4`) | 1.5B | Rectified Flow Transformer + SDF VAE. Supports direct face budget via `--faces 15000`. |
+| **TripoSF** | `VAST-AI/TripoSF` | VAE | SparseFlex ultra-high-resolution ($1024^3$) arbitrary-topology & open-surface mesh reconstruction (`ckpts/vae/pretrained_TripoSFVAE_256i1024o.safetensors`). |
+| **SkinTokens (TokenRig)** | `VAST-AI/SkinTokens` | 0.6B + CVAE | **Successor to UniRig (2026):** Unified autoregressive skeleton + per-vertex skinning weight prediction via FSQ-CVAE + Qwen3-0.6B + GRPO (`demo.py --input model.glb --output rigged.glb --use_transfer`, 14 GB VRAM). |
+| **UniRig** | `VAST-AI/UniRig` | SIGGRAPH '25 | Two-stage autoregressive skeleton tree + Bone-Point Cross Attention skinning framework. |
 
-### 3. Microsoft TRELLIS Series (`D:\AI_Models\3d-models\TRELLIS`)
+### 3. Microsoft TRELLIS Series (`D:\AI_Models\3d-models\TRELLIS.2`, `TRELLIS`)
 
 | Model | Repo ID | Params | Purpose & Key README Features |
 |---|---|---|---|
+| **TRELLIS.2-4B** | `microsoft/TRELLIS.2-4B` | 4.0B | **Latest (Dec 2025):** Field-free **O-Voxel** representation up to $1536^3$ resolution; supports open surfaces, non-manifold geometry, and full PBR materials (`Base Color`, `Roughness`, `Metallic`, `Opacity`) via `Trellis2ImageTo3DPipeline` + `o_voxel.postprocess.to_glb`. |
 | **TRELLIS-image-large** | `microsoft/TRELLIS-image-large` | 1.2B | Unified Structured LATent (`SLAT`) model decoding to Mesh (FlexiCubes) + 3D Gaussians (`to_glb` with `texture_size=2048`). |
+
+### 4. Local Foreground Segmentation (`D:\AI_Models\rembg`)
+
+| Model | Repo ID | File | Purpose & Notes |
+|---|---|---|---|
+| **RMBG-2.0** | `briaai/RMBG-2.0` | `models/bria-rmbg/bria-rmbg.onnx` (`1.02 GB`) | High-precision BiRefNet-based foreground segmentation (`rembg.new_session("bria-rmbg")`). |
+| **U2Net** | `u2net` | `models/u2net/u2net.onnx` (`176 MB`) | Fast default foreground segmentation (`rembg.new_session("u2net")`). |
 
 ---
 
@@ -94,6 +114,7 @@ Use `invoke_subagent` with `image-generator` to lock a bold, stylized-gritty Ind
 ```python
 import os, sys, torch
 os.environ["HF_HOME"] = r"D:\AI_Models\huggingface"
+os.environ["HY3DGEN_MODELS"] = r"D:\AI_Models\hy3dgen"
 sys.path.insert(0, r"D:\AI_Models\3d-models\Hunyuan3D-2")
 from PIL import Image
 from hy3dgen.rembg import BackgroundRemover
@@ -120,6 +141,33 @@ mesh = pipeline(
 )[0]
 mesh.export(output_glb_path)
 ```
+
+### Alternative Single-Image Engines (`TRELLIS.2-4B` / `Hunyuan3D-2.1` / `TripoSG`)
+- **`microsoft/TRELLIS.2-4B` (O-Voxel + Native PBR Materials):**
+  ```python
+  import os, sys
+  os.environ["HF_HOME"] = r"D:\AI_Models\huggingface"
+  os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
+  sys.path.insert(0, r"D:\AI_Models\3d-models\TRELLIS.2")
+  from PIL import Image
+  from trellis2.pipelines import Trellis2ImageTo3DPipeline
+  import o_voxel
+
+  pipeline = Trellis2ImageTo3DPipeline.from_pretrained("microsoft/TRELLIS.2-4B")
+  pipeline.cuda()
+  mesh = pipeline.run(Image.open(hero_image_path))[0]
+  glb = o_voxel.postprocess.to_glb(
+      vertices=mesh.vertices, faces=mesh.faces, attr_volume=mesh.attrs,
+      coords=mesh.coords, attr_layout=mesh.layout, voxel_size=mesh.voxel_size,
+      aabb=[[-0.5, -0.5, -0.5], [0.5, 0.5, 0.5]], decimation_target=20000,
+  )
+  glb.export(output_glb_path)
+  ```
+- **`VAST-AI/SkinTokens` (TokenRig Automated Skeleton & Skin Weight Prediction):**
+  ```powershell
+  # From D:\AI_Models\3d-models\SkinTokens:
+  python demo.py --input "path/to/character.glb" --output "path/to/rigged.glb" --use_transfer
+  ```
 
 ---
 

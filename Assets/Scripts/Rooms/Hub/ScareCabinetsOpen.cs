@@ -24,14 +24,15 @@ public class ScareCabinetsOpen : HubRoomScare
 
     protected override void Capture()
     {
-        if (_rest != null || leaves == null) return;
+        if (leaves == null || leaves.Length == 0) return;
+        if (_rest != null && _rest.Length == leaves.Length) return;
         _rest = new Quaternion[leaves.Length];
         for (int i = 0; i < leaves.Length; i++) if (leaves[i] != null) _rest[i] = leaves[i].localRotation;
     }
 
     protected override void Restore()
     {
-        if (_rest == null) return;
+        if (_rest == null || leaves == null || _rest.Length != leaves.Length) return;
         for (int i = 0; i < leaves.Length; i++) if (leaves[i] != null) leaves[i].localRotation = _rest[i];
     }
 

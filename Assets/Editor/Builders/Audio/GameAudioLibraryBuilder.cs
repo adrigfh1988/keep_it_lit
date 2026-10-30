@@ -17,6 +17,7 @@ public static class GameAudioLibraryBuilder
     private const string HE = "Assets/Horror Elements/";
     private const string SB = "Assets/Libraries/Soundbits_freeSFX_2025/Sounds/";
     private const string SF = "Assets/Scary Sound FX/";
+    private const string AT = "Assets/Arya of Terror - FREE Horror Soundtracks Vol. 1/";
 
     private struct Row
     {
@@ -98,6 +99,7 @@ public static class GameAudioLibraryBuilder
         R("chaseMusic", new[] { HE + "Ambient/Amb_Run_2" }, 1f, mono: false, stream: true),
         R("chaseEnd", new[] { HE + "Ambient/Amb_Run_End" }, 1f, mono: false),
         R("shopMusic", new[] { HE + "Save Room/SR_We_are_safe" }, 0.6f, mono: false, stream: true),
+        R("eliasMazeMusic", new[] { AT + "2021_HSV1_Dolls_of_Nagoro" }, 1f, mono: false, stream: true),
     };
 
     /// <summary>Null when the library exists, is assigned to the scene's MazeGenerator and has every mapped slot filled; otherwise what is wrong.</summary>

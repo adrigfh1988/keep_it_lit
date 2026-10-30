@@ -501,11 +501,16 @@ public partial class MazeGenerator
                 fog.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                 ParticleSystem.MainModule main = fog.main;
                 main.maxParticles = alive + 2;
+                main.startSizeY = new ParticleSystem.MinMaxCurve(0.35f, 0.60f);
                 ParticleSystem.EmissionModule emission = fog.emission;
                 float life = (main.startLifetime.constantMin + main.startLifetime.constantMax) * 0.5f;
                 emission.rateOverTime = alive / Mathf.Max(1f, life);
                 ParticleSystem.ShapeModule shape = fog.shape;
                 shape.scale = new Vector3(size.x, 0f, size.z);
+                shape.position = new Vector3(0f, 0.18f, 0f);
+                shape.randomPositionAmount = 0.06f;
+                ParticleSystem.NoiseModule noise = fog.noise;
+                noise.strengthY = 0.003f;
                 fog.Simulate(life, true, true); // settled when the floor starts, not filling in
                 fog.gameObject.AddComponent<FogScale>(); // S2: the Fog setting scales / switches this chunk
                 fog.Play();
